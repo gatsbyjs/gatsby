@@ -1,25 +1,25 @@
-import type { Rule } from "eslint"
-import type { Node, ExportDefaultDeclaration } from "estree"
-import { store } from "../../redux"
-import { isPageTemplate } from "../eslint-rules-helpers"
+import type { Rule } from "eslint";
+import type { Node, ExportDefaultDeclaration } from "estree";
+import { store } from "../../redux";
+import { isPageTemplate } from "../eslint-rules-helpers";
 
 const defs = {
   ArrowFunctionExpression: {
-    messageId: `anonymousArrowFunction`,
+    messageId: "anonymousArrowFunction",
   },
   FunctionDeclaration: {
-    messageId: `anonymousFunctionDeclaration`,
+    messageId: "anonymousFunctionDeclaration",
     forbid: (node): boolean => !node.declaration.id,
   },
   ClassDeclaration: {
-    messageId: `anonymousClass`,
+    messageId: "anonymousClass",
     forbid: (node): boolean => !node.declaration.id,
   },
-}
+};
 
-const noAnonymousExports: Rule.RuleModule = {
+export const noAnonymousExports: Rule.RuleModule = {
   meta: {
-    type: `problem`,
+    type: "problem",
     messages: {
       anonymousArrowFunction: `Anonymous arrow functions cause Fast Refresh to not preserve local component state.
 
@@ -56,24 +56,22 @@ const noAnonymousExports: Rule.RuleModule = {
   },
   create: (context) => {
     if (!isPageTemplate(store, context)) {
-      return {}
+      return {};
     }
 
     return {
       ExportDefaultDeclaration: (node: Node): void => {
         // @ts-ignore
-        const type = node.declaration.type as ExportDefaultDeclaration["type"]
-        const def = defs[type]
+        const type = node.declaration.type as ExportDefaultDeclaration["type"];
+        const def = defs[type];
 
         if (def && (!def.forbid || def.forbid(node))) {
           context.report({
             node,
             messageId: def.messageId,
-          })
+          });
         }
       },
-    }
+    };
   },
-}
-
-module.exports = noAnonymousExports
+};

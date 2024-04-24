@@ -1,10 +1,10 @@
-import { compile } from "coffeescript"
-import resolve from "./resolve"
+import { compile } from "coffeescript";
+import resolve from "./resolve";
 
-const COFFEE = /\.coffee$/
+const COFFEE = /\.coffee$/;
 
 export function resolvableExtensions() {
-  return [`.coffee`]
+  return [".coffee"];
 }
 
 export function onCreateWebpackConfig({ loaders, actions }) {
@@ -14,16 +14,16 @@ export function onCreateWebpackConfig({ loaders, actions }) {
       rules: [
         {
           test: COFFEE,
-          use: [loaders.js(), resolve(`coffee-loader`)],
+          use: [loaders.js(), resolve("coffee-loader")],
         },
       ],
     },
-  })
+  });
 }
 
 export function preprocessSource({ filename, contents }, pluginOptions) {
   if (COFFEE.test(filename)) {
-    return compile(contents, pluginOptions)
+    return compile(contents, pluginOptions);
   }
-  return null
+  return null;
 }

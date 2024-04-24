@@ -3,46 +3,46 @@ import manager, {
   type StoreConfig,
   type CachingConfig,
   type MultiCache,
-} from "cache-manager"
-import fs from "fs-extra"
-import * as fsStore from "../cache/cache-fs"
-import path from "node:path"
+} from "cache-manager";
+import fs from "fs-extra";
+import * as fsStore from "../cache/cache-fs";
+import path from "node:path";
 
-const MAX_CACHE_SIZE = 250
-const TTL = Number.MAX_SAFE_INTEGER
+const MAX_CACHE_SIZE = 250;
+const TTL = Number.MAX_SAFE_INTEGER;
 
 type ICacheProperties = {
-  name?: string | undefined
-  store?: Store | undefined
-}
+  name?: string | undefined;
+  store?: Store | undefined;
+};
 
 export default class GatsbyCache {
-  public name: string
-  public store: Store
-  public directory: string
+  public name: string;
+  public store: Store;
+  public directory: string;
   // TODO: remove `.cache` in v4. This is compat mode - cache-manager cache implementation
   // expose internal cache that gives access to `.del` function that wasn't available in public
   // cache interface (gatsby-plugin-sharp use it to clear no longer needed data)
-  public cache?: MultiCache
+  public cache?: MultiCache;
 
   // @ts-ignore - set & get types are missing from fsStore?
-  constructor({ name = `db`, store = fsStore }: ICacheProperties = {}) {
-    this.name = name
-    this.store = store
+  constructor({ name = "db", store = fsStore }: ICacheProperties = {}) {
+    this.name = name;
+    this.store = store;
     this.directory = path.join(
       global.__GATSBY?.root ?? process.cwd(),
-      `.cache`,
-      `caches`,
+      ".cache",
+      "caches",
       name,
-    )
+    );
   }
 
   init(): GatsbyCache {
-    fs.ensureDirSync(this.directory)
+    fs.ensureDirSync(this.directory);
 
     const configs: Array<StoreConfig> = [
       {
-        store: `memory`,
+        store: "memory",
         max: MAX_CACHE_SIZE,
         ttl: TTL,
       },
@@ -54,26 +54,26 @@ export default class GatsbyCache {
           ttl: TTL,
         },
       },
-    ]
+    ];
 
-    const caches = configs.map((cache) => manager.caching(cache))
+    const caches = configs.map((cache) => manager.caching(cache));
 
-    this.cache = manager.multiCaching(caches)
+    this.cache = manager.multiCaching(caches);
 
-    return this
+    return this;
   }
 
   async get<T = unknown>(key): Promise<T | undefined> {
     return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
-          `GatsbyCache wasn't initialised yet, please run the init method first`,
-        )
+          "GatsbyCache wasn't initialised yet, please run the init method first",
+        );
       }
       this.cache.get<T>(key, (err, res) => {
-        resolve(err ? undefined : res)
-      })
-    })
+        resolve(err ? undefined : res);
+      });
+    });
   }
 
   async set<T>(
@@ -84,22 +84,22 @@ export default class GatsbyCache {
     return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
-          `GatsbyCache wasn't initialised yet, please run the init method first`,
-        )
+          "GatsbyCache wasn't initialised yet, please run the init method first",
+        );
       }
       this.cache.set(key, value, args, (err) => {
-        resolve(err ? undefined : value)
-      })
-    })
+        resolve(err ? undefined : value);
+      });
+    });
   }
 
   async del(key: string): Promise<void> {
     if (!this.cache) {
       throw new Error(
-        `GatsbyCache wasn't initialised yet, please run the init method first`,
-      )
+        "GatsbyCache wasn't initialised yet, please run the init method first",
+      );
     }
 
-    return this.cache.del(key)
+    return this.cache.del(key);
   }
 }

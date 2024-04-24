@@ -1,25 +1,25 @@
 // @ts-check
-import { stripIndent } from "common-tags"
-import { GraphQLBoolean, GraphQLInt } from "gatsby/graphql"
-import { hasFeature } from "gatsby-plugin-utils"
+import { stripIndent } from "common-tags";
+import { GraphQLBoolean, GraphQLInt } from "gatsby/graphql";
+import { hasFeature } from "gatsby-plugin-utils";
 
-import { resolveGatsbyImageData } from "./gatsby-plugin-image"
-import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
-import { makeTypeName } from "./normalize"
+import { resolveGatsbyImageData } from "./gatsby-plugin-image";
+import { ImageCropFocusType, ImageResizingBehavior } from "./schemes";
+import { makeTypeName } from "./normalize";
 
 export async function setFieldsOnGraphQLNodeType(
   { type, cache },
-  { typePrefix = `Contentful` } = {},
+  { typePrefix = "Contentful" } = {},
 ) {
-  if (type.name !== makeTypeName(`Asset`, typePrefix)) {
-    return {}
+  if (type.name !== makeTypeName("Asset", typePrefix)) {
+    return {};
   }
 
   // gatsby-plugin-image
   const getGatsbyImageData = async () => {
     const { getGatsbyImageFieldConfig } = await import(
-      `gatsby-plugin-image/graphql-utils`
-    )
+      "gatsby-plugin-image/graphql-utils"
+    );
 
     const fieldConfig = getGatsbyImageFieldConfig(
       async (...args) => resolveGatsbyImageData(...args, { cache }),
@@ -45,18 +45,18 @@ export async function setFieldsOnGraphQLNodeType(
           type: GraphQLInt,
         },
       },
-    )
+    );
 
-    fieldConfig.type = hasFeature(`graphql-typegen`)
-      ? `GatsbyImageData`
-      : `JSON`
+    fieldConfig.type = hasFeature("graphql-typegen")
+      ? "GatsbyImageData"
+      : "JSON";
 
-    return fieldConfig
-  }
+    return fieldConfig;
+  };
 
-  const gatsbyImageData = await getGatsbyImageData()
+  const gatsbyImageData = await getGatsbyImageData();
 
   return {
     gatsbyImageData,
-  }
+  };
 }

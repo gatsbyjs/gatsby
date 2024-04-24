@@ -511,5 +511,5 @@ export function commonTypeBuilder(prefix: string): string {
         POUNDS
         OUNCES
       }
-    `
+    `;
 }

@@ -1,17 +1,17 @@
-const path = require(`path`)
-const HtmlWebpackPlugin = require(`html-webpack-plugin`)
-const webpack = require(`webpack`)
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 
-const mode = `production`
+const mode = "production";
 
 /** @type { import('webpack').Configuration } */
 module.exports = {
-  entry: path.join(__dirname, `app.jsx`),
+  entry: path.join(__dirname, "app.jsx"),
   mode,
   output: {
-    path: path.join(__dirname, `..`, `dist`),
-    filename: `./app.js`,
-    publicPath: `/___graphql`,
+    path: path.join(__dirname, "..", "dist"),
+    filename: "./app.js",
+    publicPath: "/___graphql",
   },
   devtool: false,
   module: {
@@ -20,29 +20,29 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: `babel-loader`,
+          loader: "babel-loader",
           options: {
             presets: [
               [
-                `@babel/preset-env`,
+                "@babel/preset-env",
                 {
                   corejs: 3,
                   loose: true,
                   bugfixes: true,
-                  modules: `commonjs`,
-                  useBuiltIns: `entry`,
+                  modules: "commonjs",
+                  useBuiltIns: "entry",
                   targets: [
-                    `>0.25% and supports es6-module`,
-                    `not dead and supports es6-module`,
+                    ">0.25% and supports es6-module",
+                    "not dead and supports es6-module",
                   ],
                 },
               ],
               [
-                `@babel/preset-react`,
+                "@babel/preset-react",
                 {
                   useBuiltIns: true,
-                  pragma: `React.createElement`,
-                  development: mode !== `production`,
+                  pragma: "React.createElement",
+                  development: mode !== "production",
                 },
               ],
             ],
@@ -59,14 +59,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [{ loader: `style-loader` }, { loader: `css-loader` }],
+        use: [{ loader: "style-loader" }, { loader: "css-loader" }],
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, `index.html.ejs`),
-      filename: `index.html`,
+      template: path.resolve(__dirname, "index.html.ejs"),
+      filename: "index.html",
       inject: false,
     }),
     new webpack.DefinePlugin({
@@ -82,4 +82,4 @@ module.exports = {
   stats: {
     warnings: false,
   },
-}
+};

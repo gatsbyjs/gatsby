@@ -1,5 +1,5 @@
-import { getStore } from "~/store"
-import { findNamedTypeName } from "~/steps/create-schema-customization/helpers"
+import { getStore } from "~/store";
+import { findNamedTypeName } from "~/steps/create-schema-customization/helpers";
 
 const buildReusableFragments = ({ fragments }) =>
   Object.values(fragments)
@@ -12,9 +12,9 @@ const buildReusableFragments = ({ fragments }) =>
       }) => `fragment ${name} on ${type} {
       ${buildSelectionSet(fields)}
       ${buildInlineFragments(inlineFragments)}
-    }`
+    }`,
     )
-    .join(` `)
+    .join(" ");
 
 /**
  * Takes in a fragments object (built up during the buildSelectionSet function)
@@ -23,16 +23,16 @@ const buildReusableFragments = ({ fragments }) =>
  * with the unused fragments removed
  */
 export const generateReusableFragments = ({ fragments, selectionSet }) => {
-  const fragmentsValues = Object.values(fragments)
+  const fragmentsValues = Object.values(fragments);
 
   if (!fragmentsValues.length) {
-    return ``
+    return "";
   }
 
-  let builtFragments = buildReusableFragments({ fragments })
+  let builtFragments = buildReusableFragments({ fragments });
 
   if (fragments) {
-    let regenerateFragments = false
+    let regenerateFragments = false;
 
     fragmentsValues.forEach(({ name, type }) => {
       // if our query didn't use the fragment due to the query depth AND the fragment isn't used in another fragment, delete it
@@ -43,28 +43,28 @@ export const generateReusableFragments = ({ fragments, selectionSet }) => {
         !selectionSet.includes(`...${name}`) &&
         !builtFragments.includes(`...${name}`)
       ) {
-        delete fragments[type]
-        regenerateFragments = true
+        delete fragments[type];
+        regenerateFragments = true;
       }
-    })
+    });
 
     if (regenerateFragments) {
-      builtFragments = buildReusableFragments({ fragments })
+      builtFragments = buildReusableFragments({ fragments });
     }
   }
 
-  return builtFragments
-}
+  return builtFragments;
+};
 
 export const buildNodesQueryOnFieldName = ({
   fieldName,
   builtSelectionSet,
-  builtFragments = ``,
-  queryVariables = ``,
-  fieldVariables = ``,
+  builtFragments = "",
+  queryVariables = "",
+  fieldVariables = "",
 }) =>
   buildQuery({
-    queryName: `NODE_LIST_QUERY`,
+    queryName: "NODE_LIST_QUERY",
     variables: `$first: Int!, $after: String, ${queryVariables}`,
     fieldName,
     fieldVariables: `first: $first, after: $after, ${fieldVariables}`,
@@ -78,44 +78,44 @@ export const buildNodesQueryOnFieldName = ({
         }
       `,
     builtFragments,
-  })
+  });
 
-const buildVariables = variables =>
-  variables && typeof variables === `string` ? `(${variables})` : ``
+const buildVariables = (variables) =>
+  variables && typeof variables === "string" ? `(${variables})` : "";
 
 const buildInlineFragment = ({ name, fields, fragments }) => `
   ... on ${name} {
     ${buildSelectionSet(fields, { fragments })}
   }
-`
+`;
 
 const buildInlineFragments = (inlineFragments, { fragments = {} } = {}) =>
   inlineFragments
     ? `
       __typename
       ${inlineFragments
-        .map(inlineFragment =>
-          buildInlineFragment({ ...inlineFragment, fragments })
+        .map((inlineFragment) =>
+          buildInlineFragment({ ...inlineFragment, fragments }),
         )
-        .join(` `)}
+        .join(" ")}
     `
-    : ``
+    : "";
 
 export const buildSelectionSet = (
   fields,
-  { fragments = {}, transformedInlineFragments = [] } = {}
+  { fragments = {}, transformedInlineFragments = [] } = {},
 ) => {
   if (!fields || !fields.length) {
-    return ``
+    return "";
   }
 
   const {
     remoteSchema: { typeMap },
-  } = getStore().getState()
+  } = getStore().getState();
 
-  const buildFieldSelectionSet = field => {
-    if (typeof field === `string`) {
-      return field
+  const buildFieldSelectionSet = (field) => {
+    if (typeof field === "string") {
+      return field;
     }
 
     let {
@@ -126,71 +126,71 @@ export const buildSelectionSet = (
       fieldType,
       internalType,
       builtSelectionSet,
-    } = field
+    } = field;
 
-    if (internalType === `Fragment`) {
-      return `...${field.fragment.name}`
+    if (internalType === "Fragment") {
+      return `...${field.fragment.name}`;
     }
 
     if (
-      (!variables || variables === ``) &&
-      fields?.find(field => field.fieldName === `nodes`)
+      (!variables || variables === "") &&
+      fields?.find((field) => field.fieldName === "nodes")
     ) {
       // @todo instead of checking for a nodes field, include the field type here
       // and check for input args instead. Maybe some kind of input args API or something would be helpful
-      variables = `first: 100`
+      variables = "first: 100";
     }
 
     const selectionSet =
       builtSelectionSet ||
       buildSelectionSet(fields, {
         fragments,
-      })
+      });
 
     const builtInlineFragments = buildInlineFragments(inlineFragments, {
       fragments,
-    })
+    });
 
-    if (fieldName && (builtInlineFragments !== `` || selectionSet !== ``)) {
+    if (fieldName && (builtInlineFragments !== "" || selectionSet !== "")) {
       return `
         ${fieldName} ${buildVariables(variables)} {
           ${selectionSet}
           ${builtInlineFragments}
         }
-      `
+      `;
     } else if (fieldName) {
-      const fullFieldType = typeMap.get(findNamedTypeName(fieldType))
+      const fullFieldType = typeMap.get(findNamedTypeName(fieldType));
 
       // if this field has subfields but we didn't build a selection set for it
       // we shouldn't fetch this field. This can happen when we have self referencing types that are limited by the schema.circularQueryLimit plugin option.
       // @todo the above should be fixed in recursively-transform-fields.js instead of here. recursion is hard :p
       if (fullFieldType.fields) {
-        return null
+        return null;
       }
 
-      return fieldName
+      return fieldName;
     }
 
-    return null
-  }
+    return null;
+  };
 
-  let inlineFragmentsSelectionSet = ``
+  let inlineFragmentsSelectionSet = "";
 
   if (transformedInlineFragments?.length) {
     inlineFragmentsSelectionSet = transformedInlineFragments.map(
-      inlineFragment => `... on ${inlineFragment.name} {
+      (inlineFragment) => `... on ${inlineFragment.name} {
         ${inlineFragment.fields.map(buildFieldSelectionSet).filter(Boolean)
           .join(`
         `)}
-      }`
-    )
+      }`,
+    );
   }
 
   const selectionSet = fields.map(buildFieldSelectionSet).filter(Boolean).join(`
-    `)
+    `);
 
-  return `${inlineFragmentsSelectionSet} ${selectionSet}`
-}
+  return `${inlineFragmentsSelectionSet} ${selectionSet}`;
+};
 
 const buildQuery = ({
   queryName,
@@ -198,7 +198,7 @@ const buildQuery = ({
   fieldVariables,
   variables,
   builtSelectionSet,
-  builtFragments = ``,
+  builtFragments = "",
 }) => `
   query ${queryName} ${buildVariables(variables)} {
     ${fieldName} ${buildVariables(fieldVariables)} {
@@ -207,15 +207,15 @@ const buildQuery = ({
   }
 
   ${builtFragments}
-`
+`;
 
 export const buildNodeQueryOnFieldName = ({
   fieldName,
   builtFragments,
   builtSelectionSet,
-  variables = `$id: ID!`,
-  fieldInputArguments = `id: $id`,
-  queryName = `SINGLE_CONTENT_QUERY`,
+  variables = "$id: ID!",
+  fieldInputArguments = "id: $id",
+  queryName = "SINGLE_CONTENT_QUERY",
 }) =>
   buildQuery({
     queryName,
@@ -224,4 +224,4 @@ export const buildNodeQueryOnFieldName = ({
     fieldVariables: fieldInputArguments,
     builtFragments,
     builtSelectionSet,
-  })
+  });

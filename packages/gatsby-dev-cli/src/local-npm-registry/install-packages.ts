@@ -1,9 +1,9 @@
-import path from "path"
-import fs from "fs-extra"
+import path from "path";
+import fs from "fs-extra";
 
-import { promisifiedSpawn } from "../utils/promisified-spawn"
-import { registryUrl } from "./verdaccio-config"
-import type { PackageJson } from "../../../gatsby"
+import { promisifiedSpawn } from "../utils/promisified-spawn";
+import { registryUrl } from "./verdaccio-config";
+import type { PackageJson } from "../../../gatsby";
 
 export async function installPackages({
   packagesToInstall,
@@ -12,18 +12,18 @@ export async function installPackages({
   externalRegistry,
   packageManager,
 }: {
-  packagesToInstall: Array<string>
-  yarnWorkspaceRoot: string | null | undefined
-  newlyPublishedPackageVersions: Record<string, string>
-  externalRegistry: boolean
-  packageManager: `pnpm` | `npm`
+  packagesToInstall: Array<string>;
+  yarnWorkspaceRoot: string | null | undefined;
+  newlyPublishedPackageVersions: Record<string, string>;
+  externalRegistry: boolean;
+  packageManager: "pnpm" | "npm";
 }): Promise<void> {
   console.log(
     `Installing packages from local registry:\n${packagesToInstall
       .map((packageAndVersion) => ` - ${packageAndVersion}`)
-      .join(`\n`)}`,
-  )
-  let installCmd
+      .join("\n")}`,
+  );
+  let installCmd;
   if (yarnWorkspaceRoot) {
     // this is very hacky - given root, we run `pnpm workspaces info`
     // to get list of all workspaces and their locations, and manually
@@ -32,15 +32,15 @@ export async function installPackages({
     // in workspaces which should preserve node_modules structure
     // (packages being mostly hoisted to top-level node_modules)
     const { stdout } = await promisifiedSpawn([
-      `pnpm`,
-      [`workspaces`, `info`, `--json`],
-      { stdio: `pipe` },
-    ])
+      "pnpm",
+      ["workspaces", "info", "--json"],
+      { stdio: "pipe" },
+    ]);
 
-    let workspacesLayout
+    let workspacesLayout;
     try {
       // @ts-ignore
-      workspacesLayout = JSON.parse(JSON.parse(stdout).data)
+      workspacesLayout = JSON.parse(JSON.parse(stdout).data);
     } catch (e) {
       /*
       Yarn 1.22 doesn't output pure json - it has leading and trailing text:
@@ -64,17 +64,17 @@ export async function installPackages({
       So we need to do some sanitization. We find JSON by matching substring
       that starts with `{` and ends with `}`
     */
-      const regex = /^[^{]*({.*})[^}]*$/gs
-      const sanitizedStdOut = regex.exec(stdout)
+      const regex = /^[^{]*({.*})[^}]*$/gs;
+      const sanitizedStdOut = regex.exec(stdout);
       if ((sanitizedStdOut?.length ?? 0) >= 2) {
         // pick content of first (and only) capturing group
-        const jsonString = sanitizedStdOut?.[1]
+        const jsonString = sanitizedStdOut?.[1];
         try {
-          workspacesLayout = JSON.parse(jsonString ?? ``)
+          workspacesLayout = JSON.parse(jsonString ?? "");
         } catch (e) {
           console.error(
             `Failed to parse "sanitized" output of "yarn workspaces info" command.\n\nSanitized string: "${jsonString}`,
-          )
+          );
           // not exitting here, because we have general check for `workspacesLayout` being set below
         }
       }
@@ -82,98 +82,102 @@ export async function installPackages({
 
     if (!workspacesLayout) {
       console.error(
-        `Couldn't parse output of "yarn workspaces info" command`,
+        'Couldn\'t parse output of "yarn workspaces info" command',
         stdout,
-      )
-      process.exit(1)
+      );
+      process.exit(1);
     }
 
     function handleDeps(deps?: Record<string, string> | undefined): boolean {
       if (!deps) {
-        return false
+        return false;
       }
 
-      let changed = false
+      let changed = false;
       Object.keys(deps).forEach((depName) => {
         if (packagesToInstall.includes(depName)) {
-          deps[depName] = `gatsby-dev`
-          changed = true
+          deps[depName] = "gatsby-dev";
+          changed = true;
         }
-      })
-      return changed
+      });
+      return changed;
     }
 
     Object.keys(workspacesLayout).forEach((workspaceName) => {
-      const { location } = workspacesLayout[workspaceName]
-      const pkgJsonPath = path.join(yarnWorkspaceRoot, location, `package.json`)
+      const { location } = workspacesLayout[workspaceName];
+      const pkgJsonPath = path.join(
+        yarnWorkspaceRoot,
+        location,
+        "package.json",
+      );
       if (!fs.existsSync(pkgJsonPath)) {
-        return
+        return;
       }
       const pkg = JSON.parse(
-        fs.readFileSync(pkgJsonPath, `utf8`),
-      ) as PackageJson
+        fs.readFileSync(pkgJsonPath, "utf8"),
+      ) as PackageJson;
 
-      const changed = false
+      const changed = false;
 
       // eslint-disable-next-line @babel/no-unused-expressions
-      changed || handleDeps(pkg.dependencies)
+      changed || handleDeps(pkg.dependencies);
       // eslint-disable-next-line @babel/no-unused-expressions
-      changed || handleDeps(pkg.devDependencies)
+      changed || handleDeps(pkg.devDependencies);
       // eslint-disable-next-line @babel/no-unused-expressions
-      changed || handleDeps(pkg.peerDependencies)
+      changed || handleDeps(pkg.peerDependencies);
 
       if (changed) {
-        console.log(`Changing deps in ${pkgJsonPath} to use @gatsby-dev`)
+        console.log(`Changing deps in ${pkgJsonPath} to use @gatsby-dev`);
         fs.outputJSONSync(pkgJsonPath, pkg, {
           spaces: 2,
-        })
+        });
       }
-    })
+    });
 
     // package.json files are changed - so we just want to install
     // using verdaccio registry
-    const yarnCommands = [`install`]
+    const yarnCommands = ["install"];
 
     if (!externalRegistry) {
-      yarnCommands.push(`--registry=${registryUrl}`)
+      yarnCommands.push(`--registry=${registryUrl}`);
     }
 
-    installCmd = [`pnpm`, yarnCommands]
+    installCmd = ["pnpm", yarnCommands];
   } else {
     const packageAndVersionsToInstall = packagesToInstall.map((packageName) => {
-      const packageVersion = newlyPublishedPackageVersions[packageName]
-      return `${packageName}@${packageVersion}`
-    })
+      const packageVersion = newlyPublishedPackageVersions[packageName];
+      return `${packageName}@${packageVersion}`;
+    });
 
-    if (packageManager === `pnpm`) {
+    if (packageManager === "pnpm") {
       const pnpmCommands = [
-        `add`,
+        "add",
         ...packageAndVersionsToInstall,
-        `--save-exact`,
-      ]
+        "--save-exact",
+      ];
 
       if (!externalRegistry) {
-        pnpmCommands.push(`--registry=${registryUrl}`)
+        pnpmCommands.push(`--registry=${registryUrl}`);
       }
 
-      installCmd = [`pnpm`, pnpmCommands]
+      installCmd = ["pnpm", pnpmCommands];
     } else {
-      const yarnCommands = [`add`, ...packageAndVersionsToInstall, `--exact`]
+      const yarnCommands = ["add", ...packageAndVersionsToInstall, "--exact"];
 
       if (!externalRegistry) {
-        yarnCommands.push(`--registry=${registryUrl}`)
+        yarnCommands.push(`--registry=${registryUrl}`);
       }
 
-      installCmd = [`pnpm`, yarnCommands]
+      installCmd = ["pnpm", yarnCommands];
     }
   }
 
   try {
-    await promisifiedSpawn(installCmd)
+    await promisifiedSpawn(installCmd);
 
-    console.log(`Installation complete`)
+    console.log("Installation complete");
   } catch (error) {
-    console.error(`Installation failed`, error)
-    process.exit(1)
+    console.error("Installation failed", error);
+    process.exit(1);
   }
 }

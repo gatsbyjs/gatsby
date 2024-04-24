@@ -1,5 +1,5 @@
-import signalExit from "signal-exit"
-import fs from "fs-extra"
+import signalExit from "signal-exit";
+import fs from "fs-extra";
 import {
   type ParentMessageUnion,
   type ChildMessageUnion,
@@ -9,29 +9,29 @@ import {
   RESULT,
   CUSTOM_MESSAGE,
   WORKER_READY,
-} from "./types"
-import { isPromise } from "./utils"
+} from "./types";
+import { isPromise } from "./utils";
 
-let counter = 0
+let counter = 0;
 export type IGatsbyWorkerMessenger<
   MessagesFromParent = unknown,
   MessagesFromChild = MessagesFromParent,
 > = {
-  onMessage: (listener: (msg: MessagesFromParent) => void) => void
-  sendMessage: (msg: MessagesFromChild) => void
-  messagingVersion: 1
-}
+  onMessage: (listener: (msg: MessagesFromParent) => void) => void;
+  sendMessage: (msg: MessagesFromChild) => void;
+  messagingVersion: 1;
+};
 
 /**
  * Used to check wether current context is executed in worker process
  */
-let isWorker = false
+let isWorker = false;
 let getMessenger = function <
   MessagesFromParent = unknown,
   MessagesFromChild = MessagesFromParent,
 >(): IGatsbyWorkerMessenger<MessagesFromParent, MessagesFromChild> | undefined {
-  return undefined
-}
+  return undefined;
+};
 
 if (
   process.send &&
@@ -39,34 +39,34 @@ if (
   process.env.GATSBY_WORKER_IN_FLIGHT_DUMP_LOCATION
 ) {
   const workerInFlightsDumpLocation =
-    process.env.GATSBY_WORKER_IN_FLIGHT_DUMP_LOCATION
-  isWorker = true
+    process.env.GATSBY_WORKER_IN_FLIGHT_DUMP_LOCATION;
+  isWorker = true;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const listeners: Array<(msg: any) => void> = []
+  const listeners: Array<(msg: any) => void> = [];
 
-  const inFlightMessages = new Set<ChildMessageUnion>()
+  const inFlightMessages = new Set<ChildMessageUnion>();
   signalExit.onExit(() => {
     if (inFlightMessages.size > 0) {
       // this need to be sync
       fs.outputJsonSync(
         workerInFlightsDumpLocation,
         Array.from(inFlightMessages),
-      )
+      );
     }
-  })
+  });
 
   function ensuredSendToMain(msg: ChildMessageUnion): void {
-    inFlightMessages.add(msg)
+    inFlightMessages.add(msg);
     process.send!(msg, undefined, undefined, (error) => {
       if (!error) {
-        inFlightMessages.delete(msg)
+        inFlightMessages.delete(msg);
       }
-    })
+    });
   }
 
   function onError(error: Error): void {
     if (error == null) {
-      error = new Error(`"null" or "undefined" thrown`)
+      error = new Error('"null" or "undefined" thrown');
     }
 
     const msg: ChildMessageUnion = [
@@ -76,17 +76,17 @@ if (
       error.message,
       error.stack,
       error,
-    ]
+    ];
 
-    ensuredSendToMain(msg)
+    ensuredSendToMain(msg);
   }
 
   function onResult(result: unknown): void {
-    const msg: ChildMessageUnion = [RESULT, ++counter, result]
-    ensuredSendToMain(msg)
+    const msg: ChildMessageUnion = [RESULT, ++counter, result];
+    ensuredSendToMain(msg);
   }
 
-  const MESSAGING_VERSION = 1
+  const MESSAGING_VERSION = 1;
 
   getMessenger = function <
     MessagesFromParent = unknown,
@@ -94,45 +94,45 @@ if (
   >(): IGatsbyWorkerMessenger<MessagesFromParent, MessagesFromChild> {
     return {
       onMessage(listener: (msg: MessagesFromParent) => void): void {
-        listeners.push(listener)
+        listeners.push(listener);
       },
       sendMessage(msg: MessagesFromChild): void {
-        const poolMsg: ChildMessageUnion = [CUSTOM_MESSAGE, ++counter, msg]
-        ensuredSendToMain(poolMsg)
+        const poolMsg: ChildMessageUnion = [CUSTOM_MESSAGE, ++counter, msg];
+        ensuredSendToMain(poolMsg);
       },
       messagingVersion: MESSAGING_VERSION,
-    }
-  }
+    };
+  };
 
-  const child = require(process.env.GATSBY_WORKER_MODULE_PATH)
+  const child = require(process.env.GATSBY_WORKER_MODULE_PATH);
 
   function messageHandler(msg: ParentMessageUnion): void {
     if (msg[0] === EXECUTE) {
-      let result
+      let result;
       try {
-        result = child[msg[2]].call(child, ...msg[3])
+        result = child[msg[2]].call(child, ...msg[3]);
       } catch (e) {
-        onError(e)
-        return
+        onError(e);
+        return;
       }
 
       if (isPromise(result)) {
-        result.then(onResult, onError)
+        result.then(onResult, onError);
       } else {
-        onResult(result)
+        onResult(result);
       }
     } else if (msg[0] === END) {
-      process.off(`message`, messageHandler)
+      process.off("message", messageHandler);
     } else if (msg[0] === CUSTOM_MESSAGE) {
       for (const listener of listeners) {
-        listener(msg[2])
+        listener(msg[2]);
       }
     }
   }
 
-  process.on(`message`, messageHandler)
+  process.on("message", messageHandler);
 
-  ensuredSendToMain([WORKER_READY, ++counter])
+  ensuredSendToMain([WORKER_READY, ++counter]);
 }
 
-export { isWorker, getMessenger }
+export { isWorker, getMessenger };

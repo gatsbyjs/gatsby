@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import path from "node:path"
+import _ from "lodash";
+import path from "node:path";
 
 /**
  * @typedef {Object} TraversePackagesDepsReturn
@@ -41,52 +41,52 @@ export function traversePackagesDeps({
   depTree = {},
   packageNameToPath,
 }: {
-  packages: Array<string>
-  monoRepoPackages: Array<string>
-  seenPackages?: Array<string> | undefined
+  packages: Array<string>;
+  monoRepoPackages: Array<string>;
+  seenPackages?: Array<string> | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  depTree?: any | undefined
-  packageNameToPath: Map<string, string>
+  depTree?: any | undefined;
+  packageNameToPath: Map<string, string>;
 }): {
-  seenPackages: Array<string>
+  seenPackages: Array<string>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  depTree: any
+  depTree: any;
 } {
-  packages.forEach(p => {
-    let pkgJson
+  packages.forEach((p) => {
+    let pkgJson;
     try {
-      const packageRoot = packageNameToPath.get(p)
+      const packageRoot = packageNameToPath.get(p);
       if (packageRoot) {
-        pkgJson = require(path.join(packageRoot, `package.json`))
+        pkgJson = require(path.join(packageRoot, "package.json"));
       } else {
-        console.error(`"${p}" package doesn't exist in monorepo.`)
+        console.error(`"${p}" package doesn't exist in monorepo.`);
         // remove from seenPackages
-        seenPackages = seenPackages.filter(seenPkg => seenPkg !== p)
-        return
+        seenPackages = seenPackages.filter((seenPkg) => seenPkg !== p);
+        return;
       }
     } catch (e) {
-      console.error(`"${p}" package doesn't exist in monorepo.`, e)
+      console.error(`"${p}" package doesn't exist in monorepo.`, e);
       // remove from seenPackages
-      seenPackages = seenPackages.filter(seenPkg => seenPkg !== p)
-      return
+      seenPackages = seenPackages.filter((seenPkg) => seenPkg !== p);
+      return;
     }
 
     const fromMonoRepo = _.intersection(
       Object.keys({ ...pkgJson.dependencies }),
       monoRepoPackages,
-    )
+    );
 
-    fromMonoRepo.forEach(pkgName => {
-      depTree[pkgName] = (depTree[pkgName] || new Set()).add(p)
-    })
+    fromMonoRepo.forEach((pkgName) => {
+      depTree[pkgName] = (depTree[pkgName] || new Set()).add(p);
+    });
 
     // only traverse not yet seen packages to avoid infinite loops
-    const newPackages = _.difference(fromMonoRepo, seenPackages)
+    const newPackages = _.difference(fromMonoRepo, seenPackages);
 
     if (newPackages.length) {
-      newPackages.forEach(depFromMonorepo => {
-        seenPackages.push(depFromMonorepo)
-      })
+      newPackages.forEach((depFromMonorepo) => {
+        seenPackages.push(depFromMonorepo);
+      });
 
       traversePackagesDeps({
         packages: fromMonoRepo,
@@ -94,8 +94,8 @@ export function traversePackagesDeps({
         seenPackages,
         depTree,
         packageNameToPath,
-      })
+      });
     }
-  })
-  return { seenPackages, depTree }
+  });
+  return { seenPackages, depTree };
 }

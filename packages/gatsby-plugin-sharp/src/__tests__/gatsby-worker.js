@@ -1,30 +1,30 @@
-jest.mock(`../process-file`)
+jest.mock("../process-file");
 
-const path = require(`path`)
-const worker = require(`../gatsby-worker`).IMAGE_PROCESSING
-const { processFile } = require(`../process-file`)
+const path = require("path");
+const worker = require("../gatsby-worker").IMAGE_PROCESSING;
+const { processFile } = require("../process-file");
 
-describe(`worker`, () => {
+describe("worker", () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-  })
+    jest.clearAllMocks();
+  });
 
-  it(`should call processFile with the right arguments`, async () => {
+  it("should call processFile with the right arguments", async () => {
     processFile.mockImplementation((file, transforms) =>
-      transforms.map(transform => Promise.resolve(transform))
-    )
+      transforms.map((transform) => Promise.resolve(transform)),
+    );
     const job = {
       inputPaths: [
         {
-          path: `inputpath/file.jpg`,
-          contentDigest: `1234`,
+          path: "inputpath/file.jpg",
+          contentDigest: "1234",
         },
       ],
-      outputDir: `/public/static/`,
+      outputDir: "/public/static/",
       args: {
         operations: [
           {
-            outputPath: `myoutputpath/1234/file.jpg`,
+            outputPath: "myoutputpath/1234/file.jpg",
             args: {
               width: 100,
               height: 100,
@@ -33,11 +33,11 @@ describe(`worker`, () => {
         ],
         pluginOptions: {},
       },
-    }
+    };
 
-    await worker(job)
+    await worker(job);
 
-    expect(processFile).toHaveBeenCalledTimes(1)
+    expect(processFile).toHaveBeenCalledTimes(1);
     expect(processFile).toHaveBeenCalledWith(
       job.inputPaths[0].path,
       [
@@ -45,31 +45,31 @@ describe(`worker`, () => {
           ...job.args.operations[0],
           outputPath: path.join(
             job.outputDir,
-            job.args.operations[0].outputPath
+            job.args.operations[0].outputPath,
           ),
         },
       ],
-      job.args.pluginOptions
-    )
-  })
+      job.args.pluginOptions,
+    );
+  });
 
-  it(`should fail a promise when image processing fails`, async () => {
+  it("should fail a promise when image processing fails", async () => {
     processFile.mockImplementation(() =>
-      Promise.reject(new Error(`transform failed`))
-    )
+      Promise.reject(new Error("transform failed")),
+    );
 
     const job = {
       inputPaths: [
         {
-          path: `inputpath/file.jpg`,
-          contentDigest: `1234`,
+          path: "inputpath/file.jpg",
+          contentDigest: "1234",
         },
       ],
-      outputDir: `/public/static/`,
+      outputDir: "/public/static/",
       args: {
         operations: [
           {
-            outputPath: `myoutputpath/1234/file.jpg`,
+            outputPath: "myoutputpath/1234/file.jpg",
             args: {
               width: 100,
               height: 100,
@@ -78,13 +78,13 @@ describe(`worker`, () => {
         ],
         pluginOptions: {},
       },
-    }
+    };
 
-    expect.assertions(1)
+    expect.assertions(1);
     try {
-      await worker(job)
+      await worker(job);
     } catch (err) {
-      expect(err.message).toEqual(`transform failed`)
+      expect(err.message).toEqual("transform failed");
     }
-  })
-})
+  });
+});

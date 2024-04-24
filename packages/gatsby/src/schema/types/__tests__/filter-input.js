@@ -1,8 +1,8 @@
-const { build } = require(`../..`)
-const { store } = require(`../../../redux`)
-const { actions } = require(`../../../redux/actions`)
+const { build } = require("../..");
+const { store } = require("../../../redux");
+const { actions } = require("../../../redux/actions");
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock("gatsby-cli/lib/reporter", () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -14,66 +14,66 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         start: jest.fn(),
         setStatus: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
-  }
-})
+  };
+});
 
 const nodes = [
   {
-    id: `parent`,
+    id: "parent",
     nested: {
-      union___NODE: [`union1`, `union2`],
+      union___NODE: ["union1", "union2"],
     },
     internal: {
-      type: `Parent`,
-      contentDigest: `a`,
+      type: "Parent",
+      contentDigest: "a",
     },
   },
   {
-    id: `union1`,
-    foo: `bar`,
+    id: "union1",
+    foo: "bar",
     internal: {
-      type: `Union1`,
-      contentDigest: `bar`,
+      type: "Union1",
+      contentDigest: "bar",
     },
   },
   {
-    id: `union2`,
-    foo: `baz`,
+    id: "union2",
+    foo: "baz",
     internal: {
-      type: `Union2`,
-      contentDigest: `baz`,
+      type: "Union2",
+      contentDigest: "baz",
     },
   },
-]
+];
 
-describe(`Filter input`, () => {
+describe("Filter input", () => {
   beforeEach(async () => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      actions.createNode({ ...node }, { name: `test` })(store.dispatch)
-    )
-  })
+    store.dispatch({ type: "DELETE_CACHE" });
+    nodes.forEach((node) =>
+      actions.createNode({ ...node }, { name: "test" })(store.dispatch),
+    );
+  });
 
-  it(`removes empty input filter fields`, async () => {
+  it("removes empty input filter fields", async () => {
     // This can happen when a type has only one GraphQLUnion type field,
     // which will be skipped by `toInputObjectType`
-    const schema = await buildSchema()
-    const parentFilterInput = schema.getType(`ParentFilterInput`)
-    const fields = parentFilterInput.getFields()
-    expect(fields.id).toBeDefined()
-    expect(fields.nested).not.toBeDefined()
-  })
-})
+    const schema = await buildSchema();
+    const parentFilterInput = schema.getType("ParentFilterInput");
+    const fields = parentFilterInput.getFields();
+    expect(fields.id).toBeDefined();
+    expect(fields.nested).not.toBeDefined();
+  });
+});
 
 const buildSchema = async () => {
-  await build({})
-  return store.getState().schema
-}
+  await build({});
+  return store.getState().schema;
+};

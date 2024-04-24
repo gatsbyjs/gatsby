@@ -1,51 +1,51 @@
-import reporter from "./reporter"
-import { getToken } from "./util/manage-token"
+import reporter from "./reporter";
+import { getToken } from "./util/manage-token";
 
 async function getUsername(token: string): Promise<string> {
-  let currentUsername
+  let currentUsername;
 
   const query = `query {
     currentUser {
       name
     }
-  }`
+  }`;
 
   try {
     const usernameResponse = await globalThis.fetch(
-      `https://api.gatsbyjs.com/graphql`,
+      "https://api.gatsbyjs.com/graphql",
       {
-        method: `post`,
+        method: "post",
         body: JSON.stringify({ query }),
         headers: {
           Authorization: `Bearer ${token}`,
-          "content-type": `application/json`,
+          "content-type": "application/json",
         },
       },
-    )
+    );
 
-    const resJson = await usernameResponse.json()
+    const resJson = await usernameResponse.json();
 
-    currentUsername = resJson.data.currentUser.name
+    currentUsername = resJson.data.currentUser.name;
   } catch (e) {
-    reporter.error(e)
+    reporter.error(e);
   }
 
-  return currentUsername
+  return currentUsername;
 }
 
 /**
  * Reports the username of the logged in user if they are logged in.
  */
 export async function whoami(): Promise<void> {
-  const tokenFromStore = getToken()
+  const tokenFromStore = getToken();
 
   if (!tokenFromStore) {
-    reporter.info(`You are not currently logged in!`)
+    reporter.info("You are not currently logged in!");
 
-    return
+    return;
   }
 
-  const username = await getUsername(tokenFromStore)
+  const username = await getUsername(tokenFromStore);
 
-  reporter.info(username)
+  reporter.info(username);
 }

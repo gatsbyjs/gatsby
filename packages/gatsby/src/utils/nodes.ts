@@ -1,7 +1,7 @@
-import { createPageDependency } from "../redux/actions/add-page-dependency"
-import { getNode } from "../datastore"
-import type { IGatsbyNode } from "../redux/types"
-import { store } from "../redux"
+import { createPageDependency } from "../redux/actions/add-page-dependency";
+import { getNode } from "../datastore";
+import type { IGatsbyNode } from "../redux/types";
+import { store } from "../redux";
 
 /**
  * Determine if node has changed.
@@ -10,11 +10,11 @@ export function hasNodeChanged(
   id?: string | undefined,
   digest?: string | undefined,
 ): boolean {
-  const node = getNode(id ?? ``)
+  const node = getNode(id ?? "");
   if (!node) {
-    return true
+    return true;
   } else {
-    return node.internal.contentDigest !== digest
+    return node.internal.contentDigest !== digest;
   }
 }
 
@@ -23,51 +23,51 @@ export function hasNodeChanged(
  */
 export function getNodeAndSavePathDependency(
   id: string,
-  path: string | undefined = ``,
+  path: string | undefined = "",
 ): IGatsbyNode | undefined {
-  const node = getNode(id)
+  const node = getNode(id);
 
   if (!node) {
     console.error(
       `getNodeAndSavePathDependency failed for node id: ${id} as it was not found in cache`,
-    )
-    return undefined
+    );
+    return undefined;
   }
 
-  createPageDependency({ path, nodeId: id })
-  return node
+  createPageDependency({ path, nodeId: id });
+  return node;
 }
 
 /**
  * Get content for a node from the plugin that created it.
  */
 export async function loadNodeContent(node: IGatsbyNode): Promise<string> {
-  if (typeof node.internal.content === `string`) {
-    return node.internal.content
+  if (typeof node.internal.content === "string") {
+    return node.internal.content;
   }
 
   // Load plugin's loader function
   const plugin = store
     .getState()
-    .flattenedPlugins.find((plug) => plug.name === node.internal.owner)
+    .flattenedPlugins.find((plug) => plug.name === node.internal.owner);
 
   if (!plugin) {
     throw new Error(
       `Could not find owner plugin of node for loadNodeContent with owner \`${node.internal.owner}\``,
-    )
+    );
   }
 
-  const { loadNodeContent } = require(plugin.resolve)
+  const { loadNodeContent } = require(plugin.resolve);
 
   if (!loadNodeContent) {
     throw new Error(
       `Could not find function loadNodeContent for plugin ${plugin.name}`,
-    )
+    );
   }
 
-  const content = await loadNodeContent(node)
+  const content = await loadNodeContent(node);
 
-  node.internal.content = content
+  node.internal.content = content;
 
-  return content
+  return content;
 }

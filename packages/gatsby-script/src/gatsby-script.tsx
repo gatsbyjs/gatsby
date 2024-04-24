@@ -1,146 +1,147 @@
-import React, { useEffect, type ReactElement, type ScriptHTMLAttributes } from "react"
-import { collectedScriptsByPage } from "./collected-scripts-by-page"
-import { requestIdleCallback } from "./request-idle-callback-shim"
-import { Location, useLocation } from "@gatsbyjs/reach-router"
+import React, {
+  useEffect,
+  type ReactElement,
+  type ScriptHTMLAttributes,
+} from "react";
+import { collectedScriptsByPage } from "./collected-scripts-by-page";
+import { requestIdleCallback } from "./request-idle-callback-shim";
+import { Location, useLocation } from "@gatsbyjs/reach-router";
 
-export type ScriptStrategy = 'post-hydrate' | 'idle' | 'off-main-thread'
+export type ScriptStrategy = "post-hydrate" | "idle" | "off-main-thread";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export type ScriptProps = Omit<ScriptHTMLAttributes<HTMLScriptElement>, 'onLoad' | 'onError'> & {
-  id?: string | undefined
-  strategy?: ScriptStrategy | undefined
-  children?: string | undefined
-  onLoad?: ((event: Event) => void) | undefined
-  onError?: ((event: ErrorEvent) => void) | undefined
-  forward?: Array<string> | undefined
-}
+export type ScriptProps = Omit<
+  ScriptHTMLAttributes<HTMLScriptElement>,
+  "onLoad" | "onError"
+> & {
+  id?: string | undefined;
+  strategy?: ScriptStrategy | undefined;
+  children?: string | undefined;
+  onLoad?: ((event: Event) => void) | undefined;
+  onError?: ((event: ErrorEvent) => void) | undefined;
+  forward?: Array<string> | undefined;
+};
 
 const handledProps = new Set([
-  'src',
-  'strategy',
-  'dangerouslySetInnerHTML',
-  'children',
-  'onLoad',
-  'onError',
-])
+  "src",
+  "strategy",
+  "dangerouslySetInnerHTML",
+  "children",
+  "onLoad",
+  "onError",
+]);
 
 // Used for de-duplication
-export const scriptCache: Set<string> = new Set()
+export const scriptCache: Set<string> = new Set();
 export const scriptCallbackCache: Map<
   string,
   {
     load?: {
-      callbacks?: Array<(event: Event) => void>
-      event?: Event | undefined
-    }
+      callbacks?: Array<(event: Event) => void>;
+      event?: Event | undefined;
+    };
     error?: {
-      callbacks?: Array<(event: ErrorEvent) => void>
-      event?: ErrorEvent | undefined
-    }
+      callbacks?: Array<(event: ErrorEvent) => void>;
+      event?: ErrorEvent | undefined;
+    };
   }
-> = new Map()
+> = new Map();
 
 // Same pattern is used in Gatsby Link
 function GatsbyScriptLocationWrapper(props: ScriptProps): JSX.Element {
-  return <Location>{(): JSX.Element => <GatsbyScript {...props} />}</Location>
+  return <Location>{(): JSX.Element => <GatsbyScript {...props} />}</Location>;
 }
 
 function GatsbyScript(props: ScriptProps): ReactElement | null {
-  const { src, strategy = 'post-hydrate' } = props || {}
+  const { src, strategy = "post-hydrate" } = props || {};
 
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    let details: IInjectedScriptDetails | null
+    let details: IInjectedScriptDetails | null;
 
     switch (strategy) {
-      case 'post-hydrate':
-        details = injectScript(props)
-        break
-      case 'idle':
+      case "post-hydrate":
+        details = injectScript(props);
+        break;
+      case "idle":
         requestIdleCallback(() => {
-          details = injectScript(props)
-        })
-        break
-      case 'off-main-thread':
+          details = injectScript(props);
+        });
+        break;
+      case "off-main-thread":
         {
-          const attributes = resolveAttributes(props)
-          collectedScriptsByPage.set(pathname, attributes)
+          const attributes = resolveAttributes(props);
+          collectedScriptsByPage.set(pathname, attributes);
         }
-        break
+        break;
     }
 
     return (): void => {
-      const { script, loadCallback, errorCallback } = details || {}
+      const { script, loadCallback, errorCallback } = details || {};
 
       if (loadCallback) {
-        script?.removeEventListener(`load`, loadCallback)
+        script?.removeEventListener("load", loadCallback);
       }
 
       if (errorCallback) {
-        script?.removeEventListener(`error`, errorCallback)
+        script?.removeEventListener("error", errorCallback);
       }
 
-      script?.remove()
-    }
-  }, [])
+      script?.remove();
+    };
+  }, []);
 
-  if (strategy === 'off-main-thread') {
-    const inlineScript = resolveInlineScript(props)
-    const attributes = resolveAttributes(props)
+  if (strategy === "off-main-thread") {
+    const inlineScript = resolveInlineScript(props);
+    const attributes = resolveAttributes(props);
 
-    if (typeof window === `undefined`) {
-      collectedScriptsByPage.set(pathname, attributes)
+    if (typeof window === "undefined") {
+      collectedScriptsByPage.set(pathname, attributes);
     }
 
     if (inlineScript) {
       return (
         <script
-          type="text/partytown"
+          type='text/partytown'
           data-strategy={strategy}
-          crossOrigin="anonymous"
+          crossOrigin='anonymous'
           {...attributes}
           dangerouslySetInnerHTML={{ __html: resolveInlineScript(props) }}
         />
-      )
+      );
     }
     return (
       <script
-        type="text/partytown"
+        type='text/partytown'
         src={proxyPartytownUrl(src)}
         data-strategy={strategy}
-        crossOrigin="anonymous"
+        crossOrigin='anonymous'
         {...attributes}
       />
-    )
+    );
   }
 
-  return null
+  return null;
 }
 
-interface IInjectedScriptDetails {
-  script: HTMLScriptElement | null
-  loadCallback: (event: Event) => void
-  errorCallback: (event: ErrorEvent) => void
-}
+type IInjectedScriptDetails = {
+  script: HTMLScriptElement | null;
+  loadCallback: (event: Event) => void;
+  errorCallback: (event: ErrorEvent) => void;
+};
 
 function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
-  const {
-    id,
-    src,
-    strategy = 'post-hydrate',
-    onLoad,
-    onError,
-  } = props || {}
+  const { id, src, strategy = "post-hydrate", onLoad, onError } = props || {};
 
-  const scriptKey = id || src
+  const scriptKey = id || src;
 
-  const callbackNames = [`load`, `error`]
+  const callbackNames = ["load", "error"];
 
   const currentCallbacks = {
     load: onLoad,
     error: onError,
-  }
+  };
 
   if (scriptKey) {
     /**
@@ -149,114 +150,114 @@ function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
      */
     for (const name of callbackNames) {
       if (currentCallbacks?.[name]) {
-        const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
-        const { callbacks = [] } = cachedCallbacks?.[name] || {}
-        callbacks.push(currentCallbacks?.[name])
+        const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {};
+        const { callbacks = [] } = cachedCallbacks?.[name] || {};
+        callbacks.push(currentCallbacks?.[name]);
 
         if (cachedCallbacks?.[name]?.event) {
-          currentCallbacks?.[name]?.(cachedCallbacks?.[name]?.event)
+          currentCallbacks?.[name]?.(cachedCallbacks?.[name]?.event);
         } else {
           scriptCallbackCache.set(scriptKey, {
             ...cachedCallbacks,
             [name]: {
               callbacks,
             },
-          })
+          });
         }
       }
     }
 
     // Avoid injecting duplicate scripts into the DOM
     if (scriptCache.has(scriptKey)) {
-      return null
+      return null;
     }
   }
 
-  const inlineScript = resolveInlineScript(props)
-  const attributes = resolveAttributes(props)
+  const inlineScript = resolveInlineScript(props);
+  const attributes = resolveAttributes(props);
 
-  const script = document.createElement(`script`)
+  const script = document.createElement("script");
 
   if (id) {
-    script.id = id
+    script.id = id;
   }
 
-  script.dataset.strategy = strategy
+  script.dataset.strategy = strategy;
 
   for (const [key, value] of Object.entries(attributes)) {
-    script.setAttribute(key, value)
+    script.setAttribute(key, value);
   }
 
   if (inlineScript) {
-    script.textContent = inlineScript
+    script.textContent = inlineScript;
   }
 
   if (src) {
-    script.src = src
+    script.src = src;
   }
 
   const wrappedCallbacks: Record<string, (event: Event | ErrorEvent) => void> =
-    {}
+    {};
 
   if (scriptKey) {
     // Add listeners on injected scripts so events are cached for use in de-duplicated script callbacks
     for (const name of callbackNames) {
       const wrappedEventCallback = (event: Event | ErrorEvent): void =>
-        onEventCallback(event, scriptKey, name)
-      script.addEventListener(name, wrappedEventCallback)
-      wrappedCallbacks[`${name}Callback`] = wrappedEventCallback
+        onEventCallback(event, scriptKey, name);
+      script.addEventListener(name, wrappedEventCallback);
+      wrappedCallbacks[`${name}Callback`] = wrappedEventCallback;
     }
 
-    scriptCache.add(scriptKey)
+    scriptCache.add(scriptKey);
   }
 
-  document.body.appendChild(script)
+  document.body.appendChild(script);
 
   return {
     script,
     loadCallback: wrappedCallbacks.loadCallback,
     errorCallback: wrappedCallbacks.errorCallback,
-  }
+  };
 }
 
 function resolveInlineScript(props: ScriptProps): string {
-  const { dangerouslySetInnerHTML, children = `` } = props || {}
-  const { __html: dangerousHTML = `` } = dangerouslySetInnerHTML || {}
-  return (dangerousHTML as string) || children
+  const { dangerouslySetInnerHTML, children = "" } = props || {};
+  const { __html: dangerousHTML = "" } = dangerouslySetInnerHTML || {};
+  return (dangerousHTML as string) || children;
 }
 
 function resolveAttributes(props: ScriptProps): Record<string, string> {
-  const attributes: Record<string, string> = {}
+  const attributes: Record<string, string> = {};
 
   for (const [key, value] of Object.entries(props)) {
     if (handledProps.has(key)) {
-      continue
+      continue;
     }
-    attributes[key] = value
+    attributes[key] = value;
   }
 
-  return attributes
+  return attributes;
 }
 
 function proxyPartytownUrl(url: string | undefined): string | undefined {
   if (!url) {
-    return undefined
+    return undefined;
   }
-  return `/__third-party-proxy?url=${encodeURIComponent(url)}`
+  return `/__third-party-proxy?url=${encodeURIComponent(url)}`;
 }
 
 function onEventCallback(
   event: Event | ErrorEvent,
   scriptKey: string,
-  eventName: string
+  eventName: string,
 ): void {
-  const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
+  const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {};
 
   for (const callback of cachedCallbacks?.[eventName]?.callbacks || []) {
-    callback(event)
+    callback(event);
   }
 
-  scriptCallbackCache.set(scriptKey, { [eventName]: { event } })
+  scriptCallbackCache.set(scriptKey, { [eventName]: { event } });
 }
 
-export { GatsbyScriptLocationWrapper as Script }
+export { GatsbyScriptLocationWrapper as Script };

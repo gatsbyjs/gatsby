@@ -1,4 +1,4 @@
-import { withPrefix } from "gatsby"
+import { withPrefix } from "gatsby";
 
 /**
  * Get a manifest filename depending on localized pathname
@@ -11,25 +11,25 @@ import { withPrefix } from "gatsby"
 export default (
   pathname,
   localizedManifests,
-  shouldPrependPathPrefix = false
+  shouldPrependPathPrefix = false,
 ) => {
-  const defaultFilename = `manifest.webmanifest`
+  const defaultFilename = "manifest.webmanifest";
   if (!Array.isArray(localizedManifests)) {
-    return defaultFilename
+    return defaultFilename;
   }
 
-  const localizedManifest = localizedManifests.find(app => {
-    let startUrl = app.start_url
+  const localizedManifest = localizedManifests.find((app) => {
+    let startUrl = app.start_url;
     if (shouldPrependPathPrefix) {
-      startUrl = withPrefix(startUrl)
+      startUrl = withPrefix(startUrl);
     }
 
-    return pathname.startsWith(startUrl)
-  })
+    return pathname.startsWith(startUrl);
+  });
 
   if (!localizedManifest) {
-    return defaultFilename
+    return defaultFilename;
   }
 
-  return `manifest_${localizedManifest.lang}.webmanifest`
-}
+  return `manifest_${localizedManifest.lang}.webmanifest`;
+};

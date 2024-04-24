@@ -1,1 +1,1 @@
-export const ROUTES_DIRECTORY = `.cache/page-ssr/routes/`
+export const ROUTES_DIRECTORY = ".cache/page-ssr/routes/";

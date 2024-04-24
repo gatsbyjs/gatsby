@@ -1,9 +1,9 @@
-const parseXml = require(`xml-parser`)
-const _ = require(`lodash`)
+const parseXml = require("xml-parser");
+const _ = require("lodash");
 
 function shouldOnCreateNode({ node }) {
   // We only care about XML content.
-  return [`application/xml`, `text/xml`].includes(node.internal.mediaType)
+  return ["application/xml", "text/xml"].includes(node.internal.mediaType);
 }
 
 async function onCreateNode({
@@ -13,14 +13,14 @@ async function onCreateNode({
   createNodeId,
   createContentDigest,
 }) {
-  const { createNode, createParentChildLink } = actions
+  const { createNode, createParentChildLink } = actions;
 
-  const rawXml = await loadNodeContent(node)
-  const parsedXml = parseXml(rawXml)
+  const rawXml = await loadNodeContent(node);
+  const parsedXml = parseXml(rawXml);
   const nodeArray = parsedXml.root.children.map((obj, i) => {
     if (obj.children) {
-      obj.xmlChildren = obj.children
-      delete obj.children
+      obj.xmlChildren = obj.children;
+      delete obj.children;
     }
     return {
       ...obj,
@@ -33,15 +33,15 @@ async function onCreateNode({
         contentDigest: createContentDigest(obj),
         type: _.upperFirst(_.camelCase(`${node.name} xml`)),
       },
-    }
-  })
+    };
+  });
 
-  _.each(nodeArray, j => {
-    createNode(j)
-    createParentChildLink({ parent: node, child: j })
-  })
-  return
+  _.each(nodeArray, (j) => {
+    createNode(j);
+    createParentChildLink({ parent: node, child: j });
+  });
+  return;
 }
 
-exports.shouldOnCreateNode = shouldOnCreateNode
-exports.onCreateNode = onCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode;
+exports.onCreateNode = onCreateNode;

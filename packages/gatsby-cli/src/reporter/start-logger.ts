@@ -1,19 +1,19 @@
 /*
  * This module is a side-effect filled module to load in the proper logger.
  */
-import semver from "semver"
-import { isCI } from "gatsby-core-utils"
+import semver from "semver";
+import { isCI } from "gatsby-core-utils";
 
 export function startLogger(): void {
   if (!process.env.GATSBY_LOGGER) {
     if (
-      semver.satisfies(process.version, `>=8`) &&
+      semver.satisfies(process.version, ">=8") &&
       !isCI() &&
-      typeof jest === `undefined`
+      typeof jest === "undefined"
     ) {
-      process.env.GATSBY_LOGGER = `ink`
+      process.env.GATSBY_LOGGER = "ink";
     } else {
-      process.env.GATSBY_LOGGER = `yurnalist`
+      process.env.GATSBY_LOGGER = "yurnalist";
     }
   }
   // if child process - use ipc logger
@@ -22,17 +22,17 @@ export function startLogger(): void {
     // This is just workaround to not crash process when reporter is used in worker context.
     // process.env.FORCE_COLOR = `0`
     // TODO move to dynamic imports
-    require(`./loggers/ipc`).initializeIPCLogger()
+    require("./loggers/ipc").initializeIPCLogger();
   }
 
-  if (process.env.GATSBY_LOGGER.includes(`json`)) {
+  if (process.env.GATSBY_LOGGER.includes("json")) {
     // TODO move to dynamic imports
-    require(`./loggers/json`).initializeJSONLogger()
-  } else if (process.env.GATSBY_LOGGER.includes(`yurnalist`)) {
+    require("./loggers/json").initializeJSONLogger();
+  } else if (process.env.GATSBY_LOGGER.includes("yurnalist")) {
     // TODO move to dynamic imports
-    require(`./loggers/yurnalist`).initializeYurnalistLogger()
+    require("./loggers/yurnalist").initializeYurnalistLogger();
   } else {
     // TODO move to dynamic imports
-    require(`./loggers/ink`).initializeINKLogger()
+    require("./loggers/ink").initializeINKLogger();
   }
 }

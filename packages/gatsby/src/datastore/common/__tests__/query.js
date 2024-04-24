@@ -1,8 +1,8 @@
-import { createDbQueriesFromObject } from "../query"
+import { createDbQueriesFromObject } from "../query";
 
-describe(`DbQuery`, () => {
-  it(`converts basic query`, () => {
-    const query = createDbQueriesFromObject({ id: { $eq: `2` } })
+describe("DbQuery", () => {
+  it("converts basic query", () => {
+    const query = createDbQueriesFromObject({ id: { $eq: "2" } });
     expect(query).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -16,13 +16,13 @@ describe(`DbQuery`, () => {
           "type": "query",
         },
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`converts nested query`, () => {
+  it("converts nested query", () => {
     const query = createDbQueriesFromObject({
-      internal: { value: { $eq: `2` } },
-    })
+      internal: { value: { $eq: "2" } },
+    });
     expect(query).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -37,13 +37,13 @@ describe(`DbQuery`, () => {
           "type": "query",
         },
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`converts branching nested query`, () => {
+  it("converts branching nested query", () => {
     const query = createDbQueriesFromObject({
-      internal: { value: { $eq: `2` }, otherValue: { $regex: /baz/ } },
-    })
+      internal: { value: { $eq: "2" }, otherValue: { $regex: /baz/ } },
+    });
     expect(query).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -69,14 +69,14 @@ describe(`DbQuery`, () => {
           "type": "query",
         },
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`converts complex branching nested query`, () => {
+  it("converts complex branching nested query", () => {
     const query = createDbQueriesFromObject({
-      id: { $in: [`foo`] },
-      internal: { value: { $eq: `2` }, otherValue: { $regex: /baz/ } },
-    })
+      id: { $in: ["foo"] },
+      internal: { value: { $eq: "2" }, otherValue: { $regex: /baz/ } },
+    });
 
     expect(query).toMatchInlineSnapshot(`
       Array [
@@ -115,13 +115,13 @@ describe(`DbQuery`, () => {
           "type": "query",
         },
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`converts elemMatch`, () => {
+  it("converts elemMatch", () => {
     const query = createDbQueriesFromObject({
-      nested: { $elemMatch: { $eq: `foo` } },
-    })
+      nested: { $elemMatch: { $eq: "foo" } },
+    });
     expect(query).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -139,13 +139,13 @@ describe(`DbQuery`, () => {
           "type": "elemMatch",
         },
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`converts complex elemMatch`, () => {
+  it("converts complex elemMatch", () => {
     const query = createDbQueriesFromObject({
-      nested: { $elemMatch: { foo: { $eq: `foo` } } },
-    })
+      nested: { $elemMatch: { foo: { $eq: "foo" } } },
+    });
     expect(query).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -165,13 +165,13 @@ describe(`DbQuery`, () => {
           "type": "elemMatch",
         },
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`converts nested elemMatch`, () => {
+  it("converts nested elemMatch", () => {
     const query = createDbQueriesFromObject({
-      nested: { $elemMatch: { foo: { $eq: `foo` }, bar: { $eq: `bar` } } },
-    })
+      nested: { $elemMatch: { foo: { $eq: "foo" }, bar: { $eq: "bar" } } },
+    });
     expect(query).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -207,6 +207,6 @@ describe(`DbQuery`, () => {
           "type": "elemMatch",
         },
       ]
-    `)
-  })
-})
+    `);
+  });
+});

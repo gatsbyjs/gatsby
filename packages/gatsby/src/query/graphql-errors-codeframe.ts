@@ -1,4 +1,4 @@
-import { codeFrameColumns } from "@babel/code-frame"
+import { codeFrameColumns } from "@babel/code-frame";
 
 export function getCodeFrame(
   query: string,
@@ -6,7 +6,7 @@ export function getCodeFrame(
   column?: number | undefined,
 ): string {
   if (!line) {
-    return query
+    return query;
   }
 
   return codeFrameColumns(
@@ -21,5 +21,5 @@ export function getCodeFrame(
       linesAbove: 10,
       linesBelow: 10,
     },
-  )
+  );
 }

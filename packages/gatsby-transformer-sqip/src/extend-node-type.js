@@ -1,56 +1,56 @@
-const path = require(`path`)
+const path = require("path");
 
-const Debug = require(`debug`)
-const fs = require(`fs-extra`)
-const sharp = require(`sharp`)
-const md5File = require(`md5-file`)
+const Debug = require("debug");
+const fs = require("fs-extra");
+const sharp = require("sharp");
+const md5File = require("md5-file");
 
 const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
-} = require(`gatsby/graphql`)
-const { queueImageResizing } = require(`gatsby-plugin-sharp`)
-const { fetchRemoteFile } = require(`gatsby-core-utils/fetch-remote-file`)
+} = require("gatsby/graphql");
+const { queueImageResizing } = require("gatsby-plugin-sharp");
+const { fetchRemoteFile } = require("gatsby-core-utils/fetch-remote-file");
 const {
   DuotoneGradientType,
   ImageCropFocusType,
-} = require(`gatsby-transformer-sharp/types`)
+} = require("gatsby-transformer-sharp/types");
 
-const generateSqip = require(`./generate-sqip`)
+const generateSqip = require("./generate-sqip");
 
-const debug = Debug(`gatsby-transformer-sqip`)
-const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
+const debug = Debug("gatsby-transformer-sqip");
+const SUPPORTED_NODES = ["ImageSharp", "ContentfulAsset"];
 
-module.exports = async args => {
+module.exports = async (args) => {
   const {
     type: { name },
-  } = args
+  } = args;
 
   if (!SUPPORTED_NODES.includes(name)) {
-    return {}
+    return {};
   }
-  if (name === `ImageSharp`) {
-    return sqipSharp(args)
-  }
-
-  if (name === `ContentfulAsset`) {
-    return sqipContentful(args)
+  if (name === "ImageSharp") {
+    return sqipSharp(args);
   }
 
-  return {}
-}
+  if (name === "ContentfulAsset") {
+    return sqipContentful(args);
+  }
+
+  return {};
+};
 
 async function sqipSharp({ cache, getNodeAndSavePathDependency }) {
-  const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`)
+  const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`);
 
-  await fs.ensureDir(cacheDir)
+  await fs.ensureDir(cacheDir);
 
   return {
     sqip: {
       type: new GraphQLObjectType({
-        name: `SqipSharp`,
+        name: "SqipSharp",
         fields: {
           svg: { type: GraphQLString },
           dataURI: { type: GraphQLString },
@@ -95,7 +95,7 @@ async function sqipSharp({ cache, getNodeAndSavePathDependency }) {
           duotone,
           cropFocus,
           rotate,
-        } = fieldArgs
+        } = fieldArgs;
 
         const sharpArgs = {
           width,
@@ -104,19 +104,19 @@ async function sqipSharp({ cache, getNodeAndSavePathDependency }) {
           duotone,
           cropFocus,
           rotate,
-        }
+        };
 
-        const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const { contentDigest } = image.internal
+        const file = getNodeAndSavePathDependency(image.parent, context.path);
+        const { contentDigest } = image.internal;
 
-        const job = await queueImageResizing({ file, args: sharpArgs })
+        const job = await queueImageResizing({ file, args: sharpArgs });
 
         if (!(await fs.exists(job.absolutePath))) {
-          debug(`Preparing ${file.name}`)
-          await job.finishedPromise
+          debug(`Preparing ${file.name}`);
+          await job.finishedPromise;
         }
 
-        const { absolutePath } = job
+        const { absolutePath } = job;
 
         return generateSqip({
           cache,
@@ -126,25 +126,25 @@ async function sqipSharp({ cache, getNodeAndSavePathDependency }) {
           numberOfPrimitives,
           blur,
           mode,
-        })
+        });
       },
     },
-  }
+  };
 }
 
 async function sqipContentful({ cache }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
-  } = require(`gatsby-source-contentful`)
+  } = require("gatsby-source-contentful");
 
-  const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`)
+  const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`);
 
-  await fs.ensureDir(cacheDir)
+  await fs.ensureDir(cacheDir);
 
   return {
     sqip: {
       type: new GraphQLObjectType({
-        name: `SqipContentful`,
+        name: "SqipContentful",
         fields: {
           svg: { type: GraphQLString },
           dataURI: { type: GraphQLString },
@@ -186,14 +186,14 @@ async function sqipContentful({ cache }) {
         const {
           createUrl,
           mimeTypeExtensions,
-        } = require(`gatsby-source-contentful/image-helpers`)
+        } = require("gatsby-source-contentful/image-helpers");
 
         const {
           file: { contentType, url: imgUrl, fileName },
-        } = asset
+        } = asset;
 
-        if (!contentType.includes(`image/`)) {
-          return null
+        if (!contentType.includes("image/")) {
+          return null;
         }
 
         const {
@@ -203,13 +203,13 @@ async function sqipContentful({ cache }) {
           resizingBehavior,
           cropFocus,
           background,
-        } = fieldArgs
+        } = fieldArgs;
 
-        let { width, height } = fieldArgs
+        let { width, height } = fieldArgs;
 
         if (width && height) {
-          const aspectRatio = height / width
-          height = height * aspectRatio
+          const aspectRatio = height / width;
+          height = height * aspectRatio;
         }
 
         const options = {
@@ -218,20 +218,20 @@ async function sqipContentful({ cache }) {
           resizingBehavior,
           cropFocus,
           background,
-        }
+        };
 
-        const extension = mimeTypeExtensions.get(contentType)
-        const url = createUrl(imgUrl, options)
-        const name = path.basename(fileName, extension)
+        const extension = mimeTypeExtensions.get(contentType);
+        const url = createUrl(imgUrl, options);
+        const name = path.basename(fileName, extension);
 
         const absolutePath = await fetchRemoteFile({
           url,
           name,
           cache,
           ext: extension,
-        })
+        });
 
-        const contentDigest = await md5File(absolutePath)
+        const contentDigest = await md5File(absolutePath);
 
         return generateSqip({
           cache,
@@ -241,8 +241,8 @@ async function sqipContentful({ cache }) {
           numberOfPrimitives,
           blur,
           mode,
-        })
+        });
       },
     },
-  }
+  };
 }

@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, type JSX } from "react"
 
 interface Props {
   /** Description of prop "foo". */
@@ -6,8 +6,8 @@ interface Props {
   /** Description of prop "bar". */
   literalsAndUnion: "string" | "otherstring" | number
   arr: Array<any>
-  func?: (value: string) => void
-  obj?: { subvalue: boolean }
+  func?: ((value: string) => void) | undefined
+  obj?: { subvalue: boolean } | undefined
 }
 
 const foo: number = 1 as const
@@ -17,7 +17,7 @@ const foo: number = 1 as const
 export default class MyComponent extends Component<Props, void> {
   props: Props
 
-  render(): ReactElement {
+  render(): JSX.Element {
     // ...
   }
 }

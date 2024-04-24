@@ -1,23 +1,23 @@
-import * as React from "react"
-import { NavigateFn, LinkProps } from "@reach/router" // These come from `@types/reach__router`
+import * as React from "react";
+import type { NavigateFn, LinkProps } from "@reach/router"; // These come from `@types/reach__router`
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
   /** A class to apply when this Link is active */
-  activeClassName?: string
+  activeClassName?: string | undefined;
   /** Inline styles for when this Link is active */
-  activeStyle?: object
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
+  activeStyle?: object | undefined;
+  onClick?: ((event: React.MouseEvent<HTMLAnchorElement>) => void) | undefined;
   /** Class the link as highlighted if there is a partial match via a the `to` being prefixed to the current url */
-  partiallyActive?: boolean
+  partiallyActive?: boolean | undefined;
   /** Used to declare that this link replaces the current URL in history with the target */
-  replace?: boolean
+  replace?: boolean | undefined;
   /** Used to pass state data to the linked page.
    * The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
    */
-  state?: TState
+  state?: TState | undefined;
   /** The URL you want to link to */
-  to: string
+  to: string;
 }
 
 /**
@@ -40,5 +40,5 @@ export const navigate: (...args: Parameters<NavigateFn>) => void;
  * After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in
  * development and production
  */
-export const withPrefix: (path: string) => string
-export const withAssetPrefix: (path: string) => string
+export const withPrefix: (path: string) => string;
+export const withAssetPrefix: (path: string) => string;

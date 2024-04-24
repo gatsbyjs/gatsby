@@ -1,11 +1,11 @@
 export abstract class BulkQuery {
-  pluginOptions: IShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions;
 
   constructor(pluginOptions: IShopifyPluginOptions) {
-    this.pluginOptions = pluginOptions
+    this.pluginOptions = pluginOptions;
   }
 
-  abstract query(date?: Date | undefined): string
+  abstract query(date?: Date | undefined): string;
 
   protected bulkOperationQuery(query: string): string {
     return `
@@ -25,6 +25,6 @@ export abstract class BulkQuery {
         }
       }
     }
-    `
+    `;
   }
 }

@@ -1,104 +1,103 @@
-import reporter from "gatsby-cli/lib/reporter"
-import chalk from "chalk"
+import reporter from "gatsby-cli/lib/reporter";
+import chalk from "chalk";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import { stripIndent } from "common-tags"
-import report from "gatsby-cli/lib/reporter"
-import { platform } from "node:os"
-import path from "node:path"
-import { trueCasePathSync } from "true-case-path"
-import url from "node:url"
-import { slash } from "gatsby-core-utils/path"
-import { createContentDigest } from "gatsby-core-utils/create-content-digest"
-import { splitComponentPath } from "gatsby-core-utils/parse-component-path"
-import { hasNodeChanged } from "../../utils/nodes"
-import { getNode, getDataStore } from "../../datastore"
-import { sanitizeNode } from "../../utils/sanitize-node"
-import { store } from "../index"
-import { validateComponent } from "../../utils/validate-component"
-import { nodeSchema } from "../../joi-schemas/joi"
-import { generateComponentChunkName } from "../../utils/js-chunk-names"
+import _ from "lodash";
+import { stripIndent } from "common-tags";
+import report from "gatsby-cli/lib/reporter";
+import { platform } from "node:os";
+import path from "node:path";
+import { trueCasePathSync } from "true-case-path";
+import url from "node:url";
+import { slash } from "gatsby-core-utils/path";
+import { createContentDigest } from "gatsby-core-utils/create-content-digest";
+import { splitComponentPath } from "gatsby-core-utils/parse-component-path";
+import { hasNodeChanged } from "../../utils/nodes";
+import { getNode, getDataStore } from "../../datastore";
+import { sanitizeNode } from "../../utils/sanitize-node";
+import { store } from "../index";
+import { validateComponent } from "../../utils/validate-component";
+import { nodeSchema } from "../../joi-schemas/joi";
+import { generateComponentChunkName } from "../../utils/js-chunk-names";
 import {
   getCommonDir,
   truncatePath,
   tooLongSegmentsInPath,
-} from "../../utils/path"
-import { applyTrailingSlashOption } from "gatsby-page-utils"
-import { apiRunnerNode } from "../../utils/api-runner-node"
-import { trackCli } from "gatsby-telemetry"
-import { getNonGatsbyCodeFrame } from "../../utils/stack-trace-utils"
-import { getPageMode } from "../../utils/page-mode"
-import normalizePath from "../../utils/normalize-path"
-import { createJobV2FromInternalJob } from "./internal"
-import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
-import { reportOnce } from "../../utils/report-once"
-import { wrapNode } from "../../utils/detect-node-mutations"
-import type { IGatsbyNode, IGatsbyPage, IPlugin } from "../types"
-import type { Span, SpanContext } from "opentracing"
-import { createInternalJob } from "../../utils/jobs/manager"
+} from "../../utils/path";
+import { applyTrailingSlashOption } from "gatsby-page-utils";
+import { apiRunnerNode } from "../../utils/api-runner-node";
+import { trackCli } from "gatsby-telemetry";
+import { getNonGatsbyCodeFrame } from "../../utils/stack-trace-utils";
+import { getPageMode } from "../../utils/page-mode";
+import normalizePath from "../../utils/normalize-path";
+import { createJobV2FromInternalJob } from "./internal";
+import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging";
+import { reportOnce } from "../../utils/report-once";
+import { wrapNode } from "../../utils/detect-node-mutations";
+import type { IGatsbyNode, IGatsbyPage, IPlugin } from "../types";
+import type { Span, SpanContext } from "opentracing";
+import { createInternalJob } from "../../utils/jobs/manager";
 
-const isNotTestEnv = process.env.NODE_ENV !== `test`
-const isTestEnv = process.env.NODE_ENV === `test`
+const isNotTestEnv = process.env.NODE_ENV !== "test";
+const isTestEnv = process.env.NODE_ENV === "test";
 
 // Memoize function used to pick shadowed page components to avoid expensive I/O.
 // Ideally, we should invalidate memoized values if there are any FS operations
 // on files that are in shadowing chain, but webpack currently doesn't handle
 // shadowing changes during develop session, so no invalidation is not a deal breaker.
 const shadowCreatePagePath = _.memoize(
-  require(
-    `../../internal-plugins/webpack-theme-component-shadowing/create-page`,
-  ),
-)
+  require("../../internal-plugins/webpack-theme-component-shadowing/create-page"),
+);
 
-const isWindows = platform() === `win32`
+const isWindows = platform() === "win32";
 
 function ensureWindowsDriveIsUppercase(filePath: string): string {
-  const segments: Array<string> = filePath.split(`:`).filter((s) => s !== ``)
+  const segments: Array<string> = filePath.split(":").filter((s) => s !== "");
   return segments.length > 0
-    ? segments.shift()?.toUpperCase() + `:` + segments.join(`:`)
-    : filePath
+    ? segments.shift()?.toUpperCase() + ":" + segments.join(":")
+    : filePath;
 }
 
 function findChildren(initialChildren: Array<string>): Array<string> {
-  const children = [...initialChildren]
-  const queue = [...initialChildren]
-  const traversedNodes = new Set()
+  const children = [...initialChildren];
+  const queue = [...initialChildren];
+  const traversedNodes = new Set();
 
   while (queue.length > 0) {
-    const currentChild = getNode(queue.pop() ?? ``)
+    const currentChild = getNode(queue.pop() ?? "");
     if (!currentChild || traversedNodes.has(currentChild.id)) {
-      continue
+      continue;
     }
-    traversedNodes.add(currentChild.id)
-    const newChildren = currentChild.children
+    traversedNodes.add(currentChild.id);
+    const newChildren = currentChild.children;
     if (_.isArray(newChildren) && newChildren.length > 0) {
-      children.push(...newChildren)
-      queue.push(...newChildren)
+      children.push(...newChildren);
+      queue.push(...newChildren);
     }
   }
-  return children
+  return children;
 }
 
 type Job = {
-  id: string
-}
+  id: string;
+  progress?: number | undefined;
+};
 
 type JobV2 = {
-  name: string
-  inputPaths: Array<string>
-  outputDir: string
-  args: Record<string, unknown>
-}
+  name: string;
+  inputPaths: Array<string>;
+  outputDir: string;
+  args: Record<string, unknown>;
+};
 
 export type IPageInput = {
-  path: string
-  component: string
-  matchPath?: string | null | undefined
-  context?: Record<string, unknown> | undefined
-  ownerNodeId?: string | undefined
-  defer?: boolean
-  slices: Record<string, string>
-}
+  path: string;
+  component: string;
+  matchPath?: string | null | undefined;
+  context?: Record<string, unknown> | undefined;
+  ownerNodeId?: string | undefined;
+  defer?: boolean | undefined;
+  slices: Record<string, string>;
+};
 
 // type PageMode = "SSG" | "DSG" | "SSR"
 
@@ -131,10 +130,10 @@ export type IPageInput = {
 // }
 
 type ActionOptions = {
-  traceId?: string | null | undefined
-  parentSpan?: Span | null | undefined
-  followsSpan?: Span | SpanContext | null | undefined
-}
+  traceId?: string | null | undefined;
+  parentSpan?: Span | null | undefined;
+  followsSpan?: Span | SpanContext | null | undefined;
+};
 
 // type PageData = {
 //   id: string
@@ -154,27 +153,27 @@ type ActionOptions = {
  * deletePage(page)
  */
 function deletePage(page: IPageInput): {
-  type: string
-  payload: IPageInput
+  type: string;
+  payload: IPageInput;
 } {
   return {
-    type: `DELETE_PAGE`,
+    type: "DELETE_PAGE",
     payload: page,
-  }
+  };
 }
 
-const hasWarnedForPageComponentInvalidContext = new Set()
-const hasWarnedForPageComponentInvalidCasing = new Set()
-const hasErroredBecauseOfNodeValidation = new Set()
-const pageComponentCache = new Map()
+const hasWarnedForPageComponentInvalidContext = new Set();
+const hasWarnedForPageComponentInvalidCasing = new Set();
+const hasErroredBecauseOfNodeValidation = new Set();
+const pageComponentCache = new Map();
 const reservedFields = [
-  `path`,
-  `matchPath`,
-  `component`,
-  `componentChunkName`,
-  `pluginCreator___NODE`,
-  `pluginCreatorId`,
-]
+  "path",
+  "matchPath",
+  "component",
+  "componentChunkName",
+  "pluginCreator___NODE",
+  "pluginCreatorId",
+];
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
@@ -205,45 +204,43 @@ function createPage(
   page: IPageInput,
   plugin?: IPlugin | undefined,
   actionOptions?: ActionOptions | undefined,
-):
-  | string
-  | Array<{
-      type: string
-      contextModified: boolean
-      componentModified: boolean
-      slicesModified: boolean
-      plugin: IPlugin | undefined
-      payload: IGatsbyPage | IGatsbyNode | undefined
-      traceId?: string | null | undefined
-      parentSpan?: Span | SpanContext | null | undefined
-      followsSpan?: Span | SpanContext | null | undefined
-    }> {
-  let name = `The plugin "${plugin?.name}"`
-  if (plugin?.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
+): Array<{
+  type: string;
+  contextModified: boolean;
+  componentModified: boolean;
+  slicesModified: boolean;
+  plugin: IPlugin | undefined;
+  payload: IGatsbyPage | IGatsbyNode | undefined;
+  traceId?: string | null | undefined;
+  parentSpan?: Span | SpanContext | null | undefined;
+  followsSpan?: Span | SpanContext | null | undefined;
+}> {
+  let name = `The plugin "${plugin?.name}"`;
+  if (plugin?.name === "default-site-plugin") {
+    name = 'Your site\'s "gatsby-node.js"';
   }
   if (!page.path) {
-    const message = `${name} must set the page path when creating a page`
+    const message = `${name} must set the page path when creating a page`;
     // Don't log out when testing
     if (isNotTestEnv) {
       report.panic({
-        id: `11323`,
+        id: "11323",
         context: {
           pluginName: name,
           pageobject: page,
           message,
         },
-      })
+      });
     } else {
-      return message
+      throw new Error(message);
     }
   }
 
   // Validate that the context object doesn't overlap with any core page fields
   // as this will cause trouble when running graphql queries.
-  const context = page.context
-  if (typeof context !== `undefined` && typeof context === `object`) {
-    const invalidFields = reservedFields.filter((field) => field in context)
+  const context = page.context;
+  if (typeof context !== "undefined" && typeof context === "object") {
+    const invalidFields = reservedFields.filter((field) => field in context);
 
     if (invalidFields.length > 0) {
       const error = `${
@@ -252,7 +249,7 @@ function createPage(
           : `${name} used reserved field names in the context object when creating a page:`
       }
 
-${invalidFields.map((f) => `  * "${f}"`).join(`\n`)}
+${invalidFields.map((f) => `  * "${f}"`).join("\n")}
 
 ${JSON.stringify(page, null, 4)}
 
@@ -270,31 +267,31 @@ Please choose another name for the conflicting fields.
 
 The following fields are used by the page object and should be avoided.
 
-${reservedFields.map((f) => `  * "${f}"`).join(`\n`)}
+${reservedFields.map((f) => `  * "${f}"`).join("\n")}
 
-            `
+            `;
       if (isTestEnv) {
-        return error
+        throw error;
         // Only error if the context version is different than the page
         // version.  People in v1 often thought that they needed to also pass
         // the path to context for it to be available in GraphQL
       } else if (
         invalidFields.some((f) => {
           return (
-            typeof page.context !== `undefined` && page.context[f] !== page[f]
-          )
+            typeof page.context !== "undefined" && page.context[f] !== page[f]
+          );
         })
       ) {
         report.panic({
-          id: `11324`,
+          id: "11324",
           context: {
             message: error,
           },
-        })
+        });
       } else {
         if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
-          report.warn(error)
-          hasWarnedForPageComponentInvalidContext.add(page.component)
+          report.warn(error);
+          hasWarnedForPageComponentInvalidContext.add(page.component);
         }
       }
     }
@@ -304,48 +301,50 @@ ${reservedFields.map((f) => `  * "${f}"`).join(`\n`)}
   if (!page.component) {
     if (isNotTestEnv) {
       report.panic({
-        id: `11322`,
+        id: "11322",
         context: {
           input: page,
           pluginName: name,
         },
-      })
+      });
     } else {
       // For test
-      return `A component must be set when creating a page`
+      throw new Error("A component must be set when creating a page");
     }
   }
 
-  const pageComponentPath = shadowCreatePagePath(page.component)
+  const pageComponentPath = shadowCreatePagePath(page.component);
   if (pageComponentPath) {
-    page.component = pageComponentPath
+    page.component = pageComponentPath;
   }
 
-  const { config, program } = store.getState()
-  const { trailingSlash } = config
-  const { directory } = program
+  const { config, program } = store.getState();
+  const { trailingSlash } = config;
+  const { directory } = program;
 
   const { error, panicOnBuild } = validateComponent({
     input: page,
     pluginName: name,
     errorIdMap: {
-      noPath: `11322`,
-      notAbsolute: `11326`,
-      doesNotExist: `11325`,
-      empty: `11327`,
-      noDefaultExport: `11328`,
+      noPath: "11322",
+      notAbsolute: "11326",
+      doesNotExist: "11325",
+      empty: "11327",
+      noDefaultExport: "11328",
     },
-  })
+  });
 
   if (error) {
     if (isNotTestEnv) {
       if (panicOnBuild) {
-        report.panicOnBuild(error)
+        report.panicOnBuild(error);
       } else {
-        report.panic(error)
+        report.panic(error);
       }
     }
-    return `${name} must set the absolute path to the page component when creating a page`
+    throw new Error(
+      `${name} must set the absolute path to the page component when creating a page`,
+    );
   }
 
   // check if we've processed this component path
@@ -355,48 +354,48 @@ ${reservedFields.map((f) => `  * "${f}"`).join(`\n`)}
   // Skip during testing as the paths don't exist on disk.
   if (isNotTestEnv) {
     if (pageComponentCache.has(page.component)) {
-      page.component = pageComponentCache.get(page.component)
+      page.component = pageComponentCache.get(page.component);
     } else {
-      const originalPageComponent = page.component
-      const splitPath = splitComponentPath(page.component)
+      const originalPageComponent = page.component;
+      const splitPath = splitComponentPath(page.component);
 
       // normalize component path
-      page.component = slash(splitPath[0])
+      page.component = slash(splitPath[0]);
       // check if path uses correct casing - incorrect casing will
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
       // linux CI/CD pipeline
-      let trueComponentPath
+      let trueComponentPath;
       try {
         // most systems
-        trueComponentPath = slash(trueCasePathSync(page.component))
+        trueComponentPath = slash(trueCasePathSync(page.component));
       } catch (e) {
         // systems where user doesn't have access to /
-        const commonDir = getCommonDir(directory, page.component)
+        const commonDir = getCommonDir(directory, page.component);
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
           path.win32.relative(commonDir, page.component),
-        )
+        );
 
-        trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
+        trueComponentPath = slash(trueCasePathSync(relativePath, commonDir));
       }
 
       if (isWindows) {
-        page.component = ensureWindowsDriveIsUppercase(page.component)
+        page.component = ensureWindowsDriveIsUppercase(page.component);
       }
 
       if (trueComponentPath !== page.component) {
         if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
           const markers = page.component
-            .split(``)
+            .split("")
             .map((letter, index) => {
               if (letter !== trueComponentPath[index]) {
-                return `^`
+                return "^";
               }
-              return ` `
+              return " ";
             })
-            .join(``)
+            .join("");
 
           report.warn(
             stripIndent`
@@ -406,33 +405,33 @@ ${reservedFields.map((f) => `  * "${f}"`).join(`\n`)}
           path in filesystem: "${trueComponentPath}"
                                ${markers}
         `,
-          )
-          hasWarnedForPageComponentInvalidCasing.add(page.component)
+          );
+          hasWarnedForPageComponentInvalidCasing.add(page.component);
         }
 
-        page.component = trueComponentPath
+        page.component = trueComponentPath;
       }
 
       if (splitPath.length > 1) {
-        page.component = `${page.component}?__contentFilePath=${splitPath[1]}`
+        page.component = `${page.component}?__contentFilePath=${splitPath[1]}`;
       }
 
-      pageComponentCache.set(originalPageComponent, page.component)
+      pageComponentCache.set(originalPageComponent, page.component);
     }
   }
 
-  let internalComponentName: string
+  let internalComponentName: string;
 
-  if (page.path === `/`) {
-    internalComponentName = `ComponentIndex`
+  if (page.path === "/") {
+    internalComponentName = "ComponentIndex";
   } else {
-    internalComponentName = `Component${page.path}`
+    internalComponentName = `Component${page.path}`;
   }
 
-  const invalidPathSegments = tooLongSegmentsInPath(page.path)
+  const invalidPathSegments = tooLongSegmentsInPath(page.path);
 
   if (invalidPathSegments.length > 0) {
-    const truncatedPath = truncatePath(page.path)
+    const truncatedPath = truncatePath(page.path);
     report.warn(
       report.stripIndent(`
         The path to the following page is longer than the supported limit on most
@@ -443,11 +442,11 @@ ${reservedFields.map((f) => `  * "${f}"`).join(`\n`)}
 
         Truncated Path: ${truncatedPath}
       `),
-    )
-    page.path = truncatedPath
+    );
+    page.path = truncatedPath;
   }
 
-  page.path = applyTrailingSlashOption(page.path, trailingSlash)
+  page.path = applyTrailingSlashOption(page.path, trailingSlash);
 
   const internalPage: IGatsbyPage = {
     internalComponentName,
@@ -457,61 +456,61 @@ ${reservedFields.map((f) => `  * "${f}"`).join(`\n`)}
     componentPath: normalizePath(page.component),
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
-      actionOptions?.traceId === `initial-createPagesStatefully`,
+      actionOptions?.traceId === "initial-createPagesStatefully",
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
     slices: page?.slices || {},
 
     // Link page to its plugin.
-    pluginCreator___NODE: plugin?.id ?? ``,
-    pluginCreatorId: plugin?.id ?? ``,
-  }
+    pluginCreator___NODE: plugin?.id ?? "",
+    pluginCreatorId: plugin?.id ?? "",
+  };
 
   if (page.defer) {
-    internalPage.defer = true
+    internalPage.defer = true;
   }
   // Note: mode is updated in the end of the build after we get access to all page components,
   // see materializePageMode in utils/page-mode.ts
-  internalPage.mode = getPageMode(internalPage)
+  internalPage.mode = getPageMode(internalPage);
 
   if (page.ownerNodeId) {
-    internalPage.ownerNodeId = page.ownerNodeId
+    internalPage.ownerNodeId = page.ownerNodeId;
   }
 
   // If the path doesn't have an initial forward slash, add it.
-  if (internalPage.path[0] !== `/`) {
-    internalPage.path = `/${internalPage.path}`
+  if (internalPage.path[0] !== "/") {
+    internalPage.path = `/${internalPage.path}`;
   }
 
   const oldPage: IGatsbyPage | undefined = store
     .getState()
-    .pages.get(internalPage.path)
+    .pages.get(internalPage.path);
 
   const contextModified =
-    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+    !!oldPage && !_.isEqual(oldPage.context, internalPage.context);
   const componentModified =
-    !!oldPage && !_.isEqual(oldPage.component, internalPage.component)
+    !!oldPage && !_.isEqual(oldPage.component, internalPage.component);
   const slicesModified =
-    !!oldPage && !_.isEqual(oldPage.slices, internalPage.slices)
+    !!oldPage && !_.isEqual(oldPage.slices, internalPage.slices);
 
-  const alternateSlashPath = page.path.endsWith(`/`)
+  const alternateSlashPath = page.path.endsWith("/")
     ? page.path.slice(0, -1)
-    : page.path + `/`
+    : page.path + "/";
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      chalk.bold.yellow(`Non-deterministic routing danger: `) +
+      chalk.bold.yellow("Non-deterministic routing danger: ") +
         `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
         chalk.bold.yellow(
-          `This could lead to non-deterministic routing behavior`,
+          "This could lead to non-deterministic routing behavior",
         ),
-    )
+    );
   }
 
   // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { updatedAt: ___, ...node } = internalPage
+  const { updatedAt: ___, ...node } = internalPage;
 
   const newNode: IGatsbyNode = {
     id: `SitePage ${internalPage.path}`,
@@ -519,84 +518,83 @@ ${reservedFields.map((f) => `  * "${f}"`).join(`\n`)}
     ...node,
     children: [],
     internal: {
-      type: `SitePage`,
+      type: "SitePage",
       contentDigest: createContentDigest(node),
     },
-  }
+  };
 
-  const oldNode = getNode(newNode.id)
+  const oldNode = getNode(newNode.id);
 
-  let deleteActions
-  let updateNodeAction
+  let deleteActions;
+  let updateNodeAction;
   // marking internal-data-bridge as owner of SitePage instead of plugin that calls createPage
   if (oldNode && !hasNodeChanged(newNode.id, newNode.internal.contentDigest)) {
     updateNodeAction = {
       ...actionOptions,
-      plugin: { name: `internal-data-bridge` },
-      type: `TOUCH_NODE`,
+      plugin: { name: "internal-data-bridge" },
+      type: "TOUCH_NODE",
       typeName: newNode.internal.type,
       payload: newNode.id,
-    }
+    };
   } else {
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
       function createDeleteAction(node?: IGatsbyNode | undefined): {
-        type: string
-        plugin: { name: string }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        payload?: IGatsbyNode | undefined
-        isRecursiveChildrenDelete: boolean
-        traceId?: string | null | undefined
-        parentSpan?: Span | SpanContext | null | undefined
-        followsSpan?: Span | SpanContext | null | undefined
+        type: string;
+        plugin: { name: string };
+        payload?: IGatsbyNode | undefined;
+        isRecursiveChildrenDelete: boolean;
+        traceId?: string | null | undefined;
+        parentSpan?: Span | SpanContext | null | undefined;
+        followsSpan?: Span | SpanContext | null | undefined;
       } {
         return {
           ...actionOptions,
-          type: `DELETE_NODE`,
-          plugin: { name: `internal-data-bridge` },
+          type: "DELETE_NODE",
+          plugin: { name: "internal-data-bridge" },
           payload: node,
           isRecursiveChildrenDelete: true,
-        }
+        };
       }
       deleteActions = findChildren(oldNode.children)
         .map(getNode)
-        .map(createDeleteAction)
+        .map(createDeleteAction);
     }
 
-    newNode.internal.counter = getNextNodeCounter()
+    newNode.internal.counter = getNextNodeCounter();
 
     updateNodeAction = {
       ...actionOptions,
-      type: `CREATE_NODE`,
-      plugin: { name: `internal-data-bridge` },
+      type: "CREATE_NODE",
+      plugin: { name: "internal-data-bridge" },
       oldNode,
       payload: newNode,
-    }
+    };
   }
 
   // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
-  const sanitizedPayload = sanitizeNode(internalPage)
+  const sanitizedPayload = sanitizeNode(internalPage);
 
   const actions = [
     {
       ...actionOptions,
-      type: `CREATE_PAGE`,
+      type: "CREATE_PAGE",
       contextModified,
       componentModified,
       slicesModified,
       plugin,
       payload: sanitizedPayload,
     },
-  ]
+  ];
 
   if (deleteActions && deleteActions.length) {
-    actions.push(...deleteActions)
+    actions.push(...deleteActions);
   }
 
-  actions.push(updateNodeAction)
+  actions.push(updateNodeAction);
 
-  return actions
+  return actions;
 }
 
 /**
@@ -611,71 +609,71 @@ function deleteNode(
   plugin?: IPlugin | undefined,
 ):
   | {
-      type: string
-      plugin: IPlugin | undefined
+      type: string;
+      plugin: IPlugin | undefined;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      payload: any
+      payload: any;
       // main node need to be owned by plugin that calls deleteNode
       // child nodes should skip ownership check
-      isRecursiveChildrenDelete: boolean
+      isRecursiveChildrenDelete: boolean;
     }
   | Array<{
-      type: string
-      plugin: IPlugin | undefined
+      type: string;
+      plugin: IPlugin | undefined;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      payload: any
+      payload: any;
       // main node need to be owned by plugin that calls deleteNode
       // child nodes should skip ownership check
-      isRecursiveChildrenDelete: boolean
+      isRecursiveChildrenDelete: boolean;
     }> {
-  const id = node && node.id
+  const id = node && node.id;
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
-  const internalNode = getNode(id)
+  const internalNode = getNode(id);
 
   function createDeleteAction(node): {
-    type: string
-    plugin: IPlugin | undefined
+    type: string;
+    plugin: IPlugin | undefined;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    payload: any
-    isRecursiveChildrenDelete: boolean
+    payload: any;
+    isRecursiveChildrenDelete: boolean;
   } {
     return {
-      type: `DELETE_NODE`,
+      type: "DELETE_NODE",
       plugin,
       payload: node,
       // main node need to be owned by plugin that calls deleteNode
       // child nodes should skip ownership check
       isRecursiveChildrenDelete: node !== internalNode,
-    }
+    };
   }
 
-  const deleteAction = createDeleteAction(internalNode)
+  const deleteAction = createDeleteAction(internalNode);
 
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
     internalNode &&
-    findChildren(internalNode.children).map(getNode).map(createDeleteAction)
+    findChildren(internalNode.children).map(getNode).map(createDeleteAction);
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
-    return [...deleteDescendantsActions, deleteAction]
+    return [...deleteDescendantsActions, deleteAction];
   } else {
-    return deleteAction
+    return deleteAction;
   }
 }
 
 // We add a counter to node.internal for fast comparisons/intersections
 // of various node slices. The counter must increase even across builds.
 function getNextNodeCounter(): number {
-  const lastNodeCounter = store.getState().status.LAST_NODE_COUNTER ?? 0
+  const lastNodeCounter = store.getState().status.LAST_NODE_COUNTER ?? 0;
   if (lastNodeCounter >= Number.MAX_SAFE_INTEGER) {
     throw new Error(
       `Could not create more nodes. Maximum node count is reached: ${lastNodeCounter}`,
-    )
+    );
   }
-  return lastNodeCounter + 1
+  return lastNodeCounter + 1;
 }
 
 // memberof notation is added so this code can be referenced instead of the wrapper.
@@ -770,77 +768,77 @@ function _createNode(
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
-        `The node passed to the "createNode" action creator must be an object`,
+        'The node passed to the "createNode" action creator must be an object',
       ),
-    )
+    );
   }
 
   // Ensure the new node has an internals object.
   if (!node.internal) {
-    node.internal = {}
+    node.internal = {};
   }
 
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
-    node.children = []
+    node.children = [];
   }
 
   // Ensure the new node has a parent field
   if (!node.parent) {
-    node.parent = null
+    node.parent = null;
   }
 
   // Tell user not to set the owner name themself.
   if (node.internal.owner) {
-    report.error(JSON.stringify(node, null, 4))
+    report.error(JSON.stringify(node, null, 4));
     report.panic(
       chalk.bold.red(
-        `The node internal.owner field is set automatically by Gatsby and not by plugins`,
+        "The node internal.owner field is set automatically by Gatsby and not by plugins",
       ),
-    )
+    );
   }
 
-  const trackParams = {}
+  const trackParams = {};
 
   // Add the plugin name to the internal object.
   if (plugin) {
-    node.internal.owner = plugin.name
-    trackParams[`pluginName`] = `${plugin.name}@${plugin.version}`
+    node.internal.owner = plugin.name;
+    trackParams["pluginName"] = `${plugin.name}@${plugin.version}`;
   }
 
-  trackCli(`CREATE_NODE`, trackParams, { debounce: true })
+  trackCli("CREATE_NODE", trackParams, { debounce: true });
 
-  const result = nodeSchema.validate(node)
+  const result = nodeSchema.validate(node);
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj = {
-        id: `11467`,
+        id: "11467",
         context: {
           validationErrorMessage: result.error.message,
           node,
         },
-      }
+      };
 
-      const possiblyCodeFrame = getNonGatsbyCodeFrame()
+      const possiblyCodeFrame = getNonGatsbyCodeFrame();
       if (possiblyCodeFrame) {
         // @ts-ignore
-        errorObj.context.codeFrame = possiblyCodeFrame.codeFrame
+        errorObj.context.codeFrame = possiblyCodeFrame.codeFrame;
         // @ts-ignore
-        errorObj.filePath = possiblyCodeFrame.fileName
+        errorObj.filePath = possiblyCodeFrame.fileName;
         // @ts-ignore
         errorObj.location = {
           start: {
             line: possiblyCodeFrame.line,
             column: possiblyCodeFrame.column,
           },
-        }
+        };
       }
 
-      report.error(errorObj)
-      hasErroredBecauseOfNodeValidation.add(result.error.message)
+      report.error(errorObj);
+      hasErroredBecauseOfNodeValidation.add(result.error.message);
     }
 
-    return { type: `VALIDATION_ERROR`, error: true }
+    return { type: "VALIDATION_ERROR", error: true };
   }
 
   // Ensure node isn't directly setting fields.
@@ -861,28 +859,28 @@ function _createNode(
 
       ${JSON.stringify(plugin, null, 4)}
     `,
-    )
+    );
   }
 
-  const sanitizedNode = sanitizeNode(node)
+  const sanitizedNode = sanitizeNode(node);
 
   // node = sanitizeNode(node)
 
-  const oldNode = getNode((sanitizedNode as IGatsbyNode | undefined)?.id ?? ``)
+  const oldNode = getNode((sanitizedNode as IGatsbyNode | undefined)?.id ?? "");
 
   if (actionOptions.parentSpan) {
     actionOptions.parentSpan.setTag(
-      `nodeId`,
+      "nodeId",
       (sanitizedNode as IGatsbyNode | undefined)?.id,
-    )
+    );
     actionOptions.parentSpan.setTag(
-      `nodeType`,
+      "nodeType",
       (sanitizedNode as IGatsbyNode | undefined)?.id,
-    )
+    );
   }
 
-  let deleteActions
-  let updateNodeAction
+  let deleteActions;
+  let updateNodeAction;
   // Check if the node has already been processed.
   if (
     oldNode &&
@@ -894,51 +892,51 @@ function _createNode(
     updateNodeAction = {
       ...actionOptions,
       plugin,
-      type: `TOUCH_NODE`,
+      type: "TOUCH_NODE",
       payload: node.id,
       typeName: node.internal.type,
-    }
+    };
   } else {
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
       function createDeleteAction(node?: IGatsbyNode | undefined): {
-        type: string
-        plugin: IPlugin | undefined
-        payload?: IGatsbyNode | undefined
-        isRecursiveChildrenDelete: boolean
-        traceId?: string | null | undefined
-        parentSpan?: Span | null | undefined
-        followsSpan?: Span | SpanContext | null | undefined
+        type: string;
+        plugin: IPlugin | undefined;
+        payload?: IGatsbyNode | undefined;
+        isRecursiveChildrenDelete: boolean;
+        traceId?: string | null | undefined;
+        parentSpan?: Span | null | undefined;
+        followsSpan?: Span | SpanContext | null | undefined;
       } {
         return {
           ...actionOptions,
-          type: `DELETE_NODE`,
+          type: "DELETE_NODE",
           plugin,
           payload: node,
           isRecursiveChildrenDelete: true,
-        }
+        };
       }
       deleteActions = findChildren(oldNode.children)
         .map(getNode)
-        .map(createDeleteAction)
+        .map(createDeleteAction);
     }
 
-    node.internal.counter = getNextNodeCounter()
+    node.internal.counter = getNextNodeCounter();
 
     updateNodeAction = {
       ...actionOptions,
-      type: `CREATE_NODE`,
+      type: "CREATE_NODE",
       plugin,
       oldNode,
       payload: node,
-    }
+    };
   }
 
   if (deleteActions && deleteActions.length) {
-    return [...deleteActions, updateNodeAction]
+    return [...deleteActions, updateNodeAction];
   } else {
-    return updateNodeAction
+    return updateNodeAction;
   }
 }
 
@@ -949,37 +947,37 @@ function createNode(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) {
   return (dispatch): Promise<unknown> => {
-    const actions = _createNode(node, plugin, actionOptions)
+    const actions = _createNode(node, plugin, actionOptions);
 
-    dispatch(actions)
+    dispatch(actions);
     const createNodeAction = (
       Array.isArray(actions) ? actions : [actions]
-    ).find((action) => action.type === `CREATE_NODE`)
+    ).find((action) => action.type === "CREATE_NODE");
 
     if (!createNodeAction) {
-      return Promise.resolve(undefined)
+      return Promise.resolve(undefined);
     }
 
-    const { payload, traceId, parentSpan } = createNodeAction
-    const maybePromise = apiRunnerNode(`onCreateNode`, {
+    const { payload, traceId, parentSpan } = createNodeAction;
+    const maybePromise = apiRunnerNode("onCreateNode", {
       node: wrapNode(payload),
       traceId,
       parentSpan,
       traceTags: { nodeId: payload.id, nodeType: payload.internal.type },
-    })
+    });
 
     if (maybePromise?.then) {
       return maybePromise.then((res) =>
         getDataStore()
           .ready()
           .then(() => res),
-      )
+      );
     } else {
       return getDataStore()
         .ready()
-        .then(() => maybePromise)
+        .then(() => maybePromise);
     }
-  }
+  };
 }
 
 /**
@@ -1000,27 +998,27 @@ function touchNode(
   | Array<never>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | { type: string; plugin: IPlugin | undefined; payload: any; typeName: any } {
-  const nodeId = node?.id
+  const nodeId = node?.id;
 
   if (!nodeId) {
     // if we don't have a node id, we don't want to dispatch this action
-    return []
+    return [];
   }
 
   return {
-    type: `TOUCH_NODE`,
+    type: "TOUCH_NODE",
     plugin,
     payload: nodeId,
     typeName: node.internal.type,
-  }
+  };
 }
 
 type CreateNodeInput = {
-  node: IGatsbyNode
-  name?: string | undefined
+  node: IGatsbyNode;
+  name?: string | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: any
-}
+  value: any;
+};
 /**
  * Extend another node. The new node field is placed under the `fields`
  * key on the extended node object.
@@ -1046,33 +1044,33 @@ function createNodeField(
   plugin: IPlugin,
   actionOptions?: ActionOptions | undefined,
 ): {
-  type: string
-  plugin: IPlugin
-  payload?: IGatsbyNode | IGatsbyPage | undefined
-  addedField: string | undefined
-  traceId?: string | null | undefined
-  parentSpan?: Span | SpanContext | null | undefined
-  followsSpan?: Span | SpanContext | null | undefined
+  type: string;
+  plugin: IPlugin;
+  payload?: IGatsbyNode | IGatsbyPage | undefined;
+  addedField: string | undefined;
+  traceId?: string | null | undefined;
+  parentSpan?: Span | SpanContext | null | undefined;
+  followsSpan?: Span | SpanContext | null | undefined;
 } {
   if (!name) {
-    throw new Error(`A field name must be provided when creating a node field`)
+    throw new Error("A field name must be provided when creating a node field");
   }
 
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
-    node.internal.fieldOwners = {}
+    node.internal.fieldOwners = {};
   }
   if (!node.fields) {
-    node.fields = {}
+    node.fields = {};
   }
 
   // Normalized name of the field that will be used in schema
-  const schemaFieldName = _.includes(name, `___NODE`)
-    ? name?.split(`___`)[0]
-    : name
+  const schemaFieldName = _.includes(name, "___NODE")
+    ? name?.split("___")[0]
+    : name;
 
   // Check that this field isn't owned by another plugin.
-  const fieldOwner = node.internal.fieldOwners[schemaFieldName]
+  const fieldOwner = node.internal.fieldOwners[schemaFieldName];
 
   if (fieldOwner && fieldOwner !== plugin.name) {
     throw new Error(
@@ -1084,20 +1082,20 @@ function createNodeField(
       name: ${name}
       value: ${value}
       `,
-    )
+    );
   }
 
   // Update node
-  node.fields[name] = value
-  node.internal.fieldOwners[schemaFieldName] = plugin.name
+  node.fields[name] = value;
+  node.internal.fieldOwners[schemaFieldName] = plugin.name;
 
   return {
     ...actionOptions,
-    type: `ADD_FIELD_TO_NODE`,
+    type: "ADD_FIELD_TO_NODE",
     plugin,
     payload: sanitizeNode(node),
     addedField: name,
-  }
+  };
 }
 
 /**
@@ -1122,14 +1120,14 @@ function createParentChildLink(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): { type: string; plugin: IPlugin | undefined; payload: any } {
   if (!parent.children.includes(child.id)) {
-    parent.children.push(child.id)
+    parent.children.push(child.id);
   }
 
   return {
-    type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
+    type: "ADD_CHILD_NODE_TO_PARENT_NODE",
     plugin,
     payload: parent,
-  }
+  };
 }
 
 /**
@@ -1146,27 +1144,27 @@ function setWebpackConfig(
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
   // @ts-ignore
-  if (config.node?.fs === `empty`) {
+  if (config.node?.fs === "empty") {
     report.warn(
       `[deprecated${
-        plugin ? ` ` + plugin.name : ``
+        plugin ? " " + plugin.name : ""
       }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`,
-    )
+    );
     // @ts-ignore
-    delete config.node.fs
+    delete config.node.fs;
     // @ts-ignore
-    config.resolve = config.resolve || {}
+    config.resolve = config.resolve || {};
     // @ts-ignore
-    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback = config.resolve.fallback || {};
     // @ts-ignore
-    config.resolve.fallback.fs = false
+    config.resolve.fallback.fs = false;
   }
 
   return {
-    type: `SET_WEBPACK_CONFIG`,
+    type: "SET_WEBPACK_CONFIG",
     plugin,
     payload: config,
-  }
+  };
 }
 
 /**
@@ -1183,27 +1181,27 @@ function replaceWebpackConfig(
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
   // @ts-ignore
-  if (config.node?.fs === `empty`) {
+  if (config.node?.fs === "empty") {
     report.warn(
       `[deprecated${
-        plugin ? ` ` + plugin.name : ``
+        plugin ? " " + plugin.name : ""
       }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`,
-    )
+    );
 
     // @ts-ignore
-    delete config.node.fs
-    config.resolve = config.resolve ?? {}
+    delete config.node.fs;
+    config.resolve = config.resolve ?? {};
     // @ts-ignore
-    config.resolve.fallback = config.resolve.fallback ?? {}
+    config.resolve.fallback = config.resolve.fallback ?? {};
     // @ts-ignore
-    config.resolve.fallback.fs = false
+    config.resolve.fallback.fs = false;
   }
 
   return {
-    type: `REPLACE_WEBPACK_CONFIG`,
+    type: "REPLACE_WEBPACK_CONFIG",
     plugin,
     payload: config,
-  }
+  };
 }
 
 /**
@@ -1222,31 +1220,31 @@ function setBabelOptions(
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
   // Validate
-  let name = `The plugin "${plugin?.name}"`
-  if (plugin?.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
+  let name = `The plugin "${plugin?.name}"`;
+  if (plugin?.name === "default-site-plugin") {
+    name = 'Your site\'s "gatsby-node.js"';
   }
   if (!_.isObject(options)) {
-    console.log(`${name} must pass an object to "setBabelOptions"`)
-    console.log(JSON.stringify(options, null, 4))
+    console.log(`${name} must pass an object to "setBabelOptions"`);
+    console.log(JSON.stringify(options, null, 4));
     if (isNotTestEnv) {
-      process.exit(1)
+      process.exit(1);
     }
   }
 
   if (!_.isObject(options.options)) {
-    console.log(`${name} must pass options to "setBabelOptions"`)
-    console.log(JSON.stringify(options, null, 4))
+    console.log(`${name} must pass options to "setBabelOptions"`);
+    console.log(JSON.stringify(options, null, 4));
     if (isNotTestEnv) {
-      process.exit(1)
+      process.exit(1);
     }
   }
 
   return {
-    type: `SET_BABEL_OPTIONS`,
+    type: "SET_BABEL_OPTIONS",
     plugin,
     payload: options,
-  }
+  };
 }
 
 /**
@@ -1267,25 +1265,25 @@ function setBabelPlugin(
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
   // Validate
-  let name = `The plugin "${plugin?.name}"`
-  if (plugin?.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
+  let name = `The plugin "${plugin?.name}"`;
+  if (plugin?.name === "default-site-plugin") {
+    name = 'Your site\'s "gatsby-node.js"';
   }
   if (!config.name) {
-    console.log(`${name} must set the name of the Babel plugin`)
-    console.log(JSON.stringify(config, null, 4))
+    console.log(`${name} must set the name of the Babel plugin`);
+    console.log(JSON.stringify(config, null, 4));
     if (isNotTestEnv) {
-      process.exit(1)
+      process.exit(1);
     }
   }
   if (!config.options) {
-    config.options = {}
+    config.options = {};
   }
   return {
-    type: `SET_BABEL_PLUGIN`,
+    type: "SET_BABEL_PLUGIN",
     plugin,
     payload: config,
-  }
+  };
 }
 
 /**
@@ -1306,25 +1304,25 @@ function setBabelPreset(
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
   // Validate
-  let name = `The plugin "${plugin?.name}"`
-  if (plugin?.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
+  let name = `The plugin "${plugin?.name}"`;
+  if (plugin?.name === "default-site-plugin") {
+    name = 'Your site\'s "gatsby-node.js"';
   }
   if (!config.name) {
-    console.log(`${name} must set the name of the Babel preset`)
-    console.log(JSON.stringify(config, null, 4))
+    console.log(`${name} must set the name of the Babel preset`);
+    console.log(JSON.stringify(config, null, 4));
     if (isNotTestEnv) {
-      process.exit(1)
+      process.exit(1);
     }
   }
   if (!config.options) {
-    config.options = {}
+    config.options = {};
   }
   return {
-    type: `SET_BABEL_PRESET`,
+    type: "SET_BABEL_PRESET",
     plugin,
     payload: config,
-  }
+  };
 }
 
 /**
@@ -1346,19 +1344,20 @@ function createJob(
   job: Job,
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Job } {
-  let msg = `Action "createJob" is deprecated. Please use "createJobV2" instead`
+  let msg =
+    'Action "createJob" is deprecated. Please use "createJobV2" instead';
 
   if (plugin?.name) {
-    msg = msg + ` (called by ${plugin.name})`
+    msg = msg + ` (called by ${plugin.name})`;
   }
 
-  reportOnce(msg)
+  reportOnce(msg);
 
   return {
-    type: `CREATE_JOB`,
+    type: "CREATE_JOB",
     plugin,
     payload: job,
-  }
+  };
 }
 
 /**
@@ -1379,25 +1378,25 @@ function createJob(
  */
 function createJobV2(job: JobV2, plugin: IPlugin) {
   return function thunk(dispatch, getState): Promise<Record<string, unknown>> {
-    const internalJob = createInternalJob(job, plugin)
+    const internalJob = createInternalJob(job, plugin);
 
-    const maybeWorkerPromise = maybeSendJobToMainProcess(internalJob)
+    const maybeWorkerPromise = maybeSendJobToMainProcess(internalJob);
     if (maybeWorkerPromise) {
-      return maybeWorkerPromise
+      return maybeWorkerPromise;
     }
 
-    return createJobV2FromInternalJob(internalJob)(dispatch, getState)
-  }
+    return createJobV2FromInternalJob(internalJob)(dispatch, getState);
+  };
 }
 
 function addGatsbyImageSourceUrl(sourceUrl: string): {
-  type: string
-  payload: { sourceUrl: string }
+  type: string;
+  payload: { sourceUrl: string };
 } {
   return {
-    type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
+    type: "PROCESS_GATSBY_IMAGE_SOURCE_URL",
     payload: { sourceUrl },
-  }
+  };
 }
 
 /**
@@ -1416,18 +1415,18 @@ function setJob(
   job: Job,
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Job } {
-  let msg = `Action "setJob" is deprecated. Please use "createJobV2" instead`
+  let msg = 'Action "setJob" is deprecated. Please use "createJobV2" instead';
 
   if (plugin?.name) {
-    msg = msg + ` (called by ${plugin.name})`
+    msg = msg + ` (called by ${plugin.name})`;
   }
-  reportOnce(msg)
+  reportOnce(msg);
 
   return {
-    type: `SET_JOB`,
+    type: "SET_JOB",
     plugin,
     payload: job,
-  }
+  };
 }
 
 /**
@@ -1446,18 +1445,18 @@ function endJob(
   job: Job,
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Job } {
-  let msg = `Action "endJob" is deprecated. Please use "createJobV2" instead`
+  let msg = 'Action "endJob" is deprecated. Please use "createJobV2" instead';
 
   if (plugin?.name) {
-    msg = msg + ` (called by ${plugin.name})`
+    msg = msg + ` (called by ${plugin.name})`;
   }
-  reportOnce(msg)
+  reportOnce(msg);
 
   return {
-    type: `END_JOB`,
+    type: "END_JOB",
     plugin,
     payload: job,
-  }
+  };
 }
 
 /**
@@ -1475,17 +1474,17 @@ function setPluginStatus(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): { type: string; plugin: IPlugin; payload: { [key: string]: any } } {
   return {
-    type: `SET_PLUGIN_STATUS`,
+    type: "SET_PLUGIN_STATUS",
     plugin,
     payload: status,
-  }
+  };
 }
 
 // Check if path is absolute and add pathPrefix in front if it's not
 function maybeAddPathPrefix(path: string, pathPrefix: string): string {
-  const parsed = url.parse(path)
-  const isRelativeProtocol = path.startsWith(`//`)
-  return `${parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix}${path}`
+  const parsed = url.parse(path);
+  const isRelativeProtocol = path.startsWith("//");
+  return `${parsed.protocol != null || isRelativeProtocol ? "" : pathPrefix}${path}`;
 }
 
 /**
@@ -1531,35 +1530,35 @@ function createRedirect({
   ignoreCase = true,
   ...rest
 }: {
-  fromPath: string
-  isPermanent?: boolean | undefined
-  redirectInBrowser?: boolean | undefined
-  toPath: string
-  ignoreCase?: boolean | undefined
-  statusCode?: number | undefined
+  fromPath: string;
+  isPermanent?: boolean | undefined;
+  redirectInBrowser?: boolean | undefined;
+  toPath: string;
+  ignoreCase?: boolean | undefined;
+  statusCode?: number | undefined;
   conditions?:
     | {
-        country?: string | Array<string> | undefined
-        language?: string | Array<string> | undefined
+        country?: string | Array<string> | undefined;
+        language?: string | Array<string> | undefined;
       }
-    | undefined
+    | undefined;
 }): {
-  type: string
+  type: string;
   payload: {
-    fromPath: string
-    isPermanent: boolean
-    ignoreCase: boolean
-    redirectInBrowser: boolean
-    toPath: string
-  }
+    fromPath: string;
+    isPermanent: boolean;
+    ignoreCase: boolean;
+    redirectInBrowser: boolean;
+    toPath: string;
+  };
 } {
-  let pathPrefix = ``
+  let pathPrefix = "";
   if (store.getState().program.prefixPaths) {
-    pathPrefix = store.getState().config.pathPrefix ?? ``
+    pathPrefix = store.getState().config.pathPrefix ?? "";
   }
 
   return {
-    type: `CREATE_REDIRECT`,
+    type: "CREATE_REDIRECT",
     payload: {
       fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
@@ -1568,7 +1567,7 @@ function createRedirect({
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
     },
-  }
+  };
 }
 
 /**
@@ -1586,17 +1585,17 @@ function createPageDependency(
     nodeId,
     connection,
   }: { path: string; nodeId: string; connection: string },
-  plugin: string = ``,
+  plugin: string = "",
 ): {
-  type: string
-  plugin: string
-  payload: Array<{ path: string; nodeId: string; connection: string }>
+  type: string;
+  plugin: string;
+  payload: Array<{ path: string; nodeId: string; connection: string }>;
 } {
   console.warn(
-    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`,
-  )
+    'Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".',
+  );
   return {
-    type: `CREATE_COMPONENT_DEPENDENCY`,
+    type: "CREATE_COMPONENT_DEPENDENCY",
     plugin,
     payload: [
       {
@@ -1605,7 +1604,7 @@ function createPageDependency(
         connection,
       },
     ],
-  }
+  };
 }
 
 /**
@@ -1617,16 +1616,16 @@ function createPageDependency(
 function createServerVisitedPage(
   chunkName: string,
 ): Array<never> | { type: string; payload: { componentChunkName: string } } {
-  if (store.getState().visitedPages.get(`server`)?.has(chunkName)) {
+  if (store.getState().visitedPages.get("server")?.has(chunkName)) {
     // we already have given chunk tracked, let's not emit `CREATE_SERVER_VISITED_PAGE`
     // action to not cause any additional work
-    return []
+    return [];
   }
 
   return {
-    type: `CREATE_SERVER_VISITED_PAGE`,
+    type: "CREATE_SERVER_VISITED_PAGE",
     payload: { componentChunkName: chunkName },
-  }
+  };
 }
 
 /**
@@ -1657,24 +1656,24 @@ function unstable_createNodeManifest(
   { manifestId, node, updatedAtUTC },
   plugin: IPlugin,
 ): {
-  type: string
+  type: string;
   payload: {
-    manifestId: string
+    manifestId: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    node: any
-    pluginName: string
-    updatedAtUTC: string
-  }
+    node: any;
+    pluginName: string;
+    updatedAtUTC: string;
+  };
 } {
   return {
-    type: `CREATE_NODE_MANIFEST`,
+    type: "CREATE_NODE_MANIFEST",
     payload: {
       manifestId,
       node,
       pluginName: plugin.name,
       updatedAtUTC,
     },
-  }
+  };
 }
 
 /**
@@ -1697,13 +1696,13 @@ function unstable_createNodeManifest(
  * @returns {{ type: string; plugin: IPlugin }}
  */
 function enableStatefulSourceNodes(plugin: IPlugin): {
-  type: string
-  plugin: IPlugin
+  type: string;
+  plugin: IPlugin;
 } {
   return {
-    type: `ENABLE_STATEFUL_SOURCE_PLUGIN`,
+    type: "ENABLE_STATEFUL_SOURCE_PLUGIN",
     plugin,
-  }
+  };
 }
 
 /**
@@ -1718,47 +1717,47 @@ function setRequestHeaders(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): { type: string; payload: { domain: string; headers: any } } | null {
   const headersIsobject =
-    typeof headers === `object` && headers !== null && !Array.isArray(headers)
+    typeof headers === "object" && headers !== null && !Array.isArray(headers);
 
-  const noHeaders = !headersIsobject
-  const noDomain = typeof domain !== `string`
+  const noHeaders = !headersIsobject;
+  const noDomain = typeof domain !== "string";
 
   if (noHeaders) {
     reporter.warn(
       `Plugin ${plugin.name} called actions.setRequestHeaders with a headers property that isn't an object.`,
-    )
+    );
   }
 
   if (noDomain) {
     reporter.warn(
       `Plugin ${plugin.name} called actions.setRequestHeaders with a domain property that isn't a string.`,
-    )
+    );
   }
 
   if (noDomain || noHeaders) {
     reporter.warn(
       `Plugin ${plugin.name} attempted to set request headers with invalid arguments. See above warnings for more info.`,
-    )
+    );
 
-    return null
+    return null;
   }
 
-  const baseDomain = url.parse(domain)?.hostname
+  const baseDomain = url.parse(domain)?.hostname;
 
   if (baseDomain) {
     return {
-      type: `SET_REQUEST_HEADERS`,
+      type: "SET_REQUEST_HEADERS",
       payload: {
         domain: baseDomain,
         headers,
       },
-    }
+    };
   } else {
     reporter.warn(
       `Plugin ${plugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`,
-    )
+    );
 
-    return null
+    return null;
   }
 }
 
@@ -1787,4 +1786,4 @@ export const actions = {
   unstable_createNodeManifest,
   enableStatefulSourceNodes,
   setRequestHeaders,
-}
+};

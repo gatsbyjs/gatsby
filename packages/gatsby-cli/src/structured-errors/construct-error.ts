@@ -1,13 +1,13 @@
-import stackTrace from "stack-trace"
-import { errorSchema } from "./error-schema"
+import stackTrace from "stack-trace";
+import { errorSchema } from "./error-schema";
 import {
   defaultError,
   type ErrorId,
   errorMap,
   type IErrorMapEntryPublicApi,
-} from "./error-map"
-import { sanitizeStructuredStackTrace } from "../reporter/errors"
-import type { IConstructError, IStructuredError } from "./types"
+} from "./error-map";
+import { sanitizeStructuredStackTrace } from "../reporter/errors";
+import type { IConstructError, IStructuredError } from "./types";
 
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema
@@ -15,25 +15,25 @@ function constructError(
   { details: { id, ...otherDetails } }: IConstructError,
   suppliedErrorMap: Record<ErrorId, IErrorMapEntryPublicApi>,
 ): IStructuredError {
-  let errorMapEntry = defaultError
+  let errorMapEntry = defaultError;
 
   if (id) {
     // Look at original errorMap, ids cannot be overwritten
     if (errorMap[id]) {
-      errorMapEntry = errorMap[id]
+      errorMapEntry = errorMap[id];
     } else if (suppliedErrorMap[id]) {
       errorMapEntry = {
-        type: `PLUGIN`,
-        level: `ERROR`,
         ...suppliedErrorMap[id],
-      }
+        type: suppliedErrorMap[id].type ?? "PLUGIN",
+        level: suppliedErrorMap[id].level ?? "ERROR",
+      };
     }
   }
 
   const type =
-    typeof errorMapEntry.type === `function`
+    typeof errorMapEntry.type === "function"
       ? errorMapEntry.type(otherDetails.context)
-      : errorMapEntry.type
+      : errorMapEntry.type;
 
   // merge
   const structuredError: IStructuredError = {
@@ -45,21 +45,21 @@ function constructError(
     stack: otherDetails.error
       ? sanitizeStructuredStackTrace(stackTrace.parse(otherDetails.error))
       : [],
-    docsUrl: errorMapEntry.docsUrl || `https://gatsby.dev/issue-how-to`,
-  }
+    docsUrl: errorMapEntry.docsUrl || "https://gatsby.dev/issue-how-to",
+  };
 
   if (id) {
-    structuredError.code = id
+    structuredError.code = id;
   }
 
   // validate
-  const { error } = errorSchema.validate(structuredError)
+  const { error } = errorSchema.validate(structuredError);
   if (error) {
-    console.log(`Failed to validate error`, error)
-    process.exit(1)
+    console.log("Failed to validate error", error);
+    process.exit(1);
   }
 
-  return structuredError
+  return structuredError;
 }
 
-export default constructError
+export default constructError;

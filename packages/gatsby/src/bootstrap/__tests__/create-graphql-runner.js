@@ -1,13 +1,13 @@
-jest.mock(`graphql`)
+jest.mock("graphql");
 
-import { createGraphQLRunner } from "../create-graphql-runner"
-import { execute, validate, parse } from "graphql"
-import { globalTracer } from "opentracing"
+import { createGraphQLRunner } from "../create-graphql-runner";
+import { execute, validate, parse } from "graphql";
+import { globalTracer } from "opentracing";
 
 parse.mockImplementation(() => {
-  return {}
-})
-validate.mockImplementation(() => [])
+  return {};
+});
+validate.mockImplementation(() => []);
 
 const createStore = (schema = {}) => {
   return {
@@ -17,88 +17,88 @@ const createStore = (schema = {}) => {
         schemaCustomization: {
           composer: {},
         },
-      }
+      };
     },
-  }
-}
+  };
+};
 
 const tracingContext = {
   graphqlTracing: false,
-  parentSpan: globalTracer().startSpan(`test`),
-}
+  parentSpan: globalTracer().startSpan("test"),
+};
 
-describe(`grapqhl-runner`, () => {
-  let reporter
+describe("grapqhl-runner", () => {
+  let reporter;
 
   beforeEach(() => {
     reporter = {
       panicOnBuild: jest.fn(),
-    }
-  })
+    };
+  });
 
-  it(`should return the result when grapqhl has no errors`, async () => {
+  it("should return the result when grapqhl has no errors", async () => {
     const graphqlRunner = createGraphQLRunner(
       createStore(),
       reporter,
-      tracingContext
-    )
+      tracingContext,
+    );
 
     const expectation = {
       data: {
-        gatsby: `is awesome`,
+        gatsby: "is awesome",
       },
-    }
-    execute.mockImplementation(() => Promise.resolve(expectation))
+    };
+    execute.mockImplementation(() => Promise.resolve(expectation));
 
-    const result = await graphqlRunner(``, {})
-    expect(reporter.panicOnBuild).not.toHaveBeenCalled()
-    expect(result).toBe(expectation)
-  })
+    const result = await graphqlRunner("", {});
+    expect(reporter.panicOnBuild).not.toHaveBeenCalled();
+    expect(result).toBe(expectation);
+  });
 
-  it(`should return an errors array when structured errors found`, async () => {
+  it("should return an errors array when structured errors found", async () => {
     const graphqlRunner = createGraphQLRunner(
       createStore(),
       reporter,
-      tracingContext
-    )
+      tracingContext,
+    );
 
     const expectation = {
       errors: [
         {
-          message: `Cannot query field boyhowdy on RootQueryType`,
+          message: "Cannot query field boyhowdy on RootQueryType",
           locations: [{ line: 1, column: 3 }],
         },
       ],
-    }
-    execute.mockImplementation(() => Promise.resolve(expectation))
+    };
+    execute.mockImplementation(() => Promise.resolve(expectation));
 
-    const result = await graphqlRunner(``, {})
-    expect(reporter.panicOnBuild).not.toHaveBeenCalled()
-    expect(result).toBe(expectation)
-  })
+    const result = await graphqlRunner("", {});
+    expect(reporter.panicOnBuild).not.toHaveBeenCalled();
+    expect(result).toBe(expectation);
+  });
 
-  it(`should throw a structured error when created from createPage file`, async () => {
+  it("should throw a structured error when created from createPage file", async () => {
     const graphqlRunner = createGraphQLRunner(
       createStore(),
       reporter,
-      tracingContext
-    )
+      tracingContext,
+    );
 
     const errorObject = {
       stack: `Error
       at createPages (my-gatsby-project/gatsby-node.js:32:17)
       `,
-      message: `Cannot query field boyhowdy on RootQueryType`,
-    }
+      message: "Cannot query field boyhowdy on RootQueryType",
+    };
 
     execute.mockImplementation(() =>
       Promise.resolve({
         errors: [errorObject],
-      })
-    )
+      }),
+    );
 
-    await graphqlRunner(``, {})
-    expect(reporter.panicOnBuild).toHaveBeenCalled()
-    expect(reporter.panicOnBuild).toMatchSnapshot()
-  })
-})
+    await graphqlRunner("", {});
+    expect(reporter.panicOnBuild).toHaveBeenCalled();
+    expect(reporter.panicOnBuild).toMatchSnapshot();
+  });
+});

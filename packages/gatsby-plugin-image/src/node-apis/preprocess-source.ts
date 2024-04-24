@@ -1,16 +1,16 @@
-import type { PreprocessSourceArgs } from "gatsby"
-import { babelParseToAst } from "./parser"
-import path from "node:path"
-import { extractStaticImageProps } from "./parser"
-import { codeFrameColumns } from "@babel/code-frame"
+import type { PreprocessSourceArgs } from "gatsby";
+import { babelParseToAst } from "./parser";
+import path from "node:path";
+import { extractStaticImageProps } from "./parser";
+import { codeFrameColumns } from "@babel/code-frame";
 
-import { writeImages } from "./image-processing"
-import { getCacheDir } from "./node-utils"
-import { stripIndents } from "common-tags"
-import type { NodePath } from "@babel/traverse"
+import { writeImages } from "./image-processing";
+import { getCacheDir } from "./node-utils";
+import { stripIndents } from "common-tags";
+import type { NodePath } from "@babel/traverse";
 // @ts-ignore
-import type { JSXAttribute } from "@babel/types"
-const extensions: Array<string> = [`.js`, `.jsx`, `.tsx`]
+import type { JSXAttribute } from "@babel/types";
+const extensions: Array<string> = [".js", ".jsx", ".tsx"];
 
 export async function preprocessSource({
   filename,
@@ -23,17 +23,17 @@ export async function preprocessSource({
   actions: { createNode },
 }: PreprocessSourceArgs): Promise<void> {
   if (
-    !contents.includes(`StaticImage`) ||
-    !contents.includes(`gatsby-plugin-image`) ||
+    !contents.includes("StaticImage") ||
+    !contents.includes("gatsby-plugin-image") ||
     !extensions.includes(path.extname(filename))
   ) {
-    return
+    return;
   }
-  const root = store.getState().program.directory
+  const root = store.getState().program.directory;
 
-  const cacheDir = getCacheDir(root)
+  const cacheDir = getCacheDir(root);
 
-  const ast = babelParseToAst(contents, filename)
+  const ast = babelParseToAst(contents, filename);
   reporter.setErrorMap({
     "95314": {
       text: (context): string =>
@@ -43,20 +43,20 @@ export async function preprocessSource({
 
           ${context.codeFrame}
         `,
-      docsUrl: `https://gatsby.dev/static-image-props`,
-      level: `ERROR`,
-      category: `USER`,
+      docsUrl: "https://gatsby.dev/static-image-props",
+      level: "ERROR",
+      category: "USER",
     },
-  })
+  });
 
   const images = extractStaticImageProps(
     ast,
     filename,
     (prop: string, nodePath: NodePath<JSXAttribute> | undefined): void => {
-      const sourceLocation = nodePath?.node.loc
+      const sourceLocation = nodePath?.node.loc;
 
       reporter.error({
-        id: `95314`,
+        id: "95314",
         filePath: filename,
         location: {
           start: sourceLocation?.start,
@@ -74,11 +74,11 @@ export async function preprocessSource({
             },
           ),
         },
-      })
+      });
     },
-  )
+  );
 
-  const sourceDir = path.dirname(filename)
+  const sourceDir = path.dirname(filename);
   await writeImages({
     images,
     pathPrefix,
@@ -89,7 +89,7 @@ export async function preprocessSource({
     createNodeId,
     createNode,
     filename,
-  })
+  });
 
-  return
+  return;
 }

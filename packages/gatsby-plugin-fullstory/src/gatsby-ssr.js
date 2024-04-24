@@ -1,10 +1,10 @@
-import React from "react"
+import React from "react";
 
 export const onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  if (process.env.NODE_ENV === `production`) {
+  if (process.env.NODE_ENV === "production") {
     return setHeadComponents([
       <script
-        key={`gatsby-plugin-fullstory`}
+        key={"gatsby-plugin-fullstory"}
         dangerouslySetInnerHTML={{
           __html: `
 window['_fs_debug'] = false;
@@ -32,8 +32,8 @@ window['_fs_namespace'] = 'FS';
       `,
         }}
       />,
-    ])
+    ]);
   }
 
-  return null
-}
+  return null;
+};

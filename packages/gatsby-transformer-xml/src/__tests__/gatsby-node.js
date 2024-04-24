@@ -1,18 +1,18 @@
-const Promise = require(`bluebird`)
+const Promise = require("bluebird");
 
-const { onCreateNode } = require(`../gatsby-node`)
-describe(`Process XML nodes correctly`, () => {
+const { onCreateNode } = require("../gatsby-node");
+describe("Process XML nodes correctly", () => {
   const node = {
-    name: `nodeName`,
-    id: `whatever`,
+    name: "nodeName",
+    id: "whatever",
     parent: null,
     children: [],
     internal: {
-      contentDigest: `whatever`,
-      mediaType: `application/xml`,
-      name: `test`,
+      contentDigest: "whatever",
+      mediaType: "application/xml",
+      name: "test",
     },
-  }
+  };
 
   // Make some fake functions its expecting.
   node.content = `
@@ -38,16 +38,16 @@ describe(`Process XML nodes correctly`, () => {
             of the world.</description>
          </book>
       </catalog>
-    `
-  const loadNodeContent = node => Promise.resolve(node.content)
+    `;
+  const loadNodeContent = (node) => Promise.resolve(node.content);
 
-  it(`correctly creates nodes from XML`, async () => {
-    const createNode = jest.fn()
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+  it("correctly creates nodes from XML", async () => {
+    const createNode = jest.fn();
+    const createParentChildLink = jest.fn();
+    const actions = { createNode, createParentChildLink };
+    const createNodeId = jest.fn();
+    createNodeId.mockReturnValue("uuid-from-gatsby");
+    const createContentDigest = jest.fn().mockReturnValue("contentDigest");
 
     await onCreateNode({
       node,
@@ -56,10 +56,10 @@ describe(`Process XML nodes correctly`, () => {
       createNodeId,
       createContentDigest,
     }).then(() => {
-      expect(createNode.mock.calls).toMatchSnapshot()
-      expect(createParentChildLink.mock.calls).toMatchSnapshot()
-      expect(createNode).toHaveBeenCalledTimes(2)
-      expect(createParentChildLink).toHaveBeenCalledTimes(2)
-    })
-  })
-})
+      expect(createNode.mock.calls).toMatchSnapshot();
+      expect(createParentChildLink.mock.calls).toMatchSnapshot();
+      expect(createNode).toHaveBeenCalledTimes(2);
+      expect(createParentChildLink).toHaveBeenCalledTimes(2);
+    });
+  });
+});

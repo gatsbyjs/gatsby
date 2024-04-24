@@ -1,11 +1,11 @@
-import reporter from "gatsby-cli/lib/reporter"
-import { WorkerPool } from "gatsby-worker"
-import { isEqual } from "lodash"
-import type { Span } from "opentracing"
+import reporter from "gatsby-cli/lib/reporter";
+import { WorkerPool } from "gatsby-worker";
+import { isEqual } from "lodash";
+import type { Span } from "opentracing";
 import {
   getCurrentPlatformAndTarget,
   getFunctionsTargetPlatformAndTarget,
-} from "../engines-helpers"
+} from "../engines-helpers";
 
 export async function validateEnginesWithActivity(
   directory: string,
@@ -18,45 +18,46 @@ export async function validateEnginesWithActivity(
     )
   ) {
     reporter.info(
-      `Skipping Rendering Engines validation as they are build for different platform and/or architecture`,
-    )
-    return
+      "Skipping Rendering Engines validation as they are build for different platform and/or architecture",
+    );
+    return;
   }
 
   const validateEnginesActivity = reporter.activityTimer(
-    `Validating Rendering Engines`,
+    "Validating Rendering Engines",
+    // @ts-ignore
     {
       parentSpan: buildSpan,
     },
-  )
-  validateEnginesActivity.start()
+  );
+  validateEnginesActivity.start();
   try {
-    await validateEngines(directory)
+    await validateEngines(directory);
   } catch (error) {
-    validateEnginesActivity.panic({ id: `98001`, context: {}, error })
+    validateEnginesActivity.panic({ id: "98001", context: {}, error });
   } finally {
-    validateEnginesActivity.end()
+    validateEnginesActivity.end();
   }
 }
 
 async function validateEngines(directory: string): Promise<void> {
   const worker = new WorkerPool<typeof import("./child")>(
-    require.resolve(`./child`),
+    require.resolve("./child"),
     {
       numWorkers: 1,
       env: {
         // Do not "inherit" this env var for validation,
         // as otherwise validation will fail on any imports
         // that OpenTracing config might make
-        GATSBY_OPEN_TRACING_CONFIG_FILE: ``,
+        GATSBY_OPEN_TRACING_CONFIG_FILE: "",
       },
       silent: true,
     },
-  )
+  );
 
   try {
-    await worker.single.validate(directory)
+    await worker.single.validate(directory);
   } finally {
-    worker.end()
+    worker.end();
   }
 }

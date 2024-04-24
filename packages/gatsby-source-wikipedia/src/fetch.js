@@ -1,13 +1,13 @@
-const Promise = require(`bluebird`)
-const queryString = require(`query-string`)
+const Promise = require("bluebird");
+const queryString = require("query-string");
 
-const apiBase = `https://en.wikipedia.org/w/api.php?`
+const apiBase = "https://en.wikipedia.org/w/api.php?";
 
 function fetchNodesFromSearch({ query, limit = 15 }) {
   return search({ query, limit }).then((results) =>
     Promise.map(results, async (result, queryIndex) => {
-      const rendered = await getArticle(result.id)
-      const metadata = await getMetaData(result.id)
+      const rendered = await getArticle(result.id);
+      const metadata = await getMetaData(result.id);
       return {
         id: result.id,
         title: result.title,
@@ -15,53 +15,53 @@ function fetchNodesFromSearch({ query, limit = 15 }) {
         updatedAt: metadata.updated,
         queryIndex: queryIndex + 1,
         rendered,
-      }
+      };
     }),
-  )
+  );
 }
 
 function getMetaData(name) {
   return fetch(
     `${apiBase}${queryString.stringify({
-      action: `query`,
+      action: "query",
       titles: name,
-      format: `json`,
-      redirects: `resolve`,
-      prop: `extracts|revisions`,
+      format: "json",
+      redirects: "resolve",
+      prop: "extracts|revisions",
       explaintext: 1,
       exsentences: 1,
     })}`,
   )
     .then((response) => response.json())
     .then((data) => {
-      const page = data.query.pages[Object.keys(data.query.pages)[0]]
+      const page = data.query.pages[Object.keys(data.query.pages)[0]];
 
-      if (`missing` in page) {
-        return { err: `Not found` }
+      if ("missing" in page) {
+        return { err: "Not found" };
       }
 
-      let updated = new Date().toJSON()
+      let updated = new Date().toJSON();
       if (page.revisions) {
-        updated = page.revisions[0].timestamp
+        updated = page.revisions[0].timestamp;
       } else {
-        console.log({ page, revisions: page.revisions })
+        console.log({ page, revisions: page.revisions });
       }
       return {
         title: page.title,
         extract: page.extract,
-        urlId: page.title.replace(/\s/g, `_`),
+        urlId: page.title.replace(/\s/g, "_"),
         updated,
-      }
-    })
+      };
+    });
 }
 
 function search({ query, limit }) {
   return fetch(
     `${apiBase}${queryString.stringify({
-      action: `opensearch`,
+      action: "opensearch",
       search: query,
-      format: `json`,
-      redirects: `resolve`,
+      format: "json",
+      redirects: "resolve",
       limit,
     })}`,
   )
@@ -72,17 +72,17 @@ function search({ query, limit }) {
           title,
           description: descriptions[i],
           id: /en.wikipedia.org\/wiki\/(.+)$/.exec(urls[i])[1],
-        }
+        };
       }),
-    )
+    );
 }
 
 function getArticle(name) {
   return fetch(`https://en.m.wikipedia.org/wiki/${name}?action=render`)
     .then((res) => res.text())
     .then((pageContent) =>
-      pageContent.replace(/\/\/en\.wikipedia\.org\/wiki\//g, `/wiki/`),
-    )
+      pageContent.replace(/\/\/en\.wikipedia\.org\/wiki\//g, "/wiki/"),
+    );
 }
 
-module.exports = { fetchNodesFromSearch, getMetaData, getArticle, search }
+module.exports = { fetchNodesFromSearch, getMetaData, getArticle, search };

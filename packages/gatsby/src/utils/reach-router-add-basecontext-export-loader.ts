@@ -10,9 +10,9 @@ export default function (source: string): string {
       // and we don't want to export same thing multiple times
       // as this would cause parsing errors:
       // "Module parse failed: Duplicate export 'BaseContext'"
-      return match
+      return match;
     } else {
-      return `export { ${exportList}, BaseContext }`
+      return `export { ${exportList}, BaseContext }`;
     }
-  })
+  });
 }

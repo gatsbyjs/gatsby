@@ -1,56 +1,56 @@
-import { stripIndent } from "common-tags"
-import type { GraphQLFieldResolver } from "gatsby/graphql"
+import { stripIndent } from "common-tags";
+import type { GraphQLFieldResolver } from "gatsby/graphql";
 import type {
   EnumTypeComposerAsObjectDefinition,
   ObjectTypeComposerFieldConfigAsObjectDefinition,
   ObjectTypeComposerArgumentConfigMapDefinition,
-} from "graphql-compose"
-import { hasFeature } from "gatsby-plugin-utils"
-import type { ISharpGatsbyImageArgs, IImageSizeArgs } from "./image-utils"
+} from "graphql-compose";
+import { hasFeature } from "gatsby-plugin-utils";
+import type { ISharpGatsbyImageArgs, IImageSizeArgs } from "./image-utils";
 
 export const ImageFormatType: EnumTypeComposerAsObjectDefinition = {
-  name: `GatsbyImageFormat`,
+  name: "GatsbyImageFormat",
   values: {
-    NO_CHANGE: { value: `` },
-    AUTO: { value: `auto` },
-    JPG: { value: `jpg` },
-    PNG: { value: `png` },
-    WEBP: { value: `webp` },
-    AVIF: { value: `avif` },
+    NO_CHANGE: { value: "" },
+    AUTO: { value: "auto" },
+    JPG: { value: "jpg" },
+    PNG: { value: "png" },
+    WEBP: { value: "webp" },
+    AVIF: { value: "avif" },
   },
-}
+};
 
 export const ImageLayoutType: EnumTypeComposerAsObjectDefinition = {
-  name: `GatsbyImageLayout`,
+  name: "GatsbyImageLayout",
   values: {
-    FIXED: { value: `fixed` },
-    FULL_WIDTH: { value: `fullWidth` },
-    CONSTRAINED: { value: `constrained` },
+    FIXED: { value: "fixed" },
+    FULL_WIDTH: { value: "fullWidth" },
+    CONSTRAINED: { value: "constrained" },
   },
-}
+};
 
 export const ImagePlaceholderType: EnumTypeComposerAsObjectDefinition = {
-  name: `GatsbyImagePlaceholder`,
+  name: "GatsbyImagePlaceholder",
   values: {
-    DOMINANT_COLOR: { value: `dominantColor` },
-    TRACED_SVG: { value: `tracedSVG` },
-    BLURRED: { value: `blurred` },
-    NONE: { value: `none` },
+    DOMINANT_COLOR: { value: "dominantColor" },
+    TRACED_SVG: { value: "tracedSVG" },
+    BLURRED: { value: "blurred" },
+    NONE: { value: "none" },
   },
-}
+};
 
 export type IGatsbyGraphQLFieldConfig<TSource, TContext, TArgs> = {
-  description?: string | undefined
-  type: string
-  args?: Record<string, IGatsbyGraphQLResolverArgumentConfig> | undefined
-  resolve: GraphQLFieldResolver<TSource, TContext, TArgs>
-}
+  description?: string | undefined;
+  type: string;
+  args?: Record<string, IGatsbyGraphQLResolverArgumentConfig> | undefined;
+  resolve: GraphQLFieldResolver<TSource, TContext, TArgs>;
+};
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type IGatsbyGraphQLResolverArgumentConfig<TValue = any> = {
-  description?: string | undefined
-  type: string | Array<string>
-  defaultValue?: TValue | undefined
-}
+  description?: string | undefined;
+  type: string | Array<string>;
+  defaultValue?: TValue | undefined;
+};
 export type IGatsbyImageResolverArgs = Pick<
   ISharpGatsbyImageArgs & IImageSizeArgs,
   | "aspectRatio"
@@ -61,7 +61,7 @@ export type IGatsbyImageResolverArgs = Pick<
   | "outputPixelDensities"
   | "sizes"
   | "width"
->
+>;
 
 export function getGatsbyImageResolver<TSource, TContext, TArgs>(
   resolve: GraphQLFieldResolver<
@@ -76,7 +76,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
   IGatsbyImageResolverArgs & TArgs
 > {
   return {
-    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON!`,
+    type: hasFeature("graphql-typegen") ? "GatsbyImageData!" : "JSON!",
     // @ts-ignore
     args: {
       layout: {
@@ -89,7 +89,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
             `,
       },
       width: {
-        type: `Int`,
+        type: "Int",
         description: stripIndent`
         The display width of the generated image for layout = FIXED, and the display width of the largest image for layout = CONSTRAINED.
         The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
@@ -97,19 +97,19 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
         `,
       },
       height: {
-        type: `Int`,
+        type: "Int",
         description: stripIndent`
         If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.`,
       },
       aspectRatio: {
-        type: `Float`,
+        type: "Float",
         description: stripIndent`
         If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed.
         If neither width or height is provided, height will be set based on the intrinsic width of the source image.
         `,
       },
       sizes: {
-        type: `String`,
+        type: "String",
         description: stripIndent`
             The "sizes" property, passed to the img tag. This describes the display size of the image.
             This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image
@@ -117,7 +117,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
         `,
       },
       outputPixelDensities: {
-        type: `[Float]`,
+        type: "[Float]",
         description: stripIndent`
             A list of image pixel densities to generate for FIXED and CONSTRAINED images. You should rarely need to change this. It will never generate images larger than the source, and will always include a 1x image.
             Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide.
@@ -125,7 +125,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
             `,
       },
       breakpoints: {
-        type: `[Int]`,
+        type: "[Int]",
         description: stripIndent`
         Specifies the image widths to generate. You should rarely need to change this. For FIXED and CONSTRAINED images it is better to allow these to be determined automatically,
         based on the image size. For FULL_WIDTH images this can be used to override the default, which is determined by the plugin.
@@ -133,13 +133,14 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
         `,
       },
       backgroundColor: {
-        type: `String`,
-        description: `Background color applied to the wrapper, or when "letterboxing" an image to another aspect ratio.`,
+        type: "String",
+        description:
+          'Background color applied to the wrapper, or when "letterboxing" an image to another aspect ratio.',
       },
       ...extraArgs,
     },
     resolve,
-  }
+  };
 }
 
 export type IGatsbyImageFieldArgs = Pick<
@@ -154,7 +155,7 @@ export type IGatsbyImageFieldArgs = Pick<
   | "placeholder"
   | "sizes"
   | "width"
->
+>;
 
 export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
   resolve: GraphQLFieldResolver<
@@ -169,7 +170,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
   IGatsbyImageFieldArgs & TArgs
 > {
   return {
-    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON!`,
+    type: hasFeature("graphql-typegen") ? "GatsbyImageData!" : "JSON!",
     // @ts-ignore
     args: {
       layout: {
@@ -182,7 +183,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
             `,
       },
       width: {
-        type: `Int`,
+        type: "Int",
         description: stripIndent`
         The display width of the generated image for layout = FIXED, and the display width of the largest image for layout = CONSTRAINED.
         The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
@@ -190,12 +191,12 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
         `,
       },
       height: {
-        type: `Int`,
+        type: "Int",
         description: stripIndent`
         If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.`,
       },
       aspectRatio: {
-        type: `Float`,
+        type: "Float",
         description: stripIndent`
         If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed.
         If neither width or height is provided, height will be set based on the intrinsic width of the source image.
@@ -218,17 +219,17 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
             not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
             both PNG and JPG is not supported and will be ignored.
         `,
-        defaultValue: [``, `webp`],
+        defaultValue: ["", "webp"],
       },
       outputPixelDensities: {
-        type: `[Float]`,
+        type: "[Float]",
         description: stripIndent`
             A list of image pixel densities to generate for FIXED and CONSTRAINED images. You should rarely need to change this. It will never generate images larger than the source, and will always include a 1x image.
             Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide.
             `,
       },
       breakpoints: {
-        type: `[Int]`,
+        type: "[Int]",
         description: stripIndent`
         Specifies the image widths to generate. You should rarely need to change this. For FIXED and CONSTRAINED images it is better to allow these to be determined automatically,
         based on the image size. For FULL_WIDTH images this can be used to override the default, which is [750, 1080, 1366, 1920].
@@ -236,7 +237,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
         `,
       },
       sizes: {
-        type: `String`,
+        type: "String",
         description: stripIndent`
             The "sizes" property, passed to the img tag. This describes the display size of the image.
             This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image
@@ -244,11 +245,12 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
         `,
       },
       backgroundColor: {
-        type: `String`,
-        description: `Background color applied to the wrapper, or when "letterboxing" an image to another aspect ratio.`,
+        type: "String",
+        description:
+          'Background color applied to the wrapper, or when "letterboxing" an image to another aspect ratio.',
       },
       ...extraArgs,
     },
     resolve,
-  }
+  };
 }

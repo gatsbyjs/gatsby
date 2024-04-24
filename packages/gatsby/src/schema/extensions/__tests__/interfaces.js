@@ -1,21 +1,21 @@
-const { graphql } = require(`graphql`)
-const { build } = require(`../..`)
-const withResolverContext = require(`../../context`)
-import { buildInterfaceType, buildObjectType } from "../../types/type-builders"
-const { store } = require(`../../../redux`)
-const { dispatch } = store
-const { actions } = require(`../../../redux/actions`)
-const { createTypes, createFieldExtension } = actions
+const { graphql } = require("graphql");
+const { build } = require("../..");
+const withResolverContext = require("../../context");
+import { buildInterfaceType, buildObjectType } from "../../types/type-builders";
+const { store } = require("../../../redux");
+const { dispatch } = store;
+const { actions } = require("../../../redux/actions");
+const { createTypes, createFieldExtension } = actions;
 
-const report = require(`gatsby-cli/lib/reporter`)
-report.panic = jest.fn()
-report.warn = jest.fn()
+const report = require("gatsby-cli/lib/reporter");
+report.panic = jest.fn();
+report.warn = jest.fn();
 afterEach(() => {
-  report.panic.mockClear()
-  report.warn.mockClear()
-})
+  report.panic.mockClear();
+  report.warn.mockClear();
+});
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock("gatsby-cli/lib/reporter", () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -26,53 +26,53 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         start: jest.fn(),
         setStatus: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
-  }
-})
+  };
+});
 
-describe(`Queryable Node interfaces with interface inheritance`, () => {
+describe("Queryable Node interfaces with interface inheritance", () => {
   beforeEach(() => {
-    dispatch({ type: `DELETE_CACHE` })
+    dispatch({ type: "DELETE_CACHE" });
     const nodes = [
       {
-        id: `test1`,
-        internal: { type: `Test`, contentDigest: `0` },
-        foo: `foo`,
-        bar: `bar`,
-        date: new Date(`2019-01-01`),
+        id: "test1",
+        internal: { type: "Test", contentDigest: "0" },
+        foo: "foo",
+        bar: "bar",
+        date: new Date("2019-01-01"),
       },
       {
-        id: `anothertest1`,
-        internal: { type: `AnotherTest`, contentDigest: `0` },
-        foo: `foooo`,
-        baz: `baz`,
-        date: new Date(`2018-01-01`),
+        id: "anothertest1",
+        internal: { type: "AnotherTest", contentDigest: "0" },
+        foo: "foooo",
+        baz: "baz",
+        date: new Date("2018-01-01"),
       },
       {
-        id: `tbtest1`,
-        internal: { type: `TBTest`, contentDigest: `0` },
-        foo: `foo`,
-        bar: `bar`,
-        date: new Date(`2019-01-01`),
+        id: "tbtest1",
+        internal: { type: "TBTest", contentDigest: "0" },
+        foo: "foo",
+        bar: "bar",
+        date: new Date("2019-01-01"),
       },
       {
-        id: `anotherbttest1`,
-        internal: { type: `AnotherTBTest`, contentDigest: `0` },
-        foo: `foooo`,
-        baz: `baz`,
-        date: new Date(`2018-01-01`),
+        id: "anotherbttest1",
+        internal: { type: "AnotherTBTest", contentDigest: "0" },
+        foo: "foooo",
+        baz: "baz",
+        date: new Date("2018-01-01"),
       },
-    ]
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
-    )
+    ];
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: "test" })(store.dispatch),
+    );
     dispatch(
       createTypes(`
         interface TestInterface implements Node {
@@ -90,20 +90,20 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           baz: String
           date: Date @dateformat
         }
-      `)
-    )
-  })
+      `),
+    );
+  });
 
-  it(`adds root query fields for interface with Node interface`, async () => {
-    const { schema } = await buildSchema()
-    const rootQueryFields = schema.getType(`Query`).getFields()
-    expect(rootQueryFields.testInterface).toBeDefined()
-    expect(rootQueryFields.allTestInterface).toBeDefined()
-    expect(rootQueryFields.testInterface.resolve).toBeDefined()
-    expect(rootQueryFields.allTestInterface.resolve).toBeDefined()
-  })
+  it("adds root query fields for interface with Node interface", async () => {
+    const { schema } = await buildSchema();
+    const rootQueryFields = schema.getType("Query").getFields();
+    expect(rootQueryFields.testInterface).toBeDefined();
+    expect(rootQueryFields.allTestInterface).toBeDefined();
+    expect(rootQueryFields.testInterface.resolve).toBeDefined();
+    expect(rootQueryFields.allTestInterface.resolve).toBeDefined();
+  });
 
-  it(`does not add root query fields for interface without Node inheritance`, async () => {
+  it("does not add root query fields for interface without Node inheritance", async () => {
     dispatch(
       createTypes(`
         interface WrongInterface {
@@ -116,15 +116,15 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
         type WrongAgain implements Node & WrongInterface {
           foo: String
         }
-      `)
-    )
-    const { schema } = await buildSchema()
-    const rootQueryFields = schema.getType(`Query`).getFields()
-    expect(rootQueryFields.wrongInterface).toBeUndefined()
-    expect(rootQueryFields.allWrongInterface).toBeUndefined()
-  })
+      `),
+    );
+    const { schema } = await buildSchema();
+    const rootQueryFields = schema.getType("Query").getFields();
+    expect(rootQueryFields.wrongInterface).toBeUndefined();
+    expect(rootQueryFields.allWrongInterface).toBeUndefined();
+  });
 
-  it(`shows error when not all types implementing the queryable interface implement the Node interface`, async () => {
+  it("shows error when not all types implementing the queryable interface implement the Node interface", async () => {
     dispatch(
       createTypes(`
         interface WrongInterface implements Node {
@@ -137,26 +137,26 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
         type WrongAgain implements WrongInterface {
           foo: String
         }
-      `)
-    )
-    await buildSchema()
+      `),
+    );
+    await buildSchema();
     expect(report.panic).toBeCalledWith(
-      `Types implementing queryable interfaces must also implement the \`Node\` interface. ` +
-        `Check the type definition of \`Wrong\`, \`WrongAgain\`.`
-    )
-  })
+      "Types implementing queryable interfaces must also implement the `Node` interface. " +
+        "Check the type definition of `Wrong`, `WrongAgain`.",
+    );
+  });
 
-  it(`adds root query fields for interface extending Node interface (type builder)`, async () => {
+  it("adds root query fields for interface extending Node interface (type builder)", async () => {
     dispatch(
       createTypes([
         buildInterfaceType({
-          name: `TypeBuilderInterface`,
-          interfaces: [`Node`],
+          name: "TypeBuilderInterface",
+          interfaces: ["Node"],
           fields: {
-            id: `ID!`,
-            foo: `String`,
+            id: "ID!",
+            foo: "String",
             date: {
-              type: `Date`,
+              type: "Date",
               extensions: {
                 dateformat: {},
               },
@@ -164,12 +164,12 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           },
         }),
         buildObjectType({
-          name: `TBTest`,
-          interfaces: [`Node`, `TypeBuilderInterface`],
+          name: "TBTest",
+          interfaces: ["Node", "TypeBuilderInterface"],
           fields: {
-            foo: `String`,
+            foo: "String",
             date: {
-              type: `Date`,
+              type: "Date",
               extensions: {
                 dateformat: {},
               },
@@ -177,20 +177,20 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           },
         }),
         buildObjectType({
-          name: `AnotherTBTest`,
-          interfaces: [`Node`, `TypeBuilderInterface`],
+          name: "AnotherTBTest",
+          interfaces: ["Node", "TypeBuilderInterface"],
           fields: {
-            foo: `String`,
+            foo: "String",
             date: {
-              type: `Date`,
+              type: "Date",
               extensions: {
                 dateformat: {},
               },
             },
           },
         }),
-      ])
-    )
+      ]),
+    );
     const query = `
       {
         allTypeBuilderInterface(
@@ -206,26 +206,26 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           date(formatString: "MM/DD/YYYY")
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       allTypeBuilderInterface: {
         nodes: [
           {
-            foo: `foooo`,
-            date: `2018`,
+            foo: "foooo",
+            date: "2018",
           },
         ],
       },
       typeBuilderInterface: {
-        foo: `foooo`,
-        date: `01/01/2018`,
+        foo: "foooo",
+        date: "01/01/2018",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`returns correct results for query`, async () => {
+  it("returns correct results for query", async () => {
     const query = `
       {
         allTestInterface {
@@ -249,32 +249,32 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           }
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       allTestInterface: {
         nodes: [
           {
-            foo: `foo`,
-            id: `test1`,
+            foo: "foo",
+            id: "test1",
           },
           {
-            foo: `foooo`,
-            baz: `baz`,
-            id: `anothertest1`,
+            foo: "foooo",
+            baz: "baz",
+            id: "anothertest1",
           },
         ],
       },
       testInterface: {
-        foo: `foo`,
-        bar: `bar`,
-        id: `test1`,
+        foo: "foo",
+        bar: "bar",
+        id: "test1",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`returns correct results for query with args`, async () => {
+  it("returns correct results for query with args", async () => {
     const query = `
       {
         allTestInterface(
@@ -288,24 +288,24 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           foo
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       allTestInterface: {
         nodes: [
           {
-            foo: `foooo`,
+            foo: "foooo",
           },
         ],
       },
       testInterface: {
-        foo: `foooo`,
+        foo: "foooo",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`adds input args from extensions to fields`, async () => {
+  it("adds input args from extensions to fields", async () => {
     const query = `
       {
         allTestInterface {
@@ -317,27 +317,27 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           date(formatString: "MM/DD/YYYY")
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       allTestInterface: {
         nodes: [
           {
-            date: `2019`,
+            date: "2019",
           },
           {
-            date: `2018`,
+            date: "2018",
           },
         ],
       },
       testInterface: {
-        date: `01/01/2019`,
+        date: "01/01/2019",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`shows error when interface implementing Node interface does not have id field`, async () => {
+  it("shows error when interface implementing Node interface does not have id field", async () => {
     dispatch(
       createTypes(`
         interface NotWrongInterface implements Node {
@@ -347,17 +347,17 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
         interface WrongInterface implements Node {
           foo: String
         }
-      `)
-    )
-    await build({})
-    expect(report.panic).toBeCalledTimes(1)
+      `),
+    );
+    await build({});
+    expect(report.panic).toBeCalledTimes(1);
     expect(report.panic).toBeCalledWith(
-      `Interfaces with the \`nodeInterface\` extension must have a field ` +
-        `\`id\` of type \`ID!\`. Check the type definition of \`WrongInterface\`.`
-    )
-  })
+      "Interfaces with the `nodeInterface` extension must have a field " +
+        "`id` of type `ID!`. Check the type definition of `WrongInterface`.",
+    );
+  });
 
-  it(`works with special case id: { eq: $id } queries`, async () => {
+  it("works with special case id: { eq: $id } queries", async () => {
     const query = `
       {
         testInterface(id: { eq: "test1" }) {
@@ -367,62 +367,62 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           id
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       testInterface: {
-        id: `test1`,
+        id: "test1",
       },
       test: {
-        id: `test1`,
+        id: "test1",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`uses concrete type resolvers when filtering on interface fields`, async () => {
+  it("uses concrete type resolvers when filtering on interface fields", async () => {
     const nodes = [
       {
-        id: `author1`,
-        internal: { type: `AuthorYaml`, counter: 0 },
-        name: `Author 1`,
+        id: "author1",
+        internal: { type: "AuthorYaml", counter: 0 },
+        name: "Author 1",
         birthday: new Date(Date.UTC(1978, 8, 26)),
       },
       {
-        id: `author2`,
-        internal: { type: `AuthorJson`, counter: 1 },
-        name: `Author 2`,
+        id: "author2",
+        internal: { type: "AuthorJson", counter: 1 },
+        name: "Author 2",
         birthday: new Date(Date.UTC(1978, 8, 26)),
       },
       {
-        id: `post1`,
-        internal: { type: `ThisPost`, counter: 2 },
-        author: `author1`,
+        id: "post1",
+        internal: { type: "ThisPost", counter: 2 },
+        author: "author1",
       },
       {
-        id: `post2`,
-        internal: { type: `ThatPost`, counter: 3 },
-        author: `author2`,
+        id: "post2",
+        internal: { type: "ThatPost", counter: 3 },
+        author: "author2",
       },
-    ]
-    nodes.forEach(node =>
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
-    )
+    ];
+    nodes.forEach((node) =>
+      dispatch({ type: "CREATE_NODE", payload: { ...node } }),
+    );
     dispatch(
       createFieldExtension({
-        name: `echo`,
+        name: "echo",
         args: {
-          value: `String!`,
+          value: "String!",
         },
         extend(options) {
           return {
             resolve() {
-              return options.value
+              return options.value;
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(`
         interface Post implements Node {
@@ -448,8 +448,8 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           name: String
           echo: String @echo(value: "Another Concrete Type")
         }
-      `)
-    )
+      `),
+    );
     const query = `
       {
         allPost(
@@ -469,48 +469,48 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           }
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       allPost: {
         nodes: [
           {
             author: {
-              name: `Author 1`,
-              echo: `Another Concrete Type`,
+              name: "Author 1",
+              echo: "Another Concrete Type",
             },
           },
           {
             author: {
-              name: `Author 2`,
-              echo: `Concrete Type`,
+              name: "Author 2",
+              echo: "Concrete Type",
             },
           },
         ],
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`materializes and searches by concrete type`, async () => {
-    dispatch({ type: `DELETE_CACHE` })
+  it("materializes and searches by concrete type", async () => {
+    dispatch({ type: "DELETE_CACHE" });
 
     const nodes = [
       {
-        id: `0`,
-        title: `Foo Bar`,
-        slugInternal: `foo-bar`,
+        id: "0",
+        title: "Foo Bar",
+        slugInternal: "foo-bar",
         internal: {
-          type: `FooConcrete`,
-          contentDigest: `0`,
+          type: "FooConcrete",
+          contentDigest: "0",
           counter: 0,
         },
       },
-    ]
+    ];
 
-    nodes.forEach(node =>
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
-    )
+    nodes.forEach((node) =>
+      dispatch({ type: "CREATE_NODE", payload: { ...node } }),
+    );
 
     dispatch(
       createTypes(`
@@ -525,8 +525,8 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           title: String
           slug: String @proxy(from: "slugInternal")
         }
-      `)
-    )
+      `),
+    );
 
     expect(
       await runQuery(`
@@ -537,7 +537,7 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           }
           }
         }
-        `)
+        `),
     ).toMatchInlineSnapshot(`
       Object {
         "allFooConcrete": Object {
@@ -548,7 +548,7 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           ],
         },
       }
-    `)
+    `);
 
     expect(
       await runQuery(`
@@ -559,7 +559,7 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
             }
           }
         }
-        `)
+        `),
     ).toMatchInlineSnapshot(`
       Object {
         "allFooInterface": Object {
@@ -570,21 +570,21 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
           ],
         },
       }
-    `)
-  })
-})
+    `);
+  });
+});
 
 const buildSchema = async () => {
-  await build({})
+  await build({});
   const {
     schemaCustomization: { composer: schemaComposer },
     schema,
-  } = store.getState()
-  return { schema, schemaComposer }
-}
+  } = store.getState();
+  return { schema, schemaComposer };
+};
 
-const runQuery = async query => {
-  const { schema, schemaComposer } = await buildSchema()
+const runQuery = async (query) => {
+  const { schema, schemaComposer } = await buildSchema();
   const results = await graphql({
     schema,
     source: query,
@@ -593,7 +593,7 @@ const runQuery = async query => {
       schema,
       schemaComposer,
     }),
-  })
-  expect(results.errors).toBeUndefined()
-  return results.data
-}
+  });
+  expect(results.errors).toBeUndefined();
+  return results.data;
+};

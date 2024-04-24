@@ -1,6 +1,6 @@
-import { parseError, type IErrorRenderMeta } from "./parse-error"
+import { parseError, type IErrorRenderMeta } from "./parse-error";
 
-import type { IServerData } from "../get-server-data"
+import type { IServerData } from "../get-server-data";
 
 export async function renderHTML({
   path,
@@ -12,17 +12,17 @@ export async function renderHTML({
   directory,
   serverData,
 }: {
-  path: string
-  componentPath: string
-  htmlComponentRendererPath: string
-  publicDir: string
-  isClientOnlyPage?: boolean
-  error?: IErrorRenderMeta | undefined
-  directory: string
-  serverData?: IServerData["props"] | undefined
+  path: string;
+  componentPath: string;
+  htmlComponentRendererPath: string;
+  publicDir: string;
+  isClientOnlyPage?: boolean | undefined;
+  error?: IErrorRenderMeta | undefined;
+  directory: string;
+  serverData?: IServerData["props"] | undefined;
 }): Promise<string> {
   try {
-    const htmlComponentRenderer = require(htmlComponentRendererPath)
+    const htmlComponentRenderer = require(htmlComponentRendererPath);
     if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
       return await htmlComponentRenderer.default({
         pagePath: path,
@@ -30,13 +30,13 @@ export async function renderHTML({
         publicDir,
         error,
         serverData,
-      })
+      });
     } else {
       return await htmlComponentRenderer.default({
         pagePath: path,
         publicDir,
         isClientOnlyPage: true,
-      })
+      });
     }
   } catch (err) {
     const error = parseError({
@@ -44,10 +44,10 @@ export async function renderHTML({
       directory,
       componentPath,
       htmlComponentRendererPath,
-    })
-    throw error
+    });
+    throw error;
   }
 }
 export function deleteModuleCache(htmlComponentRendererPath: string): void {
-  delete require.cache[require.resolve(htmlComponentRendererPath)]
+  delete require.cache[require.resolve(htmlComponentRendererPath)];
 }

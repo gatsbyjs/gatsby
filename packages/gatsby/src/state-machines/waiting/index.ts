@@ -1,13 +1,13 @@
-import { type MachineConfig, assign, createMachine } from "xstate"
-import type { IWaitingContext } from "./types"
-import { waitingActions } from "./actions"
-import { waitingServices } from "./services"
+import { type MachineConfig, assign, createMachine } from "xstate";
+import type { IWaitingContext } from "./types";
+import { waitingActions } from "./actions";
+import { waitingServices } from "./services";
 
-const NODE_MUTATION_BATCH_SIZE = 100
-const NODE_MUTATION_BATCH_TIMEOUT = 500
-const FILE_CHANGE_AGGREGATION_TIMEOUT = 200
+const NODE_MUTATION_BATCH_SIZE = 100;
+const NODE_MUTATION_BATCH_TIMEOUT = 500;
+const FILE_CHANGE_AGGREGATION_TIMEOUT = 200;
 
-export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
+export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">;
 
 /**
  * This idle state also handles batching of node mutations and running of
@@ -16,8 +16,8 @@ export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   predictableActionArguments: true,
-  id: `waitingMachine`,
-  initial: `idle`,
+  id: "waitingMachine",
+  initial: "idle",
   context: {
     nodeMutationBatch: [],
     runningBatch: [],
@@ -29,25 +29,25 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
           // If we already have queued node mutations, move
           // immediately to batching
           cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
-          target: `batchingNodeMutations`,
+          target: "batchingNodeMutations",
         },
         {
           // If source files are dirty upon entering this state,
           // move immediately to aggregatingFileChanges to force re-compilation
           // See https://github.com/gatsbyjs/gatsby/issues/27609
-          target: `aggregatingFileChanges`,
+          target: "aggregatingFileChanges",
           cond: ({ sourceFilesDirty }): boolean => Boolean(sourceFilesDirty),
         },
       ],
       on: {
         ADD_NODE_MUTATION: {
-          actions: `addNodeMutation`,
-          target: `batchingNodeMutations`,
+          actions: "addNodeMutation",
+          target: "batchingNodeMutations",
         },
         // We only listen for this when idling because if we receive it at any
         // other point we're already going to create pages etc
         SOURCE_FILE_CHANGED: {
-          target: `aggregatingFileChanges`,
+          target: "aggregatingFileChanges",
         },
       },
     },
@@ -58,14 +58,14 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
       after: {
         // The aggregation timeout
         [FILE_CHANGE_AGGREGATION_TIMEOUT]: {
-          actions: `extractQueries`,
-          target: `idle`,
+          actions: "extractQueries",
+          target: "idle",
         },
       },
       on: {
         ADD_NODE_MUTATION: {
-          actions: `addNodeMutation`,
-          target: `batchingNodeMutations`,
+          actions: "addNodeMutation",
+          target: "batchingNodeMutations",
         },
         SOURCE_FILE_CHANGED: {
           target: undefined,
@@ -79,7 +79,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
       always: {
         cond: (ctx): boolean =>
           ctx.nodeMutationBatch.length >= NODE_MUTATION_BATCH_SIZE,
-        target: `committingBatch`,
+        target: "committingBatch",
       },
       on: {
         // More mutations added to batch
@@ -87,20 +87,20 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
           // You know the score: only run the first matching transition
           {
             // If this fills the batch then commit it
-            actions: `addNodeMutation`,
+            actions: "addNodeMutation",
             cond: (ctx): boolean =>
               ctx.nodeMutationBatch.length >= NODE_MUTATION_BATCH_SIZE,
-            target: `committingBatch`,
+            target: "committingBatch",
           },
           {
             // ...otherwise just add it to the batch
-            actions: `addNodeMutation`,
+            actions: "addNodeMutation",
           },
         ],
       },
       after: {
         // Time's up
-        [NODE_MUTATION_BATCH_TIMEOUT]: `committingBatch`,
+        [NODE_MUTATION_BATCH_TIMEOUT]: "committingBatch",
       },
     },
     committingBatch: {
@@ -108,38 +108,38 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
         return {
           nodeMutationBatch: [],
           runningBatch: nodeMutationBatch,
-        }
+        };
       }),
       on: {
         // While we're running the batch we will also run new actions, as these may be cascades
         ADD_NODE_MUTATION: {
-          actions: `callApi`,
+          actions: "callApi",
         },
       },
       invoke: {
-        src: `runMutationBatch`,
+        src: "runMutationBatch",
         // When we're done, clear the running batch ready for next time
         onDone: {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           actions: assign<IWaitingContext, any>({
             runningBatch: [],
           }),
-          target: `rebuild`,
+          target: "rebuild",
         },
       },
     },
     rebuild: {
-      type: `final`,
+      type: "final",
       // This is returned to the parent. The batch includes
       // any mutations that arrived while we were running the other batch
       data: ({ nodeMutationBatch }): WaitingResult => {
-        return { nodeMutationBatch }
+        return { nodeMutationBatch };
       },
     },
   },
-}
+};
 
 export const waitingMachine = createMachine(waitingStates, {
   actions: waitingActions,
   services: waitingServices,
-})
+});

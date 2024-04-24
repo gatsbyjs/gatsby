@@ -11,56 +11,56 @@ import {
   type CSSProperties,
   type ReactEventHandler,
   type ComponentType,
-} from "react"
+} from "react";
 import {
   getWrapperProps,
   gatsbyImageIsInstalled,
   hasNativeLazyLoadSupport,
-} from "./hooks"
-import { getSizer } from "./layout-wrapper"
-import { propTypes } from "./gatsby-image.server"
+} from "./hooks";
+import { getSizer } from "./layout-wrapper";
+import { propTypes } from "./gatsby-image.server";
 
-import { renderImageToString } from "./lazy-hydrate"
-import type { PlaceholderProps } from "./placeholder"
-import type { MainImageProps } from "./main-image"
-import type { Layout } from "../image-utils"
+import { renderImageToString } from "./lazy-hydrate";
+import type { PlaceholderProps } from "./placeholder";
+import type { MainImageProps } from "./main-image";
+import type { Layout } from "../image-utils";
 
-const imageCache = new Set<string>()
+const imageCache = new Set<string>();
 
-let renderImageToStringPromise
-let renderImage: typeof renderImageToString | undefined
+let renderImageToStringPromise;
+let renderImage: typeof renderImageToString | undefined;
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export type GatsbyImageProps = {
-  alt: string
-  as?: ElementType | undefined
-  className?: string | undefined
-  class?: string | undefined
-  imgClassName?: string | undefined
-  image: IGatsbyImageData
-  imgStyle?: CSSProperties | undefined
-  backgroundColor?: string | undefined
-  objectFit?: CSSProperties["objectFit"] | undefined
-  objectPosition?: CSSProperties["objectPosition"] | undefined
-  onLoad?: ((props: { wasCached: boolean }) => void) | undefined
-  onError?: ReactEventHandler<HTMLImageElement> | undefined
-  onStartLoad?: ((props: { wasCached: boolean }) => void) | undefined
+  alt: string;
+  as?: ElementType | undefined;
+  className?: string | undefined;
+  class?: string | undefined;
+  imgClassName?: string | undefined;
+  image: IGatsbyImageData;
+  imgStyle?: CSSProperties | undefined;
+  backgroundColor?: string | undefined;
+  objectFit?: CSSProperties["objectFit"] | undefined;
+  objectPosition?: CSSProperties["objectPosition"] | undefined;
+  onLoad?: ((props: { wasCached: boolean }) => void) | undefined;
+  onError?: ReactEventHandler<HTMLImageElement> | undefined;
+  onStartLoad?: ((props: { wasCached: boolean }) => void) | undefined;
 } & Omit<
   ImgHTMLAttributes<HTMLImageElement>,
   "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
->
+>;
 
 export type IGatsbyImageData = {
-  layout: Layout
-  width: number
-  height: number
-  backgroundColor?: string | undefined
-  images: Pick<MainImageProps, "sources" | "fallback">
-  placeholder?: Pick<PlaceholderProps, "sources" | "fallback"> | undefined
-}
+  layout: Layout;
+  width: number;
+  height: number;
+  backgroundColor?: string | undefined;
+  images: Pick<MainImageProps, "sources" | "fallback">;
+  placeholder?: Pick<PlaceholderProps, "sources" | "fallback"> | undefined;
+};
 
 function _GatsbyImageHydrator({
-  as = `div`,
+  as = "div",
   image,
   style,
   backgroundColor,
@@ -71,92 +71,92 @@ function _GatsbyImageHydrator({
   onError,
   ...props
 }: GatsbyImageProps): JSX.Element {
-  const { width, height, layout } = image
+  const { width, height, layout } = image;
 
   const {
     style: wStyle,
     className: wClass,
     ...wrapperProps
-  } = getWrapperProps(width, height, layout)
+  } = getWrapperProps(width, height, layout);
 
-  const root = useRef<HTMLElement>()
+  const root = useRef<HTMLElement>();
 
-  const cacheKey = useMemo(() => JSON.stringify(image.images), [image.images])
+  const cacheKey = useMemo(() => JSON.stringify(image.images), [image.images]);
 
   // Preact uses class instead of className so we need to check for both
   if (preactClass) {
-    className = preactClass
+    className = preactClass;
   }
 
-  const sizer = getSizer(layout, width, height)
+  const sizer = getSizer(layout, width, height);
 
   useEffect(() => {
     if (!renderImageToStringPromise) {
-      renderImageToStringPromise = import(`./lazy-hydrate`).then(
+      renderImageToStringPromise = import("./lazy-hydrate").then(
         ({ renderImageToString, swapPlaceholderImage }) => {
-          renderImage = renderImageToString
+          renderImage = renderImageToString;
 
           return {
             renderImageToString,
             swapPlaceholderImage,
-          }
+          };
         },
-      )
+      );
     }
 
     // The plugin image component is a bit special where if it's server-side rendered, we add extra script tags to support lazy-loading without
     // In this case we stop hydration but fire the correct events.
     const ssrImage = root.current.querySelector(
-      `[data-gatsby-image-ssr]`,
-    ) as HTMLImageElement
+      "[data-gatsby-image-ssr]",
+    ) as HTMLImageElement;
 
     if (ssrImage && hasNativeLazyLoadSupport()) {
       if (ssrImage.complete) {
         // Trigger onStartload and onLoad events
         onStartLoad?.({
           wasCached: true,
-        })
+        });
         onLoad?.({
           wasCached: true,
-        })
+        });
 
         // remove ssr key for state updates but add delay to not fight with native code snippt of gatsby-ssr
         globalThis.setTimeout(() => {
-          ssrImage.removeAttribute(`data-gatsby-image-ssr`)
-        }, 0)
+          ssrImage.removeAttribute("data-gatsby-image-ssr");
+        }, 0);
       } else {
         onStartLoad?.({
           wasCached: true,
-        })
+        });
 
-        ssrImage.addEventListener(`load`, function onLoadListener() {
-          ssrImage.removeEventListener(`load`, onLoadListener)
+        ssrImage.addEventListener("load", function onLoadListener() {
+          ssrImage.removeEventListener("load", onLoadListener);
 
           onLoad?.({
             wasCached: true,
-          })
+          });
           // remove ssr key for state updates but add delay to not fight with native code snippt of gatsby-ssr
           globalThis.setTimeout(() => {
-            ssrImage.removeAttribute(`data-gatsby-image-ssr`)
-          }, 0)
-        })
+            ssrImage.removeAttribute("data-gatsby-image-ssr");
+          }, 0);
+        });
       }
 
-      imageCache.add(cacheKey)
+      imageCache.add(cacheKey);
 
-      return
+      return;
     }
 
     if (renderImage && imageCache.has(cacheKey)) {
-      return
+      return;
     }
 
-    let animationFrame
-    let cleanupCallback
+    let animationFrame;
+    let cleanupCallback;
     renderImageToStringPromise.then(
       ({ renderImageToString, swapPlaceholderImage }) => {
         if (!root.current) {
-          return
+          return;
         }
 
         root.current.innerHTML = renderImageToString({
@@ -164,7 +164,7 @@ function _GatsbyImageHydrator({
           isLoaded: imageCache.has(cacheKey),
           image,
           ...props,
-        })
+        });
 
         if (!imageCache.has(cacheKey)) {
           animationFrame = requestAnimationFrame(() => {
@@ -177,23 +177,23 @@ function _GatsbyImageHydrator({
                 onStartLoad,
                 onLoad,
                 onError,
-              )
+              );
             }
-          })
+          });
         }
       },
-    )
+    );
 
     // eslint-disable-next-line consistent-return
     return (): void => {
       if (animationFrame) {
-        cancelAnimationFrame(animationFrame)
+        cancelAnimationFrame(animationFrame);
       }
       if (cleanupCallback) {
-        cleanupCallback()
+        cleanupCallback();
       }
-    }
-  }, [image])
+    };
+  }, [image]);
 
   // useLayoutEffect is ran before React commits to the DOM. This allows us to make sure our HTML is using our cached image version
   useLayoutEffect(() => {
@@ -203,17 +203,17 @@ function _GatsbyImageHydrator({
         isLoaded: imageCache.has(cacheKey),
         image,
         ...props,
-      })
+      });
 
       // Trigger onStartload and onLoad events
       onStartLoad?.({
         wasCached: true,
-      })
+      });
       onLoad?.({
         wasCached: true,
-      })
+      });
     }
-  }, [image])
+  }, [image]);
 
   // By keeping all props equal React will keep the component in the DOM
   return createElement(as, {
@@ -223,38 +223,38 @@ function _GatsbyImageHydrator({
       ...style,
       backgroundColor,
     },
-    className: `${wClass}${className ? ` ${className}` : ``}`,
+    className: `${wClass}${className ? ` ${className}` : ""}`,
     ref: root,
     dangerouslySetInnerHTML: {
       __html: sizer,
     },
     suppressHydrationWarning: true,
-  })
+  });
 }
 
 const GatsbyImageHydrator: ComponentType<GatsbyImageProps> =
-  memo<GatsbyImageProps>(_GatsbyImageHydrator)
+  memo<GatsbyImageProps>(_GatsbyImageHydrator);
 
 function _GatsbyImage(props: GatsbyImageProps): JSX.Element {
   if (!props.image) {
-    if (process.env.NODE_ENV === `development`) {
-      console.warn(`[gatsby-plugin-image] Missing image prop`)
+    if (process.env.NODE_ENV === "development") {
+      console.warn("[gatsby-plugin-image] Missing image prop");
     }
 
-    return null
+    return null;
   }
 
-  if (!gatsbyImageIsInstalled() && process.env.NODE_ENV === `development`) {
+  if (!gatsbyImageIsInstalled() && process.env.NODE_ENV === "development") {
     console.warn(
-      `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`,
-    )
+      '[gatsby-plugin-image] You\'re missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js',
+    );
   }
 
-  return createElement(GatsbyImageHydrator, props)
+  return createElement(GatsbyImageHydrator, props);
 }
 
 export const GatsbyImage: ComponentType<GatsbyImageProps> =
-  memo<GatsbyImageProps>(_GatsbyImage)
+  memo<GatsbyImageProps>(_GatsbyImage);
 
-GatsbyImage.propTypes = propTypes
-GatsbyImage.displayName = `GatsbyImage`
+GatsbyImage.propTypes = propTypes;
+GatsbyImage.displayName = "GatsbyImage";

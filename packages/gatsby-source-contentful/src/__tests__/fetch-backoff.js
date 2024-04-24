@@ -3,89 +3,91 @@
  */
 // @ts-check
 
-import nock from "nock"
-import { fetchContent } from "../fetch"
-import { createPluginConfig } from "../plugin-options"
+import nock from "nock";
+import { fetchContent } from "../fetch";
+import { createPluginConfig } from "../plugin-options";
 
-const host = `localhost`
+const host = "localhost";
 const options = {
-  spaceId: `12345`,
-  accessToken: `67890`,
+  spaceId: "12345",
+  accessToken: "67890",
   host,
   contentfulClientConfig: {
     retryLimit: 2,
   },
-}
+};
 
-const baseURI = `https://${host}`
+const baseURI = `https://${host}`;
 
-const start = jest.fn()
-const end = jest.fn()
+const start = jest.fn();
+const end = jest.fn();
 const mockActivity = {
   start,
   end,
   tick: jest.fn(),
   done: end,
-}
+};
 
 const reporter = {
   info: jest.fn(),
   verbose: jest.fn(),
   warn: jest.fn(),
-  panic: jest.fn(e => {
-    throw e
+  panic: jest.fn((e) => {
+    throw e;
   }),
   activityTimer: jest.fn(() => mockActivity),
   createProgress: jest.fn(() => mockActivity),
-}
+};
 
-const pluginConfig = createPluginConfig(options)
+const pluginConfig = createPluginConfig(options);
 
-describe(`fetch-backoff`, () => {
+describe("fetch-backoff", () => {
   afterEach(() => {
-    nock.cleanAll()
-    reporter.verbose.mockClear()
-    reporter.panic.mockClear()
-    reporter.warn.mockClear()
-  })
+    nock.cleanAll();
+    reporter.verbose.mockClear();
+    reporter.panic.mockClear();
+    reporter.warn.mockClear();
+  });
 
-  test(`backoffs page limit when limit is reached`, async () => {
-    jest.setTimeout(30000)
+  test("backoffs page limit when limit is reached", async () => {
+    jest.setTimeout(30000);
     const scope = nock(baseURI)
       // Space
       .get(`/spaces/${options.spaceId}/`)
       .reply(200, { items: [] })
       // Locales
       .get(`/spaces/${options.spaceId}/environments/master/locales`)
-      .reply(200, { items: [{ code: `en`, default: true }] })
+      .reply(200, { items: [{ code: "en", default: true }] })
       // Sync with 1000 (to much)
       .get(
-        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
+        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`,
       )
       .times(1)
       .reply(400, {
-        sys: { type: `Error`, id: `BadRequest` },
-        message: `Response size too big. Maximum allowed response size: 512000B.`,
-        requestId: `12345`,
+        sys: { type: "Error", id: "BadRequest" },
+        message:
+          "Response size too big. Maximum allowed response size: 512000B.",
+        requestId: "12345",
       })
       // Sync with 666 (still to much)
       .get(
-        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=666`
+        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=666`,
       )
       .times(1)
       .reply(400, {
-        sys: { type: `Error`, id: `BadRequest` },
-        message: `Response size too big. Maximum allowed response size: 512000B.`,
-        requestId: `12345`,
+        sys: { type: "Error", id: "BadRequest" },
+        message:
+          "Response size too big. Maximum allowed response size: 512000B.",
+        requestId: "12345",
       })
       // Sync with 444
       .get(
-        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=444`
+        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=444`,
       )
-      .reply(200, { items: [] })
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+      .reply(200, { items: [] });
+    await fetchContent({ pluginConfig, reporter, syncToken: null });
 
-    expect(reporter.panic).not.toBeCalled()
+    expect(reporter.panic).not.toBeCalled();
     expect(reporter.warn.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -102,29 +104,29 @@ describe(`fetch-backoff`, () => {
           "We recommend you to set your pageLimit in gatsby-config.js to 444 to avoid failed synchronizations.",
         ],
       ]
-    `)
-    expect(scope.isDone()).toBeTruthy()
-  })
+    `);
+    expect(scope.isDone()).toBeTruthy();
+  });
 
-  test(`does not backoff page limit when limit is not reached`, async () => {
-    jest.setTimeout(30000)
+  test("does not backoff page limit when limit is not reached", async () => {
+    jest.setTimeout(30000);
     const scope = nock(baseURI)
       // Space
       .get(`/spaces/${options.spaceId}/`)
       .reply(200, { items: [] })
       // Locales
       .get(`/spaces/${options.spaceId}/environments/master/locales`)
-      .reply(200, { items: [{ code: `en`, default: true }] })
+      .reply(200, { items: [{ code: "en", default: true }] })
       // Sync with 1000 (no limit exceeded)
       .get(
-        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
+        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`,
       )
-      .reply(200, { items: [] })
+      .reply(200, { items: [] });
 
-    await fetchContent({ pluginConfig, reporter, syncToken: null })
+    await fetchContent({ pluginConfig, reporter, syncToken: null });
 
-    expect(reporter.panic).not.toBeCalled()
-    expect(reporter.warn).not.toBeCalled()
-    expect(scope.isDone()).toBeTruthy()
-  })
-})
+    expect(reporter.panic).not.toBeCalled();
+    expect(reporter.warn).not.toBeCalled();
+    expect(scope.isDone()).toBeTruthy();
+  });
+});

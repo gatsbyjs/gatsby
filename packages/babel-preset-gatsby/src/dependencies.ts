@@ -1,9 +1,9 @@
 // This file is heavily based on create-react-app's implementation
 // @see https://github.com/facebook/create-react-app/blob/master/packages/babel-preset-react-app/dependencies.js
 
-import * as path from "node:path"
-import { loadCachedConfig } from "./index"
-import { CORE_JS_POLYFILL_EXCLUDE_LIST as polyfillsToExclude } from "gatsby-legacy-polyfills/dist/exclude"
+import * as path from "node:path";
+import { loadCachedConfig } from "./index";
+import { CORE_JS_POLYFILL_EXCLUDE_LIST as polyfillsToExclude } from "gatsby-legacy-polyfills/dist/exclude";
 
 type IPresetOptions = {
   stage?:
@@ -11,43 +11,43 @@ type IPresetOptions = {
     | "build-html"
     | "develop"
     | "develop-html"
-    | undefined
-}
+    | undefined;
+};
 
 // export default is required here because it is passed directly to webpack
 // via require.resolve
 // This function has a better inference than would be beneficial to type, and it's relatively easy to grok.
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export default (_?: unknown, options: IPresetOptions = {}) => {
+export default (_?: unknown | undefined, options: IPresetOptions = {}) => {
   const absoluteRuntimePath = path.dirname(
-    require.resolve(`@babel/runtime/package.json`),
-  )
+    require.resolve("@babel/runtime/package.json"),
+  );
 
-  const stage = options.stage || `test`
-  const pluginBabelConfig = loadCachedConfig()
-  const targets = pluginBabelConfig.browserslist
+  const stage = options.stage || "test";
+  const pluginBabelConfig = loadCachedConfig();
+  const targets = pluginBabelConfig.browserslist;
 
   return {
     // Babel assumes ES Modules, which isn't safe until CommonJS
     // dies. This changes the behavior to assume CommonJS unless
     // an `import` or `export` is present in the file.
     // https://github.com/webpack/webpack/issues/4039#issuecomment-419284940
-    sourceType: `unambiguous`,
+    sourceType: "unambiguous",
     presets: [
       [
         // Latest stable ECMAScript features
-        require.resolve(`@babel/preset-env`),
+        require.resolve("@babel/preset-env"),
         {
           // Allow importing core-js in entrypoint and use browserlist to select polyfills
           // V3 change, make this entry
-          useBuiltIns: `usage`,
+          useBuiltIns: "usage",
           corejs: 3,
           modules: false,
           // debug: true,
           targets,
           exclude: [
             // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
-            `transform-typeof-symbol`,
+            "transform-typeof-symbol",
             ...polyfillsToExclude,
           ],
         },
@@ -57,7 +57,7 @@ export default (_?: unknown, options: IPresetOptions = {}) => {
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
-        require.resolve(`@babel/plugin-transform-runtime`),
+        require.resolve("@babel/plugin-transform-runtime"),
         {
           corejs: false,
           helpers: true,
@@ -73,14 +73,14 @@ export default (_?: unknown, options: IPresetOptions = {}) => {
         },
       ],
       // Adds syntax support for import()
-      require.resolve(`@babel/plugin-syntax-dynamic-import`),
-      stage === `build-javascript` && [
+      require.resolve("@babel/plugin-syntax-dynamic-import"),
+      stage === "build-javascript" && [
         // Remove PropTypes from production build
-        require.resolve(`babel-plugin-transform-react-remove-prop-types`),
+        require.resolve("babel-plugin-transform-react-remove-prop-types"),
         {
           removeImport: true,
         },
       ],
     ].filter(Boolean),
-  }
-}
+  };
+};

@@ -1,79 +1,79 @@
 /**  @jest-environment node */
-import { exec } from "child_process"
+import { exec } from "child_process";
 
-jest.mock(`child_process`, () => {
+jest.mock("child_process", () => {
   return {
     exec: jest.fn(async (_command, _options, cb) => {
       setImmediate(() => {
         try {
           return cb(
             null,
-            `> sharp@0.29.3 install C:\\Users\\Ward\\projects\\gatsby\\gatsby\\node_modules\\sharp\n`,
-            ``
-          )
+            "> sharp@0.29.3 install C:\\Users\\Ward\\projects\\gatsby\\gatsby\\node_modules\\sharp\n",
+            "",
+          );
         } catch (err) {
-          return cb(true, ``, err.message)
+          return cb(true, "", err.message);
         }
-      })
+      });
     }),
-  }
-})
+  };
+});
 
 function getSharpInstance(): typeof import("../index") {
-  let getSharpInstance
+  let getSharpInstance;
   jest.isolateModules(() => {
-    getSharpInstance = require(`../index`)
-  })
+    getSharpInstance = require("../index");
+  });
 
-  return getSharpInstance()
+  return getSharpInstance();
 }
 
-describe(`getSharpInstance`, () => {
+describe("getSharpInstance", () => {
   beforeEach(() => {
     // @ts-ignore
-    exec.mockClear()
-  })
+    exec.mockClear();
+  });
 
   // jest mocking is making this impossible to test
-  it(`should give you the bare sharp module`, async () => {
-    const sharpInstance = await getSharpInstance()
+  it("should give you the bare sharp module", async () => {
+    const sharpInstance = await getSharpInstance();
 
-    expect(exec).not.toHaveBeenCalled()
-    expect(sharpInstance).toBeDefined()
+    expect(exec).not.toHaveBeenCalled();
+    expect(sharpInstance).toBeDefined();
     // @ts-ignore
-    expect(sharpInstance.versions).toBeDefined()
-  })
+    expect(sharpInstance.versions).toBeDefined();
+  });
 
   it(
-    `should rebuild sharp when binaries not found for current arch`,
+    "should rebuild sharp when binaries not found for current arch",
     async () => {
-      expect.assertions(3)
+      expect.assertions(3);
 
-      let called = false
-      jest.doMock(`sharp`, () => {
+      let called = false;
+      jest.doMock("sharp", () => {
         if (!called) {
-          called = true
-          throw new Error(`sharp failed to load`)
+          called = true;
+          throw new Error("sharp failed to load");
         }
 
-        return jest.requireActual(`sharp`)
-      })
+        return jest.requireActual("sharp");
+      });
 
       try {
-        const sharpInstance = await getSharpInstance()
-        expect(sharpInstance).toBeDefined()
+        const sharpInstance = await getSharpInstance();
+        expect(sharpInstance).toBeDefined();
         // @ts-ignore
-        expect(sharpInstance.versions).toBeDefined()
+        expect(sharpInstance.versions).toBeDefined();
       } catch (err) {
         // ignore
       }
 
       expect(exec).toHaveBeenCalledWith(
-        `npm rebuild sharp`,
+        "npm rebuild sharp",
         expect.anything(),
-        expect.anything()
-      )
+        expect.anything(),
+      );
     },
-    60 * 1000
-  )
-})
+    60 * 1000,
+  );
+});

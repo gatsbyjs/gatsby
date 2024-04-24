@@ -1,10 +1,10 @@
-import type { ActionsUnion, IGatsbyCLIState, ISetLogs } from "../types"
-import { Actions } from "../../constants"
+import type { ActionsUnion, IGatsbyCLIState, ISetLogs } from "../types";
+import { Actions } from "../../constants";
 
 export const reducer = (
   state: IGatsbyCLIState = {
     activities: {},
-    status: ``,
+    status: "",
   },
   action: ActionsUnion | ISetLogs,
 ): IGatsbyCLIState => {
@@ -13,24 +13,24 @@ export const reducer = (
       return {
         ...state,
         status: action.payload,
-      }
+      };
     }
 
     case Actions.StartActivity: {
-      const { id } = action.payload
+      const { id } = action.payload;
       return {
         ...state,
         activities: {
           ...state.activities,
           [id]: action.payload,
         },
-      }
+      };
     }
 
     case Actions.UpdateActivity:
     case Actions.PendingActivity: {
-      const { id, ...rest } = action.payload
-      const activity = state.activities[id]
+      const { id, ...rest } = action.payload;
+      const activity = state.activities[id];
 
       return {
         ...state,
@@ -42,11 +42,11 @@ export const reducer = (
             ...rest,
           },
         },
-      }
+      };
     }
     case Actions.ActivityErrored: {
-      const { id } = action.payload
-      const activity = state.activities[id]
+      const { id } = action.payload;
+      const activity = state.activities[id];
 
       return {
         ...state,
@@ -57,34 +57,34 @@ export const reducer = (
             errored: true,
           },
         },
-      }
+      };
     }
 
     case Actions.EndActivity:
     case Actions.CancelActivity: {
-      const { id, status, duration } = action.payload
-      const activity = state.activities[id]
+      const { id, status, duration } = action.payload;
+      const activity = state.activities[id];
       if (!activity) {
-        return state
+        return state;
       }
 
-      const activities = { ...state.activities }
+      const activities = { ...state.activities };
       activities[id] = {
         ...activity,
         status,
         duration,
-      }
+      };
 
       return {
         ...state,
         activities,
-      }
+      };
     }
 
     case Actions.SetLogs: {
-      return action.payload
+      return action.payload;
     }
   }
 
-  return state
-}
+  return state;
+};

@@ -1,30 +1,30 @@
-import { LoaderContext } from "webpack"
-import { createFileToMdxCacheKey } from "../cache-helpers"
-import gatsbyLayoutLoader from "../gatsby-layout-loader"
-import gatsbyMDXLoader from "../gatsby-mdx-loader"
-import { mockGatsbyApi } from "../__fixtures__/test-utils"
+import { LoaderContext } from "webpack";
+import { createFileToMdxCacheKey } from "../cache-helpers";
+import gatsbyLayoutLoader from "../gatsby-layout-loader";
+import gatsbyMDXLoader from "../gatsby-mdx-loader";
+import { mockGatsbyApi } from "../__fixtures__/test-utils";
 
-const { cache, getNode, reporter } = mockGatsbyApi()
+const { cache, getNode, reporter } = mockGatsbyApi();
 
 const exampleMDX = `# Layout test
 
 Does it wrap?
 
-<Example/>`
+<Example/>`;
 
-const nodeExists: () => boolean = () => true
+const nodeExists: () => boolean = () => true;
 
-const getNodeMock = getNode as jest.Mock
+const getNodeMock = getNode as jest.Mock;
 
-const resourcePath = `/mocked`
-const resourceQuery = `mocked`
+const resourcePath = "/mocked";
+const resourceQuery = "mocked";
 
 const parseMDX = async (source: string): Promise<string | Buffer | void> => {
   getNodeMock.mockImplementation(() => {
     return {
       body: source,
-    }
-  })
+    };
+  });
 
   const JSXSource = await gatsbyMDXLoader.call(
     {
@@ -34,19 +34,19 @@ const parseMDX = async (source: string): Promise<string | Buffer | void> => {
           getNode,
           cache,
           reporter,
-        }
+        };
       },
       resourcePath,
       resourceQuery,
       addDependency: jest.fn(),
     } as unknown as LoaderContext<string>,
-    source
-  )
+    source,
+  );
   getNodeMock.mockImplementation(() => {
     return {
       body: JSXSource,
-    }
-  })
+    };
+  });
 
   const loaderPromise = gatsbyLayoutLoader.call(
     {
@@ -54,22 +54,22 @@ const parseMDX = async (source: string): Promise<string | Buffer | void> => {
         return {
           nodeExists,
           reporter,
-        }
+        };
       },
-      resourcePath: `/mocked-layout.ts`,
-      resourceQuery: `?contentFilePath=/mocked-content.mdx`,
+      resourcePath: "/mocked-layout.ts",
+      resourceQuery: "?contentFilePath=/mocked-content.mdx",
       addDependency: jest.fn(),
     } as unknown as LoaderContext<string>,
-    String(JSXSource)
-  )
+    String(JSXSource),
+  );
 
-  return loaderPromise
-}
+  return loaderPromise;
+};
 
-describe(`webpack loader: loads and injects Gatsby layout component`, () => {
-  cache.set(createFileToMdxCacheKey(resourcePath), 123)
+describe("webpack loader: loads and injects Gatsby layout component", () => {
+  cache.set(createFileToMdxCacheKey(resourcePath), 123);
 
-  it(`MDX without layout`, async () => {
+  it("MDX without layout", async () => {
     await expect(parseMDX(exampleMDX)).resolves.toMatchInlineSnapshot(`
             "import React from \\"react\\";
             import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
@@ -102,13 +102,13 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
               throw new Error(\\"Expected \\" + (component ? \\"component\\" : \\"object\\") + \\" \`\\" + id + \\"\` to be defined: you likely forgot to import, pass, or provide it.\\");
             }
             "
-          `)
-  })
-  it(`MDX with imported layout as default export`, async () => {
+          `);
+  });
+  it("MDX with imported layout as default export", async () => {
     await expect(
       parseMDX(
-        `import TemplateComponent from "./some-path"\n\n${exampleMDX}\n\nexport default TemplateComponent`
-      )
+        `import TemplateComponent from "./some-path"\n\n${exampleMDX}\n\nexport default TemplateComponent`,
+      ),
     ).resolves.toMatchInlineSnapshot(`
             "import React from \\"react\\";
             import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
@@ -142,11 +142,11 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
               throw new Error(\\"Expected \\" + (component ? \\"component\\" : \\"object\\") + \\" \`\\" + id + \\"\` to be defined: you likely forgot to import, pass, or provide it.\\");
             }
             "
-          `)
-  })
-  it(`MDX with layout exporting default directly`, async () => {
+          `);
+  });
+  it("MDX with layout exporting default directly", async () => {
     await expect(
-      parseMDX(`${exampleMDX}\n\nexport {default} from "./some-path"`)
+      parseMDX(`${exampleMDX}\n\nexport {default} from "./some-path"`),
     ).resolves.toMatchInlineSnapshot(`
             "import React from \\"react\\";
             import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
@@ -179,11 +179,13 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
               throw new Error(\\"Expected \\" + (component ? \\"component\\" : \\"object\\") + \\" \`\\" + id + \\"\` to be defined: you likely forgot to import, pass, or provide it.\\");
             }
             "
-          `)
-  })
-  it(`MDX with layout exporting named default directly`, async () => {
+          `);
+  });
+  it("MDX with layout exporting named default directly", async () => {
     await expect(
-      parseMDX(`${exampleMDX}\n\nexport {Layout as default} from "./some-path"`)
+      parseMDX(
+        `${exampleMDX}\n\nexport {Layout as default} from "./some-path"`,
+      ),
     ).resolves.toMatchInlineSnapshot(`
             "import React from \\"react\\";
             import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
@@ -216,6 +218,6 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
               throw new Error(\\"Expected \\" + (component ? \\"component\\" : \\"object\\") + \\" \`\\" + id + \\"\` to be defined: you likely forgot to import, pass, or provide it.\\");
             }
             "
-          `)
-  })
-})
+          `);
+  });
+});

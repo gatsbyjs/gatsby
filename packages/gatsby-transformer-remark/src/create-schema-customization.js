@@ -29,26 +29,26 @@ const typeDefs = `
   type MarkdownRemark implements Node @infer @childOf(mimeTypes: ["text/markdown", "text/x-markdown"]) {
     id: ID!
   }
-`
+`;
 
 module.exports = (nodeApiArgs, pluginOptions = {}) => {
-  const { plugins = [] } = pluginOptions
+  const { plugins = [] } = pluginOptions;
 
-  nodeApiArgs.actions.createTypes(typeDefs)
+  nodeApiArgs.actions.createTypes(typeDefs);
 
   // This allows subplugins to use Node APIs bound to `gatsby-transformer-remark`
   // to customize the GraphQL schema. This makes it possible for subplugins to
   // modify types owned by `gatsby-transformer-remark`.
-  plugins.forEach(plugin => {
-    const resolvedPlugin = plugin.module
+  plugins.forEach((plugin) => {
+    const resolvedPlugin = plugin.module;
 
-    if (typeof resolvedPlugin.createSchemaCustomization === `function`) {
+    if (typeof resolvedPlugin.createSchemaCustomization === "function") {
       resolvedPlugin.createSchemaCustomization(
         nodeApiArgs,
-        plugin.pluginOptions
-      )
+        plugin.pluginOptions,
+      );
     }
-  })
-}
+  });
+};
 
-module.exports.typeDefs = typeDefs
+module.exports.typeDefs = typeDefs;

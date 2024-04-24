@@ -1,245 +1,246 @@
-import _ from "lodash"
+import sampleSiteForExperiment from "../sample-site-for-experiment";
+import handleFlags from "../handle-flags";
+import { type IFlag, satisfiesSemvers, type FitnessEnum } from "../flags";
 
-import sampleSiteForExperiment from "../sample-site-for-experiment"
-import handleFlags from "../handle-flags"
-import { IFlag, satisfiesSemvers, fitnessEnum } from "../flags"
-
-jest.mock(`gatsby-core-utils`, () => {
+jest.mock("gatsby-core-utils", () => {
   return {
     isCI: (): boolean => true,
-  }
-})
+  };
+});
 
-describe(`satisfies semver`, () => {
-  it(`returns false if a module doesn't exist`, () => {
+describe("satisfies semver", () => {
+  it("returns false if a module doesn't exist", () => {
     const semverConstraints = {
       // Because of this, this flag will never show up
-      "gatsby-plugin-sharpy": `>=2.10.0`,
-    }
-    expect(satisfiesSemvers(semverConstraints)).toBeFalsy()
-  })
-})
+      "gatsby-plugin-sharpy": ">=2.10.0",
+    };
+    expect(satisfiesSemvers(semverConstraints)).toBeFalsy();
+  });
+});
 
-describe(`handle flags`, () => {
+describe("handle flags", () => {
   const activeFlags: Array<IFlag> = [
     {
-      name: `FAST_DEV`,
-      env: `GATSBY_EXPERIMENTAL_FAST_DEV`,
-      command: `develop`,
-      telemetryId: `test`,
+      name: "FAST_DEV",
+      env: "GATSBY_EXPERIMENTAL_FAST_DEV",
+      command: "develop",
+      telemetryId: "test",
       experimental: false,
-      description: `Enable all experiments aimed at improving develop server start time`,
-      includedFlags: [`DEV_SSR`, `QUERY_ON_DEMAND`],
-      testFitness: (): fitnessEnum => true,
+      description:
+        "Enable all experiments aimed at improving develop server start time",
+      includedFlags: ["DEV_SSR", "QUERY_ON_DEMAND"],
+      testFitness: (): FitnessEnum => true,
     },
     {
-      name: `DEV_SSR`,
-      env: `GATSBY_EXPERIMENTAL_DEV_SSR`,
-      command: `develop`,
-      telemetryId: `test`,
+      name: "DEV_SSR",
+      env: "GATSBY_EXPERIMENTAL_DEV_SSR",
+      command: "develop",
+      telemetryId: "test",
       experimental: false,
-      description: `SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
-      umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28138`,
-      testFitness: (): fitnessEnum => true,
+      description:
+        "SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.",
+      umbrellaIssue: "https://github.com/gatsbyjs/gatsby/discussions/28138",
+      testFitness: (): FitnessEnum => true,
     },
     {
-      name: `QUERY_ON_DEMAND`,
-      env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
-      command: `develop`,
-      telemetryId: `test`,
+      name: "QUERY_ON_DEMAND",
+      env: "GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND",
+      command: "develop",
+      telemetryId: "test",
       experimental: false,
-      description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
-      umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27620`,
+      description:
+        "Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.",
+      umbrellaIssue: "https://github.com/gatsbyjs/gatsby/discussions/27620",
       noCI: true,
-      testFitness: (): fitnessEnum => true,
+      testFitness: (): FitnessEnum => true,
     },
     {
-      name: `ONLY_BUILDS`,
-      env: `GATSBY_EXPERIMENTAL_BUILD_ME_FASTER`,
-      command: `build`,
-      telemetryId: `test`,
+      name: "ONLY_BUILDS",
+      env: "GATSBY_EXPERIMENTAL_BUILD_ME_FASTER",
+      command: "build",
+      telemetryId: "test",
       experimental: false,
-      description: `test`,
-      umbrellaIssue: `test`,
-      testFitness: (): fitnessEnum => true,
+      description: "test",
+      umbrellaIssue: "test",
+      testFitness: (): FitnessEnum => true,
     },
     {
-      name: `ALL_COMMANDS`,
-      env: `GATSBY_EXPERIMENTAL_SOMETHING_COOL`,
-      command: `all`,
-      telemetryId: `test`,
+      name: "ALL_COMMANDS",
+      env: "GATSBY_EXPERIMENTAL_SOMETHING_COOL",
+      command: "all",
+      telemetryId: "test",
       experimental: false,
-      description: `test`,
-      umbrellaIssue: `test`,
-      testFitness: (): fitnessEnum => true,
+      description: "test",
+      umbrellaIssue: "test",
+      testFitness: (): FitnessEnum => true,
     },
     {
-      name: `YET_ANOTHER`,
-      env: `GATSBY_EXPERIMENTAL_SOMETHING_COOL2`,
-      command: `all`,
-      telemetryId: `test`,
+      name: "YET_ANOTHER",
+      env: "GATSBY_EXPERIMENTAL_SOMETHING_COOL2",
+      command: "all",
+      telemetryId: "test",
       experimental: false,
-      description: `test`,
-      umbrellaIssue: `test`,
-      testFitness: (): fitnessEnum => true,
+      description: "test",
+      umbrellaIssue: "test",
+      testFitness: (): FitnessEnum => true,
     },
     {
-      name: `PARTIAL_RELEASE`,
-      env: `GATSBY_READY_TO_GO`,
-      command: `all`,
-      telemetryId: `test`,
+      name: "PARTIAL_RELEASE",
+      env: "GATSBY_READY_TO_GO",
+      command: "all",
+      telemetryId: "test",
       experimental: false,
-      description: `test`,
-      umbrellaIssue: `test`,
-      testFitness: (flag): fitnessEnum => {
+      description: "test",
+      umbrellaIssue: "test",
+      testFitness: (flag): FitnessEnum => {
         if (sampleSiteForExperiment(flag.name, 100)) {
-          return `OPT_IN`
+          return "OPT_IN";
         } else {
-          return false
+          return false;
         }
       },
     },
     {
-      name: `PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH`,
-      env: `GATSBY_READY_TO_GO_LODASH`,
-      command: `all`,
-      telemetryId: `test`,
+      name: "PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH",
+      env: "GATSBY_READY_TO_GO_LODASH",
+      command: "all",
+      telemetryId: "test",
       experimental: false,
-      description: `test`,
-      umbrellaIssue: `test`,
-      testFitness: (flag): fitnessEnum => {
+      description: "test",
+      umbrellaIssue: "test",
+      testFitness: (flag): FitnessEnum => {
         const semver = {
           // Because of this, this flag will never show up
-          lodash: `<=3.9`,
-        }
+          lodash: "<=3.9",
+        };
         if (
           satisfiesSemvers(semver) &&
           sampleSiteForExperiment(flag.name, 100)
         ) {
-          return `OPT_IN`
+          return "OPT_IN";
         } else {
-          return false
+          return false;
         }
       },
     },
     {
-      name: `PARTIAL_RELEASE_ONLY_NEW_LODASH`,
-      env: `GATSBY_READY_TO_GO_NEW_LODASH`,
-      command: `all`,
-      description: `test`,
-      umbrellaIssue: `test`,
-      telemetryId: `test`,
+      name: "PARTIAL_RELEASE_ONLY_NEW_LODASH",
+      env: "GATSBY_READY_TO_GO_NEW_LODASH",
+      command: "all",
+      description: "test",
+      umbrellaIssue: "test",
+      telemetryId: "test",
       experimental: false,
-      testFitness: (flag): fitnessEnum => {
+      testFitness: (flag): FitnessEnum => {
         const semver = {
           // Because of this, this flag will never show up
-          lodash: `>=4.9`,
-        }
+          lodash: ">=4.9",
+        };
         if (
           satisfiesSemvers(semver) &&
           sampleSiteForExperiment(flag.name, 100)
         ) {
-          return `OPT_IN`
+          return "OPT_IN";
         } else {
-          return false
+          return false;
         }
       },
     },
     {
-      name: `LMDB_NODE14_ONLY`,
-      env: `GATSBY_LMDB`,
-      command: `all`,
-      description: `test`,
-      umbrellaIssue: `test`,
-      telemetryId: `test`,
+      name: "LMDB_NODE14_ONLY",
+      env: "GATSBY_LMDB",
+      command: "all",
+      description: "test",
+      umbrellaIssue: "test",
+      telemetryId: "test",
       experimental: false,
-      testFitness: (): fitnessEnum => false,
-      requires: `Requires Node 14.10+`,
+      testFitness: (): FitnessEnum => false,
+      requires: "Requires Node 14.10+",
     },
-  ]
+  ];
 
   const configFlags = {
     FAST_DEV: true,
     ALL_COMMANDS: true,
-  }
+  };
   const configFlagsWithFalse = {
     ALL_COMMANDS: true,
     DEV_SSR: false,
-  }
+  };
   const configWithFlagsNoCi = {
     QUERY_ON_DEMAND: true,
     DEV_SSR: true,
-  }
+  };
 
-  it(`returns enabledConfigFlags and a message`, () => {
-    expect(handleFlags(activeFlags, configFlags, `develop`)).toMatchSnapshot()
-  })
+  it("returns enabledConfigFlags and a message", () => {
+    expect(handleFlags(activeFlags, configFlags, "develop")).toMatchSnapshot();
+  });
 
-  it(`filters out flags marked false`, () => {
-    const result = handleFlags(activeFlags, configFlagsWithFalse, `develop`)
-    expect(result.enabledConfigFlags).toHaveLength(3)
-    expect(result).toMatchSnapshot()
-  })
+  it("filters out flags marked false", () => {
+    const result = handleFlags(activeFlags, configFlagsWithFalse, "develop");
+    expect(result.enabledConfigFlags).toHaveLength(3);
+    expect(result).toMatchSnapshot();
+  });
 
-  it(`filters out flags that are marked as not available on CI`, () => {
+  it("filters out flags that are marked as not available on CI", () => {
     expect(
-      handleFlags(activeFlags, configWithFlagsNoCi, `develop`)
-        .enabledConfigFlags
-    ).toHaveLength(3)
-  })
+      handleFlags(activeFlags, configWithFlagsNoCi, "develop")
+        .enabledConfigFlags,
+    ).toHaveLength(3);
+  });
 
-  it(`filters out flags that aren't for the current command`, () => {
+  it("filters out flags that aren't for the current command", () => {
     expect(
-      handleFlags(activeFlags, configFlags, `build`).enabledConfigFlags
-    ).toHaveLength(3)
-  })
+      handleFlags(activeFlags, configFlags, "build").enabledConfigFlags,
+    ).toHaveLength(3);
+  });
 
-  it(`returns a message about unknown flags in the config`, () => {
+  it("returns a message about unknown flags in the config", () => {
     const unknownConfigFlags = handleFlags(
       activeFlags,
       { ALL_COMMANDS: true, FASTLY_DEV: true, SUPER_COOL_FLAG: true },
-      `develop`
-    )
-    expect(unknownConfigFlags).toMatchSnapshot()
-  })
+      "develop",
+    );
+    expect(unknownConfigFlags).toMatchSnapshot();
+  });
 
-  it(`returns a message about unfit flags in the config`, () => {
+  it("returns a message about unfit flags in the config", () => {
     const unfitConfigFlags = handleFlags(
       activeFlags,
       { LMDB_NODE14_ONLY: true },
-      `develop`
-    )
+      "develop",
+    );
     expect(unfitConfigFlags.enabledConfigFlags).not.toContain(
       expect.objectContaining({
-        name: `LMDB_NODE14_ONLY`,
-      })
-    )
+        name: "LMDB_NODE14_ONLY",
+      }),
+    );
     expect(unfitConfigFlags.unfitFlagMessage).toMatchInlineSnapshot(`
       "The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:
       - LMDB_NODE14_ONLY: Requires Node 14.10+"
-    `)
-    expect(unfitConfigFlags.unknownFlagMessage).toEqual(``)
-  })
+    `);
+    expect(unfitConfigFlags.unknownFlagMessage).toEqual("");
+  });
 
-  it(`opts in sites to a flag if their site is selected for partial release`, () => {
+  it("opts in sites to a flag if their site is selected for partial release", () => {
     // Nothing is enabled in their config.
-    const response = handleFlags(activeFlags, {}, `develop`)
-    expect(response).toMatchSnapshot()
-  })
+    const response = handleFlags(activeFlags, {}, "develop");
+    expect(response).toMatchSnapshot();
+  });
 
-  it(`removes flags people explicitly opt out of and ignores flags that don't pass semver`, () => {
+  it("removes flags people explicitly opt out of and ignores flags that don't pass semver", () => {
     const response = handleFlags(
       activeFlags,
       {
         PARTIAL_RELEASE: false,
         PARTIAL_RELEASE_ONLY_NEW_LODASH: false,
       },
-      `develop`
-    )
-    expect(response.enabledConfigFlags).toHaveLength(0)
-  })
+      "develop",
+    );
+    expect(response.enabledConfigFlags).toHaveLength(0);
+  });
 
-  it(`doesn't count unfit flags as unknown`, () => {
+  it("doesn't count unfit flags as unknown", () => {
     const response = handleFlags(
       activeFlags,
       {
@@ -247,8 +248,8 @@ describe(`handle flags`, () => {
         PARTIAL_RELEASE: false,
         PARTIAL_RELEASE_ONLY_NEW_LODASH: false,
       },
-      `develop`
-    )
+      "develop",
+    );
 
     // it currently just silently disables it
     expect(response).toMatchInlineSnapshot(`
@@ -259,22 +260,22 @@ describe(`handle flags`, () => {
       - PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH",
         "unknownFlagMessage": "",
       }
-    `)
-  })
+    `);
+  });
 
-  it(`Prefers explicit opt-in over auto opt-in (for terminal message)`, () => {
+  it("Prefers explicit opt-in over auto opt-in (for terminal message)", () => {
     const response = handleFlags(
       activeFlags.concat([
         {
-          name: `ALWAYS_OPT_IN`,
-          env: `GATSBY_ALWAYS_OPT_IN`,
-          command: `all`,
-          description: `test`,
-          umbrellaIssue: `test`,
-          telemetryId: `test`,
+          name: "ALWAYS_OPT_IN",
+          env: "GATSBY_ALWAYS_OPT_IN",
+          command: "all",
+          description: "test",
+          umbrellaIssue: "test",
+          telemetryId: "test",
           experimental: false,
           // this will always OPT IN
-          testFitness: (): fitnessEnum => `OPT_IN`,
+          testFitness: (): FitnessEnum => "OPT_IN",
         },
       ]),
       {
@@ -283,10 +284,10 @@ describe(`handle flags`, () => {
         PARTIAL_RELEASE: false,
         PARTIAL_RELEASE_ONLY_NEW_LODASH: false,
       },
-      `develop`
-    )
+      "develop",
+    );
 
-    expect(response.message).not.toContain(`automatically enabled`)
+    expect(response.message).not.toContain("automatically enabled");
     expect(response.message).toMatchInlineSnapshot(`
       "The following flags are active:
       - ALWAYS_OPT_IN · (Umbrella Issue (test)) · test
@@ -297,99 +298,99 @@ describe(`handle flags`, () => {
       - ALL_COMMANDS · (Umbrella Issue (test)) · test
       - YET_ANOTHER · (Umbrella Issue (test)) · test
       "
-    `)
-  })
+    `);
+  });
 
-  describe(`LOCKED_IN`, () => {
-    it(`Enables locked in flag by default and doesn't mention it in terminal (no spam)`, () => {
+  describe("LOCKED_IN", () => {
+    it("Enables locked in flag by default and doesn't mention it in terminal (no spam)", () => {
       const response = handleFlags(
         [
           {
-            name: `ALWAYS_LOCKED_IN`,
-            env: `GATSBY_ALWAYS_LOCKED_IN`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "ALWAYS_LOCKED_IN",
+            env: "GATSBY_ALWAYS_LOCKED_IN",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
             // this will always LOCKED IN
-            testFitness: (): fitnessEnum => `LOCKED_IN`,
+            testFitness: (): FitnessEnum => "LOCKED_IN",
           },
         ],
         {},
-        `develop`
-      )
+        "develop",
+      );
 
       expect(response.enabledConfigFlags).toContainEqual(
-        expect.objectContaining({ name: `ALWAYS_LOCKED_IN` })
-      )
-      expect(response.message).toEqual(``)
-    })
+        expect.objectContaining({ name: "ALWAYS_LOCKED_IN" }),
+      );
+      expect(response.message).toEqual("");
+    });
 
-    it(`Display message saying config flag for LOCKED_IN feature is no-op`, () => {
+    it("Display message saying config flag for LOCKED_IN feature is no-op", () => {
       const response = handleFlags(
         [
           {
-            name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG`,
-            env: `GATSBY_ALWAYS_LOCKED_IN_SET_IN_CONFIG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "ALWAYS_LOCKED_IN_SET_IN_CONFIG",
+            env: "GATSBY_ALWAYS_LOCKED_IN_SET_IN_CONFIG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
             // this will always LOCKED IN
-            testFitness: (): fitnessEnum => `LOCKED_IN`,
+            testFitness: (): FitnessEnum => "LOCKED_IN",
           },
         ],
         {
           // this has no effect, but we want to show to user that
           ALWAYS_LOCKED_IN_SET_IN_CONFIG: true,
         },
-        `develop`
-      )
+        "develop",
+      );
 
       expect(response.enabledConfigFlags).toContainEqual(
-        expect.objectContaining({ name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG` })
-      )
+        expect.objectContaining({ name: "ALWAYS_LOCKED_IN_SET_IN_CONFIG" }),
+      );
       expect(response.message).toMatchInlineSnapshot(`
         "Some features you configured with flags are used natively now.
         Those flags no longer have any effect and you can remove them from config:
         - ALWAYS_LOCKED_IN_SET_IN_CONFIG · (Umbrella Issue (test)) · test
         "
-      `)
-    })
+      `);
+    });
 
-    it(`Display message when LOCKED_IN applies to command different than currently executed`, () => {
+    it("Display message when LOCKED_IN applies to command different than currently executed", () => {
       const response = handleFlags(
         [
           {
-            name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG_FOR_DEVELOP`,
-            env: `GATSBY_ALWAYS_LOCKED_IN_SET_IN_CONFIG_FOR_DEVELOP`,
-            command: `develop`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "ALWAYS_LOCKED_IN_SET_IN_CONFIG_FOR_DEVELOP",
+            env: "GATSBY_ALWAYS_LOCKED_IN_SET_IN_CONFIG_FOR_DEVELOP",
+            command: "develop",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
             // this will always LOCKED IN
-            testFitness: (): fitnessEnum => `LOCKED_IN`,
+            testFitness: (): FitnessEnum => "LOCKED_IN",
           },
           {
-            name: `SOME_FLAG`,
-            env: `GATSBY_SOME_FLAG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "SOME_FLAG",
+            env: "GATSBY_SOME_FLAG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
         ],
         {
           // this has no effect, but we want to show to user that
           SOME_FLAG: true,
         },
-        `build`
-      )
+        "build",
+      );
 
       expect(response).toMatchInlineSnapshot(`
         Object {
@@ -411,33 +412,33 @@ describe(`handle flags`, () => {
           "unfitFlagMessage": "",
           "unknownFlagMessage": "",
         }
-      `)
-    })
+      `);
+    });
 
-    it(`Kitchen sink`, () => {
+    it("Kitchen sink", () => {
       const response = handleFlags(
         activeFlags.concat([
           {
-            name: `ALWAYS_LOCKED_IN`,
-            env: `GATSBY_ALWAYS_LOCKED_IN`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "ALWAYS_LOCKED_IN",
+            env: "GATSBY_ALWAYS_LOCKED_IN",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
             // this will always LOCKED IN
-            testFitness: (): fitnessEnum => `LOCKED_IN`,
+            testFitness: (): FitnessEnum => "LOCKED_IN",
           },
           {
-            name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG`,
-            env: `GATSBY_ALWAYS_LOCKED_IN_SET_IN_CONFIG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "ALWAYS_LOCKED_IN_SET_IN_CONFIG",
+            env: "GATSBY_ALWAYS_LOCKED_IN_SET_IN_CONFIG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
             // this will always LOCKED IN
-            testFitness: (): fitnessEnum => `LOCKED_IN`,
+            testFitness: (): FitnessEnum => "LOCKED_IN",
           },
         ]),
         {
@@ -448,17 +449,17 @@ describe(`handle flags`, () => {
           // this has no effect, but we want to show to user that
           ALWAYS_LOCKED_IN_SET_IN_CONFIG: true,
         },
-        `develop`
-      )
+        "develop",
+      );
 
       // this is enabled, but because it's not configurable anymore and user doesn't set it explicitly in config - there is no point in printing information about it
       expect(response.enabledConfigFlags).toContainEqual(
-        expect.objectContaining({ name: `ALWAYS_LOCKED_IN` })
-      )
+        expect.objectContaining({ name: "ALWAYS_LOCKED_IN" }),
+      );
       // this is enabled, but because it's not configurable anymore and user sets it in config - we want to mention that this config flag has no effect anymore
       expect(response.enabledConfigFlags).toContainEqual(
-        expect.objectContaining({ name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG` })
-      )
+        expect.objectContaining({ name: "ALWAYS_LOCKED_IN_SET_IN_CONFIG" }),
+      );
       expect(response.message).toMatchInlineSnapshot(`
         "The following flags are active:
         - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
@@ -472,154 +473,154 @@ describe(`handle flags`, () => {
         - ALL_COMMANDS · (Umbrella Issue (test)) · test
         - YET_ANOTHER · (Umbrella Issue (test)) · test
         "
-      `)
-    })
-  })
+      `);
+    });
+  });
 
-  describe(`includeFlags`, () => {
-    it(`enabling umbrella flag implies enabling individual flags`, () => {
+  describe("includeFlags", () => {
+    it("enabling umbrella flag implies enabling individual flags", () => {
       const response = handleFlags(
         [
           {
-            name: `UMBRELLA`,
-            env: `GATSBY_UMBRELLA`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "UMBRELLA",
+            env: "GATSBY_UMBRELLA",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
-            includedFlags: [`SUB_FLAG_A`, `SUB_FLAG_B`],
+            testFitness: (): FitnessEnum => true,
+            includedFlags: ["SUB_FLAG_A", "SUB_FLAG_B"],
           },
           {
-            name: `SUB_FLAG_A`,
-            env: `GATSBY_SUB_FLAG_A`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "SUB_FLAG_A",
+            env: "GATSBY_SUB_FLAG_A",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
           {
-            name: `SUB_FLAG_B`,
-            env: `GATSBY_SUB_FLAG_B`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "SUB_FLAG_B",
+            env: "GATSBY_SUB_FLAG_B",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
         ],
         {
           UMBRELLA: true,
         },
-        `build`
-      )
+        "build",
+      );
 
       expect(response.enabledConfigFlags).toContainEqual(
-        expect.objectContaining({ name: `SUB_FLAG_A` })
-      )
+        expect.objectContaining({ name: "SUB_FLAG_A" }),
+      );
       expect(response.enabledConfigFlags).toContainEqual(
-        expect.objectContaining({ name: `SUB_FLAG_B` })
-      )
+        expect.objectContaining({ name: "SUB_FLAG_B" }),
+      );
       expect(response.message).toMatchInlineSnapshot(`
         "The following flags are active:
         - UMBRELLA · (Umbrella Issue (test)) · test
         - SUB_FLAG_A · (Umbrella Issue (test)) · test
         - SUB_FLAG_B · (Umbrella Issue (test)) · test
         "
-      `)
-    })
+      `);
+    });
 
-    it(`allow disabling individual flags that umbrella flag would enable`, () => {
+    it("allow disabling individual flags that umbrella flag would enable", () => {
       const response = handleFlags(
         [
           {
-            name: `UMBRELLA`,
-            env: `GATSBY_UMBRELLA`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "UMBRELLA",
+            env: "GATSBY_UMBRELLA",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
-            includedFlags: [`SUB_FLAG_A`, `SUB_FLAG_B`],
+            testFitness: (): FitnessEnum => true,
+            includedFlags: ["SUB_FLAG_A", "SUB_FLAG_B"],
           },
           {
-            name: `SUB_FLAG_A`,
-            env: `GATSBY_SUB_FLAG_A`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "SUB_FLAG_A",
+            env: "GATSBY_SUB_FLAG_A",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
           {
-            name: `SUB_FLAG_B`,
-            env: `GATSBY_SUB_FLAG_B`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "SUB_FLAG_B",
+            env: "GATSBY_SUB_FLAG_B",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
         ],
         {
           UMBRELLA: true,
           SUB_FLAG_B: false,
         },
-        `build`
-      )
+        "build",
+      );
 
       expect(response.enabledConfigFlags).toContainEqual(
-        expect.objectContaining({ name: `SUB_FLAG_A` })
-      )
+        expect.objectContaining({ name: "SUB_FLAG_A" }),
+      );
       expect(response.enabledConfigFlags).not.toContainEqual(
-        expect.objectContaining({ name: `SUB_FLAG_B` })
-      )
+        expect.objectContaining({ name: "SUB_FLAG_B" }),
+      );
       expect(response.message).toMatchInlineSnapshot(`
         "The following flags are active:
         - UMBRELLA · (Umbrella Issue (test)) · test
         - SUB_FLAG_A · (Umbrella Issue (test)) · test
         "
-      `)
-    })
-  })
+      `);
+    });
+  });
 
-  describe(`other flag suggestions`, () => {
-    it(`suggest other flags when there is flag explicitly enabled`, () => {
+  describe("other flag suggestions", () => {
+    it("suggest other flags when there is flag explicitly enabled", () => {
       const response = handleFlags(
         [
           {
-            name: `ENABLED_FLAG`,
-            env: `GATSBY_ENABLED_FLAG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "ENABLED_FLAG",
+            env: "GATSBY_ENABLED_FLAG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
           {
-            name: `OTHER_FLAG`,
-            env: `GATSBY_OTHER_FLAG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "OTHER_FLAG",
+            env: "GATSBY_OTHER_FLAG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
         ],
         {
           ENABLED_FLAG: true,
         },
-        `build`
-      )
+        "build",
+      );
 
       expect(response.message).toMatchInlineSnapshot(`
         "The following flags are active:
@@ -628,36 +629,36 @@ describe(`handle flags`, () => {
         There is one other flag available that you might be interested in:
         - OTHER_FLAG · (Umbrella Issue (test)) · test
         "
-      `)
-    })
+      `);
+    });
 
-    it(`suggest other flags when there is opted-in flag`, () => {
+    it("suggest other flags when there is opted-in flag", () => {
       const response = handleFlags(
         [
           {
-            name: `OPTED_IN_FLAG`,
-            env: `GATSBY_OPTED_IN_FLAG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "OPTED_IN_FLAG",
+            env: "GATSBY_OPTED_IN_FLAG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => `OPT_IN`,
+            testFitness: (): FitnessEnum => "OPT_IN",
           },
           {
-            name: `OTHER_FLAG`,
-            env: `GATSBY_OTHER_FLAG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "OTHER_FLAG",
+            env: "GATSBY_OTHER_FLAG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
         ],
         {},
-        `build`
-      )
+        "build",
+      );
 
       expect(response.message).toMatchInlineSnapshot(`
         "We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
@@ -675,69 +676,69 @@ describe(`handle flags`, () => {
         There is one other flag available that you might be interested in:
         - OTHER_FLAG · (Umbrella Issue (test)) · test
         "
-      `)
-    })
+      `);
+    });
 
-    it(`doesn't suggest other flags if there are no enabled or opted in flags (no locked-in flags)`, () => {
+    it("doesn't suggest other flags if there are no enabled or opted in flags (no locked-in flags)", () => {
       const response = handleFlags(
         [
           {
-            name: `SOME_FLAG`,
-            env: `GATSBY_SOME_FLAG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "SOME_FLAG",
+            env: "GATSBY_SOME_FLAG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
           {
-            name: `OTHER_FLAG`,
-            env: `GATSBY_OTHER_FLAG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "OTHER_FLAG",
+            env: "GATSBY_OTHER_FLAG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
         ],
         {},
-        `build`
-      )
+        "build",
+      );
 
-      expect(response.message).toMatchInlineSnapshot(`""`)
-    })
+      expect(response.message).toMatchInlineSnapshot('""');
+    });
 
-    it(`doesn't suggest other flags if there are no enabled or opted in flags (with locked-in flag)`, () => {
+    it("doesn't suggest other flags if there are no enabled or opted in flags (with locked-in flag)", () => {
       const response = handleFlags(
         [
           {
-            name: `LOCKED_IN_FLAG`,
-            env: `GATSBY_LOCKED_IN_FLAG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "LOCKED_IN_FLAG",
+            env: "GATSBY_LOCKED_IN_FLAG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => `LOCKED_IN`,
+            testFitness: (): FitnessEnum => "LOCKED_IN",
           },
           {
-            name: `OTHER_FLAG`,
-            env: `GATSBY_OTHER_FLAG`,
-            command: `all`,
-            description: `test`,
-            umbrellaIssue: `test`,
-            telemetryId: `test`,
+            name: "OTHER_FLAG",
+            env: "GATSBY_OTHER_FLAG",
+            command: "all",
+            description: "test",
+            umbrellaIssue: "test",
+            telemetryId: "test",
             experimental: false,
-            testFitness: (): fitnessEnum => true,
+            testFitness: (): FitnessEnum => true,
           },
         ],
         {},
-        `build`
-      )
+        "build",
+      );
 
-      expect(response.message).toMatchInlineSnapshot(`""`)
-    })
-  })
-})
+      expect(response.message).toMatchInlineSnapshot('""');
+    });
+  });
+});

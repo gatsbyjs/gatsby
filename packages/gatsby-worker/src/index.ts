@@ -1,9 +1,9 @@
-import { fork } from "child_process"
-import fs from "fs-extra"
-import os from "os"
-import path from "path"
+import { fork } from "child_process";
+import fs from "fs-extra";
+import os from "os";
+import path from "path";
 
-import { TaskQueue } from "./task-queue"
+import { TaskQueue } from "./task-queue";
 import {
   EXECUTE,
   END,
@@ -13,23 +13,23 @@ import {
   WORKER_READY,
   type ParentMessageUnion,
   type ChildMessageUnion,
-} from "./types"
+} from "./types";
 
 type IWorkerOptions = {
   // number of workers to spawn, defaults to 1
-  numWorkers?: number | undefined
+  numWorkers?: number | undefined;
   // environmental variables specific to the worker(s)
-  env?: Record<string, string> | undefined
+  env?: Record<string, string> | undefined;
   // whether or not output should be ignored
-  silent?: boolean | undefined
-}
+  silent?: boolean | undefined;
+};
 
 type WrapReturnOfAFunctionInAPromise<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   FunctionThatDoesNotReturnAPromise extends (...args: Array<any>) => any,
 > = (
   ...a: Parameters<FunctionThatDoesNotReturnAPromise>
-) => Promise<ReturnType<FunctionThatDoesNotReturnAPromise>>
+) => Promise<ReturnType<FunctionThatDoesNotReturnAPromise>>;
 
 // gatsby-worker will make sync function async, so to keep proper types we need to adjust types so all functions
 // on worker pool are async
@@ -42,7 +42,7 @@ type EnsureFunctionReturnsAPromise<MaybeFunction> = MaybeFunction extends (
   : // eslint-disable-next-line @typescript-eslint/no-explicit-any
     MaybeFunction extends (...args: Array<any>) => any
     ? WrapReturnOfAFunctionInAPromise<MaybeFunction>
-    : never
+    : never;
 
 type WrapReturnInArray<MaybeFunction> = MaybeFunction extends (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,65 +50,65 @@ type WrapReturnInArray<MaybeFunction> = MaybeFunction extends (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => any
   ? (...a: Parameters<MaybeFunction>) => Array<ReturnType<MaybeFunction>>
-  : never
+  : never;
 
 export type CreateWorkerPoolType<ExposedFunctions> = WorkerPool & {
   [FunctionName in keyof ExposedFunctions]: EnsureFunctionReturnsAPromise<
     ExposedFunctions[FunctionName]
-  >
+  >;
 } & {
   all: {
     [FunctionName in keyof ExposedFunctions]: WrapReturnInArray<
       EnsureFunctionReturnsAPromise<ExposedFunctions[FunctionName]>
-    >
-  }
-}
+    >;
+  };
+};
 
-const childWrapperPath = require.resolve(`./child`)
+const childWrapperPath = require.resolve("./child");
 
 class TaskInfo<T> {
-  functionName: T
+  functionName: T;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  args: Array<any>
-  assignedToWorker?: IWorkerInfo<T> | undefined
+  args: Array<any>;
+  assignedToWorker?: IWorkerInfo<T> | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  promise: Promise<any>
+  promise: Promise<any>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  resolve!: (r: any) => void
-  reject!: (e: Error) => void
+  resolve!: (r: any) => void;
+  reject!: (e: Error) => void;
 
   constructor(opts: {
-    functionName: T
+    functionName: T;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    args: Array<any>
-    assignedToWorker?: IWorkerInfo<T>
+    args: Array<any>;
+    assignedToWorker?: IWorkerInfo<T>;
   }) {
-    this.functionName = opts.functionName
-    this.args = opts.args
-    this.assignedToWorker = opts.assignedToWorker
+    this.functionName = opts.functionName;
+    this.args = opts.args;
+    this.assignedToWorker = opts.assignedToWorker;
     this.promise = new Promise((resolve, reject) => {
-      this.resolve = resolve
-      this.reject = reject
-    })
+      this.resolve = resolve;
+      this.reject = reject;
+    });
   }
 }
 
 type IWorkerInfo<T> = {
-  workerId: number
-  send: (msg: ParentMessageUnion) => void
-  kill: (signal?: NodeJS.Signals | number | undefined) => boolean
-  lastMessage: number
+  workerId: number;
+  send: (msg: ParentMessageUnion) => void;
+  kill: (signal?: NodeJS.Signals | number | undefined) => boolean;
+  lastMessage: number;
   exitedPromise: Promise<{
-    code: number | null
-    signal: NodeJS.Signals | null
-  }>
-  currentTask?: TaskInfo<T> | undefined
-  ready: Promise<void>
-}
+    code: number | null;
+    signal: NodeJS.Signals | null;
+  }>;
+  currentTask?: TaskInfo<T> | undefined;
+  ready: Promise<void>;
+};
 
 export type IPublicWorkerInfo = {
-  workerId: number
-}
+  workerId: number;
+};
 
 /**
  * Worker pool is a class that allow you to queue function execution across multiple
@@ -129,8 +129,8 @@ export class WorkerPool<
   all: {
     [FunctionName in keyof WorkerModuleExports]: WrapReturnInArray<
       EnsureFunctionReturnsAPromise<WorkerModuleExports[FunctionName]>
-    >
-  }
+    >;
+  };
 
   /**
    * Schedule task execution on single worker. Useful to distribute tasks between multiple workers.
@@ -138,65 +138,65 @@ export class WorkerPool<
   single: {
     [FunctionName in keyof WorkerModuleExports]: EnsureFunctionReturnsAPromise<
       WorkerModuleExports[FunctionName]
-    >
-  }
+    >;
+  };
 
-  private workers: Array<IWorkerInfo<keyof WorkerModuleExports>> = []
-  private taskQueue = new TaskQueue<TaskInfo<keyof WorkerModuleExports>>()
-  private idleWorkers: Set<IWorkerInfo<keyof WorkerModuleExports>> = new Set()
+  private workers: Array<IWorkerInfo<keyof WorkerModuleExports>> = [];
+  private taskQueue = new TaskQueue<TaskInfo<keyof WorkerModuleExports>>();
+  private idleWorkers: Set<IWorkerInfo<keyof WorkerModuleExports>> = new Set();
   private listeners: Array<(msg: MessagesFromChild, workerId: number) => void> =
-    []
-  private counter = 0
+    [];
+  private counter = 0;
 
   constructor(
     private workerPath: string,
     private options?: IWorkerOptions,
   ) {
-    const single: Partial<WorkerPool<WorkerModuleExports>["single"]> = {}
-    const all: Partial<WorkerPool<WorkerModuleExports>["all"]> = {}
+    const single: Partial<WorkerPool<WorkerModuleExports>["single"]> = {};
+    const all: Partial<WorkerPool<WorkerModuleExports>["all"]> = {};
 
     {
       // we don't need to retain these
-      const module = require(workerPath)
+      const module = require(workerPath);
       const exportNames = Object.keys(module) as Array<
         keyof WorkerModuleExports
-      >
+      >;
 
       for (const exportName of exportNames) {
-        if (typeof module[exportName] !== `function`) {
+        if (typeof module[exportName] !== "function") {
           // We only expose functions. Exposing other types
           // would require additional handling which doesn't seem
           // worth supporting given that consumers can just access
           // those via require/import instead of WorkerPool interface.
-          continue
+          continue;
         }
 
         single[exportName] = this.scheduleWorkSingle.bind(
           this,
           exportName,
-        ) as WorkerPool<WorkerModuleExports>["single"][typeof exportName]
+        ) as WorkerPool<WorkerModuleExports>["single"][typeof exportName];
 
         all[exportName] = this.scheduleWorkAll.bind(
           this,
           exportName,
-        ) as unknown as WorkerPool<WorkerModuleExports>["all"][typeof exportName]
+        ) as unknown as WorkerPool<WorkerModuleExports>["all"][typeof exportName];
       }
     }
 
-    this.single = single as WorkerPool<WorkerModuleExports>["single"]
-    this.all = all as WorkerPool<WorkerModuleExports>["all"]
-    this.startAll()
+    this.single = single as WorkerPool<WorkerModuleExports>["single"];
+    this.all = all as WorkerPool<WorkerModuleExports>["all"];
+    this.startAll();
   }
 
   private startAll(): void {
-    this.counter = 0
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), `gatsby-worker`))
-    const options = this.options
+    this.counter = 0;
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "gatsby-worker"));
+    const options = this.options;
     for (let workerId = 1; workerId <= (options?.numWorkers ?? 1); workerId++) {
       const workerInFlightsDumpLocation = path.join(
         tmpDir,
         `worker-${workerId}.json`,
-      )
+      );
       const worker = fork(childWrapperPath, {
         cwd: process.cwd(),
         env: {
@@ -209,42 +209,42 @@ export class WorkerPool<
         // Suppress --debug / --inspect flags while preserving others (like --harmony).
         execArgv: process.execArgv.filter((v) => !/^--(debug|inspect)/.test(v)),
         silent: options && options.silent,
-      })
+      });
 
-      let workerReadyResolve: () => void
+      let workerReadyResolve: () => void;
       let workerExitResolve: (arg: {
-        code: number | null
-        signal: NodeJS.Signals | null
-      }) => void
+        code: number | null;
+        signal: NodeJS.Signals | null;
+      }) => void;
 
       const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
         workerId,
         send: (msg: ParentMessageUnion): void => {
           if (!worker.connected) {
-            return
+            return;
           }
 
           worker.send(msg, undefined, undefined, (error) => {
             if (error && worker.connected) {
-              throw error
+              throw error;
             }
-          })
+          });
         },
         kill: worker.kill.bind(worker),
         ready: new Promise<void>((resolve) => {
-          workerReadyResolve = resolve
+          workerReadyResolve = resolve;
         }),
         lastMessage: 0,
         exitedPromise: new Promise((resolve) => {
-          workerExitResolve = resolve
+          workerExitResolve = resolve;
         }),
-      }
+      };
 
       const workerProcessMessageHandler = (msg: ChildMessageUnion): void => {
         if (!Array.isArray(msg)) {
           // all gatsby-worker messages should be an array
           // if it's not an array we skip it
-          return
+          return;
         } else if (msg[1] <= workerInfo.lastMessage) {
           // this message was already handled, so skipping it
           // this is specifically for special casing worker exits
@@ -253,7 +253,7 @@ export class WorkerPool<
           // Trickiness is that while we write out in flight IPC messages
           // to fs, those messages might actually still go through as regular
           // ipc messages so we have to ensure we don't handle same message twice
-          return
+          return;
         } else if (msg[1] !== workerInfo.lastMessage + 1) {
           // TODO: figure out IPC message order guarantees (or lack of them) - for now
           // condition above relies on IPC messages being received in same order
@@ -269,70 +269,72 @@ export class WorkerPool<
               null,
               2,
             )}.`,
-          )
+          );
         }
-        workerInfo.lastMessage = msg[1]
+        workerInfo.lastMessage = msg[1];
         if (msg[0] === RESULT) {
           if (!workerInfo.currentTask) {
             throw new Error(
-              `Invariant: gatsby-worker received execution result, but it wasn't expecting it.`,
-            )
+              "Invariant: gatsby-worker received execution result, but it wasn't expecting it.",
+            );
           }
-          const task = workerInfo.currentTask
-          workerInfo.currentTask = undefined
-          this.checkForWork(workerInfo)
-          task.resolve(msg[2])
+          const task = workerInfo.currentTask;
+          workerInfo.currentTask = undefined;
+          this.checkForWork(workerInfo);
+          task.resolve(msg[2]);
         } else if (msg[0] === ERROR) {
           if (!workerInfo.currentTask) {
             throw new Error(
-              `Invariant: gatsby-worker received execution rejection, but it wasn't expecting it.`,
-            )
+              "Invariant: gatsby-worker received execution rejection, but it wasn't expecting it.",
+            );
           }
 
-          let error = msg[5]
+          let error = msg[5];
 
-          if (error !== null && typeof error === `object`) {
-            const extra = error
+          if (error !== null && typeof error === "object") {
+            const extra = error;
 
-            const NativeCtor = global[msg[2]]
-            const Ctor = typeof NativeCtor === `function` ? NativeCtor : Error
+            const NativeCtor = global[msg[2]];
+            const Ctor = typeof NativeCtor === "function" ? NativeCtor : Error;
 
-            error = new Ctor(msg[3])
+            error = new Ctor(msg[3]);
             // @ts-ignore type doesn't exist on Error, but that's what jest-worker does for errors :shrug:
-            error.type = msg[2]
-            error.stack = msg[4]
+            error.type = msg[2];
+            error.stack = msg[4] ?? "";
 
             for (const key in extra) {
               if (Object.prototype.hasOwnProperty.call(extra, key)) {
-                error[key] = extra[key]
+                error[key] = extra[key];
               }
             }
           }
 
-          const task = workerInfo.currentTask
-          workerInfo.currentTask = undefined
-          this.checkForWork(workerInfo)
-          task.reject(error)
+          const task = workerInfo.currentTask;
+          workerInfo.currentTask = undefined;
+          this.checkForWork(workerInfo);
+          task.reject(error);
         } else if (msg[0] === CUSTOM_MESSAGE) {
           for (const listener of this.listeners) {
-            listener(msg[2] as MessagesFromChild, workerId)
+            listener(msg[2] as MessagesFromChild, workerId);
           }
         } else if (msg[0] === WORKER_READY) {
-          workerReadyResolve()
+          workerReadyResolve();
         }
-      }
+      };
 
-      worker.on(`message`, workerProcessMessageHandler)
-      worker.on(`exit`, async (code, signal) => {
+      worker.on("message", workerProcessMessageHandler);
+      worker.on("exit", async (code, signal) => {
         if (await fs.pathExists(workerInFlightsDumpLocation)) {
-          const pendingMessages = await fs.readJSON(workerInFlightsDumpLocation)
+          const pendingMessages = await fs.readJSON(
+            workerInFlightsDumpLocation,
+          );
           if (Array.isArray(pendingMessages)) {
             for (const msg of pendingMessages) {
-              workerProcessMessageHandler(msg)
+              workerProcessMessageHandler(msg);
             }
           }
           try {
-            await fs.remove(workerInFlightsDumpLocation)
+            await fs.remove(workerInFlightsDumpLocation);
           } catch {
             // this is just cleanup, failing to delete this file
             // won't cause
@@ -342,16 +344,16 @@ export class WorkerPool<
         if (workerInfo.currentTask) {
           // worker exited without finishing a task
           workerInfo.currentTask.reject(
-            new Error(`Worker exited before finishing task`),
-          )
+            new Error("Worker exited before finishing task"),
+          );
         }
         // remove worker from list of workers
-        this.workers.splice(this.workers.indexOf(workerInfo), 1)
-        workerExitResolve({ code, signal })
-      })
+        this.workers.splice(this.workers.indexOf(workerInfo), 1);
+        workerExitResolve({ code, signal });
+      });
 
-      this.workers.push(workerInfo)
-      this.idleWorkers.add(workerInfo)
+      this.workers.push(workerInfo);
+      this.idleWorkers.add(workerInfo);
     }
   }
 
@@ -362,46 +364,46 @@ export class WorkerPool<
   end(): Array<Promise<number | null>> {
     const results = this.workers.map(async (workerInfo) => {
       // tell worker to end gracefully
-      const endMessage: ParentMessageUnion = [END, ++this.counter]
+      const endMessage: ParentMessageUnion = [END, ++this.counter];
 
-      workerInfo.send(endMessage)
+      workerInfo.send(endMessage);
 
       // force exit if worker doesn't exit gracefully quickly
       const forceExitTimeout = setTimeout(() => {
-        workerInfo.kill(`SIGKILL`)
-      }, 1000)
+        workerInfo.kill("SIGKILL");
+      }, 1000);
 
-      const exitResult = await workerInfo.exitedPromise
+      const exitResult = await workerInfo.exitedPromise;
 
-      clearTimeout(forceExitTimeout)
+      clearTimeout(forceExitTimeout);
 
-      return exitResult.code
-    })
+      return exitResult.code;
+    });
 
     Promise.all(results).then(() => {
       // make sure we fail queued tasks as well
       for (const taskNode of this.taskQueue) {
-        taskNode.value.reject(new Error(`Worker exited before finishing task`))
+        taskNode.value.reject(new Error("Worker exited before finishing task"));
       }
-      this.workers = []
-      this.idleWorkers = new Set()
-    })
+      this.workers = [];
+      this.idleWorkers = new Set();
+    });
 
-    return results
+    return results;
   }
 
   /**
    * Kills all running worker processes and spawns a new pool of processes
    */
   async restart(): Promise<void> {
-    await Promise.all(this.end())
-    this.startAll()
+    await Promise.all(this.end());
+    this.startAll();
   }
 
   getWorkerInfo(): Array<IPublicWorkerInfo> {
     return this.workers.map((worker) => {
-      return { workerId: worker.workerId }
-    })
+      return { workerId: worker.workerId };
+    });
   }
 
   private checkForWork<T extends keyof WorkerModuleExports>(
@@ -409,17 +411,17 @@ export class WorkerPool<
   ): void {
     // check if there is task in queue
     for (const taskNode of this.taskQueue) {
-      const task = taskNode.value
+      const task = taskNode.value;
       if (!task.assignedToWorker || task.assignedToWorker === workerInfo) {
-        this.doWork(task, workerInfo)
-        this.taskQueue.remove(taskNode)
+        this.doWork(task, workerInfo);
+        this.taskQueue.remove(taskNode);
 
-        return
+        return;
       }
     }
 
     // no task found, so just marking worker as idle
-    this.idleWorkers.add(workerInfo)
+    this.idleWorkers.add(workerInfo);
   }
 
   private async doWork<T extends keyof WorkerModuleExports>(
@@ -427,18 +429,18 @@ export class WorkerPool<
     workerInfo: IWorkerInfo<T>,
   ): Promise<void> {
     // block worker
-    workerInfo.currentTask = taskInfo
-    this.idleWorkers.delete(workerInfo)
+    workerInfo.currentTask = taskInfo;
+    this.idleWorkers.delete(workerInfo);
 
-    await workerInfo.ready
+    await workerInfo.ready;
 
     const msg: ParentMessageUnion = [
       EXECUTE,
       ++this.counter,
       taskInfo.functionName,
       taskInfo.args,
-    ]
-    workerInfo.send(msg)
+    ];
+    workerInfo.send(msg);
   }
 
   private scheduleWork<T extends keyof WorkerModuleExports>(
@@ -446,30 +448,30 @@ export class WorkerPool<
   ): Promise<unknown> {
     let workerToExecuteTaskNow:
       | IWorkerInfo<keyof WorkerModuleExports>
-      | undefined
+      | undefined;
 
     if (taskInfo.assignedToWorker) {
       if (this.idleWorkers.has(taskInfo.assignedToWorker)) {
-        workerToExecuteTaskNow = taskInfo.assignedToWorker
+        workerToExecuteTaskNow = taskInfo.assignedToWorker;
       }
     } else {
-      workerToExecuteTaskNow = this.idleWorkers.values().next().value
+      workerToExecuteTaskNow = this.idleWorkers.values().next().value;
     }
 
     if (workerToExecuteTaskNow) {
-      this.doWork(taskInfo, workerToExecuteTaskNow)
+      this.doWork(taskInfo, workerToExecuteTaskNow);
     } else {
-      this.taskQueue.enqueue(taskInfo)
+      this.taskQueue.enqueue(taskInfo);
     }
 
-    return taskInfo.promise
+    return taskInfo.promise;
   }
 
   private scheduleWorkSingle<T extends keyof WorkerModuleExports>(
     functionName: T,
     ...args: Array<unknown>
   ): Promise<unknown> {
-    return this.scheduleWork(new TaskInfo({ functionName, args }))
+    return this.scheduleWork(new TaskInfo({ functionName, args }));
   }
 
   private scheduleWorkAll<T extends keyof WorkerModuleExports>(
@@ -480,24 +482,24 @@ export class WorkerPool<
       this.scheduleWork(
         new TaskInfo({ assignedToWorker: workerInfo, functionName, args }),
       ),
-    )
+    );
   }
 
   onMessage(
     listener: (msg: MessagesFromChild, workerId: number) => void,
   ): void {
-    this.listeners.push(listener)
+    this.listeners.push(listener);
   }
 
   sendMessage(msg: MessagesFromParent, workerId: number): void {
-    const worker = this.workers[workerId - 1]
+    const worker = this.workers[workerId - 1];
     if (!worker) {
-      throw new Error(`There is no worker with "${workerId}" id.`)
+      throw new Error(`There is no worker with "${workerId}" id.`);
     }
 
-    const poolMsg: ParentMessageUnion = [CUSTOM_MESSAGE, ++this.counter, msg]
-    worker.send(poolMsg)
+    const poolMsg: ParentMessageUnion = [CUSTOM_MESSAGE, ++this.counter, msg];
+    worker.send(poolMsg);
   }
 }
 
-export * from "./child"
+export * from "./child";

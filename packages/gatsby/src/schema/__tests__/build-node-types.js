@@ -1,22 +1,22 @@
-const { graphql, GraphQLString } = require(`graphql`)
+const { graphql, GraphQLString } = require("graphql");
 
-const { createSchemaComposer } = require(`../schema-composer`)
-const { buildSchema } = require(`../schema`)
-const { LocalNodeModel } = require(`../node-model`)
-const { store } = require(`../../redux`)
-const { actions } = require(`../../redux/actions`)
+const { createSchemaComposer } = require("../schema-composer");
+const { buildSchema } = require("../schema");
+const { LocalNodeModel } = require("../node-model");
+const { store } = require("../../redux");
+const { actions } = require("../../redux/actions");
 
-jest.mock(`../../utils/api-runner-node`)
-const apiRunnerNode = require(`../../utils/api-runner-node`)
+jest.mock("../../utils/api-runner-node");
+const apiRunnerNode = require("../../utils/api-runner-node");
 
-jest.mock(`../../redux/actions/add-page-dependency`)
-import { createPageDependency } from "../../redux/actions/add-page-dependency"
+jest.mock("../../redux/actions/add-page-dependency");
+import { createPageDependency } from "../../redux/actions/add-page-dependency";
 
-const { TypeConflictReporter } = require(`../infer/type-conflict-reporter`)
-const typeConflictReporter = new TypeConflictReporter()
-const addConflictSpy = jest.spyOn(typeConflictReporter, `addConflict`)
+const { TypeConflictReporter } = require("../infer/type-conflict-reporter");
+const typeConflictReporter = new TypeConflictReporter();
+const addConflictSpy = jest.spyOn(typeConflictReporter, "addConflict");
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock("gatsby-cli/lib/reporter", () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -27,68 +27,68 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         start: jest.fn(),
         setStatus: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
-  }
-})
+  };
+});
 
 const makeNodes = () => [
   {
-    id: `p1`,
-    internal: { type: `Parent`, contentDigest: `0` },
-    hair: `red`,
-    children: [`c1`, `c2`, `r1`],
+    id: "p1",
+    internal: { type: "Parent", contentDigest: "0" },
+    hair: "red",
+    children: ["c1", "c2", "r1"],
   },
   {
-    id: `r1`,
-    internal: { type: `Relative`, contentDigest: `0` },
-    hair: `black`,
+    id: "r1",
+    internal: { type: "Relative", contentDigest: "0" },
+    hair: "black",
     children: [],
-    parent: `p1`,
+    parent: "p1",
   },
   {
-    id: `c1`,
-    internal: { type: `Child`, contentDigest: `0` },
-    hair: `brown`,
+    id: "c1",
+    internal: { type: "Child", contentDigest: "0" },
+    hair: "brown",
     children: [],
-    parent: `p1`,
-    pluginField: `string`,
+    parent: "p1",
+    pluginField: "string",
   },
   {
-    id: `c2`,
-    internal: { type: `Child`, contentDigest: `0` },
-    hair: `blonde`,
+    id: "c2",
+    internal: { type: "Child", contentDigest: "0" },
+    hair: "blonde",
     children: [],
-    parent: `p1`,
+    parent: "p1",
     pluginField: 5,
   },
-]
+];
 
-describe(`build-node-types`, () => {
+describe("build-node-types", () => {
   async function runQuery(query, nodes = makeNodes()) {
-    store.dispatch({ type: `DELETE_CACHE` })
-    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
-    )
+    store.dispatch({ type: "DELETE_CACHE" });
+    store.dispatch({ type: "START_INCREMENTAL_INFERENCE" });
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: "test" })(store.dispatch),
+    );
 
-    const schemaComposer = createSchemaComposer()
+    const schemaComposer = createSchemaComposer();
     const schema = await buildSchema({
       schemaComposer,
       types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
       inferenceMetadata: store.getState().inferenceMetadata,
-    })
-    store.dispatch({ type: `SET_SCHEMA`, payload: schema })
+    });
+    store.dispatch({ type: "SET_SCHEMA", payload: schema });
 
-    const context = { path: `foo` }
+    const context = { path: "foo" };
     const { data, errors } = await graphql({
       schema,
       source: query,
@@ -101,27 +101,27 @@ describe(`build-node-types`, () => {
           createPageDependency,
         }),
       },
-    })
-    expect(errors).not.toBeDefined()
-    return data
+    });
+    expect(errors).not.toBeDefined();
+    return data;
   }
 
   beforeEach(async () => {
-    createPageDependency.mockClear()
-    addConflictSpy.mockClear()
+    createPageDependency.mockClear();
+    addConflictSpy.mockClear();
     const apiRunnerResponse = [
       {
         pluginField: {
           type: GraphQLString,
-          description: `test description`,
-          resolve: () => `pluginFieldValue`,
+          description: "test description",
+          resolve: () => "pluginFieldValue",
         },
       },
-    ]
-    apiRunnerNode.mockImplementation(() => apiRunnerResponse)
-  })
+    ];
+    apiRunnerNode.mockImplementation(() => apiRunnerResponse);
+  });
 
-  it(`should result in a valid queryable schema`, async () => {
+  it("should result in a valid queryable schema", async () => {
     const { parent, child, relative } = await runQuery(
       `
       {
@@ -135,14 +135,14 @@ describe(`build-node-types`, () => {
           hair
         }
       }
-    `
-    )
-    expect(parent.hair).toEqual(`red`)
-    expect(child.hair).toEqual(`brown`)
-    expect(relative.hair).toEqual(`black`)
-  })
+    `,
+    );
+    expect(parent.hair).toEqual("red");
+    expect(child.hair).toEqual("brown");
+    expect(relative.hair).toEqual("black");
+  });
 
-  it(`should link children automatically`, async () => {
+  it("should link children automatically", async () => {
     const { parent } = await runQuery(
       `
       {
@@ -152,13 +152,13 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
-    )
-    expect(parent.children).toBeDefined()
-    expect(parent.children.map(c => c.id)).toEqual([`c1`, `c2`, `r1`])
-  })
+    `,
+    );
+    expect(parent.children).toBeDefined();
+    expect(parent.children.map((c) => c.id)).toEqual(["c1", "c2", "r1"]);
+  });
 
-  it(`should create typed children fields`, async () => {
+  it("should create typed children fields", async () => {
     const { parent } = await runQuery(
       `
       {
@@ -171,16 +171,16 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
-    )
-    expect(parent.childrenChild).toBeDefined()
-    expect(parent.childrenChild.map(c => c.id)).toEqual([`c1`, `c2`])
+    `,
+    );
+    expect(parent.childrenChild).toBeDefined();
+    expect(parent.childrenChild.map((c) => c.id)).toEqual(["c1", "c2"]);
 
-    expect(parent.childChild).toBeDefined()
-    expect(parent.childChild).toEqual({ id: `c1` })
-  })
+    expect(parent.childChild).toBeDefined();
+    expect(parent.childChild).toEqual({ id: "c1" });
+  });
 
-  it(`should create typed child field for singular children`, async () => {
+  it("should create typed child field for singular children", async () => {
     const { parent } = await runQuery(
       `
       {
@@ -190,14 +190,14 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
-    )
+    `,
+    );
 
-    expect(parent.childRelative).toBeDefined()
-    expect(parent.childRelative.id).toEqual(`r1`)
-  })
+    expect(parent.childRelative).toBeDefined();
+    expect(parent.childRelative.id).toEqual("r1");
+  });
 
-  it(`should handle plugin fields`, async () => {
+  it("should handle plugin fields", async () => {
     const result = await runQuery(
       `
       {
@@ -205,12 +205,12 @@ describe(`build-node-types`, () => {
           pluginField
         }
       }
-    `
-    )
-    expect(result.parent.pluginField).toEqual(`pluginFieldValue`)
-  })
+    `,
+    );
+    expect(result.parent.pluginField).toEqual("pluginFieldValue");
+  });
 
-  it(`should allow filtering on plugin fields`, async () => {
+  it("should allow filtering on plugin fields", async () => {
     const result = await runQuery(
       `
       {
@@ -218,21 +218,21 @@ describe(`build-node-types`, () => {
           pluginField
         }
       }
-    `
-    )
-    expect(result.parent.pluginField).toEqual(`pluginFieldValue`)
-  })
+    `,
+    );
+    expect(result.parent.pluginField).toEqual("pluginFieldValue");
+  });
 
-  it(`should create root query type page dependency`, async () => {
-    await runQuery(` { parent(id: { eq: "p1" }) { id } } `)
+  it("should create root query type page dependency", async () => {
+    await runQuery(' { parent(id: { eq: "p1" }) { id } } ');
 
     expect(createPageDependency).toHaveBeenCalledWith({
-      path: `foo`,
-      nodeId: `p1`,
-    })
-  })
+      path: "foo",
+      nodeId: "p1",
+    });
+  });
 
-  it(`should create children page dependency`, async () => {
+  it("should create children page dependency", async () => {
     await runQuery(
       `
         {
@@ -240,23 +240,23 @@ describe(`build-node-types`, () => {
             children { id }
           }
         }
-      `
-    )
+      `,
+    );
     expect(createPageDependency).toHaveBeenCalledWith({
-      path: `foo`,
-      nodeId: `c1`,
-    })
+      path: "foo",
+      nodeId: "c1",
+    });
     expect(createPageDependency).toHaveBeenCalledWith({
-      path: `foo`,
-      nodeId: `c2`,
-    })
+      path: "foo",
+      nodeId: "c2",
+    });
     expect(createPageDependency).toHaveBeenCalledWith({
-      path: `foo`,
-      nodeId: `r1`,
-    })
-  })
+      path: "foo",
+      nodeId: "r1",
+    });
+  });
 
-  it(`should create parent page dependency`, async () => {
+  it("should create parent page dependency", async () => {
     await runQuery(
       `
         {
@@ -264,15 +264,15 @@ describe(`build-node-types`, () => {
             parent { id }
           }
         }
-      `
-    )
+      `,
+    );
     expect(createPageDependency).toHaveBeenCalledWith({
-      path: `foo`,
-      nodeId: `p1`,
-    })
-  })
+      path: "foo",
+      nodeId: "p1",
+    });
+  });
 
-  it(`should create childX page dependency`, async () => {
+  it("should create childX page dependency", async () => {
     await runQuery(
       `
       {
@@ -282,16 +282,16 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
-    )
+    `,
+    );
 
     expect(createPageDependency).toHaveBeenCalledWith({
-      path: `foo`,
-      nodeId: `r1`,
-    })
-  })
+      path: "foo",
+      nodeId: "r1",
+    });
+  });
 
-  it(`should create childrenX page dependency`, async () => {
+  it("should create childrenX page dependency", async () => {
     await runQuery(
       `
       {
@@ -301,20 +301,20 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
-    )
+    `,
+    );
 
     expect(createPageDependency).toHaveBeenCalledWith({
-      path: `foo`,
-      nodeId: `c1`,
-    })
+      path: "foo",
+      nodeId: "c1",
+    });
     expect(createPageDependency).toHaveBeenCalledWith({
-      path: `foo`,
-      nodeId: `c2`,
-    })
-  })
+      path: "foo",
+      nodeId: "c2",
+    });
+  });
 
-  it(`should not report conflicts on plugin fields`, () => {
-    expect(typeConflictReporter.addConflict).not.toBeCalled()
-  })
-})
+  it("should not report conflicts on plugin fields", () => {
+    expect(typeConflictReporter.addConflict).not.toBeCalled();
+  });
+});

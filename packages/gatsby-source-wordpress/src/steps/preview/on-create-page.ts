@@ -1,7 +1,7 @@
-import { formatLogMessage } from "~/utils/format-log-message"
-import { getStore } from "~/store"
-import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
-import { inPreviewMode } from "."
+import { formatLogMessage } from "~/utils/format-log-message";
+import { getStore } from "~/store";
+import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types";
+import { inPreviewMode } from ".";
 
 /**
  * during onCreatePage we want to figure out which node the page is dependant on
@@ -18,13 +18,13 @@ export function onCreatepageSavePreviewNodeIdToPageDependency(
 ): void {
   // if we're not in preview mode we don't want to track this
   if (!inPreviewMode()) {
-    return
+    return;
   }
 
-  const { page, getNode } = helpers
+  const { page, getNode } = helpers;
 
   const nodeThatCreatedThisPage =
-    page.context && page.context.id && getNode(page.context.id)
+    page.context && page.context.id && getNode(page.context.id);
 
   if (nodeThatCreatedThisPage) {
     getStore().dispatch.previewStore.saveNodePageState({
@@ -33,7 +33,7 @@ export function onCreatepageSavePreviewNodeIdToPageDependency(
         path: page.path,
         updatedAt: page.updatedAt,
       },
-    })
+    });
   }
 }
 
@@ -48,70 +48,70 @@ export async function onCreatePageRespondToPreviewStatusQuery(
 ): Promise<void> {
   // if we're not in preview mode we don't want to set this up
   if (!inPreviewMode()) {
-    return
+    return;
   }
 
   const { nodePageCreatedCallbacks, pagePathToNodeDependencyId } =
-    getStore().getState().previewStore
+    getStore().getState().previewStore;
 
-  const { page, getNode } = helpers
+  const { page, getNode } = helpers;
 
   if (
     !nodePageCreatedCallbacks ||
     !Object.keys(nodePageCreatedCallbacks).length
   ) {
-    return
+    return;
   }
 
   const nodeIdThatCreatedThisPage =
-    pagePathToNodeDependencyId?.[page.path]?.nodeId
+    pagePathToNodeDependencyId?.[page.path]?.nodeId;
 
   if (!nodeIdThatCreatedThisPage) {
-    return
+    return;
   }
 
   const nodePageCreatedCallback =
     nodeIdThatCreatedThisPage &&
-    nodePageCreatedCallbacks[nodeIdThatCreatedThisPage]
+    nodePageCreatedCallbacks[nodeIdThatCreatedThisPage];
 
   if (
     !nodeIdThatCreatedThisPage ||
-    typeof nodePageCreatedCallback !== `function`
+    typeof nodePageCreatedCallback !== "function"
   ) {
-    return
+    return;
   }
 
   getStore().dispatch.previewStore.unSubscribeToPagesCreatedFromNodeById({
     nodeId: nodeIdThatCreatedThisPage,
-  })
+  });
 
-  const nodeThatCreatedThisPage = getNode(nodeIdThatCreatedThisPage)
+  const nodeThatCreatedThisPage = getNode(nodeIdThatCreatedThisPage);
 
   if (!nodeThatCreatedThisPage) {
     helpers.reporter.warn(
       formatLogMessage(
         `There was an attempt to call a Preview onPageCreated callback for node ${nodeIdThatCreatedThisPage}, but no node was found.`,
       ),
-    )
-    return
+    );
+    return;
   }
 
   // We need to add the modified time to pageContext so we can read it in WP
   // This way can tell when the updated page has been deployed
   if (!page.context.__wpGatsbyNodeModified) {
-    const pageCopy = { ...page }
-    pageCopy.context.__wpGatsbyNodeModified = nodeThatCreatedThisPage.modified
+    const pageCopy = { ...page };
+    pageCopy.context.__wpGatsbyNodeModified = nodeThatCreatedThisPage.modified;
 
-    const { deletePage, createPage } = helpers.actions
+    const { deletePage, createPage } = helpers.actions;
 
-    deletePage(page)
-    createPage(pageCopy)
+    deletePage(page);
+    createPage(pageCopy);
   }
 
   await nodePageCreatedCallback({
     passedNode: nodeThatCreatedThisPage,
     pageNode: page,
-    context: `onCreatePage Preview callback invocation`,
-    status: `PREVIEW_SUCCESS`,
-  })
+    context: "onCreatePage Preview callback invocation",
+    status: "PREVIEW_SUCCESS",
+  });
 }

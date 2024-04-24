@@ -1,11 +1,11 @@
-import { stripIndent } from "common-tags"
-import { reportOnce } from "../../utils/report-once"
+import { stripIndent } from "common-tags";
+import { reportOnce } from "../../utils/report-once";
 import type {
   ActionsUnion,
   IGatsbyNode,
   IGatsbyPlugin,
   IGatsbyState,
-} from "../types"
+} from "../types";
 
 function setTypeOwner(
   typeName: string,
@@ -13,26 +13,26 @@ function setTypeOwner(
   typeOwners: IGatsbyState["typeOwners"],
   fullNode?: IGatsbyNode | undefined,
 ): IGatsbyState["typeOwners"] {
-  const ownerName = plugin?.name || fullNode?.internal.owner
+  const ownerName = plugin?.name || fullNode?.internal.owner;
 
   if (!ownerName) {
-    reportOnce(`No plugin owner for type "${typeName}"`)
-    return typeOwners
+    reportOnce(`No plugin owner for type "${typeName}"`);
+    return typeOwners;
   }
 
-  const existingOwnerTypes = typeOwners.pluginsToTypes.get(ownerName)
+  const existingOwnerTypes = typeOwners.pluginsToTypes.get(ownerName);
 
   if (!existingOwnerTypes) {
-    typeOwners.pluginsToTypes.set(ownerName, new Set([typeName]))
+    typeOwners.pluginsToTypes.set(ownerName, new Set([typeName]));
   } else {
-    existingOwnerTypes.add(typeName)
+    existingOwnerTypes.add(typeName);
   }
 
   const existingTypeOwnerNameByTypeName =
-    typeOwners.typesToPlugins.get(typeName)
+    typeOwners.typesToPlugins.get(typeName);
 
   if (!existingTypeOwnerNameByTypeName) {
-    typeOwners.typesToPlugins.set(typeName, ownerName)
+    typeOwners.typesToPlugins.set(typeName, ownerName);
   } else if (existingTypeOwnerNameByTypeName !== ownerName) {
     throw new Error(stripIndent`
       The plugin "${ownerName}" created a node of a type owned by another plugin.
@@ -49,15 +49,15 @@ function setTypeOwner(
 
               ${JSON.stringify(fullNode, null, 4)}\n`,
             )
-          : ``
+          : ""
       }
       The plugin creating the node:
 
       ${JSON.stringify(plugin, null, 4)}
-    `)
+    `);
   }
 
-  return typeOwners
+  return typeOwners;
 }
 
 export function typeOwnersReducer(
@@ -68,15 +68,15 @@ export function typeOwnersReducer(
   action: ActionsUnion,
 ): IGatsbyState["typeOwners"] {
   switch (action.type) {
-    case `DELETE_NODE`: {
-      const { plugin, payload: internalNode } = action
+    case "DELETE_NODE": {
+      const { plugin, payload: internalNode } = action;
 
       if (plugin && internalNode && !action.isRecursiveChildrenDelete) {
-        const pluginName = plugin.name
+        const pluginName = plugin.name;
 
         const previouslyRecordedOwnerName = typeOwners.typesToPlugins.get(
           internalNode.internal.type,
-        )
+        );
 
         if (
           internalNode &&
@@ -95,21 +95,21 @@ export function typeOwnersReducer(
             The plugin deleting the node:
 
             ${JSON.stringify(plugin, null, 4)}
-        `)
+        `);
         }
       }
 
-      return typeOwners
+      return typeOwners;
     }
-    case `CREATE_NODE`: {
-      const { plugin, oldNode, payload: node } = action
-      const { owner, type } = node.internal
+    case "CREATE_NODE": {
+      const { plugin, oldNode, payload: node } = action;
+      const { owner, type } = node.internal;
 
       if (!type) {
-        throw new Error(`No type for node ${node.id}`)
+        throw new Error(`No type for node ${node.id}`);
       }
 
-      setTypeOwner(type, plugin, typeOwners, node)
+      setTypeOwner(type, plugin, typeOwners, node);
 
       // If the node has been created in the past, check that
       // the current plugin is the same as the previous.
@@ -120,13 +120,13 @@ export function typeOwnersReducer(
             owned by "${oldNode.internal.owner}" and another plugin "${owner}"
             tried to update it.
           `,
-        )
+        );
       }
 
-      return typeOwners
+      return typeOwners;
     }
 
     default:
-      return typeOwners
+      return typeOwners;
   }
 }

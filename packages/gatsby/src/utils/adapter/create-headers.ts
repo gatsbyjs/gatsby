@@ -1,15 +1,15 @@
-import { match } from "@gatsbyjs/reach-router"
-import type { IHeader } from "../../redux/types"
-import { rankRoute } from "../rank-route"
+import { match } from "@gatsbyjs/reach-router";
+import type { IHeader } from "../../redux/types";
+import { rankRoute } from "../rank-route";
 
-type Headers = IHeader["headers"]
+type Headers = IHeader["headers"];
 type IHeaderWithScore = {
-  score: number
-} & IHeader
+  score: number;
+} & IHeader;
 
 // We don't care if the path has a trailing slash or not, but to be able to compare stuff we need to normalize it
 function normalizePath(input: string): string {
-  return input.endsWith(`/`) ? input : `${input}/`
+  return input.endsWith("/") ? input : `${input}/`;
 }
 
 export function createHeadersMatcher(
@@ -19,60 +19,60 @@ export function createHeadersMatcher(
   // - dynamicHeaders: Headers with dynamic paths (e.g. /* or /:tests)
   // - staticHeaders: Headers with fully static paths (e.g. /static/)
   // Also add a score using the rankRoute function to each header
-  let dynamicHeaders: Array<IHeaderWithScore> = []
-  const staticHeaders: Map<string, IHeader> = new Map()
+  let dynamicHeaders: Array<IHeaderWithScore> = [];
+  const staticHeaders: Map<string, IHeader> = new Map();
 
   // If no custom headers are defined by the user in the gatsby-config, we can return only the default headers
   if (!headers || headers.length === 0) {
-    return (_path: string, defaultHeaders: Headers) => defaultHeaders
+    return (_path: string, defaultHeaders: Headers) => defaultHeaders;
   }
 
   for (const header of headers) {
-    if (header.source.includes(`:`) || header.source.includes(`*`)) {
+    if (header.source.includes(":") || header.source.includes("*")) {
       // rankRoute is the internal function that also "match" uses
-      const score = rankRoute(header.source) ?? 0
+      const score = rankRoute(header.source) ?? 0;
 
-      dynamicHeaders.push({ ...header, score })
+      dynamicHeaders.push({ ...header, score });
     } else {
-      staticHeaders.set(normalizePath(header.source), header)
+      staticHeaders.set(normalizePath(header.source), header);
     }
   }
 
   // Sort the dynamic headers by score, moving the ones with the highest specificity to the end of the array
   // If the score is the same, do a lexigraphic comparison of the source
   dynamicHeaders = dynamicHeaders.sort((a, b) => {
-    const order = a.score - b.score
+    const order = a.score - b.score;
     if (order !== 0) {
-      return order
+      return order;
     }
-    return a.source.localeCompare(b.source)
-  })
+    return a.source.localeCompare(b.source);
+  });
 
   return (path: string, defaultHeaders: Headers): Headers => {
     // Create a map of headers for the given path
     // The key will be the header key. Since a key may only appear once in a map, the last header with the same key will win
-    const uniqueHeaders: Map<string, string> = new Map()
+    const uniqueHeaders: Map<string, string> = new Map();
 
     // 1. Add default headers
     for (const h of defaultHeaders) {
-      uniqueHeaders.set(h.key, h.value)
+      uniqueHeaders.set(h.key, h.value);
     }
 
     // 2. Add dynamic headers that match the current path
     for (const d of dynamicHeaders) {
       if (match(d.source, path)) {
         for (const h of d.headers) {
-          uniqueHeaders.set(h.key, h.value)
+          uniqueHeaders.set(h.key, h.value);
         }
       }
     }
 
-    const staticEntry = staticHeaders.get(normalizePath(path))
+    const staticEntry = staticHeaders.get(normalizePath(path));
 
     // 3. Add static headers that match the current path
     if (staticEntry) {
       for (const h of staticEntry.headers) {
-        uniqueHeaders.set(h.key, h.value)
+        uniqueHeaders.set(h.key, h.value);
       }
     }
 
@@ -81,7 +81,7 @@ export function createHeadersMatcher(
       return {
         key,
         value,
-      }
-    })
-  }
+      };
+    });
+  };
 }

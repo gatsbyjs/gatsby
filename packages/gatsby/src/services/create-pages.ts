@@ -1,14 +1,14 @@
-import reporter from "gatsby-cli/lib/reporter"
-import { apiRunnerNode } from "../utils/api-runner-node"
-import type { IDataLayerContext } from "../state-machines/data-layer/types"
-import { assertStore } from "../utils/assert-store"
-import type { IGatsbyPage } from "../redux/types"
-import { actions } from "../redux/actions"
-import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages"
-import { getDataStore } from "../datastore"
+import reporter from "gatsby-cli/lib/reporter";
+import { apiRunnerNode } from "../utils/api-runner-node";
+import type { IDataLayerContext } from "../state-machines/data-layer/types";
+import { assertStore } from "../utils/assert-store";
+import type { IGatsbyPage } from "../redux/types";
+import { actions } from "../redux/actions";
+import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages";
+import { getDataStore } from "../datastore";
 
-const isInitialCreatePages = true
-let createPagesCount = 0
+const isInitialCreatePages = true;
+let createPagesCount = 0;
 export async function createPages({
   parentSpan,
   gatsbyNodeGraphQLFunction,
@@ -16,42 +16,44 @@ export async function createPages({
   deferNodeMutation,
   shouldRunCreatePagesStatefully,
 }: Partial<IDataLayerContext>): Promise<{
-  deletedPages: Array<string>
-  changedPages: Array<string>
+  deletedPages: Array<string>;
+  changedPages: Array<string>;
 }> {
-  assertStore(store)
-  const activity = reporter.activityTimer(`createPages`, {
+  assertStore(store);
+
+  // @ts-ignore
+  const activity = reporter.activityTimer("createPages", {
     parentSpan,
-  })
-  activity.start()
-  const timestamp = Date.now()
-  const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
+  });
+  activity.start();
+  const timestamp = Date.now();
+  const currentPages = new Map<string, IGatsbyPage>(store.getState().pages);
 
   // Wrap the GraphQL function so we can measure how long it takes to run.
-  const originalGraphQL = gatsbyNodeGraphQLFunction
+  const originalGraphQL = gatsbyNodeGraphQLFunction;
   // eslint-disable-next-line
   async function wrappedGraphQL() {
-    const start = Date.now()
+    const start = Date.now();
     // @ts-ignore not sure how to type the following
-    const returnValue = await originalGraphQL.apply(this, arguments) // eslint-disable-line
-    const end = Date.now()
-    const totalMS = end - start
+    const returnValue = await originalGraphQL.apply(this, arguments); // eslint-disable-line
+    const end = Date.now();
+    const totalMS = end - start;
     if (totalMS > 10000) {
       reporter.warn(
         `Your GraphQL query in createPages took ${
           totalMS / 1000
         } seconds which is an unexpectedly long time. See https://gatsby.dev/create-pages-performance for tips on how to improve this.`,
-      )
+      );
     }
-    return returnValue
+    return returnValue;
   }
 
-  createPagesCount += 1
+  createPagesCount += 1;
   const traceId = isInitialCreatePages
-    ? `initial-createPages`
-    : `createPages #${createPagesCount}`
+    ? "initial-createPages"
+    : `createPages #${createPagesCount}`;
   await apiRunnerNode(
-    `createPages`,
+    "createPages",
     {
       graphql: wrappedGraphQL,
       traceId,
@@ -60,19 +62,20 @@ export async function createPages({
       deferNodeMutation,
     },
     { activity },
-  )
-  activity.end()
+  );
+  activity.end();
 
   if (shouldRunCreatePagesStatefully) {
-    const activity = reporter.activityTimer(`createPagesStatefully`, {
+    // @ts-ignore
+    const activity = reporter.activityTimer("createPagesStatefully", {
       parentSpan,
-    })
-    activity.start()
+    });
+    activity.start();
     await apiRunnerNode(
-      `createPagesStatefully`,
+      "createPagesStatefully",
       {
         graphql: gatsbyNodeGraphQLFunction,
-        traceId: `initial-createPagesStatefully`,
+        traceId: "initial-createPagesStatefully",
         waitForCascadingActions: true,
         parentSpan: activity.span,
         deferNodeMutation,
@@ -80,73 +83,74 @@ export async function createPages({
       {
         activity,
       },
-    )
-    activity.end()
+    );
+    activity.end();
   }
 
-  const dataStore = getDataStore()
+  const dataStore = getDataStore();
   reporter.info(
     `Total nodes: ${dataStore.countNodes()}, ` +
       `SitePage nodes: ${
         store.getState().pages.size
       } (use --verbose for breakdown)`,
-  )
+  );
 
-  if (process.env.gatsby_log_level === `verbose`) {
-    const types = dataStore.getTypes()
+  if (process.env.gatsby_log_level === "verbose") {
+    const types = dataStore.getTypes();
     reporter.verbose(
       `Number of node types: ${types.length}. Nodes per type: ${types
-        .map((type) => type + `: ` + dataStore.countNodes(type))
-        .join(`, `)}`,
-    )
+        .map((type) => type + ": " + dataStore.countNodes(type))
+        .join(", ")}`,
+    );
   }
 
-  reporter.verbose(`Checking for deleted pages`)
+  reporter.verbose("Checking for deleted pages");
 
   const deletedPages = deleteUntouchedPages(
     store.getState().pages,
     timestamp,
     !!shouldRunCreatePagesStatefully,
-  )
+  );
 
   reporter.verbose(
-    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`,
-  )
+    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? "" : "s"}`,
+  );
 
-  const tim = reporter.activityTimer(`Checking for changed pages`, {
+  // @ts-ignore
+  const tim = reporter.activityTimer("Checking for changed pages", {
     parentSpan,
-  })
-  tim.start()
+  });
+  tim.start();
 
   const { changedPages } = findChangedPages(
     currentPages,
     store.getState().pages,
-  )
+  );
 
   reporter.verbose(
     `Found ${changedPages.length} changed page${
-      changedPages.length === 1 ? `` : `s`
+      changedPages.length === 1 ? "" : "s"
     }`,
-  )
+  );
 
-  tim.end()
+  tim.end();
 
   store.getState().slices.forEach((slice) => {
     if (slice.updatedAt < timestamp) {
       store.dispatch({
-        type: `DELETE_SLICE`,
+        type: "DELETE_SLICE",
         payload: {
           name: slice.name,
           componentPath: slice.componentPath,
         },
-      })
+      });
     }
-  })
+  });
 
-  store.dispatch(actions.apiFinished({ apiName: `createPages` }))
+  store.dispatch(actions.apiFinished({ apiName: "createPages" }));
 
   return {
     changedPages,
     deletedPages,
-  }
+  };
 }

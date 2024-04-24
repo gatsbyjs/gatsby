@@ -3,11 +3,11 @@ export function makeNpmSafe(str: string): string {
   return (
     str
       // Replace camelcase with kebab
-      .replace(/([a-z])([A-Z])/g, `$1-$2`)
+      .replace(/([a-z])([A-Z])/g, "$1-$2")
       .toLowerCase()
       // Replace any number of consecutive illegal characters with a single dash
-      .replace(/[^a-z0-9_.]+/g, `-`)
+      .replace(/[^a-z0-9_.]+/g, "-")
       // Remove trailing dots and dashes
-      .replace(/^[_\-.]+|[_\-.]+$/g, ``)
-  )
+      .replace(/^[_\-.]+|[_\-.]+$/g, "")
+  );
 }

@@ -5,52 +5,52 @@
 type MettHandler<EventName, Payload> = (
   e: Payload,
   eventName: EventName,
-) => void
+) => void;
 
 export type IMett = {
-  on(eventName: EventName, callback: MettHandler<EventName, Payload>): void
-  off(eventName: EventName, callback: MettHandler<EventName, Payload>): void
-  emit(eventName: EventName, e?: Payload): void
-}
+  on(eventName: EventName, callback: MettHandler<EventName, Payload>): void;
+  off(eventName: EventName, callback: MettHandler<EventName, Payload>): void;
+  emit(eventName: EventName, e?: Payload): void;
+};
 
-type EventName = string
+type EventName = string;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Payload = any
+type Payload = any;
 
 export function mett(): IMett {
   const mettEvents: Map<
     EventName,
     Set<MettHandler<EventName, Payload>>
-  > = new Map()
+  > = new Map();
 
   return {
     on(eventName: EventName, callback: MettHandler<EventName, Payload>): void {
-      const set = mettEvents.get(eventName)
+      const set = mettEvents.get(eventName);
       if (set) {
-        set.add(callback)
+        set.add(callback);
       } else {
-        mettEvents.set(eventName, new Set([callback]))
+        mettEvents.set(eventName, new Set([callback]));
       }
     },
     off(eventName: EventName, callback: MettHandler<EventName, Payload>): void {
-      const set = mettEvents.get(eventName)
+      const set = mettEvents.get(eventName);
       if (set) {
-        set.delete(callback)
+        set.delete(callback);
       }
     },
     emit(eventName: EventName, e: Payload): void {
-      const setName = mettEvents.get(eventName)
+      const setName = mettEvents.get(eventName);
       if (setName) {
         setName.forEach(function mettEmitEachC(callback) {
-          callback(e, eventName)
-        })
+          callback(e, eventName);
+        });
       }
-      const setStar = mettEvents.get(`*`)
+      const setStar = mettEvents.get("*");
       if (setStar) {
         setStar.forEach(function mettEmitEachStar(callback) {
-          callback(e, eventName)
-        })
+          callback(e, eventName);
+        });
       }
     },
-  }
+  };
 }

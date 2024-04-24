@@ -1,4 +1,4 @@
-import preval from "preval.macro"
+import preval from "preval.macro";
 
 // we need to wrap this file inside preval to retain tree-shaking.
 // using syntaxes like const x = { ...var } adds side-effects to the export
@@ -216,4 +216,4 @@ export const colors = preval`
       scrollbarTrack: "#faede5",
     },
   }
-`
+`;

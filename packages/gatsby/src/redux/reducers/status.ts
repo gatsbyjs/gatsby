@@ -1,39 +1,39 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import { uuid } from "gatsby-core-utils"
-import type { ActionsUnion, IGatsbyState } from "../types"
+import _ from "lodash";
+import { uuid } from "gatsby-core-utils";
+import type { ActionsUnion, IGatsbyState } from "../types";
 
 const defaultState: IGatsbyState["status"] = {
-  PLUGINS_HASH: ``,
+  PLUGINS_HASH: "",
   LAST_NODE_COUNTER: 0,
   plugins: {},
-  cdnObfuscatedPrefix: ``,
-}
+  cdnObfuscatedPrefix: "",
+};
 
 export function statusReducer(
   state: IGatsbyState["status"] = defaultState,
   action: ActionsUnion,
 ): IGatsbyState["status"] {
   switch (action.type) {
-    case `DELETE_CACHE`:
+    case "DELETE_CACHE":
       return {
         ...defaultState,
-        cdnObfuscatedPrefix: state.cdnObfuscatedPrefix ?? ``,
-      }
-    case `INIT`: {
+        cdnObfuscatedPrefix: state.cdnObfuscatedPrefix ?? "",
+      };
+    case "INIT": {
       if (!state.cdnObfuscatedPrefix) {
-        state.cdnObfuscatedPrefix = uuid.v4()
+        state.cdnObfuscatedPrefix = uuid.v4();
       }
-      return state
+      return state;
     }
-    case `UPDATE_PLUGINS_HASH`:
+    case "UPDATE_PLUGINS_HASH":
       return {
         ...state,
         PLUGINS_HASH: action.payload,
-      }
-    case `SET_PLUGIN_STATUS`:
+      };
+    case "SET_PLUGIN_STATUS":
       if (!action.plugin || !action.plugin?.name) {
-        throw new Error(`You can't set plugin status without a plugin`)
+        throw new Error("You can't set plugin status without a plugin");
       }
       if (!_.isObject(action.payload)) {
         throw new Error(
@@ -42,7 +42,7 @@ export function statusReducer(
             null,
             4,
           )}`,
-        )
+        );
       }
       return {
         ...state,
@@ -54,11 +54,11 @@ export function statusReducer(
             action.payload,
           ),
         },
-      }
-    case `CREATE_NODE`:
-      state.LAST_NODE_COUNTER = action.payload.internal.counter
-      return state
+      };
+    case "CREATE_NODE":
+      state.LAST_NODE_COUNTER = action.payload.internal.counter;
+      return state;
     default:
-      return state
+      return state;
   }
 }

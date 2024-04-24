@@ -1,16 +1,16 @@
-import { shiftLeft } from "shift-left"
-import { pluginErrorCodes as errorCodes } from "./errors"
+import { shiftLeft } from "shift-left";
+import { pluginErrorCodes as errorCodes } from "./errors";
 
 function getErrorText(context: IErrorContext): string {
-  return context.sourceMessage
+  return context.sourceMessage;
 }
 
 export const ERROR_MAP: IErrorMap = {
   [errorCodes.bulkOperationFailed]: {
     text: getErrorText,
-    level: `ERROR`,
-    category: `USER`,
-    type: `PLUGIN`,
+    level: "ERROR",
+    category: "USER",
+    type: "PLUGIN",
   },
   [errorCodes.apiConflict]: {
     text: (): string => shiftLeft`
@@ -22,9 +22,9 @@ export const ERROR_MAP: IErrorMap = {
     If the duplication is intentional, please wait for the other operation to finish before trying
     again. Otherwise, consider deleting the other site or pointing it to a test store instead.
   `,
-    level: `ERROR`,
-    category: `USER`,
-    type: `PLUGIN`,
+    level: "ERROR",
+    category: "USER",
+    type: "PLUGIN",
   },
   /**
    * If we don't know what it is, we haven't done our due
@@ -33,14 +33,14 @@ export const ERROR_MAP: IErrorMap = {
    */
   [errorCodes.unknownSourcingFailure]: {
     text: getErrorText,
-    level: `ERROR`,
-    category: `THIRD_PARTY`,
-    type: `PLUGIN`,
+    level: "ERROR",
+    category: "THIRD_PARTY",
+    type: "PLUGIN",
   },
   [errorCodes.unknownApiError]: {
     text: getErrorText,
-    level: `ERROR`,
-    category: `THIRD_PARTY`,
-    type: `PLUGIN`,
+    level: "ERROR",
+    category: "THIRD_PARTY",
+    type: "PLUGIN",
   },
-}
+};

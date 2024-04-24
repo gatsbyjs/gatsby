@@ -4,30 +4,30 @@ export function getValueAt(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any {
   const selectors =
-    typeof selector === `string` ? selector.split(`.`) : selector
-  return get(obj, selectors)
+    typeof selector === "string" ? selector.split(".") : selector;
+  return get(obj, selectors);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function get(obj: unknown, selectors: Array<string>): any {
-  if (typeof obj !== `object` || obj === null) {
-    return undefined
+  if (typeof obj !== "object" || obj === null) {
+    return undefined;
   }
   if (Array.isArray(obj)) {
-    return getArray(obj, selectors)
+    return getArray(obj, selectors);
   }
-  const [key, ...rest] = selectors
-  const value = obj[key]
+  const [key, ...rest] = selectors;
+  const value = obj[key];
   if (!rest.length) {
-    return value
+    return value;
   }
   if (Array.isArray(value)) {
-    return getArray(value, rest)
+    return getArray(value, rest);
   }
-  if (value && typeof value === `object`) {
-    return get(value, rest)
+  if (value && typeof value === "object") {
+    return get(value, rest);
   }
-  return undefined
+  return undefined;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,7 +36,7 @@ function getArray(arr: Array<unknown>, selectors: Array<string>): Array<any> {
     .map((value) => {
       return Array.isArray(value)
         ? getArray(value, selectors)
-        : get(value, selectors)
+        : get(value, selectors);
     })
-    .filter((v) => v !== undefined)
+    .filter((v) => v !== undefined);
 }

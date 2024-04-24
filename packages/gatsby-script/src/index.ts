@@ -4,8 +4,8 @@ import {
   type ScriptStrategy,
   scriptCache,
   scriptCallbackCache,
-} from "./gatsby-script"
-import { collectedScriptsByPage } from "./collected-scripts-by-page"
+} from "./gatsby-script";
+import { collectedScriptsByPage } from "./collected-scripts-by-page";
 
 export {
   Script,
@@ -14,4 +14,4 @@ export {
   scriptCache,
   scriptCallbackCache,
   collectedScriptsByPage,
-}
+};

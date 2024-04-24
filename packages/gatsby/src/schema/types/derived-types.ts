@@ -37,7 +37,7 @@ import {
   InputTypeComposer,
   EnumTypeComposer,
   UnionTypeComposer,
-} from "graphql-compose"
+} from "graphql-compose";
 
 type AllTypeComposer =
   | ObjectTypeComposer
@@ -45,73 +45,73 @@ type AllTypeComposer =
   | EnumTypeComposer
   | InterfaceTypeComposer
   | UnionTypeComposer
-  | ScalarTypeComposer
+  | ScalarTypeComposer;
 
 function getDerivedTypes({
   typeComposer,
 }: {
-  typeComposer: AllTypeComposer
+  typeComposer: AllTypeComposer;
 }): Set<string> {
-  const derivedTypes = typeComposer.getExtension(`derivedTypes`)
+  const derivedTypes = typeComposer.getExtension("derivedTypes");
   if (derivedTypes) {
-    return derivedTypes as Set<string>
+    return derivedTypes as Set<string>;
   }
 
-  return new Set<string>()
+  return new Set<string>();
 }
 
 function removeTypeFromSchemaComposer({
   schemaComposer,
   typeComposer,
 }: {
-  schemaComposer: SchemaComposer<string>
-  typeComposer: AllTypeComposer
+  schemaComposer: SchemaComposer<string>;
+  typeComposer: AllTypeComposer;
 }): void {
-  schemaComposer.delete(typeComposer.getTypeName())
-  schemaComposer.delete(typeComposer._gqType)
-  schemaComposer.delete(typeComposer)
+  schemaComposer.delete(typeComposer.getTypeName());
+  schemaComposer.delete(typeComposer._gqType);
+  schemaComposer.delete(typeComposer);
 }
 
 export const clearDerivedTypes = ({
   schemaComposer,
   typeComposer,
 }: {
-  schemaComposer: SchemaComposer<string>
-  typeComposer: AllTypeComposer
+  schemaComposer: SchemaComposer<string>;
+  typeComposer: AllTypeComposer;
 }): void => {
-  const derivedTypes = getDerivedTypes({ typeComposer })
+  const derivedTypes = getDerivedTypes({ typeComposer });
 
   for (const typeName of derivedTypes.values()) {
-    const derivedTypeComposer = schemaComposer.getAnyTC(typeName)
-    clearDerivedTypes({ schemaComposer, typeComposer: derivedTypeComposer })
+    const derivedTypeComposer = schemaComposer.getAnyTC(typeName);
+    clearDerivedTypes({ schemaComposer, typeComposer: derivedTypeComposer });
     removeTypeFromSchemaComposer({
       schemaComposer,
       typeComposer: derivedTypeComposer,
-    })
+    });
   }
 
   if (
     typeComposer instanceof ObjectTypeComposer ||
     typeComposer instanceof InterfaceTypeComposer
   ) {
-    const inputTypeComposer = typeComposer.getInputTypeComposer()
+    const inputTypeComposer = typeComposer.getInputTypeComposer();
     removeTypeFromSchemaComposer({
       schemaComposer,
       typeComposer: inputTypeComposer,
-    })
-    typeComposer.removeInputTypeComposer()
+    });
+    typeComposer.removeInputTypeComposer();
   }
 
-  typeComposer.setExtension(`derivedTypes`, new Set())
-}
+  typeComposer.setExtension("derivedTypes", new Set());
+};
 
 export const addDerivedType = ({
   typeComposer,
   derivedTypeName,
 }: {
-  typeComposer: AllTypeComposer
-  derivedTypeName: string
+  typeComposer: AllTypeComposer;
+  derivedTypeName: string;
 }): void => {
-  const derivedTypes = getDerivedTypes({ typeComposer })
-  typeComposer.setExtension(`derivedTypes`, derivedTypes.add(derivedTypeName))
-}
+  const derivedTypes = getDerivedTypes({ typeComposer });
+  typeComposer.setExtension("derivedTypes", derivedTypes.add(derivedTypeName));
+};

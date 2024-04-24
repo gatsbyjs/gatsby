@@ -1,61 +1,61 @@
-import type { GatsbyBrowser } from "gatsby"
-import type { GatsbyImageProps } from "gatsby-plugin-image"
-import { createElement } from "react"
+import type { GatsbyBrowser } from "gatsby";
+import type { GatsbyImageProps } from "gatsby-plugin-image";
+import { createElement } from "react";
 // @ts-ignore
-import { createRoot } from "react-dom/client"
+import { createRoot } from "react-dom/client";
 
-let hydrateRef: number | NodeJS.Timeout
+let hydrateRef: number | NodeJS.Timeout;
 
 export const onRouteUpdate: GatsbyBrowser["onRouteUpdate"] =
   function onRouteUpdate(): void {
-    if (`requestIdleCallback` in window) {
-      if (typeof hydrateRef === `number`) {
-        window.cancelIdleCallback(hydrateRef)
+    if ("requestIdleCallback" in window) {
+      if (typeof hydrateRef === "number") {
+        window.cancelIdleCallback(hydrateRef);
       }
 
-      hydrateRef = window.requestIdleCallback(hydrateImages)
+      hydrateRef = window.requestIdleCallback(hydrateImages);
     } else {
       if (hydrateRef) {
-        clearTimeout(hydrateRef)
+        clearTimeout(hydrateRef);
       }
 
-      hydrateRef = setTimeout(hydrateImages)
+      hydrateRef = setTimeout(hydrateImages);
     }
-  }
+  };
 
 function hydrateImages(): void {
-  const doc = document
+  const doc = document;
   const inlineWPimages: Array<HTMLElement> = Array.from(
-    doc.querySelectorAll(`[data-wp-inline-image]`),
-  )
+    doc.querySelectorAll("[data-wp-inline-image]"),
+  );
 
   if (!inlineWPimages.length) {
-    return
+    return;
   }
 
   import(
-    /* webpackChunkName: "gatsby-plugin-image" */ `gatsby-plugin-image`
-  ).then(mod => {
-    inlineWPimages.forEach(image => {
+    /* webpackChunkName: "gatsby-plugin-image" */ "gatsby-plugin-image"
+  ).then((mod) => {
+    inlineWPimages.forEach((image) => {
       // usually this is the right element to hydrate on
       const grandParentIsGatsbyImage =
         // @ts-ignore-next-line classList is on HTMLElement
         image?.parentNode?.parentNode?.classList?.contains(
-          `gatsby-image-wrapper`,
-        )
+          "gatsby-image-wrapper",
+        );
 
       // but sometimes this is the right element
       const parentIsGatsbyImage =
         // @ts-ignore-next-line classList is on HTMLElement
-        image?.parentNode?.classList?.contains(`gatsby-image-wrapper`)
+        image?.parentNode?.classList?.contains("gatsby-image-wrapper");
 
       if (!grandParentIsGatsbyImage && !parentIsGatsbyImage) {
-        return
+        return;
       }
 
       const gatsbyImageHydrationElement = grandParentIsGatsbyImage
         ? image.parentNode.parentNode
-        : image.parentNode
+        : image.parentNode;
 
       if (
         image.dataset &&
@@ -64,18 +64,18 @@ function hydrateImages(): void {
       ) {
         const hydrationData = doc.querySelector(
           `script[data-wp-inline-image-hydration="${image.dataset.wpInlineImage}"]`,
-        )
+        );
 
         if (hydrationData) {
           const imageProps: GatsbyImageProps = JSON.parse(
             hydrationData.innerHTML,
-          )
+          );
 
           // @ts-ignore - TODO: Fix me
-          const root = createRoot(gatsbyImageHydrationElement)
-          root.render(createElement(mod.GatsbyImage, imageProps))
+          const root = createRoot(gatsbyImageHydrationElement);
+          root.render(createElement(mod.GatsbyImage, imageProps));
         }
       }
-    })
-  })
+    });
+  });
 }

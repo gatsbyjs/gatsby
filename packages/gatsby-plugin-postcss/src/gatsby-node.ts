@@ -1,40 +1,40 @@
-import type { GatsbyNode } from "gatsby"
-import resolve from "./resolve"
+import type { GatsbyNode } from "gatsby";
+import resolve from "./resolve";
 
-const CSS_PATTERN = /\.css$/
-const MODULE_CSS_PATTERN = /\.module\.css$/
+const CSS_PATTERN = /\.css$/;
+const MODULE_CSS_PATTERN = /\.module\.css$/;
 
-const isCssRules = rule =>
+const isCssRules = (rule) =>
   rule.test &&
   (rule.test.toString() === CSS_PATTERN.toString() ||
-    rule.test.toString() === MODULE_CSS_PATTERN.toString())
+    rule.test.toString() === MODULE_CSS_PATTERN.toString());
 
-const findCssRules = config =>
+const findCssRules = (config) =>
   config.module.rules.find(
-    rule => Array.isArray(rule.oneOf) && rule.oneOf.every(isCssRules)
-  )
+    (rule) => Array.isArray(rule.oneOf) && rule.oneOf.every(isCssRules),
+  );
 
-export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = (
+export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = (
   { actions, stage, loaders, getConfig },
-  { cssLoaderOptions = {}, postCssPlugins, plugins, ...postcssLoaderOptions }
+  { cssLoaderOptions = {}, postCssPlugins, plugins, ...postcssLoaderOptions },
 ) => {
-  const isSSR = [`develop-html`, `build-html`].includes(stage)
-  const config = getConfig()
-  const cssRules = findCssRules(config)
+  const isSSR = ["develop-html", "build-html"].includes(stage);
+  const config = getConfig();
+  const cssRules = findCssRules(config);
 
   if (!postcssLoaderOptions.postcssOptions) {
-    postcssLoaderOptions.postcssOptions = {}
+    postcssLoaderOptions.postcssOptions = {};
   }
 
   if (postCssPlugins) {
     // @ts-ignore
-    postcssLoaderOptions.postcssOptions.plugins = postCssPlugins
+    postcssLoaderOptions.postcssOptions.plugins = postCssPlugins;
   }
 
   const postcssLoader = {
-    loader: resolve(`postcss-loader`),
+    loader: resolve("postcss-loader"),
     options: postcssLoaderOptions,
-  }
+  };
 
   const postcssRule = {
     test: CSS_PATTERN,
@@ -50,7 +50,7 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = (
           }),
           postcssLoader,
         ],
-  }
+  };
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
     use: [
@@ -70,15 +70,15 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = (
       }),
       postcssLoader,
     ].filter(Boolean),
-  }
+  };
 
-  const postcssRules = { oneOf: [postcssRuleModules, postcssRule] }
+  const postcssRules = { oneOf: [postcssRuleModules, postcssRule] };
 
   if (cssRules) {
-    cssRules.oneOf.unshift(...postcssRules.oneOf)
+    cssRules.oneOf.unshift(...postcssRules.oneOf);
 
-    actions.replaceWebpackConfig(config)
+    actions.replaceWebpackConfig(config);
   } else {
-    actions.setWebpackConfig({ module: { rules: [postcssRules] } })
+    actions.setWebpackConfig({ module: { rules: [postcssRules] } });
   }
-}
+};

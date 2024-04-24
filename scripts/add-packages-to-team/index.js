@@ -1,26 +1,26 @@
 #!/usr/bin/env node
 // const util = require(`util`)
 // const exec = util.promisify(require(`child_process`).exec)
-const argv = require(`yargs`)
-  .command(`$0`, `Add new owner to gatsby packages`, {
+const argv = require("yargs")
+  .command("$0", "Add new owner to gatsby packages", {
     user: {
-      default: `@gatsbyjs:ink-team`,
+      default: "@gatsbyjs:ink-team",
     },
   })
-  .help().argv
-const getUnownedPackages = require(`../get-unowned-packages`)
+  .help().argv;
+const getUnownedPackages = require("../get-unowned-packages");
 
-const user = argv.user
+const user = argv.user;
 
 getUnownedPackages({ user }).then(async ({ packages }) => {
   if (!packages.length) {
-    console.log(`${user} has write access to all packages`)
-    return
+    console.log(`${user} has write access to all packages`);
+    return;
   } else {
-    console.log(`Will be adding ${user} to packages:`)
-    packages.forEach(pkg => {
-      console.log(` - ${pkg.name}`)
-    })
+    console.log(`Will be adding ${user} to packages:`);
+    packages.forEach((pkg) => {
+      console.log(` - ${pkg.name}`);
+    });
   }
 
   // seems like the cli only supports users and no teams yet. The website does.
@@ -46,9 +46,9 @@ getUnownedPackages({ user }).then(async ({ packages }) => {
   // })
   console.log(
     JSON.stringify(
-      packages.map(pkg => pkg.name),
+      packages.map((pkg) => pkg.name),
       null,
-      2
-    )
-  )
-})
+      2,
+    ),
+  );
+});

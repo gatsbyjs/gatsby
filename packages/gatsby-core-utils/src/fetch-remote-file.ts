@@ -1,33 +1,32 @@
 // @ts-ignore
-import { fileTypeFromFile } from "file-type"
-import path from "path"
-import fs from "fs-extra"
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import Queue from "fastq"
-import { createContentDigest } from "./create-content-digest"
+import { fileTypeFromFile } from "file-type";
+import path from "path";
+import fs from "fs-extra";
+import Queue from "fastq";
+import { createContentDigest } from "./create-content-digest";
 import {
   getRemoteFileName,
   getRemoteFileExtension,
   createFilePath,
-} from "./filename-utils"
-import { slash } from "./path"
-import { requestRemoteNode } from "./remote-file-utils/fetch-file"
-import { getStorage, getDatabaseDir } from "./utils/get-storage"
-import { createMutex } from "./mutex"
-import type { Options } from "got"
-import type { IFetchRemoteFileOptions } from "./remote-file-utils/fetch-file"
+} from "./filename-utils";
+import { slash } from "./path";
+import { requestRemoteNode } from "./remote-file-utils/fetch-file";
+import { getStorage, getDatabaseDir } from "./utils/get-storage";
+import { createMutex } from "./mutex";
+import type { Options } from "got";
+import type { IFetchRemoteFileOptions } from "./remote-file-utils/fetch-file";
 
 type ITask = {
-  args: IFetchRemoteFileOptions
-}
+  args: IFetchRemoteFileOptions;
+};
 
 const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
   ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
-  : 50
+  : 50;
 
-const alreadyCopiedFiles = new Set<string>()
+const alreadyCopiedFiles = new Set<string>();
 
-export type { IFetchRemoteFileOptions }
+export type { IFetchRemoteFileOptions };
 
 /**
  * Downloads a remote file to disk
@@ -37,63 +36,63 @@ export async function fetchRemoteFile(
 ): Promise<string> {
   // when cachekey is present we can do more persistance
   if (args.cacheKey) {
-    const storage = getStorage(getDatabaseDir())
-    const info = storage.remoteFileInfo.get(args.url)
+    const storage = getStorage(getDatabaseDir());
+    const info = storage.remoteFileInfo.get(args.url);
 
     const fileDirectory = (
       args.cache ? args.cache.directory : args.directory
-    ) as string
+    ) as string;
 
     if (info?.cacheKey === args.cacheKey && fileDirectory) {
-      const cachedPath = path.join(info.directory, info.path)
-      const downloadPath = path.join(fileDirectory, info.path)
+      const cachedPath = path.join(info.directory, info.path);
+      const downloadPath = path.join(fileDirectory, info.path);
 
       if (await fs.pathExists(cachedPath)) {
         // If the cached directory is not part of the public directory, we don't need to copy it
         // as it won't be part of the build.
         if (isPublicPath(downloadPath) && cachedPath !== downloadPath) {
-          return copyCachedPathToDownloadPath({ cachedPath, downloadPath })
+          return copyCachedPathToDownloadPath({ cachedPath, downloadPath });
         }
 
-        return cachedPath
+        return cachedPath;
       }
     }
   }
 
-  return pushTask({ args })
+  return pushTask({ args });
 }
 
 function isPublicPath(downloadPath: string): boolean {
   return downloadPath.startsWith(
-    path.join(global.__GATSBY?.root ?? process.cwd(), `public`),
-  )
+    path.join(global.__GATSBY?.root ?? process.cwd(), "public"),
+  );
 }
 
 async function copyCachedPathToDownloadPath({
   cachedPath,
   downloadPath,
 }: {
-  cachedPath: string
-  downloadPath: string
+  cachedPath: string;
+  downloadPath: string;
 }): Promise<string> {
   // Create a mutex to do our copy - we could do a md5 hash check as well but that's also expensive
   if (!alreadyCopiedFiles.has(downloadPath)) {
     const copyFileMutex = createMutex(
       `gatsby-core-utils:copy-fetch:${downloadPath}`,
       200,
-    )
-    await copyFileMutex.acquire()
+    );
+    await copyFileMutex.acquire();
     if (!alreadyCopiedFiles.has(downloadPath)) {
       await fs.copy(cachedPath, downloadPath, {
         overwrite: true,
-      })
+      });
     }
 
-    alreadyCopiedFiles.add(downloadPath)
-    await copyFileMutex.release()
+    alreadyCopiedFiles.add(downloadPath);
+    await copyFileMutex.release();
   }
 
-  return downloadPath
+  return downloadPath;
 }
 
 const queue = Queue<null, ITask, string>(
@@ -104,13 +103,13 @@ const queue = Queue<null, ITask, string>(
    */
   async function fetchWorker(task, cb): Promise<void> {
     try {
-      return void cb(null, await fetchFile(task.args))
+      return void cb(null, await fetchFile(task.args));
     } catch (e) {
-      return void cb(e)
+      return void cb(e);
     }
   },
   GATSBY_CONCURRENT_DOWNLOAD,
-)
+);
 
 /**
  * pushTask
@@ -125,12 +124,12 @@ async function pushTask(task: ITask): Promise<string> {
   return new Promise((resolve, reject) => {
     queue.push(task, (err, node) => {
       if (!err) {
-        resolve(node as string)
+        resolve(node as string);
       } else {
-        reject(err)
+        reject(err);
       }
-    })
-  })
+    });
+  });
 }
 
 async function fetchFile({
@@ -145,68 +144,68 @@ async function fetchFile({
   excludeDigest,
 }: IFetchRemoteFileOptions): Promise<string> {
   // global introduced in gatsby 4.0.0
-  const BUILD_ID = global.__GATSBY?.buildId ?? ``
-  const fileDirectory = (cache ? cache.directory : directory) as string
-  const storage = getStorage(getDatabaseDir())
+  const BUILD_ID = global.__GATSBY?.buildId ?? "";
+  const fileDirectory = (cache ? cache.directory : directory) as string;
+  const storage = getStorage(getDatabaseDir());
 
   if (!cache && !directory) {
-    throw new Error(`You must specify either a cache or a directory`)
+    throw new Error("You must specify either a cache or a directory");
   }
 
-  const fetchFileMutex = createMutex(`gatsby-core-utils:fetch:${url}`)
-  await fetchFileMutex.acquire()
+  const fetchFileMutex = createMutex(`gatsby-core-utils:fetch:${url}`);
+  await fetchFileMutex.acquire();
 
   // Fetch the file.
   try {
-    const digest = createContentDigest(url)
+    const digest = createContentDigest(url);
     const finalDirectory = excludeDigest
       ? path.resolve(fileDirectory)
-      : path.join(fileDirectory, digest)
+      : path.join(fileDirectory, digest);
 
     if (!name) {
-      name = getRemoteFileName(url)
+      name = getRemoteFileName(url);
     }
 
     if (!ext) {
-      ext = getRemoteFileExtension(url)
+      ext = getRemoteFileExtension(url);
     }
 
-    const cachedEntry = await storage.remoteFileInfo.get(url)
+    const cachedEntry = await storage.remoteFileInfo.get(url);
 
-    const inFlightValue = getInFlightObject(url, BUILD_ID)
+    const inFlightValue = getInFlightObject(url, BUILD_ID);
     if (inFlightValue) {
-      const downloadPath = createFilePath(finalDirectory, name, ext)
+      const downloadPath = createFilePath(finalDirectory, name, ext);
       if (!isPublicPath(finalDirectory) || downloadPath === inFlightValue) {
-        return inFlightValue
+        return inFlightValue;
       }
 
       return await copyCachedPathToDownloadPath({
         cachedPath: inFlightValue,
         downloadPath: createFilePath(finalDirectory, name, ext),
-      })
+      });
     }
 
     // Add htaccess authentication if passed in. This isn't particularly
     // extensible. We should define a proper API that we validate.
-    const httpOptions: Partial<Options> = {}
+    const httpOptions: Partial<Options> = {};
 
     if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-      httpOptions.username = auth.htaccess_user
-      httpOptions.password = auth.htaccess_pass
+      httpOptions.username = auth.htaccess_user ?? "";
+      httpOptions.password = auth.htaccess_pass ?? "";
     }
 
-    await fs.ensureDir(finalDirectory)
+    await fs.ensureDir(finalDirectory);
 
-    const tmpFilename = createFilePath(fileDirectory, `tmp-${digest}`, ext)
-    let filename = createFilePath(finalDirectory, name, ext)
+    const tmpFilename = createFilePath(fileDirectory, `tmp-${digest}`, ext);
+    let filename = createFilePath(finalDirectory, name, ext);
 
     // See if there's response headers for this url
     // from a previous request.
-    const headers = { ...httpHeaders }
+    const headers = { ...httpHeaders };
 
     if (cachedEntry?.headers?.etag && (await fs.pathExists(filename))) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      headers[`If-None-Match`] = cachedEntry.headers.etag
+      headers["If-None-Match"] = cachedEntry.headers.etag;
     }
 
     const response = await requestRemoteNode(
@@ -214,59 +213,62 @@ async function fetchFile({
       headers,
       tmpFilename,
       httpOptions,
-    )
+    );
 
     if (response.statusCode === 200) {
       // Save the response headers for future requests.
       // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
       if (!ext) {
         // if this is fresh response - try to guess extension and cache result for future
-        const filetype = await fileTypeFromFile(tmpFilename)
+        const filetype = await fileTypeFromFile(tmpFilename);
         if (filetype) {
-          ext = `.${filetype.ext}`
+          ext = `.${filetype.ext}`;
 
-          filename += ext
+          filename += ext;
         }
       }
 
-      await fs.move(tmpFilename, filename, { overwrite: true })
+      await fs.move(tmpFilename, filename, { overwrite: true });
 
-      const slashedDirectory = slash(finalDirectory)
+      const slashedDirectory = slash(finalDirectory);
       await setInFlightObject(url, BUILD_ID, {
         cacheKey,
         extension: ext,
         headers: response.headers.etag ? { etag: response.headers.etag } : {},
         directory: slashedDirectory,
-        path: slash(filename).replace(`${slashedDirectory}/`, ``),
-      })
+        path: slash(filename).replace(`${slashedDirectory}/`, ""),
+      });
     } else if (response.statusCode === 304) {
-      await fs.remove(tmpFilename)
+      await fs.remove(tmpFilename);
     }
 
-    return filename
+    return filename;
   } finally {
-    await fetchFileMutex.release()
+    await fetchFileMutex.release();
   }
 }
 
-const inFlightMap = new Map<string, string>()
-function getInFlightObject(key: string, buildId?: string): string | undefined {
+const inFlightMap = new Map<string, string>();
+function getInFlightObject(
+  key: string,
+  buildId?: string | undefined,
+): string | undefined {
   if (!buildId) {
-    return inFlightMap.get(key)
+    return inFlightMap.get(key);
   }
 
-  const remoteFile = getStorage(getDatabaseDir()).remoteFileInfo.get(key)
+  const remoteFile = getStorage(getDatabaseDir()).remoteFileInfo.get(key);
   // if buildId match we know it's the same build and it already processed this url this build
   if (remoteFile && remoteFile.buildId === buildId) {
-    return path.join(remoteFile.directory, remoteFile.path)
+    return path.join(remoteFile.directory, remoteFile.path);
   }
 
-  return undefined
+  return undefined;
 }
 async function setInFlightObject(
   key: string,
   buildId: string,
-  value: { buildId?: string } & Omit<
+  value: { buildId?: string | undefined } & Omit<
     NonNullable<
       ReturnType<ReturnType<typeof getStorage>["remoteFileInfo"]["get"]>
     >,
@@ -274,11 +276,11 @@ async function setInFlightObject(
   >,
 ): Promise<void> {
   if (!buildId) {
-    inFlightMap.set(key, path.join(value.directory, value.path))
+    inFlightMap.set(key, path.join(value.directory, value.path));
   }
 
   await getStorage(getDatabaseDir()).remoteFileInfo.put(key, {
     ...value,
     buildId,
-  })
+  });
 }

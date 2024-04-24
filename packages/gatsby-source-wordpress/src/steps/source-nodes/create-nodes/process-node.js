@@ -1,31 +1,31 @@
 /* eslint-disable no-useless-escape */
-import { isWebUri } from "valid-url"
-import { GatsbyImage } from "gatsby-plugin-image"
-import React from "react"
-import ReactDOMServer from "react-dom/server"
-import stringify from "fast-json-stable-stringify"
-import execall from "execall"
-import cheerio from "cheerio"
-import url from "url"
-import path from "path"
-import fs from "fs-extra"
-import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensions"
-import replaceAll from "replaceall"
-import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
+import { isWebUri } from "valid-url";
+import { GatsbyImage } from "gatsby-plugin-image";
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import stringify from "fast-json-stable-stringify";
+import execall from "execall";
+import cheerio from "cheerio";
+import url from "url";
+import path from "path";
+import fs from "fs-extra";
+import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensions";
+import replaceAll from "replaceall";
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version";
 import {
   gatsbyImageResolver,
   publicUrlResolver,
-} from "gatsby-plugin-utils/polyfill-remote-file"
+} from "gatsby-plugin-utils/polyfill-remote-file";
 
-import { formatLogMessage } from "~/utils/format-log-message"
+import { formatLogMessage } from "~/utils/format-log-message";
 
 import fetchReferencedMediaItemsAndCreateNodes, {
   stripImageSizesFromUrl,
-} from "../fetch-nodes/fetch-referenced-media-items"
-import { b64e } from "~/utils/string-encoding"
-import { getStore } from "~/store"
+} from "../fetch-nodes/fetch-referenced-media-items";
+import { b64e } from "~/utils/string-encoding";
+import { getStore } from "~/store";
 
-import { store as gatsbyStore } from "gatsby/dist/redux"
+import { store as gatsbyStore } from "gatsby/dist/redux";
 
 /**
  * Takes in a MediaItem node from WPGraphQL as well as Gatsby plugin options and returns the correct placeholder URL for GatsbyImage
@@ -33,24 +33,24 @@ import { store as gatsbyStore } from "gatsby/dist/redux"
  * The user must set the placeholderSizeName plugin option, or otherwise create an image size in WP where the name is `gatsby-image-placeholder`
  */
 export function getPlaceholderUrlFromMediaItemNode(node, pluginOptions) {
-  let placeholderSizeByWidth
-  let placeholderSizeByName
+  let placeholderSizeByWidth;
+  let placeholderSizeByName;
 
-  node.mediaDetails?.sizes?.forEach(size => {
+  node.mediaDetails?.sizes?.forEach((size) => {
     if (
       size.name ===
       (pluginOptions?.type?.MediaItem?.placeholderSizeName ||
-        `gatsby-image-placeholder`)
+        "gatsby-image-placeholder")
     ) {
-      placeholderSizeByName = size
+      placeholderSizeByName = size;
     } else if (Number(size.width) <= 20) {
-      placeholderSizeByWidth = size
+      placeholderSizeByWidth = size;
     }
-  })
+  });
 
-  const placeHolderSize = placeholderSizeByName || placeholderSizeByWidth
+  const placeHolderSize = placeholderSizeByName || placeholderSizeByWidth;
 
-  return placeHolderSize?.sourceUrl
+  return placeHolderSize?.sourceUrl;
 }
 
 const findReferencedImageNodeIds = ({ nodeString, pluginOptions, node }) => {
@@ -61,67 +61,67 @@ const findReferencedImageNodeIds = ({ nodeString, pluginOptions, node }) => {
     // but not in Gatsby v4+ because lazyNodes is no longer supported
     !usingGatsbyV4OrGreater
   ) {
-    return []
+    return [];
   }
 
   // get an array of all referenced media file ID's
   const matchedIds = execall(
     /"__typename":"MediaItem","id":"([^"]*)"/gm,
-    nodeString
+    nodeString,
   )
-    .map(match => match.subMatches[0])
-    .filter(id => id !== node.id)
+    .map((match) => match.subMatches[0])
+    .filter((id) => id !== node.id);
 
-  return matchedIds
-}
+  return matchedIds;
+};
 
-const getCheerioImgDbId = cheerioImg => {
+const getCheerioImgDbId = (cheerioImg) => {
   // try to get the db id from data attributes
   const dataAttributeId =
-    cheerioImg.attribs[`data-id`] || cheerioImg.attribs[`data-image-id`]
+    cheerioImg.attribs["data-id"] || cheerioImg.attribs["data-image-id"];
 
   if (dataAttributeId) {
-    return dataAttributeId
+    return dataAttributeId;
   }
 
   if (!cheerioImg.attribs.class) {
-    return null
+    return null;
   }
 
   // try to get the db id from the wp-image-id classname
   const wpImageClass = cheerioImg.attribs.class
-    .split(` `)
-    .find(className => className.includes(`wp-image-`))
+    .split(" ")
+    .find((className) => className.includes("wp-image-"));
 
   if (wpImageClass) {
-    const wpImageClassDashArray = wpImageClass.split(`-`)
+    const wpImageClassDashArray = wpImageClass.split("-");
     const wpImageClassId = Number(
-      wpImageClassDashArray[wpImageClassDashArray.length - 1]
-    )
+      wpImageClassDashArray[wpImageClassDashArray.length - 1],
+    );
 
     if (wpImageClassId) {
-      return wpImageClassId
+      return wpImageClassId;
     }
   }
 
-  return null
-}
+  return null;
+};
 
 // media items are of the "post" type
-const dbIdToMediaItemRelayId = dbId => (dbId ? b64e(`post:${dbId}`) : null)
+const dbIdToMediaItemRelayId = (dbId) => (dbId ? b64e(`post:${dbId}`) : null);
 
-const getCheerioImgRelayId = cheerioImg =>
-  dbIdToMediaItemRelayId(getCheerioImgDbId(cheerioImg))
+const getCheerioImgRelayId = (cheerioImg) =>
+  dbIdToMediaItemRelayId(getCheerioImgDbId(cheerioImg));
 
 export const ensureSrcHasHostname = ({ src, wpUrl }) => {
-  const { protocol, host } = url.parse(wpUrl)
+  const { protocol, host } = url.parse(wpUrl);
 
-  if (src.startsWith(`/wp-content`)) {
-    src = `${protocol}//${host}${src}`
+  if (src.startsWith("/wp-content")) {
+    src = `${protocol}//${host}${src}`;
   }
 
-  return src
-}
+  return src;
+};
 
 const pickNodeBySourceUrlOrCheerioImg = ({
   url,
@@ -133,10 +133,10 @@ const pickNodeBySourceUrlOrCheerioImg = ({
     url,
     // or by the src minus any image sizes string
     stripImageSizesFromUrl(url),
-  ]
+  ];
 
   let imageNode = mediaItemNodes.find(
-    mediaItemNode =>
+    (mediaItemNode) =>
       // either find our node by the source url
       possibleHtmlSrcs.includes(mediaItemNode.sourceUrl) ||
       possibleHtmlSrcs.includes(
@@ -146,22 +146,22 @@ const pickNodeBySourceUrlOrCheerioImg = ({
         // the sourceUrl may have -scaled in it but the full size image is still
         // stored on the server (just not in the db)
         (mediaItemNode.sourceUrl || mediaItemNode.mediaItemUrl)?.replace(
-          `-scaled`,
-          ``
-        )
-      )
-  )
+          "-scaled",
+          "",
+        ),
+      ),
+  );
 
   if (!imageNode && cheerioImg) {
     imageNode = mediaItemNodes.find(
-      mediaItemNode => getCheerioImgRelayId(cheerioImg) === mediaItemNode.id
-    )
+      (mediaItemNode) => getCheerioImgRelayId(cheerioImg) === mediaItemNode.id,
+    );
   }
 
-  return imageNode
-}
+  return imageNode;
+};
 
-let displayedFailedToRestoreMessage = false
+let displayedFailedToRestoreMessage = false;
 
 const fetchNodeHtmlImageMediaItemNodes = async ({
   // node, // for inspecting nodes while debugging
@@ -170,67 +170,67 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
   wpUrl,
 }) => {
   // get all the image nodes we've cached from elsewhere
-  const { nodeMetaByUrl } = getStore().getState().imageNodes
+  const { nodeMetaByUrl } = getStore().getState().imageNodes;
 
   const previouslyCachedNodesByUrl = (
     await Promise.all(
       Object.entries(nodeMetaByUrl).map(([sourceUrl, { id } = {}]) => {
         if (!sourceUrl || !id) {
-          return null
+          return null;
         }
 
-        sourceUrl = ensureSrcHasHostname({ wpUrl, src: sourceUrl })
+        sourceUrl = ensureSrcHasHostname({ wpUrl, src: sourceUrl });
 
-        const existingNode = helpers.getNode(id)
+        const existingNode = helpers.getNode(id);
 
         if (!existingNode) {
           if (!displayedFailedToRestoreMessage) {
             helpers.reporter.warn(
               formatLogMessage(
-                `File node failed to restore from cache. This is a bug in gatsby-source-wordpress. Please open an issue so we can help you out :)`
-              )
-            )
-            displayedFailedToRestoreMessage = true
+                "File node failed to restore from cache. This is a bug in gatsby-source-wordpress. Please open an issue so we can help you out :)",
+              ),
+            );
+            displayedFailedToRestoreMessage = true;
           }
 
-          return null
+          return null;
         }
 
         return {
           sourceUrl,
           ...existingNode,
-        }
-      })
+        };
+      }),
     )
-  ).filter(Boolean)
+  ).filter(Boolean);
 
   const mediaItemUrls = cheerioImages
     // filter out nodes we already have
     .filter(({ cheerioImg }) => {
-      const url = ensureSrcHasHostname({ wpUrl, src: cheerioImg.attribs.src })
+      const url = ensureSrcHasHostname({ wpUrl, src: cheerioImg.attribs.src });
 
       const existingNode = pickNodeBySourceUrlOrCheerioImg({
         url,
         mediaItemNodes: previouslyCachedNodesByUrl,
-      })
+      });
 
-      return !existingNode
+      return !existingNode;
     })
     // get remaining urls
     .map(({ cheerioImg }) => {
       const src = ensureSrcHasHostname({
         src: cheerioImg.attribs.src,
         wpUrl,
-      })
+      });
 
-      return src
-    })
+      return src;
+    });
 
   // build a query to fetch all media items that we don't already have
   const mediaItemNodesBySourceUrl =
     await fetchReferencedMediaItemsAndCreateNodes({
       mediaItemUrls,
-    })
+    });
   // images that have been edited from the media library that were previously
   // uploaded to a post/page will have a different sourceUrl so they can't be fetched by it
   // in many cases we have data-id or data-image-id as attributes on the img
@@ -238,55 +238,55 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
   // this will keep us from missing nodes
   const mediaItemDbIds = cheerioImages
     .map(({ cheerioImg }) => getCheerioImgDbId(cheerioImg))
-    .filter(Boolean)
+    .filter(Boolean);
 
   const mediaItemRelayIds = mediaItemDbIds
-    .map(dbId => dbIdToMediaItemRelayId(dbId))
+    .map((dbId) => dbIdToMediaItemRelayId(dbId))
     .filter(
       // filter out any media item ids we already fetched
-      relayId =>
+      (relayId) =>
         ![...mediaItemNodesBySourceUrl, ...previouslyCachedNodesByUrl].find(
-          ({ id } = {}) => id === relayId
-        )
-    )
+          ({ id } = {}) => id === relayId,
+        ),
+    );
 
   const mediaItemNodesById = await fetchReferencedMediaItemsAndCreateNodes({
     referencedMediaItemNodeIds: mediaItemRelayIds,
-  })
+  });
 
-  const createdNodes = [...mediaItemNodesById, ...mediaItemNodesBySourceUrl]
+  const createdNodes = [...mediaItemNodesById, ...mediaItemNodesBySourceUrl];
 
-  const mediaItemNodes = [...createdNodes, ...previouslyCachedNodesByUrl]
+  const mediaItemNodes = [...createdNodes, ...previouslyCachedNodesByUrl];
 
-  const htmlMatchesToMediaItemNodesMap = new Map()
+  const htmlMatchesToMediaItemNodesMap = new Map();
   for (const { cheerioImg, match } of cheerioImages) {
     const htmlImgSrc = ensureSrcHasHostname({
       src: cheerioImg.attribs.src,
       wpUrl,
-    })
+    });
 
     const imageNode = pickNodeBySourceUrlOrCheerioImg({
       url: htmlImgSrc,
       cheerioImg,
       mediaItemNodes,
-    })
+    });
 
-    cacheCreatedFileNodeBySrc({ node: imageNode, src: htmlImgSrc })
+    cacheCreatedFileNodeBySrc({ node: imageNode, src: htmlImgSrc });
 
     if (imageNode) {
       // match is the html string of the img tag
-      htmlMatchesToMediaItemNodesMap.set(match, { imageNode, cheerioImg })
+      htmlMatchesToMediaItemNodesMap.set(match, { imageNode, cheerioImg });
     }
   }
 
-  return htmlMatchesToMediaItemNodesMap
-}
+  return htmlMatchesToMediaItemNodesMap;
+};
 
 const getCheerioElementFromMatch =
-  wpUrl =>
-  ({ match, tag = `img` }) => {
+  (wpUrl) =>
+  ({ match, tag = "img" }) => {
     // unescape quotes
-    const parsedMatch = JSON.parse(`"${match}"`)
+    const parsedMatch = JSON.parse(`"${match}"`);
 
     // load our matching img tag into cheerio
     const $ = cheerio.load(parsedMatch, {
@@ -300,14 +300,14 @@ const getCheerioElementFromMatch =
         // or of the source plugin elsewhere.
         decodeEntities: false,
       },
-    })
+    });
 
     // there's only ever one element due to our match matching a single tag
     // $(tag) isn't an array, it's an object with a key of 0
-    const cheerioElement = $(tag)[0]
+    const cheerioElement = $(tag)[0];
 
-    if (cheerioElement?.attribs?.src?.startsWith(`/wp-content`)) {
-      cheerioElement.attribs.src = `${wpUrl}${cheerioElement.attribs.src}`
+    if (cheerioElement?.attribs?.src?.startsWith("/wp-content")) {
+      cheerioElement.attribs.src = `${wpUrl}${cheerioElement.attribs.src}`;
     }
 
     return {
@@ -316,107 +316,107 @@ const getCheerioElementFromMatch =
       // @todo this is from when this function was just used for images
       // remove this by refactoring
       cheerioImg: cheerioElement,
-    }
-  }
+    };
+  };
 
 const getCheerioElementsFromMatches = ({ imgTagMatches, wpUrl }) =>
   imgTagMatches
     .map(getCheerioElementFromMatch(wpUrl))
     .filter(({ cheerioImg: { attribs } }) => {
       if (!attribs.src) {
-        return false
+        return false;
       }
 
-      return isWebUri(encodeURI(attribs.src))
-    })
+      return isWebUri(encodeURI(attribs.src));
+    });
 
-const getLargestSizeFromSizesAttribute = sizesString => {
-  const sizesStringsArray = sizesString.split(`,`)
+const getLargestSizeFromSizesAttribute = (sizesString) => {
+  const sizesStringsArray = sizesString.split(",");
 
   return sizesStringsArray.reduce((largest, currentSizeString) => {
     const maxWidth = currentSizeString
       .substring(
-        currentSizeString.indexOf(`max-width: `) + 1,
-        currentSizeString.indexOf(`px`)
+        currentSizeString.indexOf("max-width: ") + 1,
+        currentSizeString.indexOf("px"),
       )
-      .trim()
+      .trim();
 
-    const maxWidthNumber = Number(maxWidth)
-    const noLargestAndMaxWidthIsANumber = !largest && !isNaN(maxWidthNumber)
+    const maxWidthNumber = Number(maxWidth);
+    const noLargestAndMaxWidthIsANumber = !largest && !isNaN(maxWidthNumber);
     const maxWidthIsALargerNumberThanLargest =
-      largest && !isNaN(maxWidthNumber) && maxWidthNumber > largest
+      largest && !isNaN(maxWidthNumber) && maxWidthNumber > largest;
 
     if (noLargestAndMaxWidthIsANumber || maxWidthIsALargerNumberThanLargest) {
-      largest = maxWidthNumber
+      largest = maxWidthNumber;
     }
 
-    return largest
-  }, null)
-}
+    return largest;
+  }, null);
+};
 
-const findImgTagMaxWidthFromCheerioImg = cheerioImg => {
+const findImgTagMaxWidthFromCheerioImg = (cheerioImg) => {
   const {
     attribs: { width, sizes },
-  } = cheerioImg || { attribs: { width: null, sizes: null } }
+  } = cheerioImg || { attribs: { width: null, sizes: null } };
 
   if (width) {
-    const widthNumber = Number(width)
+    const widthNumber = Number(width);
 
     if (!isNaN(widthNumber)) {
-      return widthNumber
+      return widthNumber;
     }
   }
 
   if (sizes) {
-    const largestSize = getLargestSizeFromSizesAttribute(sizes)
+    const largestSize = getLargestSizeFromSizesAttribute(sizes);
 
     if (largestSize && !isNaN(largestSize)) {
-      return largestSize
+      return largestSize;
     }
   }
 
-  return null
-}
+  return null;
+};
 
-const getFileNodeRelativePathname = fileNode => {
-  const fileName = `${fileNode.internal.contentDigest}/${fileNode.base}`
+const getFileNodeRelativePathname = (fileNode) => {
+  const fileName = `${fileNode.internal.contentDigest}/${fileNode.base}`;
 
-  return fileName
-}
+  return fileName;
+};
 
-const getFileNodePublicPath = fileNode => {
-  const fileName = getFileNodeRelativePathname(fileNode)
+const getFileNodePublicPath = (fileNode) => {
+  const fileName = getFileNodeRelativePathname(fileNode);
 
-  const publicPath = path.join(process.cwd(), `public`, `static`, fileName)
+  const publicPath = path.join(process.cwd(), "public", "static", fileName);
 
-  return publicPath
-}
+  return publicPath;
+};
 
 const copyFileToStaticAndReturnUrlPath = async (fileNode, helpers) => {
-  const publicPath = getFileNodePublicPath(fileNode)
+  const publicPath = getFileNodePublicPath(fileNode);
 
   if (!fs.existsSync(publicPath)) {
     await fs.copy(
       fileNode.absolutePath,
       publicPath,
       { dereference: true },
-      err => {
+      (err) => {
         if (err) {
           console.error(
             `error copying file from ${fileNode.absolutePath} to ${publicPath}`,
-            err
-          )
+            err,
+          );
         }
-      }
-    )
+      },
+    );
   }
 
-  const fileName = getFileNodeRelativePathname(fileNode)
+  const fileName = getFileNodeRelativePathname(fileNode);
 
-  const relativeUrl = `${helpers.pathPrefix ?? ``}/static/${fileName}`
+  const relativeUrl = `${helpers.pathPrefix ?? ""}/static/${fileName}`;
 
-  return relativeUrl
-}
+  return relativeUrl;
+};
 
 const cacheCreatedFileNodeBySrc = ({ node, src }) => {
   if (node) {
@@ -425,32 +425,32 @@ const cacheCreatedFileNodeBySrc = ({ node, src }) => {
       sourceUrl: src,
       id: node.id,
       modifiedGmt: node.modifiedGmt,
-    })
+    });
   }
-}
+};
 
 const imgSrcRemoteFileRegex =
-  /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.|\/)(?:[^'"])*\.(?:jpeg|jpg|png|gif|ico|mpg|ogv|svg|bmp|tif|tiff))(\?[^\\" \.]*|)(?=\\"| |\.)/gim
+  /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.|\/)(?:[^'"])*\.(?:jpeg|jpg|png|gif|ico|mpg|ogv|svg|bmp|tif|tiff))(\?[^\\" \.]*|)(?=\\"| |\.)/gim;
 
-export const getImgSrcRemoteFileMatchesFromNodeString = nodeString =>
+export const getImgSrcRemoteFileMatchesFromNodeString = (nodeString) =>
   execall(imgSrcRemoteFileRegex, nodeString).filter(({ subMatches }) => {
     // if our match is json encoded, that means it's inside a JSON
     // encoded string field.
-    const isInJSON = subMatches[0].includes(`\\/\\/`)
+    const isInJSON = subMatches[0].includes("\\/\\/");
 
     // we shouldn't process encoded JSON, so skip this match if it's JSON
-    return !isInJSON
-  })
+    return !isInJSON;
+  });
 
 export const getImgTagMatches = ({ nodeString }) =>
   execall(
     /<img([\w\W]+?)[\/]?>/gim,
     nodeString
       // we don't want to match images inside pre
-      .replace(/<pre([\w\W]+?)[\/]?>(?:(?!<\/pre>).)+(<\/pre>)/gim, ``)
+      .replace(/<pre([\w\W]+?)[\/]?>(?:(?!<\/pre>).)+(<\/pre>)/gim, "")
       // and code tags, so temporarily remove those tags and everything inside them
-      .replace(/<code([\w\W]+?)[\/]?>(?:(?!<\/code>).)+(<\/code>)/gim, ``)
-  )
+      .replace(/<code([\w\W]+?)[\/]?>(?:(?!<\/code>).)+(<\/code>)/gim, ""),
+  );
 
 export const replaceNodeHtmlImages = async ({
   nodeString,
@@ -464,18 +464,18 @@ export const replaceNodeHtmlImages = async ({
     !pluginOptions?.html?.useGatsbyImage ||
     pluginOptions?.type?.MediaItem?.exclude
   ) {
-    return nodeString
+    return nodeString;
   }
 
-  const imageUrlMatches = getImgSrcRemoteFileMatchesFromNodeString(nodeString)
+  const imageUrlMatches = getImgSrcRemoteFileMatchesFromNodeString(nodeString);
 
-  const imgTagMatches = getImgTagMatches({ nodeString })
+  const imgTagMatches = getImgTagMatches({ nodeString });
 
   if (imageUrlMatches.length && imgTagMatches.length) {
     const cheerioImages = getCheerioElementsFromMatches({
       imgTagMatches,
       wpUrl,
-    })
+    });
 
     const htmlMatchesToMediaItemNodesMap =
       await fetchNodeHtmlImageMediaItemNodes({
@@ -485,23 +485,23 @@ export const replaceNodeHtmlImages = async ({
         helpers,
         pluginOptions,
         wpUrl,
-      })
+      });
 
     // generate gatsby images for each cheerioImage
     const htmlMatchesWithImageResizes = await Promise.all(
       imgTagMatches.map(async ({ match }) => {
-        const matchInfo = htmlMatchesToMediaItemNodesMap.get(match)
+        const matchInfo = htmlMatchesToMediaItemNodesMap.get(match);
 
         if (!matchInfo) {
-          return null
+          return null;
         }
 
-        const { imageNode, cheerioImg } = matchInfo
+        const { imageNode, cheerioImg } = matchInfo;
 
-        const isMediaItemNode = imageNode.__typename === `MediaItem`
+        const isMediaItemNode = imageNode.__typename === "MediaItem";
 
         if (!imageNode) {
-          return null
+          return null;
         }
 
         const fileNode =
@@ -510,21 +510,21 @@ export const replaceNodeHtmlImages = async ({
             ? // this will already be a file node
               imageNode
             : // otherwise grab the file node
-              helpers.getNode(imageNode?.localFile?.id)
+              helpers.getNode(imageNode?.localFile?.id);
 
         const extension = imageNode?.mimeType?.replace(
           `${imageNode?.mediaType}/`,
-          ``
-        )
+          "",
+        );
 
-        const imgTagMaxWidth = findImgTagMaxWidthFromCheerioImg(cheerioImg)
+        const imgTagMaxWidth = findImgTagMaxWidthFromCheerioImg(cheerioImg);
 
         const mediaItemNodeWidth = isMediaItemNode
           ? imageNode?.mediaDetails?.width
-          : null
+          : null;
 
         // if a max width can't be inferred from html, this value will be passed to Sharp
-        let fallbackImageMaxWidth = pluginOptions?.html?.fallbackImageMaxWidth
+        let fallbackImageMaxWidth = pluginOptions?.html?.fallbackImageMaxWidth;
 
         if (
           // if the image is smaller than the fallback max width,
@@ -533,10 +533,10 @@ export const replaceNodeHtmlImages = async ({
           // of course that means we have to have a media item node
           // and a media item node max width
           mediaItemNodeWidth &&
-          typeof mediaItemNodeWidth === `number` &&
+          typeof mediaItemNodeWidth === "number" &&
           mediaItemNodeWidth > 0
         ) {
-          fallbackImageMaxWidth = mediaItemNodeWidth
+          fallbackImageMaxWidth = mediaItemNodeWidth;
         }
 
         let maxWidth =
@@ -545,7 +545,7 @@ export const replaceNodeHtmlImages = async ({
           // and we have a media item node to know it's full size max width
           mediaItemNodeWidth &&
           // and this isn't an svg which has no maximum width
-          extension !== `svg` &&
+          extension !== "svg" &&
           // and the media item node max width is smaller than what we inferred
           // from html
           mediaItemNodeWidth < imgTagMaxWidth
@@ -555,42 +555,42 @@ export const replaceNodeHtmlImages = async ({
               imgTagMaxWidth) ??
           // if we don't have a media item node and we inferred no width
           // from html, then use the fallback max width from plugin options
-          fallbackImageMaxWidth
+          fallbackImageMaxWidth;
 
-        const configuredMaxWidth = pluginOptions?.html?.imageMaxWidth
+        const configuredMaxWidth = pluginOptions?.html?.imageMaxWidth;
 
         // if the configured html.maxWidth property is less than the result, then
         // override the resulting width
         if (configuredMaxWidth && configuredMaxWidth < maxWidth) {
-          maxWidth = configuredMaxWidth
+          maxWidth = configuredMaxWidth;
         }
 
-        const quality = pluginOptions?.html?.imageQuality ?? 70
+        const quality = pluginOptions?.html?.imageQuality ?? 70;
 
-        const { reporter } = helpers
+        const { reporter } = helpers;
 
         const gatsbyTransformerSharpSupportsThisFileType =
-          supportedExtensions[extension] || extension === `gif`
+          supportedExtensions[extension] || extension === "gif";
 
-        let imageResize = null
-        let publicUrl
+        let imageResize = null;
+        let publicUrl;
 
         const imageUrl =
-          imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
+          imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url;
 
         try {
           if (gatsbyTransformerSharpSupportsThisFileType) {
             const placeholderUrl = getPlaceholderUrlFromMediaItemNode(
               imageNode,
-              pluginOptions
-            )
+              pluginOptions,
+            );
 
-            const formats = [`auto`]
+            const formats = ["auto"];
             if (pluginOptions.html.generateWebpImages) {
-              formats.push(`webp`)
+              formats.push("webp");
             }
             if (pluginOptions.html.generateAvifImages) {
-              formats.push(`avif`)
+              formats.push("avif");
             }
 
             imageResize = await gatsbyImageResolver(
@@ -607,16 +607,16 @@ export const replaceNodeHtmlImages = async ({
               },
               {
                 width: maxWidth,
-                layout: `constrained`,
+                layout: "constrained",
                 placeholder: !placeholderUrl
-                  ? `none`
-                  : pluginOptions?.html?.placeholderType || `dominantColor`,
+                  ? "none"
+                  : pluginOptions?.html?.placeholderType || "dominantColor",
                 quality,
                 formats,
               },
               helpers.actions,
-              gatsbyStore
-            )
+              gatsbyStore,
+            );
           } else {
             publicUrl = publicUrlResolver(
               {
@@ -628,17 +628,17 @@ export const replaceNodeHtmlImages = async ({
                 },
               },
               helpers.actions,
-              gatsbyStore
-            )
+              gatsbyStore,
+            );
           }
         } catch (e) {
-          reporter.error(e)
+          reporter.error(e);
           reporter.warn(
             formatLogMessage(
-              `${node.__typename} ${node.id} couldn't process inline html image ${imageUrl}`
-            )
-          )
-          return null
+              `${node.__typename} ${node.id} couldn't process inline html image ${imageUrl}`,
+            ),
+          );
+          return null;
         }
 
         return {
@@ -648,22 +648,22 @@ export const replaceNodeHtmlImages = async ({
           imageResize,
           maxWidth,
           publicUrl,
-        }
-      })
-    )
+        };
+      }),
+    );
 
     // find/replace mutate nodeString to replace matched images with rendered gatsby images
-    let replaceIndex = 0
+    let replaceIndex = 0;
     for (const matchResize of htmlMatchesWithImageResizes) {
       if (!matchResize) {
-        continue
+        continue;
       }
 
-      const { match, imageResize, cheerioImg, publicUrl } = matchResize
+      const { match, imageResize, cheerioImg, publicUrl } = matchResize;
 
-      let ReactGatsbyImage
+      let ReactGatsbyImage;
       // used to create hydration data for images
-      let gatsbyImageHydrationData = null
+      let gatsbyImageHydrationData = null;
       if (
         imageResize &&
         (imageResize.images.sources.length > 0 || imageResize.images.fallback)
@@ -671,57 +671,57 @@ export const replaceNodeHtmlImages = async ({
         gatsbyImageHydrationData = {
           image: imageResize,
           // Wordpress tells users to leave "alt" empty if image is decorative. But it returns undefined, not ``
-          alt: cheerioImg?.attribs?.alt ?? ``,
+          alt: cheerioImg?.attribs?.alt ?? "",
           className: `${
-            cheerioImg?.attribs?.class || ``
+            cheerioImg?.attribs?.class || ""
           } inline-gatsby-image-wrapper`,
           "data-wp-inline-image": String(++replaceIndex),
-        }
+        };
         ReactGatsbyImage = React.createElement(
           GatsbyImage,
           gatsbyImageHydrationData,
-          null
-        )
+          null,
+        );
       } else if (publicUrl) {
         ReactGatsbyImage = React.createElement(
-          `img`,
+          "img",
           {
             src: publicUrl,
             // Wordpress tells users to leave "alt" empty if image is decorative. But it returns undefined, not ``
-            alt: cheerioImg?.attribs?.alt ?? ``,
+            alt: cheerioImg?.attribs?.alt ?? "",
             className: `${
-              cheerioImg?.attribs?.class || ``
+              cheerioImg?.attribs?.class || ""
             } inline-gatsby-image-wrapper`,
           },
-          null
-        )
+          null,
+        );
       }
 
       if (ReactGatsbyImage) {
         let gatsbyImageStringRaw =
-          ReactDOMServer.renderToString(ReactGatsbyImage)
+          ReactDOMServer.renderToString(ReactGatsbyImage);
 
         // gatsby-plugin-image needs hydration data to work on navigations - we add the hydration data to the DOM to use it in gatsby-browser.ts
         if (gatsbyImageHydrationData) {
           gatsbyImageStringRaw += `<script type="application/json" data-wp-inline-image-hydration="${replaceIndex}">${JSON.stringify(
-            gatsbyImageHydrationData
-          )}</script>`
+            gatsbyImageHydrationData,
+          )}</script>`;
         }
         // need to remove the JSON stringify quotes around our image since we're
         // threading this JSON string back into a larger JSON object string
-        const gatsbyImageStringJSON = JSON.stringify(gatsbyImageStringRaw)
+        const gatsbyImageStringJSON = JSON.stringify(gatsbyImageStringRaw);
         const gatsbyImageString = gatsbyImageStringJSON.substring(
           1,
-          gatsbyImageStringJSON.length - 1
-        )
+          gatsbyImageStringJSON.length - 1,
+        );
 
-        nodeString = replaceAll(match, gatsbyImageString, nodeString)
+        nodeString = replaceAll(match, gatsbyImageString, nodeString);
       }
     }
   }
 
-  return nodeString
-}
+  return nodeString;
+};
 
 const replaceFileLinks = async ({
   nodeString,
@@ -734,75 +734,75 @@ const replaceFileLinks = async ({
     !pluginOptions?.html?.createStaticFiles ||
     pluginOptions?.type?.MediaItem?.exclude
   ) {
-    return nodeString
+    return nodeString;
   }
 
-  if (node.__typename === `MediaItem`) {
+  if (node.__typename === "MediaItem") {
     // we don't want to replace file links on MediaItem nodes because they're processed specially from other node types.
     // if we replace file links here then we wont be able to properly fetch the localFile node
-    return nodeString
+    return nodeString;
   }
 
   const hrefMatches = [
     // match url pathnames in html fields, for ex /wp-content/uploads/2019/01/image.jpg
     ...(execall(
       /(\\"|\\'|\()([^'"()]*)(\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\))/gm,
-      nodeString
+      nodeString,
     ) || []),
     // match full urls in json fields, for ex https://example.com/wp-content/uploads/2019/01/image.jpg
     ...(execall(
       new RegExp(
         `(\\"|\\'|\\()([^'"()]*)(${wpUrl}\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\\))`,
-        `gm`
+        "gm",
       ),
-      nodeString
+      nodeString,
     ) || []),
-  ]
+  ];
 
   if (hrefMatches.length) {
     // eslint-disable-next-line arrow-body-style
-    const mediaItemUrlsAndMatches = hrefMatches.map(matchGroup => {
-      const match = matchGroup.subMatches[2]
-      const url = match.startsWith(wpUrl) ? match : `${wpUrl}${match}`
+    const mediaItemUrlsAndMatches = hrefMatches.map((matchGroup) => {
+      const match = matchGroup.subMatches[2];
+      const url = match.startsWith(wpUrl) ? match : `${wpUrl}${match}`;
       return {
         matchGroup,
         url,
-      }
-    })
+      };
+    });
 
     const mediaItemUrls = mediaItemUrlsAndMatches
       .map(({ url }) => url)
-      .filter(isWebUri)
+      .filter(isWebUri);
 
     const mediaItemNodesBySourceUrl =
       await fetchReferencedMediaItemsAndCreateNodes({
         mediaItemUrls,
-      })
+      });
 
-    const findReplaceMaps = []
+    const findReplaceMaps = [];
 
     await Promise.all(
-      mediaItemNodesBySourceUrl.map(async node => {
-        let fileNode
-        let mediaItemNode
+      mediaItemNodesBySourceUrl.map(async (node) => {
+        let fileNode;
+        let mediaItemNode;
 
-        if (node.internal.type === `File`) {
-          fileNode = node
-          mediaItemNode = await helpers.getNode(node.parent)
+        if (node.internal.type === "File") {
+          fileNode = node;
+          mediaItemNode = await helpers.getNode(node.parent);
         } else if (node.localFile?.id) {
-          fileNode = await helpers.getNode(node.localFile.id)
-          mediaItemNode = node
+          fileNode = await helpers.getNode(node.localFile.id);
+          mediaItemNode = node;
         } else {
-          return null
+          return null;
         }
 
         const relativeUrl = await copyFileToStaticAndReturnUrlPath(
           fileNode,
-          helpers
-        )
+          helpers,
+        );
 
         if (!relativeUrl || !mediaItemNode?.mediaItemUrl || !fileNode) {
-          return null
+          return null;
         }
 
         const mediaItemMatchGroup = mediaItemUrlsAndMatches.find(
@@ -810,52 +810,52 @@ const replaceFileLinks = async ({
             matchGroup: {
               subMatches: [, , path],
             },
-          }) => mediaItemNode.mediaItemUrl.includes(path)
-        )?.matchGroup
+          }) => mediaItemNode.mediaItemUrl.includes(path),
+        )?.matchGroup;
 
         if (!mediaItemMatchGroup) {
-          return null
+          return null;
         }
 
-        const [, hostname, path] = mediaItemMatchGroup.subMatches
+        const [, hostname, path] = mediaItemMatchGroup.subMatches;
 
         cacheCreatedFileNodeBySrc({
           node: mediaItemNode,
           src: `${wpUrl}${path}`,
-        })
+        });
 
         findReplaceMaps.push({
-          find: `${hostname || ``}${path}`,
+          find: `${hostname || ""}${path}`,
           replace: relativeUrl,
-        })
+        });
 
         findReplaceMaps.push({
           find: path,
           replace: relativeUrl,
-        })
+        });
 
-        return null
-      })
-    )
+        return null;
+      }),
+    );
 
     for (const { find, replace } of findReplaceMaps.filter(Boolean)) {
-      nodeString = replaceAll(find, replace, nodeString)
+      nodeString = replaceAll(find, replace, nodeString);
     }
   }
 
-  return nodeString
-}
+  return nodeString;
+};
 
-export const getWpLinkRegex = wpUrl =>
+export const getWpLinkRegex = (wpUrl) =>
   new RegExp(
     `["']${wpUrl}(?!/wp-content|/wp-admin|/wp-includes)(/[^'"]+)["']`,
-    `gim`
-  )
+    "gim",
+  );
 
 // replaces any url which is a front-end WP url with a relative path
 const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
-  const wpLinkRegex = getWpLinkRegex(wpUrl)
-  const linkMatches = execall(wpLinkRegex, nodeString)
+  const wpLinkRegex = getWpLinkRegex(wpUrl);
+  const linkMatches = execall(wpLinkRegex, nodeString);
 
   if (linkMatches.length) {
     linkMatches.forEach(({ match, subMatches: [path] }) => {
@@ -863,33 +863,33 @@ const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
         try {
           // remove \, " and ' characters from match
           const normalizedMatch = match
-            .replace(/['"\\]/g, ``)
+            .replace(/['"\\]/g, "")
             // ensure that query params are properly quoted
-            .replace(/\?/, `\\?`)
+            .replace(/\?/, "\\?");
 
-          const normalizedPath = path.replace(/\\/g, ``)
+          const normalizedPath = path.replace(/\\/g, "");
 
           // replace normalized match with relative path
           const thisMatchRegex = new RegExp(
-            normalizedMatch + `(?!/?wp-content|/?wp-admin|/?wp-includes)`,
-            `g`
-          )
+            normalizedMatch + "(?!/?wp-content|/?wp-admin|/?wp-includes)",
+            "g",
+          );
 
-          nodeString = nodeString.replace(thisMatchRegex, normalizedPath)
+          nodeString = nodeString.replace(thisMatchRegex, normalizedPath);
         } catch (e) {
-          console.error(e)
+          console.error(e);
           console.warn(
             formatLogMessage(
-              `Failed to process inline html links in ${node.__typename} ${node.id}`
-            )
-          )
+              `Failed to process inline html links in ${node.__typename} ${node.id}`,
+            ),
+          );
         }
       }
-    })
+    });
   }
 
-  return nodeString
-}
+  return nodeString;
+};
 
 // replaces specific string or regex with a given string from the plugin options config
 export const searchAndReplaceNodeStrings = ({
@@ -899,31 +899,31 @@ export const searchAndReplaceNodeStrings = ({
 }) => {
   if (Array.isArray(pluginOptions?.searchAndReplace)) {
     pluginOptions.searchAndReplace.forEach(({ search, replace }) => {
-      const searchRegex = new RegExp(search, `g`)
+      const searchRegex = new RegExp(search, "g");
 
-      const stringMatches = execall(searchRegex, nodeString)
+      const stringMatches = execall(searchRegex, nodeString);
 
       if (stringMatches.length) {
         stringMatches.forEach(({ match }) => {
           if (match) {
             try {
-              nodeString = nodeString.replace(search, replace)
+              nodeString = nodeString.replace(search, replace);
             } catch (e) {
-              console.error(e)
+              console.error(e);
               console.warn(
                 formatLogMessage(
-                  `Failed to process search and replace string in ${node.__typename} ${node.id}`
-                )
-              )
+                  `Failed to process search and replace string in ${node.__typename} ${node.id}`,
+                ),
+              );
             }
           }
-        })
+        });
       }
-    })
+    });
   }
 
-  return nodeString
-}
+  return nodeString;
+};
 
 const processNodeString = async ({
   nodeString,
@@ -937,7 +937,7 @@ const processNodeString = async ({
     replaceNodeHtmlImages,
     replaceFileLinks,
     replaceNodeHtmlLinks,
-  ]
+  ];
 
   for (const nodeStringFilter of nodeStringFilters) {
     nodeString = await nodeStringFilter({
@@ -946,11 +946,11 @@ const processNodeString = async ({
       pluginOptions,
       helpers,
       wpUrl,
-    })
+    });
   }
 
-  return nodeString
-}
+  return nodeString;
+};
 
 const processNode = async ({
   node,
@@ -959,7 +959,7 @@ const processNode = async ({
   helpers,
   referencedMediaItemNodeIds,
 }) => {
-  const nodeString = stringify(node)
+  const nodeString = stringify(node);
 
   // find referenced node ids
   // here we're searching for node id strings in our node
@@ -971,11 +971,13 @@ const processNode = async ({
     nodeString,
     pluginOptions,
     node,
-  })
+  });
 
   // push them to our store of referenced id's
   if (nodeMediaItemIdReferences?.length && referencedMediaItemNodeIds) {
-    nodeMediaItemIdReferences.forEach(id => referencedMediaItemNodeIds.add(id))
+    nodeMediaItemIdReferences.forEach((id) =>
+      referencedMediaItemNodeIds.add(id),
+    );
   }
 
   const processedNodeString = await processNodeString({
@@ -984,16 +986,16 @@ const processNode = async ({
     pluginOptions,
     helpers,
     wpUrl,
-  })
+  });
 
   const processedNode =
     // only parse if the nodeString has changed
-    processedNodeString !== nodeString ? JSON.parse(processedNodeString) : node
+    processedNodeString !== nodeString ? JSON.parse(processedNodeString) : node;
 
   return {
     processedNode,
     nodeMediaItemIdReferences,
-  }
-}
+  };
+};
 
-export { processNode }
+export { processNode };

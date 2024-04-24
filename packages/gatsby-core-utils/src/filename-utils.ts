@@ -1,7 +1,7 @@
-import path from "node:path"
-import crypto from "node:crypto"
+import path from "node:path";
+import crypto from "node:crypto";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import Url from "node:url"
+import Url from "node:url";
 
 /**
  * getParsedPath
@@ -10,7 +10,7 @@ import Url from "node:url"
  *
  */
 function getParsedPath(url: string): path.ParsedPath {
-  return path.parse(Url.parse(url).pathname || ``)
+  return path.parse(Url.parse(url).pathname || "");
 }
 
 /**
@@ -20,7 +20,7 @@ function getParsedPath(url: string): path.ParsedPath {
  *
  */
 export function getRemoteFileExtension(url: string): string {
-  return getParsedPath(url).ext
+  return getParsedPath(url).ext;
 }
 
 /**
@@ -30,18 +30,18 @@ export function getRemoteFileExtension(url: string): string {
  *
  */
 export function getRemoteFileName(url: string): string {
-  return decodeURIComponent(getParsedPath(url).name)
+  return decodeURIComponent(getParsedPath(url).name);
 }
 
 export function createFileHash(input: string, length: number = 8): string {
   return crypto
-    .createHash(`sha1`)
+    .createHash("sha1")
     .update(input)
-    .digest(`hex`)
-    .substring(0, length)
+    .digest("hex")
+    .substring(0, length);
 }
 
-const filenamePurgeRegex = /:|\/|\*|\?|"|<|>|\||\\/g
+const filenamePurgeRegex = /:|\/|\*|\?|"|<|>|\||\\/g;
 
 /**
  * createFilePath
@@ -53,18 +53,18 @@ export function createFilePath(
   filename: string,
   ext: string,
 ): string {
-  directory = decodeURIComponent(directory)
-  filename = decodeURIComponent(filename)
+  directory = decodeURIComponent(directory);
+  filename = decodeURIComponent(filename);
 
-  const purgedFileName = filename.replace(filenamePurgeRegex, `-`)
-  const shouldAddHash = purgedFileName !== filename
+  const purgedFileName = filename.replace(filenamePurgeRegex, "-");
+  const shouldAddHash = purgedFileName !== filename;
 
   if (shouldAddHash) {
     return path.join(
       directory,
       `${purgedFileName}-${createFileHash(filename)}${ext}`,
-    )
+    );
   } else {
-    return path.join(directory, `${filename}${ext}`)
+    return path.join(directory, `${filename}${ext}`);
   }
 }

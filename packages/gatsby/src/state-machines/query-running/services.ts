@@ -1,4 +1,4 @@
-import type { MachineOptions } from "xstate"
+import type { MachineOptions } from "xstate";
 import {
   extractQueries,
   writeOutRequires,
@@ -8,8 +8,8 @@ import {
   runSliceQueries,
   waitUntilAllJobsComplete,
   writeOutRedirects,
-} from "../../services"
-import type { IQueryRunningContext } from "./types"
+} from "../../services";
+import type { IQueryRunningContext } from "./types";
 
 export const queryRunningServices: MachineOptions<
   IQueryRunningContext,
@@ -24,4 +24,4 @@ export const queryRunningServices: MachineOptions<
   runSliceQueries,
   waitUntilAllJobsComplete,
   writeOutRedirects,
-}
+};

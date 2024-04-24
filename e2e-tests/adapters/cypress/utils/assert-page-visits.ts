@@ -1,16 +1,22 @@
-export function assertPageVisits(pages: Array<{ path: string; status: number; destinationPath?: string }>) {
+export function assertPageVisits(
+  pages: Array<{
+    path: string;
+    status: number;
+    destinationPath?: string | undefined;
+  }>,
+) {
   for (let i = 0; i < pages.length; i++) {
-    const page = pages[i]
+    const page = pages[i];
 
-    cy.intercept(new RegExp(`^${page.path}$`), req => {
-      req.continue(res => {
-        expect(res.statusCode).to.equal(page.status)
+    cy.intercept(new RegExp(`^${page.path}$`), (req) => {
+      req.continue((res) => {
+        expect(res.statusCode).to.equal(page.status);
         if (page.destinationPath) {
-          expect(res.headers.location).to.equal(page.destinationPath)
+          expect(res.headers.location).to.equal(page.destinationPath);
         } else {
-          expect(res.headers.location).to.be.undefined
+          expect(res.headers.location).to.be.undefined;
         }
-      })
-    })
+      });
+    });
   }
 }

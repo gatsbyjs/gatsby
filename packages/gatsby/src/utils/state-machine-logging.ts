@@ -4,32 +4,32 @@ import {
   type Actor,
   State,
   type AnyEventObject,
-} from "xstate"
-import reporter from "gatsby-cli/lib/reporter"
+} from "xstate";
+import reporter from "gatsby-cli/lib/reporter";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyInterpreterWithContext<T> = Interpreter<T, any, any, any, any>
+type AnyInterpreterWithContext<T> = Interpreter<T, any, any, any, any>;
 
 const isInterpreter = <T>(
   actor: Actor<T> | Interpreter<T>,
-): actor is Interpreter<T> => `machine` in actor
+): actor is Interpreter<T> => "machine" in actor;
 
 export function logTransitions<T = DefaultContext>(
   service: AnyInterpreterWithContext<T>,
 ): void {
-  const listeners = new WeakSet()
+  const listeners = new WeakSet();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let last: State<T, AnyEventObject, any, any>
+  let last: State<T, AnyEventObject, any, any>;
 
   service.onTransition((state) => {
     if (!last) {
-      last = state
+      last = state;
     } else if (!state.changed || last.matches(state)) {
-      return
+      return;
     }
-    last = state
-    if (process.env.gatsby_log_level === `verbose`) {
-      reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
+    last = state;
+    if (process.env.gatsby_log_level === "verbose") {
+      reporter.verbose(`Transition to ${JSON.stringify(state.value)}`);
     }
     // eslint-disable-next-line no-unused-expressions
     service.children?.forEach((child) => {
@@ -39,24 +39,24 @@ export function logTransitions<T = DefaultContext>(
 
       // @ts-ignore - TODO: Fix it
       if (isInterpreter(child) && !listeners.has(child)) {
-        let sublast = child.state
+        let sublast = child.state;
         child.onTransition((substate) => {
           if (!sublast) {
-            sublast = substate
+            sublast = substate;
           } else if (!substate.changed || sublast.matches(substate)) {
-            return
+            return;
           }
-          sublast = substate
-          if (process.env.gatsby_log_level === `verbose`) {
+          sublast = substate;
+          if (process.env.gatsby_log_level === "verbose") {
             reporter.verbose(
               `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
                 substate.value,
               )}`,
-            )
+            );
           }
-        })
-        listeners.add(child)
+        });
+        listeners.add(child);
       }
-    })
-  })
+    });
+  });
 }

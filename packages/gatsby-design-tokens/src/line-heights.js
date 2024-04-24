@@ -5,4 +5,4 @@ export const lineHeights = {
   default: 1.5,
   body: 1.5,
   loose: 1.75,
-}
+};

@@ -1,16 +1,16 @@
-import type { ProcessorOptions } from "@mdx-js/mdx"
-import type { GatsbyCache, NodePluginArgs } from "gatsby"
-import type { Pluggable } from "unified"
-import type { IMdxPluginOptions } from "./plugin-options"
+import type { ProcessorOptions } from "@mdx-js/mdx";
+import type { GatsbyCache, NodePluginArgs } from "gatsby";
+import type { Pluggable } from "unified";
+import type { IMdxPluginOptions } from "./plugin-options";
 
 type IGetSourcePluginsAsRemarkPlugins = {
-  gatsbyRemarkPlugins: IMdxPluginOptions["gatsbyRemarkPlugins"]
-  getNode: NodePluginArgs["getNode"]
-  getNodesByType: NodePluginArgs["getNodesByType"]
-  pathPrefix: NodePluginArgs["pathPrefix"]
-  reporter: NodePluginArgs["reporter"]
-  cache: GatsbyCache
-}
+  gatsbyRemarkPlugins: IMdxPluginOptions["gatsbyRemarkPlugins"];
+  getNode: NodePluginArgs["getNode"];
+  getNodesByType: NodePluginArgs["getNodesByType"];
+  pathPrefix: NodePluginArgs["pathPrefix"];
+  reporter: NodePluginArgs["reporter"];
+  cache: GatsbyCache;
+};
 
 export async function getSourcePluginsAsRemarkPlugins({
   gatsbyRemarkPlugins,
@@ -23,19 +23,21 @@ export async function getSourcePluginsAsRemarkPlugins({
   ProcessorOptions["remarkPlugins"]
 > {
   const userPluginsFiltered = gatsbyRemarkPlugins
-    ? gatsbyRemarkPlugins.filter(plugin => typeof plugin.module === `function`)
-    : []
+    ? gatsbyRemarkPlugins.filter(
+        (plugin) => typeof plugin.module === "function",
+      )
+    : [];
 
   if (!userPluginsFiltered.length) {
-    return []
+    return [];
   }
 
-  const userPlugins = userPluginsFiltered.map(plugin => {
-    const requiredPlugin = plugin.module
+  const userPlugins = userPluginsFiltered.map((plugin) => {
+    const requiredPlugin = plugin.module;
     const wrappedGatsbyPlugin: Pluggable = function wrappedGatsbyPlugin() {
       // @ts-ignore
       // eslint-disable-next-line @babel/no-invalid-this
-      const mdxNode = getNode(this.data(`mdxNodeId`))
+      const mdxNode = getNode(this.data("mdxNodeId"));
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return async function transformer(markdownAST): Promise<any> {
@@ -47,19 +49,19 @@ export async function getSourcePluginsAsRemarkPlugins({
             getNode,
             getNodesByType,
             get files() {
-              return getNodesByType(`File`)
+              return getNodesByType("File");
             },
             pathPrefix,
             reporter,
             cache,
           },
           plugin.pluginOptions || {},
-        )
-      }
-    }
+        );
+      };
+    };
 
-    return wrappedGatsbyPlugin
-  })
+    return wrappedGatsbyPlugin;
+  });
 
-  return userPlugins
+  return userPlugins;
 }

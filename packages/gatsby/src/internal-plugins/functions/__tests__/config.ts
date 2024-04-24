@@ -1,35 +1,37 @@
-import { createConfig } from "../config"
-import { printConfigWarnings } from "../middleware"
-import reporter from "gatsby-cli/lib/reporter"
-import type { IGatsbyFunction } from "../../../redux/types"
-const reporterWarnSpy = jest.spyOn(reporter, `warn`)
+import { createConfig, type IGatsbyFunctionConfigProcessed } from "../config";
+import { printConfigWarnings } from "../middleware";
+import reporter from "gatsby-cli/lib/reporter";
+import type { IGatsbyFunction } from "../../../redux/types";
+const reporterWarnSpy = jest.spyOn(reporter, "warn");
 
 beforeEach(() => {
-  reporterWarnSpy.mockReset()
-})
+  reporterWarnSpy.mockReset();
+});
 
 function createConfigAndPrintWarnings(
-  userConfig: any,
-  functionObj: IGatsbyFunction
-): any {
-  const { config, warnings } = createConfig(userConfig)
-  printConfigWarnings(warnings, functionObj)
-  return config
+  userConfig: unknown,
+  functionObj: IGatsbyFunction,
+): IGatsbyFunctionConfigProcessed {
+  const { config, warnings } = createConfig(userConfig);
+  printConfigWarnings(warnings, functionObj);
+  return config;
 }
 
 const testFunction: IGatsbyFunction = {
-  functionRoute: `a-directory/function`,
+  functionRoute: "a-directory/function",
   matchPath: undefined,
-  pluginName: `default-site-plugin`,
-  originalAbsoluteFilePath: `/Users/misiek/dev/functions-test/src/api/a-directory/function.js`,
-  originalRelativeFilePath: `a-directory/function.js`,
-  relativeCompiledFilePath: `a-directory/function.js`,
-  absoluteCompiledFilePath: `/Users/misiek/dev/functions-test/.cache/functions/a-directory/function.js`,
-  functionId: `a-directory/function`,
-}
+  pluginName: "default-site-plugin",
+  originalAbsoluteFilePath:
+    "/Users/misiek/dev/functions-test/src/api/a-directory/function.js",
+  originalRelativeFilePath: "a-directory/function.js",
+  relativeCompiledFilePath: "a-directory/function.js",
+  absoluteCompiledFilePath:
+    "/Users/misiek/dev/functions-test/.cache/functions/a-directory/function.js",
+  functionId: "a-directory/function",
+};
 
-describe(`createConfigAndPrintWarnings`, () => {
-  it(`defaults`, () => {
+describe("createConfigAndPrintWarnings", () => {
+  it("defaults", () => {
     expect(createConfigAndPrintWarnings(undefined, testFunction))
       .toMatchInlineSnapshot(`
       Object {
@@ -49,12 +51,12 @@ describe(`createConfigAndPrintWarnings`, () => {
           },
         },
       }
-    `)
-    expect(reporterWarnSpy).toBeCalledTimes(0)
-  })
+    `);
+    expect(reporterWarnSpy).toBeCalledTimes(0);
+  });
 
-  describe(`input not matching schema (fallback to default and warnings)`, () => {
-    it(`{ bodyParser: false }`, () => {
+  describe("input not matching schema (fallback to default and warnings)", () => {
+    it("{ bodyParser: false }", () => {
       expect(createConfigAndPrintWarnings({ bodyParser: false }, testFunction))
         .toMatchInlineSnapshot(`
                   Object {
@@ -74,18 +76,18 @@ describe(`createConfigAndPrintWarnings`, () => {
                       },
                     },
                   }
-              `)
+              `);
 
-      expect(reporterWarnSpy).toBeCalledTimes(1)
+      expect(reporterWarnSpy).toBeCalledTimes(1);
       expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
         "\`bodyParser\` property of exported config in \`a-directory/function.js\` is misconfigured.
         Expected object:
 
         {
-          text?: GatsbyFunctionBodyParserCommonMiddlewareConfig
-          json?: GatsbyFunctionBodyParserCommonMiddlewareConfig
-          raw?: GatsbyFunctionBodyParserCommonMiddlewareConfig
-          urlencoded?: GatsbyFunctionBodyParserUrlencodedConfig
+          text?: GatsbyFunctionBodyParserCommonMiddlewareConfig | undefined
+          json?: GatsbyFunctionBodyParserCommonMiddlewareConfig | undefined
+          raw?: GatsbyFunctionBodyParserCommonMiddlewareConfig | undefined
+          urlencoded?: GatsbyFunctionBodyParserUrlencodedConfig | undefined
         }
 
         Got:
@@ -109,11 +111,11 @@ describe(`createConfigAndPrintWarnings`, () => {
             \\"extended\\": true
           }
         }"
-      `)
-    })
+      `);
+    });
 
-    it(`{ bodyParser: "foo" }`, () => {
-      expect(createConfigAndPrintWarnings({ bodyParser: `foo` }, testFunction))
+    it('{ bodyParser: "foo" }', () => {
+      expect(createConfigAndPrintWarnings({ bodyParser: "foo" }, testFunction))
         .toMatchInlineSnapshot(`
                   Object {
                     "bodyParser": Object {
@@ -132,18 +134,18 @@ describe(`createConfigAndPrintWarnings`, () => {
                       },
                     },
                   }
-              `)
+              `);
 
-      expect(reporterWarnSpy).toBeCalledTimes(1)
+      expect(reporterWarnSpy).toBeCalledTimes(1);
       expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
         "\`bodyParser\` property of exported config in \`a-directory/function.js\` is misconfigured.
         Expected object:
 
         {
-          text?: GatsbyFunctionBodyParserCommonMiddlewareConfig
-          json?: GatsbyFunctionBodyParserCommonMiddlewareConfig
-          raw?: GatsbyFunctionBodyParserCommonMiddlewareConfig
-          urlencoded?: GatsbyFunctionBodyParserUrlencodedConfig
+          text?: GatsbyFunctionBodyParserCommonMiddlewareConfig | undefined
+          json?: GatsbyFunctionBodyParserCommonMiddlewareConfig | undefined
+          raw?: GatsbyFunctionBodyParserCommonMiddlewareConfig | undefined
+          urlencoded?: GatsbyFunctionBodyParserUrlencodedConfig | undefined
         }
 
         Got:
@@ -167,10 +169,10 @@ describe(`createConfigAndPrintWarnings`, () => {
             \\"extended\\": true
           }
         }"
-      `)
-    })
+      `);
+    });
 
-    it(`{ unrelated: true }`, () => {
+    it("{ unrelated: true }", () => {
       expect(createConfigAndPrintWarnings({ unrelated: true }, testFunction))
         .toMatchInlineSnapshot(`
                   Object {
@@ -190,9 +192,9 @@ describe(`createConfigAndPrintWarnings`, () => {
                       },
                     },
                   }
-              `)
+              `);
 
-      expect(reporterWarnSpy).toBeCalledTimes(1)
+      expect(reporterWarnSpy).toBeCalledTimes(1);
       expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
         "Exported config in \`a-directory/function.js\` is misconfigured.
         Expected object:
@@ -224,15 +226,15 @@ describe(`createConfigAndPrintWarnings`, () => {
             }
           }
         }"
-      `)
-    })
+      `);
+    });
 
-    it(`{ bodyParser: { unrelated: true } }`, () => {
+    it("{ bodyParser: { unrelated: true } }", () => {
       expect(
         createConfigAndPrintWarnings(
           { bodyParser: { unrelated: true } },
-          testFunction
-        )
+          testFunction,
+        ),
       ).toMatchInlineSnapshot(`
                   Object {
                     "bodyParser": Object {
@@ -251,9 +253,9 @@ describe(`createConfigAndPrintWarnings`, () => {
                       },
                     },
                   }
-              `)
+              `);
 
-      expect(reporterWarnSpy).toBeCalledTimes(1)
+      expect(reporterWarnSpy).toBeCalledTimes(1);
       expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
         "\`bodyParser\` property of exported config in \`a-directory/function.js\` is misconfigured.
         Expected object:
@@ -286,75 +288,75 @@ describe(`createConfigAndPrintWarnings`, () => {
             \\"extended\\": true
           }
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
-  describe(`bodyParser`, () => {
-    describe(`text`, () => {
-      it(`limit`, () => {
+  describe("bodyParser", () => {
+    describe("text", () => {
+      it("limit", () => {
         const customTextConfig = {
-          limit: `1mb`,
-        }
+          limit: "1mb",
+        };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               text: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.text).toMatchInlineSnapshot(`
                   Object {
                     "limit": "1mb",
                   }
-              `)
-        expect(reporterWarnSpy).toBeCalledTimes(0)
-      })
+              `);
+        expect(reporterWarnSpy).toBeCalledTimes(0);
+      });
 
-      it(`type`, () => {
+      it("type", () => {
         const customTextConfig = {
-          type: `lorem/*`,
-        }
+          type: "lorem/*",
+        };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               text: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.text).toMatchInlineSnapshot(`
                   Object {
                     "type": "lorem/*",
                   }
-              `)
-        expect(reporterWarnSpy).toBeCalledTimes(0)
-      })
+              `);
+        expect(reporterWarnSpy).toBeCalledTimes(0);
+      });
 
-      it(`input not matching schema (fallback to default) - not an config object`, () => {
-        const customTextConfig = `foo`
+      it("input not matching schema (fallback to default) - not an config object", () => {
+        const customTextConfig = "foo";
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               text: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.text).toMatchInlineSnapshot(`
                   Object {
                     "limit": "100kb",
                   }
-              `)
-        expect(reporterWarnSpy).toBeCalledTimes(1)
+              `);
+        expect(reporterWarnSpy).toBeCalledTimes(1);
         expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
           "\`bodyParser.text\` property of exported config in \`a-directory/function.js\` is misconfigured.
           Expected object:
 
           {
-            type?: string
-            limit?: string | number
+            type?: string | undefined
+            limit?: string | number | undefined
           }
 
           Got:
@@ -366,32 +368,32 @@ describe(`createConfigAndPrintWarnings`, () => {
           {
             \\"limit\\": \\"100kb\\"
           }"
-        `)
-      })
+        `);
+      });
 
-      it(`input not matching schema (fallback to default) - config object not matching schema`, () => {
-        const customTextConfig = { wat: true }
+      it("input not matching schema (fallback to default) - config object not matching schema", () => {
+        const customTextConfig = { wat: true };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               text: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.text).toMatchInlineSnapshot(`
                   Object {
                     "limit": "100kb",
                   }
-              `)
-        expect(reporterWarnSpy).toBeCalledTimes(1)
+              `);
+        expect(reporterWarnSpy).toBeCalledTimes(1);
         expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
           "\`bodyParser.text\` property of exported config in \`a-directory/function.js\` is misconfigured.
           Expected object:
 
           {
-            type?: string
-            limit?: string | number
+            type?: string | undefined
+            limit?: string | number | undefined
           }
 
           Got:
@@ -403,76 +405,76 @@ describe(`createConfigAndPrintWarnings`, () => {
           {
             \\"limit\\": \\"100kb\\"
           }"
-        `)
-      })
-    })
+        `);
+      });
+    });
 
-    describe(`json`, () => {
-      it(`limit`, () => {
+    describe("json", () => {
+      it("limit", () => {
         const customTextConfig = {
-          limit: `1mb`,
-        }
+          limit: "1mb",
+        };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               json: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.json).toMatchInlineSnapshot(`
                   Object {
                     "limit": "1mb",
                   }
-              `)
+              `);
 
-        expect(reporterWarnSpy).toBeCalledTimes(0)
-      })
+        expect(reporterWarnSpy).toBeCalledTimes(0);
+      });
 
-      it(`type`, () => {
+      it("type", () => {
         const customTextConfig = {
-          type: `lorem/*`,
-        }
+          type: "lorem/*",
+        };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               json: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.json).toMatchInlineSnapshot(`
                   Object {
                     "type": "lorem/*",
                   }
-              `)
-        expect(reporterWarnSpy).toBeCalledTimes(0)
-      })
+              `);
+        expect(reporterWarnSpy).toBeCalledTimes(0);
+      });
 
-      it(`input not matching schema (fallback to default) - not an config object`, () => {
-        const customTextConfig = `foo`
+      it("input not matching schema (fallback to default) - not an config object", () => {
+        const customTextConfig = "foo";
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               json: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.json).toMatchInlineSnapshot(`
                   Object {
                     "limit": "100kb",
                   }
-              `)
+              `);
 
-        expect(reporterWarnSpy).toBeCalledTimes(1)
+        expect(reporterWarnSpy).toBeCalledTimes(1);
         expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
           "\`bodyParser.json\` property of exported config in \`a-directory/function.js\` is misconfigured.
           Expected object:
 
           {
-            type?: string
-            limit?: string | number
+            type?: string | undefined
+            limit?: string | number | undefined
           }
 
           Got:
@@ -484,33 +486,33 @@ describe(`createConfigAndPrintWarnings`, () => {
           {
             \\"limit\\": \\"100kb\\"
           }"
-        `)
-      })
+        `);
+      });
 
-      it(`input not matching schema (fallback to default) - config object not matching schema`, () => {
-        const customTextConfig = { wat: true }
+      it("input not matching schema (fallback to default) - config object not matching schema", () => {
+        const customTextConfig = { wat: true };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               json: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.json).toMatchInlineSnapshot(`
                   Object {
                     "limit": "100kb",
                   }
-              `)
+              `);
 
-        expect(reporterWarnSpy).toBeCalledTimes(1)
+        expect(reporterWarnSpy).toBeCalledTimes(1);
         expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
           "\`bodyParser.json\` property of exported config in \`a-directory/function.js\` is misconfigured.
           Expected object:
 
           {
-            type?: string
-            limit?: string | number
+            type?: string | undefined
+            limit?: string | number | undefined
           }
 
           Got:
@@ -522,75 +524,75 @@ describe(`createConfigAndPrintWarnings`, () => {
           {
             \\"limit\\": \\"100kb\\"
           }"
-        `)
-      })
-    })
+        `);
+      });
+    });
 
-    describe(`raw`, () => {
-      it(`limit`, () => {
+    describe("raw", () => {
+      it("limit", () => {
         const customTextConfig = {
-          limit: `1mb`,
-        }
+          limit: "1mb",
+        };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               raw: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.raw).toMatchInlineSnapshot(`
                   Object {
                     "limit": "1mb",
                   }
-              `)
-        expect(reporterWarnSpy).toBeCalledTimes(0)
-      })
+              `);
+        expect(reporterWarnSpy).toBeCalledTimes(0);
+      });
 
-      it(`type`, () => {
+      it("type", () => {
         const customTextConfig = {
-          type: `lorem/*`,
-        }
+          type: "lorem/*",
+        };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               raw: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.raw).toMatchInlineSnapshot(`
                   Object {
                     "type": "lorem/*",
                   }
-              `)
-        expect(reporterWarnSpy).toBeCalledTimes(0)
-      })
+              `);
+        expect(reporterWarnSpy).toBeCalledTimes(0);
+      });
 
-      it(`input not matching schema (fallback to default) - not an config object`, () => {
-        const customTextConfig = `foo`
+      it("input not matching schema (fallback to default) - not an config object", () => {
+        const customTextConfig = "foo";
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               raw: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.raw).toMatchInlineSnapshot(`
                   Object {
                     "limit": "100kb",
                   }
-              `)
+              `);
 
-        expect(reporterWarnSpy).toBeCalledTimes(1)
+        expect(reporterWarnSpy).toBeCalledTimes(1);
         expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
           "\`bodyParser.raw\` property of exported config in \`a-directory/function.js\` is misconfigured.
           Expected object:
 
           {
-            type?: string
-            limit?: string | number
+            type?: string | undefined
+            limit?: string | number | undefined
           }
 
           Got:
@@ -602,33 +604,33 @@ describe(`createConfigAndPrintWarnings`, () => {
           {
             \\"limit\\": \\"100kb\\"
           }"
-        `)
-      })
+        `);
+      });
 
-      it(`input not matching schema (fallback to default) - config object not matching schema`, () => {
-        const customTextConfig = { wat: true }
+      it("input not matching schema (fallback to default) - config object not matching schema", () => {
+        const customTextConfig = { wat: true };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               raw: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.raw).toMatchInlineSnapshot(`
                   Object {
                     "limit": "100kb",
                   }
-              `)
+              `);
 
-        expect(reporterWarnSpy).toBeCalledTimes(1)
+        expect(reporterWarnSpy).toBeCalledTimes(1);
         expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
           "\`bodyParser.raw\` property of exported config in \`a-directory/function.js\` is misconfigured.
           Expected object:
 
           {
-            type?: string
-            limit?: string | number
+            type?: string | undefined
+            limit?: string | number | undefined
           }
 
           Got:
@@ -640,79 +642,79 @@ describe(`createConfigAndPrintWarnings`, () => {
           {
             \\"limit\\": \\"100kb\\"
           }"
-        `)
-      })
-    })
+        `);
+      });
+    });
 
-    describe(`urlencoded`, () => {
-      it(`limit`, () => {
+    describe("urlencoded", () => {
+      it("limit", () => {
         const customTextConfig = {
-          limit: `1mb`,
+          limit: "1mb",
           extended: true,
-        }
+        };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.urlencoded).toMatchInlineSnapshot(`
           Object {
             "extended": true,
             "limit": "1mb",
           }
-        `)
-        expect(reporterWarnSpy).toBeCalledTimes(0)
-      })
+        `);
+        expect(reporterWarnSpy).toBeCalledTimes(0);
+      });
 
-      it(`type`, () => {
+      it("type", () => {
         const customTextConfig = {
-          type: `lorem/*`,
+          type: "lorem/*",
           extended: true,
-        }
+        };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.urlencoded).toMatchInlineSnapshot(`
           Object {
             "extended": true,
             "type": "lorem/*",
           }
-        `)
-        expect(reporterWarnSpy).toBeCalledTimes(0)
-      })
+        `);
+        expect(reporterWarnSpy).toBeCalledTimes(0);
+      });
 
-      it(`input not matching schema (fallback to default) - not an config object`, () => {
-        const customTextConfig = `foo`
+      it("input not matching schema (fallback to default) - not an config object", () => {
+        const customTextConfig = "foo";
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.urlencoded).toMatchInlineSnapshot(`
                   Object {
                     "extended": true,
                     "limit": "100kb",
                   }
-              `)
+              `);
 
-        expect(reporterWarnSpy).toBeCalledTimes(1)
+        expect(reporterWarnSpy).toBeCalledTimes(1);
         expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
           "\`bodyParser.urlencoded\` property of exported config in \`a-directory/function.js\` is misconfigured.
           Expected object:
 
           {
-            type?: string
+            type?: string | undefined
             limit: string | number
             extended: boolean
           }
@@ -727,33 +729,33 @@ describe(`createConfigAndPrintWarnings`, () => {
             \\"limit\\": \\"100kb\\",
             \\"extended\\": true
           }"
-        `)
-      })
+        `);
+      });
 
-      it(`input not matching schema (fallback to default) - config object not matching schema`, () => {
-        const customTextConfig = { wat: true }
+      it("input not matching schema (fallback to default) - config object not matching schema", () => {
+        const customTextConfig = { wat: true };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.urlencoded).toMatchInlineSnapshot(`
                   Object {
                     "extended": true,
                     "limit": "100kb",
                   }
-              `)
+              `);
 
-        expect(reporterWarnSpy).toBeCalledTimes(1)
+        expect(reporterWarnSpy).toBeCalledTimes(1);
         expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
           "\`bodyParser.urlencoded\` property of exported config in \`a-directory/function.js\` is misconfigured.
           Expected object:
 
           {
-            type?: string
+            type?: string | undefined
             limit: string | number
             extended: boolean
           }
@@ -768,33 +770,33 @@ describe(`createConfigAndPrintWarnings`, () => {
             \\"limit\\": \\"100kb\\",
             \\"extended\\": true
           }"
-        `)
-      })
+        `);
+      });
 
-      it(`input not matching schema (fallback to default) - "extended" is required"`, () => {
-        const customTextConfig = { limit: `200kb` }
+      it('input not matching schema (fallback to default) - "extended" is required"', () => {
+        const customTextConfig = { limit: "200kb" };
         const generatedConfig = createConfigAndPrintWarnings(
           {
             bodyParser: {
               urlencoded: customTextConfig,
             },
           },
-          testFunction
-        )
+          testFunction,
+        );
         expect(generatedConfig.bodyParser.urlencoded).toMatchInlineSnapshot(`
                   Object {
                     "extended": true,
                     "limit": "100kb",
                   }
-              `)
+              `);
 
-        expect(reporterWarnSpy).toBeCalledTimes(1)
+        expect(reporterWarnSpy).toBeCalledTimes(1);
         expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
           "\`bodyParser.urlencoded\` property of exported config in \`a-directory/function.js\` is misconfigured.
           Expected object:
 
           {
-            type?: string
+            type?: string | undefined
             limit: string | number
             extended: boolean
           }
@@ -809,8 +811,8 @@ describe(`createConfigAndPrintWarnings`, () => {
             \\"limit\\": \\"100kb\\",
             \\"extended\\": true
           }"
-        `)
-      })
-    })
-  })
-})
+        `);
+      });
+    });
+  });
+});

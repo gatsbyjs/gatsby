@@ -38,7 +38,7 @@
     "ink": "^4.4.1",
     "ink-spinner": "^5.0.0",
     "is-valid-path": "^0.1.1",
-    "joi": "^17.12.3",
+    "joi": "^17.13.0",
     "lodash": "^4.17.21",
     "opentracing": "^0.14.7",
     "pretty-error": "^4.0.0",

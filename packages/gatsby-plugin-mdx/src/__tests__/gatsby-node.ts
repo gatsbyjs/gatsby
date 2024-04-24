@@ -1,6 +1,6 @@
-import { createSchemaCustomization } from "../gatsby-node"
-import { mockGatsbyApi } from "../__fixtures__/test-utils"
-import { globalTracer } from "opentracing"
+import { createSchemaCustomization } from "../gatsby-node";
+import { mockGatsbyApi } from "../__fixtures__/test-utils";
+import { globalTracer } from "opentracing";
 
 const {
   getNode,
@@ -19,14 +19,14 @@ const {
   getCache,
   createNodeId,
   tracing,
-} = mockGatsbyApi()
+} = mockGatsbyApi();
 
-actions.createTypes = jest.fn()
+actions.createTypes = jest.fn();
 
-describe(`Gatsby Node API`, () => {
-  it(`createSchemaCustomization`, async () => {
+describe("Gatsby Node API", () => {
+  it("createSchemaCustomization", async () => {
     if (!createSchemaCustomization) {
-      throw new Error(`createSchemaCustomization shoudl exist`)
+      throw new Error("createSchemaCustomization shoudl exist");
     }
     await createSchemaCustomization(
       {
@@ -37,9 +37,9 @@ describe(`Gatsby Node API`, () => {
         cache,
         actions,
         schema,
-        traceId: `initial-createSchemaCustomization`,
-        parentSpan: globalTracer().startSpan(`test`),
-        basePath: ``,
+        traceId: "initial-createSchemaCustomization",
+        parentSpan: globalTracer().startSpan("test"),
+        basePath: "",
         createContentDigest,
         loadNodeContent,
         store,
@@ -51,20 +51,20 @@ describe(`Gatsby Node API`, () => {
         tracing,
       },
       { plugins: [] },
-      () => {}
-    )
-    expect(actions.createTypes).toHaveBeenCalledTimes(1)
+      () => {},
+    );
+    expect(actions.createTypes).toHaveBeenCalledTimes(1);
 
     const buildObjectTypeCalls = (schema.buildObjectType as jest.Mock).mock
-      .calls
+      .calls;
 
-    expect(buildObjectTypeCalls[0][0].extensions.infer).toBe(true)
+    expect(buildObjectTypeCalls[0][0].extensions.infer).toBe(true);
     expect(Object.keys(buildObjectTypeCalls[0][0].fields)).toMatchObject([
-      `excerpt`,
-      `tableOfContents`,
-    ])
+      "excerpt",
+      "tableOfContents",
+    ]);
 
-    expect(buildObjectTypeCalls[0][0].fields.excerpt.type).toBe(`String`)
-    expect(buildObjectTypeCalls[0][0].fields.tableOfContents.type).toBe(`JSON`)
-  })
-})
+    expect(buildObjectTypeCalls[0][0].fields.excerpt.type).toBe("String");
+    expect(buildObjectTypeCalls[0][0].fields.tableOfContents.type).toBe("JSON");
+  });
+});

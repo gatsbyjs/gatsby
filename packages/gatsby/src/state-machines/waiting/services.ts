@@ -1,3 +1,3 @@
-import { runMutationBatch } from "../../services"
+import { runMutationBatch } from "../../services";
 
-export const waitingServices = { runMutationBatch }
+export const waitingServices = { runMutationBatch };

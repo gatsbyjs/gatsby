@@ -1,28 +1,28 @@
 // @ts-check
 /* eslint-env node */
-import _ from "lodash"
-import fetchRetry from "@vercel/fetch-retry"
-import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
-export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
-import { CODES } from "./report"
+import _ from "lodash";
+import fetchRetry from "@vercel/fetch-retry";
+import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file";
+export { setFieldsOnGraphQLNodeType } from "./extend-node-type";
+import { CODES } from "./report";
 
-import { maskText } from "./plugin-options"
+import { maskText } from "./plugin-options";
 
-export { createSchemaCustomization } from "./create-schema-customization"
-export { sourceNodes } from "./source-nodes"
+export { createSchemaCustomization } from "./create-schema-customization";
+export { sourceNodes } from "./source-nodes";
 
 // eslint-disable-next-line no-undef
-const fetch = fetchRetry(globalThis.fetch)
+const fetch = fetchRetry(globalThis.fetch);
 
 async function validateContentfulAccess(pluginOptions) {
-  if (process.env.NODE_ENV === `test`) return undefined
+  if (process.env.NODE_ENV === "test") return undefined;
 
   await fetch(
     `https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}/environments/${pluginOptions.environment}/content_types`,
     {
       headers: {
         Authorization: `Bearer ${pluginOptions.accessToken}`,
-        "Content-Type": `application/json`,
+        "Content-Type": "application/json",
       },
     },
   )
@@ -33,46 +33,48 @@ async function validateContentfulAccess(pluginOptions) {
           pluginOptions.spaceId,
         )}" on environment "${pluginOptions.environment}" with access token "${maskText(
           pluginOptions.accessToken,
-        )}". Make sure to double check them!`
+        )}". Make sure to double check them!`;
 
-        throw new Error(errorMessage)
+        throw new Error(errorMessage);
       }
-    })
+    });
 
-  return undefined
+  return undefined;
 }
 
 export async function onPreInit({ store, reporter, actions }, pluginOptions) {
   // if gatsby-plugin-image is not installed
   try {
-    await import(`gatsby-plugin-image/graphql-utils`)
+    await import("gatsby-plugin-image/graphql-utils");
   } catch (err) {
     reporter.panic({
       id: CODES.GatsbyPluginMissing,
       context: {
-        sourceMessage: `gatsby-plugin-image is missing from your project.\nPlease install "gatsby-plugin-image".`,
+        sourceMessage:
+          'gatsby-plugin-image is missing from your project.\nPlease install "gatsby-plugin-image".',
       },
-    })
+    });
   }
 
   // if gatsby-plugin-image is not configured
   if (
     !store
       .getState()
-      .flattenedPlugins.find((plugin) => plugin.name === `gatsby-plugin-image`)
+      .flattenedPlugins.find((plugin) => plugin.name === "gatsby-plugin-image")
   ) {
     reporter.panic({
       id: CODES.GatsbyPluginMissing,
       context: {
-        sourceMessage: `gatsby-plugin-image is missing from your gatsby-config file.\nPlease add "gatsby-plugin-image" to your plugins array.`,
+        sourceMessage:
+          'gatsby-plugin-image is missing from your gatsby-config file.\nPlease add "gatsby-plugin-image" to your plugins array.',
       },
-    })
+    });
   }
 
-  if (typeof actions?.addRemoteFileAllowedUrl === `function`) {
+  if (typeof actions?.addRemoteFileAllowedUrl === "function") {
     actions.addRemoteFileAllowedUrl(
       `https://images.ctfassets.net/${pluginOptions.spaceId}/*`,
-    )
+    );
   }
 }
 
@@ -81,25 +83,25 @@ export function pluginOptionsSchema({ Joi }) {
     .keys({
       accessToken: Joi.string()
         .description(
-          `Contentful delivery api key, when using the Preview API use your Preview API key`,
+          "Contentful delivery api key, when using the Preview API use your Preview API key",
         )
         .required()
         .empty(),
       spaceId: Joi.string()
-        .description(`Contentful spaceId`)
+        .description("Contentful spaceId")
         .required()
         .empty(),
       host: Joi.string()
         .description(
-          `The base host for all the API requests, by default it's 'cdn.contentful.com', if you want to use the Preview API set it to 'preview.contentful.com'. You can use your own host for debugging/testing purposes as long as you respect the same Contentful JSON structure.`,
+          "The base host for all the API requests, by default it's 'cdn.contentful.com', if you want to use the Preview API set it to 'preview.contentful.com'. You can use your own host for debugging/testing purposes as long as you respect the same Contentful JSON structure.",
         )
-        .default(`cdn.contentful.com`)
+        .default("cdn.contentful.com")
         .empty(),
       environment: Joi.string()
         .description(
-          `The environment to pull the content from, for more info on environments check out this [Guide](https://www.contentful.com/developers/docs/concepts/multiple-environments/).`,
+          "The environment to pull the content from, for more info on environments check out this [Guide](https://www.contentful.com/developers/docs/concepts/multiple-environments/).",
         )
-        .default(`master`)
+        .default("master")
         .empty(),
       downloadLocal: Joi.boolean()
         .description(
@@ -116,8 +118,8 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         )
         .default(() => () => true),
       typePrefix: Joi.string()
-        .description(`Prefix for Contentful node types`)
-        .default(`Contentful`),
+        .description("Prefix for Contentful node types")
+        .default("Contentful"),
       contentTypeFilter: Joi.func()
         .description(
           `Possibility to limit how many contentType/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in Contentful and only want to get the data from certain content types.
@@ -127,13 +129,13 @@ For example, to exclude content types starting with "page" \`contentTypeFilter: 
       pageLimit: Joi.number()
         .integer()
         .description(
-          `Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g 50.`,
+          "Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g 50.",
         )
         .default(1000),
       assetDownloadWorkers: Joi.number()
         .integer()
         .description(
-          `Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.`,
+          "Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.",
         )
         .default(50),
       proxy: Joi.object()
@@ -147,11 +149,11 @@ For example, to exclude content types starting with "page" \`contentTypeFilter: 
           }),
         })
         .description(
-          `Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.`,
+          "Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.",
         ),
       enableTags: Joi.boolean()
         .description(
-          `Enable the new tags feature. This will disallow the content type name "tags" till the next major version of this plugin.`,
+          'Enable the new tags feature. This will disallow the content type name "tags" till the next major version of this plugin.',
         )
         .default(false),
       useNameForId: Joi.boolean()
@@ -175,10 +177,10 @@ For example, to exclude content types starting with "page" \`contentTypeFilter: 
       // default plugins passed by gatsby
       plugins: Joi.array(),
     })
-    .external(validateContentfulAccess)
+    .external(validateContentfulAccess);
 }
 
 /** @type {import('gatsby').GatsbyNode["onCreateDevServer"]} */
 export const onCreateDevServer = function onCreateDevServer({ app, store }) {
-  polyfillImageServiceDevRoutes(app, store)
-}
+  polyfillImageServiceDevRoutes(app, store);
+};

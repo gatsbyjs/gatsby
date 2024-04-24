@@ -1,14 +1,14 @@
-import { runSteps } from "~/utils/run-steps"
-import { formatLogMessage } from "~/utils/format-log-message"
+import { runSteps } from "~/utils/run-steps";
+import { formatLogMessage } from "~/utils/format-log-message";
 
-import { checkIfSchemaHasChanged } from "./diff-schemas"
-import { introspectAndStoreRemoteSchema } from "./introspect-remote-schema"
-import { identifyAndStoreIngestableFieldsAndTypes } from "./identify-and-store-ingestable-types"
-import { buildNonNodeQueries } from "./build-and-store-ingestible-root-field-non-node-queries"
-import { buildNodeQueries } from "./build-queries-from-introspection/build-node-queries"
-import { cacheFetchedTypes } from "./cache-fetched-types"
-import { writeQueriesToDisk } from "./write-queries-to-disk"
-import { withPluginKey } from "~/store"
+import { checkIfSchemaHasChanged } from "./diff-schemas";
+import { introspectAndStoreRemoteSchema } from "./introspect-remote-schema";
+import { identifyAndStoreIngestableFieldsAndTypes } from "./identify-and-store-ingestable-types";
+import { buildNonNodeQueries } from "./build-and-store-ingestible-root-field-non-node-queries";
+import { buildNodeQueries } from "./build-queries-from-introspection/build-node-queries";
+import { cacheFetchedTypes } from "./cache-fetched-types";
+import { writeQueriesToDisk } from "./write-queries-to-disk";
+import { withPluginKey } from "~/store";
 /**
  * This fn is called during schema customization.
  * It pulls in the remote WPGraphQL schema, caches it,
@@ -18,32 +18,32 @@ import { withPluginKey } from "~/store"
  * This fn must run in all PQR workers.
  */
 const ingestRemoteSchema = async (helpers, pluginOptions) => {
-  if (process.env.NODE_ENV === `development`) {
+  if (process.env.NODE_ENV === "development") {
     // running this code block in production is problematic for PQR
     // since this fn will run once for each worker and we need the result in each
     // we'll return early in most workers when it checks the cache here
     // Since PQR doesn't run in development and this code block was only meant for dev
     // it should be ok to wrap it in this if statement
-    const schemaTimeKey = withPluginKey(`lastIngestRemoteSchemaTime`)
-    const lastIngestRemoteSchemaTime = await helpers.cache.get(schemaTimeKey)
+    const schemaTimeKey = withPluginKey("lastIngestRemoteSchemaTime");
+    const lastIngestRemoteSchemaTime = await helpers.cache.get(schemaTimeKey);
 
     const ingestedSchemaInLastTenSeconds =
-      Date.now() - lastIngestRemoteSchemaTime <= 10000
+      Date.now() - lastIngestRemoteSchemaTime <= 10000;
 
     if (lastIngestRemoteSchemaTime && ingestedSchemaInLastTenSeconds) {
       // only allow this to run once every ten seconds
       // this prevents thrashing when many webhooks are received at once
-      return
+      return;
     }
 
-    await helpers.cache.set(schemaTimeKey, Date.now())
+    await helpers.cache.set(schemaTimeKey, Date.now());
   }
 
   const activity = helpers.reporter.activityTimer(
-    formatLogMessage(`ingest WPGraphQL schema`)
-  )
+    formatLogMessage("ingest WPGraphQL schema"),
+  );
 
-  activity.start()
+  activity.start();
 
   try {
     await runSteps(
@@ -55,13 +55,13 @@ const ingestRemoteSchema = async (helpers, pluginOptions) => {
         [cacheFetchedTypes, writeQueriesToDisk],
       ],
       helpers,
-      pluginOptions
-    )
+      pluginOptions,
+    );
   } catch (e) {
-    activity.panic(e)
+    activity.panic(e);
   } finally {
-    activity.end()
+    activity.end();
   }
-}
+};
 
-export { ingestRemoteSchema }
+export { ingestRemoteSchema };

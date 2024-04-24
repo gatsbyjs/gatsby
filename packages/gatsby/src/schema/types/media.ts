@@ -1,5 +1,5 @@
-import { GraphQLScalarType } from "graphql"
+import { GraphQLScalarType } from "graphql";
 
 export const GatsbyImageDataScalar = new GraphQLScalarType({
-  name: `GatsbyImageData`,
-})
+  name: "GatsbyImageData",
+});

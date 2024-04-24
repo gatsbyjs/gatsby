@@ -1,25 +1,27 @@
-import { CREATED_NODE_IDS, LAST_COMPLETED_SOURCE_TIME } from "~/constants"
-import { fetchAndRunWpActions } from "./wp-actions"
-import { formatLogMessage } from "~/utils/format-log-message"
-import { getGatsbyApi } from "~/utils/get-gatsby-api"
-import { getPersistentCache } from "~/utils/cache"
-import { needToTouchNodes } from "../../../utils/gatsby-features"
-import { withPluginKey } from "~/store"
+import { CREATED_NODE_IDS, LAST_COMPLETED_SOURCE_TIME } from "~/constants";
+import { fetchAndRunWpActions } from "./wp-actions";
+import { formatLogMessage } from "~/utils/format-log-message";
+import { getGatsbyApi } from "~/utils/get-gatsby-api";
+import { getPersistentCache } from "~/utils/cache";
+import { needToTouchNodes } from "../../../utils/gatsby-features";
+import { withPluginKey } from "~/store";
 
 export const touchValidNodes = async () => {
   if (!needToTouchNodes) {
-    return
+    return;
   }
 
-  const { helpers } = getGatsbyApi()
-  const { actions } = helpers
+  const { helpers } = getGatsbyApi();
+  const { actions } = helpers;
 
-  const validNodeIds = await getPersistentCache({ key: CREATED_NODE_IDS })
+  const validNodeIds = await getPersistentCache({ key: CREATED_NODE_IDS });
 
   if (validNodeIds?.length) {
-    validNodeIds.forEach(nodeId => actions.touchNode(helpers.getNode(nodeId)))
+    validNodeIds.forEach((nodeId) =>
+      actions.touchNode(helpers.getNode(nodeId)),
+    );
   }
-}
+};
 
 /**
  * fetchAndApplyNodeUpdates
@@ -33,17 +35,17 @@ const fetchAndApplyNodeUpdates = async ({
   throwFetchErrors = false,
   throwGqlErrors = false,
 }) => {
-  const { helpers, pluginOptions } = getGatsbyApi()
+  const { helpers, pluginOptions } = getGatsbyApi();
 
-  const { cache, reporter } = helpers
+  const { cache, reporter } = helpers;
 
   const activity = reporter.activityTimer(
-    formatLogMessage(`pull updates since last build`)
-  )
-  activity.start()
+    formatLogMessage("pull updates since last build"),
+  );
+  activity.start();
 
   if (!since) {
-    since = await cache.get(withPluginKey(LAST_COMPLETED_SOURCE_TIME))
+    since = await cache.get(withPluginKey(LAST_COMPLETED_SOURCE_TIME));
   }
 
   // Check with WPGQL to create, delete, or update cached WP nodes
@@ -53,13 +55,13 @@ const fetchAndApplyNodeUpdates = async ({
     pluginOptions,
     throwFetchErrors,
     throwGqlErrors,
-  })
+  });
 
-  await touchValidNodes()
+  await touchValidNodes();
 
-  activity.end()
+  activity.end();
 
-  return { wpActions, didUpdate }
-}
+  return { wpActions, didUpdate };
+};
 
-export default fetchAndApplyNodeUpdates
+export default fetchAndApplyNodeUpdates;

@@ -1,50 +1,50 @@
-import React, { FunctionComponent, ImgHTMLAttributes } from "react"
-import * as PropTypes from "prop-types"
+import React, { type JSX, type ImgHTMLAttributes } from "react";
+import * as PropTypes from "prop-types";
 
-export interface IResponsiveImageProps {
-  sizes?: string
-  srcSet: string
-}
+export type IResponsiveImageProps = {
+  sizes?: string | undefined;
+  srcSet: string;
+};
 
 export type SourceProps = IResponsiveImageProps &
   (
     | {
-        media: string
-        type?: string
+        media: string;
+        type?: string | undefined;
       }
     | {
-        media?: string
-        type: string
+        media?: string | undefined;
+        type: string;
       }
-  )
+  );
 
-type FallbackProps = { src: string } & Partial<IResponsiveImageProps>
+type FallbackProps = { src: string } & Partial<IResponsiveImageProps>;
 
 type ImageProps = ImgHTMLAttributes<HTMLImageElement> & {
-  src: string
-  alt: string
-  shouldLoad: boolean
-}
+  src: string;
+  alt: string;
+  shouldLoad: boolean;
+};
 
 export type PictureProps = ImgHTMLAttributes<HTMLImageElement> & {
-  fallback?: FallbackProps
-  sources?: Array<SourceProps>
-  alt: string
-  shouldLoad?: boolean
-}
+  fallback?: FallbackProps | undefined;
+  sources?: Array<SourceProps> | undefined;
+  alt: string;
+  shouldLoad?: boolean | undefined;
+};
 
-const Image: FunctionComponent<ImageProps> = function Image({
+function Image({
   src,
   srcSet,
   loading,
-  alt = ``,
+  alt = "",
   shouldLoad,
   ...props
-}) {
+}: ImageProps): JSX.Element {
   return (
     <img
       {...props}
-      decoding="async"
+      decoding='async'
       loading={loading}
       src={shouldLoad ? src : undefined}
       data-src={!shouldLoad ? src : undefined}
@@ -52,22 +52,22 @@ const Image: FunctionComponent<ImageProps> = function Image({
       data-srcset={!shouldLoad ? srcSet : undefined}
       alt={alt}
     />
-  )
+  );
 }
 
-export const Picture: React.FC<PictureProps> = function Picture({
+export function Picture({
   fallback,
   sources = [],
   shouldLoad = true,
   ...props
-}) {
-  const sizes = props.sizes || fallback?.sizes
+}: PictureProps): JSX.Element {
+  const sizes = props.sizes || fallback?.sizes;
   const fallbackImage = (
     <Image {...props} {...fallback} sizes={sizes} shouldLoad={shouldLoad} />
-  )
+  );
 
   if (!sources.length) {
-    return fallbackImage
+    return fallbackImage;
   }
 
   return (
@@ -84,7 +84,7 @@ export const Picture: React.FC<PictureProps> = function Picture({
       ))}
       {fallbackImage}
     </picture>
-  )
+  );
 }
 
 Image.propTypes = {
@@ -93,9 +93,9 @@ Image.propTypes = {
   sizes: PropTypes.string,
   srcSet: PropTypes.string,
   shouldLoad: PropTypes.bool,
-}
+};
 
-Picture.displayName = `Picture`
+Picture.displayName = "Picture";
 Picture.propTypes = {
   alt: PropTypes.string.isRequired,
   shouldLoad: PropTypes.bool,
@@ -118,6 +118,6 @@ Picture.propTypes = {
         sizes: PropTypes.string,
         srcSet: PropTypes.string.isRequired,
       }),
-    ])
+    ]),
   ),
-}
+};

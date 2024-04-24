@@ -1,6 +1,6 @@
-import path from "node:path"
-import { pathToFileURL } from "node:url"
-import report from "gatsby-cli/lib/reporter"
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import report from "gatsby-cli/lib/reporter";
 
 /**
  * On Windows, the file protocol is required for the path to be resolved correctly.
@@ -9,7 +9,7 @@ import report from "gatsby-cli/lib/reporter"
  */
 export const maybeAddFileProtocol = process.env.JEST_WORKER_ID
   ? (module: string): string => module
-  : (module: string): string => pathToFileURL(module).href
+  : (module: string): string => pathToFileURL(module).href;
 
 /**
  * Figure out if the file path is .js or .mjs without relying on the fs module, and return the file path if it exists.
@@ -19,16 +19,16 @@ export async function resolveJSFilepath({
   filePath,
   warn = true,
 }: {
-  rootDir: string
-  filePath: string
-  warn?: boolean
+  rootDir: string;
+  filePath: string;
+  warn?: boolean | undefined;
 }): Promise<string> {
-  const filePathWithJSExtension = filePath.endsWith(`.js`)
+  const filePathWithJSExtension = filePath.endsWith(".js")
     ? filePath
-    : `${filePath}.js`
-  const filePathWithMJSExtension = filePath.endsWith(`.mjs`)
+    : `${filePath}.js`;
+  const filePathWithMJSExtension = filePath.endsWith(".mjs")
     ? filePath
-    : `${filePath}.mjs`
+    : `${filePath}.mjs`;
 
   // Check if both variants exist
   try {
@@ -42,9 +42,9 @@ export async function resolveJSFilepath({
             rootDir,
             filePath,
           )}' has both .js and .mjs variants, please use one or the other. Using .js by default.`,
-        )
+        );
       }
-      return filePathWithJSExtension
+      return filePathWithJSExtension;
     }
   } catch (_) {
     // Do nothing
@@ -53,7 +53,7 @@ export async function resolveJSFilepath({
   // Check if .js variant exists
   try {
     if (require.resolve(filePathWithJSExtension)) {
-      return filePathWithJSExtension
+      return filePathWithJSExtension;
     }
   } catch (_) {
     // Do nothing
@@ -61,11 +61,11 @@ export async function resolveJSFilepath({
 
   try {
     if (require.resolve(filePathWithMJSExtension)) {
-      return filePathWithMJSExtension
+      return filePathWithMJSExtension;
     }
   } catch (_) {
     // Do nothing
   }
 
-  return ``
+  return "";
 }

@@ -1,20 +1,20 @@
-import { TaskQueue } from "../task-queue"
+import { TaskQueue } from "../task-queue";
 
 function getValuesInQueue<T>(queue: TaskQueue<T>): Array<T> {
-  const valuesInQueue: Array<T> = []
+  const valuesInQueue: Array<T> = [];
   for (const item of queue) {
-    valuesInQueue.push(item.value)
+    valuesInQueue.push(item.value);
   }
 
-  return valuesInQueue
+  return valuesInQueue;
 }
 
-describe(`Task Queue`, () => {
-  it(`correctly holds all queued items in order`, () => {
-    const taskQueue = new TaskQueue<number | string>()
+describe("Task Queue", () => {
+  it("correctly holds all queued items in order", () => {
+    const taskQueue = new TaskQueue<number | string>();
 
     for (let i = 1; i <= 20; i++) {
-      taskQueue.enqueue(i)
+      taskQueue.enqueue(i);
     }
 
     expect(getValuesInQueue(taskQueue)).toMatchInlineSnapshot(`
@@ -40,24 +40,24 @@ describe(`Task Queue`, () => {
         19,
         20,
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`handles removing first item`, () => {
-    const taskQueue = new TaskQueue<number | string>()
+  it("handles removing first item", () => {
+    const taskQueue = new TaskQueue<number | string>();
 
     for (let i = 1; i <= 20; i++) {
-      taskQueue.enqueue(i)
+      taskQueue.enqueue(i);
     }
 
     for (const item of taskQueue) {
       if (item.value === 1) {
-        taskQueue.remove(item)
-        break
+        taskQueue.remove(item);
+        break;
       }
     }
 
-    taskQueue.enqueue(`added after removal`)
+    taskQueue.enqueue("added after removal");
 
     expect(getValuesInQueue(taskQueue)).toMatchInlineSnapshot(`
       Array [
@@ -82,24 +82,24 @@ describe(`Task Queue`, () => {
         20,
         "added after removal",
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`handles removing last item`, () => {
-    const taskQueue = new TaskQueue<number | string>()
+  it("handles removing last item", () => {
+    const taskQueue = new TaskQueue<number | string>();
 
     for (let i = 1; i <= 20; i++) {
-      taskQueue.enqueue(i)
+      taskQueue.enqueue(i);
     }
 
     for (const item of taskQueue) {
       if (item.value === 20) {
-        taskQueue.remove(item)
-        break
+        taskQueue.remove(item);
+        break;
       }
     }
 
-    taskQueue.enqueue(`added after removal`)
+    taskQueue.enqueue("added after removal");
 
     expect(getValuesInQueue(taskQueue)).toMatchInlineSnapshot(`
       Array [
@@ -124,24 +124,24 @@ describe(`Task Queue`, () => {
         19,
         "added after removal",
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`handles removing item in the middle`, () => {
-    const taskQueue = new TaskQueue<number | string>()
+  it("handles removing item in the middle", () => {
+    const taskQueue = new TaskQueue<number | string>();
 
     for (let i = 1; i <= 20; i++) {
-      taskQueue.enqueue(i)
+      taskQueue.enqueue(i);
     }
 
     for (const item of taskQueue) {
       if (item.value === 11) {
-        taskQueue.remove(item)
-        break
+        taskQueue.remove(item);
+        break;
       }
     }
 
-    taskQueue.enqueue(`added after removal`)
+    taskQueue.enqueue("added after removal");
 
     expect(getValuesInQueue(taskQueue)).toMatchInlineSnapshot(`
       Array [
@@ -166,73 +166,73 @@ describe(`Task Queue`, () => {
         20,
         "added after removal",
       ]
-    `)
-  })
+    `);
+  });
 
-  it(`queue can fill up after being drained`, () => {
-    const taskQueue = new TaskQueue<number | string>()
+  it("queue can fill up after being drained", () => {
+    const taskQueue = new TaskQueue<number | string>();
 
-    taskQueue.enqueue(1)
-    taskQueue.enqueue(2)
+    taskQueue.enqueue(1);
+    taskQueue.enqueue(2);
 
     expect(getValuesInQueue(taskQueue)).toMatchInlineSnapshot(`
       Array [
         1,
         2,
       ]
-    `)
+    `);
 
     for (const item of taskQueue) {
-      taskQueue.remove(item)
+      taskQueue.remove(item);
     }
 
-    expect(getValuesInQueue(taskQueue)).toMatchInlineSnapshot(`Array []`)
+    expect(getValuesInQueue(taskQueue)).toMatchInlineSnapshot("Array []");
 
-    taskQueue.enqueue(3)
-    taskQueue.enqueue(4)
+    taskQueue.enqueue(3);
+    taskQueue.enqueue(4);
 
     expect(getValuesInQueue(taskQueue)).toMatchInlineSnapshot(`
       Array [
         3,
         4,
       ]
-    `)
-  })
+    `);
+  });
 
-  describe(`Removed node is not referenced in .next or .prev`, () => {
-    let taskQueue: TaskQueue<number>
+  describe("Removed node is not referenced in .next or .prev", () => {
+    let taskQueue: TaskQueue<number>;
     beforeEach(() => {
-      taskQueue = new TaskQueue<number>()
+      taskQueue = new TaskQueue<number>();
 
-      taskQueue.enqueue(1)
-      taskQueue.enqueue(2)
-      taskQueue.enqueue(3)
-    })
+      taskQueue.enqueue(1);
+      taskQueue.enqueue(2);
+      taskQueue.enqueue(3);
+    });
 
     it.each([
-      [`removed from head`, 1],
-      [`removed from middle`, 2],
-      [`removed from tail`, 3],
-    ])(`%s`, (_label, itemToRemove) => {
+      ["removed from head", 1],
+      ["removed from middle", 2],
+      ["removed from tail", 3],
+    ])("%s", (_label, itemToRemove) => {
       for (const item of taskQueue) {
         if (item.value === itemToRemove) {
-          taskQueue.remove(item)
+          taskQueue.remove(item);
         }
       }
 
       for (const item of taskQueue) {
         if (item.value === itemToRemove) {
-          fail(`"${itemToRemove}" found as value`)
+          fail(`"${itemToRemove}" found as value`);
         }
 
         if (item?.prev?.value === itemToRemove) {
-          fail(`"${itemToRemove}" found as value of previous node`)
+          fail(`"${itemToRemove}" found as value of previous node`);
         }
 
         if (item?.next?.value === itemToRemove) {
-          fail(`"${itemToRemove}" found as value of next node`)
+          fail(`"${itemToRemove}" found as value of next node`);
         }
       }
-    })
-  })
-})
+    });
+  });
+});

@@ -5,8 +5,8 @@ import {
   GraphQLEnumType,
   GraphQLList,
   GraphQLScalarType,
-} from "graphql"
-import { addDerivedType } from "./derived-types"
+} from "graphql";
+import { addDerivedType } from "./derived-types";
 import {
   InputTypeComposer,
   SchemaComposer,
@@ -16,80 +16,85 @@ import {
   UnionTypeComposer,
   ScalarTypeComposer,
   NonNullComposer,
-} from "graphql-compose"
+} from "graphql-compose";
 
-type Context = any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Context = any;
 
 type AnyComposeType<TContext> =
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ObjectTypeComposer<any, TContext>
   | InputTypeComposer<TContext>
   | EnumTypeComposer<TContext>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | InterfaceTypeComposer<any, TContext>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | UnionTypeComposer<any, TContext>
-  | ScalarTypeComposer<TContext>
+  | ScalarTypeComposer<TContext>;
 
 export const SEARCHABLE_ENUM = {
-  SEARCHABLE: `SEARCHABLE`,
-  NOT_SEARCHABLE: `NON_SEARCHABLE`,
-  DEPRECATED_SEARCHABLE: `DERPECATED_SEARCHABLE`,
-} as const
+  SEARCHABLE: "SEARCHABLE",
+  NOT_SEARCHABLE: "NON_SEARCHABLE",
+  DEPRECATED_SEARCHABLE: "DERPECATED_SEARCHABLE",
+} as const;
 
-const removeEmptyFields = (
+function removeEmptyFields(
   { inputTypeComposer }: { inputTypeComposer: InputTypeComposer },
-  cache = new Set()
-): InputTypeComposer => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache = new Set<InputTypeComposer<any>>(),
+): InputTypeComposer {
   const convert = (itc: InputTypeComposer): InputTypeComposer => {
     if (cache.has(itc)) {
-      return itc
+      return itc;
     }
-    cache.add(itc)
-    const fields = itc.getFields()
-    const nonEmptyFields = {}
-    Object.keys(fields).forEach(fieldName => {
-      const fieldITC = fields[fieldName].type
+    cache.add(itc);
+    const fields = itc.getFields();
+    const nonEmptyFields = {};
+    Object.keys(fields).forEach((fieldName) => {
+      const fieldITC = fields[fieldName].type;
       if (fieldITC instanceof InputTypeComposer) {
-        const convertedITC = convert(fieldITC)
+        const convertedITC = convert(fieldITC);
         if (convertedITC.getFieldNames().length) {
-          nonEmptyFields[fieldName] = convertedITC
+          nonEmptyFields[fieldName] = convertedITC;
         }
       } else {
-        nonEmptyFields[fieldName] = fieldITC
+        nonEmptyFields[fieldName] = fieldITC;
       }
-    })
-    itc.setFields(nonEmptyFields)
-    return itc
-  }
-  return convert(inputTypeComposer)
+    });
+    itc.setFields(nonEmptyFields);
+    return itc;
+  };
+  return convert(inputTypeComposer);
 }
 
 export type IVisitContext =
   | {
-      deprecationReason?: string
+      deprecationReason?: string | undefined;
     }
   | undefined
-  | null
+  | null;
 
 export type OnEnter = (visitorContext: {
-  fieldName: string
-  typeComposer: AnyComposeType<Context>
-}) => IVisitContext
+  fieldName: string;
+  typeComposer: AnyComposeType<Context>;
+}) => IVisitContext;
 
 export type LeafInput =
   | InputTypeComposer<Context>
   | NonNullComposer<InputTypeComposer<Context>>
   | ((arg: {
-      type: GraphQLScalarType | GraphQLEnumType
-      schemaComposer: SchemaComposer<Context>
+      type: GraphQLScalarType | GraphQLEnumType;
+      schemaComposer: SchemaComposer<Context>;
     }) => InputTypeComposer<Context>)
   | EnumTypeComposer<Context>
-  | NonNullComposer<EnumTypeComposer<Context>>
+  | NonNullComposer<EnumTypeComposer<Context>>;
 
 export type ListInput = (arg: {
-  inputTypeComposer: InputTypeComposer
-  schemaComposer: SchemaComposer<Context>
-}) => InputTypeComposer<Context>
+  inputTypeComposer: InputTypeComposer;
+  schemaComposer: SchemaComposer<Context>;
+}) => InputTypeComposer<Context>;
 
-const convert = ({
+function convert({
   schemaComposer,
   typeComposer,
   inputTypeComposer,
@@ -100,61 +105,62 @@ const convert = ({
   leafInputComposer,
   listInputComposer,
 }: {
-  schemaComposer: SchemaComposer<Context>
-  typeComposer: AnyComposeType<Context>
-  inputTypeComposer: InputTypeComposer<Context>
-  preCreatedInputComposer?: InputTypeComposer<Context>
-  deprecationReason?: any
-  postfix: string
-  onEnter: OnEnter
-  leafInputComposer: LeafInput
-  listInputComposer?: ListInput
-}): InputTypeComposer<Context> => {
+  schemaComposer: SchemaComposer<Context>;
+  typeComposer: AnyComposeType<Context>;
+  inputTypeComposer: InputTypeComposer<Context>;
+  preCreatedInputComposer?: InputTypeComposer<Context> | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  deprecationReason?: any | undefined;
+  postfix: string;
+  onEnter: OnEnter;
+  leafInputComposer: LeafInput;
+  listInputComposer?: ListInput | undefined;
+}): InputTypeComposer<Context> {
   const inputTypeName = inputTypeComposer
     .getTypeName()
-    .replace(/Input$/, postfix)
+    .replace(/Input$/, postfix);
 
-  addDerivedType({ typeComposer, derivedTypeName: inputTypeName })
+  addDerivedType({ typeComposer, derivedTypeName: inputTypeName });
 
-  let convertedITC
+  let convertedITC;
   if (preCreatedInputComposer) {
-    convertedITC = preCreatedInputComposer
+    convertedITC = preCreatedInputComposer;
   } else if (schemaComposer.has(inputTypeName)) {
-    return schemaComposer.getITC(inputTypeName)
+    return schemaComposer.getITC(inputTypeName);
   } else {
     convertedITC = new InputTypeComposer(
       new GraphQLInputObjectType({
         name: inputTypeName,
         fields: {},
       }),
-      schemaComposer
-    )
+      schemaComposer,
+    );
   }
 
-  schemaComposer.add(convertedITC)
+  schemaComposer.add(convertedITC);
 
-  const fieldNames = inputTypeComposer.getFieldNames()
-  const convertedFields = {}
-  fieldNames.forEach(fieldName => {
+  const fieldNames = inputTypeComposer.getFieldNames();
+  const convertedFields = {};
+  fieldNames.forEach((fieldName) => {
     const maybeContext = onEnter({
       fieldName,
       typeComposer,
-    })
+    });
 
     if (maybeContext === null) {
-      return
+      return;
     }
 
-    const fieldConfig = inputTypeComposer.getFieldConfig(fieldName)
-    const type = getNamedType(fieldConfig.type)
+    const fieldConfig = inputTypeComposer.getFieldConfig(fieldName);
+    const type = getNamedType(fieldConfig.type);
 
     if (type instanceof GraphQLInputObjectType) {
       // Input type composers has names `FooInput`, get the type associated
       // with it
       const typeComposer = schemaComposer.getAnyTC(
-        type.name.replace(/Input$/, ``)
-      )
-      const itc = new InputTypeComposer(type, schemaComposer)
+        type.name.replace(/Input$/, ""),
+      );
+      const itc = new InputTypeComposer(type, schemaComposer);
 
       const operatorsInputTC = convert({
         schemaComposer,
@@ -165,38 +171,38 @@ const convert = ({
         onEnter,
         leafInputComposer,
         listInputComposer,
-      })
+      });
 
       // TODO: array of arrays?
       const isListType =
-        getNullableType(fieldConfig.type) instanceof GraphQLList
+        getNullableType(fieldConfig.type) instanceof GraphQLList;
 
       convertedFields[fieldName] = isListType
-        ? typeof listInputComposer === `function`
+        ? typeof listInputComposer === "function"
           ? listInputComposer({
               schemaComposer,
               inputTypeComposer: operatorsInputTC,
             })
           : operatorsInputTC
-        : operatorsInputTC
+        : operatorsInputTC;
     } else {
       // GraphQLScalarType || GraphQLEnumType
       const operatorFields =
-        typeof leafInputComposer === `function`
+        typeof leafInputComposer === "function"
           ? leafInputComposer({ schemaComposer, type })
-          : leafInputComposer
+          : leafInputComposer;
       if (operatorFields) {
-        convertedFields[fieldName] = operatorFields
+        convertedFields[fieldName] = operatorFields;
       }
     }
 
     if (convertedFields[fieldName]) {
-      convertedFields[fieldName].deprecationReason = deprecationReason
+      convertedFields[fieldName].deprecationReason = deprecationReason;
     }
-  })
+  });
 
-  convertedITC.addFields(convertedFields)
-  return convertedITC
+  convertedITC.addFields(convertedFields);
+  return convertedITC;
 }
 
 export const convertToNestedInputType = ({
@@ -207,26 +213,26 @@ export const convertToNestedInputType = ({
   leafInputComposer,
   listInputComposer,
 }: {
-  schemaComposer: SchemaComposer<Context>
-  typeComposer: ObjectTypeComposer<Context> | InterfaceTypeComposer<Context>
-  postfix: string
-  onEnter: OnEnter
-  leafInputComposer: LeafInput
-  listInputComposer?: ListInput
+  schemaComposer: SchemaComposer<Context>;
+  typeComposer: ObjectTypeComposer<Context> | InterfaceTypeComposer<Context>;
+  postfix: string;
+  onEnter: OnEnter;
+  leafInputComposer: LeafInput;
+  listInputComposer?: ListInput;
 }): InputTypeComposer => {
-  const typeName = typeComposer.getTypeName()
+  const typeName = typeComposer.getTypeName();
   const preCreatedInputComposer = schemaComposer.getOrCreateITC(
-    `${typeName}${postfix}`
-  )
+    `${typeName}${postfix}`,
+  );
   const inputTypeComposer = typeComposer.getInputTypeComposer({
     fallbackType: null,
-  })
+  });
 
   if (
-    inputTypeComposer?.hasField(`id`) &&
-    getNamedType(inputTypeComposer.getFieldType(`id`)).name === `ID`
+    inputTypeComposer?.hasField("id") &&
+    getNamedType(inputTypeComposer.getFieldType("id")).name === "ID"
   ) {
-    inputTypeComposer.extendField(`id`, { type: `String` })
+    inputTypeComposer.extendField("id", { type: "String" });
   }
 
   const filterInputTC = convert({
@@ -238,7 +244,7 @@ export const convertToNestedInputType = ({
     onEnter,
     leafInputComposer,
     listInputComposer,
-  })
+  });
 
-  return removeEmptyFields({ inputTypeComposer: filterInputTC })
-}
+  return removeEmptyFields({ inputTypeComposer: filterInputTC });
+};

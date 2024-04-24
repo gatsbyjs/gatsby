@@ -1,54 +1,54 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import * as path from "path"
-import * as fs from "fs-extra"
-import execa, { type Options as ExecaOptions } from "execa"
-import webpack, { Module, NormalModule, Compilation } from "webpack"
-import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
+import * as path from "path";
+import * as fs from "fs-extra";
+import execa, { type Options as ExecaOptions } from "execa";
+import webpack, { Module, NormalModule, Compilation } from "webpack";
+import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule";
 // @ts-ignore
-import { dependencies } from "gatsby/package.json"
-import { printQueryEnginePlugins } from "./print-plugins"
-import mod from "module"
-import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
-import { getAssetMeta } from "@vercel/webpack-asset-relocator-loader"
-import reporter from "gatsby-cli/lib/reporter"
-import { schemaCustomizationAPIs } from "./print-plugins"
-import type { GatsbyNodeAPI } from "../../redux/types"
-import * as nodeApis from "../../utils/api-node-docs"
-import { store } from "../../redux"
-import type { PackageJson } from "../../.."
-import { slash } from "gatsby-core-utils/path"
-import { isEqual } from "lodash"
+import { dependencies } from "gatsby/package.json";
+import { printQueryEnginePlugins } from "./print-plugins";
+import mod from "module";
+import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging";
+import { getAssetMeta } from "@vercel/webpack-asset-relocator-loader";
+import reporter from "gatsby-cli/lib/reporter";
+import { schemaCustomizationAPIs } from "./print-plugins";
+import type { GatsbyNodeAPI } from "../../redux/types";
+import * as nodeApis from "../../utils/api-node-docs";
+import { store } from "../../redux";
+import type { PackageJson } from "../../..";
+import { slash } from "gatsby-core-utils/path";
+import { isEqual } from "lodash";
 import {
   type IPlatformAndArch,
   getCurrentPlatformAndTarget,
   getFunctionsTargetPlatformAndTarget,
-} from "../../utils/engines-helpers"
+} from "../../utils/engines-helpers";
 
-type Reporter = typeof reporter
+type Reporter = typeof reporter;
 
-const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
+const extensions = [".mjs", ".js", ".json", ".node", ".ts", ".tsx"];
 
 const outputDir = path.posix.join(
   slash(process.cwd()),
-  `.cache`,
-  `query-engine`,
-)
+  ".cache",
+  "query-engine",
+);
 const cacheLocation = path.posix.join(
   slash(process.cwd()),
-  `.cache`,
-  `webpack`,
-  `query-engine`,
-)
+  ".cache",
+  "webpack",
+  "query-engine",
+);
 
 function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
-  const apisToKeep = new Set(schemaCustomizationAPIs)
-  apisToKeep.add(`onPluginInit`)
+  const apisToKeep = new Set(schemaCustomizationAPIs);
+  apisToKeep.add("onPluginInit");
 
   const apisToRemove = (Object.keys(nodeApis) as Array<GatsbyNodeAPI>).filter(
     (api) => !apisToKeep.has(api),
-  )
-  return apisToRemove
+  );
+  return apisToRemove;
 }
 
 function getInternalPackagesCacheDir(
@@ -56,33 +56,34 @@ function getInternalPackagesCacheDir(
 ): string {
   return path.posix.join(
     slash(process.cwd()),
-    `.cache`,
-    `internal-packages`,
+    ".cache",
+    "internal-packages",
     `${functionsTarget.platform}-${functionsTarget.arch}`,
-  )
+  );
 }
 
 // Create a directory and JS module where we install internally used packages
 async function createInternalPackagesCacheDir(
   functionsTarget: IPlatformAndArch,
 ): Promise<void> {
-  const cacheDir = getInternalPackagesCacheDir(functionsTarget)
-  await fs.ensureDir(cacheDir)
+  const cacheDir = getInternalPackagesCacheDir(functionsTarget);
+  await fs.ensureDir(cacheDir);
 
-  const packageJsonPath = path.join(cacheDir, `package.json`)
+  const packageJsonPath = path.join(cacheDir, "package.json");
 
   if (!fs.existsSync(packageJsonPath)) {
-    await fs.emptyDir(cacheDir)
+    await fs.emptyDir(cacheDir);
 
     await fs.outputJson(packageJsonPath, {
-      name: `gatsby-internal-packages`,
-      description: `This directory contains internal packages installed by Gatsby used to comply with the current platform requirements`,
-      version: `1.0.0`,
+      name: "gatsby-internal-packages",
+      description:
+        "This directory contains internal packages installed by Gatsby used to comply with the current platform requirements",
+      version: "1.0.0",
       private: true,
-      author: `Gatsby`,
-      license: `MIT`,
+      author: "Gatsby",
+      license: "MIT",
       functionsTarget,
-    })
+    });
   }
 }
 
@@ -92,108 +93,108 @@ function getLMDBBinaryFromSiteLocation(
   functionsTarget: IPlatformAndArch,
 ): string | undefined {
   // Read lmdb's package.json, go through its optional depedencies and validate if there's a prebuilt lmdb module with a compatible binary to our platform and arch
-  let packageJson: PackageJson
+  let packageJson: PackageJson;
   try {
     const modulePath = path
-      .dirname(slash(require.resolve(`lmdb`)))
-      .replace(`/dist`, ``)
-    const packageJsonPath = path.join(modulePath, `package.json`)
+      .dirname(slash(require.resolve("lmdb")))
+      .replace("/dist", "");
+    const packageJsonPath = path.join(modulePath, "package.json");
     packageJson = JSON.parse(
-      fs.readFileSync(packageJsonPath, `utf-8`),
-    ) as PackageJson
+      fs.readFileSync(packageJsonPath, "utf-8"),
+    ) as PackageJson;
   } catch (e) {
     // If we fail to read lmdb's package.json there's bigger problems here so just skip installation
-    return undefined
+    return undefined;
   }
   // If there's no lmdb prebuilt package for our arch/platform listed as optional dep no point in trying to install it
-  const { optionalDependencies = {} } = packageJson
+  const { optionalDependencies = {} } = packageJson;
   if (!Object.keys(optionalDependencies).find((p) => p === lmdbPackageName)) {
     throw new Error(
       `Target platform/arch for functions execution (${functionsTarget.platform}/${functionsTarget.arch}) is not supported.`,
-    )
+    );
   }
   return getPackageLocationFromRequireContext(
-    slash(require.resolve(`lmdb`)),
+    slash(require.resolve("lmdb")),
     lmdbPackageName,
     version,
-  )
+  );
 }
 
 function getPackageLocationFromRequireContext(
   location: string,
   packageName: string,
-  packageVersion?: string,
+  packageVersion?: string | undefined,
 ): string | undefined {
   try {
-    const requireId = `${packageName}/package.json`
-    const locationRequire = mod.createRequire(location)
-    const packageJsonLocation = slash(locationRequire.resolve(requireId))
+    const requireId = `${packageName}/package.json`;
+    const locationRequire = mod.createRequire(location);
+    const packageJsonLocation = slash(locationRequire.resolve(requireId));
 
     if (packageVersion) {
       // delete locationRequire.cache[requireId]
       const { version } = JSON.parse(
-        fs.readFileSync(packageJsonLocation, `utf-8`),
-      ) as PackageJson
+        fs.readFileSync(packageJsonLocation, "utf-8"),
+      ) as PackageJson;
       if (packageVersion !== version) {
-        return undefined
+        return undefined;
       }
     }
 
-    return path.dirname(packageJsonLocation)
+    return path.dirname(packageJsonLocation);
   } catch (e) {
-    return undefined
+    return undefined;
   }
 }
 
 type ILMDBBinaryPackageStatusBase = {
-  packageName: string
-  needToInstall: boolean
-  packageVersion: string
-}
+  packageName: string;
+  needToInstall: boolean;
+  packageVersion: string;
+};
 
 type ILMDBBinaryPackageStatusInstalled = {
-  needToInstall: false
-  packageLocation: string
-} & ILMDBBinaryPackageStatusBase
+  needToInstall: false;
+  packageLocation: string;
+} & ILMDBBinaryPackageStatusBase;
 
 type ILMDBBinaryPackageStatusNeedAlternative = {
-  needToInstall: true
-} & ILMDBBinaryPackageStatusBase
+  needToInstall: true;
+} & ILMDBBinaryPackageStatusBase;
 
 type IBinaryPackageStatus =
   | ILMDBBinaryPackageStatusInstalled
-  | ILMDBBinaryPackageStatusNeedAlternative
+  | ILMDBBinaryPackageStatusNeedAlternative;
 
 function checkIfInstalledInInternalPackagesCache(
   packageStatus: IBinaryPackageStatus,
   functionsTarget: IPlatformAndArch,
 ): IBinaryPackageStatus {
-  const cacheDir = getInternalPackagesCacheDir(functionsTarget)
+  const cacheDir = getInternalPackagesCacheDir(functionsTarget);
 
   const packageLocationFromInternalPackageCache =
     getPackageLocationFromRequireContext(
-      path.posix.join(cacheDir, `:internal:`),
+      path.posix.join(cacheDir, ":internal:"),
       packageStatus.packageName,
       packageStatus.packageVersion,
-    )
+    );
 
   if (
     packageLocationFromInternalPackageCache &&
     !path.posix
       .relative(cacheDir, packageLocationFromInternalPackageCache)
-      .startsWith(`..`)
+      .startsWith("..")
   ) {
     return {
       ...packageStatus,
       needToInstall: false,
       packageLocation: packageLocationFromInternalPackageCache,
-    }
+    };
   }
 
   return {
     ...packageStatus,
     needToInstall: true,
-  }
+  };
 }
 
 // Install lmdb's native system module under our internal cache if we detect the current installation
@@ -202,32 +203,32 @@ function checkIfNeedToInstallMissingLmdb(
   functionsTarget: IPlatformAndArch,
 ): IBinaryPackageStatus {
   // lmdb module with prebuilt binaries for target platform
-  const lmdbPackageName = `@lmdb/lmdb-${functionsTarget.platform}-${functionsTarget.arch}`
+  const lmdbPackageName = `@lmdb/lmdb-${functionsTarget.platform}-${functionsTarget.arch}`;
 
   const lmdbBinaryFromSiteLocation = getLMDBBinaryFromSiteLocation(
     lmdbPackageName,
     dependencies.lmdb,
     functionsTarget,
-  )
+  );
 
   const sharedPackageStatus: ILMDBBinaryPackageStatusNeedAlternative = {
     needToInstall: true,
     packageName: lmdbPackageName,
     packageVersion: dependencies.lmdb,
-  }
+  };
 
   if (lmdbBinaryFromSiteLocation) {
     return {
       ...sharedPackageStatus,
       needToInstall: false,
       packageLocation: lmdbBinaryFromSiteLocation,
-    }
+    };
   }
 
   return checkIfInstalledInInternalPackagesCache(
     sharedPackageStatus,
     functionsTarget,
-  )
+  );
 }
 
 function checkIfNeedToInstallMissingSharp(
@@ -236,22 +237,22 @@ function checkIfNeedToInstallMissingSharp(
 ): IBinaryPackageStatus | undefined {
   try {
     // check if shapr is resolvable
-    const { version: sharpVersion } = require(`sharp/package.json`)
+    const { version: sharpVersion } = require("sharp/package.json");
 
     if (isEqual(functionsTarget, currentTarget)) {
-      return undefined
+      return undefined;
     }
 
     return checkIfInstalledInInternalPackagesCache(
       {
         needToInstall: true,
-        packageName: `sharp`,
+        packageName: "sharp",
         packageVersion: sharpVersion,
       },
       functionsTarget,
-    )
+    );
   } catch (e) {
-    return undefined
+    return undefined;
   }
 }
 
@@ -262,51 +263,51 @@ async function installMissing(
   function shouldInstall(
     p: IBinaryPackageStatus | undefined,
   ): p is IBinaryPackageStatus {
-    return Boolean(p?.needToInstall)
+    return Boolean(p?.needToInstall);
   }
 
-  const packagesToInstall = packages.filter(shouldInstall)
+  const packagesToInstall = packages.filter(shouldInstall);
 
   if (packagesToInstall.length === 0) {
-    return packages
+    return packages;
   }
 
-  await createInternalPackagesCacheDir(functionsTarget)
+  await createInternalPackagesCacheDir(functionsTarget);
 
-  const cacheDir = getInternalPackagesCacheDir(functionsTarget)
+  const cacheDir = getInternalPackagesCacheDir(functionsTarget);
 
   const options: ExecaOptions = {
-    stderr: `inherit`,
+    stderr: "inherit",
     cwd: cacheDir,
     env: {
       npm_config_arch: functionsTarget.arch,
       npm_config_platform: functionsTarget.platform,
     },
-  }
+  };
 
   const npmAdditionalCliArgs = [
-    `--no-progress`,
-    `--no-audit`,
-    `--no-fund`,
-    `--loglevel`,
-    `error`,
-    `--color`,
-    `always`,
-    `--legacy-peer-deps`,
-    `--save-exact`,
+    "--no-progress",
+    "--no-audit",
+    "--no-fund",
+    "--loglevel",
+    "error",
+    "--color",
+    "always",
+    "--legacy-peer-deps",
+    "--save-exact",
     // target platform might be different than current and force allows us to install it
-    `--force`,
-  ]
+    "--force",
+  ];
 
   await execa.execa(
-    `npm`,
+    "npm",
     [
-      `install`,
+      "install",
       ...npmAdditionalCliArgs,
       ...packagesToInstall.map((p) => `${p.packageName}@${p.packageVersion}`),
     ],
     options,
-  )
+  );
 
   return packages.map((info) =>
     info
@@ -316,51 +317,51 @@ async function installMissing(
             needToInstall: false,
             packageLocation: path.posix.join(
               cacheDir,
-              `node_modules`,
+              "node_modules",
               info.packageName,
             ),
           }
         : info
       : undefined,
-  )
+  );
 }
 
 export async function createGraphqlEngineBundle(
   rootDir: string,
   reporter: Reporter,
-  isVerbose?: boolean,
+  isVerbose?: boolean | undefined,
 ): Promise<webpack.Compilation | undefined> {
-  const state = store.getState()
+  const state = store.getState();
   const pathPrefix = state.program.prefixPaths
-    ? state.config.pathPrefix ?? ``
-    : ``
+    ? state.config.pathPrefix ?? ""
+    : "";
 
   const schemaSnapshotString = await fs.readFile(
-    path.join(rootDir, `.cache`, `schema.gql`),
-    `utf-8`,
-  )
-  await printQueryEnginePlugins()
+    path.join(rootDir, ".cache", "schema.gql"),
+    "utf-8",
+  );
+  await printQueryEnginePlugins();
 
   const assetRelocatorUseEntry = {
-    loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
+    loader: require.resolve("@vercel/webpack-asset-relocator-loader"),
     options: {
-      outputAssetBase: `assets`,
+      outputAssetBase: "assets",
     },
-  }
+  };
 
   const gatsbyPluginTSRequire = mod.createRequire(
-    require.resolve(`gatsby-plugin-typescript`),
-  )
+    require.resolve("gatsby-plugin-typescript"),
+  );
 
-  const currentTarget = getCurrentPlatformAndTarget()
-  const functionsTarget = getFunctionsTargetPlatformAndTarget()
+  const currentTarget = getCurrentPlatformAndTarget();
+  const functionsTarget = getFunctionsTargetPlatformAndTarget();
 
-  const dynamicAliases: Record<string, string> = {}
-  let forcedLmdbBinaryModule: string | undefined = undefined
+  const dynamicAliases: Record<string, string> = {};
+  let forcedLmdbBinaryModule: string | undefined = undefined;
 
   // we need to make sure we have internal packages cache directory setup for current lambda target
   // before we attempt to check if we can reuse those packages
-  await createInternalPackagesCacheDir(functionsTarget)
+  await createInternalPackagesCacheDir(functionsTarget);
 
   const [lmdbPackageInfo, sharpPackageInfo] = await installMissing(
     [
@@ -368,48 +369,48 @@ export async function createGraphqlEngineBundle(
       checkIfNeedToInstallMissingSharp(functionsTarget, currentTarget),
     ],
     functionsTarget,
-  )
+  );
 
   if (!lmdbPackageInfo) {
-    throw new Error(`Failed to find required LMDB binary`)
-  } else if (functionsTarget.platform === `linux`) {
+    throw new Error("Failed to find required LMDB binary");
+  } else if (functionsTarget.platform === "linux") {
     // function execution platform is primarily linux, which is tested the most, so we only force that specific binary
     // to not cause untested code paths
     if (lmdbPackageInfo.needToInstall) {
       throw new Error(
         `Failed to locate or install LMDB binary for functions execution platform/arch (${functionsTarget.platform}/${functionsTarget.arch})`,
-      )
+      );
     }
 
-    forcedLmdbBinaryModule = `${lmdbPackageInfo.packageLocation}/node.abi83.glibc.node`
+    forcedLmdbBinaryModule = `${lmdbPackageInfo.packageLocation}/node.abi83.glibc.node`;
   }
 
   if (sharpPackageInfo) {
     if (sharpPackageInfo.needToInstall) {
       throw new Error(
         `Failed to locate or install Sharp binary for functions execution platform/arch (${functionsTarget.platform}/${functionsTarget.arch})`,
-      )
+      );
     }
-    dynamicAliases[`sharp$`] = sharpPackageInfo.packageLocation
+    dynamicAliases["sharp$"] = sharpPackageInfo.packageLocation;
   }
 
   const compiler = webpack({
-    name: `Query Engine`,
+    name: "Query Engine",
     // mode: `production`,
-    mode: `none`,
-    entry: path.join(__dirname, `entry.js`),
+    mode: "none",
+    entry: path.join(__dirname, "entry.js"),
     output: {
       path: outputDir,
-      filename: `index.js`,
-      libraryTarget: `commonjs`,
+      filename: "index.js",
+      libraryTarget: "commonjs",
     },
-    target: `node`,
+    target: "node",
     externalsPresets: {
       node: false,
     },
     cache: {
-      type: `filesystem`,
-      name: `graphql-engine`,
+      type: "filesystem",
+      name: "graphql-engine",
       cacheLocation,
       buildDependencies: {
         config: [__filename],
@@ -418,18 +419,18 @@ export async function createGraphqlEngineBundle(
     },
     // those are required in some runtime paths, but we don't need them
     externals: [
-      `cbor-x`, // optional dep of lmdb-store, but we are using `msgpack` (default) encoding, so we don't need it
-      `electron`, // :shrug: `got` seems to have electron specific code path
+      "cbor-x", // optional dep of lmdb-store, but we are using `msgpack` (default) encoding, so we don't need it
+      "electron", // :shrug: `got` seems to have electron specific code path
       mod.builtinModules.reduce((acc, builtinModule) => {
-        if (builtinModule === `fs`) {
-          acc[builtinModule] = `global _actualFsWrapper`
-          acc[`node:${builtinModule}`] = `global _actualFsWrapper`
+        if (builtinModule === "fs") {
+          acc[builtinModule] = "global _actualFsWrapper";
+          acc[`node:${builtinModule}`] = "global _actualFsWrapper";
         } else {
-          acc[builtinModule] = `commonjs ${builtinModule}`
-          acc[`node:${builtinModule}`] = `commonjs ${builtinModule}`
+          acc[builtinModule] = `commonjs ${builtinModule}`;
+          acc[`node:${builtinModule}`] = `commonjs ${builtinModule}`;
         }
 
-        return acc
+        return acc;
       }, {}),
     ],
     module: {
@@ -444,7 +445,7 @@ export async function createGraphqlEngineBundle(
               use: [
                 assetRelocatorUseEntry,
                 {
-                  loader: require.resolve(`./sharp-bundling-patch`),
+                  loader: require.resolve("./sharp-bundling-patch"),
                 },
               ],
             },
@@ -456,7 +457,7 @@ export async function createGraphqlEngineBundle(
               use: [
                 assetRelocatorUseEntry,
                 {
-                  loader: require.resolve(`./lmdb-bundling-patch`),
+                  loader: require.resolve("./lmdb-bundling-patch"),
                   options: {
                     forcedBinaryModule: forcedLmdbBinaryModule,
                   },
@@ -472,7 +473,7 @@ export async function createGraphqlEngineBundle(
                 assetRelocatorUseEntry,
                 {
                   loader: require.resolve(
-                    `../../utils/webpack/loaders/webpack-remove-exports-loader`,
+                    "../../utils/webpack/loaders/webpack-remove-exports-loader",
                   ),
                   options: {
                     remove: getApisToRemoveForQueryEngine(),
@@ -495,17 +496,17 @@ export async function createGraphqlEngineBundle(
           test: /\.ts$/,
           exclude: /node_modules/,
           use: {
-            loader: require.resolve(`babel-loader`),
+            loader: require.resolve("babel-loader"),
             options: {
               presets: [
-                gatsbyPluginTSRequire.resolve(`@babel/preset-typescript`),
+                gatsbyPluginTSRequire.resolve("@babel/preset-typescript"),
               ],
             },
           },
         },
         {
           test: /\.m?js$/,
-          type: `javascript/auto`,
+          type: "javascript/auto",
           resolve: {
             byDependency: {
               esm: {
@@ -516,12 +517,12 @@ export async function createGraphqlEngineBundle(
         },
         {
           test: /\.txt/,
-          type: `asset/resource`,
+          type: "asset/resource",
         },
         {
           test: /\.(graphqls?|gqls?)$/,
           use: {
-            loader: require.resolve(`graphql-tag/loader`),
+            loader: require.resolve("graphql-tag/loader"),
           },
         },
       ],
@@ -530,30 +531,32 @@ export async function createGraphqlEngineBundle(
       extensions,
       alias: {
         ...dynamicAliases,
-        ".cache": process.cwd() + `/.cache/`,
+        ".cache": process.cwd() + "/.cache/",
 
-        [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
+        [require.resolve("gatsby-cli/lib/reporter/loggers/ink/index.js")]:
           false,
         inquirer: false,
         // only load one version of lmdb
-        lmdb: require.resolve(`lmdb`),
-        "ts-node": require.resolve(`./shims/ts-node`),
-        "gatsby-sharp$": require.resolve(`./shims/gatsby-sharp`),
-        "graphql-import-node$": require.resolve(`./shims/no-op-module`),
-        "graphql-import-node/register$":
-          require.resolve(`./shims/no-op-module`),
-        "babel-runtime/helpers/asyncToGenerator":
-          require.resolve(`./shims/no-op-module`), // undeclared dep of yurnalist (but used in code path we don't use)
+        lmdb: require.resolve("lmdb"),
+        "ts-node": require.resolve("./shims/ts-node"),
+        "gatsby-sharp$": require.resolve("./shims/gatsby-sharp"),
+        "graphql-import-node$": require.resolve("./shims/no-op-module"),
+        "graphql-import-node/register$": require.resolve(
+          "./shims/no-op-module",
+        ),
+        "babel-runtime/helpers/asyncToGenerator": require.resolve(
+          "./shims/no-op-module",
+        ), // undeclared dep of yurnalist (but used in code path we don't use)
       },
     },
     plugins: [
-      new webpack.EnvironmentPlugin([`GATSBY_CLOUD_IMAGE_CDN`]),
+      new webpack.EnvironmentPlugin(["GATSBY_CLOUD_IMAGE_CDN"]),
       new webpack.DefinePlugin({
-        "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
-        "process.env.NODE_ENV": JSON.stringify(`production`),
+        "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": "true",
+        "process.env.NODE_ENV": JSON.stringify("production"),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         PATH_PREFIX: JSON.stringify(pathPrefix),
-        "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
+        "process.env.GATSBY_LOGGER": JSON.stringify("yurnalist"),
         "process.env.GATSBY_SLICES": JSON.stringify(
           !!process.env.GATSBY_SLICES,
         ),
@@ -564,28 +567,33 @@ export async function createGraphqlEngineBundle(
           functionsTarget.arch,
         ),
       }),
-      process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
+      process.env.GATSBY_WEBPACK_LOGGING?.includes("query-engine") &&
         new WebpackLoggingPlugin(rootDir, reporter, isVerbose),
     ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
-  })
+  });
 
   return new Promise((resolve, reject) => {
     compiler.run(async (err, stats): Promise<void> => {
       function getResourcePath(
-        webpackModule?: Module | NormalModule | ConcatenatedModule | null,
+        webpackModule?:
+          | Module
+          | NormalModule
+          | ConcatenatedModule
+          | null
+          | undefined,
       ): string | undefined {
         if (webpackModule && !(webpackModule instanceof ConcatenatedModule)) {
-          return (webpackModule as NormalModule).resource
+          return (webpackModule as NormalModule).resource;
         }
 
         if (webpackModule?.modules) {
           // ConcatenatedModule is a collection of modules so we have to go deeper to actually get a path,
           // at this point we won't know which one so we just grab first module here
-          const [firstSubModule] = webpackModule.modules
-          return getResourcePath(firstSubModule)
+          const [firstSubModule] = webpackModule.modules;
+          return getResourcePath(firstSubModule);
         }
 
-        return undefined
+        return undefined;
       }
 
       function iterateModules(
@@ -597,22 +605,23 @@ export async function createGraphqlEngineBundle(
             iterateModules(
               (webpackModule as ConcatenatedModule).modules,
               compilation,
-            )
+            );
           } else {
-            const resourcePath = getResourcePath(webpackModule)
-            if (resourcePath?.includes(`ts-node`)) {
+            const resourcePath = getResourcePath(webpackModule);
+            if (resourcePath?.includes("ts-node")) {
               const importedBy = getResourcePath(
                 compilation.moduleGraph.getIssuer(webpackModule),
-              )
+              );
               const structuredError = {
-                id: `98011`,
+                id: "98011",
                 context: {
-                  package: `ts-node`,
+                  package: "ts-node",
                   importedBy,
-                  advisory: `Gatsby is supporting TypeScript natively (see https://gatsby.dev/typescript). "ts-node" might not be needed anymore at all, consider removing it.`,
+                  advisory:
+                    'Gatsby is supporting TypeScript natively (see https://gatsby.dev/typescript). "ts-node" might not be needed anymore at all, consider removing it.',
                 },
-              }
-              throw structuredError
+              };
+              throw structuredError;
             }
           }
         }
@@ -620,11 +629,11 @@ export async function createGraphqlEngineBundle(
 
       try {
         if (stats?.compilation.modules) {
-          iterateModules(stats.compilation.modules, stats.compilation)
+          iterateModules(stats.compilation.modules, stats.compilation);
         }
 
         if (!isEqual(functionsTarget, currentTarget)) {
-          const binaryFixingPromises: Array<Promise<void>> = []
+          const binaryFixingPromises: Array<Promise<void>> = [];
           // sigh - emitAsset used by relocator seems to corrupt binaries
           // resulting in "ELF file's phentsize not the expected size" errors
           // - see size diff
@@ -639,32 +648,32 @@ export async function createGraphqlEngineBundle(
           for (const asset of (
             stats?.compilation?.assetsInfo ?? new Map()
           ).keys()) {
-            if (asset?.endsWith(`.node`)) {
-              const targetRelPath = path.posix.relative(`assets`, asset)
-              const assetMeta = getAssetMeta(targetRelPath, stats?.compilation)
-              const sourcePath = assetMeta?.path
+            if (asset?.endsWith(".node")) {
+              const targetRelPath = path.posix.relative("assets", asset);
+              const assetMeta = getAssetMeta(targetRelPath, stats?.compilation);
+              const sourcePath = assetMeta?.path;
               if (sourcePath) {
-                const dist = path.join(outputDir, asset)
-                binaryFixingPromises.push(fs.copyFile(sourcePath, dist))
+                const dist = path.join(outputDir, asset);
+                binaryFixingPromises.push(fs.copyFile(sourcePath, dist));
               }
             }
           }
 
-          await Promise.all(binaryFixingPromises)
+          await Promise.all(binaryFixingPromises);
         }
 
         compiler.close((closeErr) => {
           if (err) {
-            return reject(err)
+            return reject(err);
           }
           if (closeErr) {
-            return reject(closeErr)
+            return reject(closeErr);
           }
-          return resolve(stats?.compilation)
-        })
+          return resolve(stats?.compilation);
+        });
       } catch (e) {
-        reject(e)
+        reject(e);
       }
-    })
-  })
+    });
+  });
 }

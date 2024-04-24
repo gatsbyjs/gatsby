@@ -1,14 +1,14 @@
-import { Joi } from "./joi"
-import type { GatsbyNode } from "gatsby"
-import { validateOptionsSchema } from "./validate"
-import type { IPluginInfoOptions } from "./types"
+import { Joi } from "./joi";
+import type { GatsbyNode } from "gatsby";
+import { validateOptionsSchema } from "./validate";
+import type { IPluginInfoOptions } from "./types";
 
 type ITestPluginOptionsSchemaReturnType = {
-  errors: Array<string>
-  warnings: Array<string>
-  isValid: boolean
-  hasWarnings: boolean
-}
+  errors: Array<string>;
+  warnings: Array<string>;
+  isValid: boolean;
+  hasWarnings: boolean;
+};
 
 export async function testPluginOptionsSchema(
   pluginSchemaFunction: GatsbyNode["pluginOptionsSchema"],
@@ -17,7 +17,7 @@ export async function testPluginOptionsSchema(
   const pluginSchema = pluginSchemaFunction?.({
     Joi: Joi.extend((joi) => {
       return {
-        type: `subPlugins`,
+        type: "subPlugins",
         base: joi
           .array()
           .items(
@@ -32,28 +32,31 @@ export async function testPluginOptionsSchema(
           .custom(
             (arrayValue) =>
               arrayValue.map((value) => {
-                if (typeof value === `string`) {
-                  value = { resolve: value }
+                if (typeof value === "string") {
+                  value = { resolve: value };
                 }
 
-                return value
+                return value;
               }),
-            `Gatsby specific subplugin validation`,
+            "Gatsby specific subplugin validation",
           )
           .default([]),
-      }
+      };
     }),
-  })
+  });
 
   try {
-    if (typeof pluginSchema === `undefined`) {
-      return
+    if (typeof pluginSchema === "undefined") {
+      return;
     }
 
-    // @ts-ignore
-    const { warning } = await validateOptionsSchema(pluginSchema, pluginOptions)
+    const { warning } = await validateOptionsSchema(
+      // @ts-ignore
+      pluginSchema,
+      pluginOptions,
+    );
 
-    const warnings = warning.details.map((detail) => detail.message) ?? []
+    const warnings = warning.details.map((detail) => detail.message) ?? [];
 
     if (warnings.length > 0) {
       // eslint-disable-next-line consistent-return
@@ -62,13 +65,13 @@ export async function testPluginOptionsSchema(
         errors: [],
         hasWarnings: true,
         warnings,
-      }
+      };
     }
 
-    return
+    return;
   } catch (e) {
-    const errors = e?.details?.map((detail) => detail.message) ?? []
+    const errors = e?.details?.map((detail) => detail.message) ?? [];
     // eslint-disable-next-line consistent-return
-    return { isValid: false, errors, hasWarnings: false, warnings: [] }
+    return { isValid: false, errors, hasWarnings: false, warnings: [] };
   }
 }

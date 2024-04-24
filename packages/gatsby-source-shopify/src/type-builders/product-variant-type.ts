@@ -47,5 +47,5 @@ export function productVariantTypeBuilder(prefix: string): string {
         name: String!
         value: String!
       }
-    `
+    `;
 }

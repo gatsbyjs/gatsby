@@ -2,9 +2,9 @@
 title: "Part 2: Create Nodes"
 ---
 
-import { LinkButton } from "gatsby-interface"
-import Collapsible from "@components/collapsible"
-import { MdArrowForward } from "react-icons/md"
+import { LinkButton } from "gatsby-interface";
+import Collapsible from "@components/collapsible";
+import { MdArrowForward } from "react-icons/md";
 
 ## Introduction
 
@@ -68,8 +68,8 @@ A destructured version would look like this:
 
 ```ts
 export const sourceNodes: GatsbyNode[`sourceNodes`] = async ({ reporter }) => {
-  reporter.info(`Example plugin sourceNodes...`)
-}
+  reporter.info(`Example plugin sourceNodes...`);
+};
 ```
 
 The problem with this is that if you want to pass `reporter` or any other helper to a utility function, you'll always need to update all function parameters when you add/remove a helper. `gatsbyApi` contains everything and inside the helper function you can access what you need. You'll see this applied in just a bit.
@@ -148,7 +148,7 @@ export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
     errors?: Array<{
       message: string
       locations: Array<unknown>
-    }>
+    }> | undefined
   }
   // highlight-end
 
@@ -314,6 +314,7 @@ Here's a short explanation on each required field for your convenience:
 
 - `id`: The node's ID that Gatsby uses to track it. It must be a globally unique ID. You should use the [`createNodeId`](/docs/reference/config-files/node-api-helpers/#createNodeId) helper to create it.
 - `internal`: An object that only allows a defined set of keys (see API reference)
+
   - `type`: The name of the node type
   - `contentDigest`: A hash (or short digital summary) of the contents of a node. The digest should be unique to the node since it's used for caching. If the node changes, this digest should also change. You can use the [`createContentDigest`](/docs/reference/config-files/node-api-helpers/#createContentDigest) helper to create that hash.
 
@@ -383,108 +384,108 @@ Now that you know how a barebones version of `createNode` works, DRY (acronym fo
 
 1. Import the `SourceNodesArgs` and `NodeInput` type from `gatsby` and the `NodeBuilderInput` type from `types.ts`. Also import the `NODE_TYPES` constants you just created:
 
-    ```ts:title=plugin/src/source-nodes.ts
-    // highlight-next-line
-    import type { GatsbyNode, SourceNodesArgs, NodeInput } from "gatsby"
-    import { fetchGraphQL } from "./utils"
-    // highlight-next-line
-    import type { IAuthorInput, IPostInput, NodeBuilderInput } from "./types"
-    // highlight-next-line
-    import { NODE_TYPES } from "./constants"
+   ```ts:title=plugin/src/source-nodes.ts
+   // highlight-next-line
+   import type { GatsbyNode, SourceNodesArgs, NodeInput } from "gatsby"
+   import { fetchGraphQL } from "./utils"
+   // highlight-next-line
+   import type { IAuthorInput, IPostInput, NodeBuilderInput } from "./types"
+   // highlight-next-line
+   import { NODE_TYPES } from "./constants"
 
-    export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
-      // Contents of sourceNodes
-    }
+   export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+     // Contents of sourceNodes
+   }
 
-    // highlight-start
-    interface INodeBuilderArgs {
-      gatsbyApi: SourceNodesArgs
-      input: NodeBuilderInput
-    }
-    // highlight-end
+   // highlight-start
+   interface INodeBuilderArgs {
+     gatsbyApi: SourceNodesArgs
+     input: NodeBuilderInput
+   }
+   // highlight-end
 
-    // highlight-next-line
-    export function nodeBuilder({ gatsbyApi, input }: INodeBuilderArgs) {}
-    ```
+   // highlight-next-line
+   export function nodeBuilder({ gatsbyApi, input }: INodeBuilderArgs) {}
+   ```
 
-    <Announcement>
+   <Announcement>
 
-    **TypeScript tip:** The `gatsbyApi` that a Gatsby Node API receives isn't always the same on each Node API. Therefore types in the naming scheme "Node API name" (in PascalCase) + "Args" exist, e.g. `sourceNodes` => `SourceNodesArgs`, `createSchemaCustomization` => `CreateSchemaCustomizationArgs`. Those utility TypeScript types are helpful when passing `gatsbyApi` or parts of it to another function.
+   **TypeScript tip:** The `gatsbyApi` that a Gatsby Node API receives isn't always the same on each Node API. Therefore types in the naming scheme "Node API name" (in PascalCase) + "Args" exist, e.g. `sourceNodes` => `SourceNodesArgs`, `createSchemaCustomization` => `CreateSchemaCustomizationArgs`. Those utility TypeScript types are helpful when passing `gatsbyApi` or parts of it to another function.
 
-    </Announcement>
+   </Announcement>
 
 1. Apply the same logic as the barebones `createNode` example to the `nodeBuilder` function:
 
-    - Generate a unique `id`, dependent on the `input.type` and `id` from `input.data`
-    - Fill out the [necessary fields](/docs/reference/config-files/actions/#createNode) on the node (as explained in "Explanation on each required node field" above)
-    - Add your arbitrary data (in this case `...input.data`)
-    - Call `createNode`
+   - Generate a unique `id`, dependent on the `input.type` and `id` from `input.data`
+   - Fill out the [necessary fields](/docs/reference/config-files/actions/#createNode) on the node (as explained in "Explanation on each required node field" above)
+   - Add your arbitrary data (in this case `...input.data`)
+   - Call `createNode`
 
-    ```ts:title=plugin/src/source-nodes.ts
-    // Rest of the file
+   ```ts:title=plugin/src/source-nodes.ts
+   // Rest of the file
 
-    export function nodeBuilder({ gatsbyApi, input }: INodeBuilderArgs) {
-      const id = gatsbyApi.createNodeId(`${input.type}-${input.data.id}`)
+   export function nodeBuilder({ gatsbyApi, input }: INodeBuilderArgs) {
+     const id = gatsbyApi.createNodeId(`${input.type}-${input.data.id}`)
 
-      const node = {
-        ...input.data,
-        id,
-        _id: input.data.id,
-        parent: null,
-        children: [],
-        internal: {
-          type: input.type,
-          contentDigest: gatsbyApi.createContentDigest(input.data),
-        },
-      } satisfies NodeInput
+     const node = {
+       ...input.data,
+       id,
+       _id: input.data.id,
+       parent: null,
+       children: [],
+       internal: {
+         type: input.type,
+         contentDigest: gatsbyApi.createContentDigest(input.data),
+       },
+     } satisfies NodeInput
 
-      gatsbyApi.actions.createNode(node)
-    }
-    ```
+     gatsbyApi.actions.createNode(node)
+   }
+   ```
 
-    Great, you wrote a reusable helper function to create nodes! Now it's time to put it to use.
+   Great, you wrote a reusable helper function to create nodes! Now it's time to put it to use.
 
-    <Announcement>
+   <Announcement>
 
-    **Pro tip:** If your incoming data has keys that clash with fields reserved by Gatsby (in this example `id`), you can prefix those fields to still make them available. So the `id` coming from the example API will be available at `_id`. You don't have to use a `_` prefix, you can choose whatever you want (but we'd recommend keeping things consistent).
+   **Pro tip:** If your incoming data has keys that clash with fields reserved by Gatsby (in this example `id`), you can prefix those fields to still make them available. So the `id` coming from the example API will be available at `_id`. You don't have to use a `_` prefix, you can choose whatever you want (but we'd recommend keeping things consistent).
 
-    **TypeScript tip:** You can use the [`satisfies` operator](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator) to check against a desired shape while inferring the most specific type possible.
+   **TypeScript tip:** You can use the [`satisfies` operator](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator) to check against a desired shape while inferring the most specific type possible.
 
-    </Announcement>
+   </Announcement>
 
 1. Scroll up in `source-nodes.ts` to the place where you're calling `console.dir()` and remove that log. Replace it with a destructuring assignment of `data` to get the `posts` and `authors` results out of it (you can also set an empty array as a default value):
 
-    ```ts:title=plugin/src/source-nodes.ts
-    // Rest of the file
+   ```ts:title=plugin/src/source-nodes.ts
+   // Rest of the file
 
-    export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
-      // Rest of sourceNodes
+   export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+     // Rest of sourceNodes
 
-      const { posts = [], authors = [] } = data
-    }
-    ```
+     const { posts = [], authors = [] } = data
+   }
+   ```
 
-    So both `posts` and `authors` are arrays of objects that you should iterate over. And each individual `post` and `author` will become a Gatsby node when you iterate over both arrays and call `nodeBuilder` inside the loops:
+   So both `posts` and `authors` are arrays of objects that you should iterate over. And each individual `post` and `author` will become a Gatsby node when you iterate over both arrays and call `nodeBuilder` inside the loops:
 
-    ```ts:title=plugin/src/source-nodes.ts
-    // Rest of the file
+   ```ts:title=plugin/src/source-nodes.ts
+   // Rest of the file
 
-    export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
-      // Rest of sourceNodes
+   export const sourceNodes: GatsbyNode[`sourceNodes`] = async (gatsbyApi) => {
+     // Rest of sourceNodes
 
-      const { posts = [], authors = [] } = data
+     const { posts = [], authors = [] } = data
 
-      // highlight-start
-      for (const post of posts) {
-        nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Post, data: post } })
-      }
+     // highlight-start
+     for (const post of posts) {
+       nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Post, data: post } })
+     }
 
-      for (const author of authors) {
-        nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Author, data: author } })
-      }
-      // highlight-end
-    }
-    ```
+     for (const author of authors) {
+       nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Author, data: author } })
+     }
+     // highlight-end
+   }
+   ```
 
 Hopefully you can see the benefit of creating a helper function: You don't have to repeat yourself inside the loops, making the code for sourcing data and creating nodes more readable, concise, and clear.
 
@@ -674,9 +675,9 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 In Part 3, you'll explicitly define the GraphQL schema of your source plugin and create a foreign-key relationship between the `Post` and `Author` node types.
 
 <LinkButton
-  to="/docs/tutorial/creating-a-source-plugin/part-3/"
+  to='/docs/tutorial/creating-a-source-plugin/part-3/'
   rightIcon={<MdArrowForward />}
-  variant="SECONDARY"
+  variant='SECONDARY'
 >
   Continue to Part 3
 </LinkButton>

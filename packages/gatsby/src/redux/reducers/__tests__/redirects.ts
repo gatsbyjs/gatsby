@@ -1,142 +1,142 @@
-import type { ICreateRedirectAction, IRedirect } from "../../types"
+import type { ICreateRedirectAction, IRedirect } from "../../types";
 
-let reducer
+let reducer;
 
-describe(`redirects`, () => {
+describe("redirects", () => {
   beforeEach(() => {
     jest.isolateModules(() => {
-      reducer = require(`../redirects`).redirectsReducer
-    })
-  })
-  it(`lets you redirect to an internal url`, () => {
+      reducer = require("../redirects").redirectsReducer;
+    });
+  });
+  it("lets you redirect to an internal url", () => {
     const action = {
-      type: `CREATE_REDIRECT`,
+      type: "CREATE_REDIRECT",
       payload: {
-        fromPath: `/page-internal`,
-        toPath: `/page-internal/`,
+        fromPath: "/page-internal",
+        toPath: "/page-internal/",
       },
-    }
+    };
 
-    const state = reducer(undefined, action)
+    const state = reducer(undefined, action);
 
     expect(state).toEqual([
       {
-        fromPath: `/page-internal`,
-        toPath: `/page-internal/`,
+        fromPath: "/page-internal",
+        toPath: "/page-internal/",
       },
-    ])
-  })
+    ]);
+  });
 
-  it(`lets you redirect to an external url`, () => {
+  it("lets you redirect to an external url", () => {
     const action = {
-      type: `CREATE_REDIRECT`,
+      type: "CREATE_REDIRECT",
       payload: {
-        fromPath: `/page-external`,
-        toPath: `https://example.com`,
+        fromPath: "/page-external",
+        toPath: "https://example.com",
       },
-    }
+    };
 
-    const state = reducer(undefined, action)
+    const state = reducer(undefined, action);
 
     expect(state).toEqual([
       {
-        fromPath: `/page-external`,
-        toPath: `https://example.com`,
+        fromPath: "/page-external",
+        toPath: "https://example.com",
       },
-    ])
-  })
+    ]);
+  });
 
   const protocolArr = [
-    [`https`, `https://example.com`],
-    [`http`, `http://example.com`],
-    [`//`, `//example.com`],
-    [`ftp`, `ftp://example.com`],
-    [`mailto`, `mailto:example@email.com`],
-  ]
+    ["https", "https://example.com"],
+    ["http", "http://example.com"],
+    ["//", "//example.com"],
+    ["ftp", "ftp://example.com"],
+    ["mailto", "mailto:example@email.com"],
+  ];
 
   protocolArr.forEach(([protocol, toPath], index) => {
     it(`lets you redirect using ${protocol}`, () => {
-      const fromPath = `/page-protocol-${index}`
+      const fromPath = `/page-protocol-${index}`;
       const action = {
-        type: `CREATE_REDIRECT`,
+        type: "CREATE_REDIRECT",
         payload: {
           fromPath,
           toPath,
         },
-      }
+      };
 
       expect(reducer(undefined, action)).toEqual([
         {
           fromPath,
           toPath,
         },
-      ])
-    })
-  })
+      ]);
+    });
+  });
 
-  it(`prevents duplicate redirects`, () => {
+  it("prevents duplicate redirects", () => {
     function createRedirect(
       fromPath: string,
       toPath: string,
       ignoreCase?: boolean | undefined,
     ): ICreateRedirectAction {
       return {
-        type: `CREATE_REDIRECT`,
+        type: "CREATE_REDIRECT",
         payload: { fromPath, toPath, ignoreCase },
-      }
+      };
     }
 
-    let state = reducer(undefined, createRedirect(`/page`, `/other-page`))
-    state = reducer(state, createRedirect(`/page`, `/other-page`))
+    let state = reducer(undefined, createRedirect("/page", "/other-page"));
+    state = reducer(state, createRedirect("/page", "/other-page"));
 
     expect(state).toEqual([
       {
-        fromPath: `/page`,
-        toPath: `/other-page`,
+        fromPath: "/page",
+        toPath: "/other-page",
       },
-    ])
-  })
+    ]);
+  });
 
-  it(`allows multiple redirects with same "fromPath" but different options`, () => {
+  it('allows multiple redirects with same "fromPath" but different options', () => {
     function createRedirect(redirect: IRedirect): ICreateRedirectAction {
       return {
-        type: `CREATE_REDIRECT`,
+        type: "CREATE_REDIRECT",
         payload: redirect,
-      }
+      };
     }
 
     let state = reducer(
       undefined,
       createRedirect({
         ignoreCase: false,
-        fromPath: `/page`,
-        toPath: `/en/page`,
-        Language: `en`,
+        fromPath: "/page",
+        toPath: "/en/page",
+        Language: "en",
       }),
-    )
+    );
     state = reducer(
       state,
       createRedirect({
         ignoreCase: false,
-        fromPath: `/page`,
-        toPath: `/pt/page`,
-        Language: `pt`,
+        fromPath: "/page",
+        toPath: "/pt/page",
+        Language: "pt",
       }),
-    )
+    );
 
     expect(state).toEqual([
       {
         ignoreCase: false,
-        fromPath: `/page`,
-        toPath: `/en/page`,
-        Language: `en`,
+        fromPath: "/page",
+        toPath: "/en/page",
+        Language: "en",
       },
       {
         ignoreCase: false,
-        fromPath: `/page`,
-        toPath: `/pt/page`,
-        Language: `pt`,
+        fromPath: "/page",
+        toPath: "/pt/page",
+        Language: "pt",
       },
-    ])
-  })
-})
+    ]);
+  });
+});

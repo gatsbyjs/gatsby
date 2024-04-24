@@ -1,7 +1,7 @@
-import { processSliceQueries } from "../query"
-import reporter from "gatsby-cli/lib/reporter"
-import type { IQueryRunningContext } from "../state-machines/query-running/types"
-import { assertStore } from "../utils/assert-store"
+import { processSliceQueries } from "../query";
+import reporter from "gatsby-cli/lib/reporter";
+import type { IQueryRunningContext } from "../state-machines/query-running/types";
+import { assertStore } from "../utils/assert-store";
 
 export async function runSliceQueries({
   parentSpan,
@@ -10,35 +10,36 @@ export async function runSliceQueries({
   program,
   graphqlRunner,
 }: Partial<IQueryRunningContext>): Promise<void> {
-  assertStore(store)
+  assertStore(store);
 
   if (!queryIds) {
-    return
+    return;
   }
-  const { sliceQueryIds } = queryIds
+  const { sliceQueryIds } = queryIds;
   if (!sliceQueryIds.length) {
-    return
+    return;
   }
 
-  const state = store.getState()
+  const state = store.getState();
   const activity = reporter.createProgress(
-    `run slice queries`,
+    "run slice queries",
     sliceQueryIds.length,
     0,
+    // @ts-ignore
     {
-      id: `slice-query-running`,
+      id: "slice-query-running",
       parentSpan,
     },
-  )
+  );
 
-  activity.start()
+  activity.start();
 
   await processSliceQueries(sliceQueryIds, {
     state,
     activity,
     graphqlRunner,
     graphqlTracing: program?.graphqlTracing,
-  })
+  });
 
-  activity.done()
+  activity.done();
 }

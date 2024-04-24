@@ -1,32 +1,32 @@
-const { prepareRegex } = require(`../prepare-regex`)
+const { prepareRegex } = require("../prepare-regex");
 
-describe(`Prepare regex for filtering`, () => {
-  it(`handles simple regex`, () => {
-    expect(prepareRegex(`/blue/`)).toMatchSnapshot()
-  })
+describe("Prepare regex for filtering", () => {
+  it("handles simple regex", () => {
+    expect(prepareRegex("/blue/")).toMatchSnapshot();
+  });
 
-  it(`handles flags regex`, () => {
-    expect(prepareRegex(`/blue/i`)).toMatchSnapshot()
-  })
+  it("handles flags regex", () => {
+    expect(prepareRegex("/blue/i")).toMatchSnapshot();
+  });
 
-  it(`handles slashes`, () => {
-    expect(prepareRegex(`/bl/ue/i`)).toMatchSnapshot()
-  })
+  it("handles slashes", () => {
+    expect(prepareRegex("/bl/ue/i")).toMatchSnapshot();
+  });
 
-  it(`handles escape sequences`, () => {
-    const expected = /^\w+\d{2}\.$/
-    expect(prepareRegex(`/^\\w+\\d{2}\\.$/`)).toEqual(expected)
-  })
+  it("handles escape sequences", () => {
+    const expected = /^\w+\d{2}\.$/;
+    expect(prepareRegex("/^\\w+\\d{2}\\.$/")).toEqual(expected);
+  });
 
-  it(`handles regex string passed as graphql arg`, async () => {
+  it("handles regex string passed as graphql arg", async () => {
     const {
       GraphQLSchema,
       GraphQLObjectType,
       GraphQLString,
       graphql,
-    } = require(`graphql`)
+    } = require("graphql");
     const QueryType = new GraphQLObjectType({
-      name: `Query`,
+      name: "Query",
       fields: {
         regex: {
           type: GraphQLString,
@@ -36,8 +36,8 @@ describe(`Prepare regex for filtering`, () => {
           resolve: (source, args) => args.regex,
         },
       },
-    })
-    const schema = new GraphQLSchema({ query: QueryType })
+    });
+    const schema = new GraphQLSchema({ query: QueryType });
     const results = await graphql({
       schema,
       source: `
@@ -45,11 +45,11 @@ describe(`Prepare regex for filtering`, () => {
           regex(regex: "/\\\\w+/")
         }
       `,
-    })
-    expect(results.errors).toBeUndefined()
-    expect(results.data).toEqual({ regex: `/\\w+/` })
+    });
+    expect(results.errors).toBeUndefined();
+    expect(results.data).toEqual({ regex: "/\\w+/" });
 
-    const expected = /\w+/
-    expect(prepareRegex(results.data.regex)).toEqual(expected)
-  })
-})
+    const expected = /\w+/;
+    expect(prepareRegex(results.data.regex)).toEqual(expected);
+  });
+});

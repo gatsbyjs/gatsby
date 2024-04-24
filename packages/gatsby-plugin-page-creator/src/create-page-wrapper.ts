@@ -1,25 +1,25 @@
-import { Actions, CreatePagesArgs } from "gatsby"
+import { Actions, CreatePagesArgs } from "gatsby";
 import {
   createPath,
   validatePath,
   ignorePath,
   IPathIgnoreOptions,
   applyTrailingSlashOption,
-} from "gatsby-page-utils"
-import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
-import { createClientOnlyPage } from "./create-client-only-page"
-import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
-import systemPath from "path"
-import { trackFeatureIsUsed } from "gatsby-telemetry"
-import { Reporter } from "gatsby/reporter"
-import type { TrailingSlash } from "gatsby-page-utils"
+} from "gatsby-page-utils";
+import { Options as ISlugifyOptions } from "@sindresorhus/slugify";
+import { createClientOnlyPage } from "./create-client-only-page";
+import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder";
+import systemPath from "path";
+import { trackFeatureIsUsed } from "gatsby-telemetry";
+import { Reporter } from "gatsby/reporter";
+import type { TrailingSlash } from "gatsby-page-utils";
 
 function pathIsCollectionBuilder(path: string): boolean {
-  return path.includes(`{`)
+  return path.includes("{");
 }
 
 function pathIsClientOnlyRoute(path: string): boolean {
-  return path.includes(`[`)
+  return path.includes("[");
 }
 
 export function createPage(
@@ -31,24 +31,24 @@ export function createPage(
   trailingSlash: TrailingSlash,
   pagesPath: string,
   ignore?: IPathIgnoreOptions | string | Array<string> | null,
-  slugifyOptions?: ISlugifyOptions
+  slugifyOptions?: ISlugifyOptions,
 ): void {
   // Filter out special components that shouldn't be made into
   // pages.
   if (!validatePath(filePath)) {
-    return
+    return;
   }
 
   // Filter out anything matching the given ignore patterns and options
   if (ignorePath(filePath, ignore)) {
-    return
+    return;
   }
 
-  const absolutePath = systemPath.join(pagesDirectory, filePath)
+  const absolutePath = systemPath.join(pagesDirectory, filePath);
 
   // If the page includes a `{}` in it, then we create it as a collection builder
   if (pathIsCollectionBuilder(absolutePath)) {
-    trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
+    trackFeatureIsUsed("UnifiedRoutes:collection-page-builder");
     createPagesFromCollectionBuilder({
       filePath,
       absolutePath,
@@ -58,26 +58,26 @@ export function createPage(
       reporter,
       trailingSlash,
       slugifyOptions,
-    })
-    return
+    });
+    return;
   }
 
   // If the path includes a `[]` in it, then we create it as a client only route
   if (pathIsClientOnlyRoute(absolutePath)) {
-    trackFeatureIsUsed(`UnifiedRoutes:client-page-builder`)
-    createClientOnlyPage(filePath, absolutePath, actions, trailingSlash)
-    return
+    trackFeatureIsUsed("UnifiedRoutes:client-page-builder");
+    createClientOnlyPage(filePath, absolutePath, actions, trailingSlash);
+    return;
   }
 
   // Create page object
-  const createdPath = createPath(filePath)
-  const modifiedPath = applyTrailingSlashOption(createdPath, trailingSlash)
+  const createdPath = createPath(filePath);
+  const modifiedPath = applyTrailingSlashOption(createdPath, trailingSlash);
   const page = {
     path: modifiedPath,
     component: absolutePath,
     context: {},
-  }
+  };
 
   // Add page
-  actions.createPage(page)
+  actions.createPage(page);
 }

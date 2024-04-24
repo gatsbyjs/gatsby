@@ -1,55 +1,55 @@
 /* global Cypress cy */
 
-import apiHandler, { waitForAPI } from "./api-handler"
+import apiHandler, { waitForAPI } from "./api-handler";
 
 // TODO(v6): Remove this command
-Cypress.Commands.add(`getTestElement`, (selector, options = {}) =>
-  cy.get(`[data-testid="${selector}"]`, options)
-)
+Cypress.Commands.add("getTestElement", (selector, options = {}) =>
+  cy.get(`[data-testid="${selector}"]`, options),
+);
 
-const TIMEOUT = 30000
+const TIMEOUT = 30000;
 
 Cypress.Commands.add(
-  `waitForAPI`,
-  { prevSubject: `optional` },
+  "waitForAPI",
+  { prevSubject: "optional" },
   (subject, api, { timeout = TIMEOUT } = {}) => {
     Cypress.log({
-      name: `waitForAPI`,
+      name: "waitForAPI",
       message: api,
-    })
+    });
 
-    cy.window({ log: false }).then({ timeout: timeout }, win => {
+    cy.window({ log: false }).then({ timeout: timeout }, (win) => {
       if (!win.___apiHandler) {
-        win.___apiHandler = apiHandler.bind(win)
+        win.___apiHandler = apiHandler.bind(win);
       }
 
-      return waitForAPI.call(win, api).then(() => subject)
-    })
-  }
-)
+      return waitForAPI.call(win, api).then(() => subject);
+    });
+  },
+);
 
 Cypress.Commands.add(
-  `waitForAPIorTimeout`,
-  { prevSubject: `optional` },
+  "waitForAPIorTimeout",
+  { prevSubject: "optional" },
   (subject, api, { timeout = TIMEOUT } = {}) => {
-    cy.window().then({ timeout: timeout + 1000 }, win => {
+    cy.window().then({ timeout: timeout + 1000 }, (win) => {
       if (!win.___apiHandler) {
-        win.___apiHandler = apiHandler.bind(win)
+        win.___apiHandler = apiHandler.bind(win);
       }
       return Promise.race([
         waitForAPI.call(win, api).then(() => subject),
-        new Promise(resolve => {
-          setTimeout(resolve, timeout)
+        new Promise((resolve) => {
+          setTimeout(resolve, timeout);
         }),
-      ])
-    })
-  }
-)
+      ]);
+    });
+  },
+);
 
 Cypress.Commands.add(
-  `waitForRouteChange`,
+  "waitForRouteChange",
   {
-    prevSubject: `optional`,
+    prevSubject: "optional",
   },
-  subject => cy.waitForAPI(`onRouteUpdate`).then(() => subject)
-)
+  (subject) => cy.waitForAPI("onRouteUpdate").then(() => subject),
+);

@@ -1,16 +1,16 @@
-import camelCase from "lodash/camelCase"
-import isEqual from "lodash/isEqual"
+import camelCase from "lodash/camelCase";
+import isEqual from "lodash/isEqual";
 
-import { GraphQLSchema, type GraphQLOutputType } from "graphql"
-import type { ActionCreator } from "redux"
-import type { ThunkAction } from "redux-thunk"
-import report from "gatsby-cli/lib/reporter"
-import { parseTypeDef } from "../../schema/types/type-defs"
+import { GraphQLSchema, type GraphQLOutputType } from "graphql";
+import type { ActionCreator } from "redux";
+import type { ThunkAction } from "redux-thunk";
+import report from "gatsby-cli/lib/reporter";
+import { parseTypeDef } from "../../schema/types/type-defs";
 import {
   type GraphQLFieldExtensionDefinition,
   reservedExtensionNames,
-} from "../../schema/extensions"
-import type { GatsbyGraphQLType } from "../../schema/types/type-builders"
+} from "../../schema/extensions";
+import type { GatsbyGraphQLType } from "../../schema/types/type-builders";
 import type {
   IGatsbyPlugin,
   ActionsUnion,
@@ -23,12 +23,12 @@ import type {
   IGatsbyPluginContext,
   ICreateSliceAction,
   IAddImageCdnAllowedUrl,
-} from "../types"
-import { generateComponentChunkName } from "../../utils/js-chunk-names"
-import { store } from "../index"
-import normalizePath from "normalize-path"
-import { trackFeatureIsUsed } from "gatsby-telemetry"
-import { validateComponent } from "../../utils/validate-component"
+} from "../types";
+import { generateComponentChunkName } from "../../utils/js-chunk-names";
+import { store } from "../index";
+import normalizePath from "normalize-path";
+import { trackFeatureIsUsed } from "gatsby-telemetry";
+import { validateComponent } from "../../utils/validate-component";
 
 type RestrictionActionNames =
   | "createFieldExtension"
@@ -37,18 +37,18 @@ type RestrictionActionNames =
   | "addThirdPartySchema"
   | "printTypeDefinitions"
   | "createSlice"
-  | "addRemoteFileAllowedUrl"
+  | "addRemoteFileAllowedUrl";
 
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ActionCreator<ThunkAction<any, IGatsbyState, any, ActionsUnion>>
+  | ActionCreator<ThunkAction<any, IGatsbyState, any, ActionsUnion>>;
 
 export type ICreateSliceInput = {
-  id: string
-  component: string
-  context: Record<string, unknown>
-}
+  id: string;
+  component: string;
+  context: Record<string, unknown>;
+};
 
 export const actions = {
   /**
@@ -68,14 +68,14 @@ export const actions = {
   addThirdPartySchema: (
     { schema }: { schema: GraphQLSchema },
     plugin: IGatsbyPlugin,
-    traceId?: string,
+    traceId?: string | undefined,
   ): IAddThirdPartySchema => {
     return {
-      type: `ADD_THIRD_PARTY_SCHEMA`,
+      type: "ADD_THIRD_PARTY_SCHEMA",
       plugin,
       traceId,
       payload: schema,
-    }
+    };
   },
 
   /**
@@ -231,13 +231,13 @@ export const actions = {
     traceId?: string | undefined,
   ): ICreateTypes => {
     return {
-      type: `CREATE_TYPES`,
+      type: "CREATE_TYPES",
       plugin,
       traceId,
       payload: Array.isArray(types)
         ? types.map(parseTypeDef)
         : parseTypeDef(types),
-    }
+    };
   },
 
   /**
@@ -285,7 +285,7 @@ export const actions = {
     (
       extension: GraphQLFieldExtensionDefinition,
       plugin: IGatsbyPlugin,
-      traceId?: string,
+      traceId?: string | undefined,
     ): ThunkAction<
       void,
       IGatsbyState,
@@ -293,28 +293,28 @@ export const actions = {
       ICreateFieldExtension
     > =>
     (dispatch, getState): void => {
-      const { name } = extension || {}
-      const { fieldExtensions } = getState().schemaCustomization
+      const { name } = extension || {};
+      const { fieldExtensions } = getState().schemaCustomization;
 
       if (!name) {
         report.error(
-          `The provided field extension must have a \`name\` property.`,
-        )
+          "The provided field extension must have a `name` property.",
+        );
       } else if (reservedExtensionNames.includes(name)) {
         report.error(
           `The field extension name \`${name}\` is reserved for internal use.`,
-        )
+        );
       } else if (fieldExtensions[name]) {
         report.error(
           `A field extension with the name \`${name}\` has already been registered.`,
-        )
+        );
       } else {
         dispatch({
-          type: `CREATE_FIELD_EXTENSION`,
+          type: "CREATE_FIELD_EXTENSION",
           plugin,
           traceId,
           payload: { name, extension },
-        })
+        });
       }
     },
 
@@ -354,21 +354,27 @@ export const actions = {
    */
   printTypeDefinitions: (
     {
-      path = `schema.gql`,
+      path = "schema.gql",
       include,
       exclude,
       withFieldTypes = true,
     }: {
-      path?: string
-      include?: { types?: Array<string>; plugins?: Array<string> }
-      exclude?: { types?: Array<string>; plugins?: Array<string> }
-      withFieldTypes?: boolean
+      path?: string | undefined;
+      include?: {
+        types?: Array<string> | undefined;
+        plugins?: Array<string> | undefined;
+      };
+      exclude?: {
+        types?: Array<string> | undefined;
+        plugins?: Array<string> | undefined;
+      };
+      withFieldTypes?: boolean | undefined;
     },
     plugin: IGatsbyPlugin,
-    traceId?: string,
+    traceId?: string | undefined,
   ): IPrintTypeDefinitions => {
     return {
-      type: `PRINT_SCHEMA_REQUESTED`,
+      type: "PRINT_SCHEMA_REQUESTED",
       plugin,
       traceId,
       payload: {
@@ -377,7 +383,7 @@ export const actions = {
         exclude,
         withFieldTypes,
       },
-    }
+    };
   },
 
   /**
@@ -413,7 +419,7 @@ export const actions = {
   createResolverContext: (
     context: IGatsbyPluginContext,
     plugin: IGatsbyPlugin,
-    traceId?: string,
+    traceId?: string | undefined,
   ): ThunkAction<
     void,
     IGatsbyState,
@@ -421,24 +427,24 @@ export const actions = {
     ICreateResolverContext
   > => {
     return (dispatch): void => {
-      if (!context || typeof context !== `object`) {
+      if (!context || typeof context !== "object") {
         report.error(
           `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`,
-        )
+        );
       } else {
-        const { name } = plugin || {}
+        const { name } = plugin || {};
         const payload =
-          !name || name === `default-site-plugin`
+          !name || name === "default-site-plugin"
             ? context
-            : { [camelCase(name.replace(/^gatsby-/, ``))]: context }
+            : { [camelCase(name.replace(/^gatsby-/, ""))]: context };
         dispatch({
-          type: `CREATE_RESOLVER_CONTEXT`,
+          type: "CREATE_RESOLVER_CONTEXT",
           plugin,
           traceId,
           payload,
-        })
+        });
       }
-    }
+    };
   },
 
   /**
@@ -466,63 +472,63 @@ export const actions = {
     plugin: IGatsbyPlugin,
     traceId?: string | undefined,
   ): ICreateSliceAction => {
-    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
-      let name = `The plugin "${plugin.name}"`
-      if (plugin.name === `default-site-plugin`) {
-        name = `Your site's "gatsby-node.js"`
+    if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
+      let name = `The plugin "${plugin.name}"`;
+      if (plugin.name === "default-site-plugin") {
+        name = 'Your site\'s "gatsby-node.js"';
       }
 
       if (!payload.id) {
-        const message = `${name} must set the page path when creating a slice`
+        const message = `${name} must set the page path when creating a slice`;
         report.panic({
-          id: `11334`,
+          id: "11334",
           context: {
             pluginName: name,
             sliceObject: payload,
             message,
           },
-        })
+        });
       }
 
-      const { slices } = store.getState()
+      const { slices } = store.getState();
 
       const { error, panicOnBuild } = validateComponent({
         input: payload,
         pluginName: name,
         errorIdMap: {
-          noPath: `11333`,
-          notAbsolute: `11335`,
-          doesNotExist: `11336`,
-          empty: `11337`,
-          noDefaultExport: `11338`,
+          noPath: "11333",
+          notAbsolute: "11335",
+          doesNotExist: "11336",
+          empty: "11337",
+          noDefaultExport: "11338",
         },
-      })
+      });
 
-      if (error && process.env.NODE_ENV !== `test`) {
+      if (error && process.env.NODE_ENV !== "test") {
         if (panicOnBuild) {
-          report.panicOnBuild(error)
+          report.panicOnBuild(error);
         } else {
-          report.panic(error)
+          report.panic(error);
         }
       }
 
-      trackFeatureIsUsed(`SliceAPI`)
+      trackFeatureIsUsed("SliceAPI");
 
-      const componentPath = normalizePath(payload.component)
+      const componentPath = normalizePath(payload.component);
 
-      const oldSlice = slices.get(payload.id)
+      const oldSlice = slices.get(payload.id);
       const contextModified =
-        !!oldSlice && !isEqual(oldSlice.context, payload.context)
+        !!oldSlice && !isEqual(oldSlice.context, payload.context);
       const componentModified =
-        !!oldSlice && !isEqual(oldSlice.componentPath, componentPath)
+        !!oldSlice && !isEqual(oldSlice.componentPath, componentPath);
 
       return {
-        type: `CREATE_SLICE`,
+        type: "CREATE_SLICE",
         plugin,
         payload: {
           componentChunkName: generateComponentChunkName(
             payload.component,
-            `slice`,
+            "slice",
           ),
           componentPath,
           // note: we use "name" internally instead of id
@@ -533,9 +539,9 @@ export const actions = {
         traceId,
         componentModified,
         contextModified,
-      }
+      };
     } else {
-      throw new Error(`createSlice is only available in Gatsby v5`)
+      throw new Error("createSlice is only available in Gatsby v5");
     }
   },
   /**
@@ -555,15 +561,15 @@ export const actions = {
     plugin: IGatsbyPlugin,
     traceId?: string | undefined,
   ): IAddImageCdnAllowedUrl => {
-    const urls = Array.isArray(url) ? url : [url]
+    const urls = Array.isArray(url) ? url : [url];
     return {
-      type: `ADD_REMOTE_FILE_ALLOWED_URL`,
+      type: "ADD_REMOTE_FILE_ALLOWED_URL",
       payload: { urls },
       plugin,
       traceId,
-    }
+    };
   },
-}
+};
 
 function withDeprecationWarning(
   actionName: RestrictionActionNames,
@@ -575,10 +581,10 @@ function withDeprecationWarning(
   return (...args: Array<any>): ReturnType<ActionCreator<any>> => {
     report.warn(
       `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
-        `Please use: ${allowedIn.map((a) => `\`${a}\``).join(`, `)}.`,
-    )
-    return action(...args)
-  }
+        `Please use: ${allowedIn.map((a) => `\`${a}\``).join(", ")}.`,
+    );
+    return action(...args);
+  };
 }
 
 const withErrorMessage =
@@ -588,29 +594,29 @@ const withErrorMessage =
   (): void => {
     report.error(
       `\`${actionName}\` is not available in the \`${api}\` API. ` +
-        `Please use: ${allowedIn.map((a) => `\`${a}\``).join(`, `)}.`,
-    )
-  }
+        `Please use: ${allowedIn.map((a) => `\`${a}\``).join(", ")}.`,
+    );
+  };
 
-const nodeAPIs = Object.keys(require(`../../utils/api-node-docs`))
+const nodeAPIs = Object.keys(require("../../utils/api-node-docs"));
 
-const ALLOWED_IN = `ALLOWED_IN`
-const DEPRECATED_IN = `DEPRECATED_IN`
+const ALLOWED_IN = "ALLOWED_IN";
+const DEPRECATED_IN = "DEPRECATED_IN";
 
-type API = string
+type API = string;
 
 type Restrictions = Record<
   RestrictionActionNames,
   Partial<{
-    ALLOWED_IN: Array<API>
-    DEPRECATED_IN: Array<API>
+    ALLOWED_IN: Array<API>;
+    DEPRECATED_IN: Array<API>;
   }>
->
+>;
 
 type AvailableActionsByAPI = Record<
   API,
   { [K in RestrictionActionNames]: SomeActionCreator }
->
+>;
 
 function set(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -619,28 +625,28 @@ function set(
   actionName: RestrictionActionNames,
   action: SomeActionCreator,
 ): void {
-  availableActionsByAPI[api] = availableActionsByAPI[api] ?? {}
-  availableActionsByAPI[api][actionName] = action
+  availableActionsByAPI[api] = availableActionsByAPI[api] ?? {};
+  availableActionsByAPI[api][actionName] = action;
 }
 
 function mapAvailableActionsToAPIs(
   restrictions: Restrictions,
 ): AvailableActionsByAPI {
-  const availableActionsByAPI: AvailableActionsByAPI = {}
+  const availableActionsByAPI: AvailableActionsByAPI = {};
 
   const actionNames = Object.keys(restrictions) as Array<
     keyof typeof restrictions
-  >
+  >;
   actionNames.forEach((actionName) => {
-    const action = actions[actionName]
+    const action = actions[actionName];
 
-    const allowedIn: Array<API> = restrictions[actionName][ALLOWED_IN] || []
+    const allowedIn: Array<API> = restrictions[actionName][ALLOWED_IN] || [];
     allowedIn.forEach((api) =>
       set(availableActionsByAPI, api, actionName, action),
-    )
+    );
 
     const deprecatedIn: Array<API> =
-      restrictions[actionName][DEPRECATED_IN] || []
+      restrictions[actionName][DEPRECATED_IN] || [];
     deprecatedIn.forEach((api) =>
       set(
         availableActionsByAPI,
@@ -648,11 +654,11 @@ function mapAvailableActionsToAPIs(
         actionName,
         withDeprecationWarning(actionName, action, api, allowedIn),
       ),
-    )
+    );
 
     const forbiddenIn = nodeAPIs.filter(
       (api) => ![...allowedIn, ...deprecatedIn].includes(api),
-    )
+    );
     forbiddenIn.forEach((api) =>
       set(
         availableActionsByAPI,
@@ -660,40 +666,40 @@ function mapAvailableActionsToAPIs(
         actionName,
         withErrorMessage(actionName, api, allowedIn),
       ),
-    )
-  })
+    );
+  });
 
-  return availableActionsByAPI
+  return availableActionsByAPI;
 }
 
 export const availableActionsByAPI = mapAvailableActionsToAPIs({
   createFieldExtension: {
-    [ALLOWED_IN]: [`createSchemaCustomization`],
-    [DEPRECATED_IN]: [`sourceNodes`],
+    [ALLOWED_IN]: ["createSchemaCustomization"],
+    [DEPRECATED_IN]: ["sourceNodes"],
   },
   createTypes: {
-    [ALLOWED_IN]: [`createSchemaCustomization`],
-    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`, `sourceNodes`],
+    [ALLOWED_IN]: ["createSchemaCustomization"],
+    [DEPRECATED_IN]: ["onPreInit", "onPreBootstrap", "sourceNodes"],
   },
   createResolverContext: {
-    [ALLOWED_IN]: [`createSchemaCustomization`],
+    [ALLOWED_IN]: ["createSchemaCustomization"],
   },
   addThirdPartySchema: {
-    [ALLOWED_IN]: [`createSchemaCustomization`],
-    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`, `sourceNodes`],
+    [ALLOWED_IN]: ["createSchemaCustomization"],
+    [DEPRECATED_IN]: ["onPreInit", "onPreBootstrap", "sourceNodes"],
   },
   printTypeDefinitions: {
-    [ALLOWED_IN]: [`createSchemaCustomization`],
+    [ALLOWED_IN]: ["createSchemaCustomization"],
   },
   createSlice: {
-    [ALLOWED_IN]: [`createPages`],
+    [ALLOWED_IN]: ["createPages"],
   },
   addRemoteFileAllowedUrl: {
     [ALLOWED_IN]: [
-      `onPreInit`,
-      `onPreBootstrap`,
-      `onPluginInit`,
-      `createSchemaCustomization`,
+      "onPreInit",
+      "onPreBootstrap",
+      "onPluginInit",
+      "createSchemaCustomization",
     ],
   },
-})
+});

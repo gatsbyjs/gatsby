@@ -9,7 +9,7 @@ export const contentPollingQuery = /* GraphQL */ `
       }
     }
   }
-`
+`;
 
 /**
  * Used to fetch WP changes since a unix timestamp
@@ -41,7 +41,7 @@ export const actionMonitorQuery = /* GraphQL */ `
       }
     }
   }
-`
+`;
 
 export const introspectionQuery = /* GraphQL */ `
   {
@@ -115,4 +115,4 @@ export const introspectionQuery = /* GraphQL */ `
       }
     }
   }
-`
+`;

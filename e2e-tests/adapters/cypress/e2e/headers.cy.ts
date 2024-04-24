@@ -1,6 +1,7 @@
-import { WorkaroundCachedResponse } from "../utils/dont-cache-responses-in-browser"
+import { describe, beforeEach, it } from "node:test";
+import { WorkaroundCachedResponse } from "../utils/dont-cache-responses-in-browser";
 
-const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
+const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``;
 
 describe("Headers", () => {
   const defaultHeaders = {
@@ -8,7 +9,7 @@ describe("Headers", () => {
     "x-content-type-options": "nosniff",
     "referrer-policy": "same-origin",
     "x-frame-options": "DENY",
-  }
+  };
 
   // DRY for repeated assertions in multple tests
   const expectedHeadersByRouteAlias = {
@@ -36,100 +37,100 @@ describe("Headers", () => {
       ...defaultHeaders,
       "cache-control": "public,max-age=31536000,immutable",
     },
-  }
+  };
 
   // `ntl serve` and actual deploy seem to have possible slight differences around header value formatting
   // so this just remove spaces around commas to make it easier to compare
   function normalizeHeaderValue(value: string | undefined): string | undefined {
     if (typeof value === "undefined") {
-      return value
+      return value;
     }
     // Remove spaces around commas
-    return value.replace(/\s*,\s*/gm, `,`)
+    return value.replace(/\s*,\s*/gm, `,`);
   }
   function checkHeaders(
     routeAlias: string,
-    expectedHeaders?: Record<string, string>
+    expectedHeaders?: Record<string, string> | undefined,
   ) {
     if (!expectedHeaders) {
-      expectedHeaders = expectedHeadersByRouteAlias[routeAlias]
+      expectedHeaders = expectedHeadersByRouteAlias[routeAlias];
     }
 
     if (!expectedHeaders) {
-      throw new Error(`No expected headers provided for "${routeAlias}`)
+      throw new Error(`No expected headers provided for "${routeAlias}`);
     }
 
-    cy.wait(routeAlias).then(interception => {
-      Object.keys(expectedHeaders).forEach(headerKey => {
-        const headers = interception.response.headers[headerKey]
+    cy.wait(routeAlias).then((interception) => {
+      Object.keys(expectedHeaders).forEach((headerKey) => {
+        const headers = interception.response.headers[headerKey];
 
         const firstHeader: string = Array.isArray(headers)
           ? headers[0]
-          : headers
+          : headers;
 
         expect(normalizeHeaderValue(firstHeader)).to.eq(
-          normalizeHeaderValue(expectedHeaders[headerKey])
-        )
-      })
-    })
+          normalizeHeaderValue(expectedHeaders[headerKey]),
+        );
+      });
+    });
   }
 
   beforeEach(() => {
-    cy.intercept(PATH_PREFIX + "/", WorkaroundCachedResponse).as("index")
+    cy.intercept(PATH_PREFIX + "/", WorkaroundCachedResponse).as("index");
     cy.intercept(
       PATH_PREFIX + "/routes/ssr/static",
-      WorkaroundCachedResponse
-    ).as("ssr")
+      WorkaroundCachedResponse,
+    ).as("ssr");
     cy.intercept(
       PATH_PREFIX + "/routes/dsg/static",
-      WorkaroundCachedResponse
-    ).as("dsg")
+      WorkaroundCachedResponse,
+    ).as("dsg");
 
     cy.intercept(
       PATH_PREFIX + "/**/page-data.json",
-      WorkaroundCachedResponse
-    ).as("page-data")
+      WorkaroundCachedResponse,
+    ).as("page-data");
     cy.intercept(
       PATH_PREFIX + "/**/app-data.json",
-      WorkaroundCachedResponse
-    ).as("app-data")
+      WorkaroundCachedResponse,
+    ).as("app-data");
     cy.intercept(
       PATH_PREFIX + "/**/slice-data/*.json",
-      WorkaroundCachedResponse
-    ).as("slice-data")
+      WorkaroundCachedResponse,
+    ).as("slice-data");
     cy.intercept(
       PATH_PREFIX + "/**/page-data/sq/d/*.json",
-      WorkaroundCachedResponse
-    ).as("static-query-result")
+      WorkaroundCachedResponse,
+    ).as("static-query-result");
 
     cy.intercept(
       PATH_PREFIX + "/static/astro-**.png",
-      WorkaroundCachedResponse
-    ).as("img-webpack-import")
-    cy.intercept(PATH_PREFIX + "/**/*.js", WorkaroundCachedResponse).as("js")
-  })
+      WorkaroundCachedResponse,
+    ).as("img-webpack-import");
+    cy.intercept(PATH_PREFIX + "/**/*.js", WorkaroundCachedResponse).as("js");
+  });
 
   it("should contain correct headers for index page", () => {
-    cy.visit("/").waitForRouteChange()
+    cy.visit("/").waitForRouteChange();
 
     checkHeaders("@index", {
       ...defaultHeaders,
       "x-custom-header": "my custom header value",
       "cache-control": "public,max-age=0,must-revalidate",
-    })
+    });
 
-    checkHeaders("@app-data")
-    checkHeaders("@page-data")
-    checkHeaders("@slice-data")
-    checkHeaders("@static-query-result")
+    checkHeaders("@app-data");
+    checkHeaders("@page-data");
+    checkHeaders("@slice-data");
+    checkHeaders("@static-query-result");
 
     // index page is only one showing webpack imported image
-    checkHeaders("@img-webpack-import")
-    checkHeaders("@js")
-  })
+    checkHeaders("@img-webpack-import");
+    checkHeaders("@js");
+  });
 
   it("should contain correct headers for ssr page", () => {
-    cy.visit("routes/ssr/static").waitForRouteChange()
+    cy.visit("routes/ssr/static").waitForRouteChange();
 
     checkHeaders("@ssr", {
       ...defaultHeaders,
@@ -137,28 +138,28 @@ describe("Headers", () => {
       "x-ssr-header": "my custom header value from config",
       "x-ssr-header-getserverdata": "my custom header value from getServerData",
       "x-ssr-header-overwrite": "getServerData wins",
-    })
+    });
 
-    checkHeaders("@app-data")
+    checkHeaders("@app-data");
     // page-data is baked into SSR page so it's not fetched and we don't assert it
-    checkHeaders("@slice-data")
-    checkHeaders("@static-query-result")
-    checkHeaders("@js")
-  })
+    checkHeaders("@slice-data");
+    checkHeaders("@static-query-result");
+    checkHeaders("@js");
+  });
 
   it("should contain correct headers for dsg page", () => {
-    cy.visit("routes/dsg/static").waitForRouteChange()
+    cy.visit("routes/dsg/static").waitForRouteChange();
 
     checkHeaders("@dsg", {
       ...defaultHeaders,
       "x-custom-header": "my custom header value",
       "x-dsg-header": "my custom header value",
-    })
+    });
 
-    checkHeaders("@app-data")
-    checkHeaders("@page-data")
-    checkHeaders("@slice-data")
-    checkHeaders("@static-query-result")
-    checkHeaders("@js")
-  })
-})
+    checkHeaders("@app-data");
+    checkHeaders("@page-data");
+    checkHeaders("@slice-data");
+    checkHeaders("@static-query-result");
+    checkHeaders("@js");
+  });
+});

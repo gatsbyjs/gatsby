@@ -1,13 +1,13 @@
-import path from "path"
+import path from "path";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import Configstore from "configstore"
-import createFetch from "@turist/fetch"
-import { Store } from "./store"
-import { ensureDirSync } from "fs-extra"
-import { isTruthy } from "gatsby-core-utils"
-import { InMemoryConfigStore } from "./in-memory-store"
+import Configstore from "configstore";
+import createFetch from "@turist/fetch";
+import { Store } from "./store";
+import { ensureDirSync } from "fs-extra";
+import { isTruthy } from "gatsby-core-utils";
+import { InMemoryConfigStore } from "./in-memory-store";
 
-const fetch = createFetch()
+const fetch = createFetch();
 
 /* The events data collection is a spooled process that
  * buffers events to a local fs based buffer
@@ -17,101 +17,101 @@ const fetch = createFetch()
  */
 export class EventStorage {
   analyticsApi =
-    process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
-  config: Configstore | InMemoryConfigStore
-  store: Store
-  verbose: boolean
-  debugEvents: boolean
-  disabled: boolean
+    process.env.GATSBY_TELEMETRY_API || "https://analytics.gatsbyjs.com/events";
+  config: Configstore | InMemoryConfigStore;
+  store: Store;
+  verbose: boolean;
+  debugEvents: boolean;
+  disabled: boolean;
 
   constructor() {
     try {
-      this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
+      this.config = new Configstore("gatsby", {}, { globalConfigPath: true });
     } catch (e) {
-      this.config = new InMemoryConfigStore()
+      this.config = new InMemoryConfigStore();
     }
 
-    const baseDir = path.dirname(this.config.path)
+    const baseDir = path.dirname(this.config.path);
 
     try {
-      ensureDirSync(baseDir)
+      ensureDirSync(baseDir);
     } catch (e) {
       // TODO: Log this event
     }
 
-    this.store = new Store(baseDir)
-    this.verbose = isTruthy(process.env.GATSBY_TELEMETRY_VERBOSE)
-    this.debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
-    this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
+    this.store = new Store(baseDir);
+    this.verbose = isTruthy(process.env.GATSBY_TELEMETRY_VERBOSE);
+    this.debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG);
+    this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED);
   }
 
   isTrackingDisabled(): boolean {
-    return this.disabled
+    return this.disabled;
   }
 
   addEvent(event: unknown): void {
     if (this.disabled) {
-      return
+      return;
     }
 
-    const eventString = JSON.stringify(event)
+    const eventString = JSON.stringify(event);
 
     if (this.debugEvents || this.verbose) {
-      console.log(`Captured event:`, JSON.parse(eventString))
+      console.log("Captured event:", JSON.parse(eventString));
 
       if (this.debugEvents) {
         // Bail because we don't want to send debug events
-        return
+        return;
       }
     }
 
-    this.store.appendToBuffer(eventString + `\n`)
+    this.store.appendToBuffer(eventString + "\n");
   }
 
   async sendEvents(): Promise<boolean> {
     return this.store.startFlushEvents(async (eventsData: string) => {
       const events = eventsData
-        .split(`\n`)
+        .split("\n")
         .filter((e) => e && e.length > 2) // drop empty lines
-        .map((e) => JSON.parse(e))
+        .map((e) => JSON.parse(e));
 
-      return this.submitEvents(events)
-    })
+      return this.submitEvents(events);
+    });
   }
 
   async submitEvents(events: unknown): Promise<boolean> {
     try {
       const res = await fetch(this.analyticsApi, {
-        method: `POST`,
+        method: "POST",
         headers: {
-          "content-type": `application/json`,
+          "content-type": "application/json",
           "user-agent": this.getUserAgent(),
         },
         body: JSON.stringify(events),
-      })
-      return res.ok
+      });
+      return res.ok;
     } catch (e) {
-      return false
+      return false;
     }
   }
 
   getUserAgent(): string {
     try {
-      const { name, version } = require(`../package.json`)
-      return `${name}:${version}`
+      const { name, version } = require("../package.json");
+      return `${name}:${version}`;
     } catch (e) {
-      return `Gatsby Telemetry`
+      return "Gatsby Telemetry";
     }
   }
 
   getConfig(key: string): string | boolean | Record<string, unknown> {
     if (key) {
-      return this.config.get(key)
+      return this.config.get(key);
     }
-    return this.config.all
+    return this.config.all;
   }
 
   updateConfig(key: string, value: string | number | boolean | null): void {
-    return this.config.set(key, value)
+    return this.config.set(key, value);
   }
 }

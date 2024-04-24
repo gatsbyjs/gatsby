@@ -1,6 +1,6 @@
-const Promise = require(`bluebird`)
-import * as chokidar from "chokidar"
-const { slash } = require(`gatsby-core-utils`)
+const Promise = require("bluebird");
+import * as chokidar from "chokidar";
+const { slash } = require("gatsby-core-utils");
 
 export async function watchDirectory(
   path: string,
@@ -11,14 +11,14 @@ export async function watchDirectory(
   return new Promise((resolve) => {
     chokidar
       .watch(glob, { cwd: path })
-      .on(`add`, (path) => {
-        path = slash(path)
-        onNewFile(path)
+      .on("add", (path) => {
+        path = slash(path);
+        onNewFile(path);
       })
-      .on(`unlink`, (path) => {
-        path = slash(path)
-        onRemovedFile(path)
+      .on("unlink", (path) => {
+        path = slash(path);
+        onRemovedFile(path);
       })
-      .on(`ready`, () => resolve())
-  })
+      .on("ready", () => resolve());
+  });
 }

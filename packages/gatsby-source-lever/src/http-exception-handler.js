@@ -8,11 +8,11 @@ function httpExceptionHandler(e) {
     status,
     statusText,
     data: { message },
-  } = e.response
-  console.log(`The server response was "${status} ${statusText}"`)
+  } = e.response;
+  console.log(`The server response was "${status} ${statusText}"`);
   if (message) {
-    console.log(`Inner exception message : "${message}"`)
+    console.log(`Inner exception message : "${message}"`);
   }
 }
 
-module.exports = httpExceptionHandler
+module.exports = httpExceptionHandler;

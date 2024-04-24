@@ -1,9 +1,9 @@
-import path from "path"
-import { simpleSitemapAndIndex } from "sitemap"
-import { pluginOptionsSchema } from "./options-validation"
-import { prefixPath, pageFilter, REPORTER_PREFIX } from "./internals"
+import path from "path";
+import { simpleSitemapAndIndex } from "sitemap";
+import { pluginOptionsSchema } from "./options-validation";
+import { prefixPath, pageFilter, REPORTER_PREFIX } from "./internals";
 
-exports.pluginOptionsSchema = pluginOptionsSchema
+exports.pluginOptionsSchema = pluginOptionsSchema;
 
 exports.onPostBuild = async (
   { graphql, reporter, basePath, pathPrefix },
@@ -17,35 +17,35 @@ exports.onPostBuild = async (
     resolvePages,
     filterPages,
     serialize,
-  }
+  },
 ) => {
-  const { data: queryRecords, errors } = await graphql(query)
+  const { data: queryRecords, errors } = await graphql(query);
 
   // resolvePages and resolveSiteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
   const siteUrl = await Promise.resolve(resolveSiteUrl(queryRecords)).catch(
-    err => reporter.panic(`${REPORTER_PREFIX} Error resolving Site URL`, err)
-  )
+    (err) => reporter.panic(`${REPORTER_PREFIX} Error resolving Site URL`, err),
+  );
 
   if (errors) {
     reporter.panic(
-      `Error executing the GraphQL query inside gatsby-plugin-sitemap:\n`,
-      errors
-    )
+      "Error executing the GraphQL query inside gatsby-plugin-sitemap:\n",
+      errors,
+    );
   }
 
   const allPages = await Promise.resolve(resolvePages(queryRecords)).catch(
-    err => reporter.panic(`${REPORTER_PREFIX} Error resolving Pages`, err)
-  )
+    (err) => reporter.panic(`${REPORTER_PREFIX} Error resolving Pages`, err),
+  );
 
   if (!Array.isArray(allPages)) {
     reporter.panic(
-      `${REPORTER_PREFIX} The \`resolvePages\` function did not return an array.`
-    )
+      `${REPORTER_PREFIX} The \`resolvePages\` function did not return an array.`,
+    );
   }
 
   reporter.verbose(
-    `${REPORTER_PREFIX} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
-  )
+    `${REPORTER_PREFIX} Filtering ${allPages.length} pages based on ${excludes.length} excludes`,
+  );
 
   const { filteredPages, messages } = pageFilter(
     {
@@ -53,33 +53,33 @@ exports.onPostBuild = async (
       filterPages,
       excludes,
     },
-    { reporter }
-  )
+    { reporter },
+  );
 
-  messages.forEach(message => reporter.verbose(message))
+  messages.forEach((message) => reporter.verbose(message));
 
   reporter.verbose(
-    `${REPORTER_PREFIX} ${filteredPages.length} pages remain after filtering`
-  )
+    `${REPORTER_PREFIX} ${filteredPages.length} pages remain after filtering`,
+  );
 
-  const serializedPages = []
+  const serializedPages = [];
 
   for (const page of filteredPages) {
     try {
       const { url, ...rest } = await Promise.resolve(
-        serialize(page, { resolvePagePath })
-      )
+        serialize(page, { resolvePagePath }),
+      );
       serializedPages.push({
         url: prefixPath({ url, siteUrl, pathPrefix: basePath }),
         ...rest,
-      })
+      });
     } catch (err) {
-      reporter.panic(`${REPORTER_PREFIX} Error serializing pages`, err)
+      reporter.panic(`${REPORTER_PREFIX} Error serializing pages`, err);
     }
   }
 
-  const sitemapWritePath = path.join(`public`, output)
-  const sitemapPublicPath = path.posix.join(pathPrefix, output)
+  const sitemapWritePath = path.join("public", output);
+  const sitemapPublicPath = path.posix.join(pathPrefix, output);
 
   return simpleSitemapAndIndex({
     hostname: siteUrl,
@@ -88,5 +88,5 @@ exports.onPostBuild = async (
     sourceData: serializedPages,
     limit: entryLimit,
     gzip: false,
-  })
-}
+  });
+};

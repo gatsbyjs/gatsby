@@ -1,56 +1,56 @@
 // `node` here is a Gatsby node
 
-import { createModel } from "@rematch/core"
-import { IRootModel } from "."
+import { createModel } from "@rematch/core";
+import { IRootModel } from ".";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type OnPageCreatedCallback = (node: any) => Promise<void>
+export type OnPageCreatedCallback = (node: any) => Promise<void>;
 
 export type IStoredPage = {
-  path: string
-  updatedAt: number
-}
+  path: string;
+  updatedAt: number;
+};
 
 export type IPreviewState = {
   nodePageCreatedCallbacks: {
-    [nodeId: string]: OnPageCreatedCallback
-  }
+    [nodeId: string]: OnPageCreatedCallback;
+  };
   nodeIdsToCreatedPages: {
     [nodeId: string]: {
-      page: IStoredPage
-    }
-  }
+      page: IStoredPage;
+    };
+  };
   pagePathToNodeDependencyId: {
     [pageId: string]: {
-      nodeId: string
-    }
-  }
-}
+      nodeId: string;
+    };
+  };
+};
 
 export type IPreviewReducers = {
   subscribeToPagesCreatedFromNodeById: (
     state: IPreviewState,
     payload: {
-      nodeId: string
-      sendPreviewStatus: OnPageCreatedCallback
-      modified: string
+      nodeId: string;
+      sendPreviewStatus: OnPageCreatedCallback;
+      modified: string;
     },
-  ) => IPreviewState
+  ) => IPreviewState;
   unSubscribeToPagesCreatedFromNodeById: (
     state: IPreviewState,
     payload: {
-      nodeId: string
+      nodeId: string;
     },
-  ) => IPreviewState
-  clearPreviewCallbacks: (state: IPreviewState) => IPreviewState
+  ) => IPreviewState;
+  clearPreviewCallbacks: (state: IPreviewState) => IPreviewState;
   saveNodePageState: (
     state: IPreviewState,
     payload: {
-      nodeId: string
-      page: IStoredPage
+      nodeId: string;
+      page: IStoredPage;
     },
-  ) => IPreviewState
-}
+  ) => IPreviewState;
+};
 
 const previewStore = createModel<IRootModel>()({
   state: {
@@ -65,14 +65,14 @@ const previewStore = createModel<IRootModel>()({
       {
         nodeId,
       }: {
-        nodeId: string
+        nodeId: string;
       },
     ) {
       if (state.nodePageCreatedCallbacks?.[nodeId]) {
-        delete state.nodePageCreatedCallbacks[nodeId]
+        delete state.nodePageCreatedCallbacks[nodeId];
       }
 
-      return state
+      return state;
     },
 
     subscribeToPagesCreatedFromNodeById(
@@ -81,23 +81,23 @@ const previewStore = createModel<IRootModel>()({
         nodeId,
         sendPreviewStatus,
       }: {
-        nodeId: string
-        sendPreviewStatus: OnPageCreatedCallback
-        modified: string
+        nodeId: string;
+        sendPreviewStatus: OnPageCreatedCallback;
+        modified: string;
       },
     ) {
       // save the callback for this nodeId
       // when a page is created from a node that has this id,
       // the callback will be invoked
-      state.nodePageCreatedCallbacks[nodeId] = sendPreviewStatus
+      state.nodePageCreatedCallbacks[nodeId] = sendPreviewStatus;
 
-      return state
+      return state;
     },
 
     clearPreviewCallbacks(state) {
-      state.nodePageCreatedCallbacks = {}
+      state.nodePageCreatedCallbacks = {};
 
-      return state
+      return state;
     },
 
     saveNodePageState(
@@ -106,24 +106,24 @@ const previewStore = createModel<IRootModel>()({
         page,
         nodeId,
       }: {
-        nodeId: string
-        page: IStoredPage
+        nodeId: string;
+        page: IStoredPage;
       },
     ) {
       state.nodeIdsToCreatedPages[nodeId] = {
         page,
-      }
+      };
 
       state.pagePathToNodeDependencyId[page.path] = {
         nodeId,
-      }
+      };
 
-      return state
+      return state;
     },
   },
   effects: () => {
-    return {}
+    return {};
   },
-})
+});
 
-export default previewStore
+export default previewStore;

@@ -1,4 +1,4 @@
-const ESC = `\u001b`
+const ESC = "\u001b";
 
 export function clearLine(count = 1): Promise<void> {
   return new Promise((resolve) => {
@@ -6,8 +6,8 @@ export function clearLine(count = 1): Promise<void> {
     process.stderr.moveCursor(0, -count, () => {
       // ... then clear that line. This is the ANSI escape sequence for "clear whole line"
       // List of escape sequences: http://ascii-table.com/ansi-escape-sequences.php
-      process.stderr.write(`${ESC}[2K`)
-      resolve()
-    })
-  })
+      process.stderr.write(`${ESC}[2K`);
+      resolve();
+    });
+  });
 }

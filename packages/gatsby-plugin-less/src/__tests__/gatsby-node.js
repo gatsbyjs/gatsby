@@ -1,26 +1,26 @@
-describe(`gatsby-plugin-less`, () => {
-  jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+describe("gatsby-plugin-less", () => {
+  jest.mock("../resolve", () => (module) => `/resolved/path/${module}`);
 
   const actions = {
     setWebpackConfig: jest.fn(),
-  }
+  };
 
   // loaders "mocks"
   const loaders = {
-    miniCssExtract: () => `miniCssExtract`,
-    css: args => `css(${JSON.stringify(args)})`,
-    postcss: args => `postcss(${JSON.stringify(args)})`,
-    null: () => `null`,
-  }
+    miniCssExtract: () => "miniCssExtract",
+    css: (args) => `css(${JSON.stringify(args)})`,
+    postcss: (args) => `postcss(${JSON.stringify(args)})`,
+    null: () => "null",
+  };
 
-  const { onCreateWebpackConfig } = require(`../gatsby-node`)
+  const { onCreateWebpackConfig } = require("../gatsby-node");
 
   beforeEach(() => {
-    actions.setWebpackConfig.mockReset()
-  })
+    actions.setWebpackConfig.mockReset();
+  });
 
   const tests = {
-    stages: [`develop`, `build-javascript`, `develop-html`, `build-html`],
+    stages: ["develop", "build-javascript", "develop-html", "build-html"],
     options: {
       "No options": {},
       "Loader options #1": {
@@ -31,18 +31,18 @@ describe(`gatsby-plugin-less`, () => {
       "Less options #1": {
         lessOptions: {
           modifyVars: {
-            "text-color": `#fff`,
+            "text-color": "#fff",
           },
           strictMath: true,
         },
       },
       "Less options #2": {
         lessOptions: {
-          modifyVars: require(`../theme-test.js`),
+          modifyVars: require("../theme-test.js"),
         },
       },
       "PostCss plugins": {
-        postCssPlugins: [`test1`],
+        postCssPlugins: ["test1"],
       },
       "css-loader options": {
         cssLoaderOptions: {
@@ -58,15 +58,15 @@ describe(`gatsby-plugin-less`, () => {
         },
       },
     },
-  }
+  };
 
-  tests.stages.forEach(stage => {
+  tests.stages.forEach((stage) => {
     for (const label in tests.options) {
-      const options = tests.options[label]
+      const options = tests.options[label];
       it(`Stage: ${stage} / ${label}`, () => {
-        onCreateWebpackConfig({ actions, loaders, stage }, options)
-        expect(actions.setWebpackConfig).toMatchSnapshot()
-      })
+        onCreateWebpackConfig({ actions, loaders, stage }, options);
+        expect(actions.setWebpackConfig).toMatchSnapshot();
+      });
     }
-  })
-})
+  });
+});

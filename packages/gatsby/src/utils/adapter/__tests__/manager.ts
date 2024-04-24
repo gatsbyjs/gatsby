@@ -1,13 +1,13 @@
-import { store } from "../../../redux"
+import { store } from "../../../redux";
 import {
   getRoutesManifest,
   getFunctionsManifest,
   setWebpackAssets,
-} from "../manager"
-import { state as stateDefault } from "./fixtures/state"
-import { IGatsbyState } from "../../../internal"
+} from "../manager";
+import { state as stateDefault } from "./fixtures/state";
+import type { IGatsbyState } from "../../../internal";
 
-jest.mock(`../../../redux`, () => {
+jest.mock("../../../redux", () => {
   return {
     emitter: {
       on: jest.fn(),
@@ -15,101 +15,101 @@ jest.mock(`../../../redux`, () => {
     store: {
       getState: jest.fn(),
     },
-  }
-})
+  };
+});
 
-jest.mock(`../../engines-helpers`, () => {
+jest.mock("../../engines-helpers", () => {
   return {
     shouldGenerateEngines: jest.fn().mockReturnValue(true),
     shouldBundleDatastore: jest.fn().mockReturnValue(true),
-  }
-})
+  };
+});
 
 function mockStoreState(
   state: IGatsbyState,
-  additionalState: Partial<IGatsbyState> = {}
+  additionalState: Partial<IGatsbyState> = {},
 ): void {
-  const mergedState = { ...state, ...additionalState }
-  ;(store.getState as jest.Mock).mockReturnValue(mergedState)
+  const mergedState = { ...state, ...additionalState };
+  (store.getState as jest.Mock).mockReturnValue(mergedState);
 }
 
-const fixturesDir = `${__dirname}/fixtures`
+const fixturesDir = `${__dirname}/fixtures`;
 
-let cwdToRestore
+let cwdToRestore;
 beforeAll(() => {
-  cwdToRestore = process.cwd()
-})
+  cwdToRestore = process.cwd();
+});
 
 afterAll(() => {
-  process.chdir(cwdToRestore)
-})
+  process.chdir(cwdToRestore);
+});
 
-describe(`getRoutesManifest`, () => {
-  it(`should return routes manifest`, () => {
-    mockStoreState(stateDefault)
-    process.chdir(fixturesDir)
-    setWebpackAssets(new Set([`app-123.js`]))
+describe("getRoutesManifest", () => {
+  it("should return routes manifest", () => {
+    mockStoreState(stateDefault);
+    process.chdir(fixturesDir);
+    setWebpackAssets(new Set(["app-123.js"]));
 
     const { routes: routesManifest, headers: headerRoutes } =
-      getRoutesManifest()
+      getRoutesManifest();
 
-    expect(routesManifest).toMatchSnapshot()
-    expect(headerRoutes).toMatchSnapshot()
-  })
+    expect(routesManifest).toMatchSnapshot();
+    expect(headerRoutes).toMatchSnapshot();
+  });
 
-  it(`should respect "never" trailingSlash config option`, () => {
+  it('should respect "never" trailingSlash config option', () => {
     mockStoreState(stateDefault, {
-      config: { ...stateDefault.config, trailingSlash: `never` },
-    })
-    process.chdir(fixturesDir)
-    setWebpackAssets(new Set([`app-123.js`]))
+      config: { ...stateDefault.config, trailingSlash: "never" },
+    });
+    process.chdir(fixturesDir);
+    setWebpackAssets(new Set(["app-123.js"]));
 
-    const { routes: routesManifest } = getRoutesManifest()
+    const { routes: routesManifest } = getRoutesManifest();
 
     expect(routesManifest).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ path: `/` }),
-        expect.objectContaining({ path: `/ssr` }),
-        expect.objectContaining({ path: `/dsg` }),
-        expect.objectContaining({ path: `/api/static` }),
-      ])
-    )
-  })
+        expect.objectContaining({ path: "/" }),
+        expect.objectContaining({ path: "/ssr" }),
+        expect.objectContaining({ path: "/dsg" }),
+        expect.objectContaining({ path: "/api/static" }),
+      ]),
+    );
+  });
 
-  it(`should respect "always" trailingSlash config option`, () => {
+  it('should respect "always" trailingSlash config option', () => {
     mockStoreState(stateDefault, {
-      config: { ...stateDefault.config, trailingSlash: `always` },
-    })
-    process.chdir(fixturesDir)
-    setWebpackAssets(new Set([`app-123.js`]))
+      config: { ...stateDefault.config, trailingSlash: "always" },
+    });
+    process.chdir(fixturesDir);
+    setWebpackAssets(new Set(["app-123.js"]));
 
-    const { routes: routesManifest } = getRoutesManifest()
+    const { routes: routesManifest } = getRoutesManifest();
 
     expect(routesManifest).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ path: `/` }),
-        expect.objectContaining({ path: `/ssr/` }),
-        expect.objectContaining({ path: `/dsg/` }),
-        expect.objectContaining({ path: `/api/static/` }),
-      ])
-    )
-  })
+        expect.objectContaining({ path: "/" }),
+        expect.objectContaining({ path: "/ssr/" }),
+        expect.objectContaining({ path: "/dsg/" }),
+        expect.objectContaining({ path: "/api/static/" }),
+      ]),
+    );
+  });
 
-  it(`should not prepend '\\' to external redirects`, () => {
-    mockStoreState(stateDefault)
-    process.chdir(fixturesDir)
-    setWebpackAssets(new Set([`app-123.js`]))
+  it("should not prepend '\\' to external redirects", () => {
+    mockStoreState(stateDefault);
+    process.chdir(fixturesDir);
+    setWebpackAssets(new Set(["app-123.js"]));
 
-    const { routes } = getRoutesManifest()
+    const { routes } = getRoutesManifest();
     expect(routes).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ path: `https://old-url` }),
-        expect.objectContaining({ path: `http://old-url` }),
-      ])
-    )
-  })
+        expect.objectContaining({ path: "https://old-url" }),
+        expect.objectContaining({ path: "http://old-url" }),
+      ]),
+    );
+  });
 
-  it(`should not prepend '\\' to external redirects (path prefix variant)`, () => {
+  it("should not prepend '\\' to external redirects (path prefix variant)", () => {
     mockStoreState(stateDefault, {
       program: {
         ...stateDefault.program,
@@ -117,90 +117,90 @@ describe(`getRoutesManifest`, () => {
       },
       config: {
         ...stateDefault.config,
-        pathPrefix: `/prefix`,
+        pathPrefix: "/prefix",
       },
-    })
-    process.chdir(fixturesDir)
-    setWebpackAssets(new Set([`app-123.js`]))
+    });
+    process.chdir(fixturesDir);
+    setWebpackAssets(new Set(["app-123.js"]));
 
-    const { routes } = getRoutesManifest()
+    const { routes } = getRoutesManifest();
     expect(routes).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ path: `https://old-url` }),
-        expect.objectContaining({ path: `http://old-url` }),
-      ])
-    )
-  })
+        expect.objectContaining({ path: "https://old-url" }),
+        expect.objectContaining({ path: "http://old-url" }),
+      ]),
+    );
+  });
 
-  it(`should return header rules`, () => {
+  it("should return header rules", () => {
     mockStoreState(stateDefault, {
       config: {
         ...stateDefault.config,
         headers: [
           {
-            source: `/ssr/*`,
+            source: "/ssr/*",
             headers: [
               {
-                key: `x-ssr-header`,
-                value: `my custom header value from config`,
+                key: "x-ssr-header",
+                value: "my custom header value from config",
               },
             ],
           },
         ],
       },
-    })
-    process.chdir(fixturesDir)
-    setWebpackAssets(new Set([`app-123.js`, `static/app-456.js`]))
+    });
+    process.chdir(fixturesDir);
+    setWebpackAssets(new Set(["app-123.js", "static/app-456.js"]));
 
-    const { headers } = getRoutesManifest()
+    const { headers } = getRoutesManifest();
 
     expect(headers).toContainEqual({
       headers: [
         {
-          key: `cache-control`,
-          value: `public, max-age=0, must-revalidate`,
+          key: "cache-control",
+          value: "public, max-age=0, must-revalidate",
         },
-        { key: `x-xss-protection`, value: `1; mode=block` },
-        { key: `x-content-type-options`, value: `nosniff` },
-        { key: `referrer-policy`, value: `same-origin` },
-        { key: `x-frame-options`, value: `DENY` },
+        { key: "x-xss-protection", value: "1; mode=block" },
+        { key: "x-content-type-options", value: "nosniff" },
+        { key: "referrer-policy", value: "same-origin" },
+        { key: "x-frame-options", value: "DENY" },
       ],
-      path: `/*`,
-    })
+      path: "/*",
+    });
     expect(headers).toContainEqual({
       headers: [
         {
-          key: `cache-control`,
-          value: `public, max-age=31536000, immutable`,
+          key: "cache-control",
+          value: "public, max-age=31536000, immutable",
         },
       ],
-      path: `/static/*`,
-    })
+      path: "/static/*",
+    });
     expect(headers).toContainEqual({
       headers: [
         {
-          key: `cache-control`,
-          value: `public, max-age=31536000, immutable`,
+          key: "cache-control",
+          value: "public, max-age=31536000, immutable",
         },
       ],
-      path: `/app-123.js`,
-    })
+      path: "/app-123.js",
+    });
     expect(headers).not.toContainEqual({
       headers: [
-        { key: `x-xss-protection`, value: `1; mode=block` },
-        { key: `x-content-type-options`, value: `nosniff` },
-        { key: `referrer-policy`, value: `same-origin` },
-        { key: `x-frame-options`, value: `DENY` },
+        { key: "x-xss-protection", value: "1; mode=block" },
+        { key: "x-content-type-options", value: "nosniff" },
+        { key: "referrer-policy", value: "same-origin" },
+        { key: "x-frame-options", value: "DENY" },
       ],
-      path: `/ssr/*`,
-    })
+      path: "/ssr/*",
+    });
 
     expect(headers).not.toContain(
-      expect.objectContaining({ path: `/static/app-456.js` })
-    )
-  })
+      expect.objectContaining({ path: "/static/app-456.js" }),
+    );
+  });
 
-  it(`should return header rules (path prefix variant)`, () => {
+  it("should return header rules (path prefix variant)", () => {
     mockStoreState(stateDefault, {
       program: {
         ...stateDefault.program,
@@ -208,114 +208,114 @@ describe(`getRoutesManifest`, () => {
       },
       config: {
         ...stateDefault.config,
-        pathPrefix: `/prefix`,
+        pathPrefix: "/prefix",
         headers: [
           {
-            source: `/ssr/*`,
+            source: "/ssr/*",
             headers: [
               {
-                key: `x-ssr-header`,
-                value: `my custom header value from config`,
+                key: "x-ssr-header",
+                value: "my custom header value from config",
               },
             ],
           },
         ],
       },
-    })
-    process.chdir(fixturesDir)
-    setWebpackAssets(new Set([`app-123.js`, `static/app-456.js`]))
+    });
+    process.chdir(fixturesDir);
+    setWebpackAssets(new Set(["app-123.js", "static/app-456.js"]));
 
-    const { headers } = getRoutesManifest()
+    const { headers } = getRoutesManifest();
 
     expect(headers).toContainEqual({
       headers: [
         {
-          key: `cache-control`,
-          value: `public, max-age=0, must-revalidate`,
+          key: "cache-control",
+          value: "public, max-age=0, must-revalidate",
         },
-        { key: `x-xss-protection`, value: `1; mode=block` },
-        { key: `x-content-type-options`, value: `nosniff` },
-        { key: `referrer-policy`, value: `same-origin` },
-        { key: `x-frame-options`, value: `DENY` },
+        { key: "x-xss-protection", value: "1; mode=block" },
+        { key: "x-content-type-options", value: "nosniff" },
+        { key: "referrer-policy", value: "same-origin" },
+        { key: "x-frame-options", value: "DENY" },
       ],
-      path: `/prefix/*`,
-    })
+      path: "/prefix/*",
+    });
     expect(headers).toContainEqual({
       headers: [
         {
-          key: `cache-control`,
-          value: `public, max-age=31536000, immutable`,
+          key: "cache-control",
+          value: "public, max-age=31536000, immutable",
         },
       ],
-      path: `/prefix/static/*`,
-    })
+      path: "/prefix/static/*",
+    });
     expect(headers).toContainEqual({
       headers: [
         {
-          key: `cache-control`,
-          value: `public, max-age=31536000, immutable`,
+          key: "cache-control",
+          value: "public, max-age=31536000, immutable",
         },
       ],
-      path: `/prefix/app-123.js`,
-    })
+      path: "/prefix/app-123.js",
+    });
     expect(headers).not.toContainEqual({
       headers: [
-        { key: `x-xss-protection`, value: `1; mode=block` },
-        { key: `x-content-type-options`, value: `nosniff` },
-        { key: `referrer-policy`, value: `same-origin` },
-        { key: `x-frame-options`, value: `DENY` },
+        { key: "x-xss-protection", value: "1; mode=block" },
+        { key: "x-content-type-options", value: "nosniff" },
+        { key: "referrer-policy", value: "same-origin" },
+        { key: "x-frame-options", value: "DENY" },
       ],
-      path: `/prefix/ssr/*`,
-    })
+      path: "/prefix/ssr/*",
+    });
 
     expect(headers).not.toContain(
-      expect.objectContaining({ path: `/prefix/static/app-456.js` })
-    )
-  })
+      expect.objectContaining({ path: "/prefix/static/app-456.js" }),
+    );
+  });
 
-  it(`should respect "force" redirects parameter`, () => {
+  it('should respect "force" redirects parameter', () => {
     mockStoreState(stateDefault, {
       config: { ...stateDefault.config },
-    })
+    });
 
-    const { routes } = getRoutesManifest()
+    const { routes } = getRoutesManifest();
 
     expect(routes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          path: `/old-url2`,
+          path: "/old-url2",
           force: true,
         }),
-      ])
-    )
-  })
+      ]),
+    );
+  });
 
-  it(`should respect "conditions" redirects parameter`, () => {
+  it('should respect "conditions" redirects parameter', () => {
     mockStoreState(stateDefault, {
       config: { ...stateDefault.config },
-    })
-    process.chdir(fixturesDir)
-    setWebpackAssets(new Set([`app-123.js`]))
+    });
+    process.chdir(fixturesDir);
+    setWebpackAssets(new Set(["app-123.js"]));
 
-    const { routes } = getRoutesManifest()
+    const { routes } = getRoutesManifest();
 
     expect(routes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          path: `/old-url2`,
-          conditions: { language: [`ca`, `us`] },
+          path: "/old-url2",
+          conditions: { language: ["ca", "us"] },
         }),
-      ])
-    )
-  })
-})
+      ]),
+    );
+  });
+});
 
-describe(`getFunctionsManifest`, () => {
-  it(`should return functions manifest`, () => {
-    mockStoreState(stateDefault)
-    process.chdir(fixturesDir)
+describe("getFunctionsManifest", () => {
+  it("should return functions manifest", () => {
+    mockStoreState(stateDefault);
+    process.chdir(fixturesDir);
 
-    const functionsManifest = getFunctionsManifest()
+    const functionsManifest = getFunctionsManifest();
 
     expect(functionsManifest).toMatchInlineSnapshot(`
       Array [
@@ -340,6 +340,6 @@ describe(`getFunctionsManifest`, () => {
           ],
         },
       ]
-    `)
-  })
-})
+    `);
+  });
+});

@@ -1,16 +1,16 @@
-const Prism = require(`prismjs`)
+const Prism = require("prismjs");
 
 const env = {
   grammar: undefined,
-}
+};
 
 function loadEnv(language) {
-  env.grammar = Prism.languages[language]
-  if (!env.grammar) return
+  env.grammar = Prism.languages[language];
+  if (!env.grammar) return;
 }
 
-module.exports = (language = `javascript`) => {
-  loadEnv(language)
+module.exports = (language = "javascript") => {
+  loadEnv(language);
 
   // Gatsby Prism Show Invisibles Plugin
   //
@@ -23,10 +23,10 @@ module.exports = (language = `javascript`) => {
   //
   // prism-show-invisibles.js:start
   if (
-    (typeof self !== `undefined` && !self.Prism) ||
-    (typeof global !== `undefined` && !global.Prism)
+    (typeof self !== "undefined" && !self.Prism) ||
+    (typeof global !== "undefined" && !global.Prism)
   ) {
-    return
+    return;
   }
 
   const invisibles = {
@@ -35,7 +35,7 @@ module.exports = (language = `javascript`) => {
     lf: /\n/,
     cr: /\r/,
     space: / /,
-  }
+  };
 
   /**
    * Handles the recursive calling of `addInvisibles` for one token.
@@ -44,31 +44,31 @@ module.exports = (language = `javascript`) => {
    * @param {string|number} name The name or index of the token in `tokens`.
    */
   function handleToken(tokens, name) {
-    const value = tokens[name]
+    const value = tokens[name];
 
-    const type = Prism.util.type(value)
+    const type = Prism.util.type(value);
     switch (type) {
-      case `RegExp`: {
-        const inside = {}
+      case "RegExp": {
+        const inside = {};
         tokens[name] = {
           pattern: value,
           inside: inside,
-        }
-        addInvisibles(inside)
-        break
+        };
+        addInvisibles(inside);
+        break;
       }
-      case `Array`: {
+      case "Array": {
         for (let i = 0, l = value.length; i < l; i++) {
-          handleToken(value, i)
+          handleToken(value, i);
         }
-        break
+        break;
       }
 
       default: {
         // 'Object'
-        const inside = value.inside || (value.inside = {}) // eslint-disable-line no-redeclare
-        addInvisibles(inside)
-        break
+        const inside = value.inside || (value.inside = {}); // eslint-disable-line no-redeclare
+        addInvisibles(inside);
+        break;
       }
     }
   }
@@ -79,14 +79,14 @@ module.exports = (language = `javascript`) => {
    * @param {Object} grammar
    */
   function addInvisibles(grammar) {
-    if (!grammar || grammar[`tab`]) {
-      return
+    if (!grammar || grammar["tab"]) {
+      return;
     }
 
     // assign invisibles here to "mark" the grammar in case of self references
     for (const name in invisibles) {
       if (invisibles.hasOwnProperty(name)) {
-        grammar[name] = invisibles[name]
+        grammar[name] = invisibles[name];
       }
     }
 
@@ -94,19 +94,19 @@ module.exports = (language = `javascript`) => {
     for (const name in grammar) {
       /* eslint-enable no-redeclare */
       if (grammar.hasOwnProperty(name) && !invisibles[name]) {
-        if (name === `rest`) {
-          addInvisibles(grammar[`rest`])
+        if (name === "rest") {
+          addInvisibles(grammar["rest"]);
         } else {
-          handleToken(grammar, name)
+          handleToken(grammar, name);
         }
       }
     }
   }
 
-  Prism.hooks.add(`before-highlight`, function (env) {
-    addInvisibles(env.grammar)
-  })
+  Prism.hooks.add("before-highlight", function (env) {
+    addInvisibles(env.grammar);
+  });
   // prism-show-invisibles.js:end
 
-  addInvisibles(env.grammar)
-}
+  addInvisibles(env.grammar);
+};

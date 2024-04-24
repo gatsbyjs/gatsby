@@ -1,18 +1,18 @@
-import pDefer, { type DeferredPromise } from "p-defer"
+import pDefer, { type DeferredPromise } from "p-defer";
 
 import {
   MESSAGE_TYPES,
   type InternalJob,
   type IJobCreatedMessage,
   WorkerError,
-} from "./types"
-import { store } from "../../redux"
-import { internalActions } from "../../redux/actions"
-import type { GatsbyWorkerPool } from "../worker/types"
-import { isWorker, getMessenger } from "../worker/messaging"
+} from "./types";
+import { store } from "../../redux";
+import { internalActions } from "../../redux/actions";
+import type { GatsbyWorkerPool } from "../worker/types";
+import { isWorker, getMessenger } from "../worker/messaging";
 
-let hasActiveWorkerJobs: DeferredPromise<void> | null = null
-let activeWorkerJobs = 0
+let hasActiveWorkerJobs: DeferredPromise<void> | null = null;
+let activeWorkerJobs = 0;
 
 export function initJobsMessagingInMainProcess(
   workerPool: GatsbyWorkerPool,
@@ -20,9 +20,9 @@ export function initJobsMessagingInMainProcess(
   workerPool.onMessage((msg, workerId) => {
     if (msg.type === MESSAGE_TYPES.JOB_CREATED) {
       if (activeWorkerJobs === 0) {
-        hasActiveWorkerJobs = pDefer<void>()
+        hasActiveWorkerJobs = pDefer<void>();
       }
-      activeWorkerJobs++
+      activeWorkerJobs++;
       store
         .dispatch(internalActions.createJobV2FromInternalJob(msg.payload))
         .then((result) => {
@@ -35,7 +35,7 @@ export function initJobsMessagingInMainProcess(
               },
             },
             workerId,
-          )
+          );
         })
         .catch((error) => {
           workerPool.sendMessage(
@@ -48,20 +48,20 @@ export function initJobsMessagingInMainProcess(
               },
             },
             workerId,
-          )
+          );
         })
         .finally(() => {
           if (--activeWorkerJobs === 0) {
-            hasActiveWorkerJobs?.resolve()
-            hasActiveWorkerJobs = null
+            hasActiveWorkerJobs?.resolve();
+            hasActiveWorkerJobs = null;
           }
-        })
+        });
     }
-  })
+  });
 }
 
 export function waitUntilWorkerJobsAreComplete(): Promise<void> {
-  return hasActiveWorkerJobs ? hasActiveWorkerJobs.promise : Promise.resolve()
+  return hasActiveWorkerJobs ? hasActiveWorkerJobs.promise : Promise.resolve();
 }
 
 /**
@@ -72,41 +72,41 @@ export function waitUntilWorkerJobsAreComplete(): Promise<void> {
 const deferredWorkerPromises = new Map<
   InternalJob["id"],
   DeferredPromise<Record<string, unknown>>
->()
-const gatsbyWorkerMessenger = getMessenger()
+>();
+const gatsbyWorkerMessenger = getMessenger();
 export function initJobsMessagingInWorker(): void {
   if (isWorker && gatsbyWorkerMessenger) {
     gatsbyWorkerMessenger.onMessage((msg) => {
       if (msg.type === MESSAGE_TYPES.JOB_COMPLETED) {
-        const { id, result } = msg.payload
-        const deferredPromise = deferredWorkerPromises.get(id)
+        const { id, result } = msg.payload;
+        const deferredPromise = deferredWorkerPromises.get(id);
 
         if (!deferredPromise) {
           throw new Error(
-            `Received message about completed job that wasn't scheduled by this worker`,
-          )
+            "Received message about completed job that wasn't scheduled by this worker",
+          );
         }
 
-        deferredPromise.resolve(result)
-        deferredWorkerPromises.delete(id)
+        deferredPromise.resolve(result);
+        deferredWorkerPromises.delete(id);
       } else if (msg.type === MESSAGE_TYPES.JOB_FAILED) {
-        const { id, error, stack } = msg.payload
-        const deferredPromise = deferredWorkerPromises.get(id)
+        const { id, error, stack } = msg.payload;
+        const deferredPromise = deferredWorkerPromises.get(id);
 
         if (!deferredPromise) {
           throw new Error(
-            `Received message about failed job that wasn't scheduled by this worker`,
-          )
+            "Received message about failed job that wasn't scheduled by this worker",
+          );
         }
 
-        const errorObject = new WorkerError(error)
+        const errorObject = new WorkerError(error);
         if (stack) {
-          errorObject.stack = stack
+          errorObject.stack = stack;
         }
-        deferredPromise.reject(errorObject)
-        deferredWorkerPromises.delete(id)
+        deferredPromise.reject(errorObject);
+        deferredWorkerPromises.delete(id);
       }
-    })
+    });
   }
 }
 
@@ -118,20 +118,20 @@ export function maybeSendJobToMainProcess(
   job: InternalJob,
 ): Promise<Record<string, unknown>> | undefined {
   if (isWorker && gatsbyWorkerMessenger) {
-    const deferredWorkerPromise = pDefer<Record<string, unknown>>()
+    const deferredWorkerPromise = pDefer<Record<string, unknown>>();
 
     const msg: IJobCreatedMessage = {
       type: MESSAGE_TYPES.JOB_CREATED,
       payload: job,
-    }
+    };
 
-    gatsbyWorkerMessenger.sendMessage(msg)
+    gatsbyWorkerMessenger.sendMessage(msg);
 
     // holds on to promise
-    deferredWorkerPromises.set(job.id, deferredWorkerPromise)
+    deferredWorkerPromises.set(job.id, deferredWorkerPromise);
 
-    return deferredWorkerPromise.promise
+    return deferredWorkerPromise.promise;
   }
 
-  return undefined
+  return undefined;
 }

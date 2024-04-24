@@ -7,19 +7,19 @@ export class SharpError extends Error {
    * @param {Error} err
    */
   constructor(message, err = null) {
-    let fullErrorMessage = message
+    let fullErrorMessage = message;
 
     if (err) {
       fullErrorMessage += `
 
 Original error:
-${err.shortMessage ?? ``}
-${err.message}`
+${err.shortMessage ?? ""}
+${err.message}`;
     }
 
-    super(fullErrorMessage)
+    super(fullErrorMessage);
 
-    this.name = `SharpError`
-    Error.captureStackTrace(this, SharpError)
+    this.name = "SharpError";
+    Error.captureStackTrace(this, SharpError);
   }
 }

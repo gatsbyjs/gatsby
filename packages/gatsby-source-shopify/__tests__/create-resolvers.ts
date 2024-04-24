@@ -1,24 +1,24 @@
-import { createResolvers } from "../src/create-resolvers"
-import { mockGatsbyApi, mockPluginOptions } from "./fixtures"
+import { createResolvers } from "../src/create-resolvers";
+import { mockGatsbyApi, mockPluginOptions } from "./fixtures";
 
-const connections = [`orders`, `collections`, `locations`]
+const connections = ["orders", "collections", "locations"];
 
 function generateTestName(downloadImages, shopifyConnections): string {
   const modifiers = [
-    downloadImages ? `with` : `without`,
-    shopifyConnections.length > 0 ? `with` : `without`,
-  ]
+    downloadImages ? "with" : "without",
+    shopifyConnections.length > 0 ? "with" : "without",
+  ];
 
-  return `Sets the correct resolvers ${modifiers[0]} downloadImages and ${modifiers[1]} connections`
+  return `Sets the correct resolvers ${modifiers[0]} downloadImages and ${modifiers[1]} connections`;
 }
 
-const gatsbyApi = mockGatsbyApi()
-const pluginOptions = mockPluginOptions()
+const gatsbyApi = mockGatsbyApi();
+const pluginOptions = mockPluginOptions();
 
-describe(`createResolvers`, () => {
+describe("createResolvers", () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-  })
+    jest.clearAllMocks();
+  });
 
   for (const downloadImages of [false, true]) {
     for (const shopifyConnections of [[], connections]) {
@@ -28,23 +28,23 @@ describe(`createResolvers`, () => {
           ...pluginOptions,
           downloadImages,
           shopifyConnections,
-          typePrefix: `__PREFIX__`,
-        })
+          typePrefix: "__PREFIX__",
+        });
 
         const getExpectedValue = (): number => {
-          if (!downloadImages && shopifyConnections.length === 3) return 4
-          if (downloadImages && shopifyConnections.length === 0) return 2
-          return 3
-        }
+          if (!downloadImages && shopifyConnections.length === 3) return 4;
+          if (downloadImages && shopifyConnections.length === 0) return 2;
+          return 3;
+        };
 
         // @ts-ignore
         expect(gatsbyApi.createResolver?.mock.calls.length).toEqual(
           getExpectedValue(),
-        )
+        );
 
         // @ts-ignore
-        expect(gatsbyApi.createResolvers?.mock.calls).toMatchSnapshot()
-      })
+        expect(gatsbyApi.createResolvers?.mock.calls).toMatchSnapshot();
+      });
     }
   }
-})
+});

@@ -1,16 +1,16 @@
-import { ip } from "address"
-import chalk from "chalk"
-import url from "node:url"
+import { ip } from "address";
+import chalk from "chalk";
+import url from "node:url";
 
 export type IPreparedUrls = {
-  lanUrlForConfig: string
-  lanUrlForTerminal: string
-  localUrlForTerminal: string
-  localUrlForBrowser: string
-}
+  lanUrlForConfig: string;
+  lanUrlForTerminal: string;
+  localUrlForTerminal: string;
+  localUrlForBrowser: string;
+};
 
 export function prepareUrls(
-  protocol: `http` | `https`,
+  protocol: "http" | "https",
   host: string,
   port: number,
 ): IPreparedUrls {
@@ -19,28 +19,28 @@ export function prepareUrls(
       protocol,
       hostname,
       port,
-      pathname: `/`,
-    })
+      pathname: "/",
+    });
   }
   function prettyPrintUrl(hostname: string): string {
     return url.format({
       protocol,
       hostname,
       port: chalk.bold(String(port)),
-      pathname: `/`,
-    })
+      pathname: "/",
+    });
   }
 
-  const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-  let prettyHost = host
-  let lanUrlForConfig
-  let lanUrlForTerminal
+  const isUnspecifiedHost = host === "0.0.0.0" || host === "::";
+  let prettyHost = host;
+  let lanUrlForConfig;
+  let lanUrlForTerminal;
   if (isUnspecifiedHost) {
-    prettyHost = `localhost`
+    prettyHost = "localhost";
 
     try {
       // This can only return an IPv4 address
-      lanUrlForConfig = ip()
+      lanUrlForConfig = ip();
       if (lanUrlForConfig) {
         // Check if the address is a private ip
         // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
@@ -50,10 +50,10 @@ export function prepareUrls(
           )
         ) {
           // Address is private, format it for later use
-          lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig)
+          lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig);
         } else {
           // Address is not private, so we will discard it
-          lanUrlForConfig = undefined
+          lanUrlForConfig = undefined;
         }
       }
     } catch (_e) {
@@ -63,12 +63,12 @@ export function prepareUrls(
   // TODO collect errors (GraphQL + Webpack) in Redux so we
   // can clear terminal and print them out on every compile.
   // Borrow pretty printing code from webpack plugin.
-  const localUrlForTerminal = prettyPrintUrl(prettyHost)
-  const localUrlForBrowser = formatUrl(prettyHost)
+  const localUrlForTerminal = prettyPrintUrl(prettyHost);
+  const localUrlForBrowser = formatUrl(prettyHost);
   return {
     lanUrlForConfig,
     lanUrlForTerminal,
     localUrlForTerminal,
     localUrlForBrowser,
-  }
+  };
 }

@@ -1,7 +1,7 @@
-import joi from "joi"
-import type { PluginOptionsSchemaJoi } from "./utils/plugin-options-schema-joi-type"
+import joi from "joi";
+import type { PluginOptionsSchemaJoi } from "./utils/plugin-options-schema-joi-type";
 
-export * from "./utils/plugin-options-schema-joi-type"
+export * from "./utils/plugin-options-schema-joi-type";
 export const Joi: PluginOptionsSchemaJoi = joi.extend({
   // This tells Joi to extend _all_ types with .dotenv(), see
   // https://github.com/sideway/joi/commit/03adf22eb1f06c47d1583617093edee3a96b3873
@@ -24,4 +24,4 @@ export const Joi: PluginOptionsSchemaJoi = joi.extend({
     //   },
     // },
   },
-})
+});

@@ -1,64 +1,68 @@
-import type { Node, GatsbyNode, NodeInput } from "gatsby"
+import type { Node, GatsbyNode, NodeInput } from "gatsby";
 
-interface IRemoteFileNodeFields {
-  url: string
-  mimeType: string
-  filename: string
-  filesize?: number | undefined
-}
+type IRemoteFileNodeFields = {
+  url: string;
+  mimeType: string;
+  filename: string;
+  filesize?: number | undefined;
+};
 
-export interface IRemoteFileNode extends IRemoteFileNodeFields, Node {}
+export type IRemoteFileNode = Record<string, unknown> &
+  IRemoteFileNodeFields &
+  Node;
 
-export interface IRemoteFileNodeInput
-  extends IRemoteFileNodeFields,
-    NodeInput {}
+export type IRemoteFileNodeInput = Record<string, unknown> &
+  IRemoteFileNodeFields &
+  NodeInput;
 
-interface IRemoteImageNodeFields {
-  width: number
-  height: number
-  placeholderUrl?: string | undefined
-}
+type IRemoteImageNodeFields = {
+  width: number;
+  height: number;
+  placeholderUrl?: string | undefined;
+};
 
-export interface IRemoteImageNode
-  extends IRemoteImageNodeFields,
-    IRemoteFileNode {}
+export type IRemoteImageNode = Record<string, unknown> &
+  IRemoteImageNodeFields &
+  IRemoteFileNode;
 
-export interface IRemoteImageNodeInput
-  extends IRemoteImageNodeFields,
-    IRemoteFileNodeInput {}
+export type IRemoteImageNodeInput = Record<string, unknown> &
+  IRemoteImageNodeFields &
+  IRemoteFileNodeInput;
 
 type GraphqlType<T> = T extends number
   ? "Int" | "Float"
   : T extends boolean
-  ? "Boolean"
-  : string
+    ? "Boolean"
+    : string;
 
-export interface IGraphQLFieldConfigDefinition<
+export type IGraphQLFieldConfigDefinition<
   TSource,
   R,
-  TArgs = Record<string, unknown>
-> {
-  type: string
-  description?: string | undefined
-  args?: {
-    [Property in keyof TArgs]:
-      | GraphqlType<TArgs[Property]>
-      | {
-          type: GraphqlType<TArgs[Property]>
-          description?: string | undefined
-          defaultValue?: TArgs[Property] | undefined
-        }
-  } | undefined
-  resolve(source: TSource, args: TArgs): R
-}
+  TArgs = Record<string, unknown>,
+> = {
+  type: string;
+  description?: string | undefined;
+  args?:
+    | {
+        [Property in keyof TArgs]:
+          | GraphqlType<TArgs[Property]>
+          | {
+              type: GraphqlType<TArgs[Property]>;
+              description?: string | undefined;
+              defaultValue?: TArgs[Property] | undefined;
+            };
+      }
+    | undefined;
+  resolve(source: TSource, args: TArgs): R;
+};
 
 export type SchemaBuilder = Parameters<
   NonNullable<GatsbyNode["createSchemaCustomization"]>
->[0]["schema"]
+>[0]["schema"];
 
-export type ImageFit = import("sharp").FitEnum[keyof import("sharp").FitEnum]
-export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto"
-export type ImageLayout = "fixed" | "constrained" | "fullWidth"
+export type ImageFit = import("sharp").FitEnum[keyof import("sharp").FitEnum];
+export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto";
+export type ImageLayout = "fixed" | "constrained" | "fullWidth";
 export type ImageCropFocus =
   | "center"
   | "top"
@@ -67,48 +71,50 @@ export type ImageCropFocus =
   | "left"
   | "entropy"
   | "edges"
-  | "faces"
+  | "faces";
 
 export type WidthOrHeight =
   | { width: number; height: number }
-  | { width: number; height?: never }
-  | { width?: never; height: number }
+  | { width: number; height?: never | undefined }
+  | { width?: never | undefined; height: number };
 
 export type CalculateImageSizesArgs = {
-  fit: ImageFit
-  layout: ImageLayout
-  outputPixelDensities: Array<number>
-  breakpoints?: Array<number> | undefined
-  aspectRatio?: number | undefined
-} & WidthOrHeight
+  fit: ImageFit;
+  layout: ImageLayout;
+  outputPixelDensities: Array<number>;
+  breakpoints?: Array<number> | undefined;
+  aspectRatio?: number | undefined;
+} & WidthOrHeight;
 
 export function isImage(node: {
-  mimeType: IRemoteFileNode["mimeType"]
+  mimeType: IRemoteFileNode["mimeType"];
 }): node is IRemoteImageNode {
   if (!node.mimeType) {
     throw new Error(
-      `RemoteFileNode does not have a mimeType. The field is required.`
-    )
+      "RemoteFileNode does not have a mimeType. The field is required.",
+    );
   }
 
-  return node.mimeType.startsWith(`image/`) && node.mimeType !== `image/svg+xml`
+  return (
+    node.mimeType.startsWith("image/") && node.mimeType !== "image/svg+xml"
+  );
 }
 
 export type ImageCdnTransformArgs = WidthOrHeight & {
-  format: string
-  cropFocus?: ImageCropFocus | Array<ImageCropFocus> | undefined
-  quality: number
-}
+  format: string;
+  cropFocus?: ImageCropFocus | Array<ImageCropFocus> | undefined;
+  quality: number;
+};
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type CdnSourceImage = {
-  url: string
-  mimeType: string
-  filename: string
-  internal: { contentDigest: string }
-}
+  url: string;
+  mimeType: string;
+  filename: string;
+  internal: { contentDigest: string };
+};
 
-export type ImageCdnSourceImage = CdnSourceImage
+export type ImageCdnSourceImage = CdnSourceImage;
 
 /**
  * The function is used to optimize image delivery by generating URLs that leverage CDN capabilities
@@ -124,10 +130,10 @@ export type ImageCdnSourceImage = CdnSourceImage
 export type ImageCdnUrlGeneratorFn = (
   source: ImageCdnSourceImage,
   imageArgs: ImageCdnTransformArgs,
-  pathPrefix: string
-) => string
+  pathPrefix: string,
+) => string;
 
-export type FileCdnSourceImage = CdnSourceImage
+export type FileCdnSourceImage = CdnSourceImage;
 
 /**
  * The function is used to optimize image delivery by generating URLs that leverage CDN capabilities
@@ -140,5 +146,5 @@ export type FileCdnSourceImage = CdnSourceImage
  */
 export type FileCdnUrlGeneratorFn = (
   source: FileCdnSourceImage,
-  pathPrefix: string
-) => string
+  pathPrefix: string,
+) => string;

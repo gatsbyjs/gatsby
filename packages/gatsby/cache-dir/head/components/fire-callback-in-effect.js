@@ -1,12 +1,12 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 
 /*
  * Calls callback in an effect and renders children
  */
 export function FireCallbackInEffect({ children, callback }) {
   useEffect(() => {
-    callback()
-  })
+    callback();
+  });
 
-  return children
+  return children;
 }

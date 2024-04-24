@@ -1,11 +1,14 @@
-import NProgress from "accessible-nprogress"
-import { GatsbyBrowser } from "gatsby"
+import NProgress from "accessible-nprogress";
+import { GatsbyBrowser } from "gatsby";
 
-const defaultOptions = { color: `#29d` }
+const defaultOptions = { color: "#29d" };
 
-export const onClientEntry: GatsbyBrowser['onClientEntry'] = (_gatsbyApi, pluginOptions = { plugins: [] }) => {
+export const onClientEntry: GatsbyBrowser["onClientEntry"] = (
+  _gatsbyApi,
+  pluginOptions = { plugins: [] },
+) => {
   // Merge default options with user defined options in `gatsby-config.js`
-  const options = { ...defaultOptions, ...pluginOptions }
+  const options = { ...defaultOptions, ...pluginOptions };
 
   // Inject styles.
   const styles = `
@@ -75,21 +78,21 @@ export const onClientEntry: GatsbyBrowser['onClientEntry'] = (_gatsbyApi, plugin
         transform: rotate(360deg);
       }
     }
-  `
+  `;
 
-  const node = document.createElement(`style`)
-  node.id = `nprogress-styles`
-  node.innerHTML = styles
-  document.head.appendChild(node)
+  const node = document.createElement("style");
+  node.id = "nprogress-styles";
+  node.innerHTML = styles;
+  document.head.appendChild(node);
 
   // @ts-ignore
-  NProgress.configure(options)
-}
+  NProgress.configure(options);
+};
 
 export const onRouteUpdateDelayed = () => {
-  NProgress.start()
-}
+  NProgress.start();
+};
 
 export const onRouteUpdate = () => {
-  NProgress.done()
-}
+  NProgress.done();
+};

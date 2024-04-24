@@ -1,18 +1,18 @@
 // NOTE: Previously `infer-graphql-type-test.js`
 
-const { graphql } = require(`graphql`)
-const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
-const { store } = require(`../../../redux`)
-const { actions } = require(`../../../redux/actions`)
-const { buildSchema } = require(`../../schema`)
-const { createSchemaComposer } = require(`../../schema-composer`)
-import { buildObjectType } from "../../types/type-builders"
-const { hasNodes } = require(`../inference-metadata`)
-const { TypeConflictReporter } = require(`../type-conflict-reporter`)
-const withResolverContext = require(`../../context`)
+const { graphql } = require("graphql");
+const path = require("path");
+const { slash } = require("gatsby-core-utils");
+const { store } = require("../../../redux");
+const { actions } = require("../../../redux/actions");
+const { buildSchema } = require("../../schema");
+const { createSchemaComposer } = require("../../schema-composer");
+import { buildObjectType } from "../../types/type-builders";
+const { hasNodes } = require("../inference-metadata");
+const { TypeConflictReporter } = require("../type-conflict-reporter");
+const withResolverContext = require("../../context");
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock("gatsby-cli/lib/reporter", () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -24,42 +24,42 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         start: jest.fn(),
         setStatus: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
-  }
-})
-const report = require(`gatsby-cli/lib/reporter`)
+  };
+});
+const report = require("gatsby-cli/lib/reporter");
 afterEach(() => {
-  report.error.mockClear()
-  report.warn.mockClear()
-})
+  report.error.mockClear();
+  report.warn.mockClear();
+});
 
 const makeNodes = () => [
   {
-    id: `1`,
-    internal: { type: `Test` },
-    name: `The Mad Max`,
-    type: `Test`,
+    id: "1",
+    internal: { type: "Test" },
+    name: "The Mad Max",
+    type: "Test",
     "key-with..unsupported-values": true,
     hair: 1,
-    date: `1012-11-01`,
+    date: "1012-11-01",
     anArray: [1, 2, 3, 4],
     aNestedArray: [
       [1, 2, 3, 4],
       [5, 6, 7, 8],
     ],
     anObjectArray: [
-      { aString: `some string`, aNumber: 2, aBoolean: true },
-      { aString: `some string`, aNumber: 2, anArray: [1, 2] },
+      { aString: "some string", aNumber: 2, aBoolean: true },
+      { aString: "some string", aNumber: 2, anArray: [1, 2] },
       { anotherObjectArray: [{ bar: 10 }] },
     ],
-    anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: `quz` }] }, null],
+    anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: "quz" }] }, null],
     deepObject: {
       level: 1,
       deepObject: {
@@ -71,180 +71,180 @@ const makeNodes = () => [
     },
     "with space": 1,
     "with-hyphen": 2,
-    "with resolver": `1012-11-01`,
+    "with resolver": "1012-11-01",
     123: 42,
     456: {
       testingTypeNameCreation: true,
     },
     aBoolean: true,
-    externalUrl: `https://example.com/awesome.jpg`,
-    domain: `pizza.com`,
+    externalUrl: "https://example.com/awesome.jpg",
+    domain: "pizza.com",
     frontmatter: {
-      date: `1012-11-01`,
-      title: `The world of dash and adventure`,
+      date: "1012-11-01",
+      title: "The world of dash and adventure",
       blue: 100,
     },
   },
   {
-    id: `2`,
-    internal: { type: `Test` },
-    name: `The Mad Wax`,
-    type: `Test`,
+    id: "2",
+    internal: { type: "Test" },
+    name: "The Mad Wax",
+    type: "Test",
     hair: 2,
-    date: `1984-10-12`,
+    date: "1984-10-12",
     anArray: [1, 2, 5, 4],
     aNestedArray: [[1, 2, 3, 4]],
-    anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
-    anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: `quz` }] }, null],
+    anObjectArray: [{ anotherObjectArray: [{ baz: "quz" }] }],
+    anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: "quz" }] }, null],
     "with space": 3,
     "with-hyphen": 4,
     123: 24,
     frontmatter: {
-      date: `1984-10-12`,
-      title: `The world of slash and adventure`,
+      date: "1984-10-12",
+      title: "The world of slash and adventure",
       blue: 10010,
     },
   },
-]
+];
 
-const addNodes = nodes => {
-  nodes.forEach(node => {
+const addNodes = (nodes) => {
+  nodes.forEach((node) => {
     if (!node.internal.contentDigest) {
-      node.internal.contentDigest = `0`
+      node.internal.contentDigest = "0";
     }
-    actions.createNode(node, { name: `test` })(store.dispatch)
-  })
-}
+    actions.createNode(node, { name: "test" })(store.dispatch);
+  });
+};
 
-const deleteNodes = nodes => {
-  nodes.forEach(node => {
-    store.dispatch(actions.deleteNode(node, { name: `test` }))
-  })
-}
+const deleteNodes = (nodes) => {
+  nodes.forEach((node) => {
+    store.dispatch(actions.deleteNode(node, { name: "test" }));
+  });
+};
 
-describe(`Inference states`, () => {
+describe("Inference states", () => {
   const node = () => {
     return {
-      id: `1`,
+      id: "1",
       parent: null,
       children: [],
-      foo: `bar`,
-      internal: { type: `Test` },
-    }
-  }
+      foo: "bar",
+      internal: { type: "Test" },
+    };
+  };
 
   beforeEach(() => {
-    store.dispatch({ type: `DELETE_CACHE` })
-  })
+    store.dispatch({ type: "DELETE_CACHE" });
+  });
 
-  describe(`Initial build`, () => {
-    it(`has incremental inference disabled by default`, () => {
-      addNodes([node()])
-      const { inferenceMetadata } = store.getState()
+  describe("Initial build", () => {
+    it("has incremental inference disabled by default", () => {
+      addNodes([node()]);
+      const { inferenceMetadata } = store.getState();
       expect(inferenceMetadata).toEqual({
-        step: `initialBuild`,
+        step: "initialBuild",
         typeMap: {},
-      })
-    })
+      });
+    });
 
-    it(`can switch to incremental build mode`, () => {
-      store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-      addNodes([node()])
-      const { inferenceMetadata } = store.getState()
-      expect(inferenceMetadata.step).toEqual(`incrementalBuild`)
-      expect(inferenceMetadata.typeMap).toHaveProperty(`Test`)
-    })
-  })
+    it("can switch to incremental build mode", () => {
+      store.dispatch({ type: "START_INCREMENTAL_INFERENCE" });
+      addNodes([node()]);
+      const { inferenceMetadata } = store.getState();
+      expect(inferenceMetadata.step).toEqual("incrementalBuild");
+      expect(inferenceMetadata.typeMap).toHaveProperty("Test");
+    });
+  });
 
-  describe(`Incremental builds`, () => {
+  describe("Incremental builds", () => {
     beforeEach(() => {
-      store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-    })
+      store.dispatch({ type: "START_INCREMENTAL_INFERENCE" });
+    });
 
-    it(`does incremental inference`, () => {
-      addNodes([node()])
-      const { inferenceMetadata } = store.getState()
-      expect(inferenceMetadata.step).toEqual(`incrementalBuild`)
-      expect(inferenceMetadata.typeMap).toHaveProperty(`Test`)
-      expect(hasNodes(inferenceMetadata.typeMap.Test)).toEqual(true)
+    it("does incremental inference", () => {
+      addNodes([node()]);
+      const { inferenceMetadata } = store.getState();
+      expect(inferenceMetadata.step).toEqual("incrementalBuild");
+      expect(inferenceMetadata.typeMap).toHaveProperty("Test");
+      expect(hasNodes(inferenceMetadata.typeMap.Test)).toEqual(true);
 
-      deleteNodes([node()])
-      expect(hasNodes(inferenceMetadata.typeMap.Test)).toEqual(false)
-    })
+      deleteNodes([node()]);
+      expect(hasNodes(inferenceMetadata.typeMap.Test)).toEqual(false);
+    });
 
-    it(`switches to initial build state on cache delete`, () => {
-      store.dispatch({ type: `DELETE_CACHE` })
-      const { inferenceMetadata } = store.getState()
-      expect(inferenceMetadata).toEqual({ step: `initialBuild`, typeMap: {} })
-    })
-  })
+    it("switches to initial build state on cache delete", () => {
+      store.dispatch({ type: "DELETE_CACHE" });
+      const { inferenceMetadata } = store.getState();
+      expect(inferenceMetadata).toEqual({ step: "initialBuild", typeMap: {} });
+    });
+  });
 
-  describe(`Any state`, () => {
-    const runInAllStates = callback => {
-      callback(`initialBuild`)
-      store.dispatch({ type: `DELETE_CACHE` })
-      store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-      callback(`incrementalBuild`)
-    }
+  describe("Any state", () => {
+    const runInAllStates = (callback) => {
+      callback("initialBuild");
+      store.dispatch({ type: "DELETE_CACHE" });
+      store.dispatch({ type: "START_INCREMENTAL_INFERENCE" });
+      callback("incrementalBuild");
+    };
 
-    it(`supports full type inference`, () => {
-      runInAllStates(state => {
+    it("supports full type inference", () => {
+      runInAllStates((state) => {
         store.dispatch({
-          type: `BUILD_TYPE_METADATA`,
+          type: "BUILD_TYPE_METADATA",
           payload: {
-            typeName: `Test`,
+            typeName: "Test",
             nodes: [node()],
           },
-        })
-        const { inferenceMetadata } = store.getState()
-        expect(inferenceMetadata.step).toEqual(state)
-        expect(inferenceMetadata.typeMap).toHaveProperty(`Test`)
-      })
-    })
+        });
+        const { inferenceMetadata } = store.getState();
+        expect(inferenceMetadata.step).toEqual(state);
+        expect(inferenceMetadata.typeMap).toHaveProperty("Test");
+      });
+    });
 
-    it(`supports createTypes`, () => {
-      runInAllStates(state => {
+    it("supports createTypes", () => {
+      runInAllStates((state) => {
         store.dispatch({
-          type: `CREATE_TYPES`,
+          type: "CREATE_TYPES",
           payload: buildObjectType({
-            name: `Test`,
+            name: "Test",
             extensions: {
               infer: false,
             },
           }),
-        })
-        const { inferenceMetadata } = store.getState()
-        expect(inferenceMetadata.step).toEqual(state)
-        expect(inferenceMetadata.typeMap.Test).toBeDefined()
-        expect(inferenceMetadata.typeMap.Test.ignored).toEqual(true)
-      })
-    })
-  })
-})
+        });
+        const { inferenceMetadata } = store.getState();
+        expect(inferenceMetadata.step).toEqual(state);
+        expect(inferenceMetadata.typeMap.Test).toBeDefined();
+        expect(inferenceMetadata.typeMap.Test.ignored).toEqual(true);
+      });
+    });
+  });
+});
 
-describe(`Incremental builds`, () => {})
+describe("Incremental builds", () => {});
 
-describe(`GraphQL type inference`, () => {
-  const typeConflictReporter = new TypeConflictReporter()
+describe("GraphQL type inference", () => {
+  const typeConflictReporter = new TypeConflictReporter();
 
   const buildTestSchema = async (nodes, buildSchemaArgs, typeDefs) => {
-    store.dispatch({ type: `DELETE_CACHE` })
-    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-    addNodes(nodes)
+    store.dispatch({ type: "DELETE_CACHE" });
+    store.dispatch({ type: "START_INCREMENTAL_INFERENCE" });
+    addNodes(nodes);
 
-    const { builtInFieldExtensions } = require(`../../extensions`)
-    Object.keys(builtInFieldExtensions).forEach(name => {
-      const extension = builtInFieldExtensions[name]
+    const { builtInFieldExtensions } = require("../../extensions");
+    Object.keys(builtInFieldExtensions).forEach((name) => {
+      const extension = builtInFieldExtensions[name];
       store.dispatch({
-        type: `CREATE_FIELD_EXTENSION`,
+        type: "CREATE_FIELD_EXTENSION",
         payload: { name, extension },
-      })
-    })
+      });
+    });
     const {
       schemaCustomization: { fieldExtensions },
       inferenceMetadata,
-    } = store.getState()
-    const schemaComposer = createSchemaComposer({ fieldExtensions })
+    } = store.getState();
+    const schemaComposer = createSchemaComposer({ fieldExtensions });
     const schema = await buildSchema({
       schemaComposer,
       types: typeDefs || [],
@@ -254,23 +254,23 @@ describe(`GraphQL type inference`, () => {
       typeConflictReporter,
       inferenceMetadata,
       ...(buildSchemaArgs || {}),
-    })
-    return { schema, schemaComposer }
-  }
+    });
+    return { schema, schemaComposer };
+  };
 
   const getQueryResult = async (
     nodes,
     fragment,
     buildSchemaArgs,
-    extraquery = ``,
-    typeDefs
+    extraquery = "",
+    typeDefs,
   ) => {
     const { schema, schemaComposer } = await buildTestSchema(
       nodes,
       buildSchemaArgs,
-      typeDefs
-    )
-    store.dispatch({ type: `SET_SCHEMA`, payload: schema })
+      typeDefs,
+    );
+    store.dispatch({ type: "SET_SCHEMA", payload: schema });
     return graphql({
       schema,
       source: `query {
@@ -288,168 +288,174 @@ describe(`GraphQL type inference`, () => {
       contextValue: withResolverContext({
         schema,
         schemaComposer,
-        context: { path: `/` },
+        context: { path: "/" },
       }),
-    })
-  }
+    });
+  };
 
   const getInferredFields = async (nodes, buildSchemaArgs) => {
-    const { schema } = await buildTestSchema(nodes, buildSchemaArgs)
-    return schema.getType(`Test`).getFields()
-  }
+    const { schema } = await buildTestSchema(nodes, buildSchemaArgs);
+    return schema.getType("Test").getFields();
+  };
 
   afterEach(() => {
-    typeConflictReporter.clearConflicts()
-  })
+    typeConflictReporter.clearConflicts();
+  });
 
-  it(`filters out null example values`, async () => {
+  it("filters out null example values", async () => {
     const nodes = [
-      { foo: null, bar: `baz`, internal: { type: `Test` }, id: `1` },
-    ]
+      { foo: null, bar: "baz", internal: { type: "Test" }, id: "1" },
+    ];
     const result = await getQueryResult(
       nodes,
       `
         foo
         bar
-      `
-    )
-    expect(result.errors.length).toEqual(1)
+      `,
+    );
+    expect(result.errors.length).toEqual(1);
     expect(result.errors[0].message).toMatch(
-      `Cannot query field "foo" on type "Test".`
-    )
-  })
+      'Cannot query field "foo" on type "Test".',
+    );
+  });
 
-  it(`doesn't throw errors at ints longer than 32-bit`, async () => {
-    const nodes = [{ longint: 3000000000, internal: { type: `Test` }, id: `1` }]
+  it("doesn't throw errors at ints longer than 32-bit", async () => {
+    const nodes = [
+      { longint: 3000000000, internal: { type: "Test" }, id: "1" },
+    ];
     const result = await getQueryResult(
       nodes,
       `
         longint
-      `
-    )
-    expect(result.errors).toBeUndefined()
-  })
+      `,
+    );
+    expect(result.errors).toBeUndefined();
+  });
 
-  it(`prefers float when multiple number types`, async () => {
+  it("prefers float when multiple number types", async () => {
     const nodes = [
-      { number: 1.1, internal: { type: `Test` }, id: `1` },
-      { number: 1, internal: { type: `Test` }, id: `2` },
-    ]
+      { number: 1.1, internal: { type: "Test" }, id: "1" },
+      { number: 1, internal: { type: "Test" }, id: "2" },
+    ];
     const result = await getQueryResult(
       nodes,
       `
         number
-      `
-    )
-    expect(result.data.allTest.edges[0].node.number).toEqual(1.1)
-  })
+      `,
+    );
+    expect(result.data.allTest.edges[0].node.number).toEqual(1.1);
+  });
 
-  it(`filters out empty objects`, async () => {
-    const nodes = [{ foo: {}, bar: `baz`, internal: { type: `Test` }, id: `1` }]
+  it("filters out empty objects", async () => {
+    const nodes = [
+      { foo: {}, bar: "baz", internal: { type: "Test" }, id: "1" },
+    ];
     const result = await getQueryResult(
       nodes,
       `
         foo
         bar
-      `
-    )
-    expect(result.errors.length).toEqual(1)
+      `,
+    );
+    expect(result.errors.length).toEqual(1);
     expect(result.errors[0].message).toMatch(
-      `Cannot query field "foo" on type "Test".`
-    )
-  })
+      'Cannot query field "foo" on type "Test".',
+    );
+  });
 
-  it(`filters out empty arrays`, async () => {
-    const nodes = [{ foo: [], bar: `baz`, internal: { type: `Test` }, id: `1` }]
+  it("filters out empty arrays", async () => {
+    const nodes = [
+      { foo: [], bar: "baz", internal: { type: "Test" }, id: "1" },
+    ];
     const result = await getQueryResult(
       nodes,
       `
         foo
         bar
-      `
-    )
-    expect(result.errors.length).toEqual(1)
+      `,
+    );
+    expect(result.errors.length).toEqual(1);
     expect(result.errors[0].message).toMatch(
-      `Cannot query field "foo" on type "Test".`
-    )
-  })
+      'Cannot query field "foo" on type "Test".',
+    );
+  });
 
-  it(`filters out sparse arrays`, async () => {
+  it("filters out sparse arrays", async () => {
     const nodes = [
       {
         foo: [undefined, null, null],
-        bar: `baz`,
-        internal: { type: `Test` },
-        id: `1`,
+        bar: "baz",
+        internal: { type: "Test" },
+        id: "1",
       },
-    ]
+    ];
     const result = await getQueryResult(
       nodes,
       `
         foo
         bar
-      `
-    )
-    expect(result.errors.length).toEqual(1)
+      `,
+    );
+    expect(result.errors.length).toEqual(1);
     expect(result.errors[0].message).toMatch(
-      `Cannot query field "foo" on type "Test".`
-    )
-  })
+      'Cannot query field "foo" on type "Test".',
+    );
+  });
 
-  it(`handles sparse arrays`, async () => {
+  it("handles sparse arrays", async () => {
     const nodes = [
-      { sparse: [null, true], internal: { type: `Test` }, id: `1` },
-      { sparse: [null], internal: { type: `Test` }, id: `2` },
-      { sparse: null, internal: { type: `Test` }, id: `3` },
-    ]
+      { sparse: [null, true], internal: { type: "Test" }, id: "1" },
+      { sparse: [null], internal: { type: "Test" }, id: "2" },
+      { sparse: null, internal: { type: "Test" }, id: "3" },
+    ];
     const result = await getQueryResult(
       nodes,
       `
       sparse
-      `
-    )
-    const { edges } = result.data.allTest
-    expect(edges[0].node.sparse).toEqual([null, true])
-  })
+      `,
+    );
+    const { edges } = result.data.allTest;
+    expect(edges[0].node.sparse).toEqual([null, true]);
+  });
 
-  it(`handles sparse arrays of objects`, async () => {
+  it("handles sparse arrays of objects", async () => {
     const nodes = [
-      { sparse: [null, { foo: true }], internal: { type: `Test` }, id: `1` },
-      { sparse: [null], internal: { type: `Test` }, id: `2` },
-      { sparse: null, internal: { type: `Test` }, id: `3` },
-    ]
+      { sparse: [null, { foo: true }], internal: { type: "Test" }, id: "1" },
+      { sparse: [null], internal: { type: "Test" }, id: "2" },
+      { sparse: null, internal: { type: "Test" }, id: "3" },
+    ];
     const result = await getQueryResult(
       nodes,
       `
       sparse { foo }
-      `
-    )
-    const { edges } = result.data.allTest
-    expect(edges[0].node.sparse[1].foo).toBe(true)
-  })
+      `,
+    );
+    const { edges } = result.data.allTest;
+    expect(edges[0].node.sparse[1].foo).toBe(true);
+  });
 
   // NOTE: Honestly this test does not makes much sense now
-  it.skip(`Removes specific root fields`, () => {
-    const { addInferredFields } = require(`../infer`)
-    const { getExampleValue } = require(`../example-value`)
-    const { getNodeInterface } = require(`../../types/node-interface`)
+  it.skip("Removes specific root fields", () => {
+    const { addInferredFields } = require("../infer");
+    const { getExampleValue } = require("../example-value");
+    const { getNodeInterface } = require("../../types/node-interface");
     const nodes = [
       {
-        type: `Test`,
-        id: `foo`,
-        parent: `parent`,
-        children: [`bar`],
-        internal: { type: `Test` },
+        type: "Test",
+        id: "foo",
+        parent: "parent",
+        children: ["bar"],
+        internal: { type: "Test" },
         foo: {
-          type: `Test`,
-          id: `foo`,
-          parent: `parent`,
-          children: [`bar`],
+          type: "Test",
+          id: "foo",
+          parent: "parent",
+          children: ["bar"],
         },
       },
-    ]
-    const schemaComposer = createSchemaComposer()
-    const typeComposer = schemaComposer.createObjectTC(`Test`)
+    ];
+    const schemaComposer = createSchemaComposer();
+    const typeComposer = schemaComposer.createObjectTC("Test");
     addInferredFields({
       schemaComposer,
       typeComposer,
@@ -457,32 +463,32 @@ describe(`GraphQL type inference`, () => {
         nodes,
         ignoreFields: getNodeInterface({ schemaComposer }).getFieldNames(),
       }),
-    })
-    const fields = typeComposer.getType().getFields()
+    });
+    const fields = typeComposer.getType().getFields();
 
-    expect(Object.keys(fields)).toHaveLength(2)
-    expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
-  })
+    expect(Object.keys(fields)).toHaveLength(2);
+    expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4);
+  });
 
-  it(`infers number types`, async () => {
+  it("infers number types", async () => {
     const nodes = [
       {
         int32: 42,
         float: 2.5,
         longint: 3000000000,
-        internal: { type: `Test` },
-        id: `1`,
+        internal: { type: "Test" },
+        id: "1",
       },
-    ]
-    const fields = await getInferredFields(nodes)
+    ];
+    const fields = await getInferredFields(nodes);
 
-    expect(fields.int32.type.name).toEqual(`Int`)
-    expect(fields.float.type.name).toEqual(`Float`)
-    expect(fields.longint.type.name).toEqual(`Float`)
-  })
+    expect(fields.int32.type.name).toEqual("Int");
+    expect(fields.float.type.name).toEqual("Float");
+    expect(fields.longint.type.name).toEqual("Float");
+  });
 
-  it(`Handle invalid graphql field names`, async () => {
-    const nodes = makeNodes()
+  it("Handle invalid graphql field names", async () => {
+    const nodes = makeNodes();
     const result = await getQueryResult(
       nodes,
       `
@@ -493,62 +499,62 @@ describe(`GraphQL type inference`, () => {
         _456 {
           testingTypeNameCreation
         }
-      `
-    )
+      `,
+    );
 
-    expect(result.errors).not.toBeDefined()
-    expect(result.data.allTest.edges.length).toEqual(2)
-    expect(result.data.allTest.edges[0].node.with_space).toEqual(1)
-    expect(result.data.allTest.edges[0].node.with_hyphen).toEqual(2)
-    expect(result.data.allTest.edges[1].node.with_space).toEqual(3)
-    expect(result.data.allTest.edges[1].node.with_hyphen).toEqual(4)
+    expect(result.errors).not.toBeDefined();
+    expect(result.data.allTest.edges.length).toEqual(2);
+    expect(result.data.allTest.edges[0].node.with_space).toEqual(1);
+    expect(result.data.allTest.edges[0].node.with_hyphen).toEqual(2);
+    expect(result.data.allTest.edges[1].node.with_space).toEqual(3);
+    expect(result.data.allTest.edges[1].node.with_hyphen).toEqual(4);
     expect(result.data.allTest.edges[0].node.with_resolver).toEqual(
-      `01.11.1012`
-    )
-    expect(result.data.allTest.edges[0].node._123).toEqual(42)
-    expect(result.data.allTest.edges[1].node._123).toEqual(24)
-    expect(result.data.allTest.edges[0].node._456).toEqual(nodes[0][`456`])
-  })
+      "01.11.1012",
+    );
+    expect(result.data.allTest.edges[0].node._123).toEqual(42);
+    expect(result.data.allTest.edges[1].node._123).toEqual(24);
+    expect(result.data.allTest.edges[0].node._456).toEqual(nodes[0]["456"]);
+  });
 
-  it(`handles invalid graphql field names on explicitly defined fields`, async () => {
+  it("handles invalid graphql field names on explicitly defined fields", async () => {
     const nodes = [
-      { id: `test`, internal: { type: `Test` } },
+      { id: "test", internal: { type: "Test" } },
       {
-        id: `foo`,
-        [`field_that_needs_to_be_sanitized?`]: `foo`,
-        [`(another)_field_that_needs_to_be_sanitized`]: `bar`,
-        [`!third_field_that_needs_to_be_sanitized`]: `baz`,
+        id: "foo",
+        ["field_that_needs_to_be_sanitized?"]: "foo",
+        ["(another)_field_that_needs_to_be_sanitized"]: "bar",
+        ["!third_field_that_needs_to_be_sanitized"]: "baz",
         internal: {
-          type: `Repro`,
-          contentDigest: `foo`,
+          type: "Repro",
+          contentDigest: "foo",
         },
       },
-    ]
+    ];
     const typeDefs = [
       {
         typeOrTypeDef: buildObjectType({
-          name: `Repro`,
-          interfaces: [`Node`],
+          name: "Repro",
+          interfaces: ["Node"],
           fields: {
             field_that_needs_to_be_sanitized_: {
-              type: `String`,
+              type: "String",
               extensions: {
-                proxy: { from: `field_that_needs_to_be_sanitized?` },
+                proxy: { from: "field_that_needs_to_be_sanitized?" },
               },
             },
             _another__field_that_needs_to_be_sanitized: {
-              type: `String`,
-              resolve: source =>
-                source[`(another)_field_that_needs_to_be_sanitized`],
+              type: "String",
+              resolve: (source) =>
+                source["(another)_field_that_needs_to_be_sanitized"],
             },
           },
         }),
       },
-    ]
+    ];
 
     const result = await getQueryResult(
       nodes,
-      `id`,
+      "id",
       undefined,
       `
         repro {
@@ -557,96 +563,96 @@ describe(`GraphQL type inference`, () => {
           _third_field_that_needs_to_be_sanitized
         }
       `,
-      typeDefs
-    )
-    expect(result.errors).not.toBeDefined()
-    expect(result.data.repro[`field_that_needs_to_be_sanitized_`]).toBe(`foo`)
+      typeDefs,
+    );
+    expect(result.errors).not.toBeDefined();
+    expect(result.data.repro["field_that_needs_to_be_sanitized_"]).toBe("foo");
     expect(
-      result.data.repro[`_another__field_that_needs_to_be_sanitized`]
-    ).toBe(`bar`)
-    expect(result.data.repro[`_third_field_that_needs_to_be_sanitized`]).toBe(
-      `baz`
-    )
-  })
+      result.data.repro["_another__field_that_needs_to_be_sanitized"],
+    ).toBe("bar");
+    expect(result.data.repro["_third_field_that_needs_to_be_sanitized"]).toBe(
+      "baz",
+    );
+  });
 
-  it(`Handles priority for conflicting fields`, async () => {
+  it("Handles priority for conflicting fields", async () => {
     const nodes = [
       {
         _2invalid: 1,
         "2invalid": 2,
-        sibling: { id: `Test` },
-        sibling___NODE: `2`,
-        internal: { type: `Test` },
-        id: `1`,
+        sibling: { id: "Test" },
+        sibling___NODE: "2",
+        internal: { type: "Test" },
+        id: "1",
       },
       {
         _2invalid: 1,
         "2invalid": 2,
-        sibling: { id: `Test` },
-        sibling___NODE: `3`,
-        internal: { type: `Test` },
-        id: `2`,
+        sibling: { id: "Test" },
+        sibling___NODE: "3",
+        internal: { type: "Test" },
+        id: "2",
       },
       {
         _2invalid: 1,
         "2invalid": 2,
-        sibling: { id: `Test` },
-        sibling___NODE: `1`,
-        internal: { type: `Test` },
-        id: `3`,
+        sibling: { id: "Test" },
+        sibling___NODE: "1",
+        internal: { type: "Test" },
+        id: "3",
       },
-    ]
+    ];
 
     const result = await getQueryResult(
       nodes,
       `
       sibling { id }
       _2invalid
-      `
-    )
-    expect(result).toMatchSnapshot()
-  })
+      `,
+    );
+    expect(result).toMatchSnapshot();
+  });
 
-  it(`Handles priority for conflicting nested fields`, async () => {
+  it("Handles priority for conflicting nested fields", async () => {
     const nodes = [
       {
         "2invalid": { nested: { check: 1 } },
         _2invalid: { nested: { check: true } },
-        internal: { type: `Test` },
-        id: `1`,
+        internal: { type: "Test" },
+        id: "1",
       },
       {
         "2invalid": { nested: { check: 0 } },
         _2invalid: { nested: { check: false } },
-        internal: { type: `Test` },
-        id: `2`,
+        internal: { type: "Test" },
+        id: "2",
       },
-    ]
+    ];
 
     const result = await getQueryResult(
       nodes,
       `
       _2invalid { nested { check } }
-      `
-    )
-    const { edges } = result.data.allTest
-    expect(edges[0].node[`_2invalid`].nested.check).toBe(true)
-    expect(edges[1].node[`_2invalid`].nested.check).toBe(false)
-    expect(result).toMatchSnapshot()
-  })
+      `,
+    );
+    const { edges } = result.data.allTest;
+    expect(edges[0].node["_2invalid"].nested.check).toBe(true);
+    expect(edges[1].node["_2invalid"].nested.check).toBe(false);
+    expect(result).toMatchSnapshot();
+  });
 
-  it(`handles lowercase type names`, async () => {
+  it("handles lowercase type names", async () => {
     const nodes = [
       {
-        id: `1`,
-        internal: { type: `wordpress__PAGE` },
+        id: "1",
+        internal: { type: "wordpress__PAGE" },
         acfFields: {
-          fooz: `bar`,
+          fooz: "bar",
         },
       },
-    ]
-    const { schema, schemaComposer } = await buildTestSchema(nodes)
-    store.dispatch({ type: `SET_SCHEMA`, payload: schema })
+    ];
+    const { schema, schemaComposer } = await buildTestSchema(nodes);
+    store.dispatch({ type: "SET_SCHEMA", payload: schema });
     const result = await graphql({
       schema,
       source: `
@@ -669,178 +675,178 @@ describe(`GraphQL type inference`, () => {
       contextValue: withResolverContext({
         schema,
         schemaComposer,
-        context: { path: `/` },
+        context: { path: "/" },
       }),
-    })
+    });
 
-    expect(result).toMatchSnapshot()
-  })
+    expect(result).toMatchSnapshot();
+  });
 
-  describe(`Handles dates`, () => {
-    it(`Handles integer with valid date format`, async () => {
+  describe("Handles dates", () => {
+    it("Handles integer with valid date format", async () => {
       const nodes = [
-        { number: 2018, internal: { type: `Test` }, id: `1` },
-        { number: 1987, internal: { type: `Test` }, id: `2` },
-      ]
+        { number: 2018, internal: { type: "Test" }, id: "1" },
+        { number: 1987, internal: { type: "Test" }, id: "2" },
+      ];
       const result = await getQueryResult(
         nodes,
         `
           number
-        `
-      )
-      expect(result.data.allTest.edges[0].node.number).toEqual(2018)
-    })
+        `,
+      );
+      expect(result.data.allTest.edges[0].node.number).toEqual(2018);
+    });
 
-    it(`Infers from Date objects`, async () => {
+    it("Infers from Date objects", async () => {
       const nodes = [
         {
           dateObject: new Date(Date.UTC(2012, 10, 5)),
-          internal: { type: `Test` },
-          id: `1`,
+          internal: { type: "Test" },
+          id: "1",
         },
         {
           dateObject: new Date(Date.UTC(2012, 10, 5)),
-          internal: { type: `Test` },
-          id: `2`,
+          internal: { type: "Test" },
+          id: "2",
         },
-      ]
+      ];
       const result = await getQueryResult(
         nodes,
         `
           dateObject
-        `
-      )
-      expect(result).toMatchSnapshot()
-    })
+        `,
+      );
+      expect(result).toMatchSnapshot();
+    });
 
-    it(`Infers from array of Date objects`, async () => {
+    it("Infers from array of Date objects", async () => {
       const nodes = [
         {
           dateObject: [
             new Date(Date.UTC(2012, 10, 5)),
             new Date(Date.UTC(2012, 10, 6)),
           ],
-          internal: { type: `Test` },
-          id: `1`,
+          internal: { type: "Test" },
+          id: "1",
         },
         {
           dateObject: [new Date(Date.UTC(2012, 10, 5))],
-          internal: { type: `Test` },
-          id: `2`,
+          internal: { type: "Test" },
+          id: "2",
         },
-      ]
+      ];
       const result = await getQueryResult(
         nodes,
         `
           dateObject
-        `
-      )
-      expect(result).toMatchSnapshot()
-    })
+        `,
+      );
+      expect(result).toMatchSnapshot();
+    });
 
-    it(`Infers from date strings`, async () => {
+    it("Infers from date strings", async () => {
       const nodes = [
-        { date: `1012-11-01`, internal: { type: `Test` }, id: `1` },
-      ]
+        { date: "1012-11-01", internal: { type: "Test" }, id: "1" },
+      ];
       const result = await getQueryResult(
         nodes,
         `
           date(formatString:"DD.MM.YYYY")
-        `
-      )
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges[0].node.date).toEqual(`01.11.1012`)
-    })
+        `,
+      );
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges[0].node.date).toEqual("01.11.1012");
+    });
 
-    it(`Infers from arrays of date strings`, async () => {
+    it("Infers from arrays of date strings", async () => {
       const nodes = [
         {
-          date: [`1012-11-01`, `10390203`],
-          internal: { type: `Test` },
-          id: `1`,
+          date: ["1012-11-01", "10390203"],
+          internal: { type: "Test" },
+          id: "1",
         },
-      ]
+      ];
       const result = await getQueryResult(
         nodes,
         `
           date(formatString:"DD.MM.YYYY")
-        `
-      )
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges[0].node.date.length).toEqual(2)
-      expect(result.data.allTest.edges[0].node.date[0]).toEqual(`01.11.1012`)
-      expect(result.data.allTest.edges[0].node.date[1]).toEqual(`03.02.1039`)
-    })
+        `,
+      );
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges[0].node.date.length).toEqual(2);
+      expect(result.data.allTest.edges[0].node.date[0]).toEqual("01.11.1012");
+      expect(result.data.allTest.edges[0].node.date[1]).toEqual("03.02.1039");
+    });
 
-    it(`infers mixes of non-dates and dates as string`, async () => {
+    it("infers mixes of non-dates and dates as string", async () => {
       const nodes = [
         {
-          date: `1012-11-01`,
-          internal: { type: `Test` },
-          id: `1`,
+          date: "1012-11-01",
+          internal: { type: "Test" },
+          id: "1",
         },
         {
-          date: `totally-not-a-date`,
-          internal: { type: `Test` },
-          id: `2`,
+          date: "totally-not-a-date",
+          internal: { type: "Test" },
+          id: "2",
         },
-      ]
+      ];
       const result = await getQueryResult(
         nodes,
         `
           date
-        `
-      )
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges.length).toEqual(2)
-      expect(result.data.allTest.edges[0].node.date).toEqual(`1012-11-01`)
+        `,
+      );
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges.length).toEqual(2);
+      expect(result.data.allTest.edges[0].node.date).toEqual("1012-11-01");
       expect(result.data.allTest.edges[1].node.date).toEqual(
-        `totally-not-a-date`
-      )
-    })
-  })
+        "totally-not-a-date",
+      );
+    });
+  });
 
-  describe(`Linked inference from config mappings`, () => {
+  describe("Linked inference from config mappings", () => {
     const getMappingNodes = () => [
       {
-        id: `node1`,
-        label: `First node`,
-        internal: { type: `MappingTest` },
+        id: "node1",
+        label: "First node",
+        internal: { type: "MappingTest" },
         nestedField: {
-          mapTarget: `test1`,
+          mapTarget: "test1",
         },
       },
       {
-        id: `node2`,
-        label: `Second node`,
-        internal: { type: `MappingTest` },
+        id: "node2",
+        label: "Second node",
+        internal: { type: "MappingTest" },
         nestedField: {
-          mapTarget: `test2`,
+          mapTarget: "test2",
         },
       },
       {
-        id: `node3`,
-        label: `Third node`,
-        internal: { type: `MappingTest` },
+        id: "node3",
+        label: "Third node",
+        internal: { type: "MappingTest" },
         nestedField: {
-          mapTarget: `test3`,
+          mapTarget: "test3",
         },
       },
-    ]
+    ];
 
-    it(`Links to single node by id`, async () => {
+    it("Links to single node by id", async () => {
       const nodes = [
         {
-          id: `1`,
-          linkedOnID: `node1`,
-          internal: { type: `Test` },
+          id: "1",
+          linkedOnID: "node1",
+          internal: { type: "Test" },
         },
         {
-          id: `2`,
-          linkedOnID: `not_existing`,
-          internal: { type: `Test` },
+          id: "2",
+          linkedOnID: "not_existing",
+          internal: { type: "Test" },
         },
-      ].concat(getMappingNodes())
+      ].concat(getMappingNodes());
       const result = await getQueryResult(
         nodes,
         `
@@ -850,29 +856,29 @@ describe(`GraphQL type inference`, () => {
         `,
         {
           typeMapping: {
-            "Test.linkedOnID": `MappingTest`,
-            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+            "Test.linkedOnID": "MappingTest",
+            "Test.linkedOnCustomField": "MappingTest.nestedField.mapTarget",
           },
-        }
-      )
+        },
+      );
 
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges.length).toEqual(2)
-      expect(result.data.allTest.edges[0].node.linkedOnID).toBeDefined()
-      expect(result.data.allTest.edges[1].node.linkedOnID).toEqual(null)
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges.length).toEqual(2);
+      expect(result.data.allTest.edges[0].node.linkedOnID).toBeDefined();
+      expect(result.data.allTest.edges[1].node.linkedOnID).toEqual(null);
       expect(result.data.allTest.edges[0].node.linkedOnID.label).toEqual(
-        `First node`
-      )
-    })
+        "First node",
+      );
+    });
 
-    it(`Links to array of nodes by id`, async () => {
+    it("Links to array of nodes by id", async () => {
       const nodes = [
         {
-          id: `3`,
-          linkedOnID: [`node1`, `node2`],
-          internal: { type: `Test` },
+          id: "3",
+          linkedOnID: ["node1", "node2"],
+          internal: { type: "Test" },
         },
-      ].concat(getMappingNodes())
+      ].concat(getMappingNodes());
       const result = await getQueryResult(
         nodes,
         `
@@ -882,37 +888,37 @@ describe(`GraphQL type inference`, () => {
         `,
         {
           typeMapping: {
-            "Test.linkedOnID": `MappingTest`,
-            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+            "Test.linkedOnID": "MappingTest",
+            "Test.linkedOnCustomField": "MappingTest.nestedField.mapTarget",
           },
-        }
-      )
+        },
+      );
 
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges.length).toEqual(1)
-      expect(result.data.allTest.edges[0].node.linkedOnID).toBeDefined()
-      expect(result.data.allTest.edges[0].node.linkedOnID.length).toEqual(2)
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges.length).toEqual(1);
+      expect(result.data.allTest.edges[0].node.linkedOnID).toBeDefined();
+      expect(result.data.allTest.edges[0].node.linkedOnID.length).toEqual(2);
       expect(result.data.allTest.edges[0].node.linkedOnID[0].label).toEqual(
-        `First node`
-      )
+        "First node",
+      );
       expect(result.data.allTest.edges[0].node.linkedOnID[1].label).toEqual(
-        `Second node`
-      )
-    })
+        "Second node",
+      );
+    });
 
-    it(`Links to single node by custom field`, async () => {
+    it("Links to single node by custom field", async () => {
       const nodes = [
         {
-          id: `1`,
-          linkedOnCustomField: `test2`,
-          internal: { type: `Test` },
+          id: "1",
+          linkedOnCustomField: "test2",
+          internal: { type: "Test" },
         },
         {
-          id: `2`,
-          linkedOnCustomField: `not_existing`,
-          internal: { type: `Test` },
+          id: "2",
+          linkedOnCustomField: "not_existing",
+          internal: { type: "Test" },
         },
-      ].concat(getMappingNodes())
+      ].concat(getMappingNodes());
       const result = await getQueryResult(
         nodes,
         `
@@ -922,33 +928,33 @@ describe(`GraphQL type inference`, () => {
         `,
         {
           typeMapping: {
-            "Test.linkedOnID": `MappingTest`,
-            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+            "Test.linkedOnID": "MappingTest",
+            "Test.linkedOnCustomField": "MappingTest.nestedField.mapTarget",
           },
-        }
-      )
+        },
+      );
 
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges.length).toEqual(2)
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges.length).toEqual(2);
       expect(
-        result.data.allTest.edges[0].node.linkedOnCustomField
-      ).toBeDefined()
+        result.data.allTest.edges[0].node.linkedOnCustomField,
+      ).toBeDefined();
       expect(result.data.allTest.edges[1].node.linkedOnCustomField).toEqual(
-        null
-      )
+        null,
+      );
       expect(
-        result.data.allTest.edges[0].node.linkedOnCustomField.label
-      ).toEqual(`Second node`)
-    })
+        result.data.allTest.edges[0].node.linkedOnCustomField.label,
+      ).toEqual("Second node");
+    });
 
-    it(`Links to array of nodes by custom field`, async () => {
+    it("Links to array of nodes by custom field", async () => {
       const nodes = [
         {
-          id: `1`,
-          linkedOnCustomField: [`test3`, `test1`],
-          internal: { type: `Test` },
+          id: "1",
+          linkedOnCustomField: ["test3", "test1"],
+          internal: { type: "Test" },
         },
-      ].concat(getMappingNodes())
+      ].concat(getMappingNodes());
       const result = await getQueryResult(
         nodes,
         `
@@ -958,11 +964,11 @@ describe(`GraphQL type inference`, () => {
         `,
         {
           typeMapping: {
-            "Test.linkedOnID": `MappingTest`,
-            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+            "Test.linkedOnID": "MappingTest",
+            "Test.linkedOnCustomField": "MappingTest.nestedField.mapTarget",
           },
-        }
-      )
+        },
+      );
 
       expect(result).toMatchInlineSnapshot(`
 Object {
@@ -985,42 +991,42 @@ Object {
     },
   },
 }
-`)
-    })
-  })
+`);
+    });
+  });
 
-  describe(`Linked inference from file URIs`, () => {
-    const dir = slash(path.resolve(`/path/`))
+  describe("Linked inference from file URIs", () => {
+    const dir = slash(path.resolve("/path/"));
     const getFileNodes = () => [
       {
-        id: `parent`,
-        internal: { type: `File` },
-        absolutePath: slash(path.resolve(dir, `index.md`)),
+        id: "parent",
+        internal: { type: "File" },
+        absolutePath: slash(path.resolve(dir, "index.md")),
         dir,
       },
       {
-        id: `file_1`,
-        internal: { type: `File` },
-        absolutePath: slash(path.resolve(dir, `file_1.jpg`)),
+        id: "file_1",
+        internal: { type: "File" },
+        absolutePath: slash(path.resolve(dir, "file_1.jpg")),
         dir,
       },
       {
-        id: `file_2`,
-        internal: { type: `File` },
-        absolutePath: slash(path.resolve(dir, `file_2.txt`)),
+        id: "file_2",
+        internal: { type: "File" },
+        absolutePath: slash(path.resolve(dir, "file_2.txt")),
         dir,
       },
-    ]
+    ];
 
-    it(`Links to file node`, async () => {
+    it("Links to file node", async () => {
       const nodes = [
         {
-          id: `1`,
-          file: `./file_1.jpg`,
-          parent: `parent`,
-          internal: { type: `Test` },
+          id: "1",
+          file: "./file_1.jpg",
+          parent: "parent",
+          internal: { type: "Test" },
         },
-      ].concat(getFileNodes())
+      ].concat(getFileNodes());
 
       const result = await getQueryResult(
         nodes,
@@ -1028,24 +1034,24 @@ Object {
           file {
             absolutePath
           }
-        `
-      )
+        `,
+      );
 
-      expect(result.errors).not.toBeDefined()
+      expect(result.errors).not.toBeDefined();
       expect(result.data.allTest.edges[0].node.file.absolutePath).toEqual(
-        slash(path.resolve(dir, `file_1.jpg`))
-      )
-    })
+        slash(path.resolve(dir, "file_1.jpg")),
+      );
+    });
 
-    it(`Links to array of file nodes`, async () => {
+    it("Links to array of file nodes", async () => {
       const nodes = [
         {
-          id: `1`,
-          files: [`./file_1.jpg`, `./file_2.txt`],
-          parent: `parent`,
-          internal: { type: `Test` },
+          id: "1",
+          files: ["./file_1.jpg", "./file_2.txt"],
+          parent: "parent",
+          internal: { type: "Test" },
         },
-      ].concat(getFileNodes())
+      ].concat(getFileNodes());
 
       const result = await getQueryResult(
         nodes,
@@ -1053,30 +1059,30 @@ Object {
           files {
             absolutePath
           }
-        `
-      )
+        `,
+      );
 
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges[0].node.files.length).toEqual(2)
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges[0].node.files.length).toEqual(2);
       expect(result.data.allTest.edges[0].node.files[0].absolutePath).toEqual(
-        slash(path.resolve(dir, `file_1.jpg`))
-      )
+        slash(path.resolve(dir, "file_1.jpg")),
+      );
       expect(result.data.allTest.edges[0].node.files[1].absolutePath).toEqual(
-        slash(path.resolve(dir, `file_2.txt`))
-      )
-    })
+        slash(path.resolve(dir, "file_2.txt")),
+      );
+    });
 
-    it(`Links to file node from non-standard field name`, async () => {
-      const fieldWithSpecialChars = `file-ж-ä-!@#$%^&*()_-=+:;'"?,~\``
+    it("Links to file node from non-standard field name", async () => {
+      const fieldWithSpecialChars = "file-ж-ä-!@#$%^&*()_-=+:;'\"?,~`";
       const nodes = [
         {
-          id: `1`,
-          "file-dashed": `./file_1.jpg`,
-          [fieldWithSpecialChars]: `./file_1.jpg`,
-          parent: `parent`,
-          internal: { type: `Test` },
+          id: "1",
+          "file-dashed": "./file_1.jpg",
+          [fieldWithSpecialChars]: "./file_1.jpg",
+          parent: "parent",
+          internal: { type: "Test" },
         },
-      ].concat(getFileNodes())
+      ].concat(getFileNodes());
 
       const result = await getQueryResult(
         nodes,
@@ -1087,138 +1093,142 @@ Object {
           file___________________________ {
             absolutePath
           }
-        `
-      )
+        `,
+      );
 
-      expect(result.errors).not.toBeDefined()
-      const node = result.data.allTest.edges[0].node
-      const expectedFilePath = slash(path.resolve(dir, `file_1.jpg`))
-      expect(node.file_dashed.absolutePath).toEqual(expectedFilePath)
+      expect(result.errors).not.toBeDefined();
+      const node = result.data.allTest.edges[0].node;
+      const expectedFilePath = slash(path.resolve(dir, "file_1.jpg"));
+      expect(node.file_dashed.absolutePath).toEqual(expectedFilePath);
       expect(node.file___________________________.absolutePath).toEqual(
-        expectedFilePath
-      )
-    })
-  })
+        expectedFilePath,
+      );
+    });
+  });
 
-  describe(`Linked inference by __NODE convention`, () => {
+  describe("Linked inference by __NODE convention", () => {
     const getLinkedNodes = () => [
-      { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
-      { id: `child_2`, internal: { type: `Child` }, hair: `blonde` },
-      { id: `pet_1`, internal: { type: `Pet` }, species: `dog` },
-    ]
+      { id: "child_1", internal: { type: "Child" }, hair: "brown" },
+      { id: "child_2", internal: { type: "Child" }, hair: "blonde" },
+      { id: "pet_1", internal: { type: "Pet" }, species: "dog" },
+    ];
 
-    it(`Links nodes`, async () => {
+    it("Links nodes", async () => {
       const nodes = [
-        { linked___NODE: `child_1`, internal: { type: `Test` }, id: `1` },
-      ].concat(getLinkedNodes())
+        { linked___NODE: "child_1", internal: { type: "Test" }, id: "1" },
+      ].concat(getLinkedNodes());
       const result = await getQueryResult(
         nodes,
         `
           linked {
             hair
           }
-        `
-      )
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges[0].node.linked.hair).toEqual(`brown`)
-    })
+        `,
+      );
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges[0].node.linked.hair).toEqual("brown");
+    });
 
-    it(`Links an array of nodes`, async () => {
-      const nodes = [
-        {
-          linked___NODE: [`child_1`, `child_2`],
-          internal: { type: `Test` },
-          id: `1`,
-        },
-      ].concat(getLinkedNodes())
-      const result = await getQueryResult(
-        nodes,
-        `
-          linked {
-            hair
-          }
-        `
-      )
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual(`brown`)
-      expect(result.data.allTest.edges[0].node.linked[1].hair).toEqual(`blonde`)
-    })
-
-    it(`Links nodes by field`, async () => {
-      const nodes = [
-        { linked___NODE___hair: `brown`, internal: { type: `Test` }, id: `1` },
-      ].concat(getLinkedNodes())
-      const result = await getQueryResult(
-        nodes,
-        `
-          linked {
-            hair
-          }
-        `
-      )
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges[0].node.linked.hair).toEqual(`brown`)
-    })
-
-    it(`Links an array of nodes by field`, async () => {
+    it("Links an array of nodes", async () => {
       const nodes = [
         {
-          linked___NODE___hair: [`brown`, `blonde`],
-          internal: { type: `Test` },
-          id: `1`,
+          linked___NODE: ["child_1", "child_2"],
+          internal: { type: "Test" },
+          id: "1",
         },
-      ].concat(getLinkedNodes())
+      ].concat(getLinkedNodes());
       const result = await getQueryResult(
         nodes,
         `
           linked {
             hair
           }
-        `
-      )
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual(`brown`)
-      expect(result.data.allTest.edges[0].node.linked[1].hair).toEqual(`blonde`)
-    })
+        `,
+      );
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual("brown");
+      expect(result.data.allTest.edges[0].node.linked[1].hair).toEqual(
+        "blonde",
+      );
+    });
 
-    it(`Errors clearly when missing nodes`, async () => {
-      expect.assertions(1)
+    it("Links nodes by field", async () => {
+      const nodes = [
+        { linked___NODE___hair: "brown", internal: { type: "Test" }, id: "1" },
+      ].concat(getLinkedNodes());
+      const result = await getQueryResult(
+        nodes,
+        `
+          linked {
+            hair
+          }
+        `,
+      );
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges[0].node.linked.hair).toEqual("brown");
+    });
+
+    it("Links an array of nodes by field", async () => {
+      const nodes = [
+        {
+          linked___NODE___hair: ["brown", "blonde"],
+          internal: { type: "Test" },
+          id: "1",
+        },
+      ].concat(getLinkedNodes());
+      const result = await getQueryResult(
+        nodes,
+        `
+          linked {
+            hair
+          }
+        `,
+      );
+      expect(result.errors).not.toBeDefined();
+      expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual("brown");
+      expect(result.data.allTest.edges[0].node.linked[1].hair).toEqual(
+        "blonde",
+      );
+    });
+
+    it("Errors clearly when missing nodes", async () => {
+      expect.assertions(1);
       try {
         await getInferredFields([
-          { linked___NODE: `baz`, internal: { type: `Test` }, id: `1` },
-        ])
+          { linked___NODE: "baz", internal: { type: "Test" }, id: "1" },
+        ]);
       } catch (e) {
         expect(e.message).toEqual(
-          `Encountered an error trying to infer a GraphQL type ` +
-            `for: \`linked___NODE\`. There is no corresponding node with the \`id\` ` +
-            `field matching: "baz".`
-        )
+          "Encountered an error trying to infer a GraphQL type " +
+            "for: `linked___NODE`. There is no corresponding node with the `id` " +
+            'field matching: "baz".',
+        );
       }
-    })
+    });
 
     // We can't miss types anymore
-    it.skip(`Errors clearly when missing types`, async () => {
+    it.skip("Errors clearly when missing types", async () => {
       expect(async () => {
         await getInferredFields([
-          { id: `baz`, internal: { type: `Bar` } },
-          { linked___NODE: `baz`, internal: { type: `Test` }, id: `1` },
-        ])
+          { id: "baz", internal: { type: "Bar" } },
+          { linked___NODE: "baz", internal: { type: "Test" }, id: "1" },
+        ]);
       }).toThrow(
-        `Encountered an error trying to infer a GraphQL type ` +
-          `for: \`linked___NODE\`. There is no corresponding GraphQL type ` +
-          `\`Bar\` available to link to this node.`
-      )
-    })
+        "Encountered an error trying to infer a GraphQL type " +
+          "for: `linked___NODE`. There is no corresponding GraphQL type " +
+          "`Bar` available to link to this node.",
+      );
+    });
 
-    describe(`Creation of union types when array field is linking to multiple types`, () => {
-      it(`Creates union types`, async () => {
+    describe("Creation of union types when array field is linking to multiple types", () => {
+      it("Creates union types", async () => {
         const nodes = [
           {
-            linked___NODE: [`child_1`, `pet_1`],
-            internal: { type: `Test` },
-            id: `1`,
+            linked___NODE: ["child_1", "pet_1"],
+            internal: { type: "Test" },
+            id: "1",
           },
-        ].concat(getLinkedNodes())
+        ].concat(getLinkedNodes());
         const result = await getQueryResult(
           nodes,
           `
@@ -1231,90 +1241,90 @@ Object {
                 species
               }
             }
-          `
-        )
-        expect(result.errors).not.toBeDefined()
+          `,
+        );
+        expect(result.errors).not.toBeDefined();
         expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual(
-          `brown`
-        )
+          "brown",
+        );
         expect(result.data.allTest.edges[0].node.linked[0].__typename).toEqual(
-          `Child`
-        )
+          "Child",
+        );
         expect(result.data.allTest.edges[0].node.linked[1].species).toEqual(
-          `dog`
-        )
+          "dog",
+        );
         expect(result.data.allTest.edges[0].node.linked[1].__typename).toEqual(
-          `Pet`
-        )
-      })
+          "Pet",
+        );
+      });
 
-      it(`Uses same union type for same child node types and key`, async () => {
+      it("Uses same union type for same child node types and key", async () => {
         const nodes = [
           {
-            test___NODE: [`pet_1`, `child_1`],
-            internal: { type: `Test` },
-            id: `1`,
+            test___NODE: ["pet_1", "child_1"],
+            internal: { type: "Test" },
+            id: "1",
           },
           {
-            test___NODE: [`pet_1`, `child_2`],
-            internal: { type: `OtherType` },
-            id: `2`,
+            test___NODE: ["pet_1", "child_2"],
+            internal: { type: "OtherType" },
+            id: "2",
           },
-        ].concat(getLinkedNodes())
-        const { schema } = await buildTestSchema(nodes)
-        const fields = schema.getType(`Test`).getFields()
-        const otherFields = schema.getType(`OtherType`).getFields()
+        ].concat(getLinkedNodes());
+        const { schema } = await buildTestSchema(nodes);
+        const fields = schema.getType("Test").getFields();
+        const otherFields = schema.getType("OtherType").getFields();
 
         expect(fields.test.type.ofType.name).toBe(
-          otherFields.test.type.ofType.name
-        )
+          otherFields.test.type.ofType.name,
+        );
         expect(fields.test.type.ofType.getTypes()).toEqual(
-          otherFields.test.type.ofType.getTypes()
-        )
-        expect(fields.test.type.ofType).toBe(otherFields.test.type.ofType)
-      })
+          otherFields.test.type.ofType.getTypes(),
+        );
+        expect(fields.test.type.ofType).toBe(otherFields.test.type.ofType);
+      });
 
-      it.skip(`Uses a different type for the same child node types with a different key`, () => {
+      it.skip("Uses a different type for the same child node types with a different key", () => {
         // NOTE: We don't do that anymore
-      })
+      });
 
-      it(`Uses a different type for different child node types with the same key`, async () => {
+      it("Uses a different type for different child node types with the same key", async () => {
         const nodes = [
-          { id: `toy_1`, internal: { type: `Toy` } },
+          { id: "toy_1", internal: { type: "Toy" } },
           {
-            test___NODE: [`pet_1`, `child_1`],
-            internal: { type: `Test` },
-            id: `1`,
+            test___NODE: ["pet_1", "child_1"],
+            internal: { type: "Test" },
+            id: "1",
           },
           {
-            test___NODE: [`pet_1`, `child_2`, `toy_1`],
-            internal: { type: `OtherType` },
-            id: `2`,
+            test___NODE: ["pet_1", "child_2", "toy_1"],
+            internal: { type: "OtherType" },
+            id: "2",
           },
-        ].concat(getLinkedNodes())
-        const { schema } = await buildTestSchema(nodes)
-        const fields = schema.getType(`Test`).getFields()
-        const otherFields = schema.getType(`OtherType`).getFields()
+        ].concat(getLinkedNodes());
+        const { schema } = await buildTestSchema(nodes);
+        const fields = schema.getType("Test").getFields();
+        const otherFields = schema.getType("OtherType").getFields();
 
-        expect(fields.test.type.ofType.name).toBe(`ChildPetUnion`)
-        expect(otherFields.test.type.ofType.name).toBe(`ChildPetToyUnion`)
+        expect(fields.test.type.ofType.name).toBe("ChildPetUnion");
+        expect(otherFields.test.type.ofType.name).toBe("ChildPetToyUnion");
         expect(fields.test.type.ofType).not.toEqual(
-          otherFields.test.type.ofType
-        )
-      })
+          otherFields.test.type.ofType,
+        );
+      });
 
-      it.skip(`Creates a new type after schema updates clear union types`, () => {
+      it.skip("Creates a new type after schema updates clear union types", () => {
         // NOTE: We don't clear union types anymore
-      })
+      });
 
-      it.skip(`Uses a reliable naming convention`, () => {
+      it.skip("Uses a reliable naming convention", () => {
         // NOTE: We don't postfix union type names anymore
-      })
-    })
-  })
+      });
+    });
+  });
 
-  it(`Infers graphql type from array of nodes`, async () => {
-    const nodes = makeNodes()
+  it("Infers graphql type from array of nodes", async () => {
+    const nodes = makeNodes();
     const result = await getQueryResult(
       nodes,
       `
@@ -1352,52 +1362,52 @@ Object {
           title,
           date(formatString: "YYYY")
         }
-    `
-    )
-    expect(result).toMatchSnapshot()
-  })
+    `,
+    );
+    expect(result).toMatchSnapshot();
+  });
 
-  describe(`type conflicts`, () => {
-    it(`catches conflicts and removes field`, async () => {
+  describe("type conflicts", () => {
+    it("catches conflicts and removes field", async () => {
       const nodes = [
-        { foo: `foo`, number: 1.1, internal: { type: `Test` }, id: `1` },
-        { foo: `bar`, number: `1`, internal: { type: `Test` }, id: `2` },
-      ]
-      const result = await getQueryResult(
-        nodes,
-        `
-          foo
-          number
-        `
-      )
-      expect(typeConflictReporter.getConflicts()).toMatchSnapshot()
-
-      expect(result.errors.length).toEqual(1)
-      expect(result.errors[0].message).toMatch(
-        `Cannot query field "number" on type "Test".`
-      )
-    })
-
-    // FIXME, ignoreFields isn't passable, Do we create type with typedefs and test it?
-    it.skip(`does not warn about provided types`, async () => {
-      const nodes = [
-        { foo: `foo`, number: 1.1, internal: { type: `Test` }, id: `1` },
-        { foo: `bar`, number: `1`, internal: { type: `Test` }, id: `2` },
-      ]
+        { foo: "foo", number: 1.1, internal: { type: "Test" }, id: "1" },
+        { foo: "bar", number: "1", internal: { type: "Test" }, id: "2" },
+      ];
       const result = await getQueryResult(
         nodes,
         `
           foo
           number
         `,
-        { ignoreFields: [`number`] }
-      )
-      expect(typeConflictReporter.getConflicts()).toEqual([])
+      );
+      expect(typeConflictReporter.getConflicts()).toMatchSnapshot();
 
-      expect(result.errors.length).toEqual(1)
+      expect(result.errors.length).toEqual(1);
       expect(result.errors[0].message).toMatch(
-        `Cannot query field "number" on type "Test".`
-      )
-    })
-  })
-})
+        'Cannot query field "number" on type "Test".',
+      );
+    });
+
+    // FIXME, ignoreFields isn't passable, Do we create type with typedefs and test it?
+    it.skip("does not warn about provided types", async () => {
+      const nodes = [
+        { foo: "foo", number: 1.1, internal: { type: "Test" }, id: "1" },
+        { foo: "bar", number: "1", internal: { type: "Test" }, id: "2" },
+      ];
+      const result = await getQueryResult(
+        nodes,
+        `
+          foo
+          number
+        `,
+        { ignoreFields: ["number"] },
+      );
+      expect(typeConflictReporter.getConflicts()).toEqual([]);
+
+      expect(result.errors.length).toEqual(1);
+      expect(result.errors[0].message).toMatch(
+        'Cannot query field "number" on type "Test".',
+      );
+    });
+  });
+});

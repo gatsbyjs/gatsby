@@ -9,18 +9,18 @@ File `worker.ts`:
 ```ts
 export async function heavyTask(param: string): Promise<string> {
   // using workers is ideal for CPU intensive tasks
-  return await heavyProcessing(param)
+  return await heavyProcessing(param);
 }
 
 export async function setupStep(param: string): Promise<void> {
-  await heavySetup(param)
+  await heavySetup(param);
 }
 ```
 
 File `parent.ts`:
 
 ```ts
-import { WorkerPool } from "gatsby-worker"
+import { WorkerPool } from "gatsby-worker";
 
 const workerPool = new WorkerPool<typeof import("./worker")>(
   require.resolve(`./worker`),
@@ -30,14 +30,14 @@ const workerPool = new WorkerPool<typeof import("./worker")>(
       CUSTOM_ENV_VAR_TO_SET_IN_WORKER: `foo`,
     },
     silent: false,
-  }
-)
+  },
+);
 
 // queue a task on all workers
-const arrayOfPromises = workerPool.all.setupStep(`bar`)
+const arrayOfPromises = workerPool.all.setupStep(`bar`);
 
 // queue a task on single worker
-const singlePromise = workerPool.single.heavyTask(`baz`)
+const singlePromise = workerPool.single.heavyTask(`baz`);
 ```
 
 ## API
@@ -54,13 +54,13 @@ const workerPool = new WorkerPool<TypeOfWorkerModule>(
   // Not required options
   options?: {
     // Number of workers to spawn. Defaults to `1` if not defined.
-    numWorkers?: number
+    numWorkers?: number | undefined
     // Additional env vars to set in worker. Worker will inherit env vars of parent process
     // as well as additional `GATSBY_WORKER_ID` env var (starting with "1" for first worker)
-    env?: Record<string, string>,
+    env?: Record<string, string> | undefined,
     // Whether or not the output from forked process should ignored. Defaults to `false` if not defined.
-    silent?: boolean,
-  }
+    silent?: boolean | undefined,
+  } | undefined
 )
 ```
 
@@ -70,7 +70,7 @@ const workerPool = new WorkerPool<TypeOfWorkerModule>(
 // Exports of the worker module become available under `.single` property of `WorkerPool` instance.
 // Calling those will either start executing immediately if there are any idle workers or queue them
 // to be executed once a worker become idle.
-const singlePromise = workerPool.single.heavyTask(`baz`)
+const singlePromise = workerPool.single.heavyTask(`baz`);
 ```
 
 ### `.all`
@@ -79,21 +79,21 @@ const singlePromise = workerPool.single.heavyTask(`baz`)
 // Exports of the worker module become available under `.all` property of `WorkerPool` instance.
 // Calling those will ensure a function is executed on all workers. Best usage for this is performing
 // setup/bootstrap of workers.
-const arrayOfPromises = workerPool.all.setupStep(`baz`)
+const arrayOfPromises = workerPool.all.setupStep(`baz`);
 ```
 
 ### `.end`
 
 ```ts
 // Used to shutdown `WorkerPool`. If there are any in progress or queued tasks, promises for those will be rejected as they won't be able to complete.
-const arrayOfPromises = workerPool.end()
+const arrayOfPromises = workerPool.end();
 ```
 
 ### `isWorker`
 
 ```ts
 // Determine if current context is executed in worker context. Useful for conditional handling depending on context.
-import { isWorker } from "gatsby-worker"
+import { isWorker } from "gatsby-worker";
 
 if (isWorker) {
   // this is executed in worker context
@@ -114,74 +114,74 @@ File `message-types.ts`:
 // `gatsby-worker` supports message types. Creating common module that centralize possible messages
 // that is shared by worker and parent will ensure messages type safety.
 interface IPingMessage {
-  type: `PING`
+  type: `PING`;
 }
 
 interface IAnotherMessageFromChild {
-  type: `OTHER_MESSAGE_FROM_CHILD`
+  type: `OTHER_MESSAGE_FROM_CHILD`;
   payload: {
-    foo: string
-  }
+    foo: string;
+  };
 }
 
-export type MessagesFromChild = IPingMessage | IAnotherMessageFromChild
+export type MessagesFromChild = IPingMessage | IAnotherMessageFromChild;
 
 interface IPongMessage {
-  type: `PONG`
+  type: `PONG`;
 }
 
 interface IAnotherMessageFromParent {
-  type: `OTHER_MESSAGE_FROM_PARENT`
+  type: `OTHER_MESSAGE_FROM_PARENT`;
   payload: {
-    foo: string
-  }
+    foo: string;
+  };
 }
 
-export type MessagesFromParent = IPongMessage | IAnotherMessageFromParent
+export type MessagesFromParent = IPongMessage | IAnotherMessageFromParent;
 ```
 
 File `worker.ts`:
 
 ```ts
-import { getMessenger } from "gatsby-worker"
+import { getMessenger } from "gatsby-worker";
 
-import { MessagesFromParent, MessagesFromChild } from "./message-types"
+import { MessagesFromParent, MessagesFromChild } from "./message-types";
 
-const messenger = getMessenger<MessagesFromParent, MessagesFromChild>()
+const messenger = getMessenger<MessagesFromParent, MessagesFromChild>();
 // messenger might be `undefined` if `getMessenger`
 // is called NOT in worker context
 if (messenger) {
   // send a message to a parent
-  messenger.send({ type: `PING` })
+  messenger.send({ type: `PING` });
   messenger.send({
     type: `OTHER_MESSAGE_FROM_CHILD`,
     payload: {
       foo: `bar`,
     },
-  })
+  });
 
   // following would cause type error as message like that is
   // not part of MessagesFromChild type union
   // messenger.send({ type: `NOT_PART_OF_TYPES` })
 
   // start listening to messages from parent
-  messenger.onMessage(msg => {
+  messenger.onMessage((msg) => {
     switch (msg.type) {
       case `PONG`: {
         // handle PONG message
-        break
+        break;
       }
       case `OTHER_MESSAGE_FROM_PARENT`: {
         // msg.payload.foo will be typed as `string` here
         // handle
-        break
+        break;
       }
 
       // following would cause type error as there is no msg with
       // given type as part of MessagesFromParent type union
       // case `NOT_PART_OF_TYPES`: {}
     }
-  })
+  });
 }
 ```
 
@@ -239,7 +239,7 @@ const testWorkerPool = new WorkerPool<WorkerModuleType>(workerModule, {
   env: {
     NODE_OPTIONS: `--require ${require.resolve(`./ts-register`)}`,
   },
-})
+});
 ```
 
 This will execute additional module before allowing adding runtime support for new JavaScript syntax or support for TypeScript. Example `ts-register.js`:
@@ -250,5 +250,5 @@ require(`@babel/register`)({
   extensions: [`.js`, `.ts`],
   configFile: require.resolve(relativePathToYourBabelConfig),
   ignore: [/node_modules/],
-})
+});
 ```

@@ -1,4 +1,4 @@
-import { VALID_NODE_NAMES } from "./constants"
+import { VALID_NODE_NAMES } from "./constants";
 
 /**
  * Filter the props coming from a page down to just the ones that are relevant for head.
@@ -13,31 +13,31 @@ export function filterHeadProps(input) {
     data: input.data || {},
     serverData: input.serverData,
     pageContext: input.pageContext,
-  }
+  };
 }
 
 /**
  * Throw error if Head export is not a valid function
  */
 export function headExportValidator(head) {
-  if (typeof head !== `function`)
+  if (typeof head !== "function")
     throw new Error(
-      `Expected "Head" export to be a function got "${typeof head}".`
-    )
+      `Expected "Head" export to be a function got "${typeof head}".`,
+    );
 }
 
 /**
  * Warn once for same messsage
  */
-let warnOnce = _ => {}
-if (process.env.NODE_ENV !== `production`) {
-  const warnings = new Set()
-  warnOnce = msg => {
+let warnOnce = (_) => {};
+if (process.env.NODE_ENV !== "production") {
+  const warnings = new Set();
+  warnOnce = (msg) => {
     if (!warnings.has(msg)) {
-      console.warn(msg)
+      console.warn(msg);
     }
-    warnings.add(msg)
-  }
+    warnings.add(msg);
+  };
 }
 
 /**
@@ -45,16 +45,16 @@ if (process.env.NODE_ENV !== `production`) {
  * @param {string} tagName
  */
 export function warnForInvalidTag(tagName) {
-  if (process.env.NODE_ENV !== `production`) {
-    const warning = createWarningForInvalidTag(tagName)
-    warnOnce(warning)
+  if (process.env.NODE_ENV !== "production") {
+    const warning = createWarningForInvalidTag(tagName);
+    warnOnce(warning);
   }
 }
 
 function createWarningForInvalidTag(tagName) {
   return `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
-    `, `
-  )}.\n\nAlso make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: https://gatsby.dev/invalid-head-elements`
+    ", ",
+  )}.\n\nAlso make sure that wrapRootElement in gatsby-ssr/gatsby-browser doesn't contain UI elements: https://gatsby.dev/invalid-head-elements`;
 }
 
 /**
@@ -73,37 +73,37 @@ function createWarningForInvalidTag(tagName) {
  */
 export function isEqualNode(oldTag, newTag) {
   if (oldTag instanceof HTMLElement && newTag instanceof HTMLElement) {
-    const nonce = newTag.getAttribute(`nonce`)
+    const nonce = newTag.getAttribute("nonce");
     // Only strip the nonce if `oldTag` has had it stripped. An element's nonce attribute will not
     // be stripped if there is no content security policy response header that includes a nonce.
-    if (nonce && !oldTag.getAttribute(`nonce`)) {
-      const cloneTag = newTag.cloneNode(true)
-      cloneTag.setAttribute(`nonce`, ``)
-      cloneTag.nonce = nonce
-      return nonce === oldTag.nonce && oldTag.isEqualNode(cloneTag)
+    if (nonce && !oldTag.getAttribute("nonce")) {
+      const cloneTag = newTag.cloneNode(true);
+      cloneTag.setAttribute("nonce", "");
+      cloneTag.nonce = nonce;
+      return nonce === oldTag.nonce && oldTag.isEqualNode(cloneTag);
     }
   }
 
-  return oldTag.isEqualNode(newTag)
+  return oldTag.isEqualNode(newTag);
 }
 
 export function diffNodes({ oldNodes, newNodes, onStale, onNew }) {
   for (const existingHeadElement of oldNodes) {
-    const indexInNewNodes = newNodes.findIndex(e =>
-      isEqualNode(e, existingHeadElement)
-    )
+    const indexInNewNodes = newNodes.findIndex((e) =>
+      isEqualNode(e, existingHeadElement),
+    );
 
     if (indexInNewNodes === -1) {
-      onStale(existingHeadElement)
+      onStale(existingHeadElement);
     } else {
       // this node is re-created as-is, so we keep old node, and remove it from list of new nodes (as we handled it already here)
-      newNodes.splice(indexInNewNodes, 1)
+      newNodes.splice(indexInNewNodes, 1);
     }
   }
 
   // remaing new nodes didn't have matching old node, so need to be added
   for (const newNode of newNodes) {
-    onNew(newNode)
+    onNew(newNode);
   }
 }
 
@@ -112,31 +112,31 @@ export function getValidHeadNodesAndAttributes(
   htmlAndBodyAttributes = {
     html: {},
     body: {},
-  }
+  },
 ) {
-  const seenIds = new Map()
-  const validHeadNodes = []
+  const seenIds = new Map();
+  const validHeadNodes = [];
 
   // Filter out non-element nodes before looping since we don't care about them
   for (const node of rootNode.childNodes) {
-    const nodeName = node.nodeName.toLowerCase()
-    const id = node.attributes?.id?.value
+    const nodeName = node.nodeName.toLowerCase();
+    const id = node.attributes?.id?.value;
 
-    if (!isElementType(node)) continue
+    if (!isElementType(node)) continue;
 
     if (isValidNodeName(nodeName)) {
       // <html> and <body> tags are treated differently, in that we don't render them, we only extract the attributes and apply them separetely
-      if (nodeName === `html` || nodeName === `body`) {
+      if (nodeName === "html" || nodeName === "body") {
         for (const attribute of node.attributes) {
-          const isStyleAttribute = attribute.name === `style`
+          const isStyleAttribute = attribute.name === "style";
 
           // Merge attributes for same nodeName from previous loop iteration
           htmlAndBodyAttributes[nodeName] = {
             ...htmlAndBodyAttributes[nodeName],
-          }
+          };
 
           if (!isStyleAttribute) {
-            htmlAndBodyAttributes[nodeName][attribute.name] = attribute.value
+            htmlAndBodyAttributes[nodeName][attribute.name] = attribute.value;
           }
 
           // If there is already a style attribute, we need to merge them as otherwise the last one will "win"
@@ -144,122 +144,122 @@ export function getValidHeadNodesAndAttributes(
             htmlAndBodyAttributes[nodeName].style = `${
               htmlAndBodyAttributes[nodeName]?.style
                 ? htmlAndBodyAttributes[nodeName].style
-                : ``
-            }${attribute.value} `
+                : ""
+            }${attribute.value} `;
           }
         }
       } else {
-        let clonedNode = node.cloneNode(true)
-        clonedNode.setAttribute(`data-gatsby-head`, true)
+        let clonedNode = node.cloneNode(true);
+        clonedNode.setAttribute("data-gatsby-head", true);
 
         // // This is hack to make script tags work
-        if (clonedNode.nodeName.toLowerCase() === `script`) {
-          clonedNode = massageScript(clonedNode)
+        if (clonedNode.nodeName.toLowerCase() === "script") {
+          clonedNode = massageScript(clonedNode);
         }
         // Duplicate ids are not allowed in the head, so we need to dedupe them
         if (id) {
           if (!seenIds.has(id)) {
-            validHeadNodes.push(clonedNode)
-            seenIds.set(id, validHeadNodes.length - 1)
+            validHeadNodes.push(clonedNode);
+            seenIds.set(id, validHeadNodes.length - 1);
           } else {
-            const indexOfPreviouslyInsertedNode = seenIds.get(id)
+            const indexOfPreviouslyInsertedNode = seenIds.get(id);
             validHeadNodes[
               indexOfPreviouslyInsertedNode
             ].parentNode?.removeChild(
-              validHeadNodes[indexOfPreviouslyInsertedNode]
-            )
-            validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
+              validHeadNodes[indexOfPreviouslyInsertedNode],
+            );
+            validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode;
           }
         } else {
-          validHeadNodes.push(clonedNode)
+          validHeadNodes.push(clonedNode);
         }
       }
     } else {
-      warnForInvalidTag(nodeName)
+      warnForInvalidTag(nodeName);
     }
 
     if (node.childNodes.length) {
       validHeadNodes.push(
         ...getValidHeadNodesAndAttributes(node, htmlAndBodyAttributes)
-          .validHeadNodes
-      )
+          .validHeadNodes,
+      );
     }
   }
 
-  return { validHeadNodes, htmlAndBodyAttributes }
+  return { validHeadNodes, htmlAndBodyAttributes };
 }
 
 function massageScript(node) {
-  const script = document.createElement(`script`)
+  const script = document.createElement("script");
   for (const attr of node.attributes) {
-    script.setAttribute(attr.name, attr.value)
+    script.setAttribute(attr.name, attr.value);
   }
-  script.innerHTML = node.innerHTML
+  script.innerHTML = node.innerHTML;
 
-  return script
+  return script;
 }
 
 export function isValidNodeName(nodeName) {
-  return VALID_NODE_NAMES.includes(nodeName)
+  return VALID_NODE_NAMES.includes(nodeName);
 }
 /*
  * For Head, we only care about element nodes(type = 1), so this util is used to skip over non-element nodes
  * For Node type, see https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
  */
 export function isElementType(node) {
-  return node.nodeType === 1
+  return node.nodeType === 1;
 }
 
 /**
  * Removes all the head elements that were added by `Head`
  */
 export function removePrevHeadElements() {
-  const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
+  const prevHeadNodes = document.querySelectorAll("[data-gatsby-head]");
   for (const node of prevHeadNodes) {
-    node.parentNode.removeChild(node)
+    node.parentNode.removeChild(node);
   }
 }
 
 export function applyHtmlAndBodyAttributes(htmlAndBodyAttributes) {
-  if (!htmlAndBodyAttributes) return
+  if (!htmlAndBodyAttributes) return;
 
-  const { html, body } = htmlAndBodyAttributes
+  const { html, body } = htmlAndBodyAttributes;
 
-  const htmlElement = document.querySelector(`html`)
+  const htmlElement = document.querySelector("html");
   if (htmlElement) {
     Object.entries(html).forEach(([attributeName, attributeValue]) => {
-      htmlElement.setAttribute(attributeName, attributeValue)
-    })
+      htmlElement.setAttribute(attributeName, attributeValue);
+    });
   }
 
-  const bodyElement = document.querySelector(`body`)
+  const bodyElement = document.querySelector("body");
   if (bodyElement) {
     Object.entries(body).forEach(([attributeName, attributeValue]) => {
-      bodyElement.setAttribute(attributeName, attributeValue)
-    })
+      bodyElement.setAttribute(attributeName, attributeValue);
+    });
   }
 }
 
 export function removeHtmlAndBodyAttributes(htmlAndBodyattributeList) {
-  if (!htmlAndBodyattributeList) return
+  if (!htmlAndBodyattributeList) return;
 
-  const { html, body } = htmlAndBodyattributeList
+  const { html, body } = htmlAndBodyattributeList;
 
   if (html) {
-    const htmlElement = document.querySelector(`html`)
-    html.forEach(attributeName => {
+    const htmlElement = document.querySelector("html");
+    html.forEach((attributeName) => {
       if (htmlElement) {
-        htmlElement.removeAttribute(attributeName)
+        htmlElement.removeAttribute(attributeName);
       }
-    })
+    });
   }
 
   if (body) {
-    const bodyElement = document.querySelector(`body`)
-    body.forEach(attributeName => {
+    const bodyElement = document.querySelector("body");
+    body.forEach((attributeName) => {
       if (bodyElement) {
-        bodyElement.removeAttribute(attributeName)
+        bodyElement.removeAttribute(attributeName);
       }
-    })
+    });
   }
 }

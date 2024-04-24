@@ -1,3 +1,3 @@
-const { wrapModuleWithTracking } = require(`./tracking-unsafe-module-wrapper`)
+const { wrapModuleWithTracking } = require("./tracking-unsafe-module-wrapper");
 
-module.exports = wrapModuleWithTracking(`http2`)
+module.exports = wrapModuleWithTracking("http2");

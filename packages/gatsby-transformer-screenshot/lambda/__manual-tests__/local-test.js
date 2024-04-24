@@ -1,4 +1,4 @@
-const thing = require(`../index`)
+const thing = require("../index")
 const url = process.env.SITE_URL
 
 const start = async () => {
@@ -8,11 +8,11 @@ const start = async () => {
     },
     {
       fail: err => {
-        console.log(`error:`)
+        console.log("error:")
         console.log(err)
       },
       succeed: res => {
-        console.log(`success!`)
+        console.log("success!")
         console.log(res)
       },
     }

@@ -1,15 +1,15 @@
-import { getStore } from "~/store"
+import { getStore } from "~/store";
 import {
   getTypeSettingsByType,
   findNamedTypeName,
   findTypeKind,
-} from "~/steps/create-schema-customization/helpers"
+} from "~/steps/create-schema-customization/helpers";
 import {
   fieldIsExcludedOnParentType,
   fieldIsExcludedOnAll,
-} from "~/steps/ingest-remote-schema/is-excluded"
-import { returnAliasedFieldName } from "~/steps/create-schema-customization/transform-fields"
-import { typeIsExcluded } from "../is-excluded"
+} from "~/steps/ingest-remote-schema/is-excluded";
+import { returnAliasedFieldName } from "~/steps/create-schema-customization/transform-fields";
+import { typeIsExcluded } from "../is-excluded";
 
 export const transformInlineFragments = ({
   possibleTypes,
@@ -26,42 +26,42 @@ export const transformInlineFragments = ({
   buildingFragment = false,
   ancestorTypeNames: parentAncestorTypeNames = [],
 }) => {
-  const state = getStore().getState()
+  const state = getStore().getState();
 
   if (!typeMap) {
-    typeMap = state.remoteSchema.typeMap
+    typeMap = state.remoteSchema.typeMap;
   }
 
-  const { pluginOptions } = state.gatsbyApi
+  const { pluginOptions } = state.gatsbyApi;
 
   if (!maxDepth) {
-    maxDepth = pluginOptions.schema.queryDepth
+    maxDepth = pluginOptions.schema.queryDepth;
   }
 
   if (!circularQueryLimit) {
-    circularQueryLimit = pluginOptions.circularQueryLimit
+    circularQueryLimit = pluginOptions.circularQueryLimit;
   }
 
   if (!gatsbyNodesInfo) {
-    gatsbyNodesInfo = state.remoteSchema.gatsbyNodesInfo
+    gatsbyNodesInfo = state.remoteSchema.gatsbyNodesInfo;
   }
 
-  const ancestorTypeNames = [...parentAncestorTypeNames]
+  const ancestorTypeNames = [...parentAncestorTypeNames];
 
   const transformedInlineFragments = possibleTypes
-    .map(possibleType => {
-      possibleType = { ...possibleType }
+    .map((possibleType) => {
+      possibleType = { ...possibleType };
 
-      const type = typeMap.get(possibleType.name)
+      const type = typeMap.get(possibleType.name);
 
       if (!type) {
-        return false
+        return false;
       }
 
-      const typeSettings = getTypeSettingsByType(type)
+      const typeSettings = getTypeSettingsByType(type);
 
       if (typeSettings.exclude) {
-        return false
+        return false;
       }
 
       if (
@@ -70,36 +70,36 @@ export const transformInlineFragments = ({
           typeName: findNamedTypeName(type),
         })
       ) {
-        return false
+        return false;
       }
 
-      possibleType.type = { ...type }
+      possibleType.type = { ...type };
 
       // save this type so we can use it in schema customization
-      getStore().dispatch.remoteSchema.addFetchedType(type)
+      getStore().dispatch.remoteSchema.addFetchedType(type);
 
       const isAGatsbyNode = gatsbyNodesInfo.typeNames.includes(
-        possibleType.name
-      )
+        possibleType.name,
+      );
 
       if (isAGatsbyNode && !buildGatsbyNodeFields) {
         // we use the id to link to the top level Gatsby node
-        possibleType.fields = [`id`]
-        return possibleType
+        possibleType.fields = ["id"];
+        return possibleType;
       }
 
-      const typeInfo = typeMap.get(possibleType.name)
+      const typeInfo = typeMap.get(possibleType.name);
 
-      let filteredFields = [...typeInfo.fields]
+      let filteredFields = [...typeInfo.fields];
 
-      if (parentType?.kind === `INTERFACE`) {
+      if (parentType?.kind === "INTERFACE") {
         // remove any fields from our fragment if the parent type already has them as shared fields
         filteredFields = filteredFields.filter(
-          filteredField =>
+          (filteredField) =>
             !parentType.fields.find(
-              parentField => parentField.name === filteredField.name
-            )
-        )
+              (parentField) => parentField.name === filteredField.name,
+            ),
+        );
       }
 
       if (typeInfo) {
@@ -113,30 +113,30 @@ export const transformInlineFragments = ({
           circularQueryLimit,
           mainType,
           parentField,
-        })
+        });
 
         if (!fields || !fields.length) {
-          return false
+          return false;
         }
 
-        possibleType.fields = [...fields]
-        return possibleType
+        possibleType.fields = [...fields];
+        return possibleType;
       }
 
-      return false
+      return false;
     })
-    .filter(Boolean)
+    .filter(Boolean);
 
-  return possibleTypes && depth <= maxDepth ? transformedInlineFragments : null
-}
+  return possibleTypes && depth <= maxDepth ? transformedInlineFragments : null;
+};
 
 // since we're counting circular types that may be on fields many levels up, incarnation felt like it works here ;) the types are born again in later generations
 const countIncarnations = ({ typeName, ancestorTypeNames }) =>
   ancestorTypeNames.length
     ? ancestorTypeNames.filter(
-        ancestorTypeName => ancestorTypeName === typeName
+        (ancestorTypeName) => ancestorTypeName === typeName,
       )?.length
-    : 0
+    : 0;
 
 export function transformField({
   field,
@@ -152,36 +152,36 @@ export function transformField({
   buildingFragment,
   mainType,
 } = {}) {
-  const ancestorTypeNames = [...parentAncestorTypeNames]
+  const ancestorTypeNames = [...parentAncestorTypeNames];
 
   // we're potentially infinitely recursing when fields are connected to other types that have fields that are connections to other types
   //  so we need a maximum limit for that
   if (depth > maxDepth) {
-    return false
+    return false;
   }
 
-  depth++
+  depth++;
 
   // if the field has no type we can't use it.
   if (!field || !field.type) {
-    return false
+    return false;
   }
 
-  const typeSettings = getTypeSettingsByType(field.type)
+  const typeSettings = getTypeSettingsByType(field.type);
 
   if (typeSettings.exclude) {
-    return false
+    return false;
   }
 
   // count the number of times this type has appeared as an ancestor of itself
   // somewhere up the tree
-  const typeName = findNamedTypeName(field.type)
-  const typeKind = findTypeKind(field.type)
+  const typeName = findNamedTypeName(field.type);
+  const typeKind = findTypeKind(field.type);
 
   const typeIncarnationCount = countIncarnations({
     typeName,
     ancestorTypeNames,
-  })
+  });
 
   if (typeIncarnationCount > 0) {
     // this type is nested within itself atleast once
@@ -201,22 +201,22 @@ export function transformField({
       queryDepth: maxDepth,
       buildingFragment,
       mainType,
-    })
+    });
   }
 
   if (typeIncarnationCount >= circularQueryLimit) {
-    return false
+    return false;
   }
 
   // this is used to alias fields that conflict with Gatsby node fields
   // for ex Gatsby and WPGQL both have a `parent` field
-  const fieldName = returnAliasedFieldName({ fieldAliases, field })
+  const fieldName = returnAliasedFieldName({ fieldAliases, field });
 
   if (
     fieldBlacklist.includes(field.name) ||
     fieldBlacklist.includes(fieldName)
   ) {
-    return false
+    return false;
   }
 
   // remove fields that have required args. They'll cause query errors if omitted
@@ -224,55 +224,55 @@ export function transformField({
   if (
     field.args &&
     field.args.length &&
-    field.args.find(arg => arg?.type?.kind === `NON_NULL`)
+    field.args.find((arg) => arg?.type?.kind === "NON_NULL")
   ) {
-    return false
+    return false;
   }
 
-  const fieldType = typeMap.get(findNamedTypeName(field.type)) || {}
-  const ofType = typeMap.get(findNamedTypeName(fieldType.ofType)) || {}
+  const fieldType = typeMap.get(findNamedTypeName(field.type)) || {};
+  const ofType = typeMap.get(findNamedTypeName(fieldType.ofType)) || {};
 
   if (
-    fieldType.kind === `SCALAR` ||
-    fieldType.kind === `ENUM` ||
-    (fieldType.kind === `NON_NULL` && ofType.kind === `SCALAR`) ||
-    (fieldType.kind === `LIST` && fieldType.ofType.kind === `SCALAR`) ||
+    fieldType.kind === "SCALAR" ||
+    fieldType.kind === "ENUM" ||
+    (fieldType.kind === "NON_NULL" && ofType.kind === "SCALAR") ||
+    (fieldType.kind === "LIST" && fieldType.ofType.kind === "SCALAR") ||
     // a list of enums has no type name, so findNamedTypeName above finds the enum type
     // instead of the field type. Need to explicitly check here
     // instead of using helpers
-    (field.type.kind === `LIST` && field.type?.ofType?.kind === `ENUM`)
+    (field.type.kind === "LIST" && field.type?.ofType?.kind === "ENUM")
   ) {
     return {
       fieldName,
       fieldType,
-    }
+    };
   }
 
   const isListOfGatsbyNodes =
-    ofType && gatsbyNodesInfo.typeNames.includes(typeName)
+    ofType && gatsbyNodesInfo.typeNames.includes(typeName);
 
-  const isListOfMediaItems = ofType && typeName === `MediaItem`
+  const isListOfMediaItems = ofType && typeName === "MediaItem";
 
-  const hasIdField = fieldType?.fields?.find(({ name }) => name === `id`)
+  const hasIdField = fieldType?.fields?.find(({ name }) => name === "id");
   if (
-    fieldType.kind === `LIST` &&
+    fieldType.kind === "LIST" &&
     isListOfGatsbyNodes &&
     !isListOfMediaItems &&
     hasIdField
   ) {
     return {
       fieldName: fieldName,
-      fields: [`__typename`, `id`],
+      fields: ["__typename", "id"],
       fieldType,
-    }
-  } else if (fieldType.kind === `LIST` && isListOfMediaItems && hasIdField) {
+    };
+  } else if (fieldType.kind === "LIST" && isListOfMediaItems && hasIdField) {
     return {
       fieldName: fieldName,
-      fields: [`__typename`, `id`],
+      fields: ["__typename", "id"],
       fieldType,
-    }
-  } else if (fieldType.kind === `LIST`) {
-    const listOfType = typeMap.get(findNamedTypeName(fieldType))
+    };
+  } else if (fieldType.kind === "LIST") {
+    const listOfType = typeMap.get(findNamedTypeName(fieldType));
 
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
@@ -283,7 +283,7 @@ export function transformField({
       circularQueryLimit,
       buildingFragment,
       mainType,
-    })
+    });
 
     const transformedInlineFragments = transformInlineFragments({
       possibleTypes: listOfType.possibleTypes,
@@ -298,10 +298,10 @@ export function transformField({
       fragments,
       circularQueryLimit,
       buildingFragment,
-    })
+    });
 
     if (!transformedFields?.length && !transformedInlineFragments?.length) {
-      return false
+      return false;
     }
 
     // if we have either inlineFragments or fields
@@ -310,7 +310,7 @@ export function transformField({
       fields: transformedFields,
       inlineFragments: transformedInlineFragments,
       fieldType,
-    }
+    };
   }
 
   const isAGatsbyNode =
@@ -319,23 +319,23 @@ export function transformField({
     // or all possible types on this type are Gatsby node types
     typeMap
       .get(typeName)
-      ?.possibleTypes?.every(possibleType =>
-        gatsbyNodesInfo.typeNames.includes(possibleType.name)
-      )
+      ?.possibleTypes?.every((possibleType) =>
+        gatsbyNodesInfo.typeNames.includes(possibleType.name),
+      );
 
   if (isAGatsbyNode && hasIdField) {
     return {
       fieldName: fieldName,
-      fields: [`__typename`, `id`],
+      fields: ["__typename", "id"],
       fieldType,
-    }
+    };
   }
 
-  const typeInfo = typeMap.get(findNamedTypeName(fieldType))
+  const typeInfo = typeMap.get(findNamedTypeName(fieldType));
 
-  const { fields } = typeInfo || {}
+  const { fields } = typeInfo || {};
 
-  let transformedInlineFragments
+  let transformedInlineFragments;
 
   if (typeInfo.possibleTypes) {
     transformedInlineFragments = transformInlineFragments({
@@ -351,7 +351,7 @@ export function transformField({
       fragments,
       circularQueryLimit,
       buildingFragment,
-    })
+    });
   }
 
   if (fields || transformedInlineFragments) {
@@ -366,10 +366,10 @@ export function transformField({
       fragments,
       circularQueryLimit,
       buildingFragment,
-    })
+    });
 
     if (!transformedFields?.length && !transformedInlineFragments?.length) {
-      return false
+      return false;
     }
 
     return {
@@ -377,11 +377,11 @@ export function transformField({
       fields: transformedFields,
       inlineFragments: transformedInlineFragments,
       fieldType,
-    }
+    };
   }
 
-  if (fieldType.kind === `UNION`) {
-    const typeInfo = typeMap.get(fieldType.name)
+  if (fieldType.kind === "UNION") {
+    const typeInfo = typeMap.get(fieldType.name);
 
     const transformedFields = recursivelyTransformFields({
       fields: typeInfo.fields,
@@ -392,7 +392,7 @@ export function transformField({
       fragments,
       circularQueryLimit,
       buildingFragment,
-    })
+    });
 
     const inlineFragments = transformInlineFragments({
       possibleTypes: typeInfo.possibleTypes,
@@ -406,17 +406,17 @@ export function transformField({
       fragments,
       circularQueryLimit,
       buildingFragment,
-    })
+    });
 
     return {
       fieldName: fieldName,
       fields: transformedFields,
       inlineFragments,
       fieldType,
-    }
+    };
   }
 
-  return false
+  return false;
 }
 
 const createFragment = ({
@@ -433,32 +433,33 @@ const createFragment = ({
   mainType,
   buildingFragment = false,
 }) => {
-  const typeName = findNamedTypeName(type)
+  const typeName = findNamedTypeName(type);
 
   if (buildingFragment) {
     // this fragment is inside a fragment that's already being built so we should exit
-    return null
+    return null;
   }
 
-  const previouslyCreatedFragment = fragments?.[typeName]
+  const previouslyCreatedFragment = fragments?.[typeName];
 
   if (previouslyCreatedFragment && buildingFragment === typeName) {
-    return previouslyCreatedFragment
+    return previouslyCreatedFragment;
   }
 
   const fragmentFields = fields.reduce((fragmentFields, field) => {
-    const fieldTypeName = findNamedTypeName(field.type)
-    const fieldType = typeMap.get(fieldTypeName)
+    const fieldTypeName = findNamedTypeName(field.type);
+    const fieldType = typeMap.get(fieldTypeName);
 
     if (
       // if this field is a different type than the fragment but has a field of the same type as the fragment,
       // we need to skip this field in the fragment to prevent nesting this type in itself a level down
       fieldType.name !== typeName &&
       fieldType?.fields?.find(
-        innerFieldField => findNamedTypeName(innerFieldField.type) === typeName
+        (innerFieldField) =>
+          findNamedTypeName(innerFieldField.type) === typeName,
       )
     ) {
-      return fragmentFields
+      return fragmentFields;
     }
 
     const transformedField = transformField({
@@ -474,16 +475,16 @@ const createFragment = ({
       circularQueryLimit: 1,
       fragments,
       buildingFragment: typeName,
-    })
+    });
 
     if (findNamedTypeName(field.type) !== typeName && !!transformedField) {
-      fragmentFields.push(transformedField)
+      fragmentFields.push(transformedField);
     }
 
-    return fragmentFields
-  }, [])
+    return fragmentFields;
+  }, []);
 
-  const queryType = typeMap.get(typeName)
+  const queryType = typeMap.get(typeName);
 
   const transformedInlineFragments = queryType?.possibleTypes?.length
     ? transformInlineFragments({
@@ -500,7 +501,7 @@ const createFragment = ({
         fragments,
         buildingFragment: typeName,
       })
-    : null
+    : null;
 
   if (fragments) {
     fragments[typeName] = {
@@ -508,11 +509,11 @@ const createFragment = ({
       type: typeName,
       fields: fragmentFields,
       inlineFragments: transformedInlineFragments,
-    }
+    };
   }
 
-  return fragmentFields
-}
+  return fragmentFields;
+};
 
 const transformFields = ({
   fields,
@@ -533,7 +534,7 @@ const transformFields = ({
 }) =>
   fields
     ?.filter(
-      field =>
+      (field) =>
         !fieldIsExcludedOnParentType({
           field,
           parentType,
@@ -545,9 +546,9 @@ const transformFields = ({
         !typeIsExcluded({
           pluginOptions,
           typeName: findNamedTypeName(field.type),
-        })
+        }),
     )
-    .map(field => {
+    .map((field) => {
       const transformedField = transformField({
         maxDepth: queryDepth,
         gatsbyNodesInfo,
@@ -562,15 +563,15 @@ const transformFields = ({
         buildingFragment,
         mainType,
         parentField,
-      })
+      });
 
       if (transformedField) {
         // save this type so we know to use it in schema customization
-        getStore().dispatch.remoteSchema.addFetchedType(field.type)
+        getStore().dispatch.remoteSchema.addFetchedType(field.type);
       }
 
-      const typeName = findNamedTypeName(field.type)
-      const fragment = fragments?.[typeName]
+      const typeName = findNamedTypeName(field.type);
+      const fragment = fragments?.[typeName];
 
       // @todo add any adjacent fields and inline fragments directly to the stored fragment object so this logic can be changed to if (fragment) useTheFragment()
       // once that's done it can be added above and below transformField() above ☝️
@@ -580,48 +581,48 @@ const transformFields = ({
         // remove fields from this query that already exist in the fragment
         if (transformedField?.fields?.length) {
           transformedField.fields = transformedField.fields.filter(
-            field =>
+            (field) =>
               !fragment.fields.find(
-                fragmentField => fragmentField.fieldName === field.fieldName
-              )
-          )
+                (fragmentField) => fragmentField.fieldName === field.fieldName,
+              ),
+          );
         }
 
         // if this field has no fields (because it has inline fragments only)
         // we need to create an empty array since we treat reusable fragments as
         // a field
         if (!transformedField.fields) {
-          transformedField.fields = []
+          transformedField.fields = [];
         }
 
         transformedField.fields.push({
-          internalType: `Fragment`,
+          internalType: "Fragment",
           fragment,
-        })
+        });
 
         if (transformedField?.inlineFragments?.length) {
           transformedField.inlineFragments =
             transformedField.inlineFragments.filter(
-              fieldInlineFragment =>
+              (fieldInlineFragment) =>
                 // yes this is a horrible use of .find(). @todo refactor this for better perf
                 !fragment.inlineFragments.find(
-                  fragmentInlineFragment =>
-                    fragmentInlineFragment.name === fieldInlineFragment.name
-                )
-            )
+                  (fragmentInlineFragment) =>
+                    fragmentInlineFragment.name === fieldInlineFragment.name,
+                ),
+            );
         }
       }
 
       if (field.fields && !transformedField) {
-        return null
+        return null;
       }
 
-      const fieldTypeKind = findTypeKind(field.type)
-      const fieldOfTypeKind = findTypeKind(field.type.ofType)
-      const typeKindsRequiringSelectionSets = [`OBJECT`, `UNION`, `INTERFACE`]
+      const fieldTypeKind = findTypeKind(field.type);
+      const fieldOfTypeKind = findTypeKind(field.type.ofType);
+      const typeKindsRequiringSelectionSets = ["OBJECT", "UNION", "INTERFACE"];
       const fieldNeedsSelectionSet =
         typeKindsRequiringSelectionSets.includes(fieldTypeKind) ||
-        typeKindsRequiringSelectionSets.includes(fieldOfTypeKind)
+        typeKindsRequiringSelectionSets.includes(fieldOfTypeKind);
 
       if (
         // if our field needs a selectionset
@@ -634,12 +635,12 @@ const transformFields = ({
         // we need to discard this field to prevent GraphQL errors
         // we're likely at the very bottom of the query depth
         // so that this fields children were omitted
-        return null
+        return null;
       }
 
-      return transformedField
+      return transformedField;
     })
-    .filter(Boolean)
+    .filter(Boolean);
 
 const recursivelyTransformFields = ({
   fields,
@@ -652,33 +653,33 @@ const recursivelyTransformFields = ({
   buildingFragment = false,
 }) => {
   if (!fields || !fields.length) {
-    return null
+    return null;
   }
 
   if (!parentAncestorTypeNames) {
-    parentAncestorTypeNames = []
+    parentAncestorTypeNames = [];
   }
 
-  const ancestorTypeNames = [...parentAncestorTypeNames]
+  const ancestorTypeNames = [...parentAncestorTypeNames];
 
   const {
     gatsbyApi: { pluginOptions },
     remoteSchema: { fieldBlacklist, fieldAliases, typeMap, gatsbyNodesInfo },
-  } = getStore().getState()
+  } = getStore().getState();
 
   const {
     schema: { queryDepth, circularQueryLimit },
-  } = pluginOptions
+  } = pluginOptions;
 
   if (depth > queryDepth && ancestorTypeNames.length) {
-    return null
+    return null;
   }
 
-  const typeName = findNamedTypeName(parentType)
+  const typeName = findNamedTypeName(parentType);
 
   const grandParentTypeName = ancestorTypeNames.length
     ? ancestorTypeNames[ancestorTypeNames.length - 1]
-    : null
+    : null;
 
   if (grandParentTypeName && typeName !== grandParentTypeName) {
     // if a field has fields of the same type as the field above it
@@ -687,22 +688,22 @@ const recursivelyTransformFields = ({
     // these types should instead be proper connections so we can identify
     // that only an id needs to be fetched.
     // @todo maybe move this into transformFields() instead of here
-    fields = fields.filter(field => {
-      const fieldTypeName = findNamedTypeName(field.type)
-      return fieldTypeName !== grandParentTypeName
-    })
+    fields = fields.filter((field) => {
+      const fieldTypeName = findNamedTypeName(field.type);
+      return fieldTypeName !== grandParentTypeName;
+    });
   }
 
   const typeIncarnationCount = countIncarnations({
     typeName,
     ancestorTypeNames,
-  })
+  });
 
   if (typeIncarnationCount >= circularQueryLimit) {
-    return null
+    return null;
   }
 
-  parentAncestorTypeNames.push(typeName)
+  parentAncestorTypeNames.push(typeName);
 
   const recursivelyTransformedFields = transformFields({
     fields,
@@ -720,13 +721,13 @@ const recursivelyTransformFields = ({
     circularQueryLimit,
     pluginOptions,
     buildingFragment,
-  })
+  });
 
   if (!recursivelyTransformedFields.length) {
-    return null
+    return null;
   }
 
-  return recursivelyTransformedFields
-}
+  return recursivelyTransformedFields;
+};
 
-export default recursivelyTransformFields
+export default recursivelyTransformFields;

@@ -1,15 +1,15 @@
-const { createMacro } = require(`babel-plugin-macros`);
-const { doSync } = require(`do-sync`);
+const { createMacro } = require("babel-plugin-macros");
+const { doSync } = require("do-sync");
 
 module.exports = createMacro(cssNanoMacro);
 
 const syncMinify = doSync((code, options = {}) => {
-  const postcss = require(`postcss`);
+  const postcss = require("postcss");
 
   return postcss({
     plugins: [
-      require(`cssnano`)({
-        preset: [`default`, { discardComments: { removeAll: true } }],
+      require("cssnano")({
+        preset: ["default", { discardComments: { removeAll: true } }],
       }),
     ],
   }).process(code, { from: undefined, to: undefined });
@@ -17,9 +17,9 @@ const syncMinify = doSync((code, options = {}) => {
 
 function cssNanoMacro({ references, state, babel }) {
   references.default.forEach((referencePath) => {
-    if (referencePath.parentPath.type === `TaggedTemplateExpression`) {
-      const quasiPath = referencePath.parentPath.get(`quasi`);
-      const string = quasiPath.parentPath.get(`quasi`).evaluate().value;
+    if (referencePath.parentPath.type === "TaggedTemplateExpression") {
+      const quasiPath = referencePath.parentPath.get("quasi");
+      const string = quasiPath.parentPath.get("quasi").evaluate().value;
 
       const result = syncMinify(string);
 

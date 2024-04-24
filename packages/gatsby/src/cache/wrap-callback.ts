@@ -32,21 +32,21 @@ module.exports = function wrapCallback<T>(
   fn: () => Promise<T>,
 ): () => Promise<T> {
   return function (...args): Promise<T> {
-    let cb
-    if (typeof args[args.length - 1] === `function`) {
-      cb = args.pop()
+    let cb;
+    if (typeof args[args.length - 1] === "function") {
+      cb = args.pop();
     }
 
     // @ts-ignore - unsure if fixing this introduces problems
-    const promise = fn.apply(this, args) // eslint-disable-line @babel/no-invalid-this
+    const promise = fn.apply(this, args); // eslint-disable-line @babel/no-invalid-this
 
-    if (typeof cb === `function`) {
+    if (typeof cb === "function") {
       promise.then(
         (value) => setImmediate(cb, null, value),
         (err) => setImmediate(cb, err),
-      )
+      );
     }
 
-    return promise
-  }
-}
+    return promise;
+  };
+};

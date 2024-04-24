@@ -1,17 +1,17 @@
-import path from "node:path"
-import os from "node:os"
+import path from "node:path";
+import os from "node:os";
 
 /**
  * Joins all given path segments and converts
  * @param paths A sequence of path segments
  */
 export function joinPath(...paths: Array<string>): string {
-  const joinedPath = path.join(...paths)
-  if (os.platform() === `win32`) {
-    return joinedPath.replace(/\\/g, `\\\\`)
+  const joinedPath = path.join(...paths);
+  if (os.platform() === "win32") {
+    return joinedPath.replace(/\\/g, "\\\\");
   }
 
-  return joinedPath
+  return joinedPath;
 }
 
 // copied from https://runpkg.com/?pretty-error@2.1.1/lib/nodePaths.js
@@ -68,14 +68,14 @@ const nodePaths = [
   /^zlib.js$/,
   /^node.js$/,
   /^internal[/\\]/,
-]
+];
 
 /**
  * Checks if the file name matches a node path
  * @param fileName File name
  */
 export function isNodeInternalModulePath(fileName: string): boolean {
-  return nodePaths.some((regTest) => regTest.test(fileName))
+  return nodePaths.some((regTest) => regTest.test(fileName));
 }
 
 /**
@@ -85,11 +85,11 @@ export function isNodeInternalModulePath(fileName: string): boolean {
  * @return  slashed path
  */
 export function slash(path: string): string {
-  const isExtendedLengthPath = /^\\\\\?\\/.test(path)
+  const isExtendedLengthPath = /^\\\\\?\\/.test(path);
 
   if (isExtendedLengthPath) {
-    return path
+    return path;
   }
 
-  return path.replace(/\\/g, `/`)
+  return path.replace(/\\/g, "/");
 }

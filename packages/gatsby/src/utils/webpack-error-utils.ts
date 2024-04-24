@@ -1,131 +1,131 @@
-import type { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import type { Reporter } from "gatsby-cli/lib/reporter/reporter";
 import {
   WebpackError,
   type StatsCompilation,
   Module,
   NormalModule,
-} from "webpack"
-import type { Stage } from "../commands/types"
-import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
+} from "webpack";
+import type { Stage } from "../commands/types";
+import formatWebpackMessages from "react-dev-utils/formatWebpackMessages";
 
 const stageCodeToReadableLabel: Record<Stage, string> = {
-  [`build-javascript`]: `Generating JavaScript bundles`,
-  [`build-html`]: `Generating SSR bundle`,
-  [`develop-html`]: `Generating development SSR bundle`,
-  [`develop`]: `Generating development JavaScript bundle`,
-}
+  ["build-javascript"]: "Generating JavaScript bundles",
+  ["build-html"]: "Generating SSR bundle",
+  ["develop-html"]: "Generating development SSR bundle",
+  ["develop"]: "Generating development JavaScript bundle",
+};
 
 type IFileLocation = {
-  line: number
-  column: number
-}
+  line: number;
+  column: number;
+};
 
 type IWebpackError = {
-  name: string
-  message: string
-  file?: string | undefined
+  name: string;
+  message: string;
+  file?: string | undefined;
   error?:
     | {
-        message: string
+        message: string;
         loc?:
           | {
-              start: IFileLocation
-              end: IFileLocation
+              start: IFileLocation;
+              end: IFileLocation;
             }
-          | undefined
+          | undefined;
       }
-    | undefined
-  module: Module
+    | undefined;
+  module: Module;
   loc?:
     | {
-        start: IFileLocation
-        end: IFileLocation
+        start: IFileLocation;
+        end: IFileLocation;
       }
-    | undefined
-}
+    | undefined;
+};
 
 type ITransformedWebpackError = {
-  id: string
-  filePath: string
+  id: string;
+  filePath: string;
   location?:
     | {
-        start: IFileLocation
-        end: IFileLocation
+        start: IFileLocation;
+        end: IFileLocation;
       }
-    | undefined
+    | undefined;
   context: {
-    stage: Stage
-    stageLabel: string
-    sourceMessage?: string | undefined
-    [key: string]: unknown
-  }
-}
+    stage: Stage;
+    stageLabel: string;
+    sourceMessage?: string | undefined;
+    [key: string]: unknown;
+  };
+};
 
 function transformWebpackError(
   stage: Stage,
   webpackError: WebpackError,
 ): ITransformedWebpackError {
-  const castedWebpackError = webpackError as unknown as IWebpackError
+  const castedWebpackError = webpackError as unknown as IWebpackError;
 
-  let location
+  let location;
   if (castedWebpackError.loc && castedWebpackError.loc.start) {
     location = {
       start: castedWebpackError.loc.start,
       end: castedWebpackError.loc.end,
-    }
+    };
   }
 
   if (!location && castedWebpackError.error?.loc) {
     if (castedWebpackError.error.loc.start) {
-      location = castedWebpackError.error.loc
+      location = castedWebpackError.error.loc;
     } else {
       location = {
         start: castedWebpackError.error.loc,
-      }
+      };
     }
   }
 
   // try to get location out of stacktrace
   if (!location) {
-    const matches = castedWebpackError.message.match(/\((\d+):(\d+)\)/)
+    const matches = castedWebpackError.message.match(/\((\d+):(\d+)\)/);
     if (matches && matches[1] && matches[2]) {
       location = {
         start: {
           line: Number(matches[1]),
           column: Number(matches[2]),
         },
-      }
+      };
     }
   }
 
-  let id = `98123`
+  let id = "98123";
   const context: ITransformedWebpackError["context"] = {
     stage,
     stageLabel: stageCodeToReadableLabel[stage],
     // TODO use formatWebpackMessages like in warnings
     sourceMessage:
       castedWebpackError.error?.message ?? castedWebpackError.message,
-  }
+  };
 
   // When a module cannot be found we can short circuit
-  if (castedWebpackError.name === `ModuleNotFoundError`) {
+  if (castedWebpackError.name === "ModuleNotFoundError") {
     const matches =
       castedWebpackError.error?.message.match(
         /Can't resolve '(.*?)' in '(.*?)'/m,
-      ) ?? []
+      ) ?? [];
 
-    id = `98124`
-    context.packageName = matches?.[1]
-    context.sourceMessage = matches?.[0]
+    id = "98124";
+    context.packageName = matches?.[1];
+    context.sourceMessage = matches?.[0];
 
     // get Breaking change message out of error
     // it shows extra information for things that changed with webpack
-    const BreakingChangeRegex = /BREAKING CHANGE[\D\n\d]+$/
+    const BreakingChangeRegex = /BREAKING CHANGE[\D\n\d]+$/;
     if (BreakingChangeRegex.test(castedWebpackError.message)) {
       const breakingMatch =
-        castedWebpackError.message.match(BreakingChangeRegex)
+        castedWebpackError.message.match(BreakingChangeRegex);
 
-      context.deprecationReason = breakingMatch?.[0]
+      context.deprecationReason = breakingMatch?.[0];
     }
   }
 
@@ -141,7 +141,7 @@ function transformWebpackError(
     // or one of loaders (for example babel-loader) and doesn't provide
     // much value to user, so it's purposely omitted.
     // error: webpackError?.error || webpackError,
-  }
+  };
 }
 
 // With the introduction of Head API, the modulePath can have a resourceQuery so this function can be used to remove it
@@ -150,10 +150,10 @@ function removeResourceQuery(
 ): string | undefined {
   const moduleNameWithoutQuery = moduleName?.replace(
     /(\?|&)export=(default|head)$/,
-    ``,
-  )
+    "",
+  );
 
-  return moduleNameWithoutQuery
+  return moduleNameWithoutQuery;
 }
 
 export function structureWebpackErrors(
@@ -161,20 +161,20 @@ export function structureWebpackErrors(
   webpackError: WebpackError | Array<WebpackError>,
 ): Array<ITransformedWebpackError> | ITransformedWebpackError {
   if (Array.isArray(webpackError)) {
-    return webpackError.map((e) => transformWebpackError(stage, e))
+    return webpackError.map((e) => transformWebpackError(stage, e));
   }
 
-  return transformWebpackError(stage, webpackError)
+  return transformWebpackError(stage, webpackError);
 }
 
 export function reportWebpackWarnings(
   warnings: StatsCompilation["warnings"] | undefined = [],
   reporter: Reporter,
 ): void {
-  let warningMessages: Array<string> = []
+  let warningMessages: Array<string> = [];
 
-  if (typeof warnings[0] === `string`) {
-    warningMessages = warnings as unknown as Array<string>
+  if (typeof warnings[0] === "string") {
+    warningMessages = warnings as unknown as Array<string>;
   } else if (
     warnings[0]?.message &&
     removeResourceQuery(warnings[0]?.moduleName)
@@ -182,13 +182,13 @@ export function reportWebpackWarnings(
     warningMessages = warnings.map(
       (warning) =>
         `${removeResourceQuery(warning.moduleName)}\n\n${warning.message}`,
-    )
+    );
   } else if (warnings[0]?.message) {
-    warningMessages = warnings.map((warning) => warning.message)
+    warningMessages = warnings.map((warning) => warning.message);
   }
 
   formatWebpackMessages({
     errors: [],
     warnings: warningMessages,
-  }).warnings.forEach((warning) => reporter.warn(warning))
+  }).warnings.forEach((warning) => reporter.warn(warning));
 }

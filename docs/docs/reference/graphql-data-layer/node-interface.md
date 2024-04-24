@@ -11,20 +11,20 @@ The basic node data structure is as follows:
 
 ```ts
 interface Node {
-  id: string
-  children?: Array<string>
-  parent?: string
-  fields: object
+  id: string;
+  children?: Array<string> | undefined;
+  parent?: string | undefined;
+  fields: object;
   internal: {
-    contentDigest: string
-    mediaType?: string
-    type: string
-    owner: string
-    fieldOwners: object
-    content?: string
-    description?: string
-  }
-  [key: string]: unknown // ...other fields specific to this type of node
+    contentDigest: string;
+    mediaType?: string | undefined;
+    type: string;
+    owner: string;
+    fieldOwners: object;
+    content?: string | undefined;
+    description?: string | undefined;
+  };
+  [key: string]: unknown; // ...other fields specific to this type of node
 }
 ```
 

@@ -1,21 +1,21 @@
-const { onCreateNode } = require(`../gatsby-node`)
+const { onCreateNode } = require("../gatsby-node");
 
-describe(`Process TOML nodes correctly`, () => {
+describe("Process TOML nodes correctly", () => {
   const node = {
-    id: `whatever`,
+    id: "whatever",
     parent: null,
     children: [],
-    extension: `toml`,
+    extension: "toml",
     internal: {
-      contentDigest: `whatever`,
+      contentDigest: "whatever",
     },
-    name: `test`,
-  }
+    name: "test",
+  };
 
   // Provide fake functions
-  const loadNodeContent = node => Promise.resolve(node.content)
+  const loadNodeContent = (node) => Promise.resolve(node.content);
 
-  it(`Correctly creates nodes from TOML test file`, async () => {
+  it("Correctly creates nodes from TOML test file", async () => {
     // Unfortunately due to TOML limitations no JSON -> TOML converters exist,
     // which means that we are stuck with JS template literals.
     node.content = `
@@ -35,14 +35,14 @@ describe(`Process TOML nodes correctly`, () => {
             "]",
             # ] Oh yes I did
             ]
-    `
+    `;
 
-    const createNode = jest.fn()
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+    const createNode = jest.fn();
+    const createParentChildLink = jest.fn();
+    const actions = { createNode, createParentChildLink };
+    const createNodeId = jest.fn();
+    createNodeId.mockReturnValue("uuid-from-gatsby");
+    const createContentDigest = jest.fn().mockReturnValue("contentDigest");
 
     await onCreateNode({
       node,
@@ -51,15 +51,15 @@ describe(`Process TOML nodes correctly`, () => {
       createNodeId,
       createContentDigest,
     }).then(() => {
-      expect(createNode.mock.calls).toMatchSnapshot()
-      expect(createParentChildLink.mock.calls).toMatchSnapshot()
-      expect(createNode).toHaveBeenCalledTimes(1)
-      expect(createParentChildLink).toHaveBeenCalledTimes(1)
-      expect(createContentDigest).toHaveBeenCalledTimes(1)
-    })
-  })
+      expect(createNode.mock.calls).toMatchSnapshot();
+      expect(createParentChildLink.mock.calls).toMatchSnapshot();
+      expect(createNode).toHaveBeenCalledTimes(1);
+      expect(createParentChildLink).toHaveBeenCalledTimes(1);
+      expect(createContentDigest).toHaveBeenCalledTimes(1);
+    });
+  });
 
   // Since TOML transformer doesn't generate sub-objects from arrays,
   // but directly uses the object, 'id' uniqueness tests between sub-objects
   // are omitted.
-})
+});

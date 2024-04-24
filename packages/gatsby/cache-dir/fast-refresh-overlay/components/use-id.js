@@ -4,53 +4,53 @@
 // Entrypoint: packages/react/src/internal/useId.js
 
 function setupGetInstanceId() {
-  let instanceId = 0
+  let instanceId = 0;
   return function getInstanceId() {
-    return ++instanceId
-  }
+    return ++instanceId;
+  };
 }
 
-import * as React from "react"
+import * as React from "react";
 
-const getId = setupGetInstanceId()
+const getId = setupGetInstanceId();
 const useIsomorphicLayoutEffect = canUseDOM()
   ? React.useLayoutEffect
-  : React.useEffect
+  : React.useEffect;
 
 function canUseDOM() {
   return !!(
-    typeof window !== `undefined` &&
+    typeof window !== "undefined" &&
     window.document &&
     window.document.createElement
-  )
+  );
 }
 
-let serverHandoffCompleted = false
+let serverHandoffCompleted = false;
 
 /**
  * Generate a unique ID with an optional prefix prepended to it
  * @param {string} [prefix]
  * @returns {string}
  */
-export function useId(prefix = `id`) {
+export function useId(prefix = "id") {
   const [id, setId] = React.useState(() => {
     if (serverHandoffCompleted) {
-      return `${prefix}-${getId()}`
+      return `${prefix}-${getId()}`;
     }
-    return null
-  })
+    return null;
+  });
 
   useIsomorphicLayoutEffect(() => {
     if (id === null) {
-      setId(`${prefix}-${getId()}`)
+      setId(`${prefix}-${getId()}`);
     }
-  }, [getId])
+  }, [getId]);
 
   React.useEffect(() => {
     if (serverHandoffCompleted === false) {
-      serverHandoffCompleted = true
+      serverHandoffCompleted = true;
     }
-  }, [])
+  }, []);
 
-  return id
+  return id;
 }

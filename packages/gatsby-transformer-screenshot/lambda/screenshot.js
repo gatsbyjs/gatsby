@@ -1,10 +1,10 @@
-const fs = require(`fs`)
-const fsPromises = require(`fs`).promises
-const path = require(`path`)
-const { createContentDigest } = require(`gatsby-core-utils`)
-const AWS = require(`aws-sdk`)
+const fs = require("fs")
+const fsPromises = require("fs").promises
+const path = require("path")
+const { createContentDigest } = require("gatsby-core-utils")
+const AWS = require("aws-sdk")
 const s3 = new AWS.S3({
-  apiVersion: `2006-03-01`,
+  apiVersion: "2006-03-01",
 })
 
 class Screenshot {
@@ -26,7 +26,7 @@ class Screenshot {
 class FSScreenshot extends Screenshot {
   constructor(opts) {
     super(opts)
-    const dir = path.join(__dirname, `screenshots`)
+    const dir = path.join(__dirname, "screenshots")
     if (!fs.existsSync(dir)) fs.mkdirSync(dir)
     this.fileUrl = path.join(dir, this.key)
   }
@@ -78,11 +78,11 @@ class S3Screenshot extends Screenshot {
 
   async putFile(fileBuffer) {
     const params = {
-      ACL: `public-read`,
+      ACL: "public-read",
       Bucket: process.env.S3_BUCKET,
       Key: this.key,
       Body: fileBuffer,
-      ContentType: `image/png`,
+      ContentType: "image/png",
     }
 
     let up
@@ -141,6 +141,6 @@ module.exports = opts => {
   }
 
   throw new Error(
-    `A required environment variable is missing. Set S3_BUCKET or TEST_WITH_LOCAL_FS and try again.`
+    "A required environment variable is missing. Set S3_BUCKET or TEST_WITH_LOCAL_FS and try again."
   )
 }

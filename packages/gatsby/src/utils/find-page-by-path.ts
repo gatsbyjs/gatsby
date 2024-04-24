@@ -1,5 +1,5 @@
-import type { IGatsbyPage, IGatsbyState } from "../redux/types"
-import { pick } from "@gatsbyjs/reach-router"
+import type { IGatsbyPage, IGatsbyState } from "../redux/types";
+import { pick } from "@gatsbyjs/reach-router";
 
 // Ranks and picks the best page to match. Each segment gets the highest
 // amount of points, then the type of segment gets an additional amount of
@@ -18,26 +18,26 @@ function findBestMatchingPage(
 ): IGatsbyPage | null {
   // Pick only routes with matchPath for better performance.
   // Exact match should have already been checked
-  const pagesByMatchPath: Record<string, IGatsbyPage> = {}
+  const pagesByMatchPath: Record<string, IGatsbyPage> = {};
   for (const page of pages.values()) {
-    const matchPath = page.matchPath
+    const matchPath = page.matchPath;
     if (matchPath) {
-      pagesByMatchPath[matchPath] = page
+      pagesByMatchPath[matchPath] = page;
     }
   }
 
   const routes = Object.keys(pagesByMatchPath).map((path) => {
-    return { path }
-  })
+    return { path };
+  });
 
   // picks best matching route with reach router's algorithm
-  const picked = pick(routes, path)
+  const picked = pick(routes, path);
 
   if (picked) {
-    return pagesByMatchPath[picked.route.path]
+    return pagesByMatchPath[picked.route.path];
   }
 
-  return null
+  return null;
 }
 
 export function findPageByPath(
@@ -45,48 +45,48 @@ export function findPageByPath(
   path: string,
   fallbackTo404: boolean = false,
 ): IGatsbyPage | undefined {
-  const { pages } = state
+  const { pages } = state;
 
   try {
-    path = decodeURIComponent(path)
+    path = decodeURIComponent(path);
   } catch {
     // no handling, just continue using path as-is
   }
 
   // first check by exact path
-  let page = pages.get(path)
+  let page = pages.get(path);
   if (page) {
-    return page
+    return page;
   }
 
-  if (path === ``) {
+  if (path === "") {
     // from my tests I never was able to make request with
     // completely empty pathname, but just for the sake
     // of completeness - try available alternative
-    page = pages.get(`/`)
+    page = pages.get("/");
     if (page) {
-      return page
+      return page;
     }
   }
   // Gatsby doesn't allow for page path to be empty string,
   // so skipping trying to get page for "" path if we can't
   // find page for `/`
-  else if (path !== `/`) {
+  else if (path !== "/") {
     // check various trailing/leading slashes combinations
-    const hasLeadingSlash = path.startsWith(`/`)
-    const hasTrailingSlash = path.endsWith(`/`)
+    const hasLeadingSlash = path.startsWith("/");
+    const hasTrailingSlash = path.endsWith("/");
 
     const bare = path.slice(
       hasLeadingSlash ? 1 : 0,
       hasTrailingSlash ? -1 : path.length,
-    )
+    );
 
-    ;[bare, `/` + bare, bare + `/`, `/` + bare + `/`].some((potentialPath) => {
-      page = pages.get(potentialPath)
-      return !!page
-    })
+    [bare, "/" + bare, bare + "/", "/" + bare + "/"].some((potentialPath) => {
+      page = pages.get(potentialPath);
+      return !!page;
+    });
     if (page) {
-      return page
+      return page;
     }
   }
 
@@ -95,17 +95,17 @@ export function findPageByPath(
   // to avoid looping through all pages again. Ideally generate smaller `match-paths.json`
   // variant that doesn't including overlapping static pages in `requires-writer` as well
   // as this function already checked static paths at this point
-  const matchingPage = findBestMatchingPage(pages, path)
+  const matchingPage = findBestMatchingPage(pages, path);
 
   if (matchingPage) {
-    return matchingPage
+    return matchingPage;
   }
 
   if (fallbackTo404) {
     return (
-      findPageByPath(state, `/dev-404-page/`, false) ??
-      findPageByPath(state, `/404.html`, false)
-    )
+      findPageByPath(state, "/dev-404-page/", false) ??
+      findPageByPath(state, "/404.html", false)
+    );
   }
-  return undefined
+  return undefined;
 }

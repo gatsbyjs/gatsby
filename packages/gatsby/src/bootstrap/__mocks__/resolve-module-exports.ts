@@ -1,21 +1,21 @@
-"use strict"
+"use strict";
 
-let mockResults = {}
+let mockResults = {};
 
 export function resolveModuleExports(
   input: unknown,
 ): Array<string> | undefined {
   // return a mocked result
-  if (typeof input === `string`) {
-    return mockResults[input]
+  if (typeof input === "string") {
+    return mockResults[input];
   }
 
   // return default result
-  if (typeof input !== `object`) {
-    return []
+  if (typeof input !== "object") {
+    return [];
   }
 
   // set mock results
-  mockResults = Object.assign({}, input)
-  return undefined
+  mockResults = Object.assign({}, input);
+  return undefined;
 }

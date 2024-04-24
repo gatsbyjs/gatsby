@@ -1,4 +1,4 @@
-import type { Plugin } from "unified"
+import type { Plugin } from "unified";
 
 /**
  * This plugin extracts metadata from the file and stores it
@@ -6,14 +6,14 @@ import type { Plugin } from "unified"
  */
 const rehypeMdxMetadataExtractor: Plugin =
   function rehypeMdxMetadataExtractor() {
-    const metadata = {}
+    const metadata = {};
 
     // @ts-ignore
     // eslint-disable-next-line @babel/no-invalid-this
-    this.data(`mdxMetadata`, metadata)
+    this.data("mdxMetadata", metadata);
     return (_tree, file): void => {
-      Object.assign(metadata, file.data.meta)
-    }
-  }
+      Object.assign(metadata, file.data.meta);
+    };
+  };
 
-export default rehypeMdxMetadataExtractor
+export default rehypeMdxMetadataExtractor;

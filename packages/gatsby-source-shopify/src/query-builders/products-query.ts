@@ -1,18 +1,18 @@
-import { BulkQuery } from "./bulk-query"
+import { BulkQuery } from "./bulk-query";
 
 export class ProductsQuery extends BulkQuery {
   query(date?: Date | undefined): string {
     const publishedStatus = this.pluginOptions.salesChannel
       ? `'${this.pluginOptions.salesChannel}:visible'`
-      : `published`
+      : "published";
 
-    const filters = [`status:active`, `published_status:${publishedStatus}`]
+    const filters = ["status:active", `published_status:${publishedStatus}`];
     if (date) {
-      const isoDate = date.toISOString()
-      filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
+      const isoDate = date.toISOString();
+      filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`);
     }
 
-    const queryString = filters.map((f) => `(${f})`).join(` AND `)
+    const queryString = filters.map((f) => `(${f})`).join(" AND ");
 
     const query = `
       {
@@ -226,8 +226,8 @@ export class ProductsQuery extends BulkQuery {
           }
         }
       }
-    `
+    `;
 
-    return this.bulkOperationQuery(query)
+    return this.bulkOperationQuery(query);
   }
 }

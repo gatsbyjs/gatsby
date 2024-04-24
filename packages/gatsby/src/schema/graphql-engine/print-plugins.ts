@@ -1,75 +1,75 @@
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-import fs from "fs-extra"
-import path from "node:path"
+import fs from "fs-extra";
+import path from "node:path";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import { slash } from "gatsby-core-utils"
-import { store } from "../../redux"
-import type { IGatsbyState } from "../../redux/types"
-import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin"
+import _ from "lodash";
+import { slash } from "gatsby-core-utils";
+import { store } from "../../redux";
+import type { IGatsbyState } from "../../redux/types";
+import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin";
 
 export const schemaCustomizationAPIs = new Set([
-  `setFieldsOnGraphQLNodeType`,
-  `createSchemaCustomization`,
-  `createResolvers`,
-])
+  "setFieldsOnGraphQLNodeType",
+  "createSchemaCustomization",
+  "createResolvers",
+]);
 
-const excludePlugins = new Set([`internal-data-bridge`])
-const includePlugins = new Set([`gatsby-plugin-sharp`])
+const excludePlugins = new Set(["internal-data-bridge"]);
+const includePlugins = new Set(["gatsby-plugin-sharp"]);
 
 // Emit file that imports required node APIs
 const schemaCustomizationPluginsPath =
-  process.cwd() + `/.cache/query-engine-plugins.js`
+  process.cwd() + "/.cache/query-engine-plugins.js";
 
 export async function printQueryEnginePlugins(): Promise<void> {
   try {
-    await fs.remove(schemaCustomizationPluginsPath)
+    await fs.remove(schemaCustomizationPluginsPath);
   } catch (e) {
     // no-op
   }
-  const queryEnginePlugins = await renderQueryEnginePlugins()
-  return await fs.writeFile(schemaCustomizationPluginsPath, queryEnginePlugins)
+  const queryEnginePlugins = await renderQueryEnginePlugins();
+  return await fs.writeFile(schemaCustomizationPluginsPath, queryEnginePlugins);
 }
 
 async function renderQueryEnginePlugins(): Promise<string> {
-  const { flattenedPlugins } = store.getState()
+  const { flattenedPlugins } = store.getState();
   const usedPlugins = flattenedPlugins.filter(
     (p) =>
       includePlugins.has(p.name) ||
       (!excludePlugins.has(p.name) &&
         p.nodeAPIs.some((api) => schemaCustomizationAPIs.has(api))),
-  )
-  const usedSubPlugins = findSubPlugins(usedPlugins, flattenedPlugins)
-  const result = await render(usedPlugins, usedSubPlugins)
-  return result
+  );
+  const usedSubPlugins = findSubPlugins(usedPlugins, flattenedPlugins);
+  const result = await render(usedPlugins, usedSubPlugins);
+  return result;
 }
 
 function relativePluginPath(resolve: string): string {
   return slash(
     path.relative(path.dirname(schemaCustomizationPluginsPath), resolve),
-  )
+  );
 }
 
 async function render(
   usedPlugins: IGatsbyState["flattenedPlugins"],
   usedSubPlugins: IGatsbyState["flattenedPlugins"],
 ): Promise<string> {
-  const uniqSubPlugins = uniq(usedSubPlugins)
+  const uniqSubPlugins = uniq(usedSubPlugins);
 
   const sanitizedUsedPlugins = usedPlugins.map((plugin, i) => {
     // TODO: We don't support functions in pluginOptions here
     return {
       ...plugin,
-      resolve: ``,
-      pluginFilepath: ``,
+      resolve: "",
+      pluginFilepath: "",
       subPluginPaths: undefined,
       importKey: i + 1,
-    }
-  })
+    };
+  });
 
-  const pluginsWithWorkers = await filterPluginsWithWorkers(usedPlugins)
+  const pluginsWithWorkers = await filterPluginsWithWorkers(usedPlugins);
 
-  const subPluginModuleToImportNameMapping = new Map<string, string>()
+  const subPluginModuleToImportNameMapping = new Map<string, string>();
   const imports: Array<string> = [
     ...usedPlugins.map(
       (plugin, i) =>
@@ -84,34 +84,34 @@ async function render(
         )}/gatsby-worker"`,
     ),
     ...uniqSubPlugins.map((plugin, i) => {
-      const importName = `subPlugin${i}`
-      subPluginModuleToImportNameMapping.set(plugin.modulePath!, importName)
+      const importName = `subPlugin${i}`;
+      subPluginModuleToImportNameMapping.set(plugin.modulePath!, importName);
       return `import * as ${importName} from "${relativePluginPath(
         plugin.modulePath!,
-      )}"`
+      )}"`;
     }),
-  ]
+  ];
   const gatsbyNodeExports = usedPlugins.map(
     (plugin, i) =>
       `{ name: "${plugin.name}", module: pluginGatsbyNode${i}, importKey: ${
         i + 1
       } },`,
-  )
+  );
   const gatsbyWorkerExports = pluginsWithWorkers.map(
     (plugin, i) =>
       `{ name: "${plugin.name}", module: pluginGatsbyWorker${i}, importKey: ${
         i + 1
       } },`,
-  )
+  );
   const output = `
-${imports.join(`\n`)}
+${imports.join("\n")}
 
 export const gatsbyNodes = [
-${gatsbyNodeExports.join(`\n`)}
+${gatsbyNodeExports.join("\n")}
 ]
 
 export const gatsbyWorkers = [
-${gatsbyWorkerExports.join(`\n`)}
+${gatsbyWorkerExports.join("\n")}
 ]
 
 export const flattenedPlugins =
@@ -124,74 +124,77 @@ export const flattenedPlugins =
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (value: any): any => {
             if (
-              typeof value === `object` &&
+              typeof value === "object" &&
               value !== null &&
               value.module &&
               value.modulePath
             ) {
-              const { module, modulePath, ...subPlugin } = value
+              const { module, modulePath, ...subPlugin } = value;
               return {
                 ...subPlugin,
                 module: `_SKIP_START_${subPluginModuleToImportNameMapping.get(
                   modulePath,
                 )}_SKIP_END_`,
-                resolve: ``,
-                pluginFilepath: ``,
-              }
+                resolve: "",
+                pluginFilepath: "",
+              };
             }
-            return undefined
+            return undefined;
           },
         ),
-      }
+      };
     }),
     null,
     2,
-  ).replace(/"_SKIP_START_|_SKIP_END_"/g, ``)}
-`
-  return output
+  ).replace(/"_SKIP_START_|_SKIP_END_"/g, "")}
+`;
+  return output;
 }
 
 async function filterPluginsWithWorkers(
   plugins: IGatsbyState["flattenedPlugins"],
 ): Promise<IGatsbyState["flattenedPlugins"]> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const filteredPlugins: Array<any> = []
+  const filteredPlugins: Array<any> = [];
 
   for (const plugin of plugins) {
     try {
-      const pluginWithWorker = await importGatsbyPlugin(plugin, `gatsby-worker`)
+      const pluginWithWorker = await importGatsbyPlugin(
+        plugin,
+        "gatsby-worker",
+      );
       if (pluginWithWorker) {
-        filteredPlugins.push(plugin)
+        filteredPlugins.push(plugin);
       }
     } catch (_) {
       // Do nothing
     }
   }
 
-  return filteredPlugins
+  return filteredPlugins;
 }
 
 type ArrayElement<ArrayType extends Array<unknown>> =
-  ArrayType extends Array<infer ElementType> ? ElementType : never
+  ArrayType extends Array<infer ElementType> ? ElementType : never;
 
 function getSubpluginsByPluginPath(
   parentPlugin: ArrayElement<IGatsbyState["flattenedPlugins"]>,
   path: string,
 ): IGatsbyState["flattenedPlugins"] {
-  const segments = path.split(`.`)
+  const segments = path.split(".");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let roots: Array<any> = [parentPlugin.pluginOptions]
+  let roots: Array<any> = [parentPlugin.pluginOptions];
 
   for (const segment of segments) {
-    if (segment === `[]`) {
-      roots = roots.flat()
+    if (segment === "[]") {
+      roots = roots.flat();
     } else {
-      roots = roots.map((root) => root[segment])
+      roots = roots.map((root) => root[segment]);
     }
   }
-  roots = roots.flat()
+  roots = roots.flat();
 
-  return roots
+  return roots;
 }
 
 function findSubPlugins(
@@ -202,25 +205,27 @@ function findSubPlugins(
     plugins
       .flatMap((plugin) => {
         if (plugin.subPluginPaths) {
-          const subPlugins: IGatsbyState["flattenedPlugins"] = []
+          const subPlugins: IGatsbyState["flattenedPlugins"] = [];
           for (const subPluginPath of plugin.subPluginPaths) {
-            subPlugins.push(...getSubpluginsByPluginPath(plugin, subPluginPath))
+            subPlugins.push(
+              ...getSubpluginsByPluginPath(plugin, subPluginPath),
+            );
           }
-          return subPlugins
+          return subPlugins;
         }
 
-        return []
+        return [];
       })
-      .map((plugin) => plugin[`resolve`])
-      .filter((p: unknown): p is string => typeof p === `string`),
-  )
+      .map((plugin) => plugin["resolve"])
+      .filter((p: unknown): p is string => typeof p === "string"),
+  );
   return allFlattenedPlugins.filter(
     (p) => usedSubPluginResolves.has(p.resolve) && !!p.modulePath,
-  )
+  );
 }
 
 function uniq(
   plugins: IGatsbyState["flattenedPlugins"],
 ): IGatsbyState["flattenedPlugins"] {
-  return Array.from(new Map(plugins.map((p) => [p.resolve, p])).values())
+  return Array.from(new Map(plugins.map((p) => [p.resolve, p])).values());
 }

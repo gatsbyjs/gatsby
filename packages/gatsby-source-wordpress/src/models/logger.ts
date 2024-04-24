@@ -1,18 +1,18 @@
-import { Reporter } from "gatsby/reporter"
-import { formatLogMessage } from "~/utils/format-log-message"
-import { IPluginOptions } from "./gatsby-api"
-import { createModel } from "@rematch/core"
-import { IRootModel } from "."
+import { Reporter } from "gatsby/reporter";
+import { formatLogMessage } from "~/utils/format-log-message";
+import { IPluginOptions } from "./gatsby-api";
+import { createModel } from "@rematch/core";
+import { IRootModel } from ".";
 
-type ITimerReporter = ReturnType<Reporter["activityTimer"]>
+type ITimerReporter = ReturnType<Reporter["activityTimer"]>;
 
 export type ILoggerState = {
-  entityCount: number
-  typeCount: { [name: string]: number }
+  entityCount: number;
+  typeCount: { [name: string]: number };
   activityTimers: {
-    [name: string]: { count: number; activity: ITimerReporter }
-  }
-}
+    [name: string]: { count: number; activity: ITimerReporter };
+  };
+};
 
 const logger = createModel<IRootModel>()({
   state: {
@@ -24,37 +24,37 @@ const logger = createModel<IRootModel>()({
   reducers: {
     incrementActivityTimer(
       state: ILoggerState,
-      { typeName, by, action = `fetched` },
+      { typeName, by, action = "fetched" },
     ): ILoggerState {
-      const logger = state.activityTimers[typeName]
+      const logger = state.activityTimers[typeName];
 
       if (!logger) {
-        return state
+        return state;
       }
 
-      if (typeof by === `number`) {
-        logger.count += by
-        state.entityCount += by
+      if (typeof by === "number") {
+        logger.count += by;
+        state.entityCount += by;
       }
 
-      logger.activity.setStatus(`${action} ${logger.count}`)
+      logger.activity.setStatus(`${action} ${logger.count}`);
 
-      return state
+      return state;
     },
 
     stopActivityTimer(
       state: ILoggerState,
-      { typeName, action = `fetched` }: { typeName: string; action: string },
+      { typeName, action = "fetched" }: { typeName: string; action: string },
     ): ILoggerState {
-      const logger = state.activityTimers[typeName]
+      const logger = state.activityTimers[typeName];
 
       if (logger.count === 0) {
-        logger.activity.setStatus(`${action} 0`)
+        logger.activity.setStatus(`${action} 0`);
       }
 
-      logger.activity.end()
+      logger.activity.end();
 
-      return state
+      return state;
     },
 
     createActivityTimer(
@@ -64,13 +64,13 @@ const logger = createModel<IRootModel>()({
         reporter,
         pluginOptions,
       }: {
-        typeName: string
-        reporter: Reporter
-        pluginOptions: IPluginOptions
+        typeName: string;
+        reporter: Reporter;
+        pluginOptions: IPluginOptions;
       },
     ): ILoggerState {
       if (state.activityTimers[typeName]) {
-        return state
+        return state;
       }
 
       const typeActivityTimer = {
@@ -80,21 +80,21 @@ const logger = createModel<IRootModel>()({
             useVerboseStyle: pluginOptions.verbose,
           }),
         ),
-      }
+      };
 
       if (pluginOptions.verbose) {
-        typeActivityTimer.activity.start()
+        typeActivityTimer.activity.start();
       }
 
-      state.activityTimers[typeName] = typeActivityTimer
+      state.activityTimers[typeName] = typeActivityTimer;
 
-      return state
+      return state;
     },
   },
 
   effects: () => {
-    return {}
+    return {};
   },
-})
+});
 
-export default logger
+export default logger;

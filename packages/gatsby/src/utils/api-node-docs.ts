@@ -3,7 +3,7 @@
  * of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
  * @returns {Array<string>} array of extensions
  */
-export const resolvableExtensions = true
+export const resolvableExtensions = true;
 
 /**
  * Create pages dynamically. This extension point is called only after the initial
@@ -70,7 +70,7 @@ export const resolvableExtensions = true
  * }
  */
 
-export const createPages = true
+export const createPages = true;
 
 /**
  * Like `createPages` but for plugins who want to manage creating and removing
@@ -86,7 +86,7 @@ export const createPages = true
  * Gatsby, it needs to keep its own state about its world to know when to
  * add and remove pages.
  */
-export const createPagesStatefully = true
+export const createPagesStatefully = true;
 
 /**
  * Extension point to tell plugins to source nodes. This API is called during
@@ -130,7 +130,7 @@ export const createPagesStatefully = true
  *   createNode(node)
  * }
  */
-export const sourceNodes = true
+export const sourceNodes = true;
 
 /**
  * Called when a new node is created. Plugins wishing to extend or
@@ -150,7 +150,7 @@ export const sourceNodes = true
  *   // create a new node field.
  * }
  */
-export const onCreateNode = true
+export const onCreateNode = true;
 
 /**
  * Called before scheduling a `onCreateNode` callback for a plugin. If it returns falsy
@@ -162,7 +162,7 @@ export const onCreateNode = true
  * exports.shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const shouldOnCreateNode = true
+export const shouldOnCreateNode = true;
 
 /**
  * Called when a new page is created. This extension API is useful
@@ -175,7 +175,7 @@ export const shouldOnCreateNode = true
  * See the guide [Creating and Modifying Pages](/docs/creating-and-modifying-pages/)
  * for more on this API.
  */
-export const onCreatePage = true
+export const onCreatePage = true;
 
 /**
  * Called during the creation of the GraphQL schema. Allows plugins
@@ -227,7 +227,7 @@ export const onCreatePage = true
  *   return {}
  * }
  */
-export const setFieldsOnGraphQLNodeType = true
+export const setFieldsOnGraphQLNodeType = true;
 
 /**
  * Customize Gatsby's GraphQL schema by creating type definitions, field
@@ -276,7 +276,7 @@ export const setFieldsOnGraphQLNodeType = true
  *   createTypes(typeDefs)
  * }
  */
-export const createSchemaCustomization = true
+export const createSchemaCustomization = true;
 
 /**
  * Add custom field resolvers to the GraphQL schema.
@@ -343,13 +343,13 @@ export const createSchemaCustomization = true
  *   createResolvers(resolvers)
  * }
  */
-export const createResolvers = true
+export const createResolvers = true;
 
 /**
  * Ask compile-to-js plugins to process source to JavaScript so the query
  * runner can extract out GraphQL queries for running.
  */
-export const preprocessSource = true
+export const preprocessSource = true;
 
 /**
  * Let plugins extend/mutate the site's Babel configuration by calling
@@ -368,7 +368,7 @@ export const preprocessSource = true
  *   })
  * }
  */
-export const onCreateBabelConfig = true
+export const onCreateBabelConfig = true;
 
 /**
  * Let plugins extend/mutate the site's webpack configuration. This method can be used by any Gatsby site, app, or plugin, not just plugins.
@@ -399,7 +399,7 @@ export const onCreateBabelConfig = true
  *   });
  * }
  */
-export const onCreateWebpackConfig = true
+export const onCreateWebpackConfig = true;
 
 /**
  * The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation.
@@ -411,7 +411,7 @@ export const onCreateWebpackConfig = true
  *
  * }
  */
-export const onPreInit = true
+export const onPreInit = true;
 
 /**
  * Lifecycle executed in each process (one time per process). Used to store actions etc for later use.
@@ -424,22 +424,22 @@ export const onPreInit = true
  * }
  * @gatsbyVersion 3.9.0
  */
-export const onPluginInit = true
+export const onPluginInit = true;
 
 /**
  * Called once Gatsby has initialized itself and is ready to bootstrap your site.
  */
-export const onPreBootstrap = true
+export const onPreBootstrap = true;
 
 /**
  * Called at the end of the bootstrap process after all other extension APIs have been called.
  */
-export const onPostBootstrap = true
+export const onPostBootstrap = true;
 
 /**
  * The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start.
  */
-export const onPreBuild = true
+export const onPreBuild = true;
 
 /**
  * The last extension point called after all other parts of the build process
@@ -452,7 +452,7 @@ export const onPreBuild = true
  *  );
  * };
  */
-export const onPostBuild = true
+export const onPostBuild = true;
 
 /**
  * Run before GraphQL queries/fragments are extracted from JavaScript files. Useful for plugins
@@ -460,7 +460,7 @@ export const onPostBuild = true
  *
  * See gatsby-transformer-sharp and gatsby-source-contentful for examples.
  */
-export const onPreExtractQueries = true
+export const onPreExtractQueries = true;
 
 /**
  * Run when the `gatsby develop` server is started. It can be used for adding proxies and Express middleware
@@ -474,7 +474,7 @@ export const onPreExtractQueries = true
  *   })
  * }
  */
-export const onCreateDevServer = true
+export const onCreateDevServer = true;
 
 /**
  * Run during the bootstrap phase. Plugins can use this to define a schema for their options using
@@ -490,4 +490,4 @@ export const onCreateDevServer = true
  *   })
  * }
  */
-export const pluginOptionsSchema = true
+export const pluginOptionsSchema = true;

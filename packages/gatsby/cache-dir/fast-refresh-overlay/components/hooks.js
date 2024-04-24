@@ -1,5 +1,5 @@
-import * as React from "react"
-import { prettifyStack } from "../utils"
+import * as React from "react";
+import { prettifyStack } from "../utils";
 
 const initialResponse = {
   decoded: null,
@@ -8,7 +8,7 @@ const initialResponse = {
     number: null,
   },
   sourceContent: null,
-}
+};
 
 export function useStackFrame(codeFrameInformation) {
   const {
@@ -18,85 +18,85 @@ export function useStackFrame(codeFrameInformation) {
     skipSourceMap,
     endLineNumber,
     endColumnNumber,
-  } = codeFrameInformation ?? {}
+  } = codeFrameInformation ?? {};
 
   let url =
-    `/__original-stack-frame?moduleId=` +
+    "/__original-stack-frame?moduleId=" +
     window.encodeURIComponent(moduleId) +
-    `&lineNumber=` +
+    "&lineNumber=" +
     window.encodeURIComponent(lineNumber) +
-    `&columnNumber=` +
-    window.encodeURIComponent(columnNumber)
+    "&columnNumber=" +
+    window.encodeURIComponent(columnNumber);
 
   if (skipSourceMap) {
-    url += `&skipSourceMap=true`
+    url += "&skipSourceMap=true";
   }
 
   if (endLineNumber) {
-    url += `&endLineNumber=` + window.encodeURIComponent(endLineNumber)
+    url += "&endLineNumber=" + window.encodeURIComponent(endLineNumber);
 
     if (endColumnNumber) {
-      url += `&endColumnNumber=` + window.encodeURIComponent(endColumnNumber)
+      url += "&endColumnNumber=" + window.encodeURIComponent(endColumnNumber);
     }
   }
 
-  const [response, setResponse] = React.useState(initialResponse)
+  const [response, setResponse] = React.useState(initialResponse);
 
   React.useEffect(() => {
-    if (!codeFrameInformation) return
+    if (!codeFrameInformation) return;
 
     async function fetchData() {
       try {
-        const res = await fetch(url)
-        const json = await res.json()
-        const decoded = prettifyStack(json.codeFrame)
-        const { sourcePosition, sourceContent } = json
+        const res = await fetch(url);
+        const json = await res.json();
+        const decoded = prettifyStack(json.codeFrame);
+        const { sourcePosition, sourceContent } = json;
         setResponse({
           decoded,
           sourceContent,
           sourcePosition,
-        })
+        });
       } catch (err) {
         setResponse({
           ...initialResponse,
           decoded: prettifyStack(err.message),
-        })
+        });
       }
     }
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
-  return response
+  return response;
 }
 
 export function useFileCodeFrame({ filePath, lineNumber, columnNumber }) {
   const url =
-    `/__file-code-frame?filePath=` +
+    "/__file-code-frame?filePath=" +
     window.encodeURIComponent(filePath) +
-    `&lineNumber=` +
+    "&lineNumber=" +
     window.encodeURIComponent(lineNumber) +
-    `&columnNumber=` +
-    window.encodeURIComponent(columnNumber)
+    "&columnNumber=" +
+    window.encodeURIComponent(columnNumber);
 
-  const [response, setResponse] = React.useState({ decoded: null })
+  const [response, setResponse] = React.useState({ decoded: null });
 
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(url)
-        const json = await res.json()
-        const decoded = prettifyStack(json.codeFrame)
+        const res = await fetch(url);
+        const json = await res.json();
+        const decoded = prettifyStack(json.codeFrame);
         setResponse({
           decoded,
-        })
+        });
       } catch (err) {
         setResponse({
           decoded: prettifyStack(err.message),
-        })
+        });
       }
     }
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
-  return response
+  return response;
 }

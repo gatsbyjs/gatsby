@@ -1,60 +1,60 @@
-jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+jest.mock("../resolve", () => (module) => `/resolved/path/${module}`);
 
 const {
   resolvableExtensions,
   onCreateWebpackConfig,
   preprocessSource,
-} = require(`../gatsby-node`)
+} = require("../gatsby-node");
 
-describe(`gatsby-plugin-coffeescript`, () => {
-  it(`contains coffee script extensions`, () => {
-    expect(resolvableExtensions()).toContain(`.coffee`)
-  })
+describe("gatsby-plugin-coffeescript", () => {
+  it("contains coffee script extensions", () => {
+    expect(resolvableExtensions()).toContain(".coffee");
+  });
 
-  it(`modifies webpack config with coffeescript extensions`, () => {
+  it("modifies webpack config with coffeescript extensions", () => {
     const actions = {
       setWebpackConfig: jest.fn(),
-    }
-    const loaders = { js: () => `babel-loader` }
+    };
+    const loaders = { js: () => "babel-loader" };
 
-    onCreateWebpackConfig({ actions, loaders })
+    onCreateWebpackConfig({ actions, loaders });
 
     expect(actions.setWebpackConfig).toHaveBeenCalledTimes(
-      resolvableExtensions().length
-    )
+      resolvableExtensions().length,
+    );
 
     expect(actions.setWebpackConfig).toHaveBeenLastCalledWith({
       module: {
         rules: [
           {
             test: /\.coffee$/,
-            use: [`babel-loader`, `/resolved/path/coffee-loader`],
+            use: ["babel-loader", "/resolved/path/coffee-loader"],
           },
         ],
       },
-    })
-  })
+    });
+  });
 
-  describe(`pre processing`, () => {
-    it(`returns null if non-coffeescript file`, () => {
+  describe("pre processing", () => {
+    it("returns null if non-coffeescript file", () => {
       expect(
         preprocessSource({
-          filename: `test.js`,
-          contents: `alert('hello');`,
-        })
-      ).toBe(null)
-    })
+          filename: "test.js",
+          contents: "alert('hello');",
+        }),
+      ).toBe(null);
+    });
 
-    it(`transforms .coffee files`, () => {
+    it("transforms .coffee files", () => {
       expect(
         preprocessSource(
           {
-            filename: `test.coffee`,
-            contents: `alert "I knew it!" if elvis?`,
+            filename: "test.coffee",
+            contents: 'alert "I knew it!" if elvis?',
           },
-          {}
-        )
-      ).toMatchSnapshot()
-    })
-  })
-})
+          {},
+        ),
+      ).toMatchSnapshot();
+    });
+  });
+});

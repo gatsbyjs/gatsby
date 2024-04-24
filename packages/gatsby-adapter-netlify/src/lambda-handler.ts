@@ -1,103 +1,108 @@
-import type { IFunctionDefinition } from "gatsby"
-// @ts-ignore
-import packageJson from "gatsby-adapter-netlify/package.json"
-import fs from "fs-extra"
-import * as path from "path"
-import { slash } from "gatsby-core-utils/path"
+import type { IFunctionDefinition } from "gatsby";
+import packageJson from "../package.json"; // with { type: "json" };
+import fs from "fs-extra";
+import * as path from "path";
+import { slash } from "gatsby-core-utils/path";
 
-interface INetlifyFunctionConfig {
-  externalNodeModules?: Array<string>
-  includedFiles?: Array<string>
-  includedFilesBasePath?: string
-  ignoredNodeModules?: Array<string>
-  nodeBundler?: "esbuild" | "esbuild_zisi" | "nft" | "zisi" | "none"
-  nodeSourcemap?: boolean
-  nodeVersion?: string
-  processDynamicNodeImports?: boolean
-  rustTargetDirectory?: string
-  schedule?: string
-  zipGo?: boolean
-  name?: string
-  generator?: string
-  nodeModuleFormat?: "cjs" | "esm"
-}
+type INetlifyFunctionConfig = {
+  externalNodeModules?: Array<string> | undefined;
+  includedFiles?: Array<string> | undefined;
+  includedFilesBasePath?: string | undefined;
+  ignoredNodeModules?: Array<string> | undefined;
+  nodeBundler?:
+    | "esbuild"
+    | "esbuild_zisi"
+    | "nft"
+    | "zisi"
+    | "none"
+    | undefined;
+  nodeSourcemap?: boolean | undefined;
+  nodeVersion?: string | undefined;
+  processDynamicNodeImports?: boolean | undefined;
+  rustTargetDirectory?: string | undefined;
+  schedule?: string | undefined;
+  zipGo?: boolean | undefined;
+  name?: string | undefined;
+  generator?: string | undefined;
+  nodeModuleFormat?: "cjs" | "esm" | undefined;
+};
 
-interface INetlifyFunctionManifest {
-  config: INetlifyFunctionConfig
-  version: number
-}
+type INetlifyFunctionManifest = {
+  config: INetlifyFunctionConfig;
+  version: number;
+};
 
 export async function prepareFunction(
   fun: IFunctionDefinition,
-  odbfunctionName?: string
+  odbfunctionName?: string | undefined,
 ): Promise<void> {
-  let functionId = fun.functionId
-  let isODB = false
+  let functionId = fun.functionId;
+  let isODB = false;
 
   if (odbfunctionName) {
-    functionId = odbfunctionName
-    isODB = true
+    functionId = odbfunctionName;
+    isODB = true;
   }
 
   const internalFunctionsDir = path.join(
     process.cwd(),
-    `.netlify`,
-    `functions-internal`,
-    functionId
-  )
+    ".netlify",
+    "functions-internal",
+    functionId,
+  );
 
-  await fs.ensureDir(internalFunctionsDir)
+  await fs.ensureDir(internalFunctionsDir);
 
   // This is a temporary hacky approach, eventually it should be just `fun.name`
   const displayName = isODB
-    ? `DSG`
-    : fun.name === `SSR & DSG`
-    ? `SSR`
-    : fun.name
+    ? "DSG"
+    : fun.name === "SSR & DSG"
+      ? "SSR"
+      : fun.name;
 
   const functionManifest: INetlifyFunctionManifest = {
     config: {
       name: displayName,
-      generator: `gatsby-adapter-netlify@${packageJson?.version ?? `unknown`}`,
-      includedFiles: fun.requiredFiles.map(file =>
-        slash(file).replace(/\[/g, `*`).replace(/]/g, `*`)
+      generator: `gatsby-adapter-netlify@${packageJson?.version ?? "unknown"}`,
+      includedFiles: fun.requiredFiles.map((file) =>
+        slash(file).replace(/\[/g, "*").replace(/]/g, "*"),
       ),
-      externalNodeModules: [`msgpackr-extract`],
+      externalNodeModules: ["msgpackr-extract"],
     },
     version: 1,
-  }
+  };
 
   await fs.writeJSON(
     path.join(internalFunctionsDir, `${functionId}.json`),
-    functionManifest
-  )
+    functionManifest,
+  );
 
   function getRelativePathToModule(modulePath: string): string {
-    const absolutePath = require.resolve(modulePath)
+    const absolutePath = require.resolve(modulePath);
 
     return (
-      `./` +
+      "./" +
       path.posix.relative(slash(internalFunctionsDir), slash(absolutePath))
-    )
+    );
   }
 
   const handlerSource = /* javascript */ `
 const Stream = require("stream")
 const http = require("http")
 const { Buffer } = require("buffer")
-const cookie = require("${getRelativePathToModule(`cookie`)}")
+const cookie = require("${getRelativePathToModule("cookie")}")
 ${
   isODB
     ? `const { builder } = require("${getRelativePathToModule(
-        `@netlify/functions`
+        "@netlify/functions",
       )}")`
-    : ``
+    : ""
 }
 
 const preferDefault = m => (m && m.default) || m
 
 const functionModule = require("${getRelativePathToModule(
-    path.join(process.cwd(), fun.pathToEntryPoint)
+    path.join(process.cwd(), fun.pathToEntryPoint),
   )}")
 
 const functionHandler = preferDefault(functionModule)
@@ -347,21 +352,21 @@ const handler = async (event, context) => {
   })
 }
 
-exports.handler = ${isODB ? `builder(handler)` : `handler`}
-`
+exports.handler = ${isODB ? "builder(handler)" : "handler"}
+`;
 
   await fs.writeFile(
     path.join(internalFunctionsDir, `${functionId}.js`),
-    handlerSource
-  )
+    handlerSource,
+  );
 }
 
 export async function prepareFunctionVariants(
   fun: IFunctionDefinition,
-  odbfunctionName?: string
+  odbfunctionName?: string | undefined,
 ): Promise<void> {
-  await prepareFunction(fun)
+  await prepareFunction(fun);
   if (odbfunctionName) {
-    await prepareFunction(fun, odbfunctionName)
+    await prepareFunction(fun, odbfunctionName);
   }
 }

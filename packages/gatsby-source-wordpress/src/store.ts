@@ -1,32 +1,32 @@
-import { type RematchStore, init } from "@rematch/core"
-import immerPlugin from "@rematch/immer"
-import { enableMapSet } from "immer"
-import models, { type IRootModel } from "./models"
+import { type RematchStore, init } from "@rematch/core";
+import immerPlugin from "@rematch/immer";
+import { enableMapSet } from "immer";
+import models, { type IRootModel } from "./models";
 
-import { AsyncLocalStorage } from "async_hooks"
-import type { IPluginOptions } from "./models/gatsby-api"
-import type { GatsbyNodeApiHelpers } from "./utils/gatsby-types"
+import { AsyncLocalStorage } from "async_hooks";
+import type { IPluginOptions } from "./models/gatsby-api";
+import type { GatsbyNodeApiHelpers } from "./utils/gatsby-types";
 
 export type IGatsbyApiHook = {
-  (helpers: GatsbyNodeApiHelpers, pluginOptions: IPluginOptions): Promise<void>
-}
+  (helpers: GatsbyNodeApiHelpers, pluginOptions: IPluginOptions): Promise<void>;
+};
 
-export type Store = RematchStore<IRootModel, Record<string, never>>
+export type Store = RematchStore<IRootModel, Record<string, never>>;
 
 export type IStoreData = {
-  store: Store
-  key: string
-}
+  store: Store;
+  key: string;
+};
 
-export const asyncLocalStorage = new AsyncLocalStorage<IStoreData>()
+export const asyncLocalStorage = new AsyncLocalStorage<IStoreData>();
 
-const STORE_MAP = new Map<string, Store>()
+const STORE_MAP = new Map<string, Store>();
 
 export function createStore(): Store {
   return init({
     models,
     plugins: [immerPlugin<IRootModel>()],
-  })
+  });
 }
 
 /**
@@ -36,42 +36,42 @@ export function createStore(): Store {
 export const wrapApiHook =
   (hook: IGatsbyApiHook): IGatsbyApiHook =>
   async (helpers, pluginOptions) => {
-    const typePrefix = pluginOptions.schema?.typePrefix ?? ``
+    const typePrefix = pluginOptions.schema?.typePrefix ?? "";
 
     if (!STORE_MAP.has(typePrefix)) {
-      STORE_MAP.set(typePrefix, createStore())
+      STORE_MAP.set(typePrefix, createStore());
     }
 
-    const store = STORE_MAP.get(typePrefix)
+    const store = STORE_MAP.get(typePrefix);
 
     return asyncLocalStorage.run({ store, key: typePrefix }, async () =>
       hook(helpers, pluginOptions),
-    )
-  }
+    );
+  };
 
-enableMapSet()
+enableMapSet();
 
 export const getStore = (): Store => {
-  const alsStore = asyncLocalStorage.getStore()
+  const alsStore = asyncLocalStorage.getStore();
   if (!alsStore) {
-    throw new Error(`Store not found`)
+    throw new Error("Store not found");
   }
-  return alsStore.store
-}
+  return alsStore.store;
+};
 
 export function snapshotContext(): () => void {
-  const alsStore = asyncLocalStorage.getStore()
+  const alsStore = asyncLocalStorage.getStore();
   return (): void => {
-    return asyncLocalStorage.enterWith(alsStore)
-  }
+    return asyncLocalStorage.enterWith(alsStore);
+  };
 }
 
 export function getPluginKey(): string {
-  return asyncLocalStorage.getStore().key
+  return asyncLocalStorage.getStore().key;
 }
 
 export function withPluginKey(str: string): string {
-  return `${getPluginKey()}-${str}`
+  return `${getPluginKey()}-${str}`;
 }
 
-export default getStore
+export default getStore;

@@ -1,73 +1,73 @@
-import traverse from "@babel/traverse"
-import type { NodePath } from "@babel/core"
+import traverse from "@babel/traverse";
+import type { NodePath } from "@babel/core";
 // @ts-ignore
-import type { JSXAttribute } from "@babel/types"
-import { parse, type ParserOptions } from "@babel/parser"
-import babel from "@babel/core"
-import { slash } from "gatsby-core-utils"
-import { evaluateImageAttributes, hashOptions } from "../babel-helpers"
-import type { IStaticImageProps } from "../components/static-image.server"
+import type { JSXAttribute } from "@babel/types";
+import { parse, type ParserOptions } from "@babel/parser";
+import babel from "@babel/core";
+import { slash } from "gatsby-core-utils";
+import { evaluateImageAttributes, hashOptions } from "../babel-helpers";
+import type { IStaticImageProps } from "../components/static-image.server";
 
 const PARSER_OPTIONS: ParserOptions = {
   allowImportExportEverywhere: true,
   allowReturnOutsideFunction: true,
   allowSuperOutsideMethod: true,
-  sourceType: `unambiguous`,
+  sourceType: "unambiguous",
   plugins: [
-    `jsx`,
-    `flow`,
-    `doExpressions`,
-    `objectRestSpread`,
+    "jsx",
+    "flow",
+    "doExpressions",
+    "objectRestSpread",
     [
-      `decorators`,
+      "decorators",
       {
         decoratorsBeforeExport: true,
       },
     ],
-    `classProperties`,
-    `classPrivateProperties`,
-    `classPrivateMethods`,
-    `exportDefaultFrom`,
-    `exportNamespaceFrom`,
-    `asyncGenerators`,
-    `functionBind`,
-    `functionSent`,
-    `dynamicImport`,
-    `numericSeparator`,
-    `optionalChaining`,
-    `importMeta`,
-    `bigInt`,
-    `optionalCatchBinding`,
-    `throwExpressions`,
+    "classProperties",
+    "classPrivateProperties",
+    "classPrivateMethods",
+    "exportDefaultFrom",
+    "exportNamespaceFrom",
+    "asyncGenerators",
+    "functionBind",
+    "functionSent",
+    "dynamicImport",
+    "numericSeparator",
+    "optionalChaining",
+    "importMeta",
+    "bigInt",
+    "optionalCatchBinding",
+    "throwExpressions",
     [
-      `pipelineOperator`,
+      "pipelineOperator",
       {
-        proposal: `minimal`,
+        proposal: "minimal",
       },
     ],
-    `nullishCoalescingOperator`,
+    "nullishCoalescingOperator",
   ],
-}
+};
 
 export function getBabelParserOptions(filePath: string): ParserOptions {
   // Flow and TypeScript plugins can't be enabled simultaneously
   if (/\.tsx?/.test(filePath)) {
-    const { plugins } = PARSER_OPTIONS
+    const { plugins } = PARSER_OPTIONS;
     return {
       ...PARSER_OPTIONS,
-      plugins: (plugins || []).map(plugin =>
-        plugin === `flow` ? `typescript` : plugin,
+      plugins: (plugins || []).map((plugin) =>
+        plugin === "flow" ? "typescript" : plugin,
       ),
-    }
+    };
   }
-  return PARSER_OPTIONS
+  return PARSER_OPTIONS;
 }
 
 export function babelParseToAst(
   contents: string,
   filePath: string,
 ): babel.types.File {
-  return parse(contents, getBabelParserOptions(filePath))
+  return parse(contents, getBabelParserOptions(filePath));
 }
 
 /**
@@ -82,30 +82,30 @@ export const extractStaticImageProps = (
     nodePath: NodePath<JSXAttribute> | undefined,
   ) => void | undefined,
 ): Map<string, IStaticImageProps> => {
-  const images: Map<string, IStaticImageProps> = new Map()
+  const images: Map<string, IStaticImageProps> = new Map();
 
   traverse(ast, {
     JSXOpeningElement(nodePath) {
       // Is this a StaticImage?
       if (
         !nodePath
-          .get(`name`)
-          .referencesImport(`gatsby-plugin-image`, `StaticImage`)
+          .get("name")
+          .referencesImport("gatsby-plugin-image", "StaticImage")
       ) {
-        return
+        return;
       }
       const image = evaluateImageAttributes(
         // There's a conflict between the definition of NodePath in @babel/core and @babel/traverse
         nodePath,
         onError,
-      ) as unknown as IStaticImageProps
+      ) as unknown as IStaticImageProps;
       // When the image props are the same for multiple StaticImage but they are in different locations
       // the hash will be the same then. We need to make sure that the hash is unique.
       // The filename should already be normalized but better safe than sorry.
-      image.filename = slash(filename)
+      image.filename = slash(filename);
 
-      images.set(hashOptions(image), image)
+      images.set(hashOptions(image), image);
     },
-  })
-  return images
-}
+  });
+  return images;
+};

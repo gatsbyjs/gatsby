@@ -1,23 +1,23 @@
-import nodePath from "node:path"
-import { getStore } from "~/store"
+import nodePath from "node:path";
+import { getStore } from "~/store";
 
-import type { Step } from "~/utils/run-steps"
+import type { Step } from "~/utils/run-steps";
 
 export const addRemoteFileAllowedUrl: Step = function addRemoteFileAllowedUrl({
   actions,
 }): void {
-  if (typeof actions?.addRemoteFileAllowedUrl !== `function`) {
-    return
+  if (typeof actions?.addRemoteFileAllowedUrl !== "function") {
+    return;
   }
 
-  const { wpUrl } = getStore().getState().remoteSchema
+  const { wpUrl } = getStore().getState().remoteSchema;
 
   if (!wpUrl) {
-    return
+    return;
   }
 
-  const wordpressUrl = new URL(wpUrl)
-  wordpressUrl.pathname = nodePath.posix.join(wordpressUrl.pathname, `*`)
+  const wordpressUrl = new URL(wpUrl);
+  wordpressUrl.pathname = nodePath.posix.join(wordpressUrl.pathname, "*");
 
-  actions.addRemoteFileAllowedUrl(wordpressUrl.href)
-}
+  actions.addRemoteFileAllowedUrl(wordpressUrl.href);
+};

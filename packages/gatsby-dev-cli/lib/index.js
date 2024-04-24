@@ -4880,30 +4880,30 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			var _uniq = /*@__PURE__*/getDefaultExportFromCjs(uniq_1);
 
 			const verdaccioConfig = {
-			  storage: path.join(os.tmpdir(), `verdaccio`, `storage`),
+			  storage: path.join(os.tmpdir(), "verdaccio", "storage"),
 			  port: 4873,
 			  // default
-			  max_body_size: `1000mb`,
+			  max_body_size: "1000mb",
 			  web: {
 			    enable: true,
-			    title: `gatsby-dev`
+			    title: "gatsby-dev"
 			  },
-			  self_path: `./`,
+			  self_path: "./",
 			  logs: {
-			    type: `stdout`,
-			    format: `pretty-timestamped`,
-			    level: `warn`
+			    type: "stdout",
+			    format: "pretty-timestamped",
+			    level: "warn"
 			  },
 			  packages: {
 			    "**": {
-			      access: `$all`,
-			      publish: `$all`,
-			      proxy: `npmjs`
+			      access: "$all",
+			      publish: "$all",
+			      proxy: "npmjs"
 			    }
 			  },
 			  uplinks: {
 			    npmjs: {
-			      url: `https://registry.npmjs.org/`,
+			      url: "https://registry.npmjs.org/",
 			      // default is 2 max_fails - on flaky networks that cause a lot of failed installations
 			      max_fails: 10
 			    }
@@ -4927,14 +4927,14 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			}
 			signalExit.onExit(() => {
 			  if (cleanupTasks.size) {
-			    console.log(`Process exitted in middle of publishing - cleaning up`);
+			    console.log("Process exitted in middle of publishing - cleaning up");
 			    cleanupTasks.forEach(taskFn => taskFn());
 			  }
 			});
 
 			const defaultSpawnArgs = {
 			  cwd: process.cwd(),
-			  stdio: `inherit`
+			  stdio: "inherit"
 			};
 			function setDefaultSpawnStdio(stdio) {
 			  // @ts-ignore
@@ -4948,8 +4948,8 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  try {
 			    return await execa.execa(cmd, args, spawnOptions);
 			  } catch (e) {
-			    if (spawnOptions.stdio === `ignore`) {
-			      console.log(`\nCommand "${cmd} ${args.join(` `)}" failed.\nTo see details of failed command, rerun "gatsby-dev" without "--quiet" or "-q" switch\n`);
+			    if (spawnOptions.stdio === "ignore") {
+			      console.log(`\nCommand "${cmd} ${args.join(" ")}" failed.\nTo see details of failed command, rerun "gatsby-dev" without "--quiet" or "-q" switch\n`);
 			    }
 			    throw e;
 			  }
@@ -4959,10 +4959,10 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  packageName,
 			  packageNameToPath
 			}) {
-			  return path.join(packageNameToPath.get(packageName), `package.json`);
+			  return path.join(packageNameToPath.get(packageName), "package.json");
 			}
 
-			const NPMRCContent = `${registryUrl.replace(/https?:/g, ``)}/:_authToken="gatsby-dev"`;
+			const NPMRCContent = `${registryUrl.replace(/https?:/g, "")}/:_authToken="gatsby-dev"`;
 
 			/**
 			 * Edit package.json to:
@@ -4983,7 +4983,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  // adjust version selector to point to dev version of package so local registry is used
 			  // for dependencies.
 
-			  const monorepoPKGjsonString = readFileSync(monoRepoPackageJsonPath, `utf-8`);
+			  const monorepoPKGjsonString = readFileSync(monoRepoPackageJsonPath, "utf-8");
 			  const monorepoPKGjson = JSON.parse(monorepoPKGjsonString);
 			  monorepoPKGjson.version = `${monorepoPKGjson.version}-dev-${versionPostFix}`;
 			  packagesToPublish.forEach(packageThatWillBePublished => {
@@ -4992,7 +4992,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			        packageName: packageThatWillBePublished,
 			        packageNameToPath
 			      });
-			      const file = readFileSync(packagePath, `utf-8`);
+			      const file = readFileSync(packagePath, "utf-8");
 			      const currentVersion = JSON.parse(file).version;
 			      monorepoPKGjson.dependencies[packageThatWillBePublished] = `${currentVersion}-dev-${versionPostFix}`;
 			    }
@@ -5022,9 +5022,9 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  pathToPackage,
 			  root
 			}) {
-			  const NPMRCPathInPackage = join(pathToPackage, `.npmrc`);
+			  const NPMRCPathInPackage = join(pathToPackage, ".npmrc");
 			  outputFileSync(NPMRCPathInPackage, NPMRCContent);
-			  const NPMRCPathInRoot = join(root, `.npmrc`);
+			  const NPMRCPathInRoot = join(root, ".npmrc");
 			  outputFileSync(NPMRCPathInRoot, NPMRCContent);
 			  return registerCleanupTask(() => {
 			    removeSync(NPMRCPathInPackage);
@@ -5062,7 +5062,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  });
 
 			  // npm publish
-			  const publishCmd = [`npm`, [`publish`, `--tag`, `gatsby-dev`, `--registry=${registryUrl}`], {
+			  const publishCmd = ["npm", ["publish", "--tag", "gatsby-dev", `--registry=${registryUrl}`], {
 			    cwd: pathToPackage
 			  }];
 			  console.log(`Publishing ${packageName}@${newPackageVersion} to local registry`);
@@ -5085,7 +5085,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  externalRegistry,
 			  packageManager
 			}) {
-			  console.log(`Installing packages from local registry:\n${packagesToInstall.map(packageAndVersion => ` - ${packageAndVersion}`).join(`\n`)}`);
+			  console.log(`Installing packages from local registry:\n${packagesToInstall.map(packageAndVersion => ` - ${packageAndVersion}`).join("\n")}`);
 			  let installCmd;
 			  if (yarnWorkspaceRoot) {
 			    // this is very hacky - given root, we run `pnpm workspaces info`
@@ -5096,8 +5096,8 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			    // (packages being mostly hoisted to top-level node_modules)
 			    const {
 			      stdout
-			    } = await promisifiedSpawn([`pnpm`, [`workspaces`, `info`, `--json`], {
-			      stdio: `pipe`
+			    } = await promisifiedSpawn(["pnpm", ["workspaces", "info", "--json"], {
+			      stdio: "pipe"
 			    }]);
 			    let workspacesLayout;
 			    try {
@@ -5132,7 +5132,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			        // pick content of first (and only) capturing group
 			        const jsonString = sanitizedStdOut?.[1];
 			        try {
-			          workspacesLayout = JSON.parse(jsonString ?? ``);
+			          workspacesLayout = JSON.parse(jsonString ?? "");
 			        } catch (e) {
 			          console.error(`Failed to parse "sanitized" output of "yarn workspaces info" command.\n\nSanitized string: "${jsonString}`);
 			          // not exitting here, because we have general check for `workspacesLayout` being set below
@@ -5140,7 +5140,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			      }
 			    }
 			    if (!workspacesLayout) {
-			      console.error(`Couldn't parse output of "yarn workspaces info" command`, stdout);
+			      console.error('Couldn\'t parse output of "yarn workspaces info" command', stdout);
 			      process.exit(1);
 			    }
 			    function handleDeps(deps) {
@@ -5150,7 +5150,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			      let changed = false;
 			      Object.keys(deps).forEach(depName => {
 			        if (packagesToInstall.includes(depName)) {
-			          deps[depName] = `gatsby-dev`;
+			          deps[depName] = "gatsby-dev";
 			          changed = true;
 			        }
 			      });
@@ -5160,11 +5160,11 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			      const {
 			        location
 			      } = workspacesLayout[workspaceName];
-			      const pkgJsonPath = path$1.join(yarnWorkspaceRoot, location, `package.json`);
+			      const pkgJsonPath = path$1.join(yarnWorkspaceRoot, location, "package.json");
 			      if (!fs.existsSync(pkgJsonPath)) {
 			        return;
 			      }
-			      const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, `utf8`));
+			      const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 
 			      // eslint-disable-next-line @babel/no-unused-expressions
 			      handleDeps(pkg.dependencies);
@@ -5176,35 +5176,35 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 
 			    // package.json files are changed - so we just want to install
 			    // using verdaccio registry
-			    const yarnCommands = [`install`];
+			    const yarnCommands = ["install"];
 			    if (!externalRegistry) {
 			      yarnCommands.push(`--registry=${registryUrl}`);
 			    }
-			    installCmd = [`pnpm`, yarnCommands];
+			    installCmd = ["pnpm", yarnCommands];
 			  } else {
 			    const packageAndVersionsToInstall = packagesToInstall.map(packageName => {
 			      const packageVersion = newlyPublishedPackageVersions[packageName];
 			      return `${packageName}@${packageVersion}`;
 			    });
-			    if (packageManager === `pnpm`) {
-			      const pnpmCommands = [`add`, ...packageAndVersionsToInstall, `--save-exact`];
+			    if (packageManager === "pnpm") {
+			      const pnpmCommands = ["add", ...packageAndVersionsToInstall, "--save-exact"];
 			      if (!externalRegistry) {
 			        pnpmCommands.push(`--registry=${registryUrl}`);
 			      }
-			      installCmd = [`pnpm`, pnpmCommands];
+			      installCmd = ["pnpm", pnpmCommands];
 			    } else {
-			      const yarnCommands = [`add`, ...packageAndVersionsToInstall, `--exact`];
+			      const yarnCommands = ["add", ...packageAndVersionsToInstall, "--exact"];
 			      if (!externalRegistry) {
 			        yarnCommands.push(`--registry=${registryUrl}`);
 			      }
-			      installCmd = [`pnpm`, yarnCommands];
+			      installCmd = ["pnpm", yarnCommands];
 			    }
 			  }
 			  try {
 			    await promisifiedSpawn(installCmd);
-			    console.log(`Installation complete`);
+			    console.log("Installation complete");
 			  } catch (error) {
-			    console.error(`Installation failed`, error);
+			    console.error("Installation failed", error);
 			    process.exit(1);
 			  }
 			}
@@ -5216,17 +5216,17 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  if (VerdaccioInitPromise) {
 			    return VerdaccioInitPromise;
 			  }
-			  console.log(`Starting local verdaccio server`);
+			  console.log("Starting local verdaccio server");
 
 			  // clear storage
 			  fs.removeSync(verdaccioConfig.storage);
 			  VerdaccioInitPromise = new Promise(resolve => {
-			    start(verdaccioConfig, verdaccioConfig.port.toString(), verdaccioConfig.storage, `1.0.0`, `gatsby-dev`,
+			    start(verdaccioConfig, verdaccioConfig.port.toString(), verdaccioConfig.storage, "1.0.0", "gatsby-dev",
 			    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 			    (webServer, addr, _pkgName, _pkgVersion) => {
 			      // console.log(webServer)
 			      webServer.listen(addr.port || addr.path, addr.host, () => {
-			        console.log(`Started local verdaccio server`);
+			        console.log("Started local verdaccio server");
 			        resolve(undefined);
 			      });
 			    });
@@ -5421,7 +5421,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  let localPKGjson;
 			  let packageNotInstalled = false;
 			  try {
-			    localPKGjson = JSON.parse(fs.readFileSync(newPath, `utf-8`));
+			    localPKGjson = JSON.parse(fs.readFileSync(newPath, "utf-8"));
 			  } catch {
 			    packageNotInstalled = true;
 			    // there is no local package - so we still need to install deps
@@ -5460,7 +5460,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			    packageName,
 			    packageNameToPath
 			  });
-			  const monorepoPKGjsonString = fs.readFileSync(monoRepoPackageJsonPath, `utf-8`);
+			  const monorepoPKGjsonString = fs.readFileSync(monoRepoPackageJsonPath, "utf-8");
 			  const monorepoPKGjson = JSON.parse(monorepoPKGjsonString);
 			  if (ignoredPackageJSON.has(packageName)) {
 			    if (ignoredPackageJSON.get(packageName).includes(monorepoPKGjsonString)) {
@@ -5484,12 +5484,12 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			      ...diff,
 			      ...diff2
 			    })).reduce((acc, key) => {
-			      if (monorepoPKGjson.dependencies?.[key] === `gatsby-dev`) {
+			      if (monorepoPKGjson.dependencies?.[key] === "gatsby-dev") {
 			        // if we are in middle of publishing to local repository - ignore
 			        isPublishing = true;
 			        return acc;
 			      }
-			      if (localPKGjson.dependencies[key] === `gatsby-dev`) {
+			      if (localPKGjson.dependencies[key] === "gatsby-dev") {
 			        // monorepo packages will restore version, but after installation
 			        // in local site - it will use `gatsby-dev` dist tag - we need
 			        // to ignore changes that
@@ -5513,13 +5513,13 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			        // this doesn't need publishing really, so will skip this
 			      }
 			      return acc;
-			    }, []).join(`\n`);
+			    }, []).join("\n");
 			    if (!isPublishing && depChangeLog.length > 0) {
 			      console.log(`Dependencies of '${packageName}' changed:\n${depChangeLog}`);
 			      if (isInitialScan) {
-			        console.log(`Will ${!needPublishing ? `not ` : ``}publish to local npm registry.`);
+			        console.log(`Will ${!needPublishing ? "not " : ""}publish to local npm registry.`);
 			      } else {
-			        console.warn(`Installation of dependencies after initial scan is not implemented`);
+			        console.warn("Installation of dependencies after initial scan is not implemented");
 			      }
 			      return {
 			        didDepsChanged: needPublishing,
@@ -5533,13 +5533,13 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  };
 			}
 			function getPackageVersion(packageName) {
-			  const projectPackageJson = JSON.parse(fs.readFileSync(`./package.json`, `utf-8`));
+			  const projectPackageJson = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 			  const {
 			    dependencies = {},
 			    devDependencies = {}
 			  } = projectPackageJson;
 			  const version = dependencies[packageName] || devDependencies[packageName];
-			  return version || `latest`;
+			  return version || "latest";
 			}
 
 			/**
@@ -5764,7 +5764,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			    try {
 			      const packageRoot = packageNameToPath.get(p);
 			      if (packageRoot) {
-			        pkgJson = require(path.join(packageRoot, `package.json`));
+			        pkgJson = require(path.join(packageRoot, "package.json"));
 			      } else {
 			        console.error(`"${p}" package doesn't exist in monorepo.`);
 			        // remove from seenPackages
@@ -5829,12 +5829,12 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  packageManager
 			  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 			}) {
-			  setDefaultSpawnStdio(quiet ? `ignore` : `inherit`);
+			  setDefaultSpawnStdio(quiet ? "ignore" : "inherit");
 			  // determine if in yarn workspace - if in workspace, force using verdaccio
 			  // as current logic of copying files will not work correctly.
 			  const yarnWorkspaceRoot = findWorkspaceRoot();
-			  if (yarnWorkspaceRoot && "production" !== `test`) {
-			    console.log(`Yarn workspace found.`);
+			  if (yarnWorkspaceRoot && "production" !== "test") {
+			    console.log("Yarn workspace found.");
 			    forceInstall = true;
 			  }
 			  let afterPackageInstallation = false;
@@ -5879,7 +5879,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			      //  -gatsby/cli.js
 			      //  -gatsby-cli/cli.js
 			      if (/(bin\/gatsby.js|gatsby(-cli)?\/cli.js)$/.test(newPath)) {
-			        fs.chmodSync(newPath, `0755`);
+			        fs.chmodSync(newPath, "0755");
 			      }
 			      numCopied += 1;
 			      if (!quiet) {
@@ -5961,10 +5961,10 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			        });
 			      } else {
 			        // run `pnpm install`
-			        const pnpmInstallCmd = [`pnpm install`];
-			        console.log(`Installing packages from public NPM registry`);
+			        const pnpmInstallCmd = ["pnpm install"];
+			        console.log("Installing packages from public NPM registry");
 			        await promisifiedSpawn(pnpmInstallCmd);
-			        console.log(`Installation complete`);
+			        console.log("Installation complete");
 			      }
 			    } catch (e) {
 			      console.log(e);
@@ -5972,13 +5972,13 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			    process.exit();
 			  }
 			  if (allPackagesToWatch.length === 0) {
-			    console.error(`There are no packages to watch.`);
+			    console.error("There are no packages to watch.");
 			    return;
 			  }
-			  const allPackagesIgnoringThemesToWatch = allPackagesToWatch.filter(pkgName => !pkgName.startsWith(`gatsby-theme`));
+			  const allPackagesIgnoringThemesToWatch = allPackagesToWatch.filter(pkgName => !pkgName.startsWith("gatsby-theme"));
 			  const ignored = [/[/\\]node_modules[/\\]/i, /\.git/i, /\.DS_Store/, /[/\\]__tests__[/\\]/i, /[/\\]__mocks__[/\\]/i, /\.npmrc/i].concat(allPackagesIgnoringThemesToWatch.map(
 			  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-			  p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`)));
+			  p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, "i")));
 			  const watchers = _uniq(allPackagesToWatch
 			  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 			  .map(p => path$1.join(packageNameToPath.get(p))).filter(p => fs.existsSync(p)));
@@ -5988,7 +5988,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  let isPublishing = false;
 			  const waitFor = new Set();
 			  let anyPackageNotInstalled = false;
-			  const watchEvents = [`change`, `add`];
+			  const watchEvents = ["change", "add"];
 			  const packagePathMatchingEntries = Array.from(packageNameToPath.entries());
 			  chokidar.watch(watchers, {
 			    ignored: [filePath => {
@@ -5996,7 +5996,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			        return reg.test(filePath);
 			      });
 			    }]
-			  }).on(`all`, async (event, filePath) => {
+			  }).on("all", async (event, filePath) => {
 			    if (!watchEvents.includes(event)) {
 			      return;
 			    }
@@ -6008,7 +6008,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			    // @ts-ignore
 			    for (const [_packageName, packagePath] of packagePathMatchingEntries) {
 			      const relativeToThisPackage = path$1.relative(packagePath, filePath);
-			      if (!relativeToThisPackage.startsWith(`..`)) {
+			      if (!relativeToThisPackage.startsWith("..")) {
 			        packageName = _packageName;
 			        break;
 			      }
@@ -6020,12 +6020,12 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 
 			    // Copy it over local version.
 			    // Don't copy over the Gatsby bin file as that breaks the NPM symlink.
-			    if (_includes(filePath, `dist/gatsby-cli.js`)) {
+			    if (_includes(filePath, "dist/gatsby-cli.js")) {
 			      return;
 			    }
 			    const relativePackageFile = path$1.relative(prefix, filePath);
 			    const newPath = path$1.join(`./node_modules/${packageName}`, relativePackageFile);
-			    if (relativePackageFile === `package.json`) {
+			    if (relativePackageFile === "package.json") {
 			      // package.json files will change during publish to adjust version of package (and dependencies), so ignore
 			      // changes during this process
 			      if (isPublishing) {
@@ -6090,12 +6090,12 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			    const localCopies = [copyPath(filePath, newPath, quiet, packageName)];
 
 			    // If this is from "cache-dir" also copy it into the site's .cache
-			    if (_includes(filePath, `cache-dir`)) {
-			      const newCachePath = path$1.join(`.cache/`, path$1.relative(path$1.join(prefix, `cache-dir`), filePath));
+			    if (_includes(filePath, "cache-dir")) {
+			      const newCachePath = path$1.join(".cache/", path$1.relative(path$1.join(prefix, "cache-dir"), filePath));
 			      localCopies.push(copyPath(filePath, newCachePath, quiet, packageName));
 			    }
 			    allCopies = allCopies.concat(localCopies);
-			  }).on(`ready`, async () => {
+			  }).on("ready", async () => {
 			    // wait for all async work needed to be done
 			    // before publishing / installing
 			    await Promise.all(Array.from(waitFor));
@@ -6116,10 +6116,10 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			        isPublishing = false;
 			      } else if (anyPackageNotInstalled) {
 			        // run `pnpm install`
-			        const pnpmInstallCmd = [`pnpm install`];
-			        console.log(`Installing packages from public NPM registry`);
+			        const pnpmInstallCmd = ["pnpm install"];
+			        console.log("Installing packages from public NPM registry");
 			        await promisifiedSpawn(pnpmInstallCmd);
-			        console.log(`Installation complete`);
+			        console.log("Installation complete");
 			      }
 			      await clearJSFilesFromNodeModules();
 			      runQueuedCopies();
@@ -6139,8 +6139,8 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			}
 
 			// eslint-disable-next-line @babel/no-unused-expressions
-			argv.usage(`Usage: gatsby-dev [options]`).alias(`q`, `quiet`).nargs(`q`, 0).describe(`q`, `Do not output copy file information`).alias(`s`, `scan-once`).nargs(`s`, 0).describe(`s`, `Scan once. Do not start file watch`).alias(`p`, `set-path-to-repo`).nargs(`p`, 1).describe(`p`, `Set path to Gatsby repository.
-You typically only need to configure this once.`).nargs(`force-install`, 0).describe(`force-install`, `Disables copying files into node_modules and forces usage of local npm repository.`).nargs(`external-registry`, 0).describe(`external-registry`, `Run 'pnpm add' commands without the --registry flag.`).alias(`C`, `copy-all`).nargs(`C`, 0).describe(`C`, `Copy all contents in packages/ instead of just gatsby packages`).array(`packages`).describe(`packages`, `Explicitly specify packages to copy`).help(`h`).alias(`h`, `help`).nargs(`v`, 0).alias(`v`, `version`).describe(`v`, `Print the currently installed version of Gatsby Dev CLI`).choices(`package-manager`, [`pnpm`, `npm`]).default(`package-manager`, `pnpm`).describe(`package-manager`, `Package manager to use for installing dependencies.`).argv;
+			argv.usage("Usage: gatsby-dev [options]").alias("q", "quiet").nargs("q", 0).describe("q", "Do not output copy file information").alias("s", "scan-once").nargs("s", 0).describe("s", "Scan once. Do not start file watch").alias("p", "set-path-to-repo").nargs("p", 1).describe("p", `Set path to Gatsby repository.
+You typically only need to configure this once.`).nargs("force-install", 0).describe("force-install", "Disables copying files into node_modules and forces usage of local npm repository.").nargs("external-registry", 0).describe("external-registry", "Run 'pnpm add' commands without the --registry flag.").alias("C", "copy-all").nargs("C", 0).describe("C", "Copy all contents in packages/ instead of just gatsby packages").array("packages").describe("packages", "Explicitly specify packages to copy").help("h").alias("h", "help").nargs("v", 0).alias("v", "version").describe("v", "Print the currently installed version of Gatsby Dev CLI").choices("package-manager", ["pnpm", "npm"]).default("package-manager", "pnpm").describe("package-manager", "Package manager to use for installing dependencies.").argv;
 			if (argv.version) {
 			  console.log(getVersionInfo());
 			  process.exit();
@@ -6148,18 +6148,18 @@ You typically only need to configure this once.`).nargs(`force-install`, 0).desc
 			const conf = new Configstore(pkg.name);
 			let pathToRepo = argv.setPathToRepo;
 			if (pathToRepo) {
-			  if (pathToRepo.includes(`~`)) {
-			    pathToRepo = path$1.join(os$1.homedir(), pathToRepo.split(`~`).pop());
+			  if (pathToRepo.includes("~")) {
+			    pathToRepo = path$1.join(os$1.homedir(), pathToRepo.split("~").pop());
 			  }
-			  conf.set(`gatsby-location`, path$1.resolve(pathToRepo));
+			  conf.set("gatsby-location", path$1.resolve(pathToRepo));
 			  process.exit();
 			}
-			const havePackageJsonFile = fs.existsSync(`package.json`);
+			const havePackageJsonFile = fs.existsSync("package.json");
 			if (!havePackageJsonFile) {
-			  console.error(`Current folder must have a package.json file!`);
+			  console.error("Current folder must have a package.json file!");
 			  process.exit();
 			}
-			const gatsbyLocation = conf.get(`gatsby-location`);
+			const gatsbyLocation = conf.get("gatsby-location");
 			if (!gatsbyLocation) {
 			  console.error(`
 You haven't set the path yet to your cloned
@@ -6172,22 +6172,22 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
 
 			// get list of packages from monorepo
 			const packageNameToPath = new Map();
-			const monoRepoPackages = fs.readdirSync(path$1.join(gatsbyLocation, `packages`)).map(dirName => {
+			const monoRepoPackages = fs.readdirSync(path$1.join(gatsbyLocation, "packages")).map(dirName => {
 			  try {
-			    const filePath = path$1.join(gatsbyLocation, `packages`, dirName, `package.json`);
+			    const filePath = path$1.join(gatsbyLocation, "packages", dirName, "package.json");
 			    const file = fs.readFileSync(filePath).toString();
 			    const localPkg = JSON.parse(file);
 			    if (localPkg?.name) {
-			      packageNameToPath.set(localPkg.name, path$1.join(gatsbyLocation, `packages`, dirName));
+			      packageNameToPath.set(localPkg.name, path$1.join(gatsbyLocation, "packages", dirName));
 			      return localPkg.name;
 			    }
 			  } catch (error) {
 			    // fallback to generic one
 			  }
-			  packageNameToPath.set(dirName, path$1.join(gatsbyLocation, `packages`, dirName));
+			  packageNameToPath.set(dirName, path$1.join(gatsbyLocation, "packages", dirName));
 			  return dirName;
 			});
-			const file = fs.readFileSync(`package.json`).toString();
+			const file = fs.readFileSync("package.json").toString();
 			const localPkg = JSON.parse(file);
 
 			// intersect dependencies with monoRepoPackages to get list of packages that are used
@@ -6207,7 +6207,7 @@ gatsby-dev will pick them up.
 			  if (!argv.forceInstall) {
 			    process.exit();
 			  } else {
-			    console.log(`Continuing other dependencies installation due to "--forceInstall" flag`);
+			    console.log('Continuing other dependencies installation due to "--forceInstall" flag');
 			  }
 			}
 			watch(gatsbyLocation, argv.packages, {

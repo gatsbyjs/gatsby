@@ -1,6 +1,6 @@
-import type { ISharpGatsbyImageArgs, Fit } from "gatsby-plugin-image"
-import { pickBy, defaults, mergeWith, omitBy, isNil, identity } from "lodash"
-import type { FailOnOptions, SharpOptions } from "sharp"
+import type { ISharpGatsbyImageArgs, Fit } from "gatsby-plugin-image";
+import { pickBy, defaults, mergeWith, omitBy, isNil, identity } from "lodash";
+import type { FailOnOptions, SharpOptions } from "sharp";
 
 export type PluginOptionsDefaults = Pick<
   ISharpGatsbyImageArgs,
@@ -15,65 +15,65 @@ export type PluginOptionsDefaults = Pick<
   | "pngOptions"
   | "webpOptions"
   | "avifOptions"
->
+>;
 
-export interface ISharpPluginOptions {
-  base64Width?: number
-  forceBase64Format?: "png" | "webp" | "jpg" | string
-  useMozJpeg?: boolean
-  stripMetadata?: boolean
-  lazyImageGeneration?: boolean
-  defaultQuality: number
-  failOn?: SharpOptions["failOn"]
-  defaults?: PluginOptionsDefaults
-}
+export type ISharpPluginOptions = {
+  base64Width?: number | undefined;
+  forceBase64Format?: "png" | "webp" | "jpg" | string | undefined;
+  useMozJpeg?: boolean | undefined;
+  stripMetadata?: boolean | undefined;
+  lazyImageGeneration?: boolean | undefined;
+  defaultQuality: number;
+  failOn?: SharpOptions["failOn"] | undefined;
+  defaults?: PluginOptionsDefaults | undefined;
+};
 
-interface IDuotoneArgs {
-  highlight: string
-  shadow: string
-  opacity?: number
-}
+type IDuotoneArgs = {
+  highlight: string;
+  shadow: string;
+  opacity?: number | undefined;
+};
 
-export interface ITransformArgs {
-  height: number
-  width: number
-  cropFocus?: number | string
-  toFormat: string
-  pngCompressionLevel?: number
-  quality?: number
-  jpegQuality?: number
-  pngQuality?: number
-  webpQuality?: number
-  jpegProgressive?: boolean
-  grayscale?: boolean
-  rotate?: number
-  trim?: number
-  duotone?: IDuotoneArgs
-  background?: string
-  fit?: Fit
-  pathPrefix?: string
-  maxHeight?: number
-  maxWidth?: number
-  base64Width?: number
-}
+export type ITransformArgs = {
+  height: number;
+  width: number;
+  cropFocus?: number | string | undefined;
+  toFormat: string;
+  pngCompressionLevel?: number | undefined;
+  quality?: number | undefined;
+  jpegQuality?: number | undefined;
+  pngQuality?: number | undefined;
+  webpQuality?: number | undefined;
+  jpegProgressive?: boolean | undefined;
+  grayscale?: boolean | undefined;
+  rotate?: number | undefined;
+  trim?: number | undefined;
+  duotone?: IDuotoneArgs | undefined;
+  background?: string | undefined;
+  fit?: Fit | undefined;
+  pathPrefix?: string | undefined;
+  maxHeight?: number | undefined;
+  maxWidth?: number | undefined;
+  base64Width?: number | undefined;
+};
 
-interface IGeneralArgs extends ITransformArgs {
-  base64: boolean
-  pathPrefix: string
-  toFormatBase64: string
-  pngCompressionSpeed?: number
-}
+type IGeneralArgs = {
+  base64: boolean;
+  pathPrefix: string;
+  toFormatBase64?: string | undefined;
+  pngCompressionSpeed?: number | undefined;
+} & ITransformArgs;
 
 // Plugin options are loaded onPreBootstrap in gatsby-node
 const pluginDefaults = {
   base64Width: 20,
-  forceBase64Format: ``, // valid formats: png,jpg,webp
-  useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
+  forceBase64Format: "", // valid formats: png,jpg,webp
+  useMozJpeg: process.env.GATSBY_JPEG_ENCODER === "MOZJPEG",
   stripMetadata: true,
   lazyImageGeneration: true,
   defaultQuality: 50,
-  failOn: `warning` as FailOnOptions,
-}
+  failOn: "warning" as FailOnOptions,
+};
 
 const generalArgs: Partial<IGeneralArgs> = {
   quality: 50,
@@ -87,31 +87,31 @@ const generalArgs: Partial<IGeneralArgs> = {
   base64: true,
   grayscale: false,
   duotone: undefined,
-  pathPrefix: ``,
-  toFormat: ``,
-  toFormatBase64: ``,
+  pathPrefix: "",
+  toFormat: "",
+  toFormatBase64: "",
   rotate: 0,
-}
+};
 
-let pluginOptions: ISharpPluginOptions = Object.assign({}, pluginDefaults)
+let pluginOptions: ISharpPluginOptions = Object.assign({}, pluginDefaults);
 export const setPluginOptions = (
-  opts: Record<string, string>
+  opts: Record<string, string>,
 ): ISharpPluginOptions => {
-  pluginOptions = Object.assign({}, pluginOptions, opts)
-  generalArgs.quality = pluginOptions.defaultQuality
+  pluginOptions = Object.assign({}, pluginOptions, opts);
+  generalArgs.quality = pluginOptions.defaultQuality;
 
-  return pluginOptions
-}
+  return pluginOptions;
+};
 
-export const getPluginOptions = (): ISharpPluginOptions => pluginOptions
+export const getPluginOptions = (): ISharpPluginOptions => pluginOptions;
 export const getPluginOptionsDefaults = (): ISharpPluginOptions =>
-  pluginDefaults
+  pluginDefaults;
 
 /**
  * Creates a transform object
  */
 export const createTransformObject = (
-  args: ITransformArgs
+  args: ITransformArgs,
 ): Partial<ITransformArgs> => {
   const options = {
     height: args.height,
@@ -131,110 +131,112 @@ export const createTransformObject = (
     duotone: args.duotone ? args.duotone : null,
     fit: args.fit,
     background: args.background,
-  }
+  };
 
   // get all non falsey values
-  return pickBy(options, identity)
-}
+  return pickBy(options, identity);
+};
 
 /**
  * Used for gatsbyImageData and StaticImage only
  */
-export const mergeDefaults = (
-  args: ISharpGatsbyImageArgs
-): PluginOptionsDefaults & ISharpGatsbyImageArgs =>
-  doMergeDefaults(args, pluginOptions.defaults)
+export function mergeDefaults(
+  args: ISharpGatsbyImageArgs,
+): PluginOptionsDefaults & ISharpGatsbyImageArgs {
+  return doMergeDefaults(args, pluginOptions.defaults);
+}
 
-const customizer = <T>(objValue: unknown, srcValue: T): T | undefined =>
-  Array.isArray(objValue) ? srcValue : undefined
+function customizer<T>(objValue: unknown, srcValue: T): T | undefined {
+  return Array.isArray(objValue) ? srcValue : undefined;
+}
 
 export function doMergeDefaults(
   args: ISharpGatsbyImageArgs,
-  defaults?: PluginOptionsDefaults
+  defaults?: PluginOptionsDefaults,
 ): PluginOptionsDefaults & ISharpGatsbyImageArgs {
   if (!defaults) {
-    return args
+    return args;
   }
-  return mergeWith({}, defaults, args, customizer)
+  return mergeWith({}, defaults, args, customizer);
 }
 
-export const healOptions = (
+export function healOptions(
   {
     defaultQuality: quality,
     base64Width,
   }: Pick<ISharpPluginOptions, "defaultQuality" | "base64Width">,
   args: ITransformArgs,
-  fileExtension = ``,
-  defaultArgs = {}
+  fileExtension = "",
+  defaultArgs = {},
 ): Partial<IGeneralArgs> & {
-  quality: number
-} & ITransformArgs => {
-  const options = defaults({}, args, { quality }, defaultArgs, generalArgs)
+  quality: number;
+} & ITransformArgs {
+  const options = defaults({}, args, { quality }, defaultArgs, generalArgs);
   // @ts-ignore - parseInt as safeguard, expects string tho
-  options.quality = parseInt(options.quality, 10)
+  options.quality = parseInt(options.quality, 10);
   // @ts-ignore - parseInt as safeguard, expects string tho
-  options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
+  options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10);
   // @ts-ignore - parseInt as safeguard, expects string tho
-  options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
-  options.toFormat = options.toFormat.toLowerCase()
-  options.toFormatBase64 = options.toFormatBase64?.toLowerCase()
-  options.base64Width = options.base64Width || base64Width
+  options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10);
+  options.toFormat = options.toFormat.toLowerCase();
+  options.toFormatBase64 = options.toFormatBase64?.toLowerCase();
+  options.base64Width = options.base64Width || base64Width;
 
   // when toFormat is not set we set it based on fileExtension
-  if (options.toFormat === ``) {
+  if (options.toFormat === "") {
     if (!fileExtension) {
       throw new Error(
-        `toFormat seems to be empty, we need a fileExtension to set it.`
-      )
+        "toFormat seems to be empty, we need a fileExtension to set it.",
+      );
     }
-    options.toFormat = fileExtension.toLowerCase()
+    options.toFormat = fileExtension.toLowerCase();
 
-    if (fileExtension === `jpeg`) {
-      options.toFormat = `jpg`
+    if (fileExtension === "jpeg") {
+      options.toFormat = "jpg";
     }
   }
 
   // only set width to 400 if neither width nor height is passed
   if (options.width === undefined && options.height === undefined) {
-    options.width = 400
+    options.width = 400;
   }
   if (options.width !== undefined) {
     // @ts-ignore - parseInt as safeguard, expects string tho
-    options.width = parseInt(options.width, 10)
+    options.width = parseInt(options.width, 10);
   }
   if (options.height !== undefined) {
     // @ts-ignore - parseInt as safeguard, expects string tho
-    options.height = parseInt(options.height, 10)
+    options.height = parseInt(options.height, 10);
   }
 
   // only set maxWidth to 800 if neither maxWidth nor maxHeight is passed
   if (options.maxWidth === undefined && options.maxHeight === undefined) {
-    options.maxWidth = 800
+    options.maxWidth = 800;
   } else if (options.maxWidth !== undefined) {
     // @ts-ignore - parseInt as safeguard, expects string tho
-    options.maxWidth = parseInt(options.maxWidth, 10)
+    options.maxWidth = parseInt(options.maxWidth, 10);
   } else if (options.maxHeight !== undefined) {
     // @ts-ignore - parseInt as safeguard, expects string tho
-    options.maxHeight = parseInt(options.maxHeight, 10)
+    options.maxHeight = parseInt(options.maxHeight, 10);
   }
 
-  ;[`width`, `height`, `maxWidth`, `maxHeight`].forEach(prop => {
-    if (typeof options[prop] !== `undefined` && options[prop] < 1) {
+  ["width", "height", "maxWidth", "maxHeight"].forEach((prop) => {
+    if (typeof options[prop] !== "undefined" && options[prop] < 1) {
       throw new Error(
-        `${prop} has to be a positive int larger than zero (> 0), now it's ${options[prop]}`
-      )
+        `${prop} has to be a positive int larger than zero (> 0), now it's ${options[prop]}`,
+      );
     }
-  })
-  return options
+  });
+  return options;
 }
 
 /**
  * Removes all default values so we have the smallest transform args
  */
-export const removeDefaultValues = (
+export function removeDefaultValues(
   args: ITransformArgs,
-  pluginOptions: ISharpPluginOptions
-): Partial<ITransformArgs> => {
+  pluginOptions: ISharpPluginOptions,
+): Partial<ITransformArgs> {
   const options = {
     height: args.height,
     width: args.width,
@@ -260,7 +262,7 @@ export const removeDefaultValues = (
     duotone: args.duotone || undefined,
     fit: args.fit,
     background: args.background,
-  }
+  };
 
-  return omitBy(options, isNil)
+  return omitBy(options, isNil);
 }

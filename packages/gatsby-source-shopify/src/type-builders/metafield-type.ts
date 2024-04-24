@@ -28,5 +28,5 @@ export function metafieldTypeBuilder(prefix: string): string {
         PRODUCTVARIANT
         SHOP
       }
-    `
+    `;
 }

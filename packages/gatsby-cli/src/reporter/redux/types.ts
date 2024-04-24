@@ -1,16 +1,16 @@
-import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
+import { Actions, ActivityStatuses, ActivityTypes } from "../constants";
 import {
   type IStructuredError,
   ErrorCategory,
-} from "../../structured-errors/types"
-import type { IRenderPageArgs } from "../types"
+} from "../../structured-errors/types";
+import type { IRenderPageArgs } from "../types";
 
 export type IGatsbyCLIState = {
   activities: {
-    [id: string]: IActivity
-  }
-  status: ActivityStatuses | ""
-}
+    [id: string]: IActivity;
+  };
+  status: ActivityStatuses | "";
+};
 
 export type ActionsUnion =
   | ICreateLog
@@ -22,114 +22,114 @@ export type ActionsUnion =
   | IUpdateActivity
   | IActivityErrored
   | ISetLogs
-  | IRenderPageTree
+  | IRenderPageTree;
 
 export type IActivity = {
-  startTime?: [number, number] | undefined
-  id: string
-  uuid: string
-  text: string
-  type: ActivityTypes
-  status: ActivityStatuses
-  statusText: string
-  current?: number | undefined
-  total?: number | undefined
-  duration?: number | undefined
-  errored?: boolean | undefined
-}
+  startTime?: [number, number] | undefined;
+  id: string;
+  uuid: string;
+  text: string;
+  type: ActivityTypes;
+  status: ActivityStatuses;
+  statusText?: string | undefined;
+  current?: number | undefined;
+  total?: number | undefined;
+  duration?: number | undefined;
+  errored?: boolean | undefined;
+};
 
 export type ILog = {
-  level: string
-  text: string | undefined
-  statusText: string | undefined
-  duration: number | undefined
-  group: string | undefined
-  code: string | undefined
-  type: string | undefined
-  category?: keyof typeof ErrorCategory | undefined
-  filePath: string | undefined
-  location: IStructuredError["location"] | undefined
-  docsUrl: string | undefined
-  context: string | undefined
-  activity_current: number | undefined
-  activity_total: number | undefined
-  activity_type: string | undefined
-  activity_uuid: string | undefined
-  timestamp: string
-  stack: IStructuredError["stack"] | undefined
-  pluginName: string | undefined
-}
+  level: string;
+  text: string | undefined;
+  statusText: string | undefined;
+  duration: number | undefined;
+  group: string | undefined;
+  code: string | undefined;
+  type: string | undefined;
+  category?: keyof typeof ErrorCategory | undefined;
+  filePath: string | undefined;
+  location: IStructuredError["location"] | undefined;
+  docsUrl: string | undefined;
+  context: string | undefined;
+  activity_current: number | undefined;
+  activity_total: number | undefined;
+  activity_type: string | undefined;
+  activity_uuid: string | undefined;
+  timestamp: string;
+  stack: IStructuredError["stack"] | undefined;
+  pluginName: string | undefined;
+};
 
 export type ICreateLog = {
-  type: Actions.Log
-  payload: ILog
-}
+  type: Actions.Log;
+  payload: ILog;
+};
 
 export type ISetStatus = {
-  type: Actions.SetStatus
-  payload: ActivityStatuses | ""
-}
+  type: Actions.SetStatus;
+  payload: ActivityStatuses | "";
+};
 
 export type IPendingActivity = {
-  type: Actions.PendingActivity
+  type: Actions.PendingActivity;
   payload: {
-    id: string
-    type: ActivityTypes
-    status: ActivityStatuses
-    startTime?: [number, number]
-  }
-}
+    id: string;
+    type: ActivityTypes;
+    status: ActivityStatuses;
+    startTime?: [number, number] | undefined;
+  };
+};
 
 export type IStartActivity = {
-  type: Actions.StartActivity
-  payload: IActivity
-}
+  type: Actions.StartActivity;
+  payload: IActivity;
+};
 
 export type ICancelActivity = {
-  type: Actions.CancelActivity
+  type: Actions.CancelActivity;
   payload: {
-    id: string
-    status: ActivityStatuses.Cancelled
-    duration: number
-    type: ActivityTypes
-  }
-}
+    id: string;
+    status: ActivityStatuses.Cancelled;
+    duration: number;
+    type: ActivityTypes;
+  };
+};
 
 export type IEndActivity = {
-  type: Actions.EndActivity
+  type: Actions.EndActivity;
   payload: {
-    uuid: string
-    id: string
-    status: ActivityStatuses
-    duration: number
-    type: ActivityTypes
-  }
-}
+    uuid: string;
+    id: string;
+    status: ActivityStatuses;
+    duration: number;
+    type: ActivityTypes;
+  };
+};
 
 export type IUpdateActivity = {
-  type: Actions.UpdateActivity
+  type: Actions.UpdateActivity;
   payload: {
-    uuid: string
-    id: string
-    statusText?: string
-    total?: number
-    current?: number
-  }
-}
+    uuid: string;
+    id: string;
+    statusText?: string | undefined;
+    total?: number | undefined;
+    current?: number | undefined;
+  };
+};
 
 export type IActivityErrored = {
-  type: Actions.ActivityErrored
+  type: Actions.ActivityErrored;
   payload: {
-    id: string
-  }
-}
+    id: string;
+  };
+};
 
 export type ISetLogs = {
-  type: Actions.SetLogs
-  payload: IGatsbyCLIState
-}
+  type: Actions.SetLogs;
+  payload: IGatsbyCLIState;
+};
 
 export type IRenderPageTree = {
-  type: Actions.RenderPageTree
-  payload: IRenderPageArgs
-}
+  type: Actions.RenderPageTree;
+  payload: IRenderPageArgs;
+};

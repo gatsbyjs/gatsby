@@ -22,21 +22,21 @@
  * @returns {boolean}
  */
 export function match(eventOrCode, { key, which, keyCode } = {}) {
-  if (typeof eventOrCode === `string`) {
-    return eventOrCode === key
+  if (typeof eventOrCode === "string") {
+    return eventOrCode === key;
   }
 
-  if (typeof eventOrCode === `number`) {
-    return eventOrCode === which || eventOrCode === keyCode
+  if (typeof eventOrCode === "number") {
+    return eventOrCode === which || eventOrCode === keyCode;
   }
 
   if (eventOrCode.key && Array.isArray(key)) {
-    return key.indexOf(eventOrCode.key) !== -1
+    return key.indexOf(eventOrCode.key) !== -1;
   }
 
   return (
     eventOrCode.key === key ||
     eventOrCode.which === which ||
     eventOrCode.keyCode === keyCode
-  )
+  );
 }

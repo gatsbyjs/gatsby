@@ -1,49 +1,49 @@
-import report from "gatsby-cli/lib/reporter"
-import type { Span } from "opentracing"
-import { sourceNodesApiRunner } from "./source-nodes-api-runner"
-import { store } from "../redux"
-import { getDataStore, getNode } from "../datastore"
-import { actions } from "../redux/actions"
-import type { IGatsbyState, IGatsbyNode } from "../redux/types"
-import type { GatsbyIterable } from "../datastore/common/iterable"
+import report from "gatsby-cli/lib/reporter";
+import type { Span } from "opentracing";
+import { sourceNodesApiRunner } from "./source-nodes-api-runner";
+import { store } from "../redux";
+import { getDataStore, getNode } from "../datastore";
+import { actions } from "../redux/actions";
+import type { IGatsbyState, IGatsbyNode } from "../redux/types";
+import type { GatsbyIterable } from "../datastore/common/iterable";
 
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
  * may create nodes, but which have not actually created any nodes.
  */
 function discoverPluginNamesWithoutNodes(): Array<string> {
-  const { typeOwners, flattenedPlugins } = store.getState()
+  const { typeOwners, flattenedPlugins } = store.getState();
 
   // Find out which plugins own already created nodes
   const pluginNamesThatCreatedNodes = new Set([
-    `default-site-plugin`,
+    "default-site-plugin",
     // each plugin that owns node types created a node at some point
     ...Array.from(typeOwners.pluginsToTypes.keys()),
-  ])
+  ]);
 
   return flattenedPlugins
     .filter((plugin) => {
       return (
         // "Can generate nodes"
-        plugin.nodeAPIs.includes(`sourceNodes`) &&
+        plugin.nodeAPIs.includes("sourceNodes") &&
         // "Has not generated nodes"
         !pluginNamesThatCreatedNodes.has(plugin.name)
-      )
+      );
     })
-    .map((plugin) => plugin.name)
+    .map((plugin) => plugin.name);
 }
 
 /**
  * Warn about plugins that should have created nodes but didn't.
  */
 function warnForPluginsWithoutNodes(): void {
-  const pluginNamesWithNoNodes = discoverPluginNamesWithoutNodes()
+  const pluginNamesWithNoNodes = discoverPluginNamesWithoutNodes();
 
   pluginNamesWithNoNodes.map((name) =>
     report.warn(
       `The ${name} plugin has generated no Gatsby nodes. Do you need it? This could also suggest the plugin is misconfigured.`,
     ),
-  )
+  );
 }
 
 /**
@@ -54,33 +54,33 @@ function getStaleNodes(
   nodes: GatsbyIterable<IGatsbyNode>,
 ): GatsbyIterable<IGatsbyNode> {
   return nodes.filter((node) => {
-    let rootNode = node
-    let next: IGatsbyNode | undefined = undefined
+    let rootNode = node;
+    let next: IGatsbyNode | undefined = undefined;
 
-    let whileCount = 0
+    let whileCount = 0;
     do {
-      next = rootNode.parent ? getNode(rootNode.parent) : undefined
+      next = rootNode.parent ? getNode(rootNode.parent) : undefined;
       if (next) {
-        rootNode = next
+        rootNode = next;
       }
-    } while (next && ++whileCount < 101)
+    } while (next && ++whileCount < 101);
 
     if (whileCount > 100) {
       console.log(
-        `It looks like you have a node that's set its parent as itself`,
+        "It looks like you have a node that's set its parent as itself",
         rootNode,
-      )
+      );
     }
 
     if (
       rootNode.internal.owner &&
       state.statefulSourcePlugins.has(rootNode.internal.owner)
     ) {
-      return false
+      return false;
     }
 
-    return !state.nodesTouched.has(rootNode.id)
-  })
+    return !state.nodesTouched.has(rootNode.id);
+  });
 }
 
 /**
@@ -89,76 +89,77 @@ function getStaleNodes(
 async function deleteStaleNodes(
   previouslyExistingNodeTypeNames: Array<string>,
 ): Promise<void> {
-  const state = store.getState()
+  const state = store.getState();
 
-  let deleteCount = 0
+  let deleteCount = 0;
 
-  const cleanupStaleNodesActivity =
-    report.createProgress(`Clean up stale nodes`)
+  const cleanupStaleNodesActivity = report.createProgress(
+    "Clean up stale nodes",
+  );
 
-  cleanupStaleNodesActivity.start()
+  cleanupStaleNodesActivity.start();
 
-  const { typeOwners, statefulSourcePlugins } = state
+  const { typeOwners, statefulSourcePlugins } = state;
 
   for (const typeName of previouslyExistingNodeTypeNames) {
-    const pluginName = typeOwners.typesToPlugins.get(typeName)
+    const pluginName = typeOwners.typesToPlugins.get(typeName);
 
     // no need to check this type if its owner has declared its a stateful source plugin
     if (pluginName && statefulSourcePlugins.has(pluginName)) {
-      continue
+      continue;
     }
 
-    report.verbose(`Checking for stale ${typeName} nodes`)
+    report.verbose(`Checking for stale ${typeName} nodes`);
 
-    const nodes = getDataStore().iterateNodesByType(typeName)
-    const staleNodes = getStaleNodes(state, nodes)
+    const nodes = getDataStore().iterateNodesByType(typeName);
+    const staleNodes = getStaleNodes(state, nodes);
 
     for (const node of staleNodes) {
       // @ts-ignore
-      store.dispatch(actions.deleteNode(node))
-      cleanupStaleNodesActivity.tick()
+      store.dispatch(actions.deleteNode(node));
+      cleanupStaleNodesActivity.tick();
 
       if (++deleteCount % 5000) {
         // dont block event loop
         await new Promise((res) => {
           setImmediate(() => {
-            res(null)
-          })
-        })
+            res(null);
+          });
+        });
       }
     }
   }
 
-  cleanupStaleNodesActivity.end()
+  cleanupStaleNodesActivity.end();
 }
 
 // exported for unit tests purposes only to allow internal module state resets
 export const is = {
   initialSourceNodesOfCurrentNodeProcess: true,
-}
+};
 
-let sourcingCount = 0
+let sourcingCount = 0;
 export default async ({
   webhookBody,
   pluginName,
   parentSpan,
   deferNodeMutation = false,
 }: {
-  webhookBody: unknown
-  pluginName?: string
-  parentSpan?: Span
-  deferNodeMutation?: boolean
+  webhookBody: unknown;
+  pluginName?: string | undefined;
+  parentSpan?: Span | undefined;
+  deferNodeMutation?: boolean | undefined;
 }): Promise<void> => {
   const traceId = is.initialSourceNodesOfCurrentNodeProcess
-    ? `initial-sourceNodes`
-    : `sourceNodes #${sourcingCount}`
+    ? "initial-sourceNodes"
+    : `sourceNodes #${sourcingCount}`;
 
   // this is persisted to cache between builds, so it will always have an up to date list of previously created types by plugin name
-  const { typeOwners } = store.getState()
+  const { typeOwners } = store.getState();
 
   const previouslyExistingNodeTypeNames: Array<string> = Array.from(
     typeOwners.typesToPlugins.keys() ?? [],
-  ).filter(Boolean)
+  ).filter(Boolean);
 
   await sourceNodesApiRunner({
     traceId,
@@ -166,25 +167,25 @@ export default async ({
     parentSpan,
     webhookBody,
     pluginName,
-  })
+  });
 
-  await getDataStore().ready()
+  await getDataStore().ready();
 
   // We only warn for plugins w/o nodes and delete stale nodes on the first sourceNodes call of the current process.
   if (is.initialSourceNodesOfCurrentNodeProcess) {
-    is.initialSourceNodesOfCurrentNodeProcess = false
+    is.initialSourceNodesOfCurrentNodeProcess = false;
 
-    warnForPluginsWithoutNodes()
+    warnForPluginsWithoutNodes();
 
     if (
       // if this is the very first source and no types existed before this sourceNodes run, there's no need to check for stale nodes. They wont be stale because they were just created. Only check for stale nodes in node types that never existed before.
       previouslyExistingNodeTypeNames.length > 0
     ) {
-      await deleteStaleNodes(previouslyExistingNodeTypeNames)
+      await deleteStaleNodes(previouslyExistingNodeTypeNames);
     }
   }
 
-  store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))
+  store.dispatch(actions.apiFinished({ apiName: "sourceNodes" }));
 
-  sourcingCount += 1
-}
+  sourcingCount += 1;
+};

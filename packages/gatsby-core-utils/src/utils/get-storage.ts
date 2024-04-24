@@ -1,7 +1,7 @@
-import path from "path"
-import { getLmdb } from "./get-lmdb"
-import type { RootDatabase, Database } from "lmdb"
-import type { Headers } from "got"
+import path from "node:path";
+import { getLmdb } from "./get-lmdb";
+import type { RootDatabase, Database } from "lmdb";
+import type { Headers } from "got";
 
 export enum LockStatus {
   Locked = 0,
@@ -11,30 +11,30 @@ export enum LockStatus {
 type ICoreUtilsDatabase = {
   remoteFileInfo: Database<
     {
-      extension: string
-      headers: Headers
-      path: string
-      directory: string
-      cacheKey?: string
-      buildId: string
+      extension: string;
+      headers: Headers;
+      path: string;
+      directory: string;
+      cacheKey?: string | undefined;
+      buildId: string;
     },
     string
-  >
-  mutex: Database<LockStatus, string>
-}
+  >;
+  mutex: Database<LockStatus, string>;
+};
 
-let databases: ICoreUtilsDatabase | undefined
-let rootDb: RootDatabase
+let databases: ICoreUtilsDatabase | undefined;
+let rootDb: RootDatabase;
 
 export function getDatabaseDir(): string {
-  const rootDir = global.__GATSBY?.root ?? process.cwd()
-  return path.join(rootDir, `.cache`, `data`, `gatsby-core-utils`)
+  const rootDir = global.__GATSBY?.root ?? process.cwd();
+  return path.join(rootDir, ".cache", "data", "gatsby-core-utils");
 }
 
 export function getStorage(fullDbPath: string): ICoreUtilsDatabase {
   if (!databases) {
     if (!fullDbPath) {
-      throw new Error(`LMDB path is not set!`)
+      throw new Error("LMDB path is not set!");
     }
 
     // __GATSBY_OPEN_LMDBS tracks if we already opened given db in this process
@@ -43,42 +43,42 @@ export function getStorage(fullDbPath: string): ICoreUtilsDatabase {
     // redirect middleware). This ensure there is single instance within a process.
     // Using more instances seems to cause weird random errors.
     if (!globalThis.__GATSBY_OPEN_LMDBS) {
-      globalThis.__GATSBY_OPEN_LMDBS = new Map()
+      globalThis.__GATSBY_OPEN_LMDBS = new Map();
     }
 
-    databases = globalThis.__GATSBY_OPEN_LMDBS.get(fullDbPath)
+    databases = globalThis.__GATSBY_OPEN_LMDBS.get(fullDbPath);
 
     if (databases) {
-      return databases
+      return databases;
     }
 
-    const open = getLmdb().open
+    const open = getLmdb().open;
 
     rootDb = open({
-      name: `root`,
+      name: "root",
       path: fullDbPath,
       compression: true,
-      sharedStructuresKey: Symbol.for(`structures`),
-    })
+      sharedStructuresKey: Symbol.for("structures"),
+    });
 
     databases = {
       remoteFileInfo: rootDb.openDB({
-        name: `remote-file`,
+        name: "remote-file",
       }),
       mutex: rootDb.openDB({
-        name: `mutex`,
+        name: "mutex",
       }),
-    }
+    };
 
-    globalThis.__GATSBY_OPEN_LMDBS.set(fullDbPath, databases)
+    globalThis.__GATSBY_OPEN_LMDBS.set(fullDbPath, databases);
   }
 
-  return databases as ICoreUtilsDatabase
+  return databases as ICoreUtilsDatabase;
 }
 
 export async function closeDatabase(): Promise<void> {
   if (rootDb) {
-    await rootDb.close()
-    databases = undefined
+    await rootDb.close();
+    databases = undefined;
   }
 }

@@ -1,19 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import Joi from "joi"
-import type { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
+import Joi from "joi";
+import type { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types";
 import {
   DEFAULT_DOCUMENT_SEARCH_PATHS,
   DEFAULT_TYPES_OUTPUT_PATH,
-} from "../utils/graphql-typegen/ts-codegen"
+} from "../utils/graphql-typegen/ts-codegen";
 
 const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
-  chain.replace(/(\w)\/+$/, `$1`)
+  chain.replace(/(\w)\/+$/, "$1");
 
 // only add leading slash on relative urls
 const addLeadingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
   chain.when(Joi.string().uri({ relativeOnly: true }), {
-    then: chain.replace(/^([^/])/, `/$1`),
-  })
+    then: chain.replace(/^([^/])/, "/$1"),
+  });
 
 export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
   .keys({
@@ -31,14 +31,14 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
             allowRelative: true,
             relativeOnly: true,
           })
-          .default(``)
+          .default("")
           // removes single / value
-          .allow(``)
-          .replace(/^\/$/, ``),
+          .allow("")
+          .replace(/^\/$/, ""),
       ),
     ),
     linkPrefix: Joi.forbidden().error(
-      new Error(`"linkPrefix" should be changed to "pathPrefix"`),
+      new Error('"linkPrefix" should be changed to "pathPrefix"'),
     ),
     siteMetadata: Joi.object({
       siteUrl: stripTrailingSlash(Joi.string()).uri(),
@@ -55,11 +55,11 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
       .single(),
     partytownProxiedURLs: Joi.array().items(Joi.string()),
     developMiddleware: Joi.func(),
-    jsxRuntime: Joi.string().valid(`automatic`, `classic`).default(`classic`),
+    jsxRuntime: Joi.string().valid("automatic", "classic").default("classic"),
     jsxImportSource: Joi.string(),
     trailingSlash: Joi.string()
-      .valid(`always`, `never`, `ignore`)
-      .default(`always`),
+      .valid("always", "never", "ignore")
+      .default("always"),
     graphqlTypegen: Joi.alternatives(
       Joi.boolean(),
       Joi.object()
@@ -79,10 +79,10 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
             typesOutputPath: DEFAULT_TYPES_OUTPUT_PATH,
             documentSearchPaths: DEFAULT_DOCUMENT_SEARCH_PATHS,
             generateOnBuild: false,
-          }
+          };
         }
 
-        return value
+        return value;
       }),
     headers: Joi.array()
       .items(
@@ -130,7 +130,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           allowRelative: true,
           relativeOnly: true,
         })
-        .default(``),
+        .default(""),
     }),
     {
       then: Joi.object({
@@ -140,12 +140,12 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           })
           .error(
             new Error(
-              `assetPrefix must be an absolute URI when used with pathPrefix`,
+              "assetPrefix must be an absolute URI when used with pathPrefix",
             ),
           ),
       }),
     },
-  )
+  );
 
 export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()
   .keys({
@@ -158,7 +158,7 @@ export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()
     pluginCreator___NODE: Joi.string(),
     pluginCreatorId: Joi.string(),
   })
-  .unknown()
+  .unknown();
 
 export const nodeSchema: Joi.ObjectSchema<IGatsbyNode> = Joi.object()
   .keys({
@@ -173,7 +173,7 @@ export const nodeSchema: Joi.ObjectSchema<IGatsbyNode> = Joi.object()
         type: Joi.string().required(),
         owner: Joi.string().required(),
         fieldOwners: Joi.object(),
-        content: Joi.string().allow(``),
+        content: Joi.string().allow(""),
         description: Joi.string(),
         ignoreType: Joi.boolean(),
         counter: Joi.number(),
@@ -181,4 +181,4 @@ export const nodeSchema: Joi.ObjectSchema<IGatsbyNode> = Joi.object()
       })
       .unknown(false), // Don't allow non-standard fields
   })
-  .unknown()
+  .unknown();

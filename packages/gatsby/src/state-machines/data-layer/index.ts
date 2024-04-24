@@ -1,7 +1,7 @@
-import { createMachine, type StatesConfig, type MachineOptions } from "xstate"
-import { dataLayerActions } from "./actions"
-import type { IDataLayerContext } from "./types"
-import { dataLayerServices } from "./services"
+import { createMachine, type StatesConfig, type MachineOptions } from "xstate";
+import { dataLayerActions } from "./actions";
+import type { IDataLayerContext } from "./types";
+import { dataLayerServices } from "./services";
 
 export type DataLayerResult = Pick<
   IDataLayerContext,
@@ -9,91 +9,91 @@ export type DataLayerResult = Pick<
   | "graphqlRunner"
   | "pagesToBuild"
   | "pagesToDelete"
->
+>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const loadDataStates: StatesConfig<IDataLayerContext, any, any> = {
   customizingSchema: {
     invoke: {
-      src: `customizeSchema`,
-      id: `customizing-schema`,
+      src: "customizeSchema",
+      id: "customizing-schema",
       onDone: {
-        target: `sourcingNodes`,
+        target: "sourcingNodes",
       },
     },
   },
   sourcingNodes: {
     invoke: {
-      src: `sourceNodes`,
-      id: `sourcing-nodes`,
+      src: "sourceNodes",
+      id: "sourcing-nodes",
       onDone: {
-        target: `buildingSchema`,
-        actions: `assignChangedPages`,
+        target: "buildingSchema",
+        actions: "assignChangedPages",
       },
     },
   },
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
   buildingSchema: {
     invoke: {
-      id: `building-schema`,
-      src: `buildSchema`,
+      id: "building-schema",
+      src: "buildSchema",
       onDone: {
-        target: `creatingPages`,
-        actions: `assignGraphQLRunners`,
+        target: "creatingPages",
+        actions: "assignGraphQLRunners",
       },
     },
   },
   creatingPages: {
     invoke: {
-      id: `creating-pages`,
-      src: `createPages`,
+      id: "creating-pages",
+      src: "createPages",
       onDone: {
-        target: `writingOutRedirects`,
-        actions: `assignChangedPages`,
+        target: "writingOutRedirects",
+        actions: "assignChangedPages",
       },
     },
   },
   writingOutRedirects: {
     invoke: {
-      src: `writeOutRedirectsAndWatch`,
+      src: "writeOutRedirectsAndWatch",
       onDone: {
-        target: `done`,
+        target: "done",
       },
     },
   },
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
   buildingSchema: {
     invoke: {
-      id: `building-schema`,
-      src: `buildSchema`,
+      id: "building-schema",
+      src: "buildSchema",
       onDone: {
-        target: `creatingPages`,
-        actions: `assignGraphQLRunners`,
+        target: "creatingPages",
+        actions: "assignGraphQLRunners",
       },
     },
   },
   creatingPages: {
     invoke: {
-      id: `creating-pages`,
-      src: `createPages`,
+      id: "creating-pages",
+      src: "createPages",
       onDone: {
-        target: `done`,
-        actions: `assignChangedPages`,
+        target: "done",
+        actions: "assignChangedPages",
       },
     },
   },
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const doneState: StatesConfig<IDataLayerContext, any, any> = {
   done: {
-    type: `final`,
+    type: "final",
     data: ({
       gatsbyNodeGraphQLFunction,
       graphqlRunner,
@@ -105,16 +105,16 @@ const doneState: StatesConfig<IDataLayerContext, any, any> = {
         graphqlRunner,
         pagesToBuild,
         pagesToDelete,
-      }
+      };
     },
   },
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const options: Partial<MachineOptions<IDataLayerContext, any>> = {
   actions: dataLayerActions,
-  services: dataLayerServices,
-}
+  services: dataLayerServices ?? {},
+};
 
 /**
  * Machine used during first run
@@ -123,9 +123,9 @@ const options: Partial<MachineOptions<IDataLayerContext, any>> = {
 export const initializeDataMachine = createMachine(
   {
     predictableActionArguments: true,
-    id: `initializeDataMachine`,
+    id: "initializeDataMachine",
     context: {},
-    initial: `customizingSchema`,
+    initial: "customizingSchema",
     states: {
       ...loadDataStates,
       ...initialCreatePagesStates,
@@ -133,7 +133,7 @@ export const initializeDataMachine = createMachine(
     },
   },
   options,
-)
+);
 
 /**
  * Machine used when we need to source nodes again
@@ -142,9 +142,9 @@ export const initializeDataMachine = createMachine(
 export const reloadDataMachine = createMachine(
   {
     predictableActionArguments: true,
-    id: `reloadDataMachine`,
+    id: "reloadDataMachine",
     context: {},
-    initial: `customizingSchema`,
+    initial: "customizingSchema",
     states: {
       ...loadDataStates,
       ...recreatePagesStates,
@@ -152,7 +152,7 @@ export const reloadDataMachine = createMachine(
     },
   },
   options,
-)
+);
 
 /**
  * Machine used when we need to re-create pages after a
@@ -161,13 +161,13 @@ export const reloadDataMachine = createMachine(
 export const recreatePagesMachine = createMachine(
   {
     predictableActionArguments: true,
-    id: `recreatePagesMachine`,
+    id: "recreatePagesMachine",
     context: {},
-    initial: `buildingSchema`,
+    initial: "buildingSchema",
     states: {
       ...recreatePagesStates,
       ...doneState,
     },
   },
   options,
-)
+);

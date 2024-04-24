@@ -1,5 +1,5 @@
-import path from "node:path"
-import { slash } from "gatsby-core-utils"
+import path from "node:path";
+import { slash } from "gatsby-core-utils";
 
 /**
  * Create a normalized module key that is referenced in both the partial hydration webpack loader and plugin.
@@ -16,13 +16,13 @@ export function createNormalizedModuleKey(
   resourcePath: string,
   rootContext: string,
 ): string {
-  const rootRelativeFilePath = resourcePath.replace(rootContext, ``)
+  const rootRelativeFilePath = resourcePath.replace(rootContext, "");
   const [rootRelativeDir, potentialModuleName] = rootRelativeFilePath
     .split(path.sep)
-    .filter(Boolean)
+    .filter(Boolean);
   const normalizedModuleKey =
-    rootRelativeDir === `node_modules`
+    rootRelativeDir === "node_modules"
       ? `file://${path.join(rootRelativeDir, potentialModuleName)}`
-      : `file://${rootRelativeFilePath.slice(1)}`
-  return slash(normalizedModuleKey)
+      : `file://${rootRelativeFilePath.slice(1)}`;
+  return slash(normalizedModuleKey);
 }

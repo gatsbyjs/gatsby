@@ -1,41 +1,41 @@
-import fs from "fs-extra"
-import path from "path"
-import findCacheDir from "find-cache-dir"
+import fs from "fs-extra";
+import path from "path";
+import findCacheDir from "find-cache-dir";
 
 import {
   userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
   showSevenDayFeedbackRequest,
-} from "../utils/feedback"
-import type { IProgram } from "./types"
+} from "../utils/feedback";
+import type { IProgram } from "./types";
 
 module.exports = async function clean(program: IProgram): Promise<void> {
-  const { directory, report } = program
+  const { directory, report } = program;
 
   const directories = [
-    `.cache`,
-    `public`,
+    ".cache",
+    "public",
     // Ensure we clean babel loader cache
     findCacheDir({
-      name: `babel-loader`,
+      name: "babel-loader",
     }),
     findCacheDir({
-      name: `terser-webpack-plugin`,
+      name: "terser-webpack-plugin",
     }),
-  ].filter(Boolean)
+  ].filter(Boolean);
 
-  report.info(`Deleting ${directories.join(`, `)}`)
+  report.info(`Deleting ${directories.join(", ")}`);
 
   await Promise.all(
     directories.map((dir) => fs.remove(path.join(directory, dir))),
-  )
+  );
 
-  report.info(`Successfully deleted directories`)
+  report.info("Successfully deleted directories");
 
   if (await userGetsSevenDayFeedback()) {
-    showSevenDayFeedbackRequest()
+    showSevenDayFeedbackRequest();
   } else if (await userPassesFeedbackRequestHeuristic()) {
-    showFeedbackRequest()
+    showFeedbackRequest();
   }
-}
+};

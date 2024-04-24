@@ -1,47 +1,47 @@
-import { buildTypeName } from "~/steps/create-schema-customization/helpers"
-import { introspectionFieldTypeToSDL } from "../helpers"
+import { buildTypeName } from "~/steps/create-schema-customization/helpers";
+import { introspectionFieldTypeToSDL } from "../helpers";
 
 export const transformUnion = ({ field, fieldName, pluginOptions }) => {
-  const prefix = pluginOptions.schema.typePrefix
+  const prefix = pluginOptions.schema.typePrefix;
   return {
     type: buildTypeName(field.type.name, prefix),
     resolve: (source, _, context) => {
       const resolvedField =
         source[fieldName] ||
-        source[`${field.name}__typename_${field.type.name}`]
+        source[`${field.name}__typename_${field.type.name}`];
 
       if (resolvedField && resolvedField.id) {
         const gatsbyNode = context.nodeModel.getNodeById({
           id: resolvedField.id,
           type: resolvedField.type,
-        })
+        });
 
         if (gatsbyNode) {
-          return gatsbyNode
+          return gatsbyNode;
         }
       }
 
-      return resolvedField ?? null
+      return resolvedField ?? null;
     },
-  }
-}
+  };
+};
 
 export const transformListOfUnions = ({ field, fieldName, pluginOptions }) => {
-  const prefix = pluginOptions.schema.typePrefix
-  const typeSDLString = introspectionFieldTypeToSDL(field.type)
+  const prefix = pluginOptions.schema.typePrefix;
+  const typeSDLString = introspectionFieldTypeToSDL(field.type);
 
   return {
     type: typeSDLString,
     resolve: (source, _, context) => {
       const resolvedField =
         source[fieldName] ??
-        source[`${field.name}__typename_${field.type.name}`]
+        source[`${field.name}__typename_${field.type.name}`];
 
       if (
         (!resolvedField && resolvedField !== false) ||
         !resolvedField.length
       ) {
-        return null
+        return null;
       }
 
       return resolvedField.reduce((accumulator, item) => {
@@ -50,16 +50,16 @@ export const transformListOfUnions = ({ field, fieldName, pluginOptions }) => {
               id: item.id,
               type: buildTypeName(item.__typename, prefix),
             })
-          : null
+          : null;
 
         if (node) {
-          accumulator.push(node)
+          accumulator.push(node);
         } else if (item && !item.id) {
-          accumulator.push(item)
+          accumulator.push(item);
         }
 
-        return accumulator
-      }, [])
+        return accumulator;
+      }, []);
     },
-  }
-}
+  };
+};

@@ -1,12 +1,12 @@
-import url from "url"
-import fetchGraphql from "~/utils/fetch-graphql"
-import { getStore, withPluginKey } from "~/store"
-import { formatLogMessage } from "~/utils/format-log-message"
-import { LAST_COMPLETED_SOURCE_TIME, MD5_CACHE_KEY } from "~/constants"
+import url from "url";
+import fetchGraphql from "~/utils/fetch-graphql";
+import { getStore, withPluginKey } from "~/store";
+import { formatLogMessage } from "~/utils/format-log-message";
+import { LAST_COMPLETED_SOURCE_TIME, MD5_CACHE_KEY } from "~/constants";
 
-import { ensurePluginRequirementsAreMet } from "../check-plugin-requirements"
+import { ensurePluginRequirementsAreMet } from "../check-plugin-requirements";
 
-import { createContentDigest } from "gatsby-core-utils"
+import { createContentDigest } from "gatsby-core-utils";
 
 import {
   clearHardCache,
@@ -14,23 +14,23 @@ import {
   getHardCachedNodes,
   setPersistentCache,
   getPersistentCache,
-} from "~/utils/cache"
+} from "~/utils/cache";
 
 const checkIfSchemaHasChanged = async ({ traceId }) => {
-  const state = getStore().getState()
+  const state = getStore().getState();
 
-  const { helpers, pluginOptions } = state.gatsbyApi
+  const { helpers, pluginOptions } = state.gatsbyApi;
 
   const lastCompletedSourceTime = await helpers.cache.get(
-    withPluginKey(LAST_COMPLETED_SOURCE_TIME)
-  )
+    withPluginKey(LAST_COMPLETED_SOURCE_TIME),
+  );
 
   const activity = helpers.reporter.activityTimer(
-    formatLogMessage(`diff schemas`)
-  )
+    formatLogMessage("diff schemas"),
+  );
 
   if (pluginOptions.verbose && lastCompletedSourceTime) {
-    activity.start()
+    activity.start();
   }
 
   const { data } = await fetchGraphql({
@@ -44,15 +44,15 @@ const checkIfSchemaHasChanged = async ({ traceId }) => {
         }
       }
     `,
-  })
+  });
 
   const {
     schemaMd5,
     generalSettings: { url: wpUrl },
-  } = data
+  } = data;
 
   if (url.parse(wpUrl).protocol !== url.parse(pluginOptions.url).protocol) {
-    helpers.reporter.log(``)
+    helpers.reporter.log("");
     helpers.reporter.warn(
       formatLogMessage(`
 
@@ -64,26 +64,26 @@ WordPress settings: ${wpUrl}
 This may cause subtle bugs, or it may be fine.
 Please consider addressing this issue by changing your WordPress settings or plugin options accordingly.
 
-`)
-    )
+`),
+    );
   }
 
-  let cachedSchemaMd5 = await helpers.cache.get(withPluginKey(MD5_CACHE_KEY))
+  let cachedSchemaMd5 = await helpers.cache.get(withPluginKey(MD5_CACHE_KEY));
 
-  let foundUsableHardCachedData
+  let foundUsableHardCachedData;
 
   if (!cachedSchemaMd5) {
     cachedSchemaMd5 = await getHardCachedData({
       key: MD5_CACHE_KEY,
-    })
+    });
 
     foundUsableHardCachedData =
-      cachedSchemaMd5 && !!(await getHardCachedNodes())
+      cachedSchemaMd5 && !!(await getHardCachedNodes());
   }
 
-  await setPersistentCache({ key: MD5_CACHE_KEY, value: schemaMd5 })
+  await setPersistentCache({ key: MD5_CACHE_KEY, value: schemaMd5 });
 
-  const schemaWasChanged = schemaMd5 !== cachedSchemaMd5
+  const schemaWasChanged = schemaMd5 !== cachedSchemaMd5;
 
   // if the schema was changed and we had a cached schema
   // we need to re-check to see if all plugin requirements are met
@@ -93,37 +93,37 @@ Please consider addressing this issue by changing your WordPress settings or plu
   if (
     schemaWasChanged &&
     cachedSchemaMd5 &&
-    traceId !== `initial-createSchemaCustomization`
+    traceId !== "initial-createSchemaCustomization"
   ) {
     await ensurePluginRequirementsAreMet({
       ...helpers,
-      traceId: `schemaWasChanged`,
-    })
+      traceId: "schemaWasChanged",
+    });
   }
 
-  const pluginOptionsMD5Key = `plugin-options-md5`
+  const pluginOptionsMD5Key = "plugin-options-md5";
   const lastPluginOptionsMD5 = await getPersistentCache({
     key: pluginOptionsMD5Key,
-  })
+  });
 
   const pluginOptionsMD5 = createContentDigest({
     url: pluginOptions.url,
     type: pluginOptions.type,
-  })
+  });
 
   const shouldClearHardCache =
-    schemaWasChanged || lastPluginOptionsMD5 !== pluginOptionsMD5
+    schemaWasChanged || lastPluginOptionsMD5 !== pluginOptionsMD5;
 
   if (shouldClearHardCache && foundUsableHardCachedData) {
-    await clearHardCache()
+    await clearHardCache();
 
-    foundUsableHardCachedData = false
+    foundUsableHardCachedData = false;
   }
 
   await setPersistentCache({
     key: pluginOptionsMD5Key,
     value: pluginOptionsMD5,
-  })
+  });
 
   if (
     lastCompletedSourceTime &&
@@ -131,29 +131,29 @@ Please consider addressing this issue by changing your WordPress settings or plu
     pluginOptions &&
     pluginOptions.verbose
   ) {
-    helpers.reporter.log(``)
+    helpers.reporter.log("");
     helpers.reporter.warn(
-      formatLogMessage(`The remote schema has changed, updating local schema.`)
-    )
-    if (process.env.NODE_ENV === `development`) {
+      formatLogMessage("The remote schema has changed, updating local schema."),
+    );
+    if (process.env.NODE_ENV === "development") {
       helpers.reporter.warn(
         formatLogMessage(
-          `If the schema change includes a data change\nyou'll need to run \`gatsby clean && gatsby develop\` to see the data update.`
-        )
-      )
+          "If the schema change includes a data change\nyou'll need to run `gatsby clean && gatsby develop` to see the data update.",
+        ),
+      );
     }
     helpers.reporter.info(
-      formatLogMessage(`Cached schema md5: ${cachedSchemaMd5}`)
-    )
-    helpers.reporter.info(formatLogMessage(`Remote schema md5: ${schemaMd5}`))
-    helpers.reporter.log(``)
+      formatLogMessage(`Cached schema md5: ${cachedSchemaMd5}`),
+    );
+    helpers.reporter.info(formatLogMessage(`Remote schema md5: ${schemaMd5}`));
+    helpers.reporter.log("");
   } else if (!lastCompletedSourceTime && pluginOptions.verbose) {
-    helpers.reporter.log(``)
+    helpers.reporter.log("");
     helpers.reporter.info(
       formatLogMessage(
-        `\n\n\tThis is either your first build or the cache was cleared.\n\tPlease wait while your WordPress data is synced to your Gatsby cache.\n\n\tMaybe now's a good time to get up and stretch? :D\n`
-      )
-    )
+        "\n\n\tThis is either your first build or the cache was cleared.\n\tPlease wait while your WordPress data is synced to your Gatsby cache.\n\n\tMaybe now's a good time to get up and stretch? :D\n",
+      ),
+    );
   }
 
   // record wether the schema changed so other logic can beware
@@ -162,13 +162,13 @@ Please consider addressing this issue by changing your WordPress settings or plu
     schemaWasChanged,
     wpUrl,
     foundUsableHardCachedData,
-  })
+  });
 
   if (pluginOptions.verbose && lastCompletedSourceTime) {
-    activity.end()
+    activity.end();
   }
 
-  return schemaWasChanged
-}
+  return schemaWasChanged;
+};
 
-export { checkIfSchemaHasChanged }
+export { checkIfSchemaHasChanged };

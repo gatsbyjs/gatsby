@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _, { isPlainObject } from "lodash"
+import _, { isPlainObject } from "lodash";
 import {
   isAbstractType,
   GraphQLUnionType,
@@ -13,24 +13,24 @@ import {
   type GraphQLEnumType,
   type GraphQLInputObjectType,
   type GraphQLScalarType,
-} from "graphql"
-import invariant from "invariant"
-import reporter from "gatsby-cli/lib/reporter"
-import { store } from "../redux"
-import { getDataStore, getNode, getTypes } from "../datastore"
-import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
-import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
+} from "graphql";
+import invariant from "invariant";
+import reporter from "gatsby-cli/lib/reporter";
+import { store } from "../redux";
+import { getDataStore, getNode, getTypes } from "../datastore";
+import { GatsbyIterable, isIterable } from "../datastore/common/iterable";
+import { wrapNode, wrapNodes } from "../utils/detect-node-mutations";
 import {
   toNodeTypeNames,
   fieldNeedToResolve,
   maybeConvertSortInputObjectToSortPath,
-} from "./utils"
-import { getMaybeResolvedValue } from "./resolvers"
-import type { IGatsbyNode, IGraphQLRunnerStats } from "../internal"
-import type { FiltersCache } from "../datastore/in-memory/indexing"
-import { Span, SpanContext } from "opentracing"
-import type { GatsbyGraphQLType } from "../.."
-import type { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom"
+} from "./utils";
+import { getMaybeResolvedValue } from "./resolvers";
+import type { IGatsbyNode, IGraphQLRunnerStats } from "../internal";
+import type { FiltersCache } from "../datastore/in-memory/indexing";
+import { Span, SpanContext } from "opentracing";
+import type { GatsbyGraphQLType } from "../..";
+import type { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom";
 
 // import { isNode } from "@babel/types"
 // import { isNode } from "@babel/types"
@@ -45,29 +45,29 @@ import type { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom"
 //  * @property {string} [connectionType] Mark this dependency as a connection
 //  */
 type PageDependencies = {
-  path?: string | undefined
-  connectionType?: string | undefined
-}
+  path?: string | undefined;
+  connectionType?: string | undefined;
+};
 
 // interface QueryArguments {
 //   type: TypeOrTypeName;
-//   query: { filter: Object, sort?: Object };
-//   firstOnly?: boolean;
+//   query: { filter: Object, sort?: Object | undefined };
+//   firstOnly?: boolean | undefined;
 // }
 
 // export type NodeModel = {
 //   getNodeById: (
 //     { id: string, type?: TypeOrTypeName | undefined }
-//     pageDependencies?: PageDependencies,
+//     pageDependencies?: PageDependencies | undefined,
 //   ) => any | null;
 //   getNodesByIds: (
-//     { ids: Array<string>, type?: TypeOrTypeName },
-//     pageDependencies?: PageDependencies,
+//     { ids: Array<string>, type?: TypeOrTypeName | undefined },
+//     pageDependencies?: PageDependencies | undefined,
 //   ) => Array<any>;
 //   getTypes(): Array<string>;
 //   trackPageDependencies<nodeOrNodes: Node | Node[]>(
 //     result: nodeOrNodes,
-//     pageDependencies?: PageDependencies,
+//     pageDependencies?: PageDependencies | undefined,
 //   ): nodesOrNodes;
 //   findRootNodeAncestor(obj: any, predicate: () => boolean): Node | null;
 //   trackInlineObjectsInRootNode(node: Node, sanitize: boolean): Node;
@@ -75,28 +75,28 @@ type PageDependencies = {
 // }
 
 class ContextualNodeModel {
-  nodeModel: LocalNodeModel
-  context: { path: string }
+  nodeModel: LocalNodeModel;
+  context: { path: string };
   constructor(rootNodeModel: LocalNodeModel, context: { path: string }) {
-    this.nodeModel = rootNodeModel
-    this.context = context
+    this.nodeModel = rootNodeModel;
+    this.context = context;
   }
 
   withContext(context: { path: string }): ContextualNodeModel {
     return new ContextualNodeModel(this.nodeModel, {
       ...this.context,
       ...context,
-    })
+    });
   }
 
   _getFullDependencies(pageDependencies?: PageDependencies | undefined): {
-    path: string
-    [key: string]: string
+    path: string;
+    [key: string]: string | undefined;
   } {
     return {
-      path: this.context.path,
       ...(pageDependencies ?? {}),
-    }
+      path: this.context.path,
+    };
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -104,15 +104,15 @@ class ContextualNodeModel {
     return this.nodeModel.getNodeById(
       args,
       this._getFullDependencies(pageDependencies),
-    )
+    );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getNodesByIds(args, pageDependencies?: PageDependencies): any {
+  getNodesByIds(args, pageDependencies?: PageDependencies | undefined): any {
     return this.nodeModel.getNodesByIds(
       args,
       this._getFullDependencies(pageDependencies),
-    )
+    );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -120,7 +120,7 @@ class ContextualNodeModel {
     return this.nodeModel.findOne(
       args,
       this._getFullDependencies(pageDependencies),
-    )
+    );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -128,37 +128,37 @@ class ContextualNodeModel {
     return this.nodeModel.findAll(
       args,
       this._getFullDependencies(pageDependencies),
-    )
+    );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prepareNodes(type: any, queryFields: any, fieldsToResolve: any): any {
-    return this.nodeModel.prepareNodes(type, queryFields, fieldsToResolve)
+    return this.nodeModel.prepareNodes(type, queryFields, fieldsToResolve);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getTypes(): any {
-    return this.nodeModel.getTypes()
+    return this.nodeModel.getTypes();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   trackInlineObjectsInRootNode(node: any): void {
-    this.nodeModel.trackInlineObjectsInRootNode(node)
+    this.nodeModel.trackInlineObjectsInRootNode(node);
   }
 
   findRootNodeAncestor(
     obj: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      parent: any
+      parent: any;
     },
     predicate?: ((tracked: IGatsbyNode) => boolean) | null | undefined,
   ): IGatsbyNode | null {
-    return this.nodeModel.findRootNodeAncestor(obj, predicate)
+    return this.nodeModel.findRootNodeAncestor(obj, predicate);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createPageDependency(args: any): void {
-    return this.nodeModel.createPageDependency(args)
+    return this.nodeModel.createPageDependency(args);
   }
 
   trackPageDependencies(
@@ -170,38 +170,38 @@ class ContextualNodeModel {
     return this.nodeModel.trackPageDependencies(
       result,
       this._getFullDependencies(pageDependencies),
-    )
+    );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getFieldValue(node: any, fieldPath: any): Promise<any> {
-    return this.nodeModel.getFieldValue(node, fieldPath)
+    return this.nodeModel.getFieldValue(node, fieldPath);
   }
 }
 
 export class LocalNodeModel {
-  schema: GraphQLSchema
+  schema: GraphQLSchema;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  schemaComposer: any
+  schemaComposer: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  createPageDependencyActionCreator: any
+  createPageDependencyActionCreator: any;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _rootNodeMap: WeakMap<WeakKey, any>
+  _rootNodeMap: WeakMap<WeakKey, any>;
 
-  _trackedRootNodes: WeakSet<WeakKey>
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _prepareNodesQueues: Record<string, Array<any>>
+  _trackedRootNodes: WeakSet<WeakKey>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _prepareNodesPromises: Record<string, any>
+  _prepareNodesQueues: Record<string, Array<any>>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _preparedNodesCache: Map<string, any>
+  _prepareNodesPromises: Record<string, any>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _filtersCache: FiltersCache | undefined
+  _preparedNodesCache: Map<string, any>;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  _filtersCache: FiltersCache | undefined;
 
   constructor({
     schema,
@@ -210,25 +210,25 @@ export class LocalNodeModel {
     _rootNodeMap,
     _trackedRootNodes,
   }: {
-    schema: GraphQLSchema
+    schema: GraphQLSchema;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    schemaComposer: any
+    schemaComposer: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    createPageDependency: any
+    createPageDependency: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    _rootNodeMap: any
+    _rootNodeMap: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    _trackedRootNodes: any
+    _trackedRootNodes: any;
   }) {
-    this.schema = schema
-    this.schemaComposer = schemaComposer
-    this.createPageDependencyActionCreator = createPageDependency
-    this._rootNodeMap = _rootNodeMap || new WeakMap()
-    this._trackedRootNodes = _trackedRootNodes || new WeakSet()
-    this._prepareNodesQueues = {}
-    this._prepareNodesPromises = {}
-    this._preparedNodesCache = new Map()
-    this.replaceFiltersCache()
+    this.schema = schema;
+    this.schemaComposer = schemaComposer;
+    this.createPageDependencyActionCreator = createPageDependency;
+    this._rootNodeMap = _rootNodeMap || new WeakMap();
+    this._trackedRootNodes = _trackedRootNodes || new WeakSet();
+    this._prepareNodesQueues = {};
+    this._prepareNodesPromises = {};
+    this._preparedNodesCache = new Map();
+    this.replaceFiltersCache();
   }
 
   createPageDependency(createPageDependencyArgs): void {
@@ -236,19 +236,19 @@ export class LocalNodeModel {
       const nodeTypeNames = toNodeTypeNames(
         this.schema,
         createPageDependencyArgs.connection,
-      )
+      );
       if (nodeTypeNames) {
         nodeTypeNames.forEach((typeName) => {
           this.createPageDependencyActionCreator({
             ...createPageDependencyArgs,
             connection: typeName,
-          })
-        })
-        return
+          });
+        });
+        return;
       }
     }
 
-    this.createPageDependencyActionCreator(createPageDependencyArgs)
+    this.createPageDependencyActionCreator(createPageDependencyArgs);
   }
 
   /**
@@ -261,12 +261,12 @@ export class LocalNodeModel {
    * cached instead of a Set of Nodes. If null, don't create or use a cache.
    */
   replaceFiltersCache(map = new Map()): void {
-    this._filtersCache = map // See redux/nodes.js for usage
+    this._filtersCache = map; // See redux/nodes.js for usage
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   withContext(context: any): ContextualNodeModel {
-    return new ContextualNodeModel(this, context)
+    return new ContextualNodeModel(this, context);
   }
 
   /**
@@ -288,7 +288,7 @@ export class LocalNodeModel {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getNodeById(
     args: {
-      id: string | null | undefined
+      id: string | null | undefined;
       type?:
         | string
         | GraphQLInterfaceType
@@ -297,33 +297,33 @@ export class LocalNodeModel {
         | GraphQLInputObjectType
         | GraphQLScalarType
         | GraphQLObjectType
-        | undefined
+        | undefined;
     },
     pageDependencies?: PageDependencies | undefined,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): any {
-    const { id, type } = args ?? {}
+    const { id, type } = args ?? {};
 
-    const node = getNodeById(id)
+    const node = getNodeById(id);
 
-    let result
+    let result;
     if (!node) {
-      result = null
+      result = null;
     } else if (!type) {
-      result = node
+      result = node;
     } else {
-      const nodeTypeNames = toNodeTypeNames(this.schema, type)
+      const nodeTypeNames = toNodeTypeNames(this.schema, type);
       result =
         node.internal.type && nodeTypeNames.includes(node.internal.type)
           ? node
-          : null
+          : null;
     }
 
     if (result) {
-      this.trackInlineObjectsInRootNode(node)
+      this.trackInlineObjectsInRootNode(node);
     }
 
-    return wrapNode(this.trackPageDependencies(result, pageDependencies))
+    return wrapNode(this.trackPageDependencies(result, pageDependencies));
   }
 
   /**
@@ -346,42 +346,42 @@ export class LocalNodeModel {
    */
   getNodesByIds(
     args: {
-      ids: Array<string>
+      ids: Array<string>;
       type:
         | string
         | GraphQLInterfaceType
         | GraphQLUnionType
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        | GraphQLObjectType
+        | GraphQLObjectType;
     },
     pageDependencies: PageDependencies,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): any {
-    const { ids, type } = args || {}
+    const { ids, type } = args || {};
 
     const nodes = Array.isArray(ids)
       ? ids.map((id) => getNodeById(id)).filter(Boolean)
-      : []
+      : [];
 
-    let result
+    let result;
 
     if (!nodes.length || !type) {
-      result = nodes
+      result = nodes;
     } else {
-      const nodeTypeNames = toNodeTypeNames(this.schema, type)
+      const nodeTypeNames = toNodeTypeNames(this.schema, type);
       result = nodes.filter((node): boolean => {
         return (
-          typeof node.internal.type === `string` &&
+          typeof node.internal.type === "string" &&
           nodeTypeNames.includes(node.internal.type)
-        )
-      })
+        );
+      });
     }
 
     if (result) {
-      result.forEach((node) => this.trackInlineObjectsInRootNode(node))
+      result.forEach((node) => this.trackInlineObjectsInRootNode(node));
     }
 
-    return wrapNodes(this.trackPageDependencies(result, pageDependencies))
+    return wrapNodes(this.trackPageDependencies(result, pageDependencies));
   }
 
   async _query(args: {
@@ -391,93 +391,95 @@ export class LocalNodeModel {
             | {
                 id?:
                   | {
-                      eq?: string | undefined
+                      eq?: string | undefined;
                     }
-                  | undefined
+                  | undefined;
               }
-            | undefined
+            | undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          sort?: any
+          sort?: any | undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          group?: any
+          group?: any | undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          distinct?: any
+          distinct?: any | undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          max?: any
+          max?: any | undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          min?: any
+          min?: any | undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          sum?: any
+          sum?: any | undefined;
         }
-      | undefined
-    type?: string | undefined
-    stats: IGraphQLRunnerStats
+      | undefined;
+    type?: string | undefined;
+    stats: IGraphQLRunnerStats;
     tracer?:
       | {
-          getParentActivity: () => { span: Span | SpanContext | undefined }
+          getParentActivity: () => { span: Span | SpanContext | undefined };
         }
-      | undefined
+      | undefined;
   }): Promise<{
-    gqlType: GatsbyGraphQLType
-    entries: GatsbyIterable<IGatsbyNode>
+    gqlType: GatsbyGraphQLType;
+    entries: GatsbyIterable<IGatsbyNode>;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    totalCount: () => Promise<any>
+    totalCount: () => Promise<any>;
   }> {
     // eslint-disable-next-line prefer-const
-    let { query = {}, type, stats, tracer } = args || {}
+    let { query = {}, type, stats, tracer } = args || {};
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
     const gqlType: GatsbyGraphQLType =
-      typeof type === `string` ? this.schema.getType(type) : type
+      typeof type === "string" ? this.schema.getType(type) : type;
 
     invariant(
       !(gqlType instanceof GraphQLUnionType),
-      `Querying GraphQLUnion types is not supported.`,
-    )
+      "Querying GraphQLUnion types is not supported.",
+    );
 
-    const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
+    const nodeTypeNames = toNodeTypeNames(this.schema, gqlType);
 
-    let runQueryActivity: IPhantomReporter | undefined
+    let runQueryActivity: IPhantomReporter | undefined;
 
     // check if we can get node by id and skip
     // more expensive query pipeline
     if (
-      typeof query?.filter?.id?.eq !== `undefined` &&
+      typeof query?.filter?.id?.eq !== "undefined" &&
       Object.keys(query.filter).length === 1 &&
       Object.keys(query.filter.id).length === 1
     ) {
       if (tracer) {
-        runQueryActivity = reporter.phantomActivity(`runQuerySimpleIdEq`, {
+        // @ts-ignore
+        runQueryActivity = reporter.phantomActivity("runQuerySimpleIdEq", {
           parentSpan: tracer.getParentActivity()?.span,
-        })
-        runQueryActivity.start()
+        });
+        runQueryActivity.start();
       }
       const nodeFoundById = this.getNodeById({
         id: query.filter.id.eq,
         type: gqlType,
-      })
+      });
 
       if (runQueryActivity) {
-        runQueryActivity.end()
+        runQueryActivity.end();
       }
 
       return {
         gqlType,
         entries: new GatsbyIterable(nodeFoundById ? [nodeFoundById] : []),
         totalCount: async () => (nodeFoundById ? 1 : 0),
-      }
+      };
     }
 
-    query = maybeConvertSortInputObjectToSortPath(query)
+    query = maybeConvertSortInputObjectToSortPath(query);
 
-    let materializationActivity
+    let materializationActivity;
 
     if (tracer) {
-      materializationActivity = reporter.phantomActivity(`Materialization`, {
+      // @ts-ignore
+      materializationActivity = reporter.phantomActivity("Materialization", {
         parentSpan: tracer.getParentActivity().span,
-      })
-      materializationActivity.start()
+      });
+      materializationActivity.start();
     }
     const fields = getQueryFields({
       filter: query.filter,
@@ -487,29 +489,30 @@ export class LocalNodeModel {
       max: query.max,
       min: query.min,
       sum: query.sum,
-    })
+    });
 
     const fieldsToResolve = determineResolvableFields(
       this.schemaComposer,
       this.schema,
       gqlType,
       fields,
-    )
+    );
 
     for (const nodeTypeName of nodeTypeNames) {
-      const gqlNodeType = this.schema.getType(nodeTypeName)
-      await this.prepareNodes(gqlNodeType, fields, fieldsToResolve)
+      const gqlNodeType = this.schema.getType(nodeTypeName);
+      await this.prepareNodes(gqlNodeType, fields, fieldsToResolve);
     }
 
     if (materializationActivity) {
-      materializationActivity.end()
+      materializationActivity.end();
     }
 
     if (tracer) {
-      runQueryActivity = reporter.phantomActivity(`runQuery`, {
+      // @ts-ignore
+      runQueryActivity = reporter.phantomActivity("runQuery", {
         parentSpan: tracer.getParentActivity().span,
-      })
-      runQueryActivity.start()
+      });
+      runQueryActivity.start();
     }
 
     const { entries, totalCount } = await getDataStore().runQuery({
@@ -521,21 +524,21 @@ export class LocalNodeModel {
       nodeTypeNames,
       filtersCache: this._filtersCache,
       stats,
-    })
+    });
 
     if (runQueryActivity) {
-      runQueryActivity.end()
+      runQueryActivity.end();
     }
 
     return {
       gqlType,
       entries: entries.map((node) => {
         // With GatsbyIterable it happens lazily as we iterate
-        this.trackInlineObjectsInRootNode(node)
-        return node
+        this.trackInlineObjectsInRootNode(node);
+        return node;
       }),
       totalCount,
-    }
+    };
   }
 
   /**
@@ -580,50 +583,50 @@ export class LocalNodeModel {
               | {
                   id?:
                     | {
-                        eq?: string | undefined
+                        eq?: string | undefined;
                       }
-                    | undefined
+                    | undefined;
                 }
-              | undefined
+              | undefined;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            sort?: any
+            sort?: any | undefined;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            group?: any
+            group?: any | undefined;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            distinct?: any
+            distinct?: any | undefined;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            max?: any
+            max?: any | undefined;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            min?: any
+            min?: any | undefined;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            sum?: any
+            sum?: any | undefined;
           }
-        | undefined
-      type?: string | undefined
-      stats: IGraphQLRunnerStats
+        | undefined;
+      type?: string | undefined;
+      stats: IGraphQLRunnerStats;
       tracer?:
         | {
-            getParentActivity: () => { span: Span | SpanContext | undefined }
+            getParentActivity: () => { span: Span | SpanContext | undefined };
           }
-        | undefined
+        | undefined;
     },
     pageDependencies: PageDependencies | undefined = {},
   ): Promise<{
-    entries: Array<IGatsbyNode> | undefined
-    totalCount: (() => Promise<number>) | (() => Promise<0 | 1>)
+    entries: Array<IGatsbyNode> | undefined;
+    totalCount: (() => Promise<number>) | (() => Promise<0 | 1>);
   }> {
-    const { gqlType, ...result } = await this._query(args)
+    const { gqlType, ...result } = await this._query(args);
 
     // Tracking connections by default:
-    if (typeof pageDependencies.connectionType === `undefined`) {
-      pageDependencies.connectionType = gqlType?.name
+    if (typeof pageDependencies.connectionType === "undefined") {
+      pageDependencies.connectionType = gqlType?.name;
     }
-    this.trackPageDependencies(result.entries, pageDependencies)
+    this.trackPageDependencies(result.entries, pageDependencies);
     return {
-      // @ts-ignore
+      // @ts-ignore for some reason GatsbyIterable passed to wrapNodes, expecting an Array
       entries: wrapNodes(result.entries),
       totalCount: result.totalCount,
-    }
+    };
   }
 
   /**
@@ -645,20 +648,20 @@ export class LocalNodeModel {
     args,
     pageDependencies: PageDependencies | undefined = {},
   ): Promise<Node> {
-    const { query = {} } = args
+    const { query = {} } = args;
     if (query.sort?.fields?.length > 0) {
       // If we support sorting and return the first node based on sorting
       // we'll have to always track connection not an individual node
       throw new Error(
-        `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead.`,
-      )
+        "nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead.",
+      );
     }
     const { gqlType, entries } = await this._query({
       ...args,
       query: { ...query, skip: 0, limit: 1, sort: undefined },
-    })
-    const result = Array.from(entries)
-    const first = result[0] ?? null
+    });
+    const result = Array.from(entries);
+    const first = result[0] ?? null;
 
     if (!first) {
       // Couldn't find matching node.
@@ -667,40 +670,40 @@ export class LocalNodeModel {
       //  (even if a new node matching this query is added at some point).
       //  To workaround this, we have to add a connection tracking to re-run
       //  the query whenever any node of this type changes.
-      pageDependencies.connectionType = gqlType.name
+      pageDependencies.connectionType = gqlType.name;
     }
-    return wrapNode(this.trackPageDependencies(first, pageDependencies))
+    return wrapNode(this.trackPageDependencies(first, pageDependencies));
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prepareNodes(type, queryFields, fieldsToResolve): any {
-    const typeName = type.name
+    const typeName = type.name;
     if (!this._prepareNodesQueues[typeName]) {
-      this._prepareNodesQueues[typeName] = []
+      this._prepareNodesQueues[typeName] = [];
     }
 
     this._prepareNodesQueues[typeName].push({
       queryFields,
       fieldsToResolve,
-    })
+    });
 
     if (!this._prepareNodesPromises[typeName]) {
       this._prepareNodesPromises[typeName] = new Promise((resolve) => {
         process.nextTick(async () => {
-          await this._doResolvePrepareNodesQueue(type)
-          resolve(undefined)
-        })
-      })
+          await this._doResolvePrepareNodesQueue(type);
+          resolve(undefined);
+        });
+      });
     }
 
-    return this._prepareNodesPromises[typeName]
+    return this._prepareNodesPromises[typeName];
   }
 
   async _doResolvePrepareNodesQueue(type): Promise<void> {
-    const typeName = type.name
-    const queue = this._prepareNodesQueues[typeName]
-    this._prepareNodesQueues[typeName] = []
-    this._prepareNodesPromises[typeName] = null
+    const typeName = type.name;
+    const queue = this._prepareNodesQueues[typeName];
+    this._prepareNodesQueues[typeName] = [];
+    this._prepareNodesPromises[typeName] = null;
 
     const { queryFields, fieldsToResolve } = queue.reduce(
       (
@@ -710,26 +713,26 @@ export class LocalNodeModel {
         return {
           queryFields: _.merge(queryFields, nextQueryFields),
           fieldsToResolve: _.merge(fieldsToResolve, nextFieldsToResolve),
-        }
+        };
       },
       {
         queryFields: {},
         fieldsToResolve: {},
       },
-    )
+    );
 
     const actualFieldsToResolve = deepObjectDifference(
       fieldsToResolve,
       this._preparedNodesCache.get(typeName) || {},
-    )
+    );
 
     if (!_.isEmpty(actualFieldsToResolve)) {
       const {
         schemaCustomization: { context: customContext },
-      } = store.getState()
-      const resolvedNodes = new Map()
+      } = store.getState();
+      const resolvedNodes = new Map();
       for (const node of getDataStore().iterateNodesByType(typeName)) {
-        this.trackInlineObjectsInRootNode(node)
+        this.trackInlineObjectsInRootNode(node);
         const resolvedFields = await resolveRecursive(
           this,
           this.schemaComposer,
@@ -739,12 +742,12 @@ export class LocalNodeModel {
           queryFields,
           actualFieldsToResolve,
           customContext,
-        )
+        );
 
-        resolvedNodes.set(node.id, resolvedFields)
+        resolvedNodes.set(node.id, resolvedFields);
       }
       if (resolvedNodes.size) {
-        await saveResolvedNodes(typeName, resolvedNodes)
+        await saveResolvedNodes(typeName, resolvedNodes);
       }
       this._preparedNodesCache.set(
         typeName,
@@ -753,7 +756,7 @@ export class LocalNodeModel {
           this._preparedNodesCache.get(typeName) || {},
           actualFieldsToResolve,
         ),
-      )
+      );
     }
   }
 
@@ -763,7 +766,7 @@ export class LocalNodeModel {
    * @returns {string[]}
    */
   getTypes(): Array<string> {
-    return getTypes()
+    return getTypes();
   }
 
   /**
@@ -780,8 +783,8 @@ export class LocalNodeModel {
         node.id,
         true,
         new Set(),
-      )
-      this._trackedRootNodes.add(node)
+      );
+      this._trackedRootNodes.add(node);
     }
   }
 
@@ -794,58 +797,58 @@ export class LocalNodeModel {
    */
   findRootNodeAncestor(
     obj: {
-      parent
+      parent;
     },
     predicate: ((tracked: IGatsbyNode) => boolean) | null | undefined = null,
   ): IGatsbyNode | null {
-    let iterations = 0
-    let ids = this._rootNodeMap.get(obj)
+    let iterations = 0;
+    let ids = this._rootNodeMap.get(obj);
     if (!ids) {
-      ids = []
+      ids = [];
     }
     if (obj?.parent) {
-      ids.push(obj.parent)
+      ids.push(obj.parent);
     }
-    let matchingRoot: IGatsbyNode | null = null
+    let matchingRoot: IGatsbyNode | null = null;
 
     if (ids) {
       for (const id of ids) {
-        let tracked = getNodeById(id)
+        let tracked = getNodeById(id);
 
         if (tracked) {
-          const visited = new Set()
+          const visited = new Set();
 
           while (iterations++ < 100) {
             if (predicate && predicate(tracked)) {
-              return tracked
+              return tracked;
             }
 
             if (visited.has(tracked)) {
               reporter.error(
-                `It looks like you have a node that's set its parent as itself:\n\n` +
+                "It looks like you have a node that's set its parent as itself:\n\n" +
                   tracked,
-              )
-              break
+              );
+              break;
             }
-            visited.add(tracked)
+            visited.add(tracked);
 
-            const parent = getNodeById(tracked.parent)
+            const parent = getNodeById(tracked.parent);
 
             if (!parent) {
-              break
+              break;
             }
 
-            tracked = parent
+            tracked = parent;
           }
 
           if (tracked && !predicate) {
-            matchingRoot = tracked
+            matchingRoot = tracked;
           }
         }
       }
     }
 
-    return matchingRoot
+    return matchingRoot;
   }
 
   /**
@@ -863,22 +866,22 @@ export class LocalNodeModel {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): any {
     // @ts-ignore
-    const { path, connectionType, track = true } = pageDependencies
+    const { path, connectionType, track = true } = pageDependencies;
     if (path && track) {
       if (connectionType) {
-        this.createPageDependency({ path, connection: connectionType })
+        this.createPageDependency({ path, connection: connectionType });
       } else {
-        const nodes = isIterable(result) ? result : [result]
+        const nodes = isIterable(result) ? result : [result];
 
         for (const node of nodes) {
           if (node) {
-            this.createPageDependency({ path, nodeId: node.id })
+            this.createPageDependency({ path, nodeId: node.id });
           }
         }
       }
     }
 
-    return result
+    return result;
   }
 
   /**
@@ -900,56 +903,56 @@ export class LocalNodeModel {
     fieldPath: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> => {
-    const fieldToResolve = pathToObject(fieldPath)
-    const typeName = node.internal.type
-    const type = typeName && this.schema.getType(typeName)
+    const fieldToResolve = pathToObject(fieldPath);
+    const typeName = node.internal.type;
+    const type = typeName && this.schema.getType(typeName);
 
-    await this.prepareNodes(type, fieldToResolve, fieldToResolve)
+    await this.prepareNodes(type, fieldToResolve, fieldToResolve);
 
-    return getMaybeResolvedValue(node, fieldPath, typeName)
-  }
+    return getMaybeResolvedValue(node, fieldPath, typeName);
+  };
 }
 
 function getNodeById(
   id: string | null | undefined,
 ): IGatsbyNode | null | undefined {
-  return id != null ? getNode(id) : null
+  return id != null ? getNode(id) : null;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getQueryFields({ filter, sort, group, distinct, max, min, sum }): any {
-  const filterFields = filter ? dropQueryOperators(filter) : {}
+  const filterFields = filter ? dropQueryOperators(filter) : {};
 
-  const sortFields = (sort && sort.fields) || []
+  const sortFields = (sort && sort.fields) || [];
 
   if (group && !Array.isArray(group)) {
-    group = [group]
+    group = [group];
   } else if (group == null) {
-    group = []
+    group = [];
   }
 
   if (distinct && !Array.isArray(distinct)) {
-    distinct = [distinct]
+    distinct = [distinct];
   } else if (distinct == null) {
-    distinct = []
+    distinct = [];
   }
 
   if (max && !Array.isArray(max)) {
-    max = [max]
+    max = [max];
   } else if (max == null) {
-    max = []
+    max = [];
   }
 
   if (min && !Array.isArray(min)) {
-    min = [min]
+    min = [min];
   } else if (min == null) {
-    min = []
+    min = [];
   }
 
   if (sum && !Array.isArray(sum)) {
-    sum = [sum]
+    sum = [sum];
   } else if (sum == null) {
-    sum = []
+    sum = [];
   }
 
   return _.merge(
@@ -960,24 +963,24 @@ function getQueryFields({ filter, sort, group, distinct, max, min, sum }): any {
     ...max.map(pathToObject),
     ...min.map(pathToObject),
     ...sum.map(pathToObject),
-  )
+  );
 }
 
 type RecursiveObject = {
-  [x: string]: string | boolean | RecursiveObject
-}
+  [x: string]: string | boolean | RecursiveObject;
+};
 
 function pathToObject(
   path: string | null | undefined,
 ): string | boolean | RecursiveObject {
-  if (path && typeof path === `string`) {
+  if (path && typeof path === "string") {
     return path
-      .split(`.`)
+      .split(".")
       .reduceRight((acc: string | boolean | RecursiveObject, key) => {
-        return { [key]: acc }
-      }, true)
+        return { [key]: acc };
+      }, true);
   }
-  return {}
+  return {};
 }
 
 function dropQueryOperators(
@@ -989,32 +992,32 @@ function dropQueryOperators(
       acc: boolean | Record<string, boolean>,
       key: string,
     ): boolean | Record<string, boolean> => {
-      const value = filter[key]
-      const k = Object.keys(value)[0]
-      const v = value[k]
+      const value = filter[key];
+      const k = Object.keys(value)[0];
+      const v = value[k];
 
       if (isPlainObject(value) && isPlainObject(v)) {
         acc[key] =
-          k === `elemMatch` ? dropQueryOperators(v) : dropQueryOperators(value)
+          k === "elemMatch" ? dropQueryOperators(v) : dropQueryOperators(value);
       } else {
-        acc[key] = true
+        acc[key] = true;
       }
-      return acc
+      return acc;
     },
     {},
-  )
+  );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getFields(schema, type, node): any {
   if (!isAbstractType(type)) {
-    return type.getFields()
+    return type.getFields();
   }
 
   // @ts-ignore
-  const concreteType = type.resolveType?.(node)
+  const concreteType = type.resolveType?.(node);
 
-  return schema.getType(concreteType).getFields()
+  return schema.getType(concreteType).getFields();
 }
 
 async function resolveRecursive(
@@ -1027,14 +1030,14 @@ async function resolveRecursive(
   fieldsToResolve,
   customContext,
 ): Promise<_.Dictionary<unknown>> {
-  const gqlFields = getFields(schema, type, node)
-  const resolvedFields = {}
+  const gqlFields = getFields(schema, type, node);
+  const resolvedFields = {};
   for (const fieldName of Object.keys(fieldsToResolve)) {
-    const fieldToResolve = fieldsToResolve[fieldName]
-    const queryField = queryFields[fieldName]
-    const gqlField = gqlFields[fieldName]
-    const gqlNonNullType = getNullableType(gqlField.type)
-    const gqlFieldType = getNamedType(gqlField.type)
+    const fieldToResolve = fieldsToResolve[fieldName];
+    const queryField = queryFields[fieldName];
+    const gqlField = gqlFields[fieldName];
+    const gqlNonNullType = getNullableType(gqlField.type);
+    const gqlFieldType = getNamedType(gqlField.type);
     let innerValue = await resolveField(
       nodeModel,
       schemaComposer,
@@ -1043,7 +1046,7 @@ async function resolveRecursive(
       gqlField,
       fieldName,
       customContext,
-    )
+    );
     if (gqlField && innerValue != null) {
       if (
         isCompositeType(gqlFieldType) &&
@@ -1058,7 +1061,7 @@ async function resolveRecursive(
           queryField,
           _.isObject(fieldToResolve) ? fieldToResolve : queryField,
           customContext,
-        )
+        );
       } else if (
         isCompositeType(gqlFieldType) &&
         (_.isArray(innerValue) || innerValue instanceof GatsbyIterable) &&
@@ -1079,11 +1082,11 @@ async function resolveRecursive(
                   customContext,
                 ),
           ),
-        )
+        );
       }
     }
     if (innerValue != null) {
-      resolvedFields[fieldName] = innerValue
+      resolvedFields[fieldName] = innerValue;
     }
   }
 
@@ -1099,14 +1102,14 @@ async function resolveRecursive(
         gqlFields[fieldName],
         fieldName,
         customContext,
-      )
+      );
     }
   }
 
-  return _.pickBy(resolvedFields, (_value, key) => queryFields[key])
+  return _.pickBy(resolvedFields, (_value, key) => queryFields[key]);
 }
 
-let withResolverContext
+let withResolverContext;
 
 function resolveField(
   nodeModel,
@@ -1119,20 +1122,20 @@ function resolveField(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any {
   if (!gqlField?.resolve) {
-    return node[fieldName]
+    return node[fieldName];
   }
 
   // We require this inline as there's a circular dependency from context back to this file.
   // https://github.com/gatsbyjs/gatsby/blob/9d33b107d167e3e9e2aa282924a0c409f6afd5a0/packages/gatsby/src/schema/context.ts#L5
   if (!withResolverContext) {
-    withResolverContext = require(`./context`)
+    withResolverContext = require("./context");
   }
 
   return gqlField.resolve(
     node,
     gqlField.args.reduce((acc, arg) => {
-      acc[arg.name] = arg.defaultValue
-      return acc
+      acc[arg.name] = arg.defaultValue;
+      return acc;
     }, {}),
     withResolverContext({
       schema,
@@ -1145,7 +1148,7 @@ function resolveField(
       schema,
       returnType: gqlField.type,
     },
-  )
+  );
 }
 
 function determineResolvableFields(
@@ -1155,14 +1158,14 @@ function determineResolvableFields(
   fields,
   isNestedAndParentNeedsResolve = false,
 ): Record<string, unknown> {
-  const fieldsToResolve = {}
-  const gqlFields = type.getFields()
+  const fieldsToResolve = {};
+  const gqlFields = type.getFields();
 
   Object.keys(fields).forEach((fieldName) => {
-    const field = fields[fieldName]
-    const gqlField = gqlFields[fieldName]
-    const gqlFieldType = getNamedType(gqlField.type)
-    const typeComposer = schemaComposer.getAnyTC(type.name)
+    const field = fields[fieldName];
+    const gqlField = gqlFields[fieldName];
+    const gqlFieldType = getNamedType(gqlField.type);
+    const typeComposer = schemaComposer.getAnyTC(type.name);
 
     const needsResolve = fieldNeedToResolve({
       schema,
@@ -1170,7 +1173,7 @@ function determineResolvableFields(
       typeComposer,
       schemaComposer,
       fieldName,
-    })
+    });
 
     if (_.isObject(field) && gqlField) {
       const innerResolved = determineResolvableFields(
@@ -1179,22 +1182,22 @@ function determineResolvableFields(
         gqlFieldType,
         field,
         isNestedAndParentNeedsResolve || needsResolve,
-      )
+      );
       if (!_.isEmpty(innerResolved)) {
-        fieldsToResolve[fieldName] = innerResolved
+        fieldsToResolve[fieldName] = innerResolved;
       }
     }
 
     if (!fieldsToResolve[fieldName] && needsResolve) {
-      fieldsToResolve[fieldName] = true
+      fieldsToResolve[fieldName] = true;
     }
     if (!fieldsToResolve[fieldName] && isNestedAndParentNeedsResolve) {
       // If parent field needs to be resolved - all nested fields should be added as well
       // See https://github.com/gatsbyjs/gatsby/issues/26056
-      fieldsToResolve[fieldName] = true
+      fieldsToResolve[fieldName] = true;
     }
-  })
-  return fieldsToResolve
+  });
+  return fieldsToResolve;
 }
 
 function addRootNodeToInlineObject(
@@ -1204,39 +1207,39 @@ function addRootNodeToInlineObject(
   isNode: boolean,
   path: Set<string | number>,
 ): void {
-  const isPlainObject = _.isPlainObject(data)
+  const isPlainObject = _.isPlainObject(data);
 
   if (isPlainObject || _.isArray(data)) {
-    if (path.has(data)) return
-    path.add(data)
+    if (path.has(data)) return;
+    path.add(data);
 
     _.each(data, (o, key) => {
-      if (!isNode || key !== `internal`) {
-        addRootNodeToInlineObject(rootNodeMap, o, nodeId, false, path)
+      if (!isNode || key !== "internal") {
+        addRootNodeToInlineObject(rootNodeMap, o, nodeId, false, path);
       }
-    })
+    });
 
     // don't need to track node itself
     if (!isNode) {
-      let nodeIds = rootNodeMap.get(data)
+      let nodeIds = rootNodeMap.get(data);
       if (!nodeIds) {
-        nodeIds = new Set([nodeId])
+        nodeIds = new Set([nodeId]);
       } else {
-        nodeIds.add(nodeId)
+        nodeIds.add(nodeId);
       }
-      rootNodeMap.set(data, nodeIds)
+      rootNodeMap.set(data, nodeIds);
     }
   }
 }
 
 function saveResolvedNodes(typeName, resolvedNodes): void {
   store.dispatch({
-    type: `SET_RESOLVED_NODES`,
+    type: "SET_RESOLVED_NODES",
     payload: {
       key: typeName,
       nodes: resolvedNodes,
     },
-  })
+  });
 }
 
 function deepObjectDifference(
@@ -1245,20 +1248,20 @@ function deepObjectDifference(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   to: Record<string, any>,
 ): Record<string, unknown> {
-  const result: Record<string, unknown> = {}
+  const result: Record<string, unknown> = {};
 
   Object.keys(from).forEach((key) => {
-    const toValue = to[key]
+    const toValue = to[key];
     if (toValue) {
       if (_.isPlainObject(toValue)) {
-        const deepResult = deepObjectDifference(from[key], toValue)
+        const deepResult = deepObjectDifference(from[key], toValue);
         if (!_.isEmpty(deepResult)) {
-          result[key] = deepResult
+          result[key] = deepResult;
         }
       }
     } else {
-      result[key] = from[key]
+      result[key] = from[key];
     }
-  })
-  return result
+  });
+  return result;
 }

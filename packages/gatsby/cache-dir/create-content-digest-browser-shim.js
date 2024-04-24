@@ -1,1 +1,1 @@
-exports.createContentDigest = () => ``
+exports.createContentDigest = () => "";

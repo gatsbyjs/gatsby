@@ -1,51 +1,51 @@
-import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
+import { createTestWorker, type GatsbyTestWorkerPool } from "./test-helpers";
 import {
   store,
   saveState,
   savePartialStateToDisk,
   loadPartialStateFromDisk,
-} from "../../../redux"
-import { GatsbyStateKeys } from "../../../redux/types"
+} from "../../../redux";
+import type { GatsbyStateKeys } from "../../../redux/types";
 
-jest.mock(`gatsby-telemetry`, () => {
+jest.mock("gatsby-telemetry", () => {
   return {
     decorateEvent: jest.fn(),
     trackError: jest.fn(),
     trackCli: jest.fn(),
     isTrackingEnabled: jest.fn(),
-  }
-})
+  };
+});
 
-let worker: GatsbyTestWorkerPool | undefined
+let worker: GatsbyTestWorkerPool | undefined;
 
 const dummyPagePayload = {
-  path: `/foo/`,
-  component: `/foo`,
-  componentPath: `/foo`,
-}
+  path: "/foo/",
+  component: "/foo",
+  componentPath: "/foo",
+};
 
-describe(`worker (share-state)`, () => {
+describe("worker (share-state)", () => {
   beforeEach(() => {
-    store.dispatch({ type: `DELETE_CACHE` })
-  })
+    store.dispatch({ type: "DELETE_CACHE" });
+  });
 
   afterEach(async () => {
     if (worker) {
-      await Promise.all(worker.end())
-      worker = undefined
+      await Promise.all(worker.end());
+      worker = undefined;
     }
-  })
+  });
 
-  it(`doesn't load all of state persisted by main process`, async () => {
+  it("doesn't load all of state persisted by main process", async () => {
     store.dispatch({
-      type: `CREATE_PAGE`,
+      type: "CREATE_PAGE",
       payload: dummyPagePayload,
       plugin: {
-        name: `test`,
+        name: "test",
       },
-    })
+    });
 
-    saveState()
+    saveState();
 
     expect(store.getState().pages.get(dummyPagePayload.path))
       .toMatchInlineSnapshot(`
@@ -54,45 +54,45 @@ describe(`worker (share-state)`, () => {
         "componentPath": "/foo",
         "path": "/foo/",
       }
-    `)
+    `);
 
-    worker = createTestWorker()
+    worker = createTestWorker();
 
-    const result = await worker.single.getPage(dummyPagePayload.path)
+    const result = await worker.single.getPage(dummyPagePayload.path);
 
-    expect(result).toBe(null)
-  })
+    expect(result).toBe(null);
+  });
 
-  it(`saves and retrieves state for workers correctly`, () => {
+  it("saves and retrieves state for workers correctly", () => {
     store.dispatch({
-      type: `CREATE_PAGE`,
+      type: "CREATE_PAGE",
       payload: dummyPagePayload,
       plugin: {
-        name: `test`,
+        name: "test",
       },
-    })
+    });
     store.dispatch({
-      type: `REPLACE_STATIC_QUERY`,
+      type: "REPLACE_STATIC_QUERY",
       plugin: {
-        name: `test`,
+        name: "test",
       },
       payload: {
-        name: `foo`,
-        componentPath: `/foo`,
-        id: `1`,
-        query: `query`,
-        hash: `hash`,
+        name: "foo",
+        componentPath: "/foo",
+        id: "1",
+        query: "query",
+        hash: "hash",
       },
-    })
+    });
 
-    const slicesOne: Array<GatsbyStateKeys> = [`components`]
+    const slicesOne: Array<GatsbyStateKeys> = ["components"];
     const slicesTwo: Array<GatsbyStateKeys> = [
-      `components`,
-      `staticQueryComponents`,
-    ]
+      "components",
+      "staticQueryComponents",
+    ];
 
-    savePartialStateToDisk(slicesOne)
-    const resultOne = loadPartialStateFromDisk(slicesOne)
+    savePartialStateToDisk(slicesOne);
+    const resultOne = loadPartialStateFromDisk(slicesOne);
 
     expect(resultOne).toMatchInlineSnapshot(`
       Object {
@@ -112,11 +112,11 @@ describe(`worker (share-state)`, () => {
           },
         },
       }
-    `)
+    `);
 
-    savePartialStateToDisk(slicesTwo)
+    savePartialStateToDisk(slicesTwo);
 
-    const resultTwo = loadPartialStateFromDisk(slicesTwo)
+    const resultTwo = loadPartialStateFromDisk(slicesTwo);
 
     expect(resultTwo).toMatchInlineSnapshot(`
       Object {
@@ -145,95 +145,94 @@ describe(`worker (share-state)`, () => {
           },
         },
       }
-    `)
-  })
+    `);
+  });
 
-  it(`stores empty state with no slices`, () => {
+  it("stores empty state with no slices", () => {
     store.dispatch({
-      type: `CREATE_PAGE`,
+      type: "CREATE_PAGE",
       payload: dummyPagePayload,
       plugin: {
-        name: `test`,
+        name: "test",
       },
-    })
+    });
 
-    const slices: Array<GatsbyStateKeys> = []
+    const slices: Array<GatsbyStateKeys> = [];
 
-    savePartialStateToDisk(slices)
-    const result = loadPartialStateFromDisk(slices)
+    savePartialStateToDisk(slices);
+    const result = loadPartialStateFromDisk(slices);
 
-    expect(result).toEqual({})
-  })
+    expect(result).toEqual({});
+  });
 
-  it(`returns default for slice even if no data is given`, () => {
+  it("returns default for slice even if no data is given", () => {
     store.dispatch({
-      type: `CREATE_PAGE`,
+      type: "CREATE_PAGE",
       payload: dummyPagePayload,
       plugin: {
-        name: `test`,
+        name: "test",
       },
-    })
+    });
 
-    const slices: Array<GatsbyStateKeys> = [`staticQueryComponents`]
+    const slices: Array<GatsbyStateKeys> = ["staticQueryComponents"];
 
-    savePartialStateToDisk(slices)
-    const result = loadPartialStateFromDisk(slices)
+    savePartialStateToDisk(slices);
+    const result = loadPartialStateFromDisk(slices);
 
     expect(result).toMatchInlineSnapshot(`
       Object {
         "staticQueryComponents": Map {},
       }
-    `)
-  })
+    `);
+  });
 
-  it(`can set slices results into state and access page & static queries`, async () => {
-    worker = createTestWorker()
-    const staticQueryID = `1`
+  it("can set slices results into state and access page & static queries", async () => {
+    worker = createTestWorker();
+    const staticQueryID = "1";
 
     store.dispatch({
-      type: `CREATE_PAGE`,
+      type: "CREATE_PAGE",
       payload: dummyPagePayload,
       plugin: {
-        name: `test`,
+        name: "test",
       },
-    })
+    });
 
     store.dispatch({
-      type: `REPLACE_STATIC_QUERY`,
+      type: "REPLACE_STATIC_QUERY",
       plugin: {
-        name: `test`,
+        name: "test",
       },
       payload: {
-        name: `foo`,
+        name: "foo",
         componentPath: dummyPagePayload.component,
         id: staticQueryID,
-        query: `I'm a static query`,
-        hash: `hash`,
+        query: "I'm a static query",
+        hash: "hash",
       },
-    })
+    });
 
     store.dispatch({
-      type: `QUERY_EXTRACTED`,
+      type: "QUERY_EXTRACTED",
       payload: {
-        componentPath: `/foo`,
-        componentChunkName: `foo`,
-        query: `I'm a page query`,
+        componentPath: "/foo",
+        componentChunkName: "foo",
+        query: "I'm a page query",
       },
       plugin: {
-        name: `test`,
+        name: "test",
       },
-    })
+    });
 
-    savePartialStateToDisk([`components`, `staticQueryComponents`])
+    savePartialStateToDisk(["components", "staticQueryComponents"]);
 
-    await Promise.all(worker.all.setComponents())
+    await Promise.all(worker.all.setComponents());
 
     const components = await worker.single.getComponent(
-      dummyPagePayload.component
-    )
-    const staticQueryComponents = await worker.single.getStaticQueryComponent(
-      staticQueryID
-    )
+      dummyPagePayload.component,
+    );
+    const staticQueryComponents =
+      await worker.single.getStaticQueryComponent(staticQueryID);
 
     expect(components).toMatchInlineSnapshot(`
       Object {
@@ -246,7 +245,7 @@ describe(`worker (share-state)`, () => {
         "query": "I'm a page query",
         "serverData": false,
       }
-    `)
+    `);
 
     expect(staticQueryComponents).toMatchInlineSnapshot(`
       Object {
@@ -256,33 +255,33 @@ describe(`worker (share-state)`, () => {
         "name": "foo",
         "query": "I'm a static query",
       }
-    `)
-  })
+    `);
+  });
 
-  it(`can set slices results into state and access inference metadata`, async () => {
-    worker = createTestWorker()
+  it("can set slices results into state and access inference metadata", async () => {
+    worker = createTestWorker();
 
     store.dispatch({
-      type: `BUILD_TYPE_METADATA`,
+      type: "BUILD_TYPE_METADATA",
       payload: {
-        typeName: `Test`,
+        typeName: "Test",
         nodes: [
           {
-            id: `1`,
+            id: "1",
             parent: null,
             children: [],
-            foo: `bar`,
-            internal: { type: `Test` },
+            foo: "bar",
+            internal: { type: "Test" },
           },
         ],
       },
-    })
+    });
 
-    savePartialStateToDisk([`inferenceMetadata`])
+    savePartialStateToDisk(["inferenceMetadata"]);
 
-    await Promise.all(worker.all.setInferenceMetadata())
+    await Promise.all(worker.all.setInferenceMetadata());
 
-    const inf = await worker.single.getInferenceMetadata(`Test`)
+    const inf = await worker.single.getInferenceMetadata("Test");
 
     expect(inf).toMatchInlineSnapshot(`
       Object {
@@ -299,6 +298,6 @@ describe(`worker (share-state)`, () => {
         "ignoredFields": Object {},
         "total": 1,
       }
-    `)
-  })
-})
+    `);
+  });
+});

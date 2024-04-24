@@ -1,20 +1,20 @@
-const { URL } = require(`url`)
+const { URL } = require("url");
 
 // This should be replaced with the solution for https://github.com/gatsbyjs/gatsby/issues/24220
 async function getBase64Img(url, reporter) {
   try {
     const response = await fetch({
-      method: `GET`,
-      responseType: `arraybuffer`,
+      method: "GET",
+      responseType: "arraybuffer",
       url: `${url}`,
-    })
+    });
 
-    const base64Img = `data:${response.headers[`content-type`]};base64,${new Buffer(response.data).toString(`base64`)}`
+    const base64Img = `data:${response.headers["content-type"]};base64,${new Buffer(response.data).toString("base64")}`;
 
-    return base64Img
+    return base64Img;
   } catch (err) {
-    reporter.panic(`Failed downloading the base64 image for ${url}`, err)
-    return undefined
+    reporter.panic(`Failed downloading the base64 image for ${url}`, err);
+    return undefined;
   }
 }
 
@@ -23,45 +23,46 @@ async function buildResponsiveSizes(
   reporter,
 ) {
   const imageURL = new URL(
-    imageUrl.indexOf(`/`) === 0 ? `https:${imageUrl}` : imageUrl,
-  )
+    imageUrl.indexOf("/") === 0 ? `https:${imageUrl}` : imageUrl,
+  );
 
-  const { width, height, density } = metadata
-  const { maxWidth, sizes } = options
-  const aspectRatio = width / height
+  const { width, height, density } = metadata;
+  const { maxWidth, sizes } = options;
+  const aspectRatio = width / height;
 
-  const presentationWidth = Math.min(maxWidth, width)
-  const presentationHeight = Math.round(presentationWidth * (height / width))
+  const presentationWidth = Math.min(maxWidth, width);
+  const presentationHeight = Math.round(presentationWidth * (height / width));
   const sizesQuery =
-    sizes || `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
+    sizes ||
+    `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`;
 
-  const images = []
+  const images = [];
 
-  images.push(metadata.width / 4)
-  images.push(metadata.width / 2)
-  images.push(metadata.width)
-  images.push(metadata.width * 1.5)
-  images.push(metadata.width * 2)
-  images.push(metadata.width * 3)
+  images.push(metadata.width / 4);
+  images.push(metadata.width / 2);
+  images.push(metadata.width);
+  images.push(metadata.width * 1.5);
+  images.push(metadata.width * 2);
+  images.push(metadata.width * 3);
 
-  const filteredSizes = images.filter((size) => size < width)
+  const filteredSizes = images.filter((size) => size < width);
 
-  filteredSizes.push(width)
+  filteredSizes.push(width);
 
-  imageURL.searchParams.set(`w`, `40`)
+  imageURL.searchParams.set("w", "40");
 
-  const base64Img = await getBase64Img(imageURL.href, reporter)
+  const base64Img = await getBase64Img(imageURL.href, reporter);
 
   function getSrcSetUrl(size) {
-    imageURL.searchParams.set(`w`, `${Math.round(size)}`)
-    return `${imageURL.href} ${Math.round(size)}w`
+    imageURL.searchParams.set("w", `${Math.round(size)}`);
+    return `${imageURL.href} ${Math.round(size)}w`;
   }
 
-  const srcSet = filteredSizes.map(getSrcSetUrl).join(`,\n`)
+  const srcSet = filteredSizes.map(getSrcSetUrl).join(",\n");
 
-  imageURL.searchParams.set(`fm`, `webp`)
+  imageURL.searchParams.set("fm", "webp");
 
-  const webpSrcSet = filteredSizes.map(getSrcSetUrl).join(`,\n`)
+  const webpSrcSet = filteredSizes.map(getSrcSetUrl).join(",\n");
 
   // TODO think about a better structure to save srcset types instead of adding them to the root
   return {
@@ -74,8 +75,8 @@ async function buildResponsiveSizes(
     density,
     presentationWidth,
     presentationHeight,
-  }
+  };
 }
 
-exports.buildResponsiveSizes = buildResponsiveSizes
-exports.getBase64Img = getBase64Img
+exports.buildResponsiveSizes = buildResponsiveSizes;
+exports.getBase64Img = getBase64Img;

@@ -1,8 +1,8 @@
-import React, { Suspense, createElement } from "react"
-import PropTypes from "prop-types"
-import { apiRunner } from "./api-runner-browser"
-import { grabMatchParams } from "./find-path"
-import { headHandlerForBrowser } from "./head/head-export-handler-for-browser"
+import React, { Suspense, createElement } from "react";
+import PropTypes from "prop-types";
+import { apiRunner } from "./api-runner-browser";
+import { grabMatchParams } from "./find-path";
+import { headHandlerForBrowser } from "./head/head-export-handler-for-browser";
 
 // Renders page
 function PageRenderer(props) {
@@ -12,41 +12,41 @@ function PageRenderer(props) {
       ...grabMatchParams(props.location.pathname),
       ...props.pageResources.json.pageContext.__params,
     },
-  }
+  };
 
-  const preferDefault = m => (m && m.default) || m
+  const preferDefault = (m) => (m && m.default) || m;
 
-  let pageElement
+  let pageElement;
   if (props.pageResources.partialHydration) {
-    pageElement = props.pageResources.partialHydration
+    pageElement = props.pageResources.partialHydration;
   } else {
     pageElement = createElement(preferDefault(props.pageResources.component), {
       ...pageComponentProps,
       key: props.path || props.pageResources.page.path,
-    })
+    });
   }
 
-  const pageComponent = props.pageResources.head
+  const pageComponent = props.pageResources.head;
 
   headHandlerForBrowser({
     pageComponent,
     staticQueryResults: props.pageResources.staticQueryResults,
     pageComponentProps,
-  })
+  });
 
   const wrappedPage = apiRunner(
-    `wrapPageElement`,
+    "wrapPageElement",
     {
       element: pageElement,
       props: pageComponentProps,
     },
     pageElement,
     ({ result }) => {
-      return { element: result, props: pageComponentProps }
-    }
-  ).pop()
+      return { element: result, props: pageComponentProps };
+    },
+  ).pop();
 
-  return wrappedPage
+  return wrappedPage;
 }
 
 PageRenderer.propTypes = {
@@ -54,6 +54,6 @@ PageRenderer.propTypes = {
   pageResources: PropTypes.object.isRequired,
   data: PropTypes.object,
   pageContext: PropTypes.object.isRequired,
-}
+};
 
-export default PageRenderer
+export default PageRenderer;

@@ -1,10 +1,10 @@
-const resolvableExtensions = () => [`.ts`, `.tsx`]
+const resolvableExtensions = () => [".ts", ".tsx"];
 
 function onCreateBabelConfig({ actions }, options) {
   actions.setBabelPreset({
-    name: require.resolve(`@babel/preset-typescript`),
+    name: require.resolve("@babel/preset-typescript"),
     options,
-  })
+  });
   // actions.setBabelPlugin({
   //   name: require.resolve(`@babel/plugin-proposal-optional-chaining`),
   // })
@@ -17,8 +17,8 @@ function onCreateBabelConfig({ actions }, options) {
 }
 
 function onCreateWebpackConfig({ actions, loaders }) {
-  if (typeof loaders?.js !== `function`) {
-    return
+  if (typeof loaders?.js !== "function") {
+    return;
   }
 
   actions.setWebpackConfig({
@@ -35,40 +35,40 @@ function onCreateWebpackConfig({ actions, loaders }) {
         },
       ],
     },
-  })
+  });
 }
 
 exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
-    isTSX: Joi.boolean().description(`Enables jsx parsing.`).default(false),
+    isTSX: Joi.boolean().description("Enables jsx parsing.").default(false),
     jsxPragma: Joi.string()
-      .description(`Replace the function used when compiling JSX expressions.`)
-      .default(`React`),
+      .description("Replace the function used when compiling JSX expressions.")
+      .default("React"),
     jsxPragmaFrag: Joi.string()
       .description(
-        `Replace the function used when compiling JSX fragment expressions.`,
+        "Replace the function used when compiling JSX fragment expressions.",
       )
       .optional(),
     allExtensions: Joi.boolean()
-      .description(`Indicates that every file should be parsed as TS or TSX.`)
+      .description("Indicates that every file should be parsed as TS or TSX.")
       .default(false)
-      .when(`isTSX`, { is: true, then: Joi.valid(true) }),
+      .when("isTSX", { is: true, then: Joi.valid(true) }),
     allowNamespaces: Joi.boolean()
-      .description(`Enables compilation of TypeScript namespaces.`)
+      .description("Enables compilation of TypeScript namespaces.")
       .optional(),
     allowDeclareFields: Joi.boolean()
       .description(
-        `When enabled, type-only class fields are only removed if they are prefixed with the declare modifier.`,
+        "When enabled, type-only class fields are only removed if they are prefixed with the declare modifier.",
       )
       .optional(),
     onlyRemoveTypeImports: Joi.boolean()
       .description(
-        `When set to true, the transform will only remove type-only imports (introduced in TypeScript 3.8).` +
-          `This should only be used if you are using TypeScript >= 3.8.`,
+        "When set to true, the transform will only remove type-only imports (introduced in TypeScript 3.8)." +
+          "This should only be used if you are using TypeScript >= 3.8.",
       )
       .optional(),
-  })
+  });
 
-exports.resolvableExtensions = resolvableExtensions
-exports.onCreateBabelConfig = onCreateBabelConfig
-exports.onCreateWebpackConfig = onCreateWebpackConfig
+exports.resolvableExtensions = resolvableExtensions;
+exports.onCreateBabelConfig = onCreateBabelConfig;
+exports.onCreateWebpackConfig = onCreateWebpackConfig;

@@ -1,95 +1,94 @@
-import { getPluginOptions } from "./../../utils/get-gatsby-api"
-import { GatsbyHelpers } from "~/utils/gatsby-types"
-import path from "node:path"
-import fs from "fs-extra"
-import chalk from "chalk"
-import urlUtil from "node:url"
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import PQueue from "p-queue"
-import { dump } from "dumper.js"
-import { actions as gatsbyActions } from "gatsby/dist/redux/actions/public"
+import { getPluginOptions } from "./../../utils/get-gatsby-api";
+import { GatsbyHelpers } from "~/utils/gatsby-types";
+import path from "node:path";
+import fs from "fs-extra";
+import chalk from "chalk";
+import urlUtil from "node:url";
+import PQueue from "p-queue";
+import { dump } from "dumper.js";
+import { actions as gatsbyActions } from "gatsby/dist/redux/actions/public";
 
-import { remoteSchemaSupportsFieldNameOnTypeName } from "~/steps/ingest-remote-schema/introspect-remote-schema"
-import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated"
-import fetchGraphql from "~/utils/fetch-graphql"
+import { remoteSchemaSupportsFieldNameOnTypeName } from "~/steps/ingest-remote-schema/introspect-remote-schema";
+import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated";
+import fetchGraphql from "~/utils/fetch-graphql";
 
-import { getStore } from "~/store"
+import { getStore } from "~/store";
 
-import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-actions/update"
-import { formatLogMessage } from "~/utils/format-log-message"
-import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates"
+import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-actions/update";
+import { formatLogMessage } from "~/utils/format-log-message";
+import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates";
 
-import { Reporter } from "gatsby/reporter"
-import { invokeAndCleanupLeftoverPreviewCallbacks } from "./cleanup"
+import { Reporter } from "gatsby/reporter";
+import { invokeAndCleanupLeftoverPreviewCallbacks } from "./cleanup";
 
 const inDevelopPreview =
-  process.env.NODE_ENV === `development` &&
-  !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
+  process.env.NODE_ENV === "development" &&
+  !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT;
 
 const inPreviewRunner =
-  process.env.RUNNER_TYPE === `PREVIEW` ||
-  process.env.RUNNER_TYPE === `INCREMENTAL_PREVIEWS` ||
-  !!process.env.IS_GATSBY_PREVIEW
+  process.env.RUNNER_TYPE === "PREVIEW" ||
+  process.env.RUNNER_TYPE === "INCREMENTAL_PREVIEWS" ||
+  !!process.env.IS_GATSBY_PREVIEW;
 
 // this is a function simply because many places in the code expect it to be.
 // it used to call getStore().getState() and check for some state to determine preview mode
-export const inPreviewMode = (): boolean => inDevelopPreview || inPreviewRunner
+export const inPreviewMode = (): boolean => inDevelopPreview || inPreviewRunner;
 
 export type PreviewStatusUnion =
-  | `PREVIEW_SUCCESS`
-  | `NO_PAGE_CREATED_FOR_PREVIEWED_NODE`
-  | `GATSBY_PREVIEW_PROCESS_ERROR`
-  | `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`
+  | "PREVIEW_SUCCESS"
+  | "NO_PAGE_CREATED_FOR_PREVIEWED_NODE"
+  | "GATSBY_PREVIEW_PROCESS_ERROR"
+  | "RECEIVED_PREVIEW_DATA_FROM_WRONG_URL";
 
 export type IPreviewData = {
-  previewDatabaseId: number
-  userDatabaseId: number
-  token: string
-  remoteUrl: string
-  modified: string
-  parentDatabaseId: number
-  id: string
-  isDraft: boolean
-  singleName: string
-  since?: number | undefined
-  refreshing?: boolean | undefined
-  preview?: boolean | undefined
-  manifestIds?: Array<string> | undefined
-}
+  previewDatabaseId: number;
+  userDatabaseId: number;
+  token: string;
+  remoteUrl: string;
+  modified: string;
+  parentDatabaseId: number;
+  id: string;
+  isDraft: boolean;
+  singleName: string;
+  since?: number | undefined;
+  refreshing?: boolean | undefined;
+  preview?: boolean | undefined;
+  manifestIds?: Array<string> | undefined;
+};
 
 type IPageNode = {
-  path: string
-}
+  path: string;
+};
 
-let previewQueue: PQueue
+let previewQueue: PQueue;
 
 function getPreviewQueue(): PQueue {
   if (!previewQueue) {
     const { previewRequestConcurrency } =
-      getStore().getState().gatsbyApi.pluginOptions.schema
+      getStore().getState().gatsbyApi.pluginOptions.schema;
 
     previewQueue = new PQueue({
       concurrency: previewRequestConcurrency,
       carryoverConcurrencyCount: true,
-    })
+    });
   }
 
-  return previewQueue
+  return previewQueue;
 }
 
 // This checks wether or not we're already currently processing a preview
 // for the passed preview id.
 function previewForIdIsAlreadyBeingProcessed(id: string): boolean {
   if (!id) {
-    return false
+    return false;
   }
 
   const existingCallbacks =
-    getStore().getState().previewStore.nodePageCreatedCallbacks
+    getStore().getState().previewStore.nodePageCreatedCallbacks;
 
-  const alreadyProcessingThisPreview = !!existingCallbacks?.[id]
+  const alreadyProcessingThisPreview = !!existingCallbacks?.[id];
 
-  return alreadyProcessingThisPreview
+  return alreadyProcessingThisPreview;
 }
 
 /**
@@ -103,52 +102,54 @@ async function writeDummyPageDataJsonIfNeeded({
   previewData,
   pageNode,
 }: {
-  previewData: IPreviewData
-  pageNode: IPageNode
+  previewData: IPreviewData;
+  pageNode: IPageNode;
 }): Promise<void> {
   if (!previewData.isDraft) {
-    return
+    return;
   }
 
   const pageDataDirectory = path.join(
     process.cwd(),
-    `public/page-data`,
+    "public/page-data",
     pageNode.path,
-  )
+  );
 
-  await fs.ensureDir(pageDataDirectory)
+  await fs.ensureDir(pageDataDirectory);
 
-  const pageDataPath = path.join(pageDataDirectory, `page-data.json`)
+  const pageDataPath = path.join(pageDataDirectory, "page-data.json");
 
-  const pageDataExists = await fs.pathExists(pageDataPath)
+  const pageDataExists = await fs.pathExists(pageDataPath);
 
   if (!pageDataExists) {
     await fs.writeJSON(pageDataPath, {
       isDraft: previewData.isDraft,
-    })
+    });
   }
 }
 
 type IOnPreviewStatusInput = {
-  status: PreviewStatusUnion
-  context?: string
-  nodeId?: string
-  passedNode?: {
-    modified?: string
-    databaseId: number
-  }
-  pageNode?: IPageNode
-  graphqlEndpoint?: string
-  error?: Error
-}
+  status: PreviewStatusUnion;
+  context?: string | undefined;
+  nodeId?: string | undefined;
+  passedNode?:
+    | {
+        modified?: string | undefined;
+        databaseId: number;
+      }
+    | undefined;
+  pageNode?: IPageNode | undefined;
+  graphqlEndpoint?: string | undefined;
+  error?: Error | undefined;
+};
 
 const createPreviewStatusCallback =
   ({
     previewData,
     reporter,
   }: {
-    previewData: IPreviewData
-    reporter: Reporter
+    previewData: IPreviewData;
+    reporter: Reporter;
   }) =>
   async ({
     passedNode,
@@ -158,16 +159,16 @@ const createPreviewStatusCallback =
     graphqlEndpoint,
     error,
   }: IOnPreviewStatusInput): Promise<void> => {
-    if (status === `PREVIEW_SUCCESS`) {
+    if (status === "PREVIEW_SUCCESS") {
       // we might need to write a dummy page-data.json so that
       // Gatsby doesn't throw 404 errors when WPGatsby tries to read this file
       // that maybe doesn't exist yet
-      await writeDummyPageDataJsonIfNeeded({ previewData, pageNode })
+      await writeDummyPageDataJsonIfNeeded({ previewData, pageNode });
     }
 
     const statusContext = error?.message
       ? `${context}\n\n${error.message}`
-      : context
+      : context;
 
     const { data } = await fetchGraphql({
       url: graphqlEndpoint,
@@ -182,7 +183,7 @@ const createPreviewStatusCallback =
       `,
       variables: {
         input: {
-          clientMutationId: `sendPreviewStatus`,
+          clientMutationId: "sendPreviewStatus",
           modified: passedNode?.modified,
           pagePath: pageNode?.path,
           parentDatabaseId:
@@ -191,28 +192,29 @@ const createPreviewStatusCallback =
           statusContext,
         },
       },
-      errorContext: `Error occurred while mutating WordPress Preview node meta.`,
+      errorContext:
+        "Error occurred while mutating WordPress Preview node meta.",
       forceReportCriticalErrors: true,
       headers: {
         WPGatsbyPreview: previewData.token,
         WPGatsbyPreviewUser: previewData.userDatabaseId,
       },
-    })
+    });
 
     if (data?.wpGatsbyRemotePreviewStatus?.success) {
       reporter.log(
         formatLogMessage(
           `Successfully sent Preview status back to WordPress post ${previewData.id} during ${context}`,
         ),
-      )
+      );
     } else {
       reporter.log(
         formatLogMessage(
           `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`,
         ),
-      )
+      );
     }
-  }
+  };
 
 /**
  * This is called and passed the result from the ActionMonitor.previewData object along with a JWT token
@@ -227,53 +229,53 @@ export async function sourcePreview({
   reporter,
   actions,
 }: {
-  previewData: IPreviewData
-  reporter: Reporter
-  actions: typeof gatsbyActions
+  previewData: IPreviewData;
+  reporter: Reporter;
+  actions: typeof gatsbyActions;
 }): Promise<void> {
   if (previewForIdIsAlreadyBeingProcessed(previewData?.id)) {
-    return
+    return;
   }
 
   const requiredProperties = [
-    `previewDatabaseId`,
-    `id`,
-    `token`,
-    `remoteUrl`,
-    `parentDatabaseId`,
-    `modified`,
-    `userDatabaseId`,
-  ]
+    "previewDatabaseId",
+    "id",
+    "token",
+    "remoteUrl",
+    "parentDatabaseId",
+    "modified",
+    "userDatabaseId",
+  ];
 
   const missingProperties = requiredProperties.filter(
-    property => !(property in previewData),
-  )
+    (property) => !(property in previewData),
+  );
 
   if (!previewData || missingProperties.length) {
     reporter.warn(
       formatLogMessage(
-        `sourcePreview was called but the required previewData properties weren't provided.`,
+        "sourcePreview was called but the required previewData properties weren't provided.",
       ),
-    )
+    );
     reporter.info(
       formatLogMessage(
         `Missing properties: \n${JSON.stringify(missingProperties, null, 2)}`,
       ),
-    )
+    );
     reporter.log(
       formatLogMessage(
         `previewData: \n${JSON.stringify(previewData, null, 2)}`,
       ),
-    )
-    return
+    );
+    return;
   }
 
-  await touchValidNodes()
+  await touchValidNodes();
 
   const sendPreviewStatus = createPreviewStatusCallback({
     previewData,
     reporter,
-  })
+  });
 
   // this callback will be invoked when the page is created/updated for this node
   // then it'll send a mutation to WPGraphQL so that WP knows the preview is ready
@@ -281,26 +283,26 @@ export async function sourcePreview({
     nodeId: previewData.id,
     modified: previewData.modified,
     sendPreviewStatus,
-  })
+  });
 
   const { node } = await fetchAndCreateSingleNode({
-    actionType: `PREVIEW`,
+    actionType: "PREVIEW",
     ...previewData,
     previewParentId: previewData.parentDatabaseId,
     isPreview: true,
-  })
+  });
 
   if (
     previewData?.manifestIds?.length &&
-    `unstable_createNodeManifest` in actions &&
+    "unstable_createNodeManifest" in actions &&
     node
   ) {
-    previewData.manifestIds.forEach(manifestId => {
+    previewData.manifestIds.forEach((manifestId) => {
       actions.unstable_createNodeManifest({
         manifestId,
         node,
-      })
-    })
+      });
+    });
   }
 }
 
@@ -310,66 +312,66 @@ export async function sourcePreview({
  * It first sources all pending preview actions, then calls sourcePreview() for each of them.
  */
 export async function sourcePreviews(helpers: GatsbyHelpers): Promise<void> {
-  const { webhookBody, reporter, actions } = helpers
+  const { webhookBody, reporter, actions } = helpers;
   const {
     debug: { preview: inPreviewDebugModeOption },
     url,
-  } = getPluginOptions()
+  } = getPluginOptions();
 
   // some versions of WPGatsby don't send a remoteUrl on every webhook.
   // if we check this for every webhookBody errors will occur!
   if (webhookBody.remoteUrl) {
     // check if we're receiving preview data fromt the right WP backend
-    const { hostname: settingsHostname } = urlUtil.parse(url)
-    const { hostname: remoteHostname } = urlUtil.parse(webhookBody.remoteUrl)
+    const { hostname: settingsHostname } = urlUtil.parse(url);
+    const { hostname: remoteHostname } = urlUtil.parse(webhookBody.remoteUrl);
 
     if (settingsHostname !== remoteHostname) {
       const sendPreviewStatus = createPreviewStatusCallback({
         previewData: webhookBody,
         reporter,
-      })
+      });
 
       await sendPreviewStatus({
-        status: `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`,
-        context: `check that the preview data came from the right URL.`,
+        status: "RECEIVED_PREVIEW_DATA_FROM_WRONG_URL",
+        context: "check that the preview data came from the right URL.",
         passedNode: {
           modified: webhookBody.modified,
           databaseId: webhookBody.parentDatabaseId,
         },
         graphqlEndpoint: webhookBody.remoteUrl,
-      })
+      });
 
       reporter.warn(
         formatLogMessage(
           `Received preview data from a different remote URL than the one specified in plugin options. Preview will not work. Please send preview requests from the WP instance configured in gatsby-config.js.\n\n ${chalk.bold(
-            `Remote URL:`,
+            "Remote URL:",
           )} ${webhookBody.remoteUrl}\n ${chalk.bold(
-            `Plugin options URL:`,
+            "Plugin options URL:",
           )} ${url}\n\n`,
         ),
-      )
+      );
 
-      return
+      return;
     }
   }
 
   const inPreviewDebugMode =
-    inPreviewDebugModeOption || process.env.WP_GATSBY_PREVIEW_DEBUG
+    inPreviewDebugModeOption || process.env.WP_GATSBY_PREVIEW_DEBUG;
 
   if (inPreviewDebugMode) {
-    reporter.info(`Sourcing previews for the following webhook:`)
-    dump(webhookBody)
+    reporter.info("Sourcing previews for the following webhook:");
+    dump(webhookBody);
   }
 
   const wpGatsbyPreviewNodeManifestsAreSupported =
     await remoteSchemaSupportsFieldNameOnTypeName({
-      typeName: `GatsbyPreviewData`,
-      fieldName: `manifestIds`,
-    })
+      typeName: "GatsbyPreviewData",
+      fieldName: "manifestIds",
+    });
 
   const previewActions = await paginatedWpNodeFetch({
-    contentTypePlural: `actionMonitorActions`,
-    nodeTypeName: `ActionMonitor`,
+    contentTypePlural: "actionMonitorActions",
+    nodeTypeName: "ActionMonitor",
     headers: {
       WPGatsbyPreview: webhookBody.token,
       WPGatsbyPreviewUser: webhookBody.userDatabaseId,
@@ -401,7 +403,7 @@ export async function sourcePreviews(helpers: GatsbyHelpers): Promise<void> {
               remoteUrl
               singleName
               userDatabaseId
-              ${wpGatsbyPreviewNodeManifestsAreSupported ? `manifestIds` : ``}
+              ${wpGatsbyPreviewNodeManifestsAreSupported ? "manifestIds" : ""}
             }
           }
           pageInfo {
@@ -411,25 +413,25 @@ export async function sourcePreviews(helpers: GatsbyHelpers): Promise<void> {
         }
       }
     `,
-  })
+  });
 
   if (!previewActions?.length) {
     if (inPreviewDebugMode) {
       reporter.info(
         `Preview for id ${webhookBody?.id} returned no action monitor actions.`,
-      )
+      );
     }
-    return
+    return;
   }
 
   if (inPreviewDebugMode) {
     reporter.info(
       `Preview for id ${webhookBody?.id} returned the following actions:`,
-    )
-    dump(previewActions)
+    );
+    dump(previewActions);
   }
 
-  const queue = getPreviewQueue()
+  const queue = getPreviewQueue();
 
   for (const { previewData } of previewActions) {
     queue.add(() =>
@@ -438,14 +440,14 @@ export async function sourcePreviews(helpers: GatsbyHelpers): Promise<void> {
         reporter,
         actions,
       }),
-    )
+    );
   }
 
-  await Promise.all([queue.onEmpty(), queue.onIdle()])
+  await Promise.all([queue.onEmpty(), queue.onIdle()]);
 
   // clean up leftover callbacks at the end to clean up anything we didn't catch elsewhere
   await invokeAndCleanupLeftoverPreviewCallbacks({
-    status: `GATSBY_PREVIEW_PROCESS_ERROR`,
-    context: `Starting sourcePreviews`,
-  })
+    status: "GATSBY_PREVIEW_PROCESS_ERROR",
+    context: "Starting sourcePreviews",
+  });
 }

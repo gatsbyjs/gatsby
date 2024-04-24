@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import semver from "semver"
+import _ from "lodash";
+import semver from "semver";
 
 // Does this experiment run for only builds
-type executingCommand = "build" | "develop" | "all"
+type executingCommand = "build" | "develop" | "all";
 
 export function satisfiesSemvers(
   semverConstraints: Record<string, string>,
@@ -12,34 +12,34 @@ export function satisfiesSemvers(
   // If any are false, then the flag doesn't pass
   const result = _.toPairs(semverConstraints).every(
     ([packageName, semverConstraint]) => {
-      let packageVersion: string
+      let packageVersion: string;
       try {
-        packageVersion = require(`${packageName}/package.json`).version
+        packageVersion = require(`${packageName}/package.json`).version;
       } catch (e) {
-        return false
+        return false;
       }
 
       // We care if the semver check doesn't pass.
       return semver.satisfies(packageVersion, semverConstraint, {
         includePrerelease: true,
-      })
+      });
     },
-  )
+  );
 
-  return result
+  return result;
 }
 
-export type fitnessEnum = true | false | "OPT_IN" | "LOCKED_IN"
+export type FitnessEnum = true | false | "OPT_IN" | "LOCKED_IN";
 
 export type IFlag = {
-  name: string
-  env: string
-  description: string
-  command: executingCommand
+  name: string;
+  env: string;
+  description: string;
+  command: executingCommand;
   /**
    * Use string identifier to track enabled flag or false to disable any tracking (useful when flag becomes new defaults)
    */
-  telemetryId: string | false
+  telemetryId: string | false;
   // Heuristics for deciding if a flag is experimental:
   // - there are known bugs most people will encounter and that block being
   // able to use Gatsby normally
@@ -49,7 +49,7 @@ export type IFlag = {
   // Flags should start as experimental but once all serious known bugs are
   // resolved and ~50+ people have tested it, experimental should be set to
   // false.
-  experimental: boolean
+  experimental: boolean;
   /**
    * True means conditions for the feature are met and can be opted in by user.
    *
@@ -64,95 +64,101 @@ export type IFlag = {
    * flag from the flag list when users has the flag set in configuration
    * (avoids showing unknown flag message and shows "no longer needed" message).
    */
-  testFitness: (flag: IFlag) => fitnessEnum
+  testFitness: (flag: IFlag) => FitnessEnum;
   /**
    * Human-readable text explaining requirements for this feature to be available
    * (e.g. requires Node 14+)
    *
    * It is shown to users when testFitness() returns `false` but flag is set in gatsby-config.js
    */
-  requires?: string | undefined
-  includedFlags?: Array<string> | undefined
-  umbrellaIssue?: string | undefined
-  noCI?: boolean | undefined
-}
+  requires?: string | undefined;
+  includedFlags?: Array<string> | undefined;
+  umbrellaIssue?: string | undefined;
+  noCI?: boolean | undefined;
+};
 
 const activeFlags: Array<IFlag> = [
   {
-    name: `FAST_DEV`,
-    env: `GATSBY_EXPERIMENTAL_FAST_DEV`,
-    command: `develop`,
-    telemetryId: `FastDev`,
+    name: "FAST_DEV",
+    env: "GATSBY_EXPERIMENTAL_FAST_DEV",
+    command: "develop",
+    telemetryId: "FastDev",
     experimental: false,
-    description: `Enable all experiments aimed at improving develop server start time & develop DX.`,
-    includedFlags: [`DEV_SSR`, `PRESERVE_FILE_DOWNLOAD_CACHE`],
-    testFitness: (): fitnessEnum => true,
+    description:
+      "Enable all experiments aimed at improving develop server start time & develop DX.",
+    includedFlags: ["DEV_SSR", "PRESERVE_FILE_DOWNLOAD_CACHE"],
+    testFitness: (): FitnessEnum => true,
   },
   {
-    name: `DEV_SSR`,
-    env: `GATSBY_EXPERIMENTAL_DEV_SSR`,
-    command: `develop`,
-    telemetryId: `DevSsr`,
+    name: "DEV_SSR",
+    env: "GATSBY_EXPERIMENTAL_DEV_SSR",
+    command: "develop",
+    telemetryId: "DevSsr",
     experimental: false,
-    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
-    umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
-    testFitness: (): fitnessEnum => true,
+    description:
+      "Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.",
+    umbrellaIssue: "https://gatsby.dev/dev-ssr-feedback",
+    testFitness: (): FitnessEnum => true,
   },
   {
-    name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE`,
-    command: `all`,
-    telemetryId: `PreserveFileDownloadCache`,
+    name: "PRESERVE_FILE_DOWNLOAD_CACHE",
+    env: "GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE",
+    command: "all",
+    telemetryId: "PreserveFileDownloadCache",
     experimental: false,
-    description: `Don't delete the downloaded files cache when changing gatsby-node.js & gatsby-config.js files.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => true,
+    description:
+      "Don't delete the downloaded files cache when changing gatsby-node.js & gatsby-config.js files.",
+    umbrellaIssue: "https://gatsby.dev/cache-clearing-feedback",
+    testFitness: (): FitnessEnum => true,
   },
   {
-    name: `PARALLEL_SOURCING`,
-    env: `GATSBY_EXPERIMENTAL_PARALLEL_SOURCING`,
-    command: `all`,
-    telemetryId: `ParallelSourcing`,
+    name: "PARALLEL_SOURCING",
+    env: "GATSBY_EXPERIMENTAL_PARALLEL_SOURCING",
+    command: "all",
+    telemetryId: "ParallelSourcing",
     experimental: true,
-    description: `Run all source plugins at the same time instead of serially. For sites with multiple source plugins, this can speedup sourcing and transforming considerably.`,
-    umbrellaIssue: `https://gatsby.dev/parallel-sourcing-feedback`,
-    testFitness: (): fitnessEnum => true,
+    description:
+      "Run all source plugins at the same time instead of serially. For sites with multiple source plugins, this can speedup sourcing and transforming considerably.",
+    umbrellaIssue: "https://gatsby.dev/parallel-sourcing-feedback",
+    testFitness: (): FitnessEnum => true,
   },
   {
-    name: `DETECT_NODE_MUTATIONS`,
-    env: `GATSBY_DETECT_NODE_MUTATIONS`,
-    command: `all`,
-    telemetryId: `DetectNodeMutations`,
-    description: `Diagnostic mode to log any attempts to mutate node directly. Helpful when debugging missing data problems. See https://gatsby.dev/debugging-missing-data for more details.`,
+    name: "DETECT_NODE_MUTATIONS",
+    env: "GATSBY_DETECT_NODE_MUTATIONS",
+    command: "all",
+    telemetryId: "DetectNodeMutations",
+    description:
+      "Diagnostic mode to log any attempts to mutate node directly. Helpful when debugging missing data problems. See https://gatsby.dev/debugging-missing-data for more details.",
     experimental: false,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): FitnessEnum => true,
   },
   {
-    name: `PARTIAL_HYDRATION`,
-    env: `GATSBY_PARTIAL_HYDRATION`,
-    command: `build`,
-    telemetryId: `PartialHydration`,
-    description: `Enable partial hydration to reduce Total Blocking Time and Time To Interactive `,
-    umbrellaIssue: `https://gatsby.dev/partial-hydration-umbrella-issue`,
+    name: "PARTIAL_HYDRATION",
+    env: "GATSBY_PARTIAL_HYDRATION",
+    command: "build",
+    telemetryId: "PartialHydration",
+    description:
+      "Enable partial hydration to reduce Total Blocking Time and Time To Interactive ",
+    umbrellaIssue: "https://gatsby.dev/partial-hydration-umbrella-issue",
     experimental: true,
-    testFitness: (): fitnessEnum => {
+    testFitness: (): FitnessEnum => {
       const v18Constraint = {
-        react: `>=18.0.0`,
-      }
+        react: ">=18.0.0",
+      };
       const v0Constraint = {
-        react: `^0.0.0`,
-      }
+        react: "^0.0.0",
+      };
 
       return (
-        _CFLAGS_.GATSBY_MAJOR === `5` &&
+        _CFLAGS_.GATSBY_MAJOR === "5" &&
         (satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint))
-      )
+      );
     },
     requires:
       Number(_CFLAGS_.GATSBY_MAJOR) < 5
-        ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
-        : `Partial hydration requires React 18+ to work.`,
+        ? "Partial hydration is only available in Gatsby V5. Please upgrade Gatsby."
+        : "Partial hydration requires React 18+ to work.",
   },
-]
+];
 
-export default activeFlags
+export default activeFlags;

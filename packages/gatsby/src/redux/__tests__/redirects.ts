@@ -1,7 +1,7 @@
-import { actions } from "../actions"
-import { store } from "../index"
+import { actions } from "../actions";
+import { store } from "../index";
 
-jest.mock(`../index`, () => {
+jest.mock("../index", () => {
   return {
     store: {
       getState: jest.fn(),
@@ -10,133 +10,133 @@ jest.mock(`../index`, () => {
     emitter: {
       on: jest.fn(),
     },
-  }
-})
+  };
+});
 
 const protocolArr = [
-  [`https`, `https://example.com`],
-  [`http`, `http://example.com`],
-  [`//`, `//example.com`],
-  [`ftp`, `ftp://example.com`],
-  [`mailto`, `mailto:example@email.com`],
-]
+  ["https", "https://example.com"],
+  ["http", "http://example.com"],
+  ["//", "//example.com"],
+  ["ftp", "ftp://example.com"],
+  ["mailto", "mailto:example@email.com"],
+];
 
-describe(`Add redirects`, () => {
+describe("Add redirects", () => {
   beforeEach(() => {
-    ;(store.getState as jest.Mock).mockReturnValue({
+    (store.getState as jest.Mock).mockReturnValue({
       program: { pathPrefixs: false },
-    })
-  })
+    });
+  });
 
-  it(`allows you to add redirects`, () => {
+  it("allows you to add redirects", () => {
     const action = actions.createRedirect({
-      fromPath: `/old/hello-world`,
-      toPath: `/new/hello-world`,
-    })
+      fromPath: "/old/hello-world",
+      toPath: "/new/hello-world",
+    });
 
-    expect(action).toMatchSnapshot()
-  })
-  it(`create redirects as permanent`, () => {
+    expect(action).toMatchSnapshot();
+  });
+  it("create redirects as permanent", () => {
     const action = actions.createRedirect({
-      fromPath: `/old/hello-world`,
-      toPath: `/new/hello-world`,
+      fromPath: "/old/hello-world",
+      toPath: "/new/hello-world",
       isPermanent: true,
-    })
+    });
 
-    expect(action).toMatchSnapshot()
-  })
+    expect(action).toMatchSnapshot();
+  });
 
-  it(`creates redirects with in-browser redirect option`, () => {
+  it("creates redirects with in-browser redirect option", () => {
     const action = actions.createRedirect({
-      fromPath: `/old/hello-world`,
-      toPath: `/new/hello-world`,
+      fromPath: "/old/hello-world",
+      toPath: "/new/hello-world",
       redirectInBrowser: true,
-    })
+    });
 
-    expect(action).toMatchSnapshot()
-  })
+    expect(action).toMatchSnapshot();
+  });
 
   protocolArr.forEach(([protocol, toPath], index) => {
     it(`creates redirects to the URL starts with ${protocol}`, () => {
       const action = actions.createRedirect({
         fromPath: `/old/hello-world-${index}`,
         toPath,
-      })
+      });
 
-      expect(action).toMatchSnapshot()
-    })
-  })
+      expect(action).toMatchSnapshot();
+    });
+  });
 
   protocolArr.forEach(([protocol, fromPath], index) => {
     it(`creates redirects from the URL starts with ${protocol}`, () => {
       const action = actions.createRedirect({
         fromPath,
         toPath: `/new/hello-world-${index}`,
-      })
+      });
 
-      expect(action).toMatchSnapshot()
-    })
-  })
-})
+      expect(action).toMatchSnapshot();
+    });
+  });
+});
 
-describe(`Add redirects with path prefixs`, () => {
+describe("Add redirects with path prefixs", () => {
   beforeEach(() => {
-    ;(store.getState as jest.Mock).mockReturnValue({
+    (store.getState as jest.Mock).mockReturnValue({
       program: {
         prefixPaths: true,
       },
       config: {
-        pathPrefix: `/blog`,
+        pathPrefix: "/blog",
       },
-    })
-  })
-  it(`allows you to add redirects`, () => {
+    });
+  });
+  it("allows you to add redirects", () => {
     const action = actions.createRedirect({
-      fromPath: `/old/hello-world`,
-      toPath: `/new/hello-world`,
-    })
+      fromPath: "/old/hello-world",
+      toPath: "/new/hello-world",
+    });
 
-    expect(action).toMatchSnapshot()
-  })
-  it(`create redirects as permanent`, () => {
+    expect(action).toMatchSnapshot();
+  });
+  it("create redirects as permanent", () => {
     const action = actions.createRedirect({
-      fromPath: `/old/hello-world`,
-      toPath: `/new/hello-world`,
+      fromPath: "/old/hello-world",
+      toPath: "/new/hello-world",
       isPermanent: true,
-    })
+    });
 
-    expect(action).toMatchSnapshot()
-  })
+    expect(action).toMatchSnapshot();
+  });
 
-  it(`creates redirects with in-browser redirect option`, () => {
+  it("creates redirects with in-browser redirect option", () => {
     const action = actions.createRedirect({
-      fromPath: `/old/hello-world`,
-      toPath: `/new/hello-world`,
+      fromPath: "/old/hello-world",
+      toPath: "/new/hello-world",
       redirectInBrowser: true,
-    })
+    });
 
-    expect(action).toMatchSnapshot()
-  })
+    expect(action).toMatchSnapshot();
+  });
 
   protocolArr.forEach(([protocol, toPath], index) => {
     it(`creates redirects to the URL starts with ${protocol}`, () => {
       const action = actions.createRedirect({
         fromPath: `/old/hello-world-${index}`,
         toPath,
-      })
+      });
 
-      expect(action).toMatchSnapshot()
-    })
-  })
+      expect(action).toMatchSnapshot();
+    });
+  });
 
   protocolArr.forEach(([protocol, fromPath], index) => {
     it(`creates redirects from the URL starts with ${protocol}`, () => {
       const action = actions.createRedirect({
         fromPath,
         toPath: `/new/hello-world-${index}`,
-      })
+      });
 
-      expect(action).toMatchSnapshot()
-    })
-  })
-})
+      expect(action).toMatchSnapshot();
+    });
+  });
+});

@@ -1,57 +1,57 @@
-import type { Node } from "unist"
+import type { Node } from "unist";
 
-import { visit } from "unist-util-visit"
-import { createProcessor } from "@mdx-js/mdx"
-import { remarkMdxHtmlPlugin } from "../remark-mdx-html-plugin"
+import { visit } from "unist-util-visit";
+import { createProcessor } from "@mdx-js/mdx";
+import { remarkMdxHtmlPlugin } from "../remark-mdx-html-plugin";
 
 export const remarkHTMLInjector = () =>
   async function transformer(markdownAST: Node): Promise<Node> {
-    visit(markdownAST, [`root`], node => {
+    visit(markdownAST, ["root"], (node) => {
       if (Array.isArray(node.children)) {
-        node.children.push({ type: `html`, value: `<hr/>` })
+        node.children.push({ type: "html", value: "<hr/>" });
         node.children.push({
-          type: `raw`,
-          value: `<marquee direction="up">Things from the past</marquee>`,
-        })
+          type: "raw",
+          value: '<marquee direction="up">Things from the past</marquee>',
+        });
       }
-    })
-    return markdownAST
-  }
+    });
+    return markdownAST;
+  };
 
 export const remarkMDASTInjector = () =>
   async function transformer(markdownAST: Node): Promise<Node> {
-    visit(markdownAST, [`root`], node => {
+    visit(markdownAST, ["root"], (node) => {
       if (Array.isArray(node.children)) {
         node.children.push({
-          type: `link`,
-          url: `#`,
+          type: "link",
+          url: "#",
           title: null,
           children: [],
           data: {
             hProperties: {
-              "aria-label": `some permalink`,
-              class: `customClass`,
+              "aria-label": "some permalink",
+              class: "customClass",
             },
             hChildren: [
               {
-                type: `raw`,
-                value: `<img src="" alt="" />`,
+                type: "raw",
+                value: '<img src="" alt="" />',
               },
             ],
           },
-        })
+        });
       }
-    })
-    return markdownAST
-  }
+    });
+    return markdownAST;
+  };
 
-const source = `# Headline`
+const source = "# Headline";
 
-describe(`remark: support old remark plugins that add raw and html nodes`, () => {
-  it(`turn html and raw nodes into `, async () => {
+describe("remark: support old remark plugins that add raw and html nodes", () => {
+  it("turn html and raw nodes into ", async () => {
     const processor = createProcessor({
       remarkPlugins: [remarkHTMLInjector, remarkMdxHtmlPlugin],
-    })
+    });
 
     await expect(processor.process(source)).resolves.toMatchInlineSnapshot(`
             VFile {
@@ -90,21 +90,21 @@ describe(`remark: support old remark plugins that add raw and html nodes`, () =>
             export default MDXContent;
             ",
             }
-          `)
-  })
-  it(`fails when plugin is missing but remark plugins add html/raw nodes`, async () => {
+          `);
+  });
+  it("fails when plugin is missing but remark plugins add html/raw nodes", async () => {
     const processor = createProcessor({
       remarkPlugins: [remarkHTMLInjector],
-    })
+    });
 
     await expect(processor.process(source)).rejects.toMatchInlineSnapshot(
-      `[Error: Cannot handle unknown node \`raw\`]`
-    )
-  })
-  it(`turns MDAST nodes created by some gatsby-remark-* plugins into HAST nodes`, async () => {
+      "[Error: Cannot handle unknown node `raw`]",
+    );
+  });
+  it("turns MDAST nodes created by some gatsby-remark-* plugins into HAST nodes", async () => {
     const processor = createProcessor({
       remarkPlugins: [remarkMDASTInjector, remarkMdxHtmlPlugin],
-    })
+    });
 
     await expect(processor.process(source)).resolves.toMatchInlineSnapshot(`
             VFile {
@@ -144,6 +144,6 @@ describe(`remark: support old remark plugins that add raw and html nodes`, () =>
             export default MDXContent;
             ",
             }
-          `)
-  })
-})
+          `);
+  });
+});

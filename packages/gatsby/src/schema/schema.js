@@ -1,5 +1,5 @@
-const _ = require(`lodash`)
-const invariant = require(`invariant`)
+const _ = require("lodash");
+const invariant = require("invariant");
 const {
   isSpecifiedScalarType,
   isIntrospectionType,
@@ -9,7 +9,7 @@ const {
   GraphQLObjectType,
   GraphQLInterfaceType,
   GraphQLUnionType,
-} = require(`graphql`)
+} = require("graphql");
 const {
   ObjectTypeComposer,
   InterfaceTypeComposer,
@@ -17,46 +17,46 @@ const {
   InputTypeComposer,
   ScalarTypeComposer,
   EnumTypeComposer,
-} = require(`graphql-compose`)
-const { getDataStore, getNode, getNodesByType } = require(`../datastore`)
+} = require("graphql-compose");
+const { getDataStore, getNode, getNodesByType } = require("../datastore");
 
-const apiRunner = require(`../utils/api-runner-node`)
-const report = require(`gatsby-cli/lib/reporter`)
-const { addNodeInterfaceFields } = require(`./types/node-interface`)
+const apiRunner = require("../utils/api-runner-node");
+const report = require("gatsby-cli/lib/reporter");
+const { addNodeInterfaceFields } = require("./types/node-interface");
 const {
   overridableBuiltInTypeNames,
   builtInScalarTypeNames,
-} = require(`./types/built-in-types`)
-const { addInferredTypes } = require(`./infer`)
+} = require("./types/built-in-types");
+const { addInferredTypes } = require("./infer");
 const {
   addRemoteFileInterfaceFields,
-} = require(`./types/remote-file-interface`)
+} = require("./types/remote-file-interface");
 
 const {
   findOne,
   findManyPaginated,
   wrappingResolver,
   defaultResolver,
-} = require(`./resolvers`)
+} = require("./resolvers");
 const {
   processFieldExtensions,
   internalExtensionNames,
-} = require(`./extensions`)
-import { getPagination } from "./types/pagination"
+} = require("./extensions");
+import { getPagination } from "./types/pagination";
 import {
   SORTABLE_ENUM,
   getSortInput,
   getSortInputNestedObjects,
-} from "./types/sort"
-import { getFilterInput, SEARCHABLE_ENUM } from "./types/filter"
-import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders"
+} from "./types/sort";
+import { getFilterInput, SEARCHABLE_ENUM } from "./types/filter";
+import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders";
 
 const {
   isASTDocument,
   parseTypeDef,
   reportParsingError,
-} = require(`./types/type-defs`)
-const { printTypeDefinitions } = require(`./print`)
+} = require("./types/type-defs");
+const { printTypeDefinitions } = require("./print");
 
 const buildSchema = async ({
   schemaComposer,
@@ -71,7 +71,7 @@ const buildSchema = async ({
   parentSpan,
 }) => {
   // FIXME: consider removing .ready here - it is needed for various tests to pass (although probably harmless)
-  await getDataStore().ready()
+  await getDataStore().ready();
   await updateSchemaComposer({
     schemaComposer,
     types,
@@ -83,25 +83,25 @@ const buildSchema = async ({
     typeConflictReporter,
     inferenceMetadata,
     parentSpan,
-  })
+  });
   // const { printSchema } = require(`graphql`)
-  const schema = schemaComposer.buildSchema()
-  freezeTypeComposers(schemaComposer)
+  const schema = schemaComposer.buildSchema();
+  freezeTypeComposers(schemaComposer);
 
   // console.log(printSchema(schema))
-  return schema
-}
+  return schema;
+};
 
 module.exports = {
   buildSchema,
-}
+};
 
 // Workaround for https://github.com/graphql-compose/graphql-compose/issues/319
 //  FIXME: remove this when fixed in graphql-compose
 const freezeTypeComposers = (schemaComposer, excluded = new Set()) => {
-  Array.from(schemaComposer.values()).forEach(tc => {
+  Array.from(schemaComposer.values()).forEach((tc) => {
     const isCompositeTC =
-      tc instanceof ObjectTypeComposer || tc instanceof InterfaceTypeComposer
+      tc instanceof ObjectTypeComposer || tc instanceof InterfaceTypeComposer;
 
     if (isCompositeTC && !excluded.has(tc.getTypeName())) {
       // typeComposer.getType() actually mutates the underlying GraphQL type
@@ -109,11 +109,11 @@ const freezeTypeComposers = (schemaComposer, excluded = new Set()) => {
       //   It causes continuous redundant field re-definitions when running queries
       //   (affects performance significantly).
       //   Prevent the mutation and "freeze" the type:
-      const type = tc.getType()
-      tc.getType = () => type
+      const type = tc.getType();
+      tc.getType = () => type;
     }
-  })
-}
+  });
+};
 
 const updateSchemaComposer = async ({
   schemaComposer,
@@ -127,76 +127,79 @@ const updateSchemaComposer = async ({
   inferenceMetadata,
   parentSpan,
 }) => {
-  let activity = report.phantomActivity(`Add explicit types`, {
+  let activity = report.phantomActivity("Add explicit types", {
     parentSpan: parentSpan,
-  })
-  activity.start()
-  await addTypes({ schemaComposer, parentSpan: activity.span, types })
-  activity.end()
+  });
+  activity.start();
+  await addTypes({ schemaComposer, parentSpan: activity.span, types });
+  activity.end();
 
-  activity = report.phantomActivity(`Add inferred types`, {
+  activity = report.phantomActivity("Add inferred types", {
     parentSpan: parentSpan,
-  })
-  activity.start()
+  });
+  activity.start();
   await addInferredTypes({
     schemaComposer,
     typeConflictReporter,
     typeMapping,
     inferenceMetadata,
     parentSpan: activity.span,
-  })
+  });
   addInferredChildOfExtensions({
     schemaComposer,
-  })
-  activity.end()
+  });
+  activity.end();
 
-  activity = report.phantomActivity(`Processing types`, {
+  activity = report.phantomActivity("Processing types", {
     parentSpan: parentSpan,
-  })
-  activity.start()
+  });
+  activity.start();
   if (!process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE) {
     await printTypeDefinitions({
       config: printConfig,
       schemaComposer,
       parentSpan: activity.span,
-    })
+    });
     if (enginePrintConfig) {
       // make sure to print schema that will be used when bundling graphql-engine
       await printTypeDefinitions({
         config: enginePrintConfig,
         schemaComposer,
         parentSpan: activity.span,
-      })
+      });
     }
   }
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     parentSpan: activity.span,
-  })
+  });
   await addConvenienceChildrenFields({
     schemaComposer,
     parentSpan: activity.span,
-  })
+  });
   await Promise.all(
-    Array.from(new Set(schemaComposer.values())).map(typeComposer =>
+    Array.from(new Set(schemaComposer.values())).map((typeComposer) =>
       processTypeComposer({
         schemaComposer,
         typeComposer,
         fieldExtensions,
         parentSpan: activity.span,
-      })
-    )
-  )
-  checkQueryableInterfaces({ schemaComposer, parentSpan: activity.span })
+      }),
+    ),
+  );
+  checkQueryableInterfaces({ schemaComposer, parentSpan: activity.span });
   await addThirdPartySchemas({
     schemaComposer,
     thirdPartySchemas,
     parentSpan: activity.span,
-  })
-  await addCustomResolveFunctions({ schemaComposer, parentSpan: activity.span })
-  attachTracingResolver({ schemaComposer, parentSpan: activity.span })
-  activity.end()
-}
+  });
+  await addCustomResolveFunctions({
+    schemaComposer,
+    parentSpan: activity.span,
+  });
+  attachTracingResolver({ schemaComposer, parentSpan: activity.span });
+  activity.end();
+};
 
 const processTypeComposer = async ({
   schemaComposer,
@@ -210,28 +213,32 @@ const processTypeComposer = async ({
       typeComposer,
       fieldExtensions,
       parentSpan,
-    })
+    });
 
-    if (typeComposer.hasInterface(`Node`)) {
-      await addNodeInterfaceFields({ schemaComposer, typeComposer })
+    if (typeComposer.hasInterface("Node")) {
+      await addNodeInterfaceFields({ schemaComposer, typeComposer });
     }
 
-    if (typeComposer.hasInterface(`RemoteFile`)) {
-      addRemoteFileInterfaceFields(schemaComposer, typeComposer)
+    if (typeComposer.hasInterface("RemoteFile")) {
+      addRemoteFileInterfaceFields(schemaComposer, typeComposer);
     }
 
     await determineSearchableFields({
       schemaComposer,
       typeComposer,
       parentSpan,
-    })
+    });
 
-    if (typeComposer.hasInterface(`Node`)) {
-      await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
+    if (typeComposer.hasInterface("Node")) {
+      await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan });
     }
   } else if (typeComposer instanceof InterfaceTypeComposer) {
     if (isNodeInterface(typeComposer)) {
-      await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
+      await addNodeInterfaceFields({
+        schemaComposer,
+        typeComposer,
+        parentSpan,
+      });
 
       // We only process field extensions for queryable Node interfaces, so we get
       // the input args on the root query type, e.g. `formatString` etc. for `dateformat`
@@ -240,33 +247,33 @@ const processTypeComposer = async ({
         typeComposer,
         fieldExtensions,
         parentSpan,
-      })
+      });
       await determineSearchableFields({
         schemaComposer,
         typeComposer,
         parentSpan,
-      })
-      await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
+      });
+      await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan });
     }
   }
-}
+};
 
 const fieldNames = {
-  query: typeName => _.camelCase(typeName),
-  queryAll: typeName => _.camelCase(`all ${typeName}`),
-  convenienceChild: typeName => _.camelCase(`child ${typeName}`),
-  convenienceChildren: typeName => _.camelCase(`children ${typeName}`),
-}
+  query: (typeName) => _.camelCase(typeName),
+  queryAll: (typeName) => _.camelCase(`all ${typeName}`),
+  convenienceChild: (typeName) => _.camelCase(`child ${typeName}`),
+  convenienceChildren: (typeName) => _.camelCase(`children ${typeName}`),
+};
 
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(({ typeOrTypeDef, plugin }) => {
-    if (typeof typeOrTypeDef === `string`) {
-      typeOrTypeDef = parseTypeDef(typeOrTypeDef)
+    if (typeof typeOrTypeDef === "string") {
+      typeOrTypeDef = parseTypeDef(typeOrTypeDef);
     }
 
     if (isASTDocument(typeOrTypeDef)) {
-      let parsedTypes
-      const createdFrom = `sdl`
+      let parsedTypes;
+      const createdFrom = "sdl";
       try {
         parsedTypes = parseTypes({
           doc: typeOrTypeDef,
@@ -274,33 +281,33 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
           createdFrom,
           schemaComposer,
           parentSpan,
-        })
+        });
       } catch (error) {
-        reportParsingError(error)
-        return
+        reportParsingError(error);
+        return;
       }
-      parsedTypes.forEach(type => {
+      parsedTypes.forEach((type) => {
         processAddedType({
           schemaComposer,
           type,
           parentSpan,
           createdFrom,
           plugin,
-        })
-      })
+        });
+      });
     } else if (isGatsbyType(typeOrTypeDef)) {
       const type = createTypeComposerFromGatsbyType({
         schemaComposer,
         type: typeOrTypeDef,
         parentSpan,
-      })
+      });
 
       if (type) {
-        const typeName = type.getTypeName()
-        const createdFrom = `typeBuilder`
-        checkIsAllowedTypeName(typeName)
+        const typeName = type.getTypeName();
+        const createdFrom = "typeBuilder";
+        checkIsAllowedTypeName(typeName);
         if (schemaComposer.has(typeName)) {
-          const typeComposer = schemaComposer.get(typeName)
+          const typeComposer = schemaComposer.get(typeName);
           mergeTypes({
             schemaComposer,
             typeComposer,
@@ -308,7 +315,7 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
             plugin,
             createdFrom,
             parentSpan,
-          })
+          });
         } else {
           processAddedType({
             schemaComposer,
@@ -316,15 +323,15 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
             parentSpan,
             createdFrom,
             plugin,
-          })
+          });
         }
       }
     } else {
-      const typeName = typeOrTypeDef.name
-      const createdFrom = `graphql-js`
-      checkIsAllowedTypeName(typeName)
+      const typeName = typeOrTypeDef.name;
+      const createdFrom = "graphql-js";
+      checkIsAllowedTypeName(typeName);
       if (schemaComposer.has(typeName)) {
-        const typeComposer = schemaComposer.get(typeName)
+        const typeComposer = schemaComposer.get(typeName);
         mergeTypes({
           schemaComposer,
           typeComposer,
@@ -332,7 +339,7 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
           plugin,
           createdFrom,
           parentSpan,
-        })
+        });
       } else {
         processAddedType({
           schemaComposer,
@@ -340,11 +347,11 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
           parentSpan,
           createdFrom,
           plugin,
-        })
+        });
       }
     }
-  })
-}
+  });
+};
 
 const mergeTypes = ({
   schemaComposer,
@@ -356,16 +363,16 @@ const mergeTypes = ({
 }) => {
   // The merge is considered safe when a user or a plugin owning the type extend this type
   // TODO: add proper conflicts detection and reporting (on the field level)
-  const typeOwner = typeComposer.getExtension(`plugin`)
+  const typeOwner = typeComposer.getExtension("plugin");
   const isOverridableBuiltInType =
-    !typeOwner && overridableBuiltInTypeNames.has(typeComposer.getTypeName())
+    !typeOwner && overridableBuiltInTypeNames.has(typeComposer.getTypeName());
 
   const isSafeMerge =
     !plugin ||
-    plugin.name === `default-site-plugin` ||
+    plugin.name === "default-site-plugin" ||
     plugin.name === typeOwner ||
-    typeComposer.hasExtension(`isPlaceholder`) ||
-    isOverridableBuiltInType
+    typeComposer.hasExtension("isPlaceholder") ||
+    isOverridableBuiltInType;
 
   if (!isSafeMerge) {
     if (typeOwner) {
@@ -373,14 +380,14 @@ const mergeTypes = ({
         `Plugin \`${plugin.name}\` has customized the GraphQL type ` +
           `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
           `by the plugin \`${typeOwner}\`. ` +
-          `This could potentially cause conflicts.`
-      )
+          "This could potentially cause conflicts.",
+      );
     } else {
       report.warn(
         `Plugin \`${plugin.name}\` has customized the built-in Gatsby GraphQL type ` +
           `\`${typeComposer.getTypeName()}\`. ` +
-          `This is allowed, but could potentially cause conflicts.`
-      )
+          "This is allowed, but could potentially cause conflicts.",
+      );
     }
   }
 
@@ -390,8 +397,8 @@ const mergeTypes = ({
     type instanceof GraphQLObjectType ||
     type instanceof GraphQLInterfaceType
   ) {
-    mergeFields({ typeComposer, fields: type.getFields() })
-    type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
+    mergeFields({ typeComposer, fields: type.getFields() });
+    type.getInterfaces().forEach((iface) => typeComposer.addInterface(iface));
   }
 
   if (
@@ -400,15 +407,15 @@ const mergeTypes = ({
     type instanceof GraphQLUnionType ||
     type instanceof UnionTypeComposer
   ) {
-    mergeResolveType({ typeComposer, type })
+    mergeResolveType({ typeComposer, type });
   }
 
-  let extensions = {}
+  let extensions = {};
   if (isNamedTypeComposer(type)) {
-    if (createdFrom === `sdl`) {
-      extensions = convertDirectivesToExtensions(type, type.getDirectives())
+    if (createdFrom === "sdl") {
+      extensions = convertDirectivesToExtensions(type, type.getDirectives());
     } else {
-      typeComposer.extendExtensions(type.getExtensions())
+      typeComposer.extendExtensions(type.getExtensions());
     }
   }
 
@@ -418,35 +425,29 @@ const mergeTypes = ({
     extensions,
     plugin,
     createdFrom,
-  })
+  });
 
-  return true
-}
+  return true;
+};
 
-const processAddedType = ({
-  schemaComposer,
-  type,
-  parentSpan,
-  createdFrom,
-  plugin,
-}) => {
-  const typeName = schemaComposer.add(type)
-  const typeComposer = schemaComposer.get(typeName)
+function processAddedType({ schemaComposer, type, createdFrom, plugin }) {
+  const typeName = schemaComposer.add(type);
+  const typeComposer = schemaComposer.get(typeName);
   if (
     typeComposer instanceof InterfaceTypeComposer ||
     typeComposer instanceof UnionTypeComposer
   ) {
     if (!typeComposer.getResolveType()) {
-      typeComposer.setResolveType(node => node.internal.type)
+      typeComposer.setResolveType((node) => node.internal.type);
     }
   }
-  schemaComposer.addSchemaMustHaveType(typeComposer)
-  let extensions = {}
-  if (createdFrom === `sdl`) {
+  schemaComposer.addSchemaMustHaveType(typeComposer);
+  let extensions = {};
+  if (createdFrom === "sdl") {
     extensions = convertDirectivesToExtensions(
       typeComposer,
-      typeComposer.getDirectives()
-    )
+      typeComposer.getDirectives(),
+    );
   }
 
   addExtensions({
@@ -455,42 +456,42 @@ const processAddedType = ({
     extensions,
     plugin,
     createdFrom,
-  })
+  });
 
-  return typeComposer
+  return typeComposer;
 }
 
 /**
  * @param {import("graphql-compose").AnyTypeComposer} typeComposer
  * @param {Array<import("graphql-compose").Directive>} directives
- * @return {{infer?: boolean, mimeTypes?: { types: Array<string> }, childOf?: { types: Array<string> }, nodeInterface?: boolean}}
+ * @return {{infer?: boolean | undefined, mimeTypes?: { types: Array<string> } | undefined, childOf?: { types: Array<string> } | undefined, nodeInterface?: boolean | undefined}}
  */
 const convertDirectivesToExtensions = (typeComposer, directives) => {
-  const extensions = {}
+  const extensions = {};
   directives.forEach(({ name, args }) => {
     switch (name) {
-      case `infer`:
-      case `dontInfer`: {
-        extensions[`infer`] = name === `infer`
-        break
+      case "infer":
+      case "dontInfer": {
+        extensions["infer"] = name === "infer";
+        break;
       }
-      case `mimeTypes`:
-        extensions[`mimeTypes`] = args
-        break
-      case `childOf`:
-        extensions[`childOf`] = args
-        break
-      case `nodeInterface`:
+      case "mimeTypes":
+        extensions["mimeTypes"] = args;
+        break;
+      case "childOf":
+        extensions["childOf"] = args;
+        break;
+      case "nodeInterface":
         if (typeComposer instanceof InterfaceTypeComposer) {
-          extensions[`nodeInterface`] = true
+          extensions["nodeInterface"] = true;
         }
-        break
+        break;
       default:
     }
-  })
+  });
 
-  return extensions
-}
+  return extensions;
+};
 
 const addExtensions = ({
   schemaComposer,
@@ -499,24 +500,24 @@ const addExtensions = ({
   plugin,
   createdFrom,
 }) => {
-  typeComposer.setExtension(`createdFrom`, createdFrom)
-  typeComposer.setExtension(`plugin`, plugin ? plugin.name : null)
-  typeComposer.extendExtensions(extensions)
+  typeComposer.setExtension("createdFrom", createdFrom);
+  typeComposer.setExtension("plugin", plugin ? plugin.name : null);
+  typeComposer.extendExtensions(extensions);
 
   if (
     typeComposer instanceof InterfaceTypeComposer &&
     isNodeInterface(typeComposer)
   ) {
     const hasCorrectIdField =
-      typeComposer.hasField(`id`) &&
-      typeComposer.getFieldType(`id`).toString() === `ID!`
+      typeComposer.hasField("id") &&
+      typeComposer.getFieldType("id").toString() === "ID!";
 
     if (!hasCorrectIdField) {
       report.panic(
-        `Interfaces with the \`nodeInterface\` extension must have a field ` +
-          `\`id\` of type \`ID!\`. Check the type definition of ` +
-          `\`${typeComposer.getTypeName()}\`.`
-      )
+        "Interfaces with the `nodeInterface` extension must have a field " +
+          "`id` of type `ID!`. Check the type definition of " +
+          `\`${typeComposer.getTypeName()}\`.`,
+      );
     }
   }
 
@@ -525,19 +526,19 @@ const addExtensions = ({
     typeComposer instanceof InterfaceTypeComposer ||
     typeComposer instanceof InputTypeComposer
   ) {
-    typeComposer.getFieldNames().forEach(fieldName => {
-      typeComposer.setFieldExtension(fieldName, `createdFrom`, createdFrom)
+    typeComposer.getFieldNames().forEach((fieldName) => {
+      typeComposer.setFieldExtension(fieldName, "createdFrom", createdFrom);
       typeComposer.setFieldExtension(
         fieldName,
-        `plugin`,
-        plugin ? plugin.name : null
-      )
+        "plugin",
+        plugin ? plugin.name : null,
+      );
 
-      if (createdFrom === `sdl`) {
-        const directives = typeComposer.getFieldDirectives(fieldName)
+      if (createdFrom === "sdl") {
+        const directives = typeComposer.getFieldDirectives(fieldName);
         directives.forEach(({ name, args }) => {
-          typeComposer.setFieldExtension(fieldName, name, args)
-        })
+          typeComposer.setFieldExtension(fieldName, name, args);
+        });
       }
 
       // Validate field extension args. `graphql-compose` already checks the
@@ -545,262 +546,262 @@ const addExtensions = ({
       // extensions provided with type builders as well. Also, we warn if an
       // extension option was provided which does not exist in the field
       // extension definition.
-      const fieldExtensions = typeComposer.getFieldExtensions(fieldName)
-      const typeName = typeComposer.getTypeName()
+      const fieldExtensions = typeComposer.getFieldExtensions(fieldName);
+      const typeName = typeComposer.getTypeName();
       Object.keys(fieldExtensions)
-        .filter(name => !internalExtensionNames.includes(name))
-        .forEach(name => {
-          const args = fieldExtensions[name]
+        .filter((name) => !internalExtensionNames.includes(name))
+        .forEach((name) => {
+          const args = fieldExtensions[name];
 
-          if (!args || typeof args !== `object`) {
+          if (!args || typeof args !== "object") {
             report.error(
-              `Field extension arguments must be provided as an object. ` +
-                `Received "${args}" on \`${typeName}.${fieldName}\`.`
-            )
-            return
+              "Field extension arguments must be provided as an object. " +
+                `Received "${args}" on \`${typeName}.${fieldName}\`.`,
+            );
+            return;
           }
 
           try {
-            const definition = schemaComposer.getDirective(name)
+            const definition = schemaComposer.getDirective(name);
 
             // Handle `defaultValue` when not provided as directive
             definition.args.forEach(({ name, defaultValue }) => {
               if (args[name] === undefined && defaultValue !== undefined) {
-                args[name] = defaultValue
+                args[name] = defaultValue;
               }
-            })
+            });
 
-            Object.keys(args).forEach(arg => {
+            Object.keys(args).forEach((arg) => {
               const argumentDef = definition.args.find(
-                ({ name }) => name === arg
-              )
+                ({ name }) => name === arg,
+              );
               if (!argumentDef) {
                 report.error(
                   `Field extension \`${name}\` on \`${typeName}.${fieldName}\` ` +
-                    `has invalid argument \`${arg}\`.`
-                )
-                return
+                    `has invalid argument \`${arg}\`.`,
+                );
+                return;
               }
-              const value = args[arg]
+              const value = args[arg];
               try {
-                validate(argumentDef.type, value)
+                validate(argumentDef.type, value);
               } catch (error) {
                 report.error(
                   `Field extension \`${name}\` on \`${typeName}.${fieldName}\` ` +
                     `has argument \`${arg}\` with invalid value "${value}". ` +
-                    error.message
-                )
+                    error.message,
+                );
               }
-            })
+            });
           } catch (error) {
             report.error(
               `Field extension \`${name}\` on \`${typeName}.${fieldName}\` ` +
-                `is not available.`
-            )
+                "is not available.",
+            );
           }
-        })
-    })
+        });
+    });
   }
 
-  return typeComposer
-}
+  return typeComposer;
+};
 
-const checkIsAllowedTypeName = name => {
+const checkIsAllowedTypeName = (name) => {
   invariant(
-    name !== `Node`,
-    `The GraphQL type \`Node\` is reserved for internal use.`
-  )
+    name !== "Node",
+    "The GraphQL type `Node` is reserved for internal use.",
+  );
   invariant(
-    !name.endsWith(`FilterInput`) && !name.endsWith(`SortInput`),
-    `GraphQL type names ending with "FilterInput" or "SortInput" are ` +
-      `reserved for internal use. Please rename \`${name}\`.`
-  )
+    !name.endsWith("FilterInput") && !name.endsWith("SortInput"),
+    'GraphQL type names ending with "FilterInput" or "SortInput" are ' +
+      `reserved for internal use. Please rename \`${name}\`.`,
+  );
   invariant(
     !builtInScalarTypeNames.includes(name),
     `The GraphQL type \`${name}\` is reserved for internal use by ` +
-      `built-in scalar types.`
-  )
-  assertValidName(name)
-}
+      "built-in scalar types.",
+  );
+  assertValidName(name);
+};
 
 const createTypeComposerFromGatsbyType = ({
   schemaComposer,
   type,
   parentSpan,
 }) => {
-  let typeComposer
+  let typeComposer;
   switch (type.kind) {
     case GatsbyGraphQLTypeKind.OBJECT: {
       typeComposer = ObjectTypeComposer.createTemp({
         ...type.config,
         fields: () =>
           schemaComposer.typeMapper.convertOutputFieldConfigMap(
-            type.config.fields
+            type.config.fields,
           ),
         interfaces: () => {
           if (type.config.interfaces) {
-            return type.config.interfaces.map(iface => {
-              if (typeof iface === `string`) {
+            return type.config.interfaces.map((iface) => {
+              if (typeof iface === "string") {
                 // Sadly, graphql-compose runs this function too early - before we have
                 // all of those interfaces actually created in the schema, so have to create
                 // a temporary placeholder composer :/
                 if (!schemaComposer.has(iface)) {
-                  const tmpComposer = schemaComposer.createInterfaceTC(iface)
-                  tmpComposer.setExtension(`isPlaceholder`, true)
-                  return tmpComposer
+                  const tmpComposer = schemaComposer.createInterfaceTC(iface);
+                  tmpComposer.setExtension("isPlaceholder", true);
+                  return tmpComposer;
                 }
-                return schemaComposer.getIFTC(iface)
+                return schemaComposer.getIFTC(iface);
               } else {
-                return iface
+                return iface;
               }
-            })
+            });
           } else {
-            return []
+            return [];
           }
         },
-      })
-      break
+      });
+      break;
     }
     case GatsbyGraphQLTypeKind.INPUT_OBJECT: {
       typeComposer = InputTypeComposer.createTemp({
         ...type.config,
         fields: schemaComposer.typeMapper.convertInputFieldConfigMap(
-          type.config.fields
+          type.config.fields,
         ),
-      })
-      break
+      });
+      break;
     }
     case GatsbyGraphQLTypeKind.UNION: {
       typeComposer = UnionTypeComposer.createTemp({
         ...type.config,
         types: () => {
           if (type.config.types) {
-            return type.config.types.map(typeName => {
+            return type.config.types.map((typeName) => {
               if (!schemaComposer.has(typeName)) {
                 // Sadly, graphql-compose runs this function too early - before we have
                 // all of those types actually created in the schema, so have to create
                 // a temporary placeholder composer :/
-                const tmpComposer = schemaComposer.createObjectTC(typeName)
-                tmpComposer.setExtension(`isPlaceholder`, true)
-                return tmpComposer
+                const tmpComposer = schemaComposer.createObjectTC(typeName);
+                tmpComposer.setExtension("isPlaceholder", true);
+                return tmpComposer;
               }
-              return schemaComposer.getOTC(typeName)
-            })
+              return schemaComposer.getOTC(typeName);
+            });
           } else {
-            return []
+            return [];
           }
         },
-      })
-      break
+      });
+      break;
     }
     case GatsbyGraphQLTypeKind.INTERFACE: {
       typeComposer = InterfaceTypeComposer.createTemp({
         ...type.config,
         fields: () =>
           schemaComposer.typeMapper.convertOutputFieldConfigMap(
-            type.config.fields
+            type.config.fields,
           ),
         interfaces: () => {
           if (type.config.interfaces) {
-            return type.config.interfaces.map(iface => {
-              if (typeof iface === `string`) {
+            return type.config.interfaces.map((iface) => {
+              if (typeof iface === "string") {
                 // Sadly, graphql-compose runs this function too early - before we have
                 // all of those interfaces actually created in the schema, so have to create
                 // a temporary placeholder composer :/
                 if (!schemaComposer.has(iface)) {
-                  const tmpComposer = schemaComposer.createInterfaceTC(iface)
-                  tmpComposer.setExtension(`isPlaceholder`, true)
-                  return tmpComposer
+                  const tmpComposer = schemaComposer.createInterfaceTC(iface);
+                  tmpComposer.setExtension("isPlaceholder", true);
+                  return tmpComposer;
                 }
-                return schemaComposer.getIFTC(iface)
+                return schemaComposer.getIFTC(iface);
               } else {
-                return iface
+                return iface;
               }
-            })
+            });
           } else {
-            return []
+            return [];
           }
         },
-      })
-      break
+      });
+      break;
     }
     case GatsbyGraphQLTypeKind.ENUM: {
-      typeComposer = EnumTypeComposer.createTemp(type.config)
-      break
+      typeComposer = EnumTypeComposer.createTemp(type.config);
+      break;
     }
     case GatsbyGraphQLTypeKind.SCALAR: {
-      typeComposer = ScalarTypeComposer.createTemp(type.config)
-      break
+      typeComposer = ScalarTypeComposer.createTemp(type.config);
+      break;
     }
     default: {
-      report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
-      typeComposer = null
+      report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`);
+      typeComposer = null;
     }
   }
   if (typeComposer) {
     // Workaround for https://github.com/graphql-compose/graphql-compose/issues/311
-    typeComposer.schemaComposer = schemaComposer
+    typeComposer.schemaComposer = schemaComposer;
   }
-  return typeComposer
-}
+  return typeComposer;
+};
 
 const addSetFieldsOnGraphQLNodeTypeFields = ({ schemaComposer, parentSpan }) =>
   Promise.all(
-    Array.from(schemaComposer.values()).map(async tc => {
-      if (tc instanceof ObjectTypeComposer && tc.hasInterface(`Node`)) {
-        const typeName = tc.getTypeName()
-        const result = await apiRunner(`setFieldsOnGraphQLNodeType`, {
+    Array.from(schemaComposer.values()).map(async (tc) => {
+      if (tc instanceof ObjectTypeComposer && tc.hasInterface("Node")) {
+        const typeName = tc.getTypeName();
+        const result = await apiRunner("setFieldsOnGraphQLNodeType", {
           type: {
             name: typeName,
             get nodes() {
               // TODO STRICT_MODE: return iterator instead of array
-              return getNodesByType(typeName)
+              return getNodesByType(typeName);
             },
           },
-          traceId: `initial-setFieldsOnGraphQLNodeType`,
+          traceId: "initial-setFieldsOnGraphQLNodeType",
           parentSpan,
-        })
+        });
         if (result) {
           // NOTE: `setFieldsOnGraphQLNodeType` only allows setting
           // nested fields with a path as property name, i.e.
           // `{ 'frontmatter.published': 'Boolean' }`, but not in the form
           // `{ frontmatter: { published: 'Boolean' }}`
-          result.forEach(fields => tc.addNestedFields(fields))
+          result.forEach((fields) => tc.addNestedFields(fields));
         }
       }
-    })
-  )
+    }),
+  );
 
 const addThirdPartySchemas = ({
   schemaComposer,
   thirdPartySchemas,
   parentSpan,
 }) => {
-  thirdPartySchemas.forEach(schema => {
-    const schemaQueryType = schema.getQueryType()
-    const queryTC = schemaComposer.createTempTC(schemaQueryType)
+  thirdPartySchemas.forEach((schema) => {
+    const schemaQueryType = schema.getQueryType();
+    const queryTC = schemaComposer.createTempTC(schemaQueryType);
     processThirdPartyTypeFields({
       typeComposer: queryTC,
       type: schemaQueryType,
       schemaQueryType,
-    })
-    schemaComposer.Query.addFields(queryTC.getFields())
+    });
+    schemaComposer.Query.addFields(queryTC.getFields());
 
     // Explicitly add the third-party schema's types, so they can be targeted
     // in `createResolvers` API.
-    const types = schema.getTypeMap()
-    Object.keys(types).forEach(typeName => {
-      const type = types[typeName]
+    const types = schema.getTypeMap();
+    Object.keys(types).forEach((typeName) => {
+      const type = types[typeName];
       if (
         type !== schemaQueryType &&
         !isSpecifiedScalarType(type) &&
         !isIntrospectionType(type) &&
-        type.name !== `Date` &&
-        type.name !== `JSON`
+        type.name !== "Date" &&
+        type.name !== "JSON"
       ) {
         const typeHasFields =
           type instanceof GraphQLObjectType ||
-          type instanceof GraphQLInterfaceType
+          type instanceof GraphQLInterfaceType;
 
         // Workaround for an edge case typical for Relay Classic-compatible schemas.
         // For example, GitHub API contains this piece:
@@ -814,25 +815,25 @@ const addThirdPartySchemas = ({
         //   This unexpected `Query` composer messes up with our own Query type composer and produces duplicate types.
         //   The workaround is to make sure fields of the GitHub type are lazy and are evaluated only when
         //   this Query type is already replaced with our own root `Query` type (see processThirdPartyTypeFields):
-        if (typeHasFields && typeof type._fields === `object`) {
-          const fields = type._fields
-          type._fields = () => fields
+        if (typeHasFields && typeof type._fields === "object") {
+          const fields = type._fields;
+          type._fields = () => fields;
         }
         // ^^^ workaround done
-        const typeComposer = schemaComposer.createTC(type)
+        const typeComposer = schemaComposer.createTC(type);
         if (typeHasFields) {
           processThirdPartyTypeFields({
             typeComposer,
             type,
             schemaQueryType,
-          })
+          });
         }
-        typeComposer.setExtension(`createdFrom`, `thirdPartySchema`)
-        schemaComposer.addSchemaMustHaveType(typeComposer)
+        typeComposer.setExtension("createdFrom", "thirdPartySchema");
+        schemaComposer.addSchemaMustHaveType(typeComposer);
       }
-    })
-  })
-}
+    });
+  });
+};
 
 const resetOverriddenThirdPartyTypeFields = ({ typeComposer }) => {
   // The problem: createResolvers API mutates third party schema instance.
@@ -846,24 +847,27 @@ const resetOverriddenThirdPartyTypeFields = ({ typeComposer }) => {
   // TODO: the right way to fix this would be not to mutate the third party schema in
   //   the first place. But unfortunately mutation happens in the `graphql-compose`
   //   and we don't have an easy way to avoid it without major rework
-  typeComposer.getFieldNames().forEach(fieldName => {
-    const createdFrom = typeComposer.getFieldExtension(fieldName, `createdFrom`)
-    if (createdFrom === `createResolvers`) {
-      typeComposer.removeField(fieldName)
-      return
+  typeComposer.getFieldNames().forEach((fieldName) => {
+    const createdFrom = typeComposer.getFieldExtension(
+      fieldName,
+      "createdFrom",
+    );
+    if (createdFrom === "createResolvers") {
+      typeComposer.removeField(fieldName);
+      return;
     }
     const config = typeComposer.getFieldExtension(
       fieldName,
-      `originalFieldConfig`
-    )
+      "originalFieldConfig",
+    );
     if (config) {
-      typeComposer.removeField(fieldName)
+      typeComposer.removeField(fieldName);
       typeComposer.addFields({
         [fieldName]: config,
-      })
+      });
     }
-  })
-}
+  });
+};
 
 const processThirdPartyTypeFields = ({
   typeComposer,
@@ -871,55 +875,55 @@ const processThirdPartyTypeFields = ({
   schemaQueryType,
 }) => {
   // Fix for types that refer to Query. Thanks Relay Classic!
-  const fields = type.getFields()
-  Object.keys(fields).forEach(fieldName => {
+  const fields = type.getFields();
+  Object.keys(fields).forEach((fieldName) => {
     // Remove customization that we could have added via `createResolvers`
     // to make it work with schema rebuilding
-    const fieldType = String(fields[fieldName].type)
-    if (fieldType.replace(/[[\]!]/g, ``) === schemaQueryType.name) {
+    const fieldType = String(fields[fieldName].type);
+    if (fieldType.replace(/[[\]!]/g, "") === schemaQueryType.name) {
       typeComposer.extendField(fieldName, {
-        type: fieldType.replace(schemaQueryType.name, `Query`),
-      })
+        type: fieldType.replace(schemaQueryType.name, "Query"),
+      });
     }
-  })
-  resetOverriddenThirdPartyTypeFields({ typeComposer })
-}
+  });
+  resetOverriddenThirdPartyTypeFields({ typeComposer });
+};
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
-  const intermediateSchema = schemaComposer.buildSchema()
+  const intermediateSchema = schemaComposer.buildSchema();
   const createResolvers = (
     resolvers,
-    { ignoreNonexistentTypes = false } = {}
+    { ignoreNonexistentTypes = false } = {},
   ) => {
-    Object.keys(resolvers).forEach(typeName => {
-      const fields = resolvers[typeName]
+    Object.keys(resolvers).forEach((typeName) => {
+      const fields = resolvers[typeName];
       if (schemaComposer.has(typeName)) {
-        const tc = schemaComposer.getOTC(typeName)
-        Object.keys(fields).forEach(fieldName => {
-          const fieldConfig = fields[fieldName]
+        const tc = schemaComposer.getOTC(typeName);
+        Object.keys(fields).forEach((fieldName) => {
+          const fieldConfig = fields[fieldName];
           if (tc.hasField(fieldName)) {
-            const originalFieldConfig = tc.getFieldConfig(fieldName)
-            const originalTypeName = originalFieldConfig.type.toString()
-            const originalResolver = originalFieldConfig.resolve
-            let fieldTypeName
+            const originalFieldConfig = tc.getFieldConfig(fieldName);
+            const originalTypeName = originalFieldConfig.type.toString();
+            const originalResolver = originalFieldConfig.resolve;
+            let fieldTypeName;
             if (fieldConfig.type) {
               fieldTypeName = Array.isArray(fieldConfig.type)
                 ? stringifyArray(fieldConfig.type)
-                : fieldConfig.type.toString()
+                : fieldConfig.type.toString();
             }
 
             if (
               !fieldTypeName ||
-              fieldTypeName.replace(/!/g, ``) ===
-                originalTypeName.replace(/!/g, ``) ||
-              tc.getExtension(`createdFrom`) === `thirdPartySchema`
+              fieldTypeName.replace(/!/g, "") ===
+                originalTypeName.replace(/!/g, "") ||
+              tc.getExtension("createdFrom") === "thirdPartySchema"
             ) {
-              const newConfig = {}
+              const newConfig = {};
               if (fieldConfig.type) {
-                newConfig.type = fieldConfig.type
+                newConfig.type = fieldConfig.type;
               }
               if (fieldConfig.args) {
-                newConfig.args = fieldConfig.args
+                newConfig.args = fieldConfig.args;
               }
               if (fieldConfig.resolve) {
                 newConfig.resolve = (source, args, context, info) =>
@@ -927,331 +931,331 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                     ...info,
                     originalResolver:
                       originalResolver || context.defaultFieldResolver,
-                  })
+                  });
                 tc.extendFieldExtensions(fieldName, {
                   needsResolve: true,
-                })
+                });
               }
-              tc.extendField(fieldName, newConfig)
+              tc.extendField(fieldName, newConfig);
 
               // See resetOverriddenThirdPartyTypeFields for explanation
-              if (tc.getExtension(`createdFrom`) === `thirdPartySchema`) {
+              if (tc.getExtension("createdFrom") === "thirdPartySchema") {
                 tc.setFieldExtension(
                   fieldName,
-                  `originalFieldConfig`,
-                  originalFieldConfig
-                )
+                  "originalFieldConfig",
+                  originalFieldConfig,
+                );
               }
             } else if (fieldTypeName) {
               report.warn(
-                `\`createResolvers\` passed resolvers for field ` +
+                "`createResolvers` passed resolvers for field " +
                   `\`${typeName}.${fieldName}\` with type \`${fieldTypeName}\`. ` +
                   `Such a field with type \`${originalTypeName}\` already exists ` +
-                  `on the type. Use \`createTypes\` to override type fields.`
-              )
+                  "on the type. Use `createTypes` to override type fields.",
+              );
             }
           } else {
             tc.addFields({
               [fieldName]: fieldConfig,
-            })
+            });
             // See resetOverriddenThirdPartyTypeFields for explanation
-            tc.setFieldExtension(fieldName, `createdFrom`, `createResolvers`)
+            tc.setFieldExtension(fieldName, "createdFrom", "createResolvers");
           }
-        })
+        });
       } else if (!ignoreNonexistentTypes) {
         report.warn(
           `\`createResolvers\` passed resolvers for type \`${typeName}\` that ` +
-            `doesn't exist in the schema. Use \`createTypes\` to add the type ` +
-            `before adding resolvers.`
-        )
+            "doesn't exist in the schema. Use `createTypes` to add the type " +
+            "before adding resolvers.",
+        );
       }
-    })
-  }
-  await apiRunner(`createResolvers`, {
+    });
+  };
+  await apiRunner("createResolvers", {
     intermediateSchema,
     createResolvers,
-    traceId: `initial-createResolvers`,
+    traceId: "initial-createResolvers",
     parentSpan,
-  })
-}
+  });
+};
 
 function attachTracingResolver({ schemaComposer }) {
-  schemaComposer.forEach(typeComposer => {
+  schemaComposer.forEach((typeComposer) => {
     if (
       typeComposer instanceof ObjectTypeComposer ||
       typeComposer instanceof InterfaceTypeComposer
     ) {
-      typeComposer.getFieldNames().forEach(fieldName => {
-        const field = typeComposer.getField(fieldName)
-        const resolver = wrappingResolver(field.resolve || defaultResolver)
+      typeComposer.getFieldNames().forEach((fieldName) => {
+        const field = typeComposer.getField(fieldName);
+        const resolver = wrappingResolver(field.resolve || defaultResolver);
         typeComposer.extendField(fieldName, {
           resolve: resolver,
-        })
-      })
+        });
+      });
     }
-  })
+  });
 }
 
 const determineSearchableFields = ({ schemaComposer, typeComposer }) => {
-  typeComposer.getFieldNames().forEach(fieldName => {
-    const field = typeComposer.getField(fieldName)
-    const extensions = typeComposer.getFieldExtensions(fieldName)
+  typeComposer.getFieldNames().forEach((fieldName) => {
+    const field = typeComposer.getField(fieldName);
+    const extensions = typeComposer.getFieldExtensions(fieldName);
     if (field.resolve) {
       if (extensions.dateformat) {
         typeComposer.extendFieldExtensions(fieldName, {
           searchable: SEARCHABLE_ENUM.SEARCHABLE,
           sortable: SORTABLE_ENUM.SORTABLE,
           needsResolve: extensions.proxy ? true : false,
-        })
+        });
       } else if (!_.isEmpty(field.args)) {
         typeComposer.extendFieldExtensions(fieldName, {
           searchable: SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE,
           sortable: SORTABLE_ENUM.DEPRECATED_SORTABLE,
           needsResolve: true,
-        })
+        });
       } else {
         typeComposer.extendFieldExtensions(fieldName, {
           searchable: SEARCHABLE_ENUM.SEARCHABLE,
           sortable: SORTABLE_ENUM.SORTABLE,
           needsResolve: true,
-        })
+        });
       }
     } else {
       typeComposer.extendFieldExtensions(fieldName, {
         searchable: SEARCHABLE_ENUM.SEARCHABLE,
         sortable: SORTABLE_ENUM.SORTABLE,
         needsResolve: false,
-      })
+      });
     }
-  })
-}
+  });
+};
 
 const addConvenienceChildrenFields = ({ schemaComposer }) => {
-  const parentTypesToChildren = new Map()
-  const mimeTypesToChildren = new Map()
-  const typesHandlingMimeTypes = new Map()
+  const parentTypesToChildren = new Map();
+  const mimeTypesToChildren = new Map();
+  const typesHandlingMimeTypes = new Map();
 
-  schemaComposer.forEach(type => {
+  schemaComposer.forEach((type) => {
     if (
       (type instanceof ObjectTypeComposer ||
         type instanceof InterfaceTypeComposer) &&
-      type.hasExtension(`mimeTypes`)
+      type.hasExtension("mimeTypes")
     ) {
-      const { types } = type.getExtension(`mimeTypes`)
-      new Set(types).forEach(mimeType => {
+      const { types } = type.getExtension("mimeTypes");
+      new Set(types).forEach((mimeType) => {
         if (!typesHandlingMimeTypes.has(mimeType)) {
-          typesHandlingMimeTypes.set(mimeType, new Set())
+          typesHandlingMimeTypes.set(mimeType, new Set());
         }
-        typesHandlingMimeTypes.get(mimeType).add(type)
-      })
+        typesHandlingMimeTypes.get(mimeType).add(type);
+      });
     }
 
     if (
       (type instanceof ObjectTypeComposer ||
         type instanceof InterfaceTypeComposer) &&
-      type.hasExtension(`childOf`)
+      type.hasExtension("childOf")
     ) {
-      if (type instanceof ObjectTypeComposer && !type.hasInterface(`Node`)) {
+      if (type instanceof ObjectTypeComposer && !type.hasInterface("Node")) {
         report.error(
-          `The \`childOf\` extension can only be used on types that implement the \`Node\` interface.\n` +
-            `Check the type definition of \`${type.getTypeName()}\`.`
-        )
-        return
+          "The `childOf` extension can only be used on types that implement the `Node` interface.\n" +
+            `Check the type definition of \`${type.getTypeName()}\`.`,
+        );
+        return;
       }
       if (type instanceof InterfaceTypeComposer && !isNodeInterface(type)) {
         report.error(
-          `The \`childOf\` extension can only be used on types that implement the \`Node\` interface.\n` +
-            `Check the type definition of \`${type.getTypeName()}\`.`
-        )
-        return
+          "The `childOf` extension can only be used on types that implement the `Node` interface.\n" +
+            `Check the type definition of \`${type.getTypeName()}\`.`,
+        );
+        return;
       }
 
-      const { types, mimeTypes } = type.getExtension(`childOf`)
+      const { types, mimeTypes } = type.getExtension("childOf");
 
-      new Set(types).forEach(parentType => {
+      new Set(types).forEach((parentType) => {
         if (!parentTypesToChildren.has(parentType)) {
-          parentTypesToChildren.set(parentType, new Set())
+          parentTypesToChildren.set(parentType, new Set());
         }
-        parentTypesToChildren.get(parentType).add(type)
-      })
-      new Set(mimeTypes).forEach(mimeType => {
+        parentTypesToChildren.get(parentType).add(type);
+      });
+      new Set(mimeTypes).forEach((mimeType) => {
         if (!mimeTypesToChildren.has(mimeType)) {
-          mimeTypesToChildren.set(mimeType, new Set())
+          mimeTypesToChildren.set(mimeType, new Set());
         }
-        mimeTypesToChildren.get(mimeType).add(type)
-      })
+        mimeTypesToChildren.get(mimeType).add(type);
+      });
     }
-  })
+  });
 
   parentTypesToChildren.forEach((children, parent) => {
-    if (!schemaComposer.has(parent)) return
-    const typeComposer = schemaComposer.getAnyTC(parent)
+    if (!schemaComposer.has(parent)) return;
+    const typeComposer = schemaComposer.getAnyTC(parent);
     if (
       typeComposer instanceof InterfaceTypeComposer &&
       !isNodeInterface(typeComposer)
     ) {
       report.error(
-        `With the \`childOf\` extension, children fields can only be added to ` +
-          `interfaces which implement the \`Node\` interface.\n` +
-          `Check the type definition of \`${typeComposer.getTypeName()}\`.`
-      )
-      return
+        "With the `childOf` extension, children fields can only be added to " +
+          "interfaces which implement the `Node` interface.\n" +
+          `Check the type definition of \`${typeComposer.getTypeName()}\`.`,
+      );
+      return;
     }
-    children.forEach(child => {
-      typeComposer.addFields(createChildrenField(child.getTypeName()))
-      typeComposer.addFields(createChildField(child.getTypeName()))
-    })
-  })
+    children.forEach((child) => {
+      typeComposer.addFields(createChildrenField(child.getTypeName()));
+      typeComposer.addFields(createChildField(child.getTypeName()));
+    });
+  });
 
   mimeTypesToChildren.forEach((children, mimeType) => {
-    const parentTypes = typesHandlingMimeTypes.get(mimeType)
+    const parentTypes = typesHandlingMimeTypes.get(mimeType);
     if (parentTypes) {
-      parentTypes.forEach(typeComposer => {
+      parentTypes.forEach((typeComposer) => {
         if (
           typeComposer instanceof InterfaceTypeComposer &&
           !isNodeInterface(typeComposer)
         ) {
           report.error(
-            `With the \`childOf\` extension, children fields can only be added to ` +
-              `interfaces which implement the \`Node\` interface.\n` +
-              `Check the type definition of \`${typeComposer.getTypeName()}\`.`
-          )
-          return
+            "With the `childOf` extension, children fields can only be added to " +
+              "interfaces which implement the `Node` interface.\n" +
+              `Check the type definition of \`${typeComposer.getTypeName()}\`.`,
+          );
+          return;
         }
-        children.forEach(child => {
-          typeComposer.addFields(createChildrenField(child.getTypeName()))
-          typeComposer.addFields(createChildField(child.getTypeName()))
-        })
-      })
+        children.forEach((child) => {
+          typeComposer.addFields(createChildrenField(child.getTypeName()));
+          typeComposer.addFields(createChildField(child.getTypeName()));
+        });
+      });
     }
-  })
-}
+  });
+};
 
 const isExplicitChild = ({ typeComposer, childTypeComposer }) => {
-  if (!childTypeComposer.hasExtension(`childOf`)) {
-    return false
+  if (!childTypeComposer.hasExtension("childOf")) {
+    return false;
   }
-  const childOfExtension = childTypeComposer.getExtension(`childOf`)
+  const childOfExtension = childTypeComposer.getExtension("childOf");
   const { types: parentMimeTypes = [] } =
-    typeComposer.getExtension(`mimeTypes`) ?? {}
+    typeComposer.getExtension("mimeTypes") ?? {};
 
   return (
     childOfExtension?.types?.includes(typeComposer.getTypeName()) ||
-    childOfExtension?.mimeTypes?.some(mimeType =>
-      parentMimeTypes.includes(mimeType)
+    childOfExtension?.mimeTypes?.some((mimeType) =>
+      parentMimeTypes.includes(mimeType),
     )
-  )
-}
+  );
+};
 
 const addInferredChildOfExtensions = ({ schemaComposer }) => {
-  schemaComposer.forEach(typeComposer => {
+  schemaComposer.forEach((typeComposer) => {
     if (
       typeComposer instanceof ObjectTypeComposer &&
-      typeComposer.hasInterface(`Node`)
+      typeComposer.hasInterface("Node")
     ) {
       addInferredChildOfExtension({
         schemaComposer,
         typeComposer,
-      })
+      });
     }
-  })
-}
+  });
+};
 
 const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
-  const shouldInfer = typeComposer.getExtension(`infer`)
+  const shouldInfer = typeComposer.getExtension("infer");
   // With `@dontInfer`, only parent-child
   // relations explicitly set with the `@childOf` extension are added.
-  if (shouldInfer === false) return
+  if (shouldInfer === false) return;
 
-  const parentTypeName = typeComposer.getTypeName()
+  const parentTypeName = typeComposer.getTypeName();
 
   // This is expensive.
   // TODO: We should probably collect this info during inference metadata pass
-  const childNodeTypes = new Set()
+  const childNodeTypes = new Set();
   for (const node of getDataStore().iterateNodesByType(parentTypeName)) {
-    const children = (node.children || []).map(getNode)
+    const children = (node.children || []).map(getNode);
     for (const childNode of children) {
       if (childNode?.internal?.type) {
-        childNodeTypes.add(childNode.internal.type)
+        childNodeTypes.add(childNode.internal.type);
       }
     }
   }
 
-  childNodeTypes.forEach(typeName => {
-    const childTypeComposer = schemaComposer.getAnyTC(typeName)
-    let childOfExtension = childTypeComposer.getExtension(`childOf`)
+  childNodeTypes.forEach((typeName) => {
+    const childTypeComposer = schemaComposer.getAnyTC(typeName);
+    let childOfExtension = childTypeComposer.getExtension("childOf");
 
     if (isExplicitChild({ typeComposer, childTypeComposer })) {
-      return
+      return;
     }
     // Set `@childOf` extension automatically
     // This will cause convenience children fields like `childImageSharp`
     // to be added in `addConvenienceChildrenFields` method.
     // Also required for proper printing of the `@childOf` directive in the snapshot plugin
     if (!childOfExtension) {
-      childOfExtension = {}
+      childOfExtension = {};
     }
     if (!childOfExtension.types) {
-      childOfExtension.types = []
+      childOfExtension.types = [];
     }
-    childOfExtension.types.push(parentTypeName)
-    childTypeComposer.setExtension(`childOf`, childOfExtension)
-  })
-}
+    childOfExtension.types.push(parentTypeName);
+    childTypeComposer.setExtension("childOf", childOfExtension);
+  });
+};
 
-const createChildrenField = typeName => {
+const createChildrenField = (typeName) => {
   return {
     [fieldNames.convenienceChildren(typeName)]: {
       type: () => [typeName],
       description: `Returns all children nodes filtered by type ${typeName}`,
       resolve(source, args, context) {
-        const { path } = context
+        const { path } = context;
         return context.nodeModel.getNodesByIds(
           { ids: source.children, type: typeName },
-          { path }
-        )
+          { path },
+        );
       },
     },
-  }
-}
+  };
+};
 
-const createChildField = typeName => {
+const createChildField = (typeName) => {
   return {
     [fieldNames.convenienceChild(typeName)]: {
       type: () => typeName,
       description:
         `Returns the first child node of type ${typeName} ` +
-        `or null if there are no children of given type on this node`,
+        "or null if there are no children of given type on this node",
       resolve(source, args, context) {
-        const { path } = context
+        const { path } = context;
         const result = context.nodeModel.getNodesByIds(
           { ids: source.children, type: typeName },
-          { path }
-        )
+          { path },
+        );
         if (result && result.length > 0) {
-          return result[0]
+          return result[0];
         } else {
-          return null
+          return null;
         }
       },
     },
-  }
-}
+  };
+};
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   const filterInputTC = getFilterInput({
     schemaComposer,
     typeComposer,
-  })
+  });
   const paginationTC = getPagination({
     schemaComposer,
     typeComposer,
-  })
+  });
 
-  const typeName = typeComposer.getTypeName()
+  const typeName = typeComposer.getTypeName();
   // not strictly correctly, result is `npmPackage` and `allNpmPackage` from type `NPMPackage`
-  const queryName = fieldNames.query(typeName)
-  const queryNamePlural = fieldNames.queryAll(typeName)
+  const queryName = fieldNames.query(typeName);
+  const queryNamePlural = fieldNames.queryAll(typeName);
 
   schemaComposer.Query.addFields({
     [queryName]: {
@@ -1266,20 +1270,20 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       args: {
         filter: filterInputTC,
         sort:
-          _CFLAGS_.GATSBY_MAJOR === `5`
+          _CFLAGS_.GATSBY_MAJOR === "5"
             ? getSortInputNestedObjects({ schemaComposer, typeComposer })
             : getSortInput({
                 schemaComposer,
                 typeComposer,
               }),
 
-        skip: `Int`,
-        limit: `Int`,
+        skip: "Int",
+        limit: "Int",
       },
       resolve: findManyPaginated(typeName),
     },
-  }).makeFieldNonNull(queryNamePlural)
-}
+  }).makeFieldNonNull(queryNamePlural);
+};
 
 const parseTypes = ({
   doc,
@@ -1288,10 +1292,10 @@ const parseTypes = ({
   schemaComposer,
   parentSpan,
 }) => {
-  const types = []
-  doc.definitions.forEach(def => {
-    const name = def.name.value
-    checkIsAllowedTypeName(name)
+  const types = [];
+  doc.definitions.forEach((def) => {
+    const name = def.name.value;
+    checkIsAllowedTypeName(name);
 
     if (schemaComposer.has(name)) {
       // We don't check if ast.kind matches composer type, but rely
@@ -1299,24 +1303,24 @@ const parseTypes = ({
       // reported by `reportParsingError`.
 
       // Keep the original type composer around
-      const typeComposer = schemaComposer.get(name)
+      const typeComposer = schemaComposer.get(name);
 
       // After this, the parsed type composer will be registered as the composer
       // handling the type name (requires cleanup after merging, see below)
-      const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
+      const parsedType = schemaComposer.typeMapper.makeSchemaDef(def);
 
       // Merging types require implemented interfaces to already exist.
       // Depending on type creation order, interface might have not been
       // processed yet. We check if interface already exist and create
       // placeholder for it, if it doesn't exist yet.
       if (parsedType.getInterfaces) {
-        parsedType.getInterfaces().forEach(iface => {
-          const ifaceName = iface.getTypeName()
+        parsedType.getInterfaces().forEach((iface) => {
+          const ifaceName = iface.getTypeName();
           if (!schemaComposer.has(ifaceName)) {
-            const tmpComposer = schemaComposer.createInterfaceTC(ifaceName)
-            tmpComposer.setExtension(`isPlaceholder`, true)
+            const tmpComposer = schemaComposer.createInterfaceTC(ifaceName);
+            tmpComposer.setExtension("isPlaceholder", true);
           }
-        })
+        });
       }
 
       // Merge the parsed type with the original
@@ -1327,7 +1331,7 @@ const parseTypes = ({
         plugin,
         createdFrom,
         parentSpan,
-      })
+      });
 
       // Cleanup:
       // Set the original type composer (with the merged fields added)
@@ -1335,91 +1339,91 @@ const parseTypes = ({
       // `graphql-compose` doesn't make that easy 🤯
       // TODO: clean this up when this issue is fixed:
       //  https://github.com/graphql-compose/graphql-compose/issues/311
-      schemaComposer.set(typeComposer.getTypeName(), typeComposer)
-      schemaComposer.set(typeComposer._gqType, typeComposer)
-      schemaComposer.delete(parsedType._gqType)
-      schemaComposer.delete(parsedType)
+      schemaComposer.set(typeComposer.getTypeName(), typeComposer);
+      schemaComposer.set(typeComposer._gqType, typeComposer);
+      schemaComposer.delete(parsedType._gqType);
+      schemaComposer.delete(parsedType);
     } else {
-      const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
-      types.push(parsedType)
+      const parsedType = schemaComposer.typeMapper.makeSchemaDef(def);
+      types.push(parsedType);
     }
-  })
-  return types
-}
+  });
+  return types;
+};
 
-const stringifyArray = arr =>
-  `[${arr.map(item =>
-    Array.isArray(item) ? stringifyArray(item) : item.toString()
-  )}]`
+const stringifyArray = (arr) =>
+  `[${arr.map((item) =>
+    Array.isArray(item) ? stringifyArray(item) : item.toString(),
+  )}]`;
 
 // TODO: Import this directly from graphql-compose once we update to v7
-const isNamedTypeComposer = type =>
+const isNamedTypeComposer = (type) =>
   type instanceof ObjectTypeComposer ||
   type instanceof InputTypeComposer ||
   type instanceof ScalarTypeComposer ||
   type instanceof EnumTypeComposer ||
   type instanceof InterfaceTypeComposer ||
-  type instanceof UnionTypeComposer
+  type instanceof UnionTypeComposer;
 
 const validate = (type, value) => {
   if (type instanceof GraphQLNonNull) {
     if (value == null) {
-      throw new Error(`Expected non-null field value.`)
+      throw new Error("Expected non-null field value.");
     }
-    return validate(type.ofType, value)
+    return validate(type.ofType, value);
   } else if (type instanceof GraphQLList) {
     if (!Array.isArray(value)) {
-      throw new Error(`Expected array field value.`)
+      throw new Error("Expected array field value.");
     }
-    return value.map(v => validate(type.ofType, v))
+    return value.map((v) => validate(type.ofType, v));
   } else {
-    return type.parseValue(value)
+    return type.parseValue(value);
   }
-}
+};
 
-const isNodeInterface = interfaceTypeComposer =>
-  interfaceTypeComposer.hasInterface(`Node`)
+const isNodeInterface = (interfaceTypeComposer) =>
+  interfaceTypeComposer.hasInterface("Node");
 
 const checkQueryableInterfaces = ({ schemaComposer }) => {
-  const queryableInterfaces = new Set()
-  schemaComposer.forEach(type => {
+  const queryableInterfaces = new Set();
+  schemaComposer.forEach((type) => {
     if (type instanceof InterfaceTypeComposer && isNodeInterface(type)) {
-      queryableInterfaces.add(type.getTypeName())
+      queryableInterfaces.add(type.getTypeName());
     }
-  })
-  const incorrectTypes = new Set()
-  schemaComposer.forEach(type => {
+  });
+  const incorrectTypes = new Set();
+  schemaComposer.forEach((type) => {
     if (type instanceof ObjectTypeComposer) {
-      const interfaces = type.getInterfaces()
+      const interfaces = type.getInterfaces();
       if (
-        interfaces.some(iface =>
-          queryableInterfaces.has(iface.getTypeName())
+        interfaces.some((iface) =>
+          queryableInterfaces.has(iface.getTypeName()),
         ) &&
-        !type.hasInterface(`Node`)
+        !type.hasInterface("Node")
       ) {
-        incorrectTypes.add(type.getTypeName())
+        incorrectTypes.add(type.getTypeName());
       }
     }
-  })
+  });
   if (incorrectTypes.size) {
     report.panic(
-      `Types implementing queryable interfaces must also implement the \`Node\` ` +
-        `interface. Check the type definition of ` +
+      "Types implementing queryable interfaces must also implement the `Node` " +
+        "interface. Check the type definition of " +
         `${Array.from(incorrectTypes)
-          .map(t => `\`${t}\``)
-          .join(`, `)}.`
-    )
+          .map((t) => `\`${t}\``)
+          .join(", ")}.`,
+    );
   }
-}
+};
 
 const mergeFields = ({ typeComposer, fields }) =>
   Object.entries(fields).forEach(([fieldName, fieldConfig]) => {
     if (typeComposer.hasField(fieldName)) {
-      typeComposer.extendField(fieldName, fieldConfig)
+      typeComposer.extendField(fieldName, fieldConfig);
     } else {
-      typeComposer.setField(fieldName, fieldConfig)
+      typeComposer.setField(fieldName, fieldConfig);
     }
-  })
+  });
 
 const mergeResolveType = ({ typeComposer, type }) => {
   if (
@@ -1427,16 +1431,16 @@ const mergeResolveType = ({ typeComposer, type }) => {
       type instanceof GraphQLUnionType) &&
     type.resolveType
   ) {
-    typeComposer.setResolveType(type.resolveType)
+    typeComposer.setResolveType(type.resolveType);
   }
   if (
     (type instanceof InterfaceTypeComposer ||
       type instanceof UnionTypeComposer) &&
     type.getResolveType()
   ) {
-    typeComposer.setResolveType(type.getResolveType())
+    typeComposer.setResolveType(type.getResolveType());
   }
   if (!typeComposer.getResolveType()) {
-    typeComposer.setResolveType(node => node?.internal?.type)
+    typeComposer.setResolveType((node) => node?.internal?.type);
   }
-}
+};

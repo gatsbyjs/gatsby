@@ -16,10 +16,10 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    // "incremental": true,
+    // "incremental": true, // for some reason incremental breaks gatsby build
     "pretty": true,
-    // "exactOptionalPropertyTypes": true,
-    // "isolatedModules": true,
+    "exactOptionalPropertyTypes": true,
+    "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "jsx": "preserve",
     "typeRoots": ["./types", "**/node_modules/@types", "node_modules/@types"],

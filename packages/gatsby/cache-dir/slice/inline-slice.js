@@ -1,5 +1,5 @@
-import React, { useContext } from "react"
-import { SlicesMapContext, SlicesResultsContext } from "./context"
+import React, { useContext } from "react";
+import { SlicesMapContext, SlicesResultsContext } from "./context";
 
 export const InlineSlice = ({
   sliceName,
@@ -7,18 +7,18 @@ export const InlineSlice = ({
   children,
   ...sliceProps
 }) => {
-  const slicesMap = useContext(SlicesMapContext)
-  const slicesResultsMap = useContext(SlicesResultsContext)
-  const concreteSliceName = slicesMap[sliceName]
-  const slice = slicesResultsMap.get(concreteSliceName)
+  const slicesMap = useContext(SlicesMapContext);
+  const slicesResultsMap = useContext(SlicesResultsContext);
+  const concreteSliceName = slicesMap[sliceName];
+  const slice = slicesResultsMap.get(concreteSliceName);
 
   if (!slice) {
     if (allowEmpty) {
-      return null
+      return null;
     } else {
       throw new Error(
-        `Slice "${concreteSliceName}" for "${sliceName}" slot not found`
-      )
+        `Slice "${concreteSliceName}" for "${sliceName}" slot not found`,
+      );
     }
   }
 
@@ -30,5 +30,5 @@ export const InlineSlice = ({
     >
       {children}
     </slice.component>
-  )
-}
+  );
+};

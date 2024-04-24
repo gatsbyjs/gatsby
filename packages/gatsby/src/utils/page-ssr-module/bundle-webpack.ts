@@ -1,64 +1,64 @@
-import * as path from "node:path"
-import * as fs from "fs-extra"
-import webpack from "webpack"
-import mod from "module"
-import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
-import reporter from "gatsby-cli/lib/reporter"
-import type { ITemplateDetails } from "./entry"
+import * as path from "node:path";
+import * as fs from "fs-extra";
+import webpack from "webpack";
+import mod from "module";
+import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging";
+import reporter from "gatsby-cli/lib/reporter";
+import type { ITemplateDetails } from "./entry";
 
 import {
   getScriptsAndStylesForTemplate,
   readWebpackStats,
-} from "../client-assets-for-template"
-import type { IGatsbyState } from "../../redux/types"
-import { store } from "../../redux"
-import { LmdbOnCdnPath, shouldBundleDatastore } from "../engines-helpers"
+} from "../client-assets-for-template";
+import type { IGatsbyState } from "../../redux/types";
+import { store } from "../../redux";
+import { LmdbOnCdnPath, shouldBundleDatastore } from "../engines-helpers";
 
-type Reporter = typeof reporter
+type Reporter = typeof reporter;
 
-const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
-const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
-const cacheLocation = path.join(process.cwd(), `.cache`, `webpack`, `page-ssr`)
+const extensions = [".mjs", ".js", ".json", ".node", ".ts", ".tsx"];
+const outputDir = path.join(process.cwd(), ".cache", "page-ssr");
+const cacheLocation = path.join(process.cwd(), ".cache", "webpack", "page-ssr");
 
 export async function copyStaticQueriesToEngine({
   engineTemplatePaths,
   components,
   staticQueriesByTemplate,
 }: {
-  engineTemplatePaths: Set<string>
-  components: IGatsbyState["components"]
-  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
+  engineTemplatePaths: Set<string>;
+  components: IGatsbyState["components"];
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"];
 }): Promise<void> {
-  const staticQueriesToCopy = new Set<string>()
+  const staticQueriesToCopy = new Set<string>();
 
   for (const component of components.values()) {
     // figuring out needed slices for each pages using componentPath is not straightforward
     // so for now we just collect static queries for all slices + engine templates
     if (component.isSlice || engineTemplatePaths.has(component.componentPath)) {
       const staticQueryHashes =
-        staticQueriesByTemplate.get(component.componentPath) || []
+        staticQueriesByTemplate.get(component.componentPath) || [];
 
       for (const hash of staticQueryHashes) {
-        staticQueriesToCopy.add(hash)
+        staticQueriesToCopy.add(hash);
       }
     }
   }
 
-  const sourceDir = path.join(process.cwd(), `public`, `page-data`, `sq`, `d`)
-  const destDir = path.join(outputDir, `sq`)
+  const sourceDir = path.join(process.cwd(), "public", "page-data", "sq", "d");
+  const destDir = path.join(outputDir, "sq");
 
-  await fs.ensureDir(destDir)
-  await fs.emptyDir(destDir)
+  await fs.ensureDir(destDir);
+  await fs.emptyDir(destDir);
 
-  const promisesToAwait: Array<Promise<void>> = []
+  const promisesToAwait: Array<Promise<void>> = [];
   for (const hash of staticQueriesToCopy) {
-    const sourcePath = path.join(sourceDir, `${hash}.json`)
-    const destPath = path.join(destDir, `${hash}.json`)
+    const sourcePath = path.join(sourceDir, `${hash}.json`);
+    const destPath = path.join(destDir, `${hash}.json`);
 
-    promisesToAwait.push(fs.copy(sourcePath, destPath))
+    promisesToAwait.push(fs.copy(sourcePath, destPath));
   }
 
-  await Promise.all(promisesToAwait)
+  await Promise.all(promisesToAwait);
 }
 
 export async function createPageSSRBundle({
@@ -69,38 +69,38 @@ export async function createPageSSRBundle({
   reporter,
   isVerbose = false,
 }: {
-  rootDir: string
-  components: IGatsbyState["components"]
-  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
-  webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
-  reporter: Reporter
-  isVerbose?: boolean | undefined
+  rootDir: string;
+  components: IGatsbyState["components"];
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"];
+  webpackCompilationHash: IGatsbyState["webpackCompilationHash"];
+  reporter: Reporter;
+  isVerbose?: boolean | undefined;
 }): Promise<webpack.Compilation | undefined> {
-  const state = store.getState()
+  const state = store.getState();
   const pathPrefix = state.program.prefixPaths
-    ? state.config.pathPrefix ?? ``
-    : ``
-  const slicesStateObject = {}
+    ? state.config.pathPrefix ?? ""
+    : "";
+  const slicesStateObject = {};
   for (const [key, value] of state.slices) {
-    slicesStateObject[key] = value
+    slicesStateObject[key] = value;
   }
 
-  const slicesByTemplateStateObject = {}
+  const slicesByTemplateStateObject = {};
   for (const [template, records] of state.slicesByTemplate) {
-    const recordsObject = {}
+    const recordsObject = {};
     for (const path of Object.keys(records)) {
-      recordsObject[path] = records[path]
+      recordsObject[path] = records[path];
     }
 
-    slicesByTemplateStateObject[template] = recordsObject
+    slicesByTemplateStateObject[template] = recordsObject;
   }
 
-  const webpackStats = await readWebpackStats(path.join(rootDir, `public`))
+  const webpackStats = await readWebpackStats(path.join(rootDir, "public"));
 
-  const toInline: Record<string, ITemplateDetails> = {}
+  const toInline: Record<string, ITemplateDetails> = {};
   for (const pageTemplate of components.values()) {
     const staticQueryHashes =
-      staticQueriesByTemplate.get(pageTemplate.componentPath) || []
+      staticQueriesByTemplate.get(pageTemplate.componentPath) || [];
 
     toInline[pageTemplate.componentChunkName] = {
       query: pageTemplate.query,
@@ -109,25 +109,25 @@ export async function createPageSSRBundle({
         pageTemplate.componentChunkName,
         webpackStats,
       ),
-    }
+    };
   }
 
   const compiler = webpack({
-    name: `Page Engine`,
-    mode: `none`,
-    entry: path.join(__dirname, `entry.js`),
+    name: "Page Engine",
+    mode: "none",
+    entry: path.join(__dirname, "entry.js"),
     output: {
       path: outputDir,
-      filename: `index.js`,
-      libraryTarget: `commonjs`,
+      filename: "index.js",
+      libraryTarget: "commonjs",
     },
-    target: `node`,
+    target: "node",
     externalsPresets: {
       node: false,
     },
     cache: {
-      type: `filesystem`,
-      name: `page-ssr`,
+      type: "filesystem",
+      name: "page-ssr",
       cacheLocation,
       buildDependencies: {
         config: [__filename],
@@ -136,15 +136,15 @@ export async function createPageSSRBundle({
     // those are required in some runtime paths, but we don't need them
     externals: [
       /^\.\/routes/,
-      `electron`, // :shrug: `got` seems to have electron specific code path
+      "electron", // :shrug: `got` seems to have electron specific code path
       mod.builtinModules.reduce((acc, builtinModule) => {
-        if (builtinModule === `fs`) {
-          acc[builtinModule] = `global _actualFsWrapper`
+        if (builtinModule === "fs") {
+          acc[builtinModule] = "global _actualFsWrapper";
         } else {
-          acc[builtinModule] = `commonjs ${builtinModule}`
+          acc[builtinModule] = `commonjs ${builtinModule}`;
         }
 
-        return acc
+        return acc;
       }, {}),
     ],
     devtool: false,
@@ -152,7 +152,7 @@ export async function createPageSSRBundle({
       rules: [
         {
           test: /\.m?js$/,
-          type: `javascript/auto`,
+          type: "javascript/auto",
           resolve: {
             byDependency: {
               esm: {
@@ -167,15 +167,15 @@ export async function createPageSSRBundle({
           // it is recommended for Node builds to turn off AMD support
           parser: { amd: false },
           use: {
-            loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
+            loader: require.resolve("@vercel/webpack-asset-relocator-loader"),
             options: {
-              outputAssetBase: `assets`,
+              outputAssetBase: "assets",
             },
           },
         },
         {
           test: /\.txt/,
-          type: `asset/resource`,
+          type: "asset/resource",
         },
       ],
     },
@@ -183,7 +183,7 @@ export async function createPageSSRBundle({
       extensions,
       alias: {
         ".cache": `${rootDir}/.cache/`,
-        [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
+        [require.resolve("gatsby-cli/lib/reporter/loggers/ink/index.js")]:
           false,
         inquirer: false,
       },
@@ -196,85 +196,86 @@ export async function createPageSSRBundle({
         GATSBY_SLICES: JSON.stringify(slicesStateObject),
         GATSBY_SLICES_BY_TEMPLATE: JSON.stringify(slicesByTemplateStateObject),
         GATSBY_SLICES_SCRIPT: JSON.stringify(
-          _CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES
+          _CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES
             ? fs.readFileSync(
                 path.join(
                   rootDir,
-                  `public`,
-                  `_gatsby`,
-                  `slices`,
-                  `_gatsby-scripts-1.html`,
+                  "public",
+                  "_gatsby",
+                  "slices",
+                  "_gatsby-scripts-1.html",
                 ),
-                `utf-8`,
+                "utf-8",
               )
-            : ``,
+            : "",
         ),
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
+        "process.env.GATSBY_LOGGER": JSON.stringify("yurnalist"),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_SLICES": JSON.stringify(
           !!process.env.GATSBY_SLICES,
         ),
       }),
-      process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
+      process.env.GATSBY_WEBPACK_LOGGING?.includes("page-engine")
         ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)
         : false,
     ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
-  })
+  });
 
-  let IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = ``
+  let IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = "";
   if (global.__GATSBY?.imageCDNUrlGeneratorModulePath) {
     await fs.copyFile(
       global.__GATSBY.imageCDNUrlGeneratorModulePath,
-      path.join(outputDir, `image-cdn-url-generator.js`),
-    )
-    IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./image-cdn-url-generator.js`
+      path.join(outputDir, "image-cdn-url-generator.js"),
+    );
+    IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH =
+      "./image-cdn-url-generator.js";
   }
 
-  let FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = ``
+  let FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = "";
   if (global.__GATSBY?.fileCDNUrlGeneratorModulePath) {
     await fs.copyFile(
       global.__GATSBY.fileCDNUrlGeneratorModulePath,
-      path.join(outputDir, `file-cdn-url-generator.js`),
-    )
-    FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./file-cdn-url-generator.js`
+      path.join(outputDir, "file-cdn-url-generator.js"),
+    );
+    FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = "./file-cdn-url-generator.js";
   }
 
   let functionCode = await fs.readFile(
-    path.join(__dirname, `lambda.js`),
-    `utf-8`,
-  )
+    path.join(__dirname, "lambda.js"),
+    "utf-8",
+  );
 
   functionCode = functionCode
     .replaceAll(
-      `%CDN_DATASTORE_PATH%`,
+      "%CDN_DATASTORE_PATH%",
       shouldBundleDatastore()
-        ? ``
-        : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`,
+        ? ""
+        : `${state.adapter.config.deployURL ?? ""}/${LmdbOnCdnPath}`,
     )
-    .replaceAll(`%PATH_PREFIX%`, pathPrefix)
+    .replaceAll("%PATH_PREFIX%", pathPrefix)
     .replaceAll(
-      `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
+      "%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%",
       IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH,
     )
     .replaceAll(
-      `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
+      "%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%",
       FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH,
-    )
+    );
 
-  await fs.outputFile(path.join(outputDir, `lambda.js`), functionCode)
+  await fs.outputFile(path.join(outputDir, "lambda.js"), functionCode);
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       compiler.close((closeErr) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         if (closeErr) {
-          return reject(closeErr)
+          return reject(closeErr);
         }
-        return resolve(stats?.compilation)
-      })
-    })
-  })
+        return resolve(stats?.compilation);
+      });
+    });
+  });
 }

@@ -1,21 +1,21 @@
-import { BulkQuery } from "./bulk-query"
+import { BulkQuery } from "./bulk-query";
 
 export class ProductVariantsQuery extends BulkQuery {
   query(date?: Date | undefined): string {
     const publishedStatus = this.pluginOptions.salesChannel
       ? `'${encodeURIComponent(this.pluginOptions.salesChannel)}:visible'`
-      : `published`
+      : "published";
 
-    const filters = [`status:active`, `published_status:${publishedStatus}`]
+    const filters = ["status:active", `published_status:${publishedStatus}`];
     if (date) {
-      const isoDate = date.toISOString()
-      filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
+      const isoDate = date.toISOString();
+      filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`);
     }
 
     const includeLocations =
-      !!this.pluginOptions.shopifyConnections?.includes(`locations`)
+      !!this.pluginOptions.shopifyConnections?.includes("locations");
 
-    const queryString = filters.map((f) => `(${f})`).join(` AND `)
+    const queryString = filters.map((f) => `(${f})`).join(" AND ");
 
     const query = `
       {
@@ -141,8 +141,8 @@ export class ProductVariantsQuery extends BulkQuery {
           }
         }
       }
-    `
+    `;
 
-    return this.bulkOperationQuery(query)
+    return this.bulkOperationQuery(query);
   }
 }

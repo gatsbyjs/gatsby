@@ -1,14 +1,14 @@
 export function createFileToMdxCacheKey(absolutePath: string): string {
-  return `fileToMdx-${absolutePath}`
+  return `fileToMdx-${absolutePath}`;
 }
 
-const importCache: Map<string, unknown> = new Map()
+const importCache: Map<string, unknown> = new Map();
 
 export async function cachedImport<Type>(packageName: string): Promise<Type> {
   if (importCache.has(packageName)) {
-    return importCache.get(packageName) as Type
+    return importCache.get(packageName) as Type;
   }
-  const importedPackage = await import(packageName)
+  const importedPackage = await import(packageName);
 
-  return importedPackage
+  return importedPackage;
 }

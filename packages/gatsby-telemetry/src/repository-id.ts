@@ -1,139 +1,143 @@
-import path from "path"
-import { basename } from "path"
-import { createHash } from "crypto"
-import { execSync } from "child_process"
-import { readdirSync, readFileSync } from "fs"
+import path from "node:path";
+import { createHash } from "node:crypto";
+import { execSync } from "node:child_process";
+import { readdirSync, readFileSync } from "node:fs";
 
-import gitUp from "git-up"
-import { getCIName } from "gatsby-core-utils"
+import gitUp from "git-up";
+import { getCIName } from "gatsby-core-utils";
 // there are no types for git-up, so we create our own
 // based on https://github.com/IonicaBizau/git-up/blob/60e6a4ff93d50360bbb80953bfab2f82d3418900/lib/index.js#L8-L28
 const typedGitUp = gitUp as (input: string) => {
-  resource: string
-  pathname: string
+  resource: string;
+  pathname: string;
+};
+
+type IRepositoryData = {
+  provider: string;
+  owner?: string | undefined;
+  name?: string | undefined;
+};
+
+export type IRepositoryId = {
+  repositoryId: string;
+  repositoryData?: IRepositoryData | null | undefined;
+};
+
+function hash(str: string): string {
+  return createHash("sha256").update(str).digest("hex");
 }
 
-interface IRepositoryData {
-  provider: string
-  owner?: string
-  name?: string
-}
-
-export interface IRepositoryId {
-  repositoryId: string
-  repositoryData?: IRepositoryData | null
-}
-
-const hash = (str: string): string =>
-  createHash(`sha256`).update(str).digest(`hex`)
-
-export const getRepoMetadata = (url: string): IRepositoryData | null => {
+export function getRepoMetadata(url: string): IRepositoryData | null {
   try {
     // This throws for invalid urls
-    const { resource: provider, pathname } = typedGitUp(url)
+    const { resource: provider, pathname } = typedGitUp(url);
 
-    const res: IRepositoryData = { provider: hash(provider) }
+    const res: IRepositoryData = { provider: hash(provider) };
 
-    const userAndRepo = pathname.split(`/`)
+    const userAndRepo = pathname.split("/");
 
     if (userAndRepo.length >= 3) {
-      res.owner = hash(userAndRepo[1])
-      res.name = hash(userAndRepo[2].replace(`.git`, ``))
+      res.owner = hash(userAndRepo[1]);
+      res.name = hash(userAndRepo[2].replace(".git", ""));
     }
 
-    return res
+    return res;
   } catch (e) {
     // ignore
   }
-  return null
+  return null;
 }
 
-const getRepositoryIdFromPath = (): string => basename(process.cwd())
+function getRepositoryIdFromPath(): string {
+  return path.basename(process.cwd());
+}
 
-const getGitRemoteWithGit = (): IRepositoryId | null => {
+function getGitRemoteWithGit(): IRepositoryId | null {
   try {
     // we may live multiple levels in git repo
     const originBuffer = execSync(
-      `git config --local --get remote.origin.url`,
-      { timeout: 1000, stdio: `pipe`, windowsHide: true }
-    )
-    const repo = String(originBuffer).trim()
+      "git config --local --get remote.origin.url",
+      { timeout: 1000, stdio: "pipe", windowsHide: true },
+    );
+    const repo = String(originBuffer).trim();
     if (repo) {
       return {
         repositoryId: `git:${hash(repo)}`,
         repositoryData: getRepoMetadata(repo),
-      }
+      };
     }
   } catch (e) {
     // ignore
   }
-  return null
+  return null;
 }
 
-const getRepositoryFromNetlifyEnv = (): IRepositoryId | null => {
+function getRepositoryFromNetlifyEnv(): IRepositoryId | null {
   if (process.env.NETLIFY) {
     try {
-      const url = process.env.REPOSITORY_URL!
-      const repoPart = url.split(`@`)[1]
+      const url = process.env.REPOSITORY_URL!;
+      const repoPart = url.split("@")[1];
       if (repoPart) {
         return {
           repositoryId: `git:${hash(repoPart)}`,
           repositoryData: getRepoMetadata(url),
-        }
+        };
       }
     } catch (e) {
       // ignore
     }
   }
-  return null
+  return null;
 }
 
 function getRepositoryFromHerokuEnv(): IRepositoryId | null {
-  if (getCIName() !== `Heroku`) {
-    return null
+  if (getCIName() !== "Heroku") {
+    return null;
   }
 
   // Parse repository metadata from /proc/*/environ. This is a naive glob approach to only
   // look pids in procfs.
-  const proc = readdirSync(`/proc`).filter(dir => Number.isFinite(Number(dir)))
-  const len = proc.length
+  const proc = readdirSync("/proc").filter((dir) =>
+    Number.isFinite(Number(dir)),
+  );
+  const len = proc.length;
   for (let i = 0; i < len; i++) {
-    const dir = proc[i]
+    const dir = proc[i];
     try {
       // Piggyback on internal datastructures for control processes to see the git repo info
-      const environData = readFileSync(path.join(`/proc`, dir, `environ`))
-        ?.toString(`utf8`)
+      const environData = readFileSync(path.join("/proc", dir, "environ"))
+        ?.toString("utf8")
         ?.split(/\0/)
-        ?.find(e => e.indexOf(`RECEIVE_DATA`) >= 0)
-        ?.replace(`RECEIVE_DATA=`, ``)
+        ?.find((e) => e.indexOf("RECEIVE_DATA") >= 0)
+        ?.replace("RECEIVE_DATA=", "");
 
       if (!environData) {
-        continue
+        continue;
       }
-      const data = JSON.parse(environData)
-      const url = data?.push_metadata?.source_url
+      const data = JSON.parse(environData);
+      const url = data?.push_metadata?.source_url;
       if (url) {
         return {
           repositoryId: `heroku:${hash(url)}`,
           repositoryData: getRepoMetadata(url),
-        }
+        };
       }
     } catch (e) {
       // ignore
     }
   }
-  return null
+  return null;
 }
 
-export const getRepositoryId = (): IRepositoryId => {
+export function getRepositoryId(): IRepositoryId {
   const gitRepo =
     getGitRemoteWithGit() ||
     getRepositoryFromNetlifyEnv() ||
-    getRepositoryFromHerokuEnv()
+    getRepositoryFromHerokuEnv();
   if (gitRepo) {
-    return gitRepo
+    return gitRepo;
   } else {
-    const repo = getRepositoryIdFromPath()
-    return { repositoryId: `pwd:${hash(repo)}` }
+    const repo = getRepositoryIdFromPath();
+    return { repositoryId: `pwd:${hash(repo)}` };
   }
 }

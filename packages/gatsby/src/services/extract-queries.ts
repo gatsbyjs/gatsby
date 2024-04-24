@@ -1,19 +1,20 @@
-import reporter from "gatsby-cli/lib/reporter"
-import { extractQueries as extractQueriesAndWatch } from "../query/query-watcher"
-import { apiRunnerNode } from "../utils/api-runner-node"
-import type { IQueryRunningContext } from "../state-machines/query-running/types"
+import reporter from "gatsby-cli/lib/reporter";
+import { extractQueries as extractQueriesAndWatch } from "../query/query-watcher";
+import { apiRunnerNode } from "../utils/api-runner-node";
+import type { IQueryRunningContext } from "../state-machines/query-running/types";
 
 export async function extractQueries({
   parentSpan,
 }: Partial<IQueryRunningContext>): Promise<void> {
-  const activity = reporter.activityTimer(`onPreExtractQueries`, {
+  // @ts-ignore
+  const activity = reporter.activityTimer("onPreExtractQueries", {
     parentSpan,
-  })
-  activity.start()
-  await apiRunnerNode(`onPreExtractQueries`, {
+  });
+  activity.start();
+  await apiRunnerNode("onPreExtractQueries", {
     parentSpan: activity.span,
-  })
-  activity.end()
+  });
+  activity.end();
 
-  await extractQueriesAndWatch({ parentSpan })
+  await extractQueriesAndWatch({ parentSpan });
 }

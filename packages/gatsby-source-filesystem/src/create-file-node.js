@@ -1,62 +1,62 @@
-const path = require(`path`)
-const fs = require(`fs-extra`)
-const mime = require(`mime`)
-const prettyBytes = require(`pretty-bytes`)
+const path = require("path");
+const fs = require("fs-extra");
+const mime = require("mime");
+const prettyBytes = require("pretty-bytes");
 
-const { createContentDigest, slash, md5File } = require(`gatsby-core-utils`)
+const { createContentDigest, slash, md5File } = require("gatsby-core-utils");
 
 exports.createFileNode = async (
   pathToFile,
   createNodeId,
   pluginOptions = {},
-  cache = null
+  cache = null,
 ) => {
-  const slashed = slash(pathToFile)
-  const parsedSlashed = path.parse(slashed)
+  const slashed = slash(pathToFile);
+  const parsedSlashed = path.parse(slashed);
   const slashedFile = {
     ...parsedSlashed,
     absolutePath: slashed,
     // Useful for limiting graphql query with certain parent directory
     relativeDirectory: slash(
-      path.relative(pluginOptions.path || process.cwd(), parsedSlashed.dir)
+      path.relative(pluginOptions.path || process.cwd(), parsedSlashed.dir),
     ),
-  }
+  };
 
-  const stats = await fs.stat(slashedFile.absolutePath)
-  let internal
+  const stats = await fs.stat(slashedFile.absolutePath);
+  let internal;
   if (stats.isDirectory()) {
     const contentDigest = createContentDigest({
       stats: stats,
       absolutePath: slashedFile.absolutePath,
-    })
+    });
     internal = {
       contentDigest,
-      type: `Directory`,
+      type: "Directory",
       description: `Directory "${path.relative(process.cwd(), slashed)}"`,
-    }
+    };
   } else {
-    const key = stats.mtimeMs.toString() + stats.ino.toString()
-    let contentDigest
+    const key = stats.mtimeMs.toString() + stats.ino.toString();
+    let contentDigest;
 
     if (pluginOptions.fastHash) {
       // Skip hashing.
-      contentDigest = key
+      contentDigest = key;
     } else {
       // Generate a hash, but only if the file has changed.
-      contentDigest = cache && (await cache.get(key))
+      contentDigest = cache && (await cache.get(key));
       if (!contentDigest) {
-        contentDigest = await md5File(slashedFile.absolutePath)
-        if (cache) await cache.set(key, contentDigest)
+        contentDigest = await md5File(slashedFile.absolutePath);
+        if (cache) await cache.set(key, contentDigest);
       }
     }
 
-    const mediaType = mime.getType(slashedFile.ext)
+    const mediaType = mime.getType(slashedFile.ext);
     internal = {
       contentDigest,
-      type: `File`,
-      mediaType: mediaType ? mediaType : `application/octet-stream`,
+      type: "File",
+      mediaType: mediaType ? mediaType : "application/octet-stream",
       description: `File "${path.relative(process.cwd(), slashed)}"`,
-    }
+    };
   }
 
   return {
@@ -67,12 +67,12 @@ exports.createFileNode = async (
     children: [],
     parent: null,
     internal,
-    sourceInstanceName: pluginOptions.name || `__PROGRAMMATIC__`,
+    sourceInstanceName: pluginOptions.name || "__PROGRAMMATIC__",
     relativePath: slash(
       path.relative(
         pluginOptions.path || process.cwd(),
-        slashedFile.absolutePath
-      )
+        slashedFile.absolutePath,
+      ),
     ),
     extension: slashedFile.ext.slice(1).toLowerCase(),
     prettySize: prettyBytes(stats.size),
@@ -102,5 +102,5 @@ exports.createFileNode = async (
     mtime: stats.mtime.toJSON(),
     ctime: stats.ctime.toJSON(),
     birthtime: stats.birthtime.toJSON(),
-  }
-}
+  };
+};

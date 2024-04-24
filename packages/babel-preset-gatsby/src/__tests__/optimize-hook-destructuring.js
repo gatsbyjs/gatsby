@@ -1,51 +1,51 @@
-import { transform } from "@babel/core"
-import preset from "../index"
-import plugin from "../optimize-hook-destructuring"
+import { transform } from "@babel/core";
+import preset from "../index";
+import plugin from "../optimize-hook-destructuring";
 
-const trim = s => s.join(`\n`).trim().replace(/^\s+/gm, ``)
+const trim = (s) => s.join("\n").trim().replace(/^\s+/gm, "");
 
-const babel = code =>
+const babel = (code) =>
   transform(code, {
-    filename: `noop.js`,
+    filename: "noop.js",
     presets: [preset],
     plugins: [plugin],
     babelrc: false,
     configFile: false,
-    sourceType: `module`,
+    sourceType: "module",
     compact: true,
     caller: {
-      name: `tests`,
+      name: "tests",
       supportsStaticESM: true,
     },
-  }).code
+  }).code;
 
-describe(`optimize-hook-destructuring`, () => {
-  it(`should transform Array-destructured hook return values use object destructuring`, () => {
+describe("optimize-hook-destructuring", () => {
+  it("should transform Array-destructured hook return values use object destructuring", () => {
     const output = babel(
       trim`
       import { useState } from 'react';
       const [count, setCount] = useState(0);
-    `
-    )
+    `,
+    );
 
     expect(output).toMatch(trim`
     \"use strict\";var _react=require(\"react\");const{0:count,1:setCount}=(0,_react.useState)(0);
-    `)
+    `);
 
     expect(output).toMatchInlineSnapshot(
-      `"\\"use strict\\";var _react=require(\\"react\\");const{0:count,1:setCount}=(0,_react.useState)(0);"`
-    )
-  })
+      '"\\"use strict\\";var _react=require(\\"react\\");const{0:count,1:setCount}=(0,_react.useState)(0);"',
+    );
+  });
 
-  it(`should handle skipped items`, () => {
+  it("should handle skipped items", () => {
     const input = trim`
       import { useState } from 'react';
       const [, setCount] = useState(0);
-    `
+    `;
 
-    expect(() => babel(input)).not.toThrow()
+    expect(() => babel(input)).not.toThrow();
     expect(babel(input)).toMatchInlineSnapshot(
-      `"\\"use strict\\";var _react=require(\\"react\\");const{1:setCount}=(0,_react.useState)(0);"`
-    )
-  })
-})
+      '"\\"use strict\\";var _react=require(\\"react\\");const{1:setCount}=(0,_react.useState)(0);"',
+    );
+  });
+});

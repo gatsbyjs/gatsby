@@ -1,6 +1,6 @@
 // @flow
 
-const { SchemaComposer } = require(`graphql-compose`)
+const { SchemaComposer } = require("graphql-compose");
 const {
   graphql,
   GraphQLSchema,
@@ -10,20 +10,20 @@ const {
   getNamedType,
   parse,
   print,
-} = require(`graphql`)
-const { store } = require(`../../redux`)
-const { actions } = require(`../../redux/actions`)
-const { build } = require(`../index`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
-const withResolverContext = require(`../context`)
-const { tranformDocument } = require(`../../query/transform-document`)
+} = require("graphql");
+const { store } = require("../../redux");
+const { actions } = require("../../redux/actions");
+const { build } = require("../index");
+const fs = require("fs-extra");
+const path = require("path");
+const { slash } = require("gatsby-core-utils");
+const withResolverContext = require("../context");
+const { tranformDocument } = require("../../query/transform-document");
 
-jest.mock(`../../utils/api-runner-node`)
-const apiRunnerNode = require(`../../utils/api-runner-node`)
+jest.mock("../../utils/api-runner-node");
+const apiRunnerNode = require("../../utils/api-runner-node");
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock("gatsby-cli/lib/reporter", () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -34,27 +34,27 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         start: jest.fn(),
         setStatus: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
-  }
-})
+  };
+});
 
 // XXX(freiksenet): Expand
-describe(`Kitchen sink schema test`, () => {
-  let schema
-  let schemaComposer
+describe("Kitchen sink schema test", () => {
+  let schema;
+  let schemaComposer;
 
-  const runQuery = query => {
-    if (_CFLAGS_.GATSBY_MAJOR === `5`) {
-      const inputAst = typeof query === `string` ? parse(query) : query
-      const { ast } = tranformDocument(inputAst)
-      query = print(ast)
+  const runQuery = (query) => {
+    if (_CFLAGS_.GATSBY_MAJOR === "5") {
+      const inputAst = typeof query === "string" ? parse(query) : query;
+      const { ast } = tranformDocument(inputAst);
+      query = print(ast);
     }
 
     return graphql({
@@ -67,36 +67,36 @@ describe(`Kitchen sink schema test`, () => {
         context: {},
         customContext: {},
       }),
-    })
-  }
+    });
+  };
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation((api, ...args) => {
-      if (api === `setFieldsOnGraphQLNodeType`) {
-        return mockSetFieldsOnGraphQLNodeType(...args)
-      } else if (api === `createResolvers`) {
-        return mockCreateResolvers(...args)
+      if (api === "setFieldsOnGraphQLNodeType") {
+        return mockSetFieldsOnGraphQLNodeType(...args);
+      } else if (api === "createResolvers") {
+        return mockCreateResolvers(...args);
       } else {
-        return []
+        return [];
       }
-    })
+    });
 
     const nodes = JSON.parse(
       fs
         .readFileSync(
-          path.join(__dirname, `./fixtures/kitchen-sink.json`),
-          `utf-8`
+          path.join(__dirname, "./fixtures/kitchen-sink.json"),
+          "utf-8",
         )
-        .replace(/<PROJECT_ROOT>/g, slash(process.cwd()))
-    )
+        .replace(/<PROJECT_ROOT>/g, slash(process.cwd())),
+    );
 
-    store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
-    )
+    store.dispatch({ type: "DELETE_CACHE" });
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: "test" })(store.dispatch),
+    );
 
     store.dispatch({
-      type: `CREATE_TYPES`,
+      type: "CREATE_TYPES",
       payload: `
         interface Post implements Node {
           id: ID!
@@ -110,19 +110,19 @@ describe(`Kitchen sink schema test`, () => {
         }
 
       `,
-    })
-    buildThirdPartySchemas().forEach(schema =>
+    });
+    buildThirdPartySchemas().forEach((schema) =>
       store.dispatch({
-        type: `ADD_THIRD_PARTY_SCHEMA`,
+        type: "ADD_THIRD_PARTY_SCHEMA",
         payload: schema,
-      })
-    )
-    await build({})
-    schema = store.getState().schema
-    schemaComposer = store.getState().schemaCustomization.composer
-  })
+      }),
+    );
+    await build({});
+    schema = store.getState().schema;
+    schemaComposer = store.getState().schemaCustomization.composer;
+  });
 
-  it(`passes kitchen sink query`, async () => {
+  it("passes kitchen sink query", async () => {
     expect(
       await runQuery(`
         {
@@ -215,25 +215,25 @@ describe(`Kitchen sink schema test`, () => {
             pageContext
           }
         }
-      `)
-    ).toMatchSnapshot()
-  }, 30000)
+      `),
+    ).toMatchSnapshot();
+  }, 30000);
 
-  it(`correctly resolves nested Query types from third-party types`, () => {
-    const queryFields = schema.getQueryType().getFields()
-    ;[`relay`, `relay2`, `query`, `manyQueries`].forEach(fieldName =>
+  it("correctly resolves nested Query types from third-party types", () => {
+    const queryFields = schema.getQueryType().getFields();
+    ["relay", "relay2", "query", "manyQueries"].forEach((fieldName) =>
       expect(getNamedType(queryFields[fieldName].type)).toBe(
-        schema.getQueryType()
-      )
-    )
-    expect(schema.getType(`Nested`).getFields().query.type).toBe(
-      schema.getQueryType()
-    )
-  })
-})
+        schema.getQueryType(),
+      ),
+    );
+    expect(schema.getType("Nested").getFields().query.type).toBe(
+      schema.getQueryType(),
+    );
+  });
+});
 
 const buildThirdPartySchemas = () => {
-  const schemaComposer = new SchemaComposer()
+  const schemaComposer = new SchemaComposer();
   schemaComposer.addTypeDefs(`
     type ThirdPartyStuff {
       text: String
@@ -265,50 +265,50 @@ const buildThirdPartySchemas = () => {
       relay: Query
       relay2: [Query]!
     }
-  `)
+  `);
   schemaComposer
-    .getUTC(`ThirdPartyUnion`)
-    .setResolveType(() => `ThirdPartyStuff`)
+    .getUTC("ThirdPartyUnion")
+    .setResolveType(() => "ThirdPartyStuff");
   schemaComposer
-    .getUTC(`ThirdPartyUnion2`)
-    .setResolveType(() => `ThirdPartyStuff`)
+    .getUTC("ThirdPartyUnion2")
+    .setResolveType(() => "ThirdPartyStuff");
   schemaComposer
-    .getIFTC(`ThirdPartyInterface`)
-    .setResolveType(() => `ThirdPartyStuff3`)
-  schemaComposer.Query.extendField(`thirdPartyStuff`, {
+    .getIFTC("ThirdPartyInterface")
+    .setResolveType(() => "ThirdPartyStuff3");
+  schemaComposer.Query.extendField("thirdPartyStuff", {
     resolve() {
       return {
-        text: `Hello third-party schema!`,
+        text: "Hello third-party schema!",
         child: {
-          text: `Hello from children!`,
+          text: "Hello from children!",
         },
-      }
+      };
     },
-  })
-  schemaComposer.Query.extendField(`thirdPartyUnion`, {
+  });
+  schemaComposer.Query.extendField("thirdPartyUnion", {
     resolve() {
       return {
-        text: `Hello third-party schema!`,
+        text: "Hello third-party schema!",
         child: {
-          text: `Hello from children!`,
+          text: "Hello from children!",
         },
-      }
+      };
     },
-  })
-  schemaComposer.Query.extendField(`thirdPartyInterface`, {
+  });
+  schemaComposer.Query.extendField("thirdPartyInterface", {
     resolve() {
       return {
-        text: `Hello third-party schema!`,
-      }
+        text: "Hello third-party schema!",
+      };
     },
-  })
+  });
   schemaComposer.addSchemaMustHaveType(
-    schemaComposer.getOTC(`ThirdPartyStuff3`)
-  )
+    schemaComposer.getOTC("ThirdPartyStuff3"),
+  );
 
   // Query type with non-default name
   const RootQueryType = new GraphQLObjectType({
-    name: `RootQueryType`,
+    name: "RootQueryType",
     fields: () => {
       return {
         query: { type: RootQueryType },
@@ -316,47 +316,47 @@ const buildThirdPartySchemas = () => {
           type: new GraphQLNonNull(new GraphQLList(RootQueryType)),
         },
         nested: { type: Nested },
-      }
+      };
     },
-  })
+  });
   const Nested = new GraphQLObjectType({
-    name: `Nested`,
+    name: "Nested",
     fields: () => {
       return {
         query: { type: RootQueryType },
-      }
+      };
     },
-  })
-  const schema = new GraphQLSchema({ query: RootQueryType })
+  });
+  const schema = new GraphQLSchema({ query: RootQueryType });
 
-  return [schemaComposer.buildSchema(), schema]
-}
+  return [schemaComposer.buildSchema(), schema];
+};
 
 const mockSetFieldsOnGraphQLNodeType = async ({ type: { name } }) => {
-  if (name === `PostsJson`) {
+  if (name === "PostsJson") {
     return [
       {
         idWithDecoration: {
-          type: `String`,
+          type: "String",
           resolve(parent) {
-            return `decoration-${parent.id}`
+            return `decoration-${parent.id}`;
           },
         },
       },
-    ]
+    ];
   } else {
-    return []
+    return [];
   }
-}
+};
 
 const mockCreateResolvers = ({ createResolvers }) => {
   createResolvers({
     Query: {
       likedEnough: {
-        type: `[PostsJson]`,
+        type: "[PostsJson]",
         async resolve(parent, args, context) {
           const { entries } = await context.nodeModel.findAll({
-            type: `PostsJson`,
+            type: "PostsJson",
             query: {
               limit: 2,
               skip: 0,
@@ -367,14 +367,14 @@ const mockCreateResolvers = ({ createResolvers }) => {
                 },
               },
               sort: {
-                fields: [`likes`],
-                order: [`DESC`],
+                fields: ["likes"],
+                order: ["DESC"],
               },
             },
-          })
-          return entries
+          });
+          return entries;
         },
       },
     },
-  })
-}
+  });
+};

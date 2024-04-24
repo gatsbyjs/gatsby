@@ -1,7 +1,7 @@
-import { inPreviewMode, type PreviewStatusUnion } from "."
-import type { OnPageCreatedCallback } from "~/models/preview"
-import { getStore } from "~/store"
-import type { NodePluginArgs } from "gatsby"
+import { inPreviewMode, type PreviewStatusUnion } from ".";
+import type { OnPageCreatedCallback } from "~/models/preview";
+import { getStore } from "~/store";
+import type { NodePluginArgs } from "gatsby";
 
 /**
  * This callback is invoked to send WP the preview status. In this case the status
@@ -14,16 +14,16 @@ const invokeLeftoverPreviewCallback =
     context,
     error,
   }: {
-    status: PreviewStatusUnion
-    context?: string | undefined
-    error?: Error | undefined
-    getNode: NodePluginArgs["getNode"]
+    status: PreviewStatusUnion;
+    context?: string | undefined;
+    error?: Error | undefined;
+    getNode: NodePluginArgs["getNode"];
   }) =>
   async ([nodeId, callback]: [
     string,
     OnPageCreatedCallback,
   ]): Promise<void> => {
-    const passedNode = getNode(nodeId)
+    const passedNode = getNode(nodeId);
 
     await callback({
       passedNode,
@@ -34,37 +34,37 @@ const invokeLeftoverPreviewCallback =
       status,
       context,
       error,
-    })
-  }
+    });
+  };
 
 export const invokeAndCleanupLeftoverPreviewCallbacks = async ({
   status,
   context,
   error,
 }: {
-  status: PreviewStatusUnion
-  context?: string | undefined
-  error?: Error | undefined
+  status: PreviewStatusUnion;
+  context?: string | undefined;
+  error?: Error | undefined;
 }): Promise<void> => {
-  const state = getStore().getState()
+  const state = getStore().getState();
 
-  const { getNode } = state.gatsbyApi.helpers
+  const { getNode } = state.gatsbyApi.helpers;
 
-  const leftoverCallbacks = state.previewStore.nodePageCreatedCallbacks
+  const leftoverCallbacks = state.previewStore.nodePageCreatedCallbacks;
 
-  const leftoverCallbacksExist = Object.keys(leftoverCallbacks).length
+  const leftoverCallbacksExist = Object.keys(leftoverCallbacks).length;
 
   if (leftoverCallbacksExist) {
     await Promise.all(
       Object.entries(leftoverCallbacks).map(
         invokeLeftoverPreviewCallback({ getNode, status, context, error }),
       ),
-    )
+    );
 
     // after processing our callbacks, we need to remove them all so they don't get called again in the future
-    getStore().dispatch.previewStore.clearPreviewCallbacks()
+    getStore().dispatch.previewStore.clearPreviewCallbacks();
   }
-}
+};
 
 /**
  * Preview callbacks are usually invoked during onCreatePage in Gatsby Preview
@@ -79,15 +79,15 @@ export const onPreExtractQueriesInvokeLeftoverPreviewCallbacks =
   async (): Promise<void> => {
     if (!inPreviewMode()) {
       return invokeAndCleanupLeftoverPreviewCallbacks({
-        status: `GATSBY_PREVIEW_PROCESS_ERROR`,
-        context: `Gatsby is not in Preview mode.`,
-      })
+        status: "GATSBY_PREVIEW_PROCESS_ERROR",
+        context: "Gatsby is not in Preview mode.",
+      });
     }
 
     // check for any onCreatePageCallbacks that weren't called during createPages
     // we need to tell WP that a page wasn't created for the preview
     return invokeAndCleanupLeftoverPreviewCallbacks({
-      status: `NO_PAGE_CREATED_FOR_PREVIEWED_NODE`,
-      context: `invokeAndCleanupLeftoverPreviewCallbacks`,
-    })
-  }
+      status: "NO_PAGE_CREATED_FOR_PREVIEWED_NODE",
+      context: "invokeAndCleanupLeftoverPreviewCallbacks",
+    });
+  };

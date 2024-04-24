@@ -1,24 +1,24 @@
-import { getFieldTransformers } from "./field-transformers"
-import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes"
-import { getStore } from "~/store"
-import { getPluginOptions } from "~/utils/get-gatsby-api"
+import { getFieldTransformers } from "./field-transformers";
+import { getGatsbyNodeTypeNames } from "../../source-nodes/fetch-nodes/fetch-nodes";
+import { getStore } from "~/store";
+import { getPluginOptions } from "~/utils/get-gatsby-api";
 
 import {
   fieldOfTypeWasFetched,
   typeIsASupportedScalar,
   getTypeSettingsByType,
   findNamedTypeName,
-} from "../helpers"
+} from "../helpers";
 
-import { buildDefaultResolver } from "./default-resolver"
+import { buildDefaultResolver } from "./default-resolver";
 
 /**
  * @param {import("graphql").GraphQLField} field
  */
 
-const handleCustomScalars = field => {
+const handleCustomScalars = (field) => {
   const fieldTypeIsACustomScalar =
-    field.type.kind === `SCALAR` && !typeIsASupportedScalar(field.type)
+    field.type.kind === "SCALAR" && !typeIsASupportedScalar(field.type);
 
   if (fieldTypeIsACustomScalar) {
     // if this field is an unsupported custom scalar,
@@ -27,13 +27,13 @@ const handleCustomScalars = field => {
       ...field,
       type: {
         ...field.type,
-        name: `JSON`,
+        name: "JSON",
       },
-    }
+    };
   }
 
   const fieldTypeOfTypeIsACustomScalar =
-    field.type.ofType?.kind === `SCALAR` && !typeIsASupportedScalar(field.type)
+    field.type.ofType?.kind === "SCALAR" && !typeIsASupportedScalar(field.type);
 
   if (fieldTypeOfTypeIsACustomScalar) {
     // if this field is an unsupported custom scalar,
@@ -44,26 +44,26 @@ const handleCustomScalars = field => {
         ...field.type,
         ofType: {
           ...field.type.ofType,
-          name: `JSON`,
+          name: "JSON",
         },
       },
-    }
+    };
   }
 
-  return field
-}
+  return field;
+};
 
 // this is used to alias fields that conflict with Gatsby node fields
 // for ex Gatsby and WPGQL both have a `parent` field
 export const getAliasedFieldName = ({ fieldAliases, field }) =>
   fieldAliases && fieldAliases[field.name]
     ? fieldAliases[field.name]
-    : field.name
+    : field.name;
 
 export const returnAliasedFieldName = ({ fieldAliases, field }) =>
   fieldAliases && fieldAliases[field.name]
     ? `${fieldAliases[field.name]}: ${field.name}`
-    : field.name
+    : field.name;
 
 const fieldIsExcluded = ({
   field,
@@ -75,27 +75,27 @@ const fieldIsExcluded = ({
 }) =>
   // this field wasn't previously fetched, so we shouldn't
   // add it to our schema
-  (!fieldOfTypeWasFetched(field.type) && fieldName !== `id`) ||
+  (!fieldOfTypeWasFetched(field.type) && fieldName !== "id") ||
   // this field was excluded on its parent fields Type
   (parentTypeSettings.excludeFieldNames &&
     parentTypeSettings.excludeFieldNames.includes(fieldName)) ||
   // this field is on an interface type and one of the implementing types has this field excluded on it.
   (parentInterfacesImplementingTypeSettings &&
     parentInterfacesImplementingTypeSettings.find(
-      typeSetting =>
+      (typeSetting) =>
         typeSetting.excludeFieldNames &&
         typeSetting.excludeFieldNames.find(
-          excludedFieldName => fieldName === excludedFieldName
-        )
+          (excludedFieldName) => fieldName === excludedFieldName,
+        ),
     )) ||
   // the type of this field was excluded via plugin options
   thisTypeSettings.exclude ||
   // field is blacklisted
   fieldBlacklist.includes(fieldName) ||
   // this field has required input args
-  (field.args && field.args.find(arg => arg.type.kind === `NON_NULL`)) ||
+  (field.args && field.args.find((arg) => arg.type.kind === "NON_NULL")) ||
   // this field has no typeName
-  !findNamedTypeName(field.type)
+  !findNamedTypeName(field.type);
 
 /**
  * Transforms fields from the WPGQL schema to work in the Gatsby schema
@@ -109,31 +109,31 @@ export const transformFields = ({
   peek = false,
 }) => {
   if (!fields || !fields.length) {
-    return null
+    return null;
   }
 
-  const gatsbyNodeTypes = getGatsbyNodeTypeNames()
+  const gatsbyNodeTypes = getGatsbyNodeTypeNames();
 
-  const { fieldAliases, fieldBlacklist } = getStore().getState().remoteSchema
+  const { fieldAliases, fieldBlacklist } = getStore().getState().remoteSchema;
 
-  const parentTypeSettings = getTypeSettingsByType(parentType)
+  const parentTypeSettings = getTypeSettingsByType(parentType);
 
   const parentInterfacesImplementingTypeSettings =
     parentInterfacesImplementingTypes
-      ? parentInterfacesImplementingTypes.map(type =>
-          getTypeSettingsByType(type)
+      ? parentInterfacesImplementingTypes.map((type) =>
+          getTypeSettingsByType(type),
         )
-      : null
+      : null;
 
   const transformedFields = fields.reduce((fieldsObject, field) => {
     // if there's no field name this field is unusable
-    if (field.name === ``) {
-      return fieldsObject
+    if (field.name === "") {
+      return fieldsObject;
     }
 
-    const thisTypeSettings = getTypeSettingsByType(field.type)
+    const thisTypeSettings = getTypeSettingsByType(field.type);
 
-    const fieldName = getAliasedFieldName({ fieldAliases, field })
+    const fieldName = getAliasedFieldName({ fieldAliases, field });
 
     if (
       fieldIsExcluded({
@@ -145,16 +145,16 @@ export const transformFields = ({
         parentInterfacesImplementingTypeSettings,
       })
     ) {
-      return fieldsObject
+      return fieldsObject;
     }
 
-    const { typeMap } = getStore().getState().remoteSchema
+    const { typeMap } = getStore().getState().remoteSchema;
 
-    const type = typeMap.get(findNamedTypeName(field.type))
+    const type = typeMap.get(findNamedTypeName(field.type));
 
-    const includedChildFields = type?.fields?.filter(field => {
-      const childFieldTypeSettings = getTypeSettingsByType(field.type)
-      const fieldName = getAliasedFieldName({ fieldAliases, field })
+    const includedChildFields = type?.fields?.filter((field) => {
+      const childFieldTypeSettings = getTypeSettingsByType(field.type);
+      const fieldName = getAliasedFieldName({ fieldAliases, field });
       return !fieldIsExcluded({
         field,
         fieldName,
@@ -162,8 +162,8 @@ export const transformFields = ({
         fieldBlacklist,
         parentTypeSettings: thisTypeSettings,
         parentInterfacesImplementingTypeSettings,
-      })
-    })
+      });
+    });
 
     // if the child fields of this field are all excluded,
     // we shouldn't add this field
@@ -171,17 +171,17 @@ export const transformFields = ({
     // if a type is missing all it's child fields due to exclusion
     // it should be globally excluded automatically.
     if (Array.isArray(includedChildFields) && !includedChildFields.length) {
-      return fieldsObject
+      return fieldsObject;
     }
 
-    field = handleCustomScalars(field)
+    field = handleCustomScalars(field);
 
     const { transform, description } =
       peek === false
         ? getFieldTransformers().find(({ test }) => test(field)) || {}
-        : {}
+        : {};
 
-    if (transform && typeof transform === `function` && peek === false) {
+    if (transform && typeof transform === "function" && peek === false) {
       const transformerApi = {
         field,
         fieldsObject,
@@ -189,12 +189,12 @@ export const transformFields = ({
         gatsbyNodeTypes,
         description,
         pluginOptions: getPluginOptions(),
-      }
+      };
 
-      let transformedField = transform(transformerApi)
+      let transformedField = transform(transformerApi);
 
       // add default resolver
-      if (typeof transformedField === `string`) {
+      if (typeof transformedField === "string") {
         // we need to add a custom resolver to override the default resolver
         // and check for aliased fields
         // fields are aliased automatically if they have conflicting types
@@ -204,22 +204,22 @@ export const transformFields = ({
           type: transformedField,
           resolve: buildDefaultResolver(transformerApi),
           description: field.description,
-        }
+        };
       } else {
-        transformedField.description = field.description
+        transformedField.description = field.description;
       }
 
-      fieldsObject[fieldName] = transformedField
+      fieldsObject[fieldName] = transformedField;
     } else if (peek) {
-      fieldsObject[fieldName] = true
+      fieldsObject[fieldName] = true;
     }
 
-    return fieldsObject
-  }, {})
+    return fieldsObject;
+  }, {});
 
   if (!Object.keys(transformedFields).length) {
-    return null
+    return null;
   }
 
-  return transformedFields
-}
+  return transformedFields;
+};

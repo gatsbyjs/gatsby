@@ -1,42 +1,42 @@
-import * as path from "path"
-import * as fs from "fs-extra"
+import * as path from "path";
+import * as fs from "fs-extra";
 import {
   savePageQueryResult,
   readPageQueryResult,
   waitUntilPageQueryResultsAreStored,
   modifyPageDataForErrorMessage,
   IPageDataWithQueryResult,
-} from "../page-data"
+} from "../page-data";
 
-describe(`savePageQueryResults / readPageQueryResults`, () => {
-  it(`can save and read data`, async () => {
-    const fileDir = path.join(process.cwd(), `.cache`, `json`)
-    await fs.emptyDir(fileDir)
+describe("savePageQueryResults / readPageQueryResults", () => {
+  it("can save and read data", async () => {
+    const fileDir = path.join(process.cwd(), ".cache", "json");
+    await fs.emptyDir(fileDir);
 
-    const pagePath = `/foo/`
+    const pagePath = "/foo/";
     const inputResult = {
-      data: { foo: `bar` },
-    }
+      data: { foo: "bar" },
+    };
 
-    await savePageQueryResult(pagePath, JSON.stringify(inputResult))
+    await savePageQueryResult(pagePath, JSON.stringify(inputResult));
 
-    await waitUntilPageQueryResultsAreStored()
+    await waitUntilPageQueryResultsAreStored();
 
-    const result = await readPageQueryResult(pagePath)
-    expect(JSON.parse(result)).toEqual(inputResult)
-  })
-})
+    const result = await readPageQueryResult(pagePath);
+    expect(JSON.parse(result)).toEqual(inputResult);
+  });
+});
 
-describe(`modifyPageDataForErrorMessage`, () => {
-  it(`handles optional data gracefully`, () => {
+describe("modifyPageDataForErrorMessage", () => {
+  it("handles optional data gracefully", () => {
     const input: IPageDataWithQueryResult = {
-      path: `/foo/`,
-      componentChunkName: `component`,
-      matchPath: `/`,
+      path: "/foo/",
+      componentChunkName: "component",
+      matchPath: "/",
       slicesMap: {},
       staticQueryHashes: [],
       result: {},
-    }
+    };
     expect(modifyPageDataForErrorMessage(input)).toMatchInlineSnapshot(`
       Object {
         "errors": Object {},
@@ -44,40 +44,40 @@ describe(`modifyPageDataForErrorMessage`, () => {
         "path": "/foo/",
         "slicesMap": Object {},
       }
-    `)
-  })
-  it(`outputs expected result shape`, () => {
+    `);
+  });
+  it("outputs expected result shape", () => {
     const input: IPageDataWithQueryResult = {
-      path: `/foo/`,
-      componentChunkName: `component`,
-      matchPath: `/`,
+      path: "/foo/",
+      componentChunkName: "component",
+      matchPath: "/",
       slicesMap: {
-        foo: `bar`,
+        foo: "bar",
       },
       getServerDataError: [
         {
-          level: `ERROR`,
-          text: `error`,
-          stack: [{ fileName: `a` }],
-          type: `UNKNOWN`,
+          level: "ERROR",
+          text: "error",
+          stack: [{ fileName: "a" }],
+          type: "UNKNOWN",
         },
       ],
-      staticQueryHashes: [`123`],
+      staticQueryHashes: ["123"],
       result: {
         data: undefined,
         // @ts-ignore - Can ignore for this test
-        errors: [`error`],
+        errors: ["error"],
         extensions: {
-          foo: `bar`,
+          foo: "bar",
         },
         pageContext: {
-          foo: `bar`,
+          foo: "bar",
         },
         serverData: {
-          foo: `bar`,
+          foo: "bar",
         },
       },
-    }
+    };
     expect(modifyPageDataForErrorMessage(input)).toMatchInlineSnapshot(`
       Object {
         "errors": Object {
@@ -106,24 +106,24 @@ describe(`modifyPageDataForErrorMessage`, () => {
           "foo": "bar",
         },
       }
-    `)
-  })
-  it(`doesn't print out the GraphQL result and serverData result`, () => {
+    `);
+  });
+  it("doesn't print out the GraphQL result and serverData result", () => {
     const input: IPageDataWithQueryResult = {
-      path: `/foo/`,
-      componentChunkName: `component`,
-      matchPath: `/`,
+      path: "/foo/",
+      componentChunkName: "component",
+      matchPath: "/",
       slicesMap: {},
       staticQueryHashes: [],
       result: {
         data: {
-          foo: `bar`,
+          foo: "bar",
         },
         serverData: {
-          foo: `bar`,
+          foo: "bar",
         },
       },
-    }
+    };
     expect(modifyPageDataForErrorMessage(input)).toMatchInlineSnapshot(`
       Object {
         "errors": Object {},
@@ -131,6 +131,6 @@ describe(`modifyPageDataForErrorMessage`, () => {
         "path": "/foo/",
         "slicesMap": Object {},
       }
-    `)
-  })
-})
+    `);
+  });
+});

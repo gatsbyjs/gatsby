@@ -1,16 +1,16 @@
-import { AsyncLocalStorage } from "async_hooks"
+import { AsyncLocalStorage } from "async_hooks";
 
 export type IEngineContext = {
-  requestId: string
-}
+  requestId: string;
+};
 
-let asyncLocalStorage
+let asyncLocalStorage;
 function getAsyncLocalStorage(): AsyncLocalStorage<IEngineContext> {
-  return asyncLocalStorage ?? (asyncLocalStorage = new AsyncLocalStorage())
+  return asyncLocalStorage ?? (asyncLocalStorage = new AsyncLocalStorage());
 }
 
 export function getEngineContext(): IEngineContext | undefined {
-  return getAsyncLocalStorage().getStore()
+  return getAsyncLocalStorage().getStore();
 }
 
 export function runWithEngineContext<T>(
@@ -19,5 +19,5 @@ export function runWithEngineContext<T>(
   fn: (...args: Array<any>) => T,
 ): T {
   // @ts-ignore typings are incorrect, run() returns the result of fn()
-  return getAsyncLocalStorage().run(context, fn)
+  return getAsyncLocalStorage().run(context, fn);
 }

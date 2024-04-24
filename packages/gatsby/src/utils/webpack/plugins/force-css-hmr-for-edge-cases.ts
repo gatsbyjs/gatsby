@@ -1,4 +1,4 @@
-import { Compiler, Module } from "webpack"
+import { Compiler, Module } from "webpack";
 
 /**
  * This is total hack that is meant to handle:
@@ -13,35 +13,35 @@ import { Compiler, Module } from "webpack"
  *  - when css imported by not loaded (by runtime) page template changes it will reload css
  */
 export class ForceCssHMRForEdgeCases {
-  private name: string
-  private originalBlankCssHash: string | undefined
-  private blankCssKey: string | undefined
-  private hackCounter = 0
-  private previouslySeenCss: Set<string> = new Set<string>()
+  private name: string;
+  private originalBlankCssHash: string | undefined;
+  private blankCssKey: string | undefined;
+  private hackCounter = 0;
+  private previouslySeenCss: Set<string> = new Set<string>();
 
   constructor() {
-    this.name = `ForceCssHMRForEdgeCases`
+    this.name = "ForceCssHMRForEdgeCases";
   }
 
   apply(compiler: Compiler): void {
     compiler.hooks.thisCompilation.tap(this.name, (compilation) => {
       compilation.hooks.fullHash.tap(this.name, () => {
-        const chunkGraph = compilation.chunkGraph
-        const records = compilation.records
+        const chunkGraph = compilation.chunkGraph;
+        const records = compilation.records;
 
         if (!records.chunkModuleHashes) {
-          return
+          return;
         }
 
-        const seenCssInThisCompilation = new Set<string>()
+        const seenCssInThisCompilation = new Set<string>();
         /**
          * We will get list of css modules that are removed in this compilation
          * by starting with list of css used in last compilation and removing
          * all modules that are used in this one.
          */
-        const cssRemovedInThisCompilation = this.previouslySeenCss
+        const cssRemovedInThisCompilation = this.previouslySeenCss;
 
-        let newOrUpdatedCss = false
+        let newOrUpdatedCss = false;
 
         for (const chunk of compilation.chunks) {
           const getModuleHash = (module: Module): string => {
@@ -49,40 +49,40 @@ export class ForceCssHMRForEdgeCases {
               return compilation.codeGenerationResults.getHash(
                 module,
                 chunk.runtime,
-              )
+              );
             } else {
-              return chunkGraph.getModuleHash(module, chunk.runtime)
+              return chunkGraph.getModuleHash(module, chunk.runtime);
             }
-          }
+          };
 
-          const modules = chunkGraph.getChunkModulesIterable(chunk)
+          const modules = chunkGraph.getChunkModulesIterable(chunk);
 
           if (modules !== undefined) {
             for (const module of modules) {
-              const key = `${chunk.id}|${module.identifier()}`
+              const key = `${chunk.id}|${module.identifier()}`;
 
               if (
                 !this.originalBlankCssHash &&
                 // @ts-ignore - exists on NormalModule but not Module
-                module.rawRequest === `./blank.css`
+                module.rawRequest === "./blank.css"
               ) {
-                this.blankCssKey = key
+                this.blankCssKey = key;
                 this.originalBlankCssHash =
-                  records.chunkModuleHashes[this.blankCssKey]
+                  records.chunkModuleHashes[this.blankCssKey];
               }
 
               // @ts-ignore - exists on NormalModule but not Module
               const isUsingMiniCssExtract = module.loaders?.find((loader) =>
-                loader?.loader?.includes(`mini-css-extract-plugin`),
-              )
+                loader?.loader?.includes("mini-css-extract-plugin"),
+              );
 
               if (isUsingMiniCssExtract) {
-                seenCssInThisCompilation.add(key)
-                cssRemovedInThisCompilation.delete(key)
+                seenCssInThisCompilation.add(key);
+                cssRemovedInThisCompilation.delete(key);
 
-                const hash = getModuleHash(module)
+                const hash = getModuleHash(module);
                 if (records.chunkModuleHashes[key] !== hash) {
-                  newOrUpdatedCss = true
+                  newOrUpdatedCss = true;
                 }
               }
             }
@@ -98,11 +98,11 @@ export class ForceCssHMRForEdgeCases {
           this.blankCssKey
         ) {
           records.chunkModuleHashes[this.blankCssKey] =
-            this.originalBlankCssHash + String(this.hackCounter++)
+            this.originalBlankCssHash + String(this.hackCounter++);
         }
 
-        this.previouslySeenCss = seenCssInThisCompilation
-      })
-    })
+        this.previouslySeenCss = seenCssInThisCompilation;
+      });
+    });
   }
 }

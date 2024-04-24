@@ -1,26 +1,26 @@
-const removeQueryName = query =>
+const removeQueryName = (query) =>
   query.replace(
     /^[^{(]+([{(])/,
     (_match, openingCurlyBracketsOrParenthesis) =>
-      `query ${openingCurlyBracketsOrParenthesis}`
-  )
+      `query ${openingCurlyBracketsOrParenthesis}`,
+  );
 
 const getQuery = (arg, spaceCount) => {
-  const { operationDataList } = arg
-  const { query } = operationDataList[0]
-  const anonymousQuery = removeQueryName(query)
+  const { operationDataList } = arg;
+  const { query } = operationDataList[0];
+  const anonymousQuery = removeQueryName(query);
   return (
-    ` `.repeat(spaceCount) +
-    anonymousQuery.replace(/\n/g, `\n` + ` `.repeat(spaceCount))
-  )
-}
+    " ".repeat(spaceCount) +
+    anonymousQuery.replace(/\n/g, "\n" + " ".repeat(spaceCount))
+  );
+};
 
 const pageQuery = {
-  name: `Page Query`,
-  language: `JavaScript`,
-  codeMirrorMode: `jsx`,
+  name: "Page Query",
+  language: "JavaScript",
+  codeMirrorMode: "jsx",
   options: [],
-  generate: arg => `import * as React from "react"
+  generate: (arg) => `import * as React from "react"
 import { graphql } from "gatsby"
 
 const Page = ({ data }) => (
@@ -33,14 +33,14 @@ ${getQuery(arg, 2)}
 
 export default Page
 `,
-}
+};
 
 const useStaticQuery = {
-  name: `useStaticQuery`,
-  language: `JavaScript`,
-  codeMirrorMode: `jsx`,
+  name: "useStaticQuery",
+  language: "JavaScript",
+  codeMirrorMode: "jsx",
   options: [],
-  generate: arg => `import * as React from "react"
+  generate: (arg) => `import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 const ComponentName = () => {
@@ -53,14 +53,14 @@ ${getQuery(arg, 4)}
 export default ComponentName
 
 `,
-}
+};
 
 const createPages = {
-  name: `createPages`,
-  language: `JavaScript`,
-  codeMirrorMode: `javascript`,
+  name: "createPages",
+  language: "JavaScript",
+  codeMirrorMode: "javascript",
   options: [],
-  generate: arg => `const path = require(\`path\`)
+  generate: (arg) => `const path = require(\`path\`)
 
 const templatePath = path.resolve(\`PATH/TO/TEMPLATE.js\`)
 
@@ -85,6 +85,6 @@ ${getQuery(arg, 4)}
   })
 }
 `,
-}
+};
 
-export const snippets = [pageQuery, useStaticQuery, createPages]
+export const snippets = [pageQuery, useStaticQuery, createPages];

@@ -1,47 +1,47 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import path from "path"
-import fs from "fs-extra"
-import reporter from "gatsby-cli/lib/reporter"
-import { match } from "@gatsbyjs/reach-router"
-import { joinPath, md5, slash } from "gatsby-core-utils"
-import { store, emitter } from "../redux/"
-import type { IGatsbyState, IGatsbyPage, IGatsbySlice } from "../redux/types"
+import _ from "lodash";
+import path from "path";
+import fs from "fs-extra";
+import reporter from "gatsby-cli/lib/reporter";
+import { match } from "@gatsbyjs/reach-router";
+import { joinPath, md5, slash } from "gatsby-core-utils";
+import { store, emitter } from "../redux/";
+import type { IGatsbyState, IGatsbyPage, IGatsbySlice } from "../redux/types";
 import {
   writeModule,
   getAbsolutePathForVirtualModule,
-} from "../utils/gatsby-webpack-virtual-modules"
-import { getPageMode } from "../utils/page-mode"
-import { devSSRWillInvalidate } from "../commands/build-html"
-import { rankRoute } from "../utils/rank-route"
+} from "../utils/gatsby-webpack-virtual-modules";
+import { getPageMode } from "../utils/page-mode";
+import { devSSRWillInvalidate } from "../commands/build-html";
+import { rankRoute } from "../utils/rank-route";
 
 function hasContentFilePath(componentPath: string): boolean {
-  return componentPath.includes(`?__contentFilePath=`)
+  return componentPath.includes("?__contentFilePath=");
 }
 
 type IGatsbyPageComponent = {
-  componentPath: string
-  componentChunkName: string
-  hasHeadComponent: boolean
-}
+  componentPath: string;
+  componentChunkName: string;
+  hasHeadComponent: boolean;
+};
 
 type IGatsbyPageMatchPath = {
-  path: string
-  matchPath: string | null | undefined
-}
+  path: string;
+  matchPath: string | null | undefined;
+};
 
-let lastHash: string | null = null
+let lastHash: string | null = null;
 
 export function resetLastHash(): void {
-  lastHash = null
+  lastHash = null;
 }
 
 type IBareComponentData = Pick<
   IGatsbyPageComponent,
-  `componentPath` | `componentChunkName`
+  "componentPath" | "componentChunkName"
 > & {
-  hasHeadComponent: boolean
-}
+  hasHeadComponent: boolean;
+};
 
 export function getComponents(
   pages: Array<IGatsbyPage>,
@@ -55,7 +55,7 @@ export function getComponents(
       componentPath: page.componentPath,
       componentChunkName: page.componentChunkName,
       hasHeadComponent: components.get(page.componentPath)?.Head ?? false,
-    }
+    };
   }
 
   return _.orderBy(
@@ -64,7 +64,7 @@ export function getComponents(
       (c) => c.componentChunkName,
     ),
     (c) => c.componentChunkName,
-  )
+  );
 }
 
 /**
@@ -73,20 +73,20 @@ export function getComponents(
  */
 function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
   type IMatchPathEntry = {
-    index: number
-    score: number
-  } & IGatsbyPage
+    index: number;
+    score: number;
+  } & IGatsbyPage;
 
   function createMatchPathEntry(
     page: IGatsbyPage,
     index: number,
   ): IMatchPathEntry {
-    const { matchPath } = page
+    const { matchPath } = page;
 
     if (matchPath === undefined) {
       return reporter.panic(
         `Error: matchPath property is undefined for page ${page.path}, should be a string`,
-      ) as never
+      ) as never;
     }
 
     return {
@@ -94,16 +94,16 @@ function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
       matchPath,
       index,
       score: rankRoute(matchPath) ?? 0,
-    }
+    };
   }
 
-  const matchPathPages: Array<IMatchPathEntry> = []
+  const matchPathPages: Array<IMatchPathEntry> = [];
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
-    if (page.matchPath && getPageMode(page) === `SSG`) {
-      matchPathPages.push(createMatchPathEntry(page, index))
+    if (page.matchPath && getPageMode(page) === "SSG") {
+      matchPathPages.push(createMatchPathEntry(page, index));
     }
-  })
+  });
 
   // Pages can live in matchPaths, to keep them working without doing another network request
   // we save them in matchPath. We use `@reach/router` path ranking to score paths/matchPaths
@@ -111,13 +111,13 @@ function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
   // More info in https://github.com/gatsbyjs/gatsby/issues/16097
   // small speedup: don't bother traversing when no matchPaths found.
   if (matchPathPages.length) {
-    const newMatches: Array<IMatchPathEntry> = []
+    const newMatches: Array<IMatchPathEntry> = [];
 
     pages.forEach((page: IGatsbyPage, index: number): void => {
       const isInsideMatchPath = !!matchPathPages.find(
         (pageWithMatchPath) =>
           !page.matchPath && match(pageWithMatchPath.matchPath, page.path),
-      )
+      );
 
       if (isInsideMatchPath) {
         newMatches.push(
@@ -128,58 +128,58 @@ function getMatchPaths(pages: Array<IGatsbyPage>): Array<IGatsbyPageMatchPath> {
             },
             index,
           ),
-        )
+        );
       }
-    })
+    });
     // Add afterwards because the new matches are not relevant for the existing search
-    matchPathPages.push(...newMatches)
+    matchPathPages.push(...newMatches);
   }
 
   return matchPathPages
     .sort((a, b): number => {
       // The higher the score, the higher the specificity of our matchPath
-      const order = b.score - a.score
+      const order = b.score - a.score;
       if (order !== 0) {
-        return order
+        return order;
       }
 
       // if specificity is the same we do lexigraphic comparison of path to ensure
       // deterministic order regardless of order pages where created
-      return a.matchPath?.localeCompare(b.matchPath ?? ``) ?? 0
+      return a.matchPath?.localeCompare(b.matchPath ?? "") ?? 0;
     })
     .map(
       ({
         path,
         matchPath,
       }: IMatchPathEntry): {
-        path: string
-        matchPath: string | null | undefined
+        path: string;
+        matchPath: string | null | undefined;
       } => {
-        return { path, matchPath }
+        return { path, matchPath };
       },
-    )
+    );
 }
 
 // Write out pages information.
 export async function writeAll(state: IGatsbyState): Promise<boolean> {
-  const { program, slices } = state
-  const pages = [...state.pages.values()]
-  const matchPaths = getMatchPaths(pages)
-  const components = getComponents(pages, slices, state.components)
-  let cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent> = []
+  const { program, slices } = state;
+  const pages = [...state.pages.values()];
+  const matchPaths = getMatchPaths(pages);
+  const components = getComponents(pages, slices, state.components);
+  let cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent> = [];
 
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const ssrVisitedPageComponents = [
-      ...(state.visitedPages.get(`server`)?.values() || []),
-    ]
+      ...(state.visitedPages.get("server")?.values() || []),
+    ];
 
     // Remove any page components that no longer exist.
     cleanedSSRVisitedPageComponents = components.filter((c) => {
       return (
         ssrVisitedPageComponents.some((s) => s === c.componentChunkName) ||
-        c.componentChunkName.startsWith(`slice---`)
-      )
-    })
+        c.componentChunkName.startsWith("slice---")
+      );
+    });
   }
 
   const newHash = await md5(
@@ -188,14 +188,14 @@ export async function writeAll(state: IGatsbyState): Promise<boolean> {
       components,
       cleanedSSRVisitedPageComponents,
     }),
-  )
+  );
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    return false
+    return false;
   }
 
-  lastHash = newHash
+  lastHash = newHash;
 
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     // Create file with sync requires of visited page components files.
@@ -204,20 +204,20 @@ export async function writeAll(state: IGatsbyState): Promise<boolean> {
         (c: IGatsbyPageComponent): string =>
           `  "${c.componentChunkName}": require("${joinPath(c.componentPath)}")`,
       )
-      .join(`,\n`)}
-  }\n\n`
+      .join(",\n")}
+  }\n\n`;
 
-    writeModule(`$virtual/ssr-sync-requires`, lazySyncRequires)
+    writeModule("$virtual/ssr-sync-requires", lazySyncRequires);
     // if this is executed, webpack should mark it as invalid, but sometimes there is some timing race
     // so we also explicitly set flag here as well
-    devSSRWillInvalidate()
+    devSSRWillInvalidate();
   }
 
   // Create file with sync requires of components/json files.
   let syncRequires = `
 // prefer default export if available
 const preferDefault = m => (m && m.default) || m
-\n\n`
+\n\n`;
   syncRequires += `exports.components = {\n${components
     .map(
       (c: IGatsbyPageComponent): string =>
@@ -225,67 +225,67 @@ const preferDefault = m => (m && m.default) || m
           c.componentPath,
         )}"))`,
     )
-    .join(`,\n`)}
-}\n\n`
+    .join(",\n")}
+}\n\n`;
 
   // Create file with async requires of components/json files.
-  let asyncRequires = ``
+  let asyncRequires = "";
 
   if (
-    process.env.gatsby_executing_command === `develop` ||
-    (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_PARTIAL_HYDRATION)
+    process.env.gatsby_executing_command === "develop" ||
+    (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_PARTIAL_HYDRATION)
   ) {
     asyncRequires = `exports.components = {\n${components
       .map((c: IGatsbyPageComponent): string => {
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
-          getAbsolutePathForVirtualModule(`$virtual`),
+          getAbsolutePathForVirtualModule("$virtual"),
           c.componentPath,
-        )
+        );
 
-        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? "&" : "?";
 
         return `  "${c.componentChunkName}": () => import("${slash(
           `./${relativeComponentPath}`,
-        )}${rqPrefix}export=default" /* webpackChunkName: "${c.componentChunkName}" */)`
+        )}${rqPrefix}export=default" /* webpackChunkName: "${c.componentChunkName}" */)`;
       })
-      .join(`,\n`)}
+      .join(",\n")}
 }\n\n
 
 exports.head = {\n${components
       .map((c: IGatsbyPageComponent): string | undefined => {
         if (!c.hasHeadComponent) {
-          return undefined
+          return undefined;
         }
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
-          getAbsolutePathForVirtualModule(`$virtual`),
+          getAbsolutePathForVirtualModule("$virtual"),
           c.componentPath,
-        )
+        );
 
-        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? "&" : "?";
 
         return `  "${c.componentChunkName}": () => import("${slash(
           `./${relativeComponentPath}`,
-        )}${rqPrefix}export=head" /* webpackChunkName: "${c.componentChunkName}head" */)`
+        )}${rqPrefix}export=head" /* webpackChunkName: "${c.componentChunkName}head" */)`;
       })
       .filter(Boolean)
-      .join(`,\n`)}
-}\n\n`
+      .join(",\n")}
+}\n\n`;
   } else {
     asyncRequires = `exports.components = {\n${components
       .map((c: IGatsbyPageComponent): string => {
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
-          getAbsolutePathForVirtualModule(`$virtual`),
+          getAbsolutePathForVirtualModule("$virtual"),
           c.componentPath,
-        )
+        );
         return `  "${c.componentChunkName}": () => import("${slash(
           `./${relativeComponentPath}`,
-        )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+        )}" /* webpackChunkName: "${c.componentChunkName}" */)`;
       })
-      .join(`,\n`)}
-}\n\n`
+      .join(",\n")}
+}\n\n`;
   }
 
   function writeAndMove(
@@ -293,43 +293,43 @@ exports.head = {\n${components
     file: string,
     data: string,
   ): Promise<void> {
-    writeModule(virtualFilePath, data)
+    writeModule(virtualFilePath, data);
 
     // files in .cache are not used anymore as part of webpack builds, but
     // still can be used by other tools (for example `gatsby serve` reads
     // `match-paths.json` to setup routing)
-    const destination = joinPath(program.directory, `.cache`, file)
-    const tmp = `${destination}.${Date.now()}`
+    const destination = joinPath(program.directory, ".cache", file);
+    const tmp = `${destination}.${Date.now()}`;
     return fs
       .writeFile(tmp, data)
-      .then(() => fs.move(tmp, destination, { overwrite: true }))
+      .then(() => fs.move(tmp, destination, { overwrite: true }));
   }
 
   await Promise.all([
-    writeAndMove(`$virtual/sync-requires.js`, `sync-requires.js`, syncRequires),
+    writeAndMove("$virtual/sync-requires.js", "sync-requires.js", syncRequires),
     writeAndMove(
-      `$virtual/async-requires.js`,
-      `async-requires.js`,
+      "$virtual/async-requires.js",
+      "async-requires.js",
       asyncRequires,
     ),
     writeAndMove(
-      `$virtual/match-paths.json`,
-      `match-paths.json`,
+      "$virtual/match-paths.json",
+      "match-paths.json",
       JSON.stringify(matchPaths, null, 4),
     ),
-  ])
+  ]);
 
-  return true
+  return true;
 }
 
 const debouncedWriteAll = _.debounce(
   async (): Promise<void> => {
-    const activity = reporter.activityTimer(`write out requires`, {
-      id: `requires-writer`,
-    })
-    activity.start()
-    await writeAll(store.getState())
-    activity.end()
+    const activity = reporter.activityTimer("write out requires", {
+      id: "requires-writer",
+    });
+    activity.start();
+    await writeAll(store.getState());
+    activity.end();
   },
   500,
   {
@@ -337,51 +337,51 @@ const debouncedWriteAll = _.debounce(
     // when refreshing data using `/__refresh` hook.
     leading: false,
   },
-)
+);
 
 /**
  * Start listening to CREATE/DELETE_PAGE events so we can rewrite
  * files as required
  */
-let listenerStarted = false
+let listenerStarted = false;
 
 export function startListener(): void {
   // Only start the listener once.
   if (listenerStarted) {
-    return
+    return;
   }
-  listenerStarted = true
+  listenerStarted = true;
 
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     /**
      * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
      * files as required
      */
-    emitter.on(`CREATE_SERVER_VISITED_PAGE`, async (): Promise<void> => {
+    emitter.on("CREATE_SERVER_VISITED_PAGE", async (): Promise<void> => {
       // this event only happen on new additions
-      devSSRWillInvalidate()
-      reporter.pendingActivity({ id: `requires-writer` })
-      debouncedWriteAll()
-    })
+      devSSRWillInvalidate();
+      reporter.pendingActivity({ id: "requires-writer" });
+      debouncedWriteAll();
+    });
   }
 
-  emitter.on(`CREATE_PAGE`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll()
-  })
+  emitter.on("CREATE_PAGE", (): void => {
+    reporter.pendingActivity({ id: "requires-writer" });
+    debouncedWriteAll();
+  });
 
-  emitter.on(`CREATE_PAGE_END`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll()
-  })
+  emitter.on("CREATE_PAGE_END", (): void => {
+    reporter.pendingActivity({ id: "requires-writer" });
+    debouncedWriteAll();
+  });
 
-  emitter.on(`DELETE_PAGE`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll()
-  })
+  emitter.on("DELETE_PAGE", (): void => {
+    reporter.pendingActivity({ id: "requires-writer" });
+    debouncedWriteAll();
+  });
 
-  emitter.on(`DELETE_PAGE_BY_PATH`, (): void => {
-    reporter.pendingActivity({ id: `requires-writer` })
-    debouncedWriteAll()
-  })
+  emitter.on("DELETE_PAGE_BY_PATH", (): void => {
+    reporter.pendingActivity({ id: "requires-writer" });
+    debouncedWriteAll();
+  });
 }

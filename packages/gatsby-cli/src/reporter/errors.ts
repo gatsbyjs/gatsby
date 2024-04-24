@@ -1,17 +1,22 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import PrettyError from "pretty-error"
-import stackTrace from "stack-trace"
-import { prepareStackTrace, ErrorWithCodeFrame } from "./prepare-stack-trace"
-import { isNodeInternalModulePath } from "gatsby-core-utils"
-import type { IStructuredStackFrame } from "../structured-errors/types"
-import { readFileSync } from "fs-extra"
-import { codeFrameColumns } from "@babel/code-frame"
+import PrettyError from "pretty-error";
+import stackTrace from "stack-trace";
+import { prepareStackTrace, ErrorWithCodeFrame } from "./prepare-stack-trace";
+import { isNodeInternalModulePath } from "gatsby-core-utils";
+import type { IStructuredStackFrame } from "../structured-errors/types";
+import { readFileSync } from "fs-extra";
+import { codeFrameColumns } from "@babel/code-frame";
 
-const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
+const packagesToSkip = [
+  "core-js",
+  "bluebird",
+  "regenerator-runtime",
+  "graphql",
+];
 
 const packagesToSkipTest = new RegExp(
-  `node_modules[\\/](${packagesToSkip.join(`|`)})`,
-)
+  `node_modules[\\/](${packagesToSkip.join("|")})`,
+);
 
 // TO-DO: move this this out of this file (and probably delete this file completely)
 // it's here because it re-implements similar thing as `pretty-error` already does
@@ -21,23 +26,23 @@ export function sanitizeStructuredStackTrace(
   // first filter out not useful call sites
   stack = stack.filter((callSite) => {
     if (!callSite.getFileName()) {
-      return false
+      return false;
     }
 
     if (packagesToSkipTest.test(callSite.getFileName())) {
-      return false
+      return false;
     }
 
-    if (callSite.getFileName().includes(`asyncToGenerator.js`)) {
-      return false
+    if (callSite.getFileName().includes("asyncToGenerator.js")) {
+      return false;
     }
 
     if (isNodeInternalModulePath(callSite.getFileName())) {
-      return false
+      return false;
     }
 
-    return true
-  })
+    return true;
+  });
 
   // then sanitize individual call site objects to make sure we don't
   // emit objects with extra fields that won't be handled by consumers
@@ -47,121 +52,121 @@ export function sanitizeStructuredStackTrace(
       functionName: callSite.getFunctionName(),
       columnNumber: callSite.getColumnNumber(),
       lineNumber: callSite.getLineNumber(),
-    }
-  })
+    };
+  });
 }
 
-type PrettyRenderError = Error | ErrorWithCodeFrame
+type PrettyRenderError = Error | ErrorWithCodeFrame;
 
 export function getErrorFormatter(): PrettyError {
-  const prettyError = new PrettyError()
-  const baseRender = prettyError.render
+  const prettyError = new PrettyError();
+  const baseRender = prettyError.render;
 
-  prettyError.skipNodeFiles()
+  prettyError.skipNodeFiles();
   prettyError.skipPackage(
-    `regenerator-runtime`,
-    `graphql`,
-    `core-js`,
+    "regenerator-runtime",
+    "graphql",
+    "core-js",
     // `static-site-generator-webpack-plugin`,
     // `tapable`, // webpack
-  )
+  );
 
   // @ts-ignore the type defs in prettyError are wrong
   prettyError.skip((traceLine) => {
-    if (traceLine && traceLine.file === `asyncToGenerator.js`) return true
-    return false
-  })
+    if (traceLine && traceLine.file === "asyncToGenerator.js") return true;
+    return false;
+  });
 
   prettyError.appendStyle({
     "pretty-error": {
       marginTop: 1,
     },
     "pretty-error > header": {
-      background: `red`,
+      background: "red",
     },
     "pretty-error > header > colon": {
-      color: `white`,
+      color: "white",
     },
-  })
+  });
 
-  if (process.env.FORCE_COLOR === `0`) {
-    prettyError.withoutColors()
+  if (process.env.FORCE_COLOR === "0") {
+    prettyError.withoutColors();
   }
 
   prettyError.render = (
     err: PrettyRenderError | Array<PrettyRenderError>,
   ): string => {
     if (Array.isArray(err)) {
-      return err.map((e) => prettyError.render(e)).join(`\n`)
+      return err.map((e) => prettyError.render(e)).join("\n");
     }
 
-    let rendered = baseRender.call(prettyError, err)
-    if (`codeFrame` in err) rendered = `\n${err.codeFrame}\n${rendered}`
-    return rendered
-  }
-  return prettyError
+    let rendered = baseRender.call(prettyError, err);
+    if ("codeFrame" in err) rendered = `\n${err.codeFrame}\n${rendered}`;
+    return rendered;
+  };
+  return prettyError;
 }
 
 type ErrorWithPotentialForcedLocation = Error & {
   forcedLocation?:
     | {
-        fileName: string
-        lineNumber?: number | undefined
-        columnNumber?: number | undefined
-        endLineNumber?: number | undefined
-        endColumnNumber?: number | undefined
-        functionName?: string | undefined
+        fileName: string;
+        lineNumber?: number | undefined;
+        columnNumber?: number | undefined;
+        endLineNumber?: number | undefined;
+        endColumnNumber?: number | undefined;
+        functionName?: string | undefined;
       }
-    | undefined
-}
+    | undefined;
+};
 
 /**
  * Convert a stringified webpack compilation error back into
  * an Error instance so it can be formatted properly
  */
 export function createErrorFromString(
-  errorOrErrorStack: string | ErrorWithPotentialForcedLocation = ``,
+  errorOrErrorStack: string | ErrorWithPotentialForcedLocation = "",
   sourceMapFile: string,
 ): ErrorWithCodeFrame {
-  if (typeof errorOrErrorStack === `string`) {
-    const errorStr = errorOrErrorStack
+  if (typeof errorOrErrorStack === "string") {
+    const errorStr = errorOrErrorStack;
     // eslint-disable-next-line prefer-const
-    let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
+    let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g);
     // pull the message from the first line then remove the `Error:` prefix
     // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
 
-    message = message.replace(/^(Error:)/, ``)
+    message = message.replace(/^(Error:)/, "");
 
-    const error = new Error(message)
+    const error = new Error(message);
 
-    error.stack = [message, rest.join(`\n`)].join(`\n`)
+    error.stack = [message, rest.join("\n")].join("\n");
 
-    error.name = `WebpackError`
+    error.name = "WebpackError";
     try {
       if (sourceMapFile) {
-        return prepareStackTrace(error, sourceMapFile)
+        return prepareStackTrace(error, sourceMapFile);
       }
     } catch (err) {
       // don't shadow a real error because of a parsing issue
     }
-    return error
+    return error;
   } else {
     if (errorOrErrorStack.forcedLocation) {
-      const forcedLocation = errorOrErrorStack.forcedLocation
-      const error = new Error(errorOrErrorStack.message) as ErrorWithCodeFrame
+      const forcedLocation = errorOrErrorStack.forcedLocation;
+      const error = new Error(errorOrErrorStack.message) as ErrorWithCodeFrame;
       error.stack = `${errorOrErrorStack.message}
-  at ${forcedLocation.functionName ?? `<anonymous>`} (${
+  at ${forcedLocation.functionName ?? "<anonymous>"} (${
     forcedLocation.fileName
   }${
     forcedLocation.lineNumber
       ? `:${forcedLocation.lineNumber}${
-          forcedLocation.columnNumber ? `:${forcedLocation.columnNumber}` : ``
+          forcedLocation.columnNumber ? `:${forcedLocation.columnNumber}` : ""
         }`
-      : ``
-  })`
+      : ""
+  })`;
 
       try {
-        const source = readFileSync(forcedLocation.fileName, `utf8`)
+        const source = readFileSync(forcedLocation.fileName, "utf8");
 
         error.codeFrame = codeFrameColumns(
           source,
@@ -180,14 +185,14 @@ export function createErrorFromString(
           {
             highlightCode: true,
           },
-        )
+        );
       } catch (e) {
         // failed to generate codeframe, we still should show an error so we keep going
       }
 
-      return error
+      return error;
     } else {
-      return createErrorFromString(errorOrErrorStack.stack, sourceMapFile)
+      return createErrorFromString(errorOrErrorStack.stack, sourceMapFile);
     }
   }
 }

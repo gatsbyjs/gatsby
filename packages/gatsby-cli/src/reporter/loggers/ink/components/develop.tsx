@@ -5,34 +5,34 @@ import {
   useEffect,
   useContext,
   type ComponentType,
-} from "react"
-import { Box, Text, useStdout } from "ink"
+} from "react";
+import { Box, Text, useStdout } from "ink";
 
-import { StoreStateContext } from "../context"
-import { ActivityStatuses } from "../../../constants"
-import { createLabel } from "./utils"
+import { StoreStateContext } from "../context";
+import { ActivityStatuses } from "../../../constants";
+import { createLabel } from "./utils";
 
 function getLabel(
   level: ActivityStatuses | string,
 ): ReturnType<typeof createLabel> {
   switch (level) {
     case ActivityStatuses.InProgress:
-      return createLabel(`In Progress`, `white`)
+      return createLabel("In Progress", "white");
     case ActivityStatuses.Interrupted:
-      return createLabel(`Interrupted`, `gray`)
+      return createLabel("Interrupted", "gray");
     case ActivityStatuses.Failed:
-      return createLabel(`Failed`, `red`)
+      return createLabel("Failed", "red");
     case ActivityStatuses.Success:
-      return createLabel(`Success`, `green`)
+      return createLabel("Success", "green");
 
     default:
-      return createLabel(level, `white`)
+      return createLabel(level, "white");
   }
 }
 
 // Track the width and height of the terminal. Responsive app design baby!
 function useTerminalResize(): Array<number> {
-  const { stdout } = useStdout()
+  const { stdout } = useStdout();
 
   // stdout type is nullable, so we need to handle case where it is undefined for type checking.
   // In practice this shouldn't happen ever, because AFAIK type is only nullable
@@ -42,40 +42,40 @@ function useTerminalResize(): Array<number> {
   // https://github.com/vadimdemedes/ink/blob/83894963727cf40ccac2256ec346e5ff3381c918/src/components/App.tsx#L18
   // https://github.com/vadimdemedes/ink/blob/83894963727cf40ccac2256ec346e5ff3381c918/src/components/App.tsx#L79-L84
   if (!stdout) {
-    return [0]
+    return [0];
   }
 
-  const [sizes, setSizes] = useState([stdout.columns, stdout.rows])
+  const [sizes, setSizes] = useState([stdout.columns, stdout.rows]);
   useEffect(() => {
     const resizeListener = (): void => {
-      setSizes([stdout.columns, stdout.rows])
-    }
-    stdout.on(`resize`, resizeListener)
+      setSizes([stdout.columns, stdout.rows]);
+    };
+    stdout.on("resize", resizeListener);
     return (): void => {
-      stdout.off(`resize`, resizeListener)
-    }
-  }, [stdout])
+      stdout.off("resize", resizeListener);
+    };
+  }, [stdout]);
 
-  return sizes
+  return sizes;
 }
 
 type IDevelopProps = {
-  pagesCount: number
-  appName: string
-  status: ActivityStatuses | ""
-}
+  pagesCount: number;
+  appName: string;
+  status: ActivityStatuses | "";
+};
 
 function _Develop({ pagesCount, appName, status }: IDevelopProps): JSX.Element {
-  const [width] = useTerminalResize()
+  const [width] = useTerminalResize();
 
-  const StatusLabel = getLabel(status)
+  const StatusLabel = getLabel(status);
 
   return (
-    <Box flexDirection="column" marginTop={2}>
+    <Box flexDirection='column' marginTop={2}>
       <Box>
-        <Text wrap="truncate">{`—`.repeat(width)}</Text>
+        <Text wrap='truncate'>{"—".repeat(width)}</Text>
       </Box>
-      <Box height={1} flexDirection="row">
+      <Box height={1} flexDirection='row'>
         <StatusLabel />
         <Box flexGrow={1} />
         <Text>{appName}</Text>
@@ -83,23 +83,23 @@ function _Develop({ pagesCount, appName, status }: IDevelopProps): JSX.Element {
         <Text>{pagesCount} pages</Text>
       </Box>
     </Box>
-  )
+  );
 }
 
-const Develop: ComponentType<IDevelopProps> = memo<IDevelopProps>(_Develop)
+const Develop: ComponentType<IDevelopProps> = memo<IDevelopProps>(_Develop);
 
 function _ConnectedDevelop(): JSX.Element {
-  const state = useContext(StoreStateContext)
+  const state = useContext(StoreStateContext);
 
   return (
     <Develop
       // @ts-ignore - program exists on state but we should refactor this
       pagesCount={state.pages?.size || 0}
       // @ts-ignore - program exists on state but we should refactor this
-      appName={state.program?.sitePackageJson.name || ``}
-      status={state.logs?.status || ``}
+      appName={state.program?.sitePackageJson.name || ""}
+      status={state.logs?.status || ""}
     />
-  )
+  );
 }
 
-export const ConnectedDevelop: ComponentType = memo(_ConnectedDevelop)
+export const ConnectedDevelop: ComponentType = memo(_ConnectedDevelop);

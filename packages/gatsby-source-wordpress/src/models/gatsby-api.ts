@@ -1,24 +1,24 @@
-import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
-import merge from "lodash/merge"
-import { createLocalFileNode } from "~/steps/source-nodes/create-nodes/create-local-file-node"
-import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/menu"
-import { cloneDeep } from "lodash"
-import { inPreviewMode } from "~/steps/preview"
-import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
-import { createModel } from "@rematch/core"
-import { IRootModel } from "."
+import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types";
+import merge from "lodash/merge";
+import { createLocalFileNode } from "~/steps/source-nodes/create-nodes/create-local-file-node";
+import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/menu";
+import { cloneDeep } from "lodash";
+import { inPreviewMode } from "~/steps/preview";
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version";
+import { createModel } from "@rematch/core";
+import { IRootModel } from ".";
 
 export type IPluginOptionsPreset = {
-  presetName: string
+  presetName: string;
   useIf: (
     helpers: GatsbyNodeApiHelpers,
     pluginOptions: IPluginOptions,
-  ) => boolean
-  options: IPluginOptions
-}
+  ) => boolean;
+  options: IPluginOptions;
+};
 
 export const previewOptimizationPreset: IPluginOptionsPreset = {
-  presetName: `PREVIEW_OPTIMIZATION`,
+  presetName: "PREVIEW_OPTIMIZATION",
   useIf: inPreviewMode,
   options: {
     html: {
@@ -52,101 +52,103 @@ export const previewOptimizationPreset: IPluginOptionsPreset = {
           }
         : {},
   },
-}
+};
 export type IPluginOptions = {
-  url?: string | undefined
-  verbose?: boolean | undefined
-  debug?: {
-    throwRefetchErrors?: boolean | undefined
-    graphql?:
-      | {
-          showQueryOnError?: boolean | undefined
-          showQueryVarsOnError?: boolean | undefined
-          copyQueryOnError?: boolean | undefined
-          panicOnError?: boolean | undefined
-          onlyReportCriticalErrors?: boolean | undefined
-          copyNodeSourcingQueryAndExit?: boolean | undefined
-          writeQueriesToDisk?: boolean | undefined
-          copyHtmlResponseOnError?: boolean | undefined
-          printIntrospectionDiff?: boolean | undefined
-        }
-      | undefined
-    timeBuildSteps?: Array<string> | boolean | undefined
-    disableCompatibilityCheck?: boolean | undefined
-    preview?: boolean | undefined
-  }
+  url?: string | undefined;
+  verbose?: boolean | undefined;
+  debug?:
+    | {
+        throwRefetchErrors?: boolean | undefined;
+        graphql?:
+          | {
+              showQueryOnError?: boolean | undefined;
+              showQueryVarsOnError?: boolean | undefined;
+              copyQueryOnError?: boolean | undefined;
+              panicOnError?: boolean | undefined;
+              onlyReportCriticalErrors?: boolean | undefined;
+              copyNodeSourcingQueryAndExit?: boolean | undefined;
+              writeQueriesToDisk?: boolean | undefined;
+              copyHtmlResponseOnError?: boolean | undefined;
+              printIntrospectionDiff?: boolean | undefined;
+            }
+          | undefined;
+        timeBuildSteps?: Array<string> | boolean | undefined;
+        disableCompatibilityCheck?: boolean | undefined;
+        preview?: boolean | undefined;
+      }
+    | undefined;
   develop?:
     | {
-        nodeUpdateInterval?: number | undefined
-        hardCacheMediaFiles?: boolean | undefined
-        hardCacheData?: boolean | undefined
+        nodeUpdateInterval?: number | undefined;
+        hardCacheMediaFiles?: boolean | undefined;
+        hardCacheData?: boolean | undefined;
       }
-    | undefined
+    | undefined;
   production?:
     | {
-        hardCacheMediaFiles?: boolean | undefined
-        allow404Images?: boolean | undefined
-        allow401Images?: boolean | undefined
+        hardCacheMediaFiles?: boolean | undefined;
+        allow404Images?: boolean | undefined;
+        allow401Images?: boolean | undefined;
       }
-    | undefined
+    | undefined;
   auth?:
     | {
         htaccess: {
-          username: string | null
-          password: string | null
-        }
+          username: string | null;
+          password: string | null;
+        };
       }
-    | undefined
+    | undefined;
   schema?:
     | {
-        queryDepth: number
-        circularQueryLimit: number
-        typePrefix: string
-        timeout: number // 30 seconds
-        perPage: number
-        requestConcurrency?: number | undefined
-        previewRequestConcurrency?: number | undefined
+        queryDepth: number;
+        circularQueryLimit: number;
+        typePrefix: string;
+        timeout: number; // 30 seconds
+        perPage: number;
+        requestConcurrency?: number | undefined;
+        previewRequestConcurrency?: number | undefined;
       }
-    | undefined
-  excludeFieldNames?: Array<string> | undefined
+    | undefined;
+  excludeFieldNames?: Array<string> | undefined;
   html?:
     | {
-        useGatsbyImage?: boolean | undefined
-        gatsbyImageOptions?: Record<string, unknown> | undefined
-        imageMaxWidth?: number | undefined
-        fallbackImageMaxWidth?: number | undefined
-        imageQuality?: number | undefined
-        createStaticFiles?: boolean | undefined
-        placeholderType?: `blurred` | `dominantColor` | undefined
+        useGatsbyImage?: boolean | undefined;
+        gatsbyImageOptions?: Record<string, unknown> | undefined;
+        imageMaxWidth?: number | undefined;
+        fallbackImageMaxWidth?: number | undefined;
+        imageQuality?: number | undefined;
+        createStaticFiles?: boolean | undefined;
+        placeholderType?: "blurred" | "dominantColor" | undefined;
       }
-    | undefined
-  presets?: Array<IPluginOptionsPreset> | undefined
+    | undefined;
+  presets?: Array<IPluginOptionsPreset> | undefined;
   type?:
     | {
         [typename: string]: {
-          limit?: number | undefined
-          excludeFieldNames?: Array<string> | undefined
+          limit?: number | undefined;
+          excludeFieldNames?: Array<string> | undefined;
 
-          exclude?: boolean | undefined
+          exclude?: boolean | undefined;
           // @todo type this
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          beforeChangeNode?: ((any) => Promise<any>) | undefined
-          nodeInterface?: boolean | undefined
-          lazyNodes?: boolean | undefined
-          createFileNodes?: boolean | undefined
+          beforeChangeNode?: ((any) => Promise<any>) | undefined;
+          nodeInterface?: boolean | undefined;
+          lazyNodes?: boolean | undefined;
+          createFileNodes?: boolean | undefined;
           localFile?:
             | {
-                excludeByMimeTypes?: Array<string> | undefined
-                maxFileSizeBytes?: number | undefined
-                requestConcurrency?: number | undefined
+                excludeByMimeTypes?: Array<string> | undefined;
+                maxFileSizeBytes?: number | undefined;
+                requestConcurrency?: number | undefined;
               }
-            | undefined
+            | undefined;
 
-          placeholderSizeName?: string
-        }
+          placeholderSizeName?: string | undefined;
+        };
       }
-    | undefined
-}
+    | undefined;
+};
 
 const defaultPluginOptions: IPluginOptions = {
   url: null,
@@ -187,7 +189,7 @@ const defaultPluginOptions: IPluginOptions = {
   schema: {
     queryDepth: 15,
     circularQueryLimit: 5,
-    typePrefix: `Wp`,
+    typePrefix: "Wp",
     timeout: 30 * 1000, // 30 seconds
     perPage: 100,
     requestConcurrency: 15,
@@ -213,7 +215,7 @@ const defaultPluginOptions: IPluginOptions = {
     // this adds image options to images in HTML fields when html.useGatsbyImage is also set
     gatsbyImageOptions: {},
 
-    placeholderType: `blurred`,
+    placeholderType: "blurred",
   },
   presets: [previewOptimizationPreset],
   type: {
@@ -223,7 +225,7 @@ const defaultPluginOptions: IPluginOptions = {
       // dateFields: [`date`],
     },
     RootQuery: {
-      excludeFieldNames: [`viewer`, `node`, `schemaMd5`],
+      excludeFieldNames: ["viewer", "node", "schemaMd5"],
     },
     UserToMediaItemConnection: {
       // if this type is not excluded it will potentially fetch an extra 100
@@ -250,7 +252,7 @@ const defaultPluginOptions: IPluginOptions = {
     },
     MediaItem: {
       exclude: false,
-      placeholderSizeName: `gatsby-image-placeholder`,
+      placeholderSizeName: "gatsby-image-placeholder",
       lazyNodes: false,
       createFileNodes: true,
       localFile: {
@@ -273,33 +275,33 @@ const defaultPluginOptions: IPluginOptions = {
         ) {
           return {
             remoteNode,
-          }
+          };
         }
 
         if (
-          actionType === `CREATE_ALL` ||
-          actionType === `CREATE` ||
-          actionType === `UPDATE`
+          actionType === "CREATE_ALL" ||
+          actionType === "CREATE" ||
+          actionType === "UPDATE"
         ) {
           const createdMediaItem = await createLocalFileNode({
             mediaItemNode: remoteNode,
             parentName: `Node action ${actionType}`,
-          })
+          });
 
           if (createdMediaItem) {
             remoteNode.localFile = {
               id: createdMediaItem.id,
-            }
+            };
 
             return {
               remoteNode,
-            }
+            };
           }
         }
 
         return {
           remoteNode,
-        }
+        };
       },
     },
     ContentNode: {
@@ -326,13 +328,13 @@ const defaultPluginOptions: IPluginOptions = {
       beforeChangeNode: menuBeforeChangeNode,
     },
   },
-}
+};
 
 export type IGatsbyApiState = {
-  helpers: GatsbyNodeApiHelpers
-  pluginOptions: IPluginOptions
-  activePluginOptionsPresets?: Array<IPluginOptionsPreset>
-}
+  helpers: GatsbyNodeApiHelpers;
+  pluginOptions: IPluginOptions;
+  activePluginOptionsPresets?: Array<IPluginOptionsPreset> | undefined;
+};
 
 const gatsbyApi = createModel<IRootModel>()({
   state: {
@@ -345,10 +347,10 @@ const gatsbyApi = createModel<IRootModel>()({
       state: IGatsbyApiState,
       payload: IGatsbyApiState,
     ): IGatsbyApiState {
-      const stateCopy = cloneDeep(state)
+      const stateCopy = cloneDeep(state);
 
-      const defaultPresets = stateCopy.pluginOptions?.presets || []
-      const userPresets = payload.pluginOptions?.presets || []
+      const defaultPresets = stateCopy.pluginOptions?.presets || [];
+      const userPresets = payload.pluginOptions?.presets || [];
 
       /**
        * Presets are plugin option configurations that are conditionally
@@ -356,30 +358,30 @@ const gatsbyApi = createModel<IRootModel>()({
        * If it returns true, that preset is used.
        */
       const optionsPresets = [...defaultPresets, ...userPresets]?.filter(
-        preset => preset.useIf(payload.helpers, payload.pluginOptions),
-      )
+        (preset) => preset.useIf(payload.helpers, payload.pluginOptions),
+      );
 
       if (optionsPresets?.length) {
-        state.activePluginOptionsPresets = optionsPresets
+        state.activePluginOptionsPresets = optionsPresets;
 
-        let presetModifiedOptions = state.pluginOptions
+        let presetModifiedOptions = state.pluginOptions;
 
         for (const preset of optionsPresets) {
-          presetModifiedOptions = merge(presetModifiedOptions, preset.options)
+          presetModifiedOptions = merge(presetModifiedOptions, preset.options);
         }
 
-        state.pluginOptions = presetModifiedOptions
+        state.pluginOptions = presetModifiedOptions;
       }
 
       // add the user defined plugin options last so they override any presets
-      state = merge(state, payload)
+      state = merge(state, payload);
 
-      return state
+      return state;
     },
   },
   effects: () => {
-    return {}
+    return {};
   },
-})
+});
 
-export default gatsbyApi
+export default gatsbyApi;

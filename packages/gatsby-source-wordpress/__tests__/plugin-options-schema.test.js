@@ -1,18 +1,18 @@
 import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "gatsby-source-wordpress/dist/steps/declare-plugin-options-schema"
 
-describe(`pluginOptionsSchema`, () => {
-  it(`should validate a minimal, valid config`, async () => {
+describe("pluginOptionsSchema", () => {
+  it("should validate a minimal, valid config", async () => {
     const { isValid, errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      url: `http://localhost:8000/graphql`,
+      url: "http://localhost:8000/graphql",
     })
 
     expect(isValid).toEqual(true)
     expect(errors).toEqual([])
   })
 
-  it(`should invalidate a config missing required vars`, async () => {
-    const expectedErrors = [`"url" is required`,]
+  it("should invalidate a config missing required vars", async () => {
+    const expectedErrors = ["\"url\" is required",]
 
     const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
@@ -23,11 +23,11 @@ describe(`pluginOptionsSchema`, () => {
     expect(errors).toEqual(expectedErrors)
   })
 
-  it(`should validate a fully custom config`, async () => {
+  it("should validate a fully custom config", async () => {
     const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       {
-        url: `https://fakeurl.com/graphql`,
+        url: "https://fakeurl.com/graphql",
         verbose: false,
         debug: {
           throwRefetchErrors: true,
@@ -53,14 +53,14 @@ describe(`pluginOptionsSchema`, () => {
         },
         auth: {
           htaccess: {
-            username: `test`,
-            password: `test`,
+            username: "test",
+            password: "test",
           },
         },
         schema: {
           queryDepth: 15,
           circularQueryLimit: 5,
-          typePrefix: `Wp`,
+          typePrefix: "Wp",
           timeout: 30 * 1000, // 30 seconds
           perPage: 100,
         },
@@ -74,15 +74,15 @@ describe(`pluginOptionsSchema`, () => {
         },
         type: {
           __all: {
-            excludeFieldNames: [`viewer`],
+            excludeFieldNames: ["viewer"],
           },
           RootQuery: {
-            excludeFieldNames: [`schemaMd5`],
+            excludeFieldNames: ["schemaMd5"],
           },
           MediaItem: {
             lazyNodes: true,
             localFile: {
-              excludeByMimeTypes: [`video/mp4`],
+              excludeByMimeTypes: ["video/mp4"],
               maxFileSizeBytes: 1400000,
             },
           },
@@ -96,11 +96,11 @@ describe(`pluginOptionsSchema`, () => {
             beforeChangeNode: null,
           },
           Page: {
-            beforeChangeNode: `./docs-generation.test.js`,
+            beforeChangeNode: "./docs-generation.test.js",
           },
           Post: {
             beforeChangeNode: () => {
-              console.log(`Hi from an inline fn!`)
+              console.log("Hi from an inline fn!")
             },
           },
           EnqueuedScript: {

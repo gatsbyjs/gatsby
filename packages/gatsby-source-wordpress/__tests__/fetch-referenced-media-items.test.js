@@ -1,4 +1,4 @@
-jest.mock(`../dist/utils/fetch-graphql`, () => jest.fn())
+jest.mock("../dist/utils/fetch-graphql", () => jest.fn())
 
 import fetchGraphql from "../dist/utils/fetch-graphql"
 import { fetchMediaItemsBySourceUrl, fetchMediaItemsById } from "../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items"
@@ -16,9 +16,9 @@ const fakeReporter = {
 
 const getNodeMock = jest.fn()
 
-const btoa = (input) => Buffer.from(input).toString(`base64`)
+const btoa = (input) => Buffer.from(input).toString("base64")
 
-const store = {store: createStore(), key: `test`}
+const store = {store: createStore(), key: "test"}
 
 const runWithGlobalStore = async (fn) => {
   asyncLocalStorage.run(store, fn)
@@ -27,7 +27,7 @@ const runWithGlobalStore = async (fn) => {
 const withGlobalStore = (fn) => () => {
      runWithGlobalStore(fn)
   }
-describe(`fetch-referenced-media-items`, () => {
+describe("fetch-referenced-media-items", () => {
   beforeAll(withGlobalStore(() => {
     getStore().dispatch.gatsbyApi.setState({
       pluginOptions: {
@@ -42,7 +42,7 @@ describe(`fetch-referenced-media-items`, () => {
     jest.resetAllMocks()
   })
 
-  describe(`fetchMediaItemsBySourceUrl`, () => {
+  describe("fetchMediaItemsBySourceUrl", () => {
 
 const createApi = () => {
   return {
@@ -63,7 +63,7 @@ const createApi = () => {
   }
 }
 
-    it(`should properly download multiple pages`, withGlobalStore(async () => {
+    it("should properly download multiple pages", withGlobalStore(async () => {
       fetchGraphql
         .mockResolvedValueOnce({
           data: {
@@ -75,11 +75,11 @@ const createApi = () => {
           data: {
             mediaItem__index_2: {
               id: 2,
-              mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
+              mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/file1.mp3",
             },
             mediaItem__index_3: {
               id: 3,
-              mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
+              mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/file1.mp3",
             },
           },
         })
@@ -97,10 +97,10 @@ const createApi = () => {
         })
       const result = await fetchMediaItemsBySourceUrl({
         mediaItemUrls: [
-          `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3?_=7`,
-          `https://wordpress.host/wp-content/uploads/2018/05/file2.mp3?_=7`,
-          `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
-          `https://wordpress.host/wp-content/uploads/2018/05/file2.mp3`,
+          "https://wordpress.host/wp-content/uploads/2018/05/file1.mp3?_=7",
+          "https://wordpress.host/wp-content/uploads/2018/05/file2.mp3?_=7",
+          "https://wordpress.host/wp-content/uploads/2018/05/file1.mp3",
+          "https://wordpress.host/wp-content/uploads/2018/05/file2.mp3",
         ],
         createContentDigest,
         helpers: createApi(),
@@ -109,7 +109,7 @@ const createApi = () => {
     }))
 
 
-    it(`should properly download a single page if there is only 1`, withGlobalStore(async () => {
+    it("should properly download a single page if there is only 1", withGlobalStore(async () => {
       getStore().dispatch.gatsbyApi.setState({
         pluginOptions: {
           schema: {
@@ -123,21 +123,21 @@ const createApi = () => {
           data: {
             mediaItem__index_0: {
               id: 0,
-              mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/single-page-file1.mp3`,
+              mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/single-page-file1.mp3",
             },
             mediaItem__index_1: {
               id: 1,
-              mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/single-page-file1.mp3`,
+              mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/single-page-file1.mp3",
             },
           },
         })
 
       const result = await fetchMediaItemsBySourceUrl({
         mediaItemUrls: [
-          `https://wordpress.host/wp-content/uploads/2018/05/single-page-file1.mp3`,
-          `https://wordpress.host/wp-content/uploads/2018/05/single-page-file2.mp3`,
+          "https://wordpress.host/wp-content/uploads/2018/05/single-page-file1.mp3",
+          "https://wordpress.host/wp-content/uploads/2018/05/single-page-file2.mp3",
         ],
-        selectionSet: `id\nmediaItemUrl`,
+        selectionSet: "id\nmediaItemUrl",
         createContentDigest,
         helpers: createApi(),
       })
@@ -146,7 +146,7 @@ const createApi = () => {
   })
 
 
-  describe(`fetchMediaItemsById`, () => {
+  describe("fetchMediaItemsById", () => {
 
     const createApi = () => {
       return {
@@ -161,7 +161,7 @@ const createApi = () => {
       }
     }
 
-    it(`should properly download multiple pages of ids`, withGlobalStore(async () => {
+    it("should properly download multiple pages of ids", withGlobalStore(async () => {
       getNodeMock
       .mockReturnValueOnce(undefined)
       .mockReturnValueOnce(undefined)
@@ -198,10 +198,10 @@ const createApi = () => {
             mediaItems: {
               nodes: [{
                 id: 0,
-                mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
+                mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/file1.mp3",
               },{
                 id: 1,
-                mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
+                mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/file1.mp3",
               },]
             }
           },
@@ -211,27 +211,27 @@ const createApi = () => {
             mediaItems: {
               nodes: [{
                 id: 2,
-                mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file2.mp3`,
+                mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/file2.mp3",
               },{
                 id: 3,
-                mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file3.mp3`,
+                mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/file3.mp3",
               },]
             }
           },
         })
       const result = await fetchMediaItemsById({
         mediaItemIds: [
-          btoa(`attachment:1`),
-          btoa(`attachment:2`),
-          btoa(`attachment:3`),
-          btoa(`attachment:4`),
+          btoa("attachment:1"),
+          btoa("attachment:2"),
+          btoa("attachment:3"),
+          btoa("attachment:4"),
         ],
         settings: {
           limit: 5
         },
         typeInfo: {
-          pluralName: `mediaItems`,
-          nodesTypeName: `MediaItem`
+          pluralName: "mediaItems",
+          nodesTypeName: "MediaItem"
         },
 
         createContentDigest,
@@ -241,7 +241,7 @@ const createApi = () => {
     }))
 
 
-    it(`should properly download a single page of ids if there is only 1`, withGlobalStore(async () => {
+    it("should properly download a single page of ids if there is only 1", withGlobalStore(async () => {
       getNodeMock
       .mockReturnValueOnce(undefined)
       .mockReturnValueOnce(undefined)
@@ -268,10 +268,10 @@ const createApi = () => {
             mediaItems: {
               nodes: [{
                 id: 0,
-                mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
+                mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/file1.mp3",
               },{
                 id: 1,
-                mediaItemUrl: `https://wordpress.host/wp-content/uploads/2018/05/file1.mp3`,
+                mediaItemUrl: "https://wordpress.host/wp-content/uploads/2018/05/file1.mp3",
               },]
             }
           },
@@ -279,17 +279,17 @@ const createApi = () => {
 
       const result = await fetchMediaItemsById({
         mediaItemIds: [
-          btoa(`attachment:1`), btoa(`attachment:2`)
+          btoa("attachment:1"), btoa("attachment:2")
         ],
         settings: {
           limit: 5
         },
         typeInfo: {
-          pluralName: `mediaItems`,
-          nodesTypeName: `MediaItem`
+          pluralName: "mediaItems",
+          nodesTypeName: "MediaItem"
         },
 
-        selectionSet: `id\nmediaItemUrl`,
+        selectionSet: "id\nmediaItemUrl",
         createContentDigest,
         helpers: createApi(),
       })

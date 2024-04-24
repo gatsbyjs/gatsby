@@ -1,4 +1,4 @@
-import preval from "preval.macro"
+import preval from "preval.macro";
 
 const fs = preval`
   let scale = [8]
@@ -14,8 +14,8 @@ const fs = preval`
   const scaleRem = scale.map(t => t / 16 + "rem")
 
   module.exports = { scale, scalePx, scaleRem }
-`
+`;
 
-export const fontSizes = fs.scaleRem
-export const fontSizesPx = fs.scalePx
-export const fontSizesRaw = fs.scale
+export const fontSizes = fs.scaleRem;
+export const fontSizesPx = fs.scalePx;
+export const fontSizesRaw = fs.scale;

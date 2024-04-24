@@ -1,11 +1,11 @@
-const { selectAll } = require(`unist-util-select`)
+const { selectAll } = require("unist-util-select");
 // TODO(v5): use gatsby/sharp
-const getSharpInstance = require(`./safe-sharp`)
-const _ = require(`lodash`)
-const Promise = require(`bluebird`)
-const cheerio = require(`cheerio`)
-const chalk = require(`chalk`)
-const { buildResponsiveSizes } = require(`./utils`)
+const getSharpInstance = require("./safe-sharp");
+const _ = require("lodash");
+const Promise = require("bluebird");
+const cheerio = require("cheerio");
+const chalk = require("chalk");
+const { buildResponsiveSizes } = require("./utils");
 
 // If the image is hosted on contentful
 // 1. Find the image file
@@ -29,72 +29,72 @@ module.exports = async (
 ) => {
   const defaults = {
     maxWidth: 650,
-    wrapperStyle: ``,
-    backgroundColor: `white`,
+    wrapperStyle: "",
+    backgroundColor: "white",
     linkImagesToOriginal: true,
     showCaptions: false,
     pathPrefix,
     withWebp: false,
-    loading: `lazy`,
-  }
+    loading: "lazy",
+  };
 
   // This will only work for markdown syntax image tags
-  const markdownImageNodes = selectAll(`image`, markdownAST)
+  const markdownImageNodes = selectAll("image", markdownAST);
 
   // This will also allow the use of html image tags
-  const rawHtmlNodes = selectAll(`html`, markdownAST)
+  const rawHtmlNodes = selectAll("html", markdownAST);
 
   const generateImagesAndUpdateNode = async function (node) {
-    let originalImg = node.url
+    let originalImg = node.url;
     if (!/^(http|https)?:\/\//i.test(node.url)) {
-      originalImg = `https:${node.url}`
+      originalImg = `https:${node.url}`;
     }
 
-    const srcSplit = node.url.split(`/`)
-    const fileName = srcSplit[srcSplit.length - 1]
-    const options = _.defaults({}, pluginOptions, defaults)
+    const srcSplit = node.url.split("/");
+    const fileName = srcSplit[srcSplit.length - 1];
+    const options = _.defaults({}, pluginOptions, defaults);
 
-    const optionsHash = createContentDigest(options)
+    const optionsHash = createContentDigest(options);
 
-    const cacheKey = `remark-images-ctf-${node.url}-${optionsHash}`
-    const cachedRawHTML = await cache.get(cacheKey)
+    const cacheKey = `remark-images-ctf-${node.url}-${optionsHash}`;
+    const cachedRawHTML = await cache.get(cacheKey);
 
     if (cachedRawHTML) {
-      return cachedRawHTML
+      return cachedRawHTML;
     }
-    const sharp = await getSharpInstance()
-    const metaReader = sharp()
+    const sharp = await getSharpInstance();
+    const metaReader = sharp();
 
     // @todo to increase reliablility, this should use the asset downloading function from gatsby-source-contentful
-    let response
+    let response;
     try {
       response = await fetch({
-        method: `GET`,
+        method: "GET",
         url: originalImg, // for some reason there is a './' prefix
-        responseType: `stream`,
-      })
+        responseType: "stream",
+      });
     } catch (err) {
       reporter.panic(
         `Image downloading failed for ${originalImg}, please check if the image still exists on contentful`,
         err,
-      )
-      return []
+      );
+      return [];
     }
 
-    response.data.pipe(metaReader)
+    response.data.pipe(metaReader);
 
-    let metadata
+    let metadata;
     try {
-      metadata = await metaReader.metadata()
+      metadata = await metaReader.metadata();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       reporter.panic(
         `The image "${node.url}" (with alt text: "${node.alt}") doesn't appear to be a supported image format.`,
         error,
-      )
+      );
     }
 
-    response.data.destroy()
+    response.data.destroy();
 
     const responsiveSizesResult = await buildResponsiveSizes(
       {
@@ -103,29 +103,29 @@ module.exports = async (
         options,
       },
       reporter,
-    )
+    );
 
     // Calculate the paddingBottom %
-    const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`
+    const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`;
 
-    const fallbackSrc = originalImg
-    const srcSet = responsiveSizesResult.srcSet
-    const presentationWidth = responsiveSizesResult.presentationWidth
+    const fallbackSrc = originalImg;
+    const srcSet = responsiveSizesResult.srcSet;
+    const presentationWidth = responsiveSizesResult.presentationWidth;
 
     // Generate default alt tag
-    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
-    const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, "");
+    const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, " ");
 
-    const loading = options.loading
+    const loading = options.loading;
 
-    if (![`lazy`, `eager`, `auto`].includes(loading)) {
+    if (!["lazy", "eager", "auto"].includes(loading)) {
       reporter.warn(
         reporter.stripIndent(`
         ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
-          `loading`,
+          "loading",
         )} option. Please pass one of "lazy", "eager" or "auto".
       `),
-      )
+      );
     }
 
     // Create our base image tag
@@ -136,13 +136,13 @@ module.exports = async (
           options.backgroundColor
         };"
         alt="${node.alt ? node.alt : defaultAlt}"
-        title="${node.title ? node.title : ``}"
+        title="${node.title ? node.title : ""}"
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${responsiveSizesResult.sizes}"
         loading="${loading}"
       />
-   `.trim()
+   `.trim();
 
     // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
     if (options.withWebp) {
@@ -163,12 +163,12 @@ module.exports = async (
               options.backgroundColor
             };"
             alt="${node.alt ? node.alt : defaultAlt}"
-            title="${node.title ? node.title : ``}"
+            title="${node.title ? node.title : ""}"
             src="${fallbackSrc}"
             loading="${loading}"
           />
         </picture>
-      `.trim()
+      `.trim();
     }
 
     // Construct new image node w/ aspect ratio placeholder
@@ -184,7 +184,7 @@ module.exports = async (
           ${imageTag}
         </span>
       </span>
-    `.trim()
+    `.trim();
 
     // Make linking to original image optional.
     if (options.linkImagesToOriginal) {
@@ -198,7 +198,7 @@ module.exports = async (
         >
           ${rawHTML}
         </a>
-      `.trim()
+      `.trim();
     }
 
     // Wrap in figure and use title as caption
@@ -208,29 +208,29 @@ module.exports = async (
 <figure class="gatsby-resp-image-figure">
 ${rawHTML}
 <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
-</figure>`
+</figure>`;
     }
-    await cache.set(cacheKey, rawHTML)
-    return rawHTML
-  }
+    await cache.set(cacheKey, rawHTML);
+    return rawHTML;
+  };
   return Promise.all(
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
       (node) =>
         new Promise((resolve) => {
-          if (node.url.indexOf(`images.ctfassets.net`) !== -1) {
+          if (node.url.indexOf("images.ctfassets.net") !== -1) {
             return generateImagesAndUpdateNode(node).then((rawHTML) => {
               if (rawHTML) {
                 // Replace the image node with an inline HTML node.
-                node.type = `html`
-                node.value = rawHTML
+                node.type = "html";
+                node.value = rawHTML;
               }
 
-              return resolve(node)
-            })
+              return resolve(node);
+            });
           } else {
             // Image isn't relative so there's nothing for us to do.
-            return resolve()
+            return resolve();
           }
         }),
     ),
@@ -243,56 +243,56 @@ ${rawHTML}
           // eslint-disable-next-line no-async-promise-executor
           new Promise(async (resolve, reject) => {
             if (!node.value) {
-              return resolve()
+              return resolve();
             }
 
-            const $ = cheerio.load(node.value)
-            if ($(`img`).length === 0) {
+            const $ = cheerio.load(node.value);
+            if ($("img").length === 0) {
               // No img tags
-              return resolve()
+              return resolve();
             }
 
-            const imageRefs = []
-            $(`img`).each(function () {
+            const imageRefs = [];
+            $("img").each(function () {
               // eslint-disable-next-line @babel/no-invalid-this
-              imageRefs.push($(this))
-            })
+              imageRefs.push($(this));
+            });
 
             for (const thisImg of imageRefs) {
               // Get the details we need.
-              const formattedImgTag = {}
-              formattedImgTag.url = thisImg.attr(`src`)
-              formattedImgTag.title = thisImg.attr(`title`)
-              formattedImgTag.alt = thisImg.attr(`alt`)
+              const formattedImgTag = {};
+              formattedImgTag.url = thisImg.attr("src");
+              formattedImgTag.title = thisImg.attr("title");
+              formattedImgTag.alt = thisImg.attr("alt");
 
               if (!formattedImgTag.url) {
-                return resolve()
+                return resolve();
               }
 
-              if (formattedImgTag.url.indexOf(`images.ctfassets.net`) !== -1) {
+              if (formattedImgTag.url.indexOf("images.ctfassets.net") !== -1) {
                 const rawHTML = await generateImagesAndUpdateNode(
                   formattedImgTag,
                   resolve,
-                )
+                );
 
                 if (rawHTML) {
                   // Replace the image string
-                  thisImg.replaceWith(rawHTML)
+                  thisImg.replaceWith(rawHTML);
                 } else {
-                  return resolve()
+                  return resolve();
                 }
               }
             }
 
             // Replace the image node with an inline HTML node.
-            node.type = `html`
-            node.value = $(`body`).html() // fix for cheerio v1
+            node.type = "html";
+            node.value = $("body").html(); // fix for cheerio v1
 
-            return resolve(node)
+            return resolve(node);
           }),
       ),
     ).then((htmlImageNodes) =>
       markdownImageNodes.concat(htmlImageNodes).filter((node) => !!node),
     ),
-  )
-}
+  );
+};

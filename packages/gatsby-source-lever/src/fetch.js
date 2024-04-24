@@ -1,4 +1,4 @@
-const httpExceptionHandler = require(`./http-exception-handler`)
+const httpExceptionHandler = require("./http-exception-handler");
 
 /**
  * High-level function to coordinate fetching data from Lever.co
@@ -7,17 +7,17 @@ const httpExceptionHandler = require(`./http-exception-handler`)
 async function fetch({ site, verbose, typePrefix }) {
   // return require(`./data.json`)
 
-  let entities = []
+  let entities = [];
   try {
     const res = await fetch({
-      method: `get`,
+      method: "get",
       url: `https://api.lever.co/v0/postings/${site}?mode=json`,
-    })
-    entities = res.data
+    });
+    entities = res.data;
   } catch (e) {
-    httpExceptionHandler(e)
+    httpExceptionHandler(e);
   }
 
-  return entities
+  return entities;
 }
-module.exports = fetch
+module.exports = fetch;

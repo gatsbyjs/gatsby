@@ -1,38 +1,38 @@
-import ModuleNotFoundError from "webpack/lib/ModuleNotFoundError"
-import { structureWebpackErrors } from "../webpack-error-utils"
-import { Stage } from "../../commands/types"
+import ModuleNotFoundError from "webpack/lib/ModuleNotFoundError";
+import { structureWebpackErrors } from "../webpack-error-utils";
+import { Stage } from "../../commands/types";
 
-describe(`structureWebpackErrors`, () => {
+describe("structureWebpackErrors", () => {
   const stages: Array<Stage> = [
-    'build-javascript',
-    'build-html',
-    'develop-html',
-    'develop',
-  ]
+    "build-javascript",
+    "build-html",
+    "develop-html",
+    "develop",
+  ];
 
-  describe.each(stages)(`stage: %s`, (stage: Stage) => {
-    it(`Can't resolve (98124)`, () => {
+  describe.each(stages)("stage: %s", (stage: Stage) => {
+    it("Can't resolve (98124)", () => {
       const error = new ModuleNotFoundError(
         {
-          resource: `foo.js`,
+          resource: "foo.js",
         },
         {
-          message: `Can't resolve 'wat.js' in 'foo.js'`,
+          message: "Can't resolve 'wat.js' in 'foo.js'",
           loc: {
             line: 5,
             column: 10,
           },
-        }
-      )
+        },
+      );
 
-      let structuredError = structureWebpackErrors(stage, error)
+      let structuredError = structureWebpackErrors(stage, error);
       if (Array.isArray(structuredError)) {
-        structuredError = structuredError[0]
+        structuredError = structuredError[0];
       }
 
-      expect(structuredError).toMatchSnapshot()
-      expect(structuredError.context.stageLabel).not.toBeUndefined()
-      expect(structuredError.context.stage).not.toBeUndefined()
-    })
-  })
-})
+      expect(structuredError).toMatchSnapshot();
+      expect(structuredError.context.stageLabel).not.toBeUndefined();
+      expect(structuredError.context.stage).not.toBeUndefined();
+    });
+  });
+});

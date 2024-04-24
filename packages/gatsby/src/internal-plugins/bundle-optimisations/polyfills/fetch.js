@@ -1,1 +1,1 @@
-module.exports = global.fetch
+module.exports = global.fetch;

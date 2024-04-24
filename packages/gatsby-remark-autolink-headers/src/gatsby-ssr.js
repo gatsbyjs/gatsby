@@ -1,16 +1,16 @@
-import React from "react"
+import React from "react";
 
 const pluginDefaults = {
-  className: `anchor`,
+  className: "anchor",
   icon: true,
   offsetY: 0,
-}
+};
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   const { className, icon, offsetY } = Object.assign(
     pluginDefaults,
-    pluginOptions
-  )
+    pluginOptions,
+  );
 
   const styles = `
     .${className}.before {
@@ -46,7 +46,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     h6 .${className}:focus svg {
       visibility: visible;
     }
-  `
+  `;
 
   // This script used to have `let scrollTop` and `let clientTop` instead of
   // current ones which are `var`. It is changed due to incompatibility with
@@ -69,19 +69,19 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         }
       }
     })
-  `
+  `;
 
   const style = icon ? (
-    <style key={`gatsby-remark-autolink-headers-style`} type="text/css">
+    <style key={"gatsby-remark-autolink-headers-style"} type='text/css'>
       {styles}
     </style>
-  ) : undefined
+  ) : undefined;
 
   return setHeadComponents([
     style,
     <script
-      key={`gatsby-remark-autolink-headers-script`}
+      key={"gatsby-remark-autolink-headers-script"}
       dangerouslySetInnerHTML={{ __html: script }}
     />,
-  ])
-}
+  ]);
+};

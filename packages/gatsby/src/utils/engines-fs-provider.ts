@@ -9,24 +9,24 @@ declare global {
   namespace NodeJS {
     // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/consistent-type-definitions
     interface Global {
-      _fsWrapper: typeof import("fs")
-      _actualFsWrapper: typeof import("fs")
+      _fsWrapper: typeof import("fs");
+      _actualFsWrapper: typeof import("fs");
     }
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-declare const __non_webpack_require__: typeof require
+declare const __non_webpack_require__: typeof require;
 
 if (global._fsWrapper) {
-  global._actualFsWrapper = global._fsWrapper
+  global._actualFsWrapper = global._fsWrapper;
 } else {
   // fs alternative not provided - falling back to regular fs
-  global._actualFsWrapper = __non_webpack_require__(`fs`)
+  global._actualFsWrapper = __non_webpack_require__("fs");
 }
 
 // hydrate webpack module cache (consume global, so it's not lazy)
-require(`fs`)
+require("fs");
 
 // https://stackoverflow.com/a/59499895
-export {}
+export {};

@@ -1,11 +1,11 @@
-import { onLogAction } from "../../redux/index"
-import type { ISetStatus, ActionsUnion } from "../../redux/types"
-import { Actions, LogLevels } from "../../constants"
-import stripAnsi from "strip-ansi"
-import { cloneDeep } from "lodash"
+import { onLogAction } from "../../redux/index";
+import type { ISetStatus, ActionsUnion } from "../../redux/types";
+import { Actions, LogLevels } from "../../constants";
+import stripAnsi from "strip-ansi";
+import { cloneDeep } from "lodash";
 
 function isStringPayload(action: ActionsUnion): action is ISetStatus {
-  return typeof action.payload === `string`
+  return typeof action.payload === "string";
 }
 
 /**
@@ -13,27 +13,29 @@ function isStringPayload(action: ActionsUnion): action is ISetStatus {
  * See more at integration-tests/structured-logging/__tests__/to-do.js
  */
 function sanitizeAction(action: ActionsUnion): ActionsUnion {
-  const copiedAction = cloneDeep(action)
+  const copiedAction = cloneDeep(action);
 
   if (isStringPayload(copiedAction)) {
-    return copiedAction
+    return copiedAction;
   }
 
-  if (`text` in copiedAction.payload && copiedAction.payload.text) {
-    copiedAction.payload.text = stripAnsi(copiedAction.payload.text)
+  if ("text" in copiedAction.payload && copiedAction.payload.text) {
+    copiedAction.payload.text = stripAnsi(copiedAction.payload.text);
   }
-  if (`statusText` in copiedAction.payload && copiedAction.payload.statusText) {
-    copiedAction.payload.statusText = stripAnsi(copiedAction.payload.statusText)
+  if ("statusText" in copiedAction.payload && copiedAction.payload.statusText) {
+    copiedAction.payload.statusText = stripAnsi(
+      copiedAction.payload.statusText,
+    );
   }
 
-  return copiedAction
+  return copiedAction;
 }
 
 export function initializeIPCLogger(): void {
   onLogAction((action: ActionsUnion) => {
-    if (!process.send) return
+    if (!process.send) return;
 
-    const sanitizedAction = sanitizeAction(action)
+    const sanitizedAction = sanitizeAction(action);
 
     // we mutate sanitizedAction but this is already deep copy of action so we should be good
     if (sanitizedAction.type === Actions.Log) {
@@ -41,7 +43,7 @@ export function initializeIPCLogger(): void {
       if (
         [LogLevels.Debug].includes(sanitizedAction.payload.level as LogLevels)
       ) {
-        return
+        return;
       }
       // Override Success and Log types to Info over IPC
       if (
@@ -49,13 +51,13 @@ export function initializeIPCLogger(): void {
           sanitizedAction.payload.level as LogLevels,
         )
       ) {
-        sanitizedAction.payload.level = LogLevels.Info
+        sanitizedAction.payload.level = LogLevels.Info;
       }
     }
 
     process.send({
       type: Actions.LogAction,
       action: sanitizedAction,
-    })
-  })
+    });
+  });
 }

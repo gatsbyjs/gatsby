@@ -1,60 +1,61 @@
-import fs from "fs-extra"
-import * as path from "path"
+import fs from "fs-extra";
+import * as path from "path";
 
-// @ts-ignore
-import packageJson from "gatsby-adapter-netlify/package.json"
+import packageJson from "../package.json"; // with { type: "json" };
 
-import type { RemoteFileAllowedUrls } from "gatsby"
+import type { RemoteFileAllowedUrls } from "gatsby";
 
-export interface IFunctionManifest {
-  version: 1
+export type IFunctionManifest = {
+  version: 1;
   functions: Array<
     | {
-        function: string
-        name?: string
-        path: string
-        cache?: "manual"
-        generator: string
+        function: string;
+        name?: string | undefined;
+        path: string;
+        cache?: "manual" | undefined;
+        generator: string;
       }
     | {
-        function: string
-        name?: string
-        pattern: string
-        cache?: "manual"
-        generator: string
+        function: string;
+        name?: string | undefined;
+        pattern: string;
+        cache?: "manual";
+        generator: string;
       }
-  >
-  layers?: Array<{ name: `https://${string}/mod.ts`; flag: string }>
-  import_map?: string
-}
+  >;
+  layers?:
+    | Array<{ name: `https://${string}/mod.ts`; flag: string }>
+    | undefined;
+  import_map?: string | undefined;
+};
 
 export async function prepareFileCdnHandler({
   pathPrefix,
   remoteFileAllowedUrls,
 }: {
-  pathPrefix: string
-  remoteFileAllowedUrls: RemoteFileAllowedUrls
+  pathPrefix: string;
+  remoteFileAllowedUrls: RemoteFileAllowedUrls;
 }): Promise<void> {
-  const functionId = `file-cdn`
+  const functionId = "file-cdn";
 
   const edgeFunctionsManifestPath = path.join(
     process.cwd(),
-    `.netlify`,
-    `edge-functions`,
-    `manifest.json`
-  )
+    ".netlify",
+    "edge-functions",
+    "manifest.json",
+  );
 
   const fileCdnEdgeFunction = path.join(
     process.cwd(),
-    `.netlify`,
-    `edge-functions`,
+    ".netlify",
+    "edge-functions",
     `${functionId}`,
-    `${functionId}.mts`
-  )
+    `${functionId}.mts`,
+  );
 
   const handlerSource = /* typescript */ `
     const allowedUrlPatterns = [${remoteFileAllowedUrls.map(
-      allowedUrl => `new RegExp(\`${allowedUrl.regexSource}\`)`
+      (allowedUrl) => `new RegExp(\`${allowedUrl.regexSource}\`)`,
     )}]
 
     export default async (req: Request): Promise<Response> => {
@@ -69,9 +70,9 @@ export async function prepareFileCdnHandler({
         return new Response("Bad request", { status: 500 })
       }
     }
-  `
+  `;
 
-  await fs.outputFileSync(fileCdnEdgeFunction, handlerSource)
+  await fs.outputFileSync(fileCdnEdgeFunction, handlerSource);
 
   const manifest: IFunctionManifest = {
     functions: [
@@ -79,13 +80,13 @@ export async function prepareFileCdnHandler({
         path: `${pathPrefix}/_gatsby/file/*`,
         function: functionId,
         generator: `gatsby-adapter-netlify@${
-          packageJson?.version ?? `unknown`
+          packageJson?.version ?? "unknown"
         }`,
       },
     ],
     layers: [],
     version: 1,
-  }
+  };
 
-  await fs.outputJSON(edgeFunctionsManifestPath, manifest)
+  await fs.outputJSON(edgeFunctionsManifestPath, manifest);
 }

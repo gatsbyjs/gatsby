@@ -1,4 +1,4 @@
-const { patch } = require(`semver`)
+const { patch } = require("semver");
 
 function renderHeader(packageName) {
   return `
@@ -6,7 +6,7 @@ function renderHeader(packageName) {
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
-`.trim()
+`.trim();
 }
 
 /**
@@ -15,76 +15,76 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
  * @returns string
  */
 function renderVersion(context, commitsByType) {
-  const { pkg, fromTag, toTag, version, date, gatsbyRelease } = context
-  const isPatch = patch(version) !== 0
-  const commitGroups = Array.from(commitsByType)
-  const hasCommits = commitGroups.some(([_, commits]) => commits.length > 0)
-  const tagUrl = `https://github.com/gatsbyjs/gatsby/commits/${toTag}/packages/${pkg}`
+  const { pkg, fromTag, toTag, version, date, gatsbyRelease } = context;
+  const isPatch = patch(version) !== 0;
+  const commitGroups = Array.from(commitsByType);
+  const hasCommits = commitGroups.some(([_, commits]) => commits.length > 0);
+  const tagUrl = `https://github.com/gatsbyjs/gatsby/commits/${toTag}/packages/${pkg}`;
 
   return `
-##${isPatch ? `#` : ``} [${version}](${tagUrl}) (${date})
+##${isPatch ? "#" : ""} [${version}](${tagUrl}) (${date})
 ${releaseNotes(gatsbyRelease)}
 ${
   hasCommits
-    ? commitGroups.map(renderCommitGroup).filter(Boolean).join(`\n\n`)
+    ? commitGroups.map(renderCommitGroup).filter(Boolean).join("\n\n")
     : `**Note:** Version bump only for package ${pkg}`
 }
-`.trim()
+`.trim();
 }
 
 function releaseNotes(gatsbyRelease) {
-  if (!gatsbyRelease) return ``
-  const releaseNotesUrl = `https://www.gatsbyjs.com/docs/reference/release-notes/v${gatsbyRelease}`
-  return `\n[🧾 Release notes](${releaseNotesUrl})\n`
+  if (!gatsbyRelease) return "";
+  const releaseNotesUrl = `https://www.gatsbyjs.com/docs/reference/release-notes/v${gatsbyRelease}`;
+  return `\n[🧾 Release notes](${releaseNotesUrl})\n`;
 }
 
 const groupTitles = new Map([
-  [`feat`, `Features`],
-  [`fix`, `Bug Fixes`],
-  [`perf`, `Performance Improvements`],
-  [`refactor`, `Refactoring`],
-  [`chore`, `Chores`],
-])
+  ["feat", "Features"],
+  ["fix", "Bug Fixes"],
+  ["perf", "Performance Improvements"],
+  ["refactor", "Refactoring"],
+  ["chore", "Chores"],
+]);
 
 function renderCommitGroup(commitGroup) {
-  const [type, commits] = commitGroup
-  const title = groupTitles.get(type) || `Other Changes`
+  const [type, commits] = commitGroup;
+  const title = groupTitles.get(type) || "Other Changes";
 
   if (!commits.length) {
-    return ``
+    return "";
   }
 
   return `
 #### ${title}
 
-${commits.map(renderCommitLine).join(`\n`)}
-`.trim()
+${commits.map(renderCommitLine).join("\n")}
+`.trim();
 }
 
 function renderCommitLine(commit) {
   // Clean up PR references at the end of the subject
   const subject = (commit.subject || commit.header).replace(
     /(\s*\(#[\d]+\)\s*)*$/,
-    ``
-  )
-  return `- ${subject} ${commitReferences(commit)} ${commitHash(commit)}`
+    "",
+  );
+  return `- ${subject} ${commitReferences(commit)} ${commitHash(commit)}`;
 }
 
 function commitReferences(commit) {
-  return commit.references.map(ref => commitReference(commit, ref)).join(` `)
+  return commit.references.map((ref) => commitReference(commit, ref)).join(" ");
 }
 
 function commitReference(commit, reference) {
-  if (!reference || !reference.issue) return ``
-  const issueUrl = `https://github.com/gatsbyjs/gatsby/issues/${reference.issue}`
-  const action = reference.action || ``
-  return `${action} [#${reference.issue}](${issueUrl})`.trim()
+  if (!reference || !reference.issue) return "";
+  const issueUrl = `https://github.com/gatsbyjs/gatsby/issues/${reference.issue}`;
+  const action = reference.action || "";
+  return `${action} [#${reference.issue}](${issueUrl})`.trim();
 }
 
 function commitHash(commit) {
-  if (!commit.hash) return ``
-  const shortHash = commit.hash.slice(0, 7)
-  return `([${shortHash}](https://github.com/gatsbyjs/gatsby/commit/${commit.hash}))`
+  if (!commit.hash) return "";
+  const shortHash = commit.hash.slice(0, 7);
+  return `([${shortHash}](https://github.com/gatsbyjs/gatsby/commit/${commit.hash}))`;
 }
 
 /* Expected commit structure
@@ -115,5 +115,5 @@ function commitHash(commit) {
 }
 */
 
-exports.renderVersion = renderVersion
-exports.renderHeader = renderHeader
+exports.renderVersion = renderVersion;
+exports.renderHeader = renderHeader;

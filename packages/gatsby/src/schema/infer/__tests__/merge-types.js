@@ -1,10 +1,10 @@
-import { buildObjectType } from "../../types/type-builders"
-const { store } = require(`../../../redux`)
-const { build } = require(`../..`)
-const { actions } = require(`../../../redux/actions`)
-const { defaultResolver } = require(`../../resolvers`)
+import { buildObjectType } from "../../types/type-builders";
+const { store } = require("../../../redux");
+const { build } = require("../..");
+const { actions } = require("../../../redux/actions");
+const { defaultResolver } = require("../../resolvers");
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock("gatsby-cli/lib/reporter", () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -16,25 +16,25 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         start: jest.fn(),
         setStatus: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
-  }
-})
+  };
+});
 
-describe(`merges explicit and inferred type definitions`, () => {
+describe("merges explicit and inferred type definitions", () => {
   beforeEach(() => {
-    store.dispatch({ type: `DELETE_CACHE` })
+    store.dispatch({ type: "DELETE_CACHE" });
 
     const nodes = [
       {
-        id: `id1`,
-        internal: { type: `Test`, contentDigest: `0` },
+        id: "id1",
+        internal: { type: "Test", contentDigest: "0" },
         foo: true,
         inferDate: new Date(),
         explicitDate: new Date(),
@@ -65,26 +65,26 @@ describe(`merges explicit and inferred type definitions`, () => {
         ],
       },
       {
-        id: `id2`,
-        internal: { type: `ArrayTest`, contentDigest: `0` },
+        id: "id2",
+        internal: { type: "ArrayTest", contentDigest: "0" },
         array: [{ foo: true }],
       },
       {
-        id: `id3`,
-        internal: { type: `LinkTest`, contentDigest: `0` },
-        link___NODE: `id1`,
-        links___NODE: [`id1`],
+        id: "id3",
+        internal: { type: "LinkTest", contentDigest: "0" },
+        link___NODE: "id1",
+        links___NODE: ["id1"],
       },
-    ]
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
-    )
-  })
+    ];
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: "test" })(store.dispatch),
+    );
+  });
 
   const buildTestSchemaWithSdl = async ({ infer }) => {
-    let directive = ``
+    let directive = "";
     if (infer != null) {
-      directive = infer ? `@infer` : `@dontInfer`
+      directive = infer ? "@infer" : "@dontInfer";
     }
 
     const typeDefs = [
@@ -115,224 +115,224 @@ describe(`merges explicit and inferred type definitions`, () => {
         conflictScalarArray: [Int!]!
         conflcitScalarArrayReverse: [Nested!]!
       }`,
-    ]
+    ];
 
-    typeDefs.forEach(def =>
-      store.dispatch({ type: `CREATE_TYPES`, payload: def })
-    )
+    typeDefs.forEach((def) =>
+      store.dispatch({ type: "CREATE_TYPES", payload: def }),
+    );
 
-    await build({})
-    return store.getState().schema
-  }
+    await build({});
+    return store.getState().schema;
+  };
 
   const buildTestSchemaWithTypeBuilders = async ({ infer }) => {
-    const extensions = {}
+    const extensions = {};
     if (infer != null) {
-      extensions.infer = infer
+      extensions.infer = infer;
     }
     const typeDefs = [
       buildObjectType({
-        name: `NestedNested`,
+        name: "NestedNested",
         fields: {
-          bar: `Boolean!`,
-          conflict: `String!`,
-          notExtra: `Boolean`,
+          bar: "Boolean!",
+          conflict: "String!",
+          notExtra: "Boolean",
         },
       }),
       buildObjectType({
-        name: `Nested`,
+        name: "Nested",
         fields: {
-          bar: `Boolean!`,
-          conflict: `String!`,
-          nested: `NestedNested`,
+          bar: "Boolean!",
+          conflict: "String!",
+          nested: "NestedNested",
         },
       }),
       buildObjectType({
-        name: `Test`,
-        interfaces: [`Node`],
+        name: "Test",
+        interfaces: ["Node"],
         extensions,
         fields: {
-          explicitDate: `Date`,
-          bar: `Boolean!`,
-          nested: `Nested!`,
-          nestedArray: `[Nested!]!`,
-          conflictType: `String!`,
-          conflictArray: `Int!`,
-          conflictArrayReverse: `[Int!]!`,
-          conflictArrayType: `[String!]!`,
-          conflictScalar: `Int!`,
-          conflictScalarReverse: `Nested!`,
-          conflictScalarArray: `[Int!]!`,
-          conflcitScalarArrayReverse: `[Nested!]!`,
+          explicitDate: "Date",
+          bar: "Boolean!",
+          nested: "Nested!",
+          nestedArray: "[Nested!]!",
+          conflictType: "String!",
+          conflictArray: "Int!",
+          conflictArrayReverse: "[Int!]!",
+          conflictArrayType: "[String!]!",
+          conflictScalar: "Int!",
+          conflictScalarReverse: "Nested!",
+          conflictScalarArray: "[Int!]!",
+          conflcitScalarArrayReverse: "[Nested!]!",
         },
       }),
-    ]
+    ];
 
-    typeDefs.forEach(def =>
-      store.dispatch({ type: `CREATE_TYPES`, payload: def })
-    )
+    typeDefs.forEach((def) =>
+      store.dispatch({ type: "CREATE_TYPES", payload: def }),
+    );
 
-    await build({})
-    return store.getState().schema
-  }
+    await build({});
+    return store.getState().schema;
+  };
 
-  ;[
-    [`sdl`, buildTestSchemaWithSdl],
-    [`typeBuilders`, buildTestSchemaWithTypeBuilders],
+  [
+    ["sdl", buildTestSchemaWithSdl],
+    ["typeBuilders", buildTestSchemaWithTypeBuilders],
   ].forEach(([name, buildTestSchema]) => {
     describe(`with ${name}`, () => {
-      it(`with default strategy (implicit "@infer")`, async () => {
-        const schema = await buildTestSchema({})
-        const fields = schema.getType(`Test`).getFields()
-        const nestedFields = schema.getType(`Nested`).getFields()
-        const nestedNestedFields = schema.getType(`NestedNested`).getFields()
+      it('with default strategy (implicit "@infer")', async () => {
+        const schema = await buildTestSchema({});
+        const fields = schema.getType("Test").getFields();
+        const nestedFields = schema.getType("Nested").getFields();
+        const nestedNestedFields = schema.getType("NestedNested").getFields();
 
         // Non-conflicting top-level fields added
-        expect(fields.foo.type.toString()).toBe(`Boolean`)
-        expect(fields.bar.type.toString()).toBe(`Boolean!`)
+        expect(fields.foo.type.toString()).toBe("Boolean");
+        expect(fields.bar.type.toString()).toBe("Boolean!");
 
         // Non-conflicting fields added on nested type
-        expect(fields.nested.type.toString()).toBe(`Nested!`)
-        expect(fields.nestedArray.type.toString()).toBe(`[Nested!]!`)
-        expect(nestedFields.foo.type.toString()).toBe(`Boolean`)
-        expect(nestedFields.bar.type.toString()).toBe(`Boolean!`)
-        expect(nestedNestedFields.foo.type.toString()).toBe(`Boolean`)
-        expect(nestedNestedFields.bar.type.toString()).toBe(`Boolean!`)
+        expect(fields.nested.type.toString()).toBe("Nested!");
+        expect(fields.nestedArray.type.toString()).toBe("[Nested!]!");
+        expect(nestedFields.foo.type.toString()).toBe("Boolean");
+        expect(nestedFields.bar.type.toString()).toBe("Boolean!");
+        expect(nestedNestedFields.foo.type.toString()).toBe("Boolean");
+        expect(nestedNestedFields.bar.type.toString()).toBe("Boolean!");
 
         // When type is referenced more than once on typeDefs, all non-conflicting
         // fields are added
-        expect(nestedFields.extra.type.toString()).toBe(`Boolean`)
-        expect(nestedNestedFields.notExtra.type.toString()).toBe(`Boolean`)
-        expect(nestedNestedFields.extraExtra.type.toString()).toBe(`Boolean`)
+        expect(nestedFields.extra.type.toString()).toBe("Boolean");
+        expect(nestedNestedFields.notExtra.type.toString()).toBe("Boolean");
+        expect(nestedNestedFields.extraExtra.type.toString()).toBe("Boolean");
         expect(nestedNestedFields.extraExtraExtra.type.toString()).toBe(
-          `Boolean`
-        )
+          "Boolean",
+        );
 
         // Explicit typeDefs have proprity in case of type conflict
-        expect(fields.conflictType.type.toString()).toBe(`String!`)
-        expect(fields.conflictArray.type.toString()).toBe(`Int!`)
-        expect(fields.conflictArrayReverse.type.toString()).toBe(`[Int!]!`)
-        expect(fields.conflictArrayType.type.toString()).toBe(`[String!]!`)
-        expect(fields.conflictScalar.type.toString()).toBe(`Int!`)
-        expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
-        expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
+        expect(fields.conflictType.type.toString()).toBe("String!");
+        expect(fields.conflictArray.type.toString()).toBe("Int!");
+        expect(fields.conflictArrayReverse.type.toString()).toBe("[Int!]!");
+        expect(fields.conflictArrayType.type.toString()).toBe("[String!]!");
+        expect(fields.conflictScalar.type.toString()).toBe("Int!");
+        expect(fields.conflictScalarReverse.type.toString()).toBe("Nested!");
+        expect(fields.conflictScalarArray.type.toString()).toBe("[Int!]!");
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
-        )
+          "[Nested!]!",
+        );
 
         // Explicit typeDefs have priority on nested types as well
-        expect(nestedFields.conflict.type.toString()).toBe(`String!`)
-        expect(nestedNestedFields.conflict.type.toString()).toBe(`String!`)
+        expect(nestedFields.conflict.type.toString()).toBe("String!");
+        expect(nestedNestedFields.conflict.type.toString()).toBe("String!");
 
         // Date resolvers
-        expect(fields.explicitDate.resolve).toBeDefined()
-        expect(fields.inferDate.resolve).toBeDefined()
-      })
+        expect(fields.explicitDate.resolve).toBeDefined();
+        expect(fields.inferDate.resolve).toBeDefined();
+      });
 
-      it(`with @infer`, async () => {
+      it("with @infer", async () => {
         const schema = await buildTestSchema({
           infer: true,
-        })
+        });
 
-        const fields = schema.getType(`Test`).getFields()
-        const nestedFields = schema.getType(`Nested`).getFields()
-        const nestedNestedFields = schema.getType(`NestedNested`).getFields()
+        const fields = schema.getType("Test").getFields();
+        const nestedFields = schema.getType("Nested").getFields();
+        const nestedNestedFields = schema.getType("NestedNested").getFields();
 
         // Non-conflicting top-level fields added
-        expect(fields.foo.type.toString()).toBe(`Boolean`)
-        expect(fields.bar.type.toString()).toBe(`Boolean!`)
+        expect(fields.foo.type.toString()).toBe("Boolean");
+        expect(fields.bar.type.toString()).toBe("Boolean!");
 
         // Non-conflicting fields added on nested type
-        expect(fields.nested.type.toString()).toBe(`Nested!`)
-        expect(fields.nestedArray.type.toString()).toBe(`[Nested!]!`)
-        expect(nestedFields.foo.type.toString()).toBe(`Boolean`)
-        expect(nestedFields.bar.type.toString()).toBe(`Boolean!`)
-        expect(nestedNestedFields.foo.type.toString()).toBe(`Boolean`)
-        expect(nestedNestedFields.bar.type.toString()).toBe(`Boolean!`)
+        expect(fields.nested.type.toString()).toBe("Nested!");
+        expect(fields.nestedArray.type.toString()).toBe("[Nested!]!");
+        expect(nestedFields.foo.type.toString()).toBe("Boolean");
+        expect(nestedFields.bar.type.toString()).toBe("Boolean!");
+        expect(nestedNestedFields.foo.type.toString()).toBe("Boolean");
+        expect(nestedNestedFields.bar.type.toString()).toBe("Boolean!");
 
         // When type is referenced more than once on typeDefs, all non-conflicting
         // fields are added
-        expect(nestedFields.extra.type.toString()).toBe(`Boolean`)
-        expect(nestedNestedFields.notExtra.type.toString()).toBe(`Boolean`)
-        expect(nestedNestedFields.extraExtra.type.toString()).toBe(`Boolean`)
+        expect(nestedFields.extra.type.toString()).toBe("Boolean");
+        expect(nestedNestedFields.notExtra.type.toString()).toBe("Boolean");
+        expect(nestedNestedFields.extraExtra.type.toString()).toBe("Boolean");
         expect(nestedNestedFields.extraExtraExtra.type.toString()).toBe(
-          `Boolean`
-        )
+          "Boolean",
+        );
 
         // Explicit typeDefs have proprity in case of type conflict
-        expect(fields.conflictType.type.toString()).toBe(`String!`)
-        expect(fields.conflictArray.type.toString()).toBe(`Int!`)
-        expect(fields.conflictArrayReverse.type.toString()).toBe(`[Int!]!`)
-        expect(fields.conflictArrayType.type.toString()).toBe(`[String!]!`)
-        expect(fields.conflictScalar.type.toString()).toBe(`Int!`)
-        expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
-        expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
+        expect(fields.conflictType.type.toString()).toBe("String!");
+        expect(fields.conflictArray.type.toString()).toBe("Int!");
+        expect(fields.conflictArrayReverse.type.toString()).toBe("[Int!]!");
+        expect(fields.conflictArrayType.type.toString()).toBe("[String!]!");
+        expect(fields.conflictScalar.type.toString()).toBe("Int!");
+        expect(fields.conflictScalarReverse.type.toString()).toBe("Nested!");
+        expect(fields.conflictScalarArray.type.toString()).toBe("[Int!]!");
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
-        )
+          "[Nested!]!",
+        );
 
         // Explicit typeDefs have priority on nested types as well
-        expect(nestedFields.conflict.type.toString()).toBe(`String!`)
-        expect(nestedNestedFields.conflict.type.toString()).toBe(`String!`)
+        expect(nestedFields.conflict.type.toString()).toBe("String!");
+        expect(nestedNestedFields.conflict.type.toString()).toBe("String!");
 
         // Date resolvers
-        expect(fields.explicitDate.resolve).toBe(defaultResolver)
-        expect(fields.inferDate.resolve).toBeDefined()
-      })
+        expect(fields.explicitDate.resolve).toBe(defaultResolver);
+        expect(fields.inferDate.resolve).toBeDefined();
+      });
 
-      it(`with @dontInfer directive`, async () => {
+      it("with @dontInfer directive", async () => {
         const schema = await buildTestSchema({
           infer: false,
-        })
-        const fields = schema.getType(`Test`).getFields()
-        const nestedFields = schema.getType(`Nested`).getFields()
-        const nestedNestedFields = schema.getType(`NestedNested`).getFields()
+        });
+        const fields = schema.getType("Test").getFields();
+        const nestedFields = schema.getType("Nested").getFields();
+        const nestedNestedFields = schema.getType("NestedNested").getFields();
 
         // Non-conflicting top-level fields added
-        expect(fields.bar.type.toString()).toBe(`Boolean!`)
+        expect(fields.bar.type.toString()).toBe("Boolean!");
 
         // Not adding inferred fields
-        expect(fields.foo).toBeUndefined()
-        expect(nestedFields.foo).toBeUndefined()
-        expect(nestedNestedFields.foo).toBeUndefined()
-        expect(nestedFields.extra).toBeUndefined()
-        expect(nestedNestedFields.extraExtra).toBeUndefined()
-        expect(nestedNestedFields.extraExtraExtra).toBeUndefined()
-        expect(fields.inferDate).toBeUndefined()
+        expect(fields.foo).toBeUndefined();
+        expect(nestedFields.foo).toBeUndefined();
+        expect(nestedNestedFields.foo).toBeUndefined();
+        expect(nestedFields.extra).toBeUndefined();
+        expect(nestedNestedFields.extraExtra).toBeUndefined();
+        expect(nestedNestedFields.extraExtraExtra).toBeUndefined();
+        expect(fields.inferDate).toBeUndefined();
 
         // Non-conflicting fields added on nested type
-        expect(fields.nested.type.toString()).toBe(`Nested!`)
-        expect(fields.nestedArray.type.toString()).toBe(`[Nested!]!`)
-        expect(nestedFields.bar.type.toString()).toBe(`Boolean!`)
-        expect(nestedNestedFields.bar.type.toString()).toBe(`Boolean!`)
+        expect(fields.nested.type.toString()).toBe("Nested!");
+        expect(fields.nestedArray.type.toString()).toBe("[Nested!]!");
+        expect(nestedFields.bar.type.toString()).toBe("Boolean!");
+        expect(nestedNestedFields.bar.type.toString()).toBe("Boolean!");
 
         // When type is referenced more than once on typeDefs, all non-conflicting
         // fields are added
-        expect(nestedNestedFields.notExtra.type.toString()).toBe(`Boolean`)
+        expect(nestedNestedFields.notExtra.type.toString()).toBe("Boolean");
 
         // Explicit typeDefs have proprity in case of type conflict
-        expect(fields.conflictType.type.toString()).toBe(`String!`)
-        expect(fields.conflictArray.type.toString()).toBe(`Int!`)
-        expect(fields.conflictArrayReverse.type.toString()).toBe(`[Int!]!`)
-        expect(fields.conflictArrayType.type.toString()).toBe(`[String!]!`)
-        expect(fields.conflictScalar.type.toString()).toBe(`Int!`)
-        expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
-        expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
+        expect(fields.conflictType.type.toString()).toBe("String!");
+        expect(fields.conflictArray.type.toString()).toBe("Int!");
+        expect(fields.conflictArrayReverse.type.toString()).toBe("[Int!]!");
+        expect(fields.conflictArrayType.type.toString()).toBe("[String!]!");
+        expect(fields.conflictScalar.type.toString()).toBe("Int!");
+        expect(fields.conflictScalarReverse.type.toString()).toBe("Nested!");
+        expect(fields.conflictScalarArray.type.toString()).toBe("[Int!]!");
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
-        )
+          "[Nested!]!",
+        );
 
         // Explicit typeDefs have priority on nested types as well
-        expect(nestedFields.conflict.type.toString()).toBe(`String!`)
-        expect(nestedNestedFields.conflict.type.toString()).toBe(`String!`)
+        expect(nestedFields.conflict.type.toString()).toBe("String!");
+        expect(nestedNestedFields.conflict.type.toString()).toBe("String!");
 
         // Date resolvers
-        expect(fields.explicitDate.resolve).toBe(defaultResolver)
-      })
-    })
-  })
+        expect(fields.explicitDate.resolve).toBe(defaultResolver);
+      });
+    });
+  });
 
-  it(`adds explicit resolvers through directives`, async () => {
+  it("adds explicit resolvers through directives", async () => {
     const typeDefs = `
       type Test implements Node @infer {
         explicitDate: Date @dateformat
@@ -343,36 +343,36 @@ describe(`merges explicit and inferred type definitions`, () => {
         link: Test! @link
         links: [Test!]! @link
       }
-    `
-    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
-    await build({})
-    const { schema } = store.getState()
+    `;
+    store.dispatch({ type: "CREATE_TYPES", payload: typeDefs });
+    await build({});
+    const { schema } = store.getState();
 
-    const { link, links } = schema.getType(`LinkTest`).getFields()
-    expect(link.type.toString()).toBe(`Test!`)
-    expect(links.type.toString()).toBe(`[Test!]!`)
-    expect(link.resolve).toBeDefined()
-    expect(links.resolve).toBeDefined()
+    const { link, links } = schema.getType("LinkTest").getFields();
+    expect(link.type.toString()).toBe("Test!");
+    expect(links.type.toString()).toBe("[Test!]!");
+    expect(link.resolve).toBeDefined();
+    expect(links.resolve).toBeDefined();
 
     const { explicitDate, inferDate, proxied } = schema
-      .getType(`Test`)
-      .getFields()
-    expect(explicitDate.resolve).toBeDefined()
-    expect(inferDate.resolve).toBeDefined()
-    expect(proxied.resolve).toBeDefined()
-  })
+      .getType("Test")
+      .getFields();
+    expect(explicitDate.resolve).toBeDefined();
+    expect(inferDate.resolve).toBeDefined();
+    expect(proxied.resolve).toBeDefined();
+  });
 
-  it(`adds explicit resolvers through extensions`, async () => {
+  it("adds explicit resolvers through extensions", async () => {
     const typeDefs = [
       buildObjectType({
-        name: `Test`,
-        interfaces: [`Node`],
+        name: "Test",
+        interfaces: ["Node"],
         extensions: {
           infer: true,
         },
         fields: {
           explicitDate: {
-            type: `Date`,
+            type: "Date",
             extensions: {
               dateformat: {},
             },
@@ -380,43 +380,43 @@ describe(`merges explicit and inferred type definitions`, () => {
         },
       }),
       buildObjectType({
-        name: `LinkTest`,
-        interfaces: [`Node`],
+        name: "LinkTest",
+        interfaces: ["Node"],
         extensions: {
           infer: true,
         },
         fields: {
           link: {
-            type: `Test!`,
+            type: "Test!",
             extensions: {
               link: {},
             },
           },
           links: {
-            type: `[Test!]!`,
+            type: "[Test!]!",
             extensions: {
               link: {},
             },
           },
         },
       }),
-    ]
-    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
-    await build({})
-    const { schema } = store.getState()
+    ];
+    store.dispatch({ type: "CREATE_TYPES", payload: typeDefs });
+    await build({});
+    const { schema } = store.getState();
 
-    const { link, links } = schema.getType(`LinkTest`).getFields()
-    expect(link.type.toString()).toBe(`Test!`)
-    expect(links.type.toString()).toBe(`[Test!]!`)
-    expect(link.resolve).toBeDefined()
-    expect(links.resolve).toBeDefined()
+    const { link, links } = schema.getType("LinkTest").getFields();
+    expect(link.type.toString()).toBe("Test!");
+    expect(links.type.toString()).toBe("[Test!]!");
+    expect(link.resolve).toBeDefined();
+    expect(links.resolve).toBeDefined();
 
-    const { explicitDate, inferDate } = schema.getType(`Test`).getFields()
-    expect(explicitDate.resolve).toBeDefined()
-    expect(inferDate.resolve).toBeDefined()
-  })
+    const { explicitDate, inferDate } = schema.getType("Test").getFields();
+    expect(explicitDate.resolve).toBeDefined();
+    expect(inferDate.resolve).toBeDefined();
+  });
 
-  it(`honors array depth when merging types`, async () => {
+  it("honors array depth when merging types", async () => {
     const typeDefs = `
       type FooBar {
         bar: Boolean
@@ -424,16 +424,16 @@ describe(`merges explicit and inferred type definitions`, () => {
       type ArrayTest implements Node {
         array: [FooBar]
       }
-    `
-    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
-    await build({})
-    const { schema } = store.getState()
-    const { foo, bar } = schema.getType(`FooBar`).getFields()
-    expect(foo.type.toString()).toBe(`Boolean`)
-    expect(bar.type.toString()).toBe(`Boolean`)
-  })
+    `;
+    store.dispatch({ type: "CREATE_TYPES", payload: typeDefs });
+    await build({});
+    const { schema } = store.getState();
+    const { foo, bar } = schema.getType("FooBar").getFields();
+    expect(foo.type.toString()).toBe("Boolean");
+    expect(bar.type.toString()).toBe("Boolean");
+  });
 
-  it(`does not merge types when array depth does not match`, async () => {
+  it("does not merge types when array depth does not match", async () => {
     const typeDefs = `
       type FooBar {
         bar: Boolean
@@ -441,48 +441,48 @@ describe(`merges explicit and inferred type definitions`, () => {
       type ArrayTest implements Node {
         array: FooBar
       }
-    `
-    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
-    await build({})
-    const { schema } = store.getState()
-    const { foo, bar } = schema.getType(`FooBar`).getFields()
-    expect(foo).toBeUndefined()
-    expect(bar.type.toString()).toBe(`Boolean`)
-  })
+    `;
+    store.dispatch({ type: "CREATE_TYPES", payload: typeDefs });
+    await build({});
+    const { schema } = store.getState();
+    const { foo, bar } = schema.getType("FooBar").getFields();
+    expect(foo).toBeUndefined();
+    expect(bar.type.toString()).toBe("Boolean");
+  });
 
-  it(`ignores foreign-key resolvers on ___NODE fields`, async () => {
+  it("ignores foreign-key resolvers on ___NODE fields", async () => {
     const typeDefs = `
       type LinkTest implements Node {
         link: Test!
         links: [Test!]!
       }
-    `
-    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+    `;
+    store.dispatch({ type: "CREATE_TYPES", payload: typeDefs });
 
-    await build({})
-    const { schema } = store.getState()
-    const { link, links } = schema.getType(`LinkTest`).getFields()
-    expect(link.type.toString()).toBe(`Test!`)
-    expect(links.type.toString()).toBe(`[Test!]!`)
-    expect(link.resolve).toBe(defaultResolver)
-    expect(links.resolve).toBe(defaultResolver)
-  })
+    await build({});
+    const { schema } = store.getState();
+    const { link, links } = schema.getType("LinkTest").getFields();
+    expect(link.type.toString()).toBe("Test!");
+    expect(links.type.toString()).toBe("[Test!]!");
+    expect(link.resolve).toBe(defaultResolver);
+    expect(links.resolve).toBe(defaultResolver);
+  });
 
-  it(`ignores foreign-key resolvers on ___NODE fields with @infer`, async () => {
+  it("ignores foreign-key resolvers on ___NODE fields with @infer", async () => {
     const typeDefs = `
       type LinkTest implements Node @infer {
         link: Test!
         links: [Test!]!
       }
-    `
-    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+    `;
+    store.dispatch({ type: "CREATE_TYPES", payload: typeDefs });
 
-    await build({})
-    const { schema } = store.getState()
-    const { link, links } = schema.getType(`LinkTest`).getFields()
-    expect(link.type.toString()).toBe(`Test!`)
-    expect(links.type.toString()).toBe(`[Test!]!`)
-    expect(link.resolve).toBe(defaultResolver)
-    expect(links.resolve).toBe(defaultResolver)
-  })
-})
+    await build({});
+    const { schema } = store.getState();
+    const { link, links } = schema.getType("LinkTest").getFields();
+    expect(link.type.toString()).toBe("Test!");
+    expect(links.type.toString()).toBe("[Test!]!");
+    expect(link.resolve).toBe(defaultResolver);
+    expect(links.resolve).toBe(defaultResolver);
+  });
+});

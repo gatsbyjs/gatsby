@@ -1,26 +1,26 @@
-const jsYaml = require(`js-yaml`)
-const _ = require(`lodash`)
-const path = require(`path`)
+const jsYaml = require("js-yaml");
+const _ = require("lodash");
+const path = require("path");
 
 function shouldOnCreateNode({ node }) {
-  return node.internal.mediaType === `text/yaml`
+  return node.internal.mediaType === "text/yaml";
 }
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
-  pluginOptions
+  pluginOptions,
 ) {
   function getType({ node, object, isArray }) {
     if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
-      return pluginOptions.typeName({ node, object, isArray })
+      return pluginOptions.typeName({ node, object, isArray });
     } else if (pluginOptions && _.isString(pluginOptions.typeName)) {
-      return pluginOptions.typeName
-    } else if (node.internal.type !== `File`) {
-      return _.upperFirst(_.camelCase(`${node.internal.type} Yaml`))
+      return pluginOptions.typeName;
+    } else if (node.internal.type !== "File") {
+      return _.upperFirst(_.camelCase(`${node.internal.type} Yaml`));
     } else if (isArray) {
-      return _.upperFirst(_.camelCase(`${node.name} Yaml`))
+      return _.upperFirst(_.camelCase(`${node.name} Yaml`));
     } else {
-      return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`))
+      return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`));
     }
   }
 
@@ -34,35 +34,35 @@ async function onCreateNode(
         contentDigest: createContentDigest(obj),
         type,
       },
-    }
+    };
     if (obj.id) {
-      yamlNode[`yamlId`] = obj.id
+      yamlNode["yamlId"] = obj.id;
     }
-    createNode(yamlNode)
-    createParentChildLink({ parent: node, child: yamlNode })
+    createNode(yamlNode);
+    createParentChildLink({ parent: node, child: yamlNode });
   }
 
-  const { createNode, createParentChildLink } = actions
+  const { createNode, createParentChildLink } = actions;
 
-  const content = await loadNodeContent(node)
-  const parsedContent = jsYaml.load(content)
+  const content = await loadNodeContent(node);
+  const parsedContent = jsYaml.load(content);
 
   if (_.isArray(parsedContent)) {
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
         createNodeId(`${node.id} [${i}] >>> YAML`),
-        getType({ node, object: obj, isArray: true })
-      )
-    })
+        getType({ node, object: obj, isArray: true }),
+      );
+    });
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
       createNodeId(`${node.id} >>> YAML`),
-      getType({ node, object: parsedContent, isArray: false })
-    )
+      getType({ node, object: parsedContent, isArray: false }),
+    );
   }
 }
 
-exports.shouldOnCreateNode = shouldOnCreateNode
-exports.onCreateNode = onCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode;
+exports.onCreateNode = onCreateNode;

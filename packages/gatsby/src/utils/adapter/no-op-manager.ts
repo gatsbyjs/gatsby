@@ -1,4 +1,4 @@
-import type { IAdapterFinalConfig, IAdapterManager } from "./types"
+import type { IAdapterFinalConfig, IAdapterManager } from "./types";
 
 export function noOpAdapterManager(): IAdapterManager {
   return {
@@ -9,7 +9,7 @@ export function noOpAdapterManager(): IAdapterManager {
       return {
         excludeDatastoreFromEngineFunction: false,
         pluginsToDisable: [],
-      }
+      };
     },
-  }
+  };
 }

@@ -1,69 +1,69 @@
-import { store } from "../redux"
-import { getDataStore, getTypes } from "../datastore"
-import { createSchemaComposer } from "./schema-composer"
-import { buildSchema } from "./schema"
-import { builtInFieldExtensions } from "./extensions"
-import { builtInTypeDefinitions } from "./types/built-in-types"
-import { TypeConflictReporter } from "./infer/type-conflict-reporter"
-import { shouldPrintEngineSnapshot } from "../utils/engines-helpers"
-import opentracing from "opentracing"
-import type { DocumentNode } from "graphql"
-import type { IGatsbyNode, IGatsbyPlugin } from "../internal"
+import { store } from "../redux";
+import { getDataStore, getTypes } from "../datastore";
+import { createSchemaComposer } from "./schema-composer";
+import { buildSchema } from "./schema";
+import { builtInFieldExtensions } from "./extensions";
+import { builtInTypeDefinitions } from "./types/built-in-types";
+import { TypeConflictReporter } from "./infer/type-conflict-reporter";
+import { shouldPrintEngineSnapshot } from "../utils/engines-helpers";
+import opentracing, { Span } from "opentracing";
+import type { DocumentNode } from "graphql";
+import type { IGatsbyNode, IGatsbyPlugin } from "../internal";
 
-const tracer = opentracing.globalTracer()
+const tracer = opentracing.globalTracer();
 
 function getAllTypeDefinitions(): Array<
   | string
   | {
-      typeOrTypeDef: DocumentNode
-      plugin: IGatsbyPlugin
+      typeOrTypeDef: DocumentNode;
+      plugin: IGatsbyPlugin;
     }
   | {
-      typeOrTypeDef: DocumentNode
-      plugin: undefined
+      typeOrTypeDef: DocumentNode;
+      plugin: undefined;
     }
 > {
   const {
     schemaCustomization: { types },
-  } = store.getState()
+  } = store.getState();
 
-  const builtInTypes = builtInTypeDefinitions().map(typeDef => {
+  const builtInTypes = builtInTypeDefinitions().map((typeDef) => {
     return {
       typeOrTypeDef: typeDef,
       plugin: undefined,
-    }
-  })
+    };
+  });
 
   // Ensure that user-defined types are processed last
   return [
     ...builtInTypes,
-    ...types.filter(type => {
+    ...types.filter((type) => {
       return (
-        typeof type !== `string` &&
+        typeof type !== "string" &&
         type.plugin &&
-        type.plugin.name !== `default-site-plugin`
-      )
+        type.plugin.name !== "default-site-plugin"
+      );
     }),
-    ...types.filter(type => {
+    ...types.filter((type) => {
       return (
-        typeof type === `string` ||
+        typeof type === "string" ||
         !type.plugin ||
-        type.plugin.name === `default-site-plugin`
-      )
+        type.plugin.name === "default-site-plugin"
+      );
     }),
-  ]
+  ];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getAllFieldExtensions(): any {
   const {
     schemaCustomization: { fieldExtensions: customFieldExtensions },
-  } = store.getState()
+  } = store.getState();
 
   return {
     ...customFieldExtensions,
     ...builtInFieldExtensions,
-  }
+  };
 }
 
 // Schema building requires metadata for type inference.
@@ -72,80 +72,83 @@ function getAllFieldExtensions(): any {
 // Actual logic for inference located in inferenceMetadata reducer and ./infer
 // Here we just orchestrate the process via redux actions
 function buildInferenceMetadata({ types }): Promise<unknown> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (!types || !types.length) {
-      resolve(null)
-      return
+      resolve(null);
+      return;
     }
 
-    const typeNames = [...types]
+    const typeNames = [...types];
     // TODO: use async iterators when we switch to node>=10
     //  or better investigate if we can offload metadata building to worker/Jobs API
     //  and then feed the result into redux?
     async function processNextType(): Promise<void> {
-      const typeName = typeNames.pop()
+      const typeName = typeNames.pop();
 
-      let processingNodes: Array<IGatsbyNode> = []
-      let dispatchCount = 0
+      let processingNodes: Array<IGatsbyNode> = [];
+      let dispatchCount = 0;
 
       function dispatchNodes(): Promise<null> {
-        return new Promise(res => {
+        return new Promise((res) => {
           store.dispatch({
-            type: `BUILD_TYPE_METADATA`,
+            type: "BUILD_TYPE_METADATA",
             payload: {
               typeName,
               // only clear metadata on the first chunk for this type
               clearExistingMetadata: dispatchCount++ === 0,
               nodes: processingNodes,
             },
-          })
+          });
           globalThis.setImmediate(() => {
             // clear this array after BUILD_TYPE_METADATA reducer has synchronously run
-            processingNodes = []
+            processingNodes = [];
             // dont block the event loop. node may decide to free previous processingNodes array from memory if it needs to.
             setImmediate(() => {
-              res(null)
-            })
-          })
-        })
+              res(null);
+            });
+          });
+        });
       }
 
       for (const node of getDataStore().iterateNodesByType(typeName)) {
-        processingNodes.push(node)
+        processingNodes.push(node);
 
         if (processingNodes.length > 1000) {
-          await dispatchNodes()
+          await dispatchNodes();
         }
       }
 
       if (processingNodes.length > 0) {
-        await dispatchNodes()
+        await dispatchNodes();
       }
 
       if (typeNames.length > 0) {
         // dont block the event loop
-        globalThis.setImmediate(() => processNextType())
+        globalThis.setImmediate(() => processNextType());
       } else {
-        resolve(null)
+        resolve(null);
       }
     }
 
-    processNextType()
-  })
+    processNextType();
+  });
 }
 
 export async function build({
   parentSpan,
   fullMetadataBuild = true,
+}: {
+  parentSpan?: Span | undefined;
+  fullMetadataBuild?: boolean | undefined;
 }): Promise<void> {
-  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
-  const span = tracer.startSpan(`build schema`, spanArgs)
-  await getDataStore().ready()
+  const spanArgs = parentSpan ? { childOf: parentSpan } : {};
+  const span = tracer.startSpan("build schema", spanArgs);
+  await getDataStore().ready();
 
   if (fullMetadataBuild) {
     // Build metadata for type inference and start updating it incrementally
-    await buildInferenceMetadata({ types: getTypes() })
-    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
+    await buildInferenceMetadata({ types: getTypes() });
+    store.dispatch({ type: "START_INCREMENTAL_INFERENCE" });
   }
 
   const {
@@ -153,19 +156,19 @@ export async function build({
     inferenceMetadata,
     config: { mapping: typeMapping },
     program: { directory },
-  } = store.getState()
+  } = store.getState();
 
-  const typeConflictReporter = new TypeConflictReporter()
+  const typeConflictReporter = new TypeConflictReporter();
 
   const enginePrintConfig = shouldPrintEngineSnapshot()
     ? {
         path: `${directory}/.cache/schema.gql`,
         rewrite: true,
       }
-    : undefined
+    : undefined;
 
-  const fieldExtensions = getAllFieldExtensions()
-  const schemaComposer = createSchemaComposer({ fieldExtensions })
+  const fieldExtensions = getAllFieldExtensions();
+  const schemaComposer = createSchemaComposer({ fieldExtensions });
   const schema = await buildSchema({
     schemaComposer,
     types: getAllTypeDefinitions(),
@@ -177,22 +180,22 @@ export async function build({
     typeConflictReporter,
     inferenceMetadata,
     parentSpan,
-  })
+  });
 
-  typeConflictReporter.printConflicts()
+  typeConflictReporter.printConflicts();
 
   store.dispatch({
-    type: `SET_SCHEMA_COMPOSER`,
+    type: "SET_SCHEMA_COMPOSER",
     payload: schemaComposer,
-  })
+  });
   store.dispatch({
-    type: `SET_SCHEMA`,
+    type: "SET_SCHEMA",
     payload: schema,
-  })
+  });
 
-  span.finish()
+  span.finish();
 }
 
 export async function rebuild({ parentSpan }): Promise<void> {
-  return await build({ parentSpan, fullMetadataBuild: false })
+  return await build({ parentSpan, fullMetadataBuild: false });
 }

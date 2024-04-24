@@ -1,21 +1,21 @@
 type ITaskQueueNode<ValueType> = {
-  value: ValueType
-  next?: ITaskQueueNode<ValueType> | undefined
-  prev?: ITaskQueueNode<ValueType> | undefined
-}
+  value: ValueType;
+  next?: ITaskQueueNode<ValueType> | undefined;
+  prev?: ITaskQueueNode<ValueType> | undefined;
+};
 
 /**
  * Task queue implemented with doubly linked list
  */
 export class TaskQueue<ValueType> {
-  private head?: ITaskQueueNode<ValueType> | undefined
+  private head?: ITaskQueueNode<ValueType> | undefined;
   private tail?: ITaskQueueNode<ValueType> | undefined;
 
   *[Symbol.iterator](): Iterator<ITaskQueueNode<ValueType>> {
-    let currentHead = this.head
+    let currentHead = this.head;
     while (currentHead) {
-      yield currentHead
-      currentHead = currentHead.next
+      yield currentHead;
+      currentHead = currentHead.next;
     }
   }
 
@@ -26,15 +26,15 @@ export class TaskQueue<ValueType> {
   enqueue(task: ValueType): void {
     const newNode: ITaskQueueNode<ValueType> = {
       value: task,
-    }
+    };
     if (this.tail) {
-      this.tail.next = newNode
-      newNode.prev = this.tail
+      this.tail.next = newNode;
+      newNode.prev = this.tail;
     } else {
-      this.head = newNode
+      this.head = newNode;
     }
 
-    this.tail = newNode
+    this.tail = newNode;
   }
 
   /**
@@ -43,22 +43,22 @@ export class TaskQueue<ValueType> {
    */
   remove(taskNode: ITaskQueueNode<ValueType>): void {
     if (taskNode === this.head) {
-      this.head = taskNode.next
+      this.head = taskNode.next;
       if (this.head) {
-        this.head.prev = undefined
+        this.head.prev = undefined;
       } else {
         // if we don't have head, we also don't have tail
-        this.tail = undefined
+        this.tail = undefined;
       }
     } else {
       if (taskNode === this.tail) {
-        this.tail = taskNode.prev
+        this.tail = taskNode.prev;
       } else {
         // if node is not the tail then it will have .next
-        taskNode.next!.prev = taskNode.prev
+        taskNode.next!.prev = taskNode.prev;
       }
       // if node is not the head then it will have .prev
-      taskNode.prev!.next = taskNode.next
+      taskNode.prev!.next = taskNode.next;
     }
   }
 }

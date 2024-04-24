@@ -1,5 +1,5 @@
-/* eslint-disable */
-import { graphql } from "gatsby"
+/* eslint-disable camelcase */
+import { graphql } from "gatsby";
 
 /**
  * The simplest set of fields for fixed sharp images
@@ -25,7 +25,7 @@ export const GatsbyImageSharpFixed = graphql`
     src
     srcSet
   }
-`
+`;
 
 /**
  * Traced SVG fixed images
@@ -39,7 +39,7 @@ export const GatsbyImageSharpFixed_tracedSVG = graphql`
     src
     srcSet
   }
-`
+`;
 
 /**
  * Images using Webp for fixed images
@@ -55,7 +55,7 @@ export const GatsbyImageSharpFixed_withWebp = graphql`
     srcWebp
     srcSetWebp
   }
-`
+`;
 
 /**
  * Traced SVG images using Webp for fixed images
@@ -71,7 +71,7 @@ export const GatsbyImageSharpFixed_withWebp_tracedSVG = graphql`
     srcWebp
     srcSetWebp
   }
-`
+`;
 
 /**
  * Fixed images without the blurred base64 image
@@ -84,7 +84,7 @@ export const GatsbyImageSharpFixed_noBase64 = graphql`
     src
     srcSet
   }
-`
+`;
 
 /**
  * Fixed images without the blurred base64 image preferring Webp
@@ -99,7 +99,7 @@ export const GatsbyImageSharpFixed_withWebp_noBase64 = graphql`
     srcWebp
     srcSetWebp
   }
-`
+`;
 
 /**
  * The simplest set of fields for fluid images
@@ -113,7 +113,7 @@ export const GatsbyImageSharpFluid = graphql`
     srcSet
     sizes
   }
-`
+`;
 
 /**
  * Presentation sizes to make sure a fluid container does not overflow
@@ -124,7 +124,7 @@ export const GatsbyImageSharpFluidLimitPresentationSize = graphql`
     maxHeight: presentationHeight
     maxWidth: presentationWidth
   }
-`
+`;
 
 /**
  * Traced SVG fluid images
@@ -138,7 +138,7 @@ export const GatsbyImageSharpFluid_tracedSVG = graphql`
     srcSet
     sizes
   }
-`
+`;
 
 /**
  * Fluid images that prefer Webp
@@ -154,7 +154,7 @@ export const GatsbyImageSharpFluid_withWebp = graphql`
     srcSetWebp
     sizes
   }
-`
+`;
 
 /**
  * Traced SVG fluid images that prefer Webp
@@ -170,7 +170,7 @@ export const GatsbyImageSharpFluid_withWebp_tracedSVG = graphql`
     srcSetWebp
     sizes
   }
-`
+`;
 
 /**
  * Traced SVG fluid images without the blurred base64 image
@@ -183,7 +183,7 @@ export const GatsbyImageSharpFluid_noBase64 = graphql`
     srcSet
     sizes
   }
-`
+`;
 
 /**
  * Traced SVG fluid images without the blurred base64 image that prefer Webp
@@ -198,4 +198,4 @@ export const GatsbyImageSharpFluid_withWebp_noBase64 = graphql`
     srcSetWebp
     sizes
   }
-`
+`;

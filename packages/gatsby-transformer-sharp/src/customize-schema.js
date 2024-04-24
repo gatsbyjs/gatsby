@@ -1,4 +1,4 @@
-const Promise = require(`bluebird`)
+const Promise = require("bluebird");
 const {
   GraphQLObjectType,
   GraphQLList,
@@ -8,22 +8,22 @@ const {
   GraphQLFloat,
   GraphQLNonNull,
   GraphQLJSON,
-} = require(`gatsby/graphql`)
+} = require("gatsby/graphql");
 const {
   queueImageResizing,
   base64,
   fluid,
   fixed,
   generateImageData,
-} = require(`gatsby-plugin-sharp`)
-const { hasFeature } = require(`gatsby-plugin-utils`)
+} = require("gatsby-plugin-sharp");
+const { hasFeature } = require("gatsby-plugin-utils");
 
-const sharp = require(`./safe-sharp`)
-const fs = require(`fs-extra`)
-const imageSize = require(`probe-image-size`)
-const path = require(`path`)
+const sharp = require("./safe-sharp");
+const fs = require("fs-extra");
+const imageSize = require("probe-image-size");
+const path = require("path");
 
-const DEFAULT_PNG_COMPRESSION_SPEED = 4
+const DEFAULT_PNG_COMPRESSION_SPEED = 4;
 
 const {
   ImageFormatType,
@@ -40,33 +40,33 @@ const {
   BlurredOptionsType,
   TransformOptionsType,
   AVIFOptionsType,
-} = require(`./types`)
-const { stripIndent } = require(`common-tags`)
-const { prefixId, CODES } = require(`./error-utils`)
+} = require("./types");
+const { stripIndent } = require("common-tags");
+const { prefixId, CODES } = require("./error-utils");
 
-let warnedForDeprecation = false
+let warnedForDeprecation = false;
 
 function warnForDeprecation() {
   if (warnedForDeprecation) {
-    return
+    return;
   }
-  warnedForDeprecation = true
+  warnedForDeprecation = true;
   console.warn(
-    `[gatsby-transformer-sharp] The "fixed" and "fluid" resolvers are now deprecated. Switch to "gatsby-plugin-image" for better performance and a simpler API. See https://gatsby.dev/migrate-images to learn how.`
-  )
+    '[gatsby-transformer-sharp] The "fixed" and "fluid" resolvers are now deprecated. Switch to "gatsby-plugin-image" for better performance and a simpler API. See https://gatsby.dev/migrate-images to learn how.',
+  );
 }
 
 function toArray(buf) {
-  const arr = new Array(buf.length)
+  const arr = new Array(buf.length);
 
   for (let i = 0; i < buf.length; i++) {
-    arr[i] = buf[i]
+    arr[i] = buf[i];
   }
 
-  return arr
+  return arr;
 }
 
-let didShowTraceSVGRemovalWarningFixed = false
+let didShowTraceSVGRemovalWarningFixed = false;
 const fixedNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -81,14 +81,14 @@ const fixedNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => {
+          resolve: (parent) => {
             if (!didShowTraceSVGRemovalWarningFixed) {
               console.warn(
-                `"tracedSVG" placeholder field is no longer supported (used in ImageSharp.fixed processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
-              )
-              didShowTraceSVGRemovalWarningFixed = true
+                '"tracedSVG" placeholder field is no longer supported (used in ImageSharp.fixed processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/',
+              );
+              didShowTraceSVGRemovalWarningFixed = true;
             }
-            return parent.base64
+            return parent.base64;
           },
         },
         aspectRatio: { type: GraphQLFloat },
@@ -101,35 +101,35 @@ const fixedNodeType = ({
           resolve: ({ file, image, fieldArgs }) => {
             // If the file is already in webp format or should explicitly
             // be converted to webp, we do not create additional webp files
-            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
-              return null
+            if (file.extension === "webp" || fieldArgs.toFormat === "webp") {
+              return null;
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, pathPrefix, toFormat: "webp" };
             return Promise.resolve(
               fixed({
                 file,
                 args,
                 reporter,
                 cache,
-              })
-            ).then(({ src }) => src)
+              }),
+            ).then(({ src }) => src);
           },
         },
         srcSetWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
-            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
-              return null
+            if (file.extension === "webp" || fieldArgs.toFormat === "webp") {
+              return null;
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, pathPrefix, toFormat: "webp" };
             return Promise.resolve(
               fixed({
                 file,
                 args,
                 reporter,
                 cache,
-              })
-            ).then(({ srcSet }) => srcSet)
+              }),
+            ).then(({ srcSet }) => srcSet);
           },
         },
         originalName: { type: GraphQLString },
@@ -179,11 +179,11 @@ const fixedNodeType = ({
       },
       toFormat: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: "",
       },
       toFormatBase64: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: "",
       },
       cropFocus: {
         type: ImageCropFocusType,
@@ -195,7 +195,7 @@ const fixedNodeType = ({
       },
       background: {
         type: GraphQLString,
-        defaultValue: `rgba(0,0,0,1)`,
+        defaultValue: "rgba(0,0,0,1)",
       },
       rotate: {
         type: GraphQLInt,
@@ -207,28 +207,28 @@ const fixedNodeType = ({
       },
     },
     resolve: (image, fieldArgs, context) => {
-      warnForDeprecation()
-      const file = getNodeAndSavePathDependency(image.parent, context.path)
-      const args = { ...fieldArgs, pathPrefix }
+      warnForDeprecation();
+      const file = getNodeAndSavePathDependency(image.parent, context.path);
+      const args = { ...fieldArgs, pathPrefix };
       return Promise.resolve(
         fixed({
           file,
           args,
           reporter,
           cache,
-        })
-      ).then(o =>
+        }),
+      ).then((o) =>
         Object.assign({}, o, {
           fieldArgs: args,
           image,
           file,
-        })
-      )
+        }),
+      );
     },
-  }
-}
+  };
+};
 
-let didShowTraceSVGRemovalWarningFluid = false
+let didShowTraceSVGRemovalWarningFluid = false;
 const fluidNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -243,14 +243,14 @@ const fluidNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => {
+          resolve: (parent) => {
             if (!didShowTraceSVGRemovalWarningFluid) {
               console.warn(
-                `"tracedSVG" placeholder field is no longer supported (used in ImageSharp.fluid processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
-              )
-              didShowTraceSVGRemovalWarningFluid = true
+                '"tracedSVG" placeholder field is no longer supported (used in ImageSharp.fluid processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/',
+              );
+              didShowTraceSVGRemovalWarningFluid = true;
             }
-            return parent.base64
+            return parent.base64;
           },
         },
         aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
@@ -259,35 +259,35 @@ const fluidNodeType = ({
         srcWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
-              return null
+            if (image.extension === "webp" || fieldArgs.toFormat === "webp") {
+              return null;
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, pathPrefix, toFormat: "webp" };
             return Promise.resolve(
               fluid({
                 file,
                 args,
                 reporter,
                 cache,
-              })
-            ).then(({ src }) => src)
+              }),
+            ).then(({ src }) => src);
           },
         },
         srcSetWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
-              return null
+            if (image.extension === "webp" || fieldArgs.toFormat === "webp") {
+              return null;
             }
-            const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+            const args = { ...fieldArgs, pathPrefix, toFormat: "webp" };
             return Promise.resolve(
               fluid({
                 file,
                 args,
                 reporter,
                 cache,
-              })
-            ).then(({ srcSet }) => srcSet)
+              }),
+            ).then(({ srcSet }) => srcSet);
           },
         },
         sizes: { type: new GraphQLNonNull(GraphQLString) },
@@ -341,11 +341,11 @@ const fluidNodeType = ({
       },
       toFormat: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: "",
       },
       toFormatBase64: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: "",
       },
       cropFocus: {
         type: ImageCropFocusType,
@@ -357,7 +357,7 @@ const fluidNodeType = ({
       },
       background: {
         type: GraphQLString,
-        defaultValue: `rgba(0,0,0,1)`,
+        defaultValue: "rgba(0,0,0,1)",
       },
       rotate: {
         type: GraphQLInt,
@@ -369,37 +369,38 @@ const fluidNodeType = ({
       },
       sizes: {
         type: GraphQLString,
-        defaultValue: ``,
+        defaultValue: "",
       },
       srcSetBreakpoints: {
         type: new GraphQLList(GraphQLInt),
         defaultValue: [],
-        description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,
+        description:
+          "A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]",
       },
     },
     resolve: (image, fieldArgs, context) => {
-      warnForDeprecation()
-      const file = getNodeAndSavePathDependency(image.parent, context.path)
-      const args = { ...fieldArgs, pathPrefix }
+      warnForDeprecation();
+      const file = getNodeAndSavePathDependency(image.parent, context.path);
+      const args = { ...fieldArgs, pathPrefix };
       return Promise.resolve(
         fluid({
           file,
           args,
           reporter,
           cache,
-        })
-      ).then(o =>
+        }),
+      ).then((o) =>
         Object.assign({}, o, {
           fieldArgs: args,
           image,
           file,
-        })
-      )
+        }),
+      );
     },
-  }
-}
+  };
+};
 
-let didShowTraceSVGRemovalWarningGatsbyImageData = false
+let didShowTraceSVGRemovalWarningGatsbyImageData = false;
 const imageNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -407,13 +408,13 @@ const imageNodeType = ({
   cache,
 }) => {
   return {
-    type: hasFeature(`graphql-typegen`)
-      ? `GatsbyImageData!`
+    type: hasFeature("graphql-typegen")
+      ? "GatsbyImageData!"
       : new GraphQLNonNull(GraphQLJSON),
     args: {
       layout: {
         type: ImageLayoutType,
-        defaultValue: `constrained`,
+        defaultValue: "constrained",
         description: stripIndent`
         The layout for the image.
         FIXED: A static image sized, that does not resize according to the screen width
@@ -453,11 +454,13 @@ const imageNodeType = ({
       },
       blurredOptions: {
         type: BlurredOptionsType,
-        description: `Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this`,
+        description:
+          'Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this',
       },
       tracedSVGOptions: {
         type: PotraceType,
-        description: `Options for traced placeholder SVGs. You also should set placeholder to "TRACED_SVG".`,
+        description:
+          'Options for traced placeholder SVGs. You also should set placeholder to "TRACED_SVG".',
       },
       formats: {
         type: new GraphQLList(ImageFormatType),
@@ -494,49 +497,52 @@ const imageNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        description: `The default quality. This is overridden by any format-specific options`,
+        description:
+          "The default quality. This is overridden by any format-specific options",
       },
       jpgOptions: {
         type: JPGOptionsType,
-        description: `Options to pass to sharp when generating JPG images.`,
+        description: "Options to pass to sharp when generating JPG images.",
       },
       pngOptions: {
         type: PNGOptionsType,
-        description: `Options to pass to sharp when generating PNG images.`,
+        description: "Options to pass to sharp when generating PNG images.",
       },
       webpOptions: {
         type: WebPOptionsType,
-        description: `Options to pass to sharp when generating WebP images.`,
+        description: "Options to pass to sharp when generating WebP images.",
       },
       avifOptions: {
         type: AVIFOptionsType,
-        description: `Options to pass to sharp when generating AVIF images.`,
+        description: "Options to pass to sharp when generating AVIF images.",
       },
       transformOptions: {
         type: TransformOptionsType,
-        description: `Options to pass to sharp to control cropping and other image manipulations.`,
+        description:
+          "Options to pass to sharp to control cropping and other image manipulations.",
       },
       backgroundColor: {
         type: GraphQLString,
-        description: `Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.`,
+        description:
+          'Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.',
       },
     },
     resolve: async (image, fieldArgs, context) => {
-      const file = getNodeAndSavePathDependency(image.parent, context.path)
+      const file = getNodeAndSavePathDependency(image.parent, context.path);
 
       if (!generateImageData) {
-        reporter.warn(`Please upgrade gatsby-plugin-sharp`)
-        return null
+        reporter.warn("Please upgrade gatsby-plugin-sharp");
+        return null;
       }
 
-      if (fieldArgs?.placeholder === `tracedSVG`) {
+      if (fieldArgs?.placeholder === "tracedSVG") {
         if (!didShowTraceSVGRemovalWarningGatsbyImageData) {
           console.warn(
-            `"TRACED_SVG" placeholder argument value is no longer supported (used in ImageSharp.gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/`
-          )
-          didShowTraceSVGRemovalWarningGatsbyImageData = true
+            '"TRACED_SVG" placeholder argument value is no longer supported (used in ImageSharp.gatsbyImageData processing), falling back to "DOMINANT_COLOR". See https://gatsby.dev/tracesvg-removal/',
+          );
+          didShowTraceSVGRemovalWarningGatsbyImageData = true;
         }
-        fieldArgs.placeholder = `dominantColor`
+        fieldArgs.placeholder = "dominantColor";
       }
 
       const imageData = await generateImageData({
@@ -545,20 +551,20 @@ const imageNodeType = ({
         pathPrefix,
         reporter,
         cache,
-      })
+      });
 
-      return imageData
+      return imageData;
     },
-  }
-}
+  };
+};
 
 /**
  * Keeps track of asynchronous file copy to prevent sequence errors in the
  * underlying fs-extra module during parallel copies of the same file
  */
-const inProgressCopy = new Set()
+const inProgressCopy = new Set();
 
-let didShowTraceSVGRemovalWarningResize = false
+let didShowTraceSVGRemovalWarningResize = false;
 
 const createFields = ({
   pathPrefix,
@@ -571,11 +577,11 @@ const createFields = ({
     getNodeAndSavePathDependency,
     reporter,
     cache,
-  }
+  };
 
-  const fixedNode = fixedNodeType({ name: `ImageSharpFixed`, ...nodeOptions })
-  const fluidNode = fluidNodeType({ name: `ImageSharpFluid`, ...nodeOptions })
-  const imageNode = imageNodeType(nodeOptions)
+  const fixedNode = fixedNodeType({ name: "ImageSharpFixed", ...nodeOptions });
+  const fluidNode = fluidNodeType({ name: "ImageSharpFluid", ...nodeOptions });
+  const imageNode = imageNodeType(nodeOptions);
 
   return {
     fixed: fixedNode,
@@ -583,7 +589,7 @@ const createFields = ({
     gatsbyImageData: imageNode,
     original: {
       type: new GraphQLObjectType({
-        name: `ImageSharpOriginal`,
+        name: "ImageSharpOriginal",
         fields: {
           width: { type: GraphQLFloat },
           height: { type: GraphQLFloat },
@@ -592,29 +598,32 @@ const createFields = ({
       }),
       args: {},
       async resolve(image, fieldArgs, context) {
-        const details = getNodeAndSavePathDependency(image.parent, context.path)
+        const details = getNodeAndSavePathDependency(
+          image.parent,
+          context.path,
+        );
         const dimensions = imageSize.sync(
-          toArray(fs.readFileSync(details.absolutePath))
-        )
-        const imageName = `${details.name}-${image.internal.contentDigest}${details.ext}`
+          toArray(fs.readFileSync(details.absolutePath)),
+        );
+        const imageName = `${details.name}-${image.internal.contentDigest}${details.ext}`;
         const publicPath = path.join(
           process.cwd(),
-          `public`,
-          `static`,
-          imageName
-        )
+          "public",
+          "static",
+          imageName,
+        );
 
         if (!fs.existsSync(publicPath) && !inProgressCopy.has(publicPath)) {
           // keep track of in progress copy, we should rely on `existsSync` but
           // a race condition exists between the exists check and the copy
-          inProgressCopy.add(publicPath)
+          inProgressCopy.add(publicPath);
           fs.copy(
             details.absolutePath,
             publicPath,
             { dereference: true },
-            err => {
+            (err) => {
               // this is no longer in progress
-              inProgressCopy.delete(publicPath)
+              inProgressCopy.delete(publicPath);
               if (err) {
                 reporter.panic(
                   {
@@ -623,39 +632,39 @@ const createFields = ({
                       sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
                     },
                   },
-                  err
-                )
+                  err,
+                );
               }
-            }
-          )
+            },
+          );
         }
 
         return {
           width: dimensions.width,
           height: dimensions.height,
           src: `${pathPrefix}/static/${imageName}`,
-        }
+        };
       },
     },
     resize: {
       type: new GraphQLObjectType({
-        name: `ImageSharpResize`,
+        name: "ImageSharpResize",
         fields: {
           src: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: async parent => {
+            resolve: async (parent) => {
               if (!didShowTraceSVGRemovalWarningResize) {
                 console.warn(
-                  `"tracedSVG" placeholder field is no longer supported (used in ImageSharp.resize processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/`
-                )
-                didShowTraceSVGRemovalWarningResize = true
+                  '"tracedSVG" placeholder field is no longer supported (used in ImageSharp.resize processing), falling back to "base64". See https://gatsby.dev/tracesvg-removal/',
+                );
+                didShowTraceSVGRemovalWarningResize = true;
               }
               const { src } = await base64({
                 file: parent.file,
                 cache,
-              })
-              return src
+              });
+              return src;
             },
           },
           width: { type: GraphQLInt },
@@ -713,7 +722,7 @@ const createFields = ({
         },
         toFormat: {
           type: ImageFormatType,
-          defaultValue: ``,
+          defaultValue: "",
         },
         cropFocus: {
           type: ImageCropFocusType,
@@ -725,7 +734,7 @@ const createFields = ({
         },
         background: {
           type: GraphQLString,
-          defaultValue: `rgba(0,0,0,1)`,
+          defaultValue: "rgba(0,0,0,1)",
         },
         rotate: {
           type: GraphQLInt,
@@ -737,34 +746,34 @@ const createFields = ({
         },
       },
       resolve: (image, fieldArgs, context) => {
-        const file = getNodeAndSavePathDependency(image.parent, context.path)
-        const args = { ...fieldArgs, pathPrefix }
-        return new Promise(resolve => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path);
+        const args = { ...fieldArgs, pathPrefix };
+        return new Promise((resolve) => {
           if (fieldArgs.base64) {
             resolve(
               base64({
                 file,
                 cache,
-              })
-            )
+              }),
+            );
           } else {
             const o = queueImageResizing({
               file,
               args,
-            })
+            });
             resolve(
               Object.assign({}, o, {
                 image,
                 file,
                 fieldArgs: args,
-              })
-            )
+              }),
+            );
           }
-        })
+        });
       },
     },
-  }
-}
+  };
+};
 
 module.exports = ({
   actions,
@@ -774,24 +783,24 @@ module.exports = ({
   reporter,
   cache,
 }) => {
-  const { createTypes } = actions
+  const { createTypes } = actions;
 
   const imageSharpType = schema.buildObjectType({
-    name: `ImageSharp`,
+    name: "ImageSharp",
     fields: createFields({
       pathPrefix,
       getNodeAndSavePathDependency,
       reporter,
       cache,
     }),
-    interfaces: [`Node`],
+    interfaces: ["Node"],
     extensions: {
       infer: true,
       childOf: {
-        types: [`File`],
+        types: ["File"],
       },
     },
-  })
+  });
 
   if (createTypes) {
     createTypes([
@@ -803,6 +812,6 @@ module.exports = ({
       PotraceTurnPolicyType,
       PotraceType,
       imageSharpType,
-    ])
+    ]);
   }
-}
+};

@@ -3,50 +3,50 @@ exports.contentTypeItems = () => [
     sys: {
       space: {
         sys: {
-          type: `Link`,
-          linkType: `Space`,
-          id: `ahntqop9oi7x`,
+          type: "Link",
+          linkType: "Space",
+          id: "ahntqop9oi7x",
         },
       },
-      id: `page`,
-      type: `ContentType`,
-      createdAt: `2020-10-16T11:43:48.221Z`,
-      updatedAt: `2020-10-16T11:44:25.392Z`,
+      id: "page",
+      type: "ContentType",
+      createdAt: "2020-10-16T11:43:48.221Z",
+      updatedAt: "2020-10-16T11:44:25.392Z",
       environment: {
         sys: {
-          id: `master`,
-          type: `Link`,
-          linkType: `Environment`,
+          id: "master",
+          type: "Link",
+          linkType: "Environment",
         },
       },
       revision: 2,
     },
-    displayField: `title`,
-    name: `Page`,
-    description: ``,
+    displayField: "title",
+    name: "Page",
+    description: "",
     fields: [
       {
-        id: `title`,
-        name: `Title`,
-        type: `Symbol`,
+        id: "title",
+        name: "Title",
+        type: "Symbol",
         localized: false,
         required: false,
         disabled: false,
         omitted: false,
       },
       {
-        id: `slug`,
-        name: `Slug`,
-        type: `Symbol`,
+        id: "slug",
+        name: "Slug",
+        type: "Symbol",
         localized: false,
         required: true,
         disabled: false,
         omitted: false,
       },
       {
-        id: `content`,
-        name: `Content`,
-        type: `RichText`,
+        id: "content",
+        name: "Content",
+        type: "RichText",
         localized: true,
         required: false,
         disabled: false,
@@ -54,7 +54,7 @@ exports.contentTypeItems = () => [
       },
     ],
   },
-]
+];
 
 exports.initialSync = () => {
   return {
@@ -64,49 +64,49 @@ exports.initialSync = () => {
           sys: {
             space: {
               sys: {
-                type: `Link`,
-                linkType: `Space`,
-                id: `ahntqop9oi7x`,
+                type: "Link",
+                linkType: "Space",
+                id: "ahntqop9oi7x",
               },
             },
-            id: `6KpLS2NZyB3KAvDzWf4Ukh`,
-            type: `Entry`,
-            createdAt: `2020-10-16T11:50:44.939Z`,
-            updatedAt: `2020-10-16T11:50:44.939Z`,
+            id: "6KpLS2NZyB3KAvDzWf4Ukh",
+            type: "Entry",
+            createdAt: "2020-10-16T11:50:44.939Z",
+            updatedAt: "2020-10-16T11:50:44.939Z",
             environment: {
               sys: {
-                id: `master`,
-                type: `Link`,
-                linkType: `Environment`,
+                id: "master",
+                type: "Link",
+                linkType: "Environment",
               },
             },
             revision: 1,
             contentType: {
               sys: {
-                type: `Link`,
-                linkType: `ContentType`,
-                id: `page`,
+                type: "Link",
+                linkType: "ContentType",
+                id: "page",
               },
             },
           },
           fields: {
             title: {
-              "en-US": `Home`,
+              "en-US": "Home",
             },
             slug: {
-              "en-US": `home`,
+              "en-US": "home",
             },
             content: {
               "en-US": {
-                nodeType: `document`,
+                nodeType: "document",
                 data: {},
                 content: [
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `This is the homepage`,
+                        nodeType: "text",
+                        value: "This is the homepage",
                         marks: [],
                         data: {},
                       },
@@ -114,11 +114,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `heading-1`,
+                    nodeType: "heading-1",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Heading 1`,
+                        nodeType: "text",
+                        value: "Heading 1",
                         marks: [],
                         data: {},
                       },
@@ -126,11 +126,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `heading-2`,
+                    nodeType: "heading-2",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Heading 2`,
+                        nodeType: "text",
+                        value: "Heading 2",
                         marks: [],
                         data: {},
                       },
@@ -138,11 +138,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `heading-3`,
+                    nodeType: "heading-3",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Heading 3`,
+                        nodeType: "text",
+                        value: "Heading 3",
                         marks: [],
                         data: {},
                       },
@@ -150,11 +150,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `heading-4`,
+                    nodeType: "heading-4",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Heading 4`,
+                        nodeType: "text",
+                        value: "Heading 4",
                         marks: [],
                         data: {},
                       },
@@ -162,11 +162,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `heading-5`,
+                    nodeType: "heading-5",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Heading 5`,
+                        nodeType: "text",
+                        value: "Heading 5",
                         marks: [],
                         data: {},
                       },
@@ -174,11 +174,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `heading-6`,
+                    nodeType: "heading-6",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Heading 6`,
+                        nodeType: "text",
+                        value: "Heading 6",
                         marks: [],
                         data: {},
                       },
@@ -186,55 +186,55 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `This is `,
+                        nodeType: "text",
+                        value: "This is ",
                         marks: [],
                         data: {},
                       },
                       {
-                        nodeType: `text`,
-                        value: `bold `,
+                        nodeType: "text",
+                        value: "bold ",
                         marks: [
                           {
-                            type: `bold`,
+                            type: "bold",
                           },
                         ],
                         data: {},
                       },
                       {
-                        nodeType: `text`,
-                        value: `and `,
+                        nodeType: "text",
+                        value: "and ",
                         marks: [],
                         data: {},
                       },
                       {
-                        nodeType: `text`,
-                        value: `italic`,
+                        nodeType: "text",
+                        value: "italic",
                         marks: [
                           {
-                            type: `italic`,
+                            type: "italic",
                           },
                         ],
                         data: {},
                       },
                       {
-                        nodeType: `text`,
-                        value: ` and `,
+                        nodeType: "text",
+                        value: " and ",
                         marks: [],
                         data: {},
                       },
                       {
-                        nodeType: `text`,
-                        value: `both`,
+                        nodeType: "text",
+                        value: "both",
                         marks: [
                           {
-                            type: `bold`,
+                            type: "bold",
                           },
                           {
-                            type: `italic`,
+                            type: "italic",
                           },
                         ],
                         data: {},
@@ -243,17 +243,17 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `unordered-list`,
+                    nodeType: "unordered-list",
                     content: [
                       {
-                        nodeType: `list-item`,
+                        nodeType: "list-item",
                         content: [
                           {
-                            nodeType: `paragraph`,
+                            nodeType: "paragraph",
                             content: [
                               {
-                                nodeType: `text`,
-                                value: `Very`,
+                                nodeType: "text",
+                                value: "Very",
                                 marks: [],
                                 data: {},
                               },
@@ -264,14 +264,14 @@ exports.initialSync = () => {
                         data: {},
                       },
                       {
-                        nodeType: `list-item`,
+                        nodeType: "list-item",
                         content: [
                           {
-                            nodeType: `paragraph`,
+                            nodeType: "paragraph",
                             content: [
                               {
-                                nodeType: `text`,
-                                value: `useful`,
+                                nodeType: "text",
+                                value: "useful",
                                 marks: [],
                                 data: {},
                               },
@@ -282,14 +282,14 @@ exports.initialSync = () => {
                         data: {},
                       },
                       {
-                        nodeType: `list-item`,
+                        nodeType: "list-item",
                         content: [
                           {
-                            nodeType: `paragraph`,
+                            nodeType: "paragraph",
                             content: [
                               {
-                                nodeType: `text`,
-                                value: `list`,
+                                nodeType: "text",
+                                value: "list",
                                 marks: [],
                                 data: {},
                               },
@@ -303,14 +303,14 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `blockquote`,
+                    nodeType: "blockquote",
                     content: [
                       {
-                        nodeType: `paragraph`,
+                        nodeType: "paragraph",
                         content: [
                           {
-                            nodeType: `text`,
-                            value: `This is a quote`,
+                            nodeType: "text",
+                            value: "This is a quote",
                             marks: [],
                             data: {},
                           },
@@ -321,11 +321,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `heading-2`,
+                    nodeType: "heading-2",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Reference tests:`,
+                        nodeType: "text",
+                        value: "Reference tests:",
                         marks: [],
                         data: {},
                       },
@@ -333,30 +333,30 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Inline Link: `,
+                        nodeType: "text",
+                        value: "Inline Link: ",
                         marks: [],
                         data: {},
                       },
                       {
-                        nodeType: `embedded-entry-inline`,
+                        nodeType: "embedded-entry-inline",
                         content: [],
                         data: {
                           target: {
                             sys: {
-                              id: `7oHxo6bs0us9wIkq27qdyK`,
-                              type: `Link`,
-                              linkType: `Entry`,
+                              id: "7oHxo6bs0us9wIkq27qdyK",
+                              type: "Link",
+                              linkType: "Entry",
                             },
                           },
                         },
                       },
                       {
-                        nodeType: `text`,
-                        value: ``,
+                        nodeType: "text",
+                        value: "",
                         marks: [],
                         data: {},
                       },
@@ -364,11 +364,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Link in list:`,
+                        nodeType: "text",
+                        value: "Link in list:",
                         marks: [],
                         data: {},
                       },
@@ -376,36 +376,36 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `ordered-list`,
+                    nodeType: "ordered-list",
                     content: [
                       {
-                        nodeType: `list-item`,
+                        nodeType: "list-item",
                         content: [
                           {
-                            nodeType: `paragraph`,
+                            nodeType: "paragraph",
                             content: [
                               {
-                                nodeType: `text`,
-                                value: ``,
+                                nodeType: "text",
+                                value: "",
                                 marks: [],
                                 data: {},
                               },
                               {
-                                nodeType: `embedded-entry-inline`,
+                                nodeType: "embedded-entry-inline",
                                 content: [],
                                 data: {
                                   target: {
                                     sys: {
-                                      id: `6KpLS2NZyB3KAvDzWf4Ukh`,
-                                      type: `Link`,
-                                      linkType: `Entry`,
+                                      id: "6KpLS2NZyB3KAvDzWf4Ukh",
+                                      type: "Link",
+                                      linkType: "Entry",
                                     },
                                   },
                                 },
                               },
                               {
-                                nodeType: `text`,
-                                value: ``,
+                                nodeType: "text",
+                                value: "",
                                 marks: [],
                                 data: {},
                               },
@@ -419,11 +419,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Embedded Entity:`,
+                        nodeType: "text",
+                        value: "Embedded Entity:",
                         marks: [],
                         data: {},
                       },
@@ -431,24 +431,24 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `embedded-entry-block`,
+                    nodeType: "embedded-entry-block",
                     content: [],
                     data: {
                       target: {
                         sys: {
-                          id: `7oHxo6bs0us9wIkq27qdyK`,
-                          type: `Link`,
-                          linkType: `Entry`,
+                          id: "7oHxo6bs0us9wIkq27qdyK",
+                          type: "Link",
+                          linkType: "Entry",
                         },
                       },
                     },
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: ``,
+                        nodeType: "text",
+                        value: "",
                         marks: [],
                         data: {},
                       },
@@ -456,11 +456,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `heading-2`,
+                    nodeType: "heading-2",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Embedded Asset:`,
+                        nodeType: "text",
+                        value: "Embedded Asset:",
                         marks: [],
                         data: {},
                       },
@@ -468,24 +468,24 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `embedded-asset-block`,
+                    nodeType: "embedded-asset-block",
                     content: [],
                     data: {
                       target: {
                         sys: {
-                          id: `4ZQrqcrTunWiuNaavhGYNT`,
-                          type: `Link`,
-                          linkType: `Asset`,
+                          id: "4ZQrqcrTunWiuNaavhGYNT",
+                          type: "Link",
+                          linkType: "Asset",
                         },
                       },
                     },
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: ``,
+                        nodeType: "text",
+                        value: "",
                         marks: [],
                         data: {},
                       },
@@ -501,49 +501,49 @@ exports.initialSync = () => {
           sys: {
             space: {
               sys: {
-                type: `Link`,
-                linkType: `Space`,
-                id: `ahntqop9oi7x`,
+                type: "Link",
+                linkType: "Space",
+                id: "ahntqop9oi7x",
               },
             },
-            id: `7oHxo6bs0us9wIkq27qdyK`,
-            type: `Entry`,
-            createdAt: `2020-10-16T11:50:44.929Z`,
-            updatedAt: `2020-10-16T11:50:44.929Z`,
+            id: "7oHxo6bs0us9wIkq27qdyK",
+            type: "Entry",
+            createdAt: "2020-10-16T11:50:44.929Z",
+            updatedAt: "2020-10-16T11:50:44.929Z",
             environment: {
               sys: {
-                id: `master`,
-                type: `Link`,
-                linkType: `Environment`,
+                id: "master",
+                type: "Link",
+                linkType: "Environment",
               },
             },
             revision: 1,
             contentType: {
               sys: {
-                type: `Link`,
-                linkType: `ContentType`,
-                id: `page`,
+                type: "Link",
+                linkType: "ContentType",
+                id: "page",
               },
             },
           },
           fields: {
             title: {
-              "en-US": `Second Page`,
+              "en-US": "Second Page",
             },
             slug: {
-              "en-US": `second-page`,
+              "en-US": "second-page",
             },
             content: {
               "en-US": {
-                nodeType: `document`,
+                nodeType: "document",
                 data: {},
                 content: [
                   {
-                    nodeType: `heading-1`,
+                    nodeType: "heading-1",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Welcome to page #2`,
+                        nodeType: "text",
+                        value: "Welcome to page #2",
                         marks: [],
                         data: {},
                       },
@@ -551,11 +551,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: ``,
+                        nodeType: "text",
+                        value: "",
                         marks: [],
                         data: {},
                       },
@@ -563,30 +563,30 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Lets create a loop and go home: `,
+                        nodeType: "text",
+                        value: "Lets create a loop and go home: ",
                         marks: [],
                         data: {},
                       },
                       {
-                        nodeType: `embedded-entry-inline`,
+                        nodeType: "embedded-entry-inline",
                         content: [],
                         data: {
                           target: {
                             sys: {
-                              id: `6KpLS2NZyB3KAvDzWf4Ukh`,
-                              type: `Link`,
-                              linkType: `Entry`,
+                              id: "6KpLS2NZyB3KAvDzWf4Ukh",
+                              type: "Link",
+                              linkType: "Entry",
                             },
                           },
                         },
                       },
                       {
-                        nodeType: `text`,
-                        value: ``,
+                        nodeType: "text",
+                        value: "",
                         marks: [],
                         data: {},
                       },
@@ -594,11 +594,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: ``,
+                        nodeType: "text",
+                        value: "",
                         marks: [],
                         data: {},
                       },
@@ -606,11 +606,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `heading-2`,
+                    nodeType: "heading-2",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: `Asset Embed:`,
+                        nodeType: "text",
+                        value: "Asset Embed:",
                         marks: [],
                         data: {},
                       },
@@ -618,24 +618,24 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `embedded-asset-block`,
+                    nodeType: "embedded-asset-block",
                     content: [],
                     data: {
                       target: {
                         sys: {
-                          id: `5yedy6m6500gVbtpNh8bEm`,
-                          type: `Link`,
-                          linkType: `Asset`,
+                          id: "5yedy6m6500gVbtpNh8bEm",
+                          type: "Link",
+                          linkType: "Asset",
                         },
                       },
                     },
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: ``,
+                        nodeType: "text",
+                        value: "",
                         marks: [],
                         data: {},
                       },
@@ -643,11 +643,11 @@ exports.initialSync = () => {
                     data: {},
                   },
                   {
-                    nodeType: `paragraph`,
+                    nodeType: "paragraph",
                     content: [
                       {
-                        nodeType: `text`,
-                        value: ``,
+                        nodeType: "text",
+                        value: "",
                         marks: [],
                         data: {},
                       },
@@ -665,31 +665,31 @@ exports.initialSync = () => {
           sys: {
             space: {
               sys: {
-                type: `Link`,
-                linkType: `Space`,
-                id: `ahntqop9oi7x`,
+                type: "Link",
+                linkType: "Space",
+                id: "ahntqop9oi7x",
               },
             },
-            id: `4ZQrqcrTunWiuNaavhGYNT`,
-            type: `Asset`,
-            createdAt: `2020-10-16T11:47:54.157Z`,
-            updatedAt: `2020-10-16T11:47:54.158Z`,
+            id: "4ZQrqcrTunWiuNaavhGYNT",
+            type: "Asset",
+            createdAt: "2020-10-16T11:47:54.157Z",
+            updatedAt: "2020-10-16T11:47:54.158Z",
             environment: {
               sys: {
-                id: `master`,
-                type: `Link`,
-                linkType: `Environment`,
+                id: "master",
+                type: "Link",
+                linkType: "Environment",
               },
             },
             revision: 1,
           },
           fields: {
             title: {
-              "en-US": `Contentful Logo`,
+              "en-US": "Contentful Logo",
             },
             file: {
               "en-US": {
-                url: `//images.ctfassets.net/ahntqop9oi7x/4ZQrqcrTunWiuNaavhGYNT/acadab6d2776e8b87e03707a71d026d9/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935.png`,
+                url: "//images.ctfassets.net/ahntqop9oi7x/4ZQrqcrTunWiuNaavhGYNT/acadab6d2776e8b87e03707a71d026d9/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935.png",
                 details: {
                   size: 25053,
                   image: {
@@ -697,8 +697,9 @@ exports.initialSync = () => {
                     height: 338,
                   },
                 },
-                fileName: `347966-contentful-logo-wordmark-dark (1)-4cd185-original-1582664935.png`,
-                contentType: `image/png`,
+                fileName:
+                  "347966-contentful-logo-wordmark-dark (1)-4cd185-original-1582664935.png",
+                contentType: "image/png",
               },
             },
           },
@@ -707,31 +708,31 @@ exports.initialSync = () => {
           sys: {
             space: {
               sys: {
-                type: `Link`,
-                linkType: `Space`,
-                id: `ahntqop9oi7x`,
+                type: "Link",
+                linkType: "Space",
+                id: "ahntqop9oi7x",
               },
             },
-            id: `5yedy6m6500gVbtpNh8bEm`,
-            type: `Asset`,
-            createdAt: `2020-10-16T11:47:43.597Z`,
-            updatedAt: `2020-10-16T11:47:43.597Z`,
+            id: "5yedy6m6500gVbtpNh8bEm",
+            type: "Asset",
+            createdAt: "2020-10-16T11:47:43.597Z",
+            updatedAt: "2020-10-16T11:47:43.597Z",
             environment: {
               sys: {
-                id: `master`,
-                type: `Link`,
-                linkType: `Environment`,
+                id: "master",
+                type: "Link",
+                linkType: "Environment",
               },
             },
             revision: 1,
           },
           fields: {
             title: {
-              "en-US": `Gatsby Logo`,
+              "en-US": "Gatsby Logo",
             },
             file: {
               "en-US": {
-                url: `//images.ctfassets.net/ahntqop9oi7x/5yedy6m6500gVbtpNh8bEm/b44e93247450ea74f38d6f641f419550/Gatsby_Logo.png`,
+                url: "//images.ctfassets.net/ahntqop9oi7x/5yedy6m6500gVbtpNh8bEm/b44e93247450ea74f38d6f641f419550/Gatsby_Logo.png",
                 details: {
                   size: 37313,
                   image: {
@@ -739,8 +740,8 @@ exports.initialSync = () => {
                     height: 555,
                   },
                 },
-                fileName: `Gatsby_Logo.png`,
-                contentType: `image/png`,
+                fileName: "Gatsby_Logo.png",
+                contentType: "image/png",
               },
             },
           },
@@ -748,52 +749,53 @@ exports.initialSync = () => {
       ],
       deletedEntries: [],
       deletedAssets: [],
-      nextSyncToken: `FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw3CmxolIsOxF10EMMOGCXM-IFrCrhc0LUPDvkjDkms7w5gLw4sqw4_CvxsiZMOFFsOawpM8R8OVPAhMJ8O1w6zCmg`,
+      nextSyncToken:
+        "FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw3CmxolIsOxF10EMMOGCXM-IFrCrhc0LUPDvkjDkms7w5gLw4sqw4_CvxsiZMOFFsOawpM8R8OVPAhMJ8O1w6zCmg",
     },
 
-    defaultLocale: `en-US`,
+    defaultLocale: "en-US",
     locales: [
       {
-        code: `en-US`,
-        name: `English (United States)`,
+        code: "en-US",
+        name: "English (United States)",
         default: true,
         fallbackCode: null,
         sys: {
-          id: `1uSElBQA68GRKF30tpTxxT`,
-          type: `Locale`,
+          id: "1uSElBQA68GRKF30tpTxxT",
+          type: "Locale",
           version: 1,
         },
       },
       {
-        code: `nl`,
-        name: `Dutch`,
+        code: "nl",
+        name: "Dutch",
         default: false,
-        fallbackCode: `en-US`,
+        fallbackCode: "en-US",
         sys: {
-          id: `2T7M2OzIrvE8cOCOF1HMuY`,
-          type: `Locale`,
+          id: "2T7M2OzIrvE8cOCOF1HMuY",
+          type: "Locale",
           version: 1,
         },
       },
     ],
     space: {
       sys: {
-        type: `Space`,
-        id: `ahntqop9oi7x`,
+        type: "Space",
+        id: "ahntqop9oi7x",
       },
-      name: `Rich Text`,
+      name: "Rich Text",
       locales: [
         {
-          code: `en-US`,
+          code: "en-US",
           default: true,
-          name: `English (United States)`,
+          name: "English (United States)",
           fallbackCode: null,
         },
       ],
     },
     tagItems: [],
-  }
-}
+  };
+};
 
 // @todo this fixture is unused
 exports.deleteLinkedPage = () => {
@@ -804,72 +806,73 @@ exports.deleteLinkedPage = () => {
       deletedEntries: [
         {
           sys: {
-            type: `DeletedEntry`,
-            id: `7oHxo6bs0us9wIkq27qdyK`,
+            type: "DeletedEntry",
+            id: "7oHxo6bs0us9wIkq27qdyK",
             space: {
               sys: {
-                type: `Link`,
-                linkType: `Space`,
-                id: `ahntqop9oi7x`,
+                type: "Link",
+                linkType: "Space",
+                id: "ahntqop9oi7x",
               },
             },
             environment: {
               sys: {
-                id: `master`,
-                type: `Link`,
-                linkType: `Environment`,
+                id: "master",
+                type: "Link",
+                linkType: "Environment",
               },
             },
             revision: 1,
-            createdAt: `2020-10-16T12:29:38.094Z`,
-            updatedAt: `2020-10-16T12:29:38.094Z`,
-            deletedAt: `2020-10-16T12:29:38.094Z`,
+            createdAt: "2020-10-16T12:29:38.094Z",
+            updatedAt: "2020-10-16T12:29:38.094Z",
+            deletedAt: "2020-10-16T12:29:38.094Z",
           },
         },
       ],
       deletedAssets: [],
-      nextSyncToken: `FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw3CqcO3w6XCrMKuITDDiEoQSMKvIMOYwrzCn3sHPH3CvsK3w4A9w6LCjsOVwrjCjGwbw4rCl0fDl8OhU8Oqw67DhMOCwozDmxrChsOtRD4`,
+      nextSyncToken:
+        "FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw3CqcO3w6XCrMKuITDDiEoQSMKvIMOYwrzCn3sHPH3CvsK3w4A9w6LCjsOVwrjCjGwbw4rCl0fDl8OhU8Oqw67DhMOCwozDmxrChsOtRD4",
     },
-    defaultLocale: `en-US`,
+    defaultLocale: "en-US",
     locales: [
       {
-        code: `en-US`,
-        name: `English (United States)`,
+        code: "en-US",
+        name: "English (United States)",
         default: true,
         fallbackCode: null,
         sys: {
-          id: `1uSElBQA68GRKF30tpTxxT`,
-          type: `Locale`,
+          id: "1uSElBQA68GRKF30tpTxxT",
+          type: "Locale",
           version: 1,
         },
       },
       {
-        code: `nl`,
-        name: `Dutch`,
+        code: "nl",
+        name: "Dutch",
         default: false,
-        fallbackCode: `en-US`,
+        fallbackCode: "en-US",
         sys: {
-          id: `2T7M2OzIrvE8cOCOF1HMuY`,
-          type: `Locale`,
+          id: "2T7M2OzIrvE8cOCOF1HMuY",
+          type: "Locale",
           version: 1,
         },
       },
     ],
     space: {
       sys: {
-        type: `Space`,
-        id: `ahntqop9oi7x`,
+        type: "Space",
+        id: "ahntqop9oi7x",
       },
-      name: `Rich Text`,
+      name: "Rich Text",
       locales: [
         {
-          code: `en-US`,
+          code: "en-US",
           default: true,
-          name: `English (United States)`,
+          name: "English (United States)",
           fallbackCode: null,
         },
       ],
     },
     tagItems: [],
-  }
-}
+  };
+};

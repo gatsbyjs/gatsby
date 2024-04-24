@@ -1,21 +1,21 @@
-const faker = require(`faker`)
+const faker = require("faker");
 
 exports.sourceNodes = (
   { actions, createNodeId, createContentDigest },
-  pluginOptions
+  pluginOptions,
 ) => {
-  const { createNode } = actions
-  const { schema, count, type } = pluginOptions
+  const { createNode } = actions;
+  const { schema, count, type } = pluginOptions;
   for (let i = 0; i < count; i++) {
-    const item = {}
-    Object.keys(schema).map(schemaKey => {
-      const schemaItemList = schema[schemaKey]
-      item[schemaKey] = {}
+    const item = {};
+    Object.keys(schema).map((schemaKey) => {
+      const schemaItemList = schema[schemaKey];
+      item[schemaKey] = {};
       // ['firstName', 'lastName']
-      schemaItemList.forEach(schemaItem => {
-        item[schemaKey][schemaItem] = faker[schemaKey][schemaItem]()
-      })
-    })
+      schemaItemList.forEach((schemaItem) => {
+        item[schemaKey][schemaItem] = faker[schemaKey][schemaItem]();
+      });
+    });
 
     const nodeBase = {
       id: createNodeId(JSON.stringify(faker.random.number())),
@@ -25,7 +25,7 @@ exports.sourceNodes = (
         type,
         contentDigest: createContentDigest(item),
       },
-    }
-    createNode(Object.assign({}, nodeBase, item))
+    };
+    createNode(Object.assign({}, nodeBase, item));
   }
-}
+};

@@ -1,64 +1,64 @@
-import type { TrailingSlash } from "gatsby-page-utils"
-import type { Express } from "express"
-import type { IProgram, Stage } from "../commands/types"
-import type { GraphQLFieldExtensionDefinition } from "../schema/extensions"
+import type { TrailingSlash } from "gatsby-page-utils";
+import type { Express } from "express";
+import type { IProgram, Stage } from "../commands/types";
+import type { GraphQLFieldExtensionDefinition } from "../schema/extensions";
 import {
   type DocumentNode,
   GraphQLSchema,
   type DefinitionNode,
   type SourceLocation,
-} from "graphql"
-import { SchemaComposer } from "graphql-compose"
-import type { IGatsbyCLIState } from "gatsby-cli/lib/reporter/redux/types"
-import type { ThunkAction } from "redux-thunk"
-import type { InternalJob, JobResultInterface } from "../utils/jobs/manager"
-import type { ITypeMetadata } from "../schema/infer/inference-metadata"
-import { Span } from "opentracing"
-import type { ICollectedSlices } from "../utils/babel/find-slices"
+} from "graphql";
+import { SchemaComposer } from "graphql-compose";
+import type { IGatsbyCLIState } from "gatsby-cli/lib/reporter/redux/types";
+import type { ThunkAction } from "redux-thunk";
+import type { InternalJob, JobResultInterface } from "../utils/jobs/manager";
+import type { ITypeMetadata } from "../schema/infer/inference-metadata";
+import { Span } from "opentracing";
+import type { ICollectedSlices } from "../utils/babel/find-slices";
 import type {
   IAdapter,
   IAdapterFinalConfig,
   IAdapterManager,
-} from "../utils/adapter/types"
-import webpack from "webpack"
+} from "../utils/adapter/types";
+import webpack from "webpack";
 
-type SystemPath = string
-type Identifier = string
+type SystemPath = string;
+type Identifier = string;
 
 export type IRedirect = {
-  fromPath: string
-  toPath: string
-  isPermanent?: boolean | undefined
-  redirectInBrowser?: boolean | undefined
-  ignoreCase?: boolean | undefined
-  statusCode?: HttpStatusCode | undefined
+  fromPath: string;
+  toPath: string;
+  isPermanent?: boolean | undefined;
+  redirectInBrowser?: boolean | undefined;
+  ignoreCase?: boolean | undefined;
+  statusCode?: HttpStatusCode | undefined;
   // Users can add anything to this createRedirect API
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
+  [key: string]: any;
+};
 
 export type ProgramStatus =
-  | `BOOTSTRAP_FINISHED`
-  | `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  | "BOOTSTRAP_FINISHED"
+  | "BOOTSTRAP_QUERY_RUNNING_FINISHED";
 
-export type PageMode = "SSG" | "DSG" | "SSR"
+export type PageMode = "SSG" | "DSG" | "SSR";
 
 export type IGatsbyPage = {
-  internalComponentName: string
-  path: string
-  matchPath: undefined | null | string
-  component: SystemPath
-  componentChunkName: string
-  isCreatedByStatefulCreatePages: boolean
-  context: Record<string, unknown>
-  updatedAt: number
+  internalComponentName: string;
+  path: string;
+  matchPath: undefined | null | string;
+  component: SystemPath;
+  componentChunkName: string;
+  isCreatedByStatefulCreatePages: boolean;
+  context: Record<string, unknown>;
+  updatedAt: number;
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  pluginCreator___NODE: Identifier
-  pluginCreatorId: Identifier
-  componentPath: SystemPath
-  ownerNodeId?: Identifier | undefined
-  manifestId?: string | undefined
-  defer?: boolean | undefined
+  pluginCreator___NODE: Identifier;
+  pluginCreatorId: Identifier;
+  componentPath: SystemPath;
+  ownerNodeId?: Identifier | undefined;
+  manifestId?: string | undefined;
+  defer?: boolean | undefined;
   /**
    * INTERNAL. Do not use `page.mode`, it can be removed at any time
    * `page.mode` is currently reliable only in engines and `onPostBuild` hook
@@ -67,214 +67,216 @@ export type IGatsbyPage = {
    *
    * @internal
    */
-  mode?: PageMode | undefined
-  slices: Record<string, string>
-}
+  mode?: PageMode | undefined;
+  slices: Record<string, string>;
+};
 
 export type IGatsbySlice = {
-  componentPath: string
-  componentChunkName: string
-  context: Record<string, unknown>
-  name: string
-  updatedAt: number
-}
+  componentPath: string;
+  componentChunkName: string;
+  context: Record<string, unknown>;
+  name: string;
+  updatedAt: number;
+};
 
 export type IGatsbyFunction = {
   /** The route in the browser to access the function **/
-  functionRoute: string
+  functionRoute: string;
   /** The absolute path to the original function **/
-  originalAbsoluteFilePath: string
+  originalAbsoluteFilePath: string;
   /** The relative path to the original function **/
-  originalRelativeFilePath: string
+  originalRelativeFilePath: string;
   /** The relative path to the compiled function (always ends with .js) **/
-  relativeCompiledFilePath: string
+  relativeCompiledFilePath: string;
   /** The absolute path to the compiled function (doesn't transfer across machines) **/
-  absoluteCompiledFilePath: string
+  absoluteCompiledFilePath: string;
   /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
-  matchPath: string | undefined
+  matchPath: string | undefined;
   /** The plugin that owns this function route **/
-  pluginName: string
+  pluginName: string;
   /** Function identifier used to match functions usage in routes manifest */
-  functionId: string
-}
+  functionId: string;
+};
 
 export type IGraphQLTypegenOptions = {
-  typesOutputPath: string
-  documentSearchPaths: Array<string>
-  generateOnBuild: boolean
-}
+  typesOutputPath: string;
+  documentSearchPaths: Array<string>;
+  generateOnBuild: boolean;
+};
 
 export type IHeader = {
-  source: string
+  source: string;
   headers: Array<{
-    key: string
-    value: string
-  }>
-}
+    key: string;
+    value: string;
+  }>;
+};
 
 // TODO: The keys of IGatsbyConfig are all optional so that in reducers like reducers/config.ts the default state for the config can be an empty object. This isn't ideal because some of those options are actually always defined because Joi validation sets defaults. Somehow fix this :D
 export type IGatsbyConfig = {
   plugins?:
     | Array<{
         // This is the name of the plugin like `gatsby-plugin-manifest`
-        resolve: string
+        resolve: string;
         options: {
-          [key: string]: unknown
-        }
+          [key: string]: unknown;
+        };
       }>
-    | undefined
+    | undefined;
   siteMetadata?:
     | {
-        title?: string | undefined
-        author?: string | undefined
-        description?: string | undefined
-        siteUrl?: string | undefined
+        title?: string | undefined;
+        author?: string | undefined;
+        description?: string | undefined;
+        siteUrl?: string | undefined;
         // siteMetadata is free form
-        [key: string]: unknown
+        [key: string]: unknown;
       }
-    | undefined
+    | undefined;
   // @deprecated
-  polyfill?: boolean | undefined
-  developMiddleware?: ((app: Express) => void) | undefined
+  polyfill?: boolean | undefined;
+  developMiddleware?: ((app: Express) => void) | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  proxy?: any | undefined
-  partytownProxiedURLs?: Array<string> | undefined
-  pathPrefix?: string | undefined
-  assetPrefix?: string | undefined
-  mapping?: Record<string, string> | undefined
-  jsxRuntime?: "classic" | "automatic" | undefined
-  jsxImportSource?: string | undefined
-  trailingSlash?: TrailingSlash | undefined
-  graphqlTypegen?: IGraphQLTypegenOptions | undefined
-  headers?: Array<IHeader> | undefined
-  adapter?: IAdapter | undefined
-}
+  proxy?: any | undefined;
+  partytownProxiedURLs?: Array<string> | undefined;
+  pathPrefix?: string | undefined;
+  assetPrefix?: string | undefined;
+  mapping?: Record<string, string> | undefined;
+  jsxRuntime?: "classic" | "automatic" | undefined;
+  jsxImportSource?: string | undefined;
+  trailingSlash?: TrailingSlash | undefined;
+  graphqlTypegen?: IGraphQLTypegenOptions | undefined;
+  headers?: Array<IHeader> | undefined;
+  adapter?: IAdapter | undefined;
+};
 
 export type IGatsbyNode = {
-  id: Identifier
-  parent: Identifier | null
-  children: Array<Identifier>
+  id: Identifier;
+  parent: Identifier | null;
+  children: Array<Identifier>;
   internal: {
-    type?: string | undefined
-    counter?: number | undefined
-    owner?: Identifier | undefined
-    contentDigest?: string | undefined
-    mediaType?: string | undefined
-    content?: string | undefined
-    description?: string | undefined
-    fieldOwners?: Record<string, Identifier> | undefined
-  }
-  [key: string]: unknown
-  fields?: Record<string, unknown> | undefined
-}
+    type?: string | undefined;
+    counter?: number | undefined;
+    owner?: Identifier | undefined;
+    contentDigest?: string | undefined;
+    mediaType?: string | undefined;
+    content?: string | undefined;
+    description?: string | undefined;
+    fieldOwners?: Record<string, Identifier> | undefined;
+  };
+  [key: string]: unknown;
+  fields?: Record<string, unknown> | undefined;
+};
 
 export type IGatsbyPlugin = {
-  id: Identifier
-  name: string
-  version: string
+  id: Identifier;
+  name: string;
+  version: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
+  [key: string]: any;
+};
 
 export type IGatsbyPluginContext = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: (...args: Array<any>) => any
-}
+  [key: string]: (...args: Array<any>) => any;
+};
 
 export type IGatsbyStaticQueryComponents = {
-  name: string
-  componentPath: SystemPath
-  id: Identifier
-  query: string
-  hash: string
-}
+  name: string;
+  componentPath: SystemPath;
+  id: Identifier;
+  query: string;
+  hash: string;
+};
 
 export type IGatsbyPageComponent = {
-  componentPath: SystemPath
-  componentChunkName: string
-  query: string
-  pages: Set<string>
-  isInBootstrap: boolean
-  serverData: boolean
-  config: boolean
-  isSlice: boolean
-  Head: boolean
-}
+  componentPath: SystemPath;
+  componentChunkName: string;
+  query: string;
+  pages: Set<string>;
+  isInBootstrap: boolean;
+  serverData: boolean;
+  config: boolean;
+  isSlice: boolean;
+  Head: boolean;
+};
 
 export type IDefinitionMeta = {
-  name: string
-  def: DefinitionNode
-  filePath: string
-  text: string
-  templateLoc: SourceLocation
-  printedAst: string | null
-  isHook: boolean
-  isStaticQuery: boolean
-  isFragment: boolean
-  isConfigQuery: boolean
-  hash: number
-}
+  name: string;
+  def: DefinitionNode;
+  filePath: string;
+  text: string;
+  templateLoc: SourceLocation;
+  printedAst: string | null;
+  isHook: boolean;
+  isStaticQuery: boolean;
+  isFragment: boolean;
+  isConfigQuery: boolean;
+  hash: number;
+};
 
-type GatsbyNodes = Map<string, IGatsbyNode>
+type GatsbyNodes = Map<string, IGatsbyNode>;
 
 export type IGatsbyIncompleteJobV2 = {
-  job: InternalJob
-}
+  job: InternalJob;
+};
 
 export type IGatsbyIncompleteJob = {
-  job: InternalJob
-  plugin: IGatsbyPlugin
-}
+  job: InternalJob;
+  plugin: IGatsbyPlugin;
+};
 
 export type IGatsbyCompleteJobV2 = {
-  result: JobResultInterface
-  inputPaths: InternalJob["inputPaths"]
-}
+  result: JobResultInterface;
+  inputPaths: InternalJob["inputPaths"];
+};
 
 export type IPlugin = {
-  id?: string | undefined
-  version?: string | undefined
-  name: string
-  options: Record<string, unknown>
-}
+  id?: string | undefined;
+  version?: string | undefined;
+  name: string;
+  options?: Record<string, unknown> | undefined;
+};
 
 export type IBabelStage = {
-  plugins: Array<IPlugin>
-  presets: Array<IPlugin>
-  options?: {
-    cacheDirectory: boolean
-    sourceType: string
-    sourceMaps?: string
-  }
-}
+  plugins: Array<IPlugin>;
+  presets: Array<IPlugin>;
+  options?:
+    | {
+        cacheDirectory: boolean;
+        sourceType: string;
+        sourceMaps?: string | undefined;
+      }
+    | undefined;
+};
 
 export type IStateProgram = IProgram & {
-  extensions: Array<string>
-  browserslist: Array<string>
-}
+  extensions: Array<string>;
+  browserslist: Array<string>;
+};
 
 export type IQueryState = {
-  dirty: number
-  running: number
-}
+  dirty: number;
+  running: number;
+};
 
 export type IComponentState = {
-  componentPath: string
-  query: string
-  pages: Set<Identifier>
-  errors: number
-}
+  componentPath: string;
+  query: string;
+  pages: Set<Identifier>;
+  errors: number;
+};
 
 export type IHtmlFileState = {
-  dirty: number
-  isDeleted: boolean
-  pageDataHash: string
-}
+  dirty: number;
+  isDeleted: boolean;
+  pageDataHash: string;
+};
 
 export type IStaticQueryResultState = {
-  dirty: number
-  staticQueryResultHash: string
-}
+  dirty: number;
+  staticQueryResultHash: string;
+};
 
 export type GatsbyNodeAPI =
   | "onPreBootstrap"
@@ -291,198 +293,198 @@ export type GatsbyNodeAPI =
   | "onPreExtractQueries"
   | "onPreInit"
   | "resolvableExtensions"
-  | "preprocessSource"
+  | "preprocessSource";
 
 export type FlattenedPlugin = {
-  resolve: SystemPath
-  id: Identifier
-  name: string
-  version: string
+  resolve: SystemPath;
+  id: Identifier;
+  name: string;
+  version: string;
   pluginOptions: {
-    plugins: []
-    [key: string]: unknown
-  }
-  nodeAPIs: Array<GatsbyNodeAPI>
+    plugins: [];
+    [key: string]: unknown;
+  };
+  nodeAPIs: Array<GatsbyNodeAPI>;
   browserAPIs: Array<
     | "onRouteUpdate"
     | "registerServiceWorker"
     | "onServiceWorkerActive"
     | "onPostPrefetchPathname"
-  >
-  ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
-  pluginFilepath: SystemPath
-  subPluginPaths?: Array<string> | undefined
-  modulePath?: string | undefined
-}
+  >;
+  ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">;
+  pluginFilepath: SystemPath;
+  subPluginPaths?: Array<string> | undefined;
+  modulePath?: string | undefined;
+};
 
 export type IGatsbyState = {
-  program: IStateProgram
-  nodes: GatsbyNodes
-  nodesByType: Map<string, GatsbyNodes>
+  program: IStateProgram;
+  nodes: GatsbyNodes;
+  nodesByType: Map<string, GatsbyNodes>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  resolvedNodesCache: Map<string, Map<string, any> | undefined> // TODO
-  nodesTouched: Set<string>
+  resolvedNodesCache: Map<string, Map<string, any> | undefined>; // TODO
+  nodesTouched: Set<string>;
   typeOwners: {
     pluginsToTypes: Map<
-      IGatsbyPlugin[`name`],
-      Set<IGatsbyNode[`internal`][`type`]>
-    >
-    typesToPlugins: Map<IGatsbyNode[`internal`][`type`], IGatsbyPlugin[`name`]>
-  }
-  nodeManifests: Array<INodeManifest>
-  requestHeaders: Map<string, { [header: string]: string }>
-  statefulSourcePlugins: Set<string>
-  telemetry: ITelemetry
-  lastAction: ActionsUnion
-  flattenedPlugins: Array<FlattenedPlugin>
-  config: IGatsbyConfig
-  functions: Array<IGatsbyFunction>
-  pages: Map<string, IGatsbyPage>
-  schema: GraphQLSchema
-  definitions: Map<string, IDefinitionMeta>
+      IGatsbyPlugin["name"],
+      Set<IGatsbyNode["internal"]["type"]>
+    >;
+    typesToPlugins: Map<IGatsbyNode["internal"]["type"], IGatsbyPlugin["name"]>;
+  };
+  nodeManifests: Array<INodeManifest>;
+  requestHeaders: Map<string, { [header: string]: string }>;
+  statefulSourcePlugins: Set<string>;
+  telemetry: ITelemetry;
+  lastAction: ActionsUnion;
+  flattenedPlugins: Array<FlattenedPlugin>;
+  config: IGatsbyConfig;
+  functions: Array<IGatsbyFunction>;
+  pages: Map<string, IGatsbyPage>;
+  schema: GraphQLSchema;
+  definitions: Map<string, IDefinitionMeta>;
   status: {
-    plugins: Record<string, IGatsbyPlugin>
-    PLUGINS_HASH: Identifier
-    LAST_NODE_COUNTER?: number | undefined
-    cdnObfuscatedPrefix: string
-  }
+    plugins: Record<string, IGatsbyPlugin>;
+    PLUGINS_HASH: Identifier;
+    LAST_NODE_COUNTER?: number | undefined;
+    cdnObfuscatedPrefix: string;
+  };
   queries: {
-    byNode: Map<Identifier, Set<Identifier>>
-    byConnection: Map<string, Set<Identifier>>
-    queryNodes: Map<Identifier, Set<Identifier>>
-    trackedQueries: Map<Identifier, IQueryState>
-    trackedComponents: Map<string, IComponentState>
-    deletedQueries: Set<Identifier>
-    dirtyQueriesListToEmitViaWebsocket: Array<string>
-  }
-  components: Map<IGatsbyPageComponent["componentPath"], IGatsbyPageComponent>
+    byNode: Map<Identifier, Set<Identifier>>;
+    byConnection: Map<string, Set<Identifier>>;
+    queryNodes: Map<Identifier, Set<Identifier>>;
+    trackedQueries: Map<Identifier, IQueryState>;
+    trackedComponents: Map<string, IComponentState>;
+    deletedQueries: Set<Identifier>;
+    dirtyQueriesListToEmitViaWebsocket: Array<string>;
+  };
+  components: Map<IGatsbyPageComponent["componentPath"], IGatsbyPageComponent>;
   staticQueryComponents: Map<
     IGatsbyStaticQueryComponents["id"],
     IGatsbyStaticQueryComponents
-  >
-  staticQueriesByTemplate: Map<SystemPath, Array<Identifier>>
+  >;
+  staticQueriesByTemplate: Map<SystemPath, Array<Identifier>>;
   pendingPageDataWrites: {
-    pagePaths: Set<string>
-    sliceNames: Set<string>
-  }
+    pagePaths: Set<string>;
+    sliceNames: Set<string>;
+  };
   // @deprecated
   jobs: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    active: Array<any> // TODO
+    active: Array<any>; // TODO
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    done: Array<any> // TODO
-  }
+    done: Array<any>; // TODO
+  };
   jobsV2: {
-    incomplete: Map<Identifier, IGatsbyIncompleteJobV2>
-    complete: Map<Identifier, IGatsbyCompleteJobV2>
-    jobsByRequest: Map<string, Set<Identifier>>
-  }
-  webpack: webpack.Configuration // TODO This should be the output from ./utils/webpack.config.js
-  webpackCompilationHash: string
-  redirects: Array<IRedirect>
+    incomplete: Map<Identifier, IGatsbyIncompleteJobV2>;
+    complete: Map<Identifier, IGatsbyCompleteJobV2>;
+    jobsByRequest: Map<string, Set<Identifier>>;
+  };
+  webpack: webpack.Configuration; // TODO This should be the output from ./utils/webpack.config.js
+  webpackCompilationHash: string;
+  redirects: Array<IRedirect>;
   babelrc: {
     stages: {
-      [key in Stage]: IBabelStage
-    }
-  }
+      [key in Stage]: IBabelStage;
+    };
+  };
   schemaCustomization: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    composer: null | SchemaComposer<any>
+    composer: null | SchemaComposer<any>;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    context: Record<string, any>
-    fieldExtensions: GraphQLFieldExtensionDefinition
+    context: Record<string, any>;
+    fieldExtensions: GraphQLFieldExtensionDefinition;
     printConfig: {
-      path?: string | undefined
+      path?: string | undefined;
       include?:
         | {
-            types?: Array<string> | undefined
-            plugins?: Array<string> | undefined
+            types?: Array<string> | undefined;
+            plugins?: Array<string> | undefined;
           }
-        | undefined
+        | undefined;
       exclude?:
         | {
-            types?: Array<string> | undefined
-            plugins?: Array<string> | undefined
+            types?: Array<string> | undefined;
+            plugins?: Array<string> | undefined;
           }
-        | undefined
-      withFieldTypes?: boolean | undefined
-    } | null
-    thirdPartySchemas: Array<GraphQLSchema>
+        | undefined;
+      withFieldTypes?: boolean | undefined;
+    } | null;
+    thirdPartySchemas: Array<GraphQLSchema>;
     types: Array<
       | string
       | { typeOrTypeDef: DocumentNode; plugin?: IGatsbyPlugin | undefined }
-    >
-  }
-  logs: IGatsbyCLIState
+    >;
+  };
+  logs: IGatsbyCLIState;
   inferenceMetadata: {
-    step: string // TODO make enum or union
+    step: string; // TODO make enum or union
     typeMap: {
-      [key: string]: ITypeMetadata
-    }
-  }
-  pageDataStats: Map<SystemPath, number>
-  visitedPages: Map<string, Set<string>>
+      [key: string]: ITypeMetadata;
+    };
+  };
+  pageDataStats: Map<SystemPath, number>;
+  visitedPages: Map<string, Set<string>>;
   html: {
-    trackedHtmlFiles: Map<Identifier, IHtmlFileState>
-    browserCompilationHash: string
-    ssrCompilationHash: string
-    trackedStaticQueryResults: Map<string, IStaticQueryResultState>
-    unsafeBuiltinWasUsedInSSR: boolean
-    templateCompilationHashes: Record<string, string>
+    trackedHtmlFiles: Map<Identifier, IHtmlFileState>;
+    browserCompilationHash: string;
+    ssrCompilationHash: string;
+    trackedStaticQueryResults: Map<string, IStaticQueryResultState>;
+    unsafeBuiltinWasUsedInSSR: boolean;
+    templateCompilationHashes: Record<string, string>;
     slicesProps: {
       bySliceId: Map<
         string,
         {
-          pages: Set<string>
-          props: Record<string, unknown>
-          sliceName: string
-          hasChildren: boolean
-          dirty: number
+          pages: Set<string>;
+          props: Record<string, unknown>;
+          sliceName: string;
+          hasChildren: boolean;
+          dirty: number;
         }
-      >
-      byPagePath: Map<string, Set<string>>
+      >;
+      byPagePath: Map<string, Set<string>>;
       bySliceName: Map<
         string,
         {
-          sliceDataHash: string
-          dirty: number
-          props: Set<string>
+          sliceDataHash: string;
+          dirty: number;
+          props: Set<string>;
         }
-      >
-    }
-    pagesThatNeedToStitchSlices: Set<string>
-  }
-  slices: Map<string, IGatsbySlice>
-  componentsUsingSlices: Map<string, ICollectedSlices>
-  slicesByTemplate: Map<SystemPath, ICollectedSlices>
+      >;
+    };
+    pagesThatNeedToStitchSlices: Set<string>;
+  };
+  slices: Map<string, IGatsbySlice>;
+  componentsUsingSlices: Map<string, ICollectedSlices>;
+  slicesByTemplate: Map<SystemPath, ICollectedSlices>;
   adapter: {
-    instance?: IAdapter | undefined
-    manager: IAdapterManager
-    config: IAdapterFinalConfig
-  }
-  remoteFileAllowedUrls: Set<string>
-}
+    instance?: IAdapter | undefined;
+    manager: IAdapterManager;
+    config: IAdapterFinalConfig;
+  };
+  remoteFileAllowedUrls: Set<string>;
+};
 
-export type GatsbyStateKeys = keyof IGatsbyState
+export type GatsbyStateKeys = keyof IGatsbyState;
 
 export type ICachedReduxState = {
-  nodes?: IGatsbyState["nodes"] | undefined
-  typeOwners?: IGatsbyState["typeOwners"] | undefined
-  statefulSourcePlugins?: IGatsbyState["statefulSourcePlugins"] | undefined
-  status: IGatsbyState["status"]
-  components: IGatsbyState["components"]
-  jobsV2: IGatsbyState["jobsV2"]
-  staticQueryComponents: IGatsbyState["staticQueryComponents"]
-  webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
-  pageDataStats: IGatsbyState["pageDataStats"]
-  pages?: IGatsbyState["pages"] | undefined
-  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
-  pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
-  queries: IGatsbyState["queries"]
-  html: IGatsbyState["html"]
-  slices: IGatsbyState["slices"]
-  slicesByTemplate: IGatsbyState["slicesByTemplate"]
-}
+  nodes?: IGatsbyState["nodes"] | undefined;
+  typeOwners?: IGatsbyState["typeOwners"] | undefined;
+  statefulSourcePlugins?: IGatsbyState["statefulSourcePlugins"] | undefined;
+  status: IGatsbyState["status"];
+  components: IGatsbyState["components"];
+  jobsV2: IGatsbyState["jobsV2"];
+  staticQueryComponents: IGatsbyState["staticQueryComponents"];
+  webpackCompilationHash: IGatsbyState["webpackCompilationHash"];
+  pageDataStats: IGatsbyState["pageDataStats"];
+  pages?: IGatsbyState["pages"] | undefined;
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"];
+  pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"];
+  queries: IGatsbyState["queries"];
+  html: IGatsbyState["html"];
+  slices: IGatsbyState["slices"];
+  slicesByTemplate: IGatsbyState["slicesByTemplate"];
+};
 
 export type ActionsUnion =
   | IInitAction
@@ -575,742 +577,742 @@ export type ActionsUnion =
   | IClearGatsbyImageSourceUrlAction
   | ISetAdapterAction
   | IDisablePluginsByNameAction
-  | IAddImageCdnAllowedUrl
+  | IAddImageCdnAllowedUrl;
 
 export type IInitAction = {
-  type: `INIT`
-}
+  type: "INIT";
+};
 
 export type ISetComponentFeatures = {
-  type: `SET_COMPONENT_FEATURES`
+  type: "SET_COMPONENT_FEATURES";
   payload: {
-    componentPath: string
-    serverData: boolean
-    config: boolean
-    Head: boolean
-  }
-}
+    componentPath: string;
+    serverData: boolean;
+    config: boolean;
+    Head: boolean;
+  };
+};
 
 export type IApiFinishedAction = {
-  type: `API_FINISHED`
+  type: "API_FINISHED";
   payload: {
-    apiName: GatsbyNodeAPI
-  }
-}
+    apiName: GatsbyNodeAPI;
+  };
+};
 
 type ISetBabelPluginAction = {
-  type: `SET_BABEL_PLUGIN`
+  type: "SET_BABEL_PLUGIN";
   payload: {
-    stage: Stage
-    name: IPlugin["name"]
-    options: IPlugin["options"]
-  }
-}
+    stage: Stage;
+    name: IPlugin["name"];
+    options: IPlugin["options"];
+  };
+};
 
 type ISetBabelPresetAction = {
-  type: `SET_BABEL_PRESET`
+  type: "SET_BABEL_PRESET";
   payload: {
-    stage: Stage
-    name: IPlugin["name"]
-    options: IPlugin["options"]
-  }
-}
+    stage: Stage;
+    name: IPlugin["name"];
+    options: IPlugin["options"];
+  };
+};
 
 type ISetBabelOptionsAction = {
-  type: `SET_BABEL_OPTIONS`
+  type: "SET_BABEL_OPTIONS";
   payload: {
-    stage: Stage
-    name: IPlugin["name"]
-    options: IPlugin["options"]
-  }
-}
+    stage: Stage;
+    name: IPlugin["name"];
+    options: IPlugin["options"];
+  };
+};
 
 export type ICreateJobV2Action = {
-  type: `CREATE_JOB_V2`
+  type: "CREATE_JOB_V2";
   payload: {
-    job: IGatsbyIncompleteJobV2["job"]
-  }
-  plugin: { name: string }
-}
+    job: IGatsbyIncompleteJobV2["job"];
+  };
+  plugin: { name: string };
+};
 
 export type IEndJobV2Action = {
-  type: `END_JOB_V2`
+  type: "END_JOB_V2";
   payload: {
-    jobContentDigest: string
-    result: JobResultInterface
-  }
-  plugin: { name: string }
-}
+    jobContentDigest: string;
+    result: JobResultInterface;
+  };
+  plugin: { name: string };
+};
 
 export type IRemoveStaleJobV2Action = {
-  type: `REMOVE_STALE_JOB_V2`
+  type: "REMOVE_STALE_JOB_V2";
   payload: {
-    contentDigest: string
-  }
-}
+    contentDigest: string;
+  };
+};
 
 export type ICreateJobV2FromInternalAction = ThunkAction<
   Promise<Record<string, unknown>>,
   IGatsbyState,
   void,
   ActionsUnion
->
+>;
 
 type ICreateJobAction = {
-  type: `CREATE_JOB`
+  type: "CREATE_JOB";
   payload: {
-    id: string
-    job: IGatsbyIncompleteJob["job"]
-  }
-  plugin: IGatsbyIncompleteJob["plugin"]
-}
+    id: string;
+    job: IGatsbyIncompleteJob["job"];
+  };
+  plugin: IGatsbyIncompleteJob["plugin"];
+};
 
 type ISetJobAction = {
-  type: `SET_JOB`
+  type: "SET_JOB";
   payload: {
-    id: string
-    job: IGatsbyIncompleteJob["job"]
-  }
-  plugin: IGatsbyIncompleteJob["plugin"]
-}
+    id: string;
+    job: IGatsbyIncompleteJob["job"];
+  };
+  plugin: IGatsbyIncompleteJob["plugin"];
+};
 
 type IEndJobAction = {
-  type: `END_JOB`
+  type: "END_JOB";
   payload: {
-    id: string
-    job: IGatsbyIncompleteJob["job"]
-  }
-  plugin: IGatsbyIncompleteJob["plugin"]
-}
+    id: string;
+    job: IGatsbyIncompleteJob["job"];
+  };
+  plugin: IGatsbyIncompleteJob["plugin"];
+};
 
 export type ICreatePageDependencyActionPayloadType = {
-  path: string
-  nodeId?: string
-  connection?: string
-}
+  path: string;
+  nodeId?: string | undefined;
+  connection?: string | undefined;
+};
 
 export type ICreatePageDependencyAction = {
-  type: `CREATE_COMPONENT_DEPENDENCY`
-  plugin?: string
-  payload: Array<ICreatePageDependencyActionPayloadType>
-}
+  type: "CREATE_COMPONENT_DEPENDENCY";
+  plugin?: string | undefined;
+  payload: Array<ICreatePageDependencyActionPayloadType>;
+};
 
 export type IDeleteComponentDependenciesAction = {
-  type: "DELETE_COMPONENTS_DEPENDENCIES"
+  type: "DELETE_COMPONENTS_DEPENDENCIES";
   payload: {
-    paths: Array<string>
-  }
-}
+    paths: Array<string>;
+  };
+};
 
 export type IReplaceComponentQueryAction = {
-  type: "REPLACE_COMPONENT_QUERY"
+  type: "REPLACE_COMPONENT_QUERY";
   payload: {
-    query: string
-    componentPath: string
-  }
-}
+    query: string;
+    componentPath: string;
+  };
+};
 
 export type IReplaceStaticQueryAction = {
-  type: `REPLACE_STATIC_QUERY`
-  plugin: IGatsbyPlugin | null | undefined
+  type: "REPLACE_STATIC_QUERY";
+  plugin: IGatsbyPlugin | null | undefined;
   payload: {
-    name: string
-    componentPath: string
-    id: string
-    query: string
-    hash: string
-  }
-}
+    name: string;
+    componentPath: string;
+    id: string;
+    query: string;
+    hash: string;
+  };
+};
 
 export type IQueryClearDirtyQueriesListToEmitViaWebsocket = {
-  type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`
-}
+  type: "QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET";
+};
 
 export type IQueryExtractedAction = {
-  type: `QUERY_EXTRACTED`
-  plugin?: IGatsbyPlugin | undefined
-  traceId?: string | undefined
-  payload: { componentPath: string; query: string }
-}
+  type: "QUERY_EXTRACTED";
+  plugin?: IGatsbyPlugin | undefined;
+  traceId?: string | undefined;
+  payload: { componentPath: string; query: string };
+};
 
 export type IQueryExtractionGraphQLErrorAction = {
-  type: `QUERY_EXTRACTION_GRAPHQL_ERROR`
-  plugin: IGatsbyPlugin | undefined
-  traceId: string | undefined
-  payload: { componentPath: string; error?: string | undefined }
-}
+  type: "QUERY_EXTRACTION_GRAPHQL_ERROR";
+  plugin: IGatsbyPlugin | undefined;
+  traceId: string | undefined;
+  payload: { componentPath: string; error?: string | undefined };
+};
 
 export type IQueryExtractedBabelSuccessAction = {
-  type: `QUERY_EXTRACTION_BABEL_SUCCESS`
-  plugin?: IGatsbyPlugin | undefined
-  traceId?: string | undefined
-  payload: { componentPath: string }
-}
+  type: "QUERY_EXTRACTION_BABEL_SUCCESS";
+  plugin?: IGatsbyPlugin | undefined;
+  traceId?: string | undefined;
+  payload: { componentPath: string };
+};
 
 export type IQueryExtractionBabelErrorAction = {
-  type: `QUERY_EXTRACTION_BABEL_ERROR`
-  plugin?: IGatsbyPlugin | undefined
-  traceId?: string | undefined
+  type: "QUERY_EXTRACTION_BABEL_ERROR";
+  plugin?: IGatsbyPlugin | undefined;
+  traceId?: string | undefined;
   payload: {
-    componentPath: string
-    error: Error
-  }
-}
+    componentPath: string;
+    error: Error;
+  };
+};
 
 export type ISetProgramStatusAction = {
-  type: `SET_PROGRAM_STATUS`
-  plugin?: IGatsbyPlugin | undefined
-  traceId: string | undefined
-  payload: ProgramStatus
-}
+  type: "SET_PROGRAM_STATUS";
+  plugin?: IGatsbyPlugin | undefined;
+  traceId: string | undefined;
+  payload: ProgramStatus;
+};
 
 export type IPageQueryRunAction = {
-  type: `PAGE_QUERY_RUN`
-  plugin?: IGatsbyPlugin | undefined
-  traceId?: string | undefined
+  type: "PAGE_QUERY_RUN";
+  plugin?: IGatsbyPlugin | undefined;
+  traceId?: string | undefined;
   payload: {
-    path: string
-    componentPath: string
-    queryType?: "page" | "static" | "slice" | undefined
-    resultHash: string
-    isPage?: boolean | undefined
-    queryHash?: string | undefined
-  }
-}
+    path: string;
+    componentPath: string;
+    queryType?: "page" | "static" | "slice" | undefined;
+    resultHash: string;
+    isPage?: boolean | undefined;
+    queryHash?: string | undefined;
+  };
+};
 
 export type IQueryStartAction = {
-  type: `QUERY_START`
-  plugin?: IGatsbyPlugin | undefined
-  traceId?: string | undefined
-  payload: { path: string; componentPath: string; isPage: boolean }
-}
+  type: "QUERY_START";
+  plugin?: IGatsbyPlugin | undefined;
+  traceId?: string | undefined;
+  payload: { path: string; componentPath: string; isPage: boolean };
+};
 
 export type IRemoveStaleJobAction = {
-  type: `REMOVE_STALE_JOB_V2`
-  plugin: IGatsbyPlugin | undefined
-  traceId?: string | undefined
-  payload: { contentDigest: string }
-}
+  type: "REMOVE_STALE_JOB_V2";
+  plugin: IGatsbyPlugin | undefined;
+  traceId?: string | undefined;
+  payload: { contentDigest: string };
+};
 
 export type IAddThirdPartySchema = {
-  type: `ADD_THIRD_PARTY_SCHEMA`
-  plugin: IGatsbyPlugin
-  traceId?: string | undefined
-  payload: GraphQLSchema
-}
+  type: "ADD_THIRD_PARTY_SCHEMA";
+  plugin: IGatsbyPlugin;
+  traceId?: string | undefined;
+  payload: GraphQLSchema;
+};
 
 export type ICreateTypes = {
-  type: `CREATE_TYPES`
-  plugin?: IGatsbyPlugin | undefined
-  traceId?: string | undefined
-  payload: DocumentNode | Array<DocumentNode>
-}
+  type: "CREATE_TYPES";
+  plugin?: IGatsbyPlugin | undefined;
+  traceId?: string | undefined;
+  payload: DocumentNode | Array<DocumentNode>;
+};
 
 export type ICreateFieldExtension = {
-  type: `CREATE_FIELD_EXTENSION`
-  plugin: IGatsbyPlugin
-  traceId?: string | undefined
+  type: "CREATE_FIELD_EXTENSION";
+  plugin: IGatsbyPlugin;
+  traceId?: string | undefined;
   payload: {
-    name: string
-    extension: GraphQLFieldExtensionDefinition
-  }
-}
+    name: string;
+    extension: GraphQLFieldExtensionDefinition;
+  };
+};
 
 export type IPrintTypeDefinitions = {
-  type: `PRINT_SCHEMA_REQUESTED`
-  plugin: IGatsbyPlugin
-  traceId?: string | undefined
+  type: "PRINT_SCHEMA_REQUESTED";
+  plugin: IGatsbyPlugin;
+  traceId?: string | undefined;
   payload: {
-    path?: string | undefined
+    path?: string | undefined;
     include?:
       | {
-          types?: Array<string> | undefined
-          plugins?: Array<string> | undefined
+          types?: Array<string> | undefined;
+          plugins?: Array<string> | undefined;
         }
-      | undefined
+      | undefined;
     exclude?:
       | {
-          types?: Array<string> | undefined
-          plugins?: Array<string> | undefined
+          types?: Array<string> | undefined;
+          plugins?: Array<string> | undefined;
         }
-      | undefined
-    withFieldTypes?: boolean | undefined
-  }
-}
+      | undefined;
+    withFieldTypes?: boolean | undefined;
+  };
+};
 
 export type ICreateResolverContext = {
-  type: `CREATE_RESOLVER_CONTEXT`
-  plugin: IGatsbyPlugin
-  traceId?: string | undefined
+  type: "CREATE_RESOLVER_CONTEXT";
+  plugin: IGatsbyPlugin;
+  traceId?: string | undefined;
   payload:
     | IGatsbyPluginContext
-    | { [camelCasedPluginNameWithoutPrefix: string]: IGatsbyPluginContext }
-}
+    | { [camelCasedPluginNameWithoutPrefix: string]: IGatsbyPluginContext };
+};
 
 type IClearSchemaCustomizationAction = {
-  type: `CLEAR_SCHEMA_CUSTOMIZATION`
-}
+  type: "CLEAR_SCHEMA_CUSTOMIZATION";
+};
 
 type ISetSchemaComposerAction = {
-  type: `SET_SCHEMA_COMPOSER`
+  type: "SET_SCHEMA_COMPOSER";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload: SchemaComposer<any>
-}
+  payload: SchemaComposer<any>;
+};
 
 export type ICreateServerVisitedPage = {
-  type: `CREATE_SERVER_VISITED_PAGE`
-  payload: IGatsbyPage
-  plugin?: IGatsbyPlugin | undefined
-}
+  type: "CREATE_SERVER_VISITED_PAGE";
+  payload: IGatsbyPage;
+  plugin?: IGatsbyPlugin | undefined;
+};
 
 export type ICreatePageAction = {
-  type: `CREATE_PAGE`
-  payload: IGatsbyPage
-  plugin?: IGatsbyPlugin | undefined
-  contextModified?: boolean | undefined
-  componentModified?: boolean | undefined
-  slicesModified?: boolean | undefined
-}
+  type: "CREATE_PAGE";
+  payload: IGatsbyPage;
+  plugin?: IGatsbyPlugin | undefined;
+  contextModified?: boolean | undefined;
+  componentModified?: boolean | undefined;
+  slicesModified?: boolean | undefined;
+};
 
 export type ICreateSliceAction = {
-  type: `CREATE_SLICE`
-  payload: IGatsbySlice
-  plugin?: IGatsbyPlugin | undefined
-  traceId: string | undefined
-  componentModified?: boolean | undefined
-  contextModified?: boolean
-}
+  type: "CREATE_SLICE";
+  payload: IGatsbySlice;
+  plugin?: IGatsbyPlugin | undefined;
+  traceId: string | undefined;
+  componentModified?: boolean | undefined;
+  contextModified?: boolean | undefined;
+};
 
 export type IDeleteSliceAction = {
-  type: `DELETE_SLICE`
+  type: "DELETE_SLICE";
   payload: {
-    name: string
-    componentPath: string
-  }
-}
+    name: string;
+    componentPath: string;
+  };
+};
 
 export type ISetComponentsUsingSlicesAction = {
-  type: `SET_COMPONENTS_USING_PAGE_SLICES`
-  payload: Map<string, ICollectedSlices>
-}
+  type: "SET_COMPONENTS_USING_PAGE_SLICES";
+  payload: Map<string, ICollectedSlices>;
+};
 
 export type ISetSlicesByTemplateAction = {
-  type: `SET_SLICES_BY_TEMPLATE`
+  type: "SET_SLICES_BY_TEMPLATE";
   payload: {
-    componentPath: string
-    slices: ICollectedSlices
-  }
-}
+    componentPath: string;
+    slices: ICollectedSlices;
+  };
+};
 
 export type ISetSlicesProps = {
-  type: `SET_SLICES_PROPS`
+  type: "SET_SLICES_PROPS";
   payload: Record<
     string,
     Record<
       string,
       {
-        props: Record<string, unknown>
-        sliceName: string
-        hasChildren: boolean
+        props: Record<string, unknown>;
+        sliceName: string;
+        hasChildren: boolean;
       }
     >
-  >
-}
+  >;
+};
 
 export type ISlicesPropsRemoveStale = {
-  type: `SLICES_PROPS_REMOVE_STALE`
-}
+  type: "SLICES_PROPS_REMOVE_STALE";
+};
 
 export type ISlicesPropsRendered = {
-  type: `SLICES_PROPS_RENDERED`
-  payload: Array<{ sliceId: string }>
-}
+  type: "SLICES_PROPS_RENDERED";
+  payload: Array<{ sliceId: string }>;
+};
 
 export type ISlicesStitched = {
-  type: `SLICES_STITCHED`
-}
+  type: "SLICES_STITCHED";
+};
 
 export type ISlicesScriptsRegenerated = {
-  type: `SLICES_SCRIPTS_REGENERATED`
-}
+  type: "SLICES_SCRIPTS_REGENERATED";
+};
 
 export type ICreateRedirectAction = {
-  type: `CREATE_REDIRECT`
-  payload: IRedirect
-}
+  type: "CREATE_REDIRECT";
+  payload: IRedirect;
+};
 
 export type IDeleteCacheAction = {
-  type: `DELETE_CACHE`
-  cacheIsCorrupt?: boolean | undefined
-}
+  type: "DELETE_CACHE";
+  cacheIsCorrupt?: boolean | undefined;
+};
 
 export type IRemoveTemplateComponentAction = {
-  type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`
+  type: "REMOVE_STATIC_QUERIES_BY_TEMPLATE";
   payload: {
-    componentPath: string
-  }
-}
+    componentPath: string;
+  };
+};
 
 export type ISetStaticQueriesByTemplateAction = {
-  type: `SET_STATIC_QUERIES_BY_TEMPLATE`
+  type: "SET_STATIC_QUERIES_BY_TEMPLATE";
   payload: {
-    componentPath: string
-    staticQueryHashes: Array<Identifier>
-  }
-}
+    componentPath: string;
+    staticQueryHashes: Array<Identifier>;
+  };
+};
 
 export type IAddPendingPageDataWriteAction = {
-  type: `ADD_PENDING_PAGE_DATA_WRITE`
+  type: "ADD_PENDING_PAGE_DATA_WRITE";
   payload: {
-    path: string
-  }
-}
+    path: string;
+  };
+};
 
 export type IAddPendingTemplateDataWriteAction = {
-  type: `ADD_PENDING_TEMPLATE_DATA_WRITE`
+  type: "ADD_PENDING_TEMPLATE_DATA_WRITE";
   payload: {
-    componentPath: SystemPath
-    pages: Array<string>
-  }
-}
+    componentPath: SystemPath;
+    pages: Array<string>;
+  };
+};
 
 export type IAddPendingSliceDataWriteAction = {
-  type: `ADD_PENDING_SLICE_DATA_WRITE`
+  type: "ADD_PENDING_SLICE_DATA_WRITE";
   payload: {
-    name: string
-  }
-}
+    name: string;
+  };
+};
 
 export type IAddPendingSliceTemplateDataWriteAction = {
-  type: `ADD_PENDING_SLICE_TEMPLATE_DATA_WRITE`
+  type: "ADD_PENDING_SLICE_TEMPLATE_DATA_WRITE";
   payload: {
-    componentPath: SystemPath
-    sliceNames: Array<string>
-  }
-}
+    componentPath: SystemPath;
+    sliceNames: Array<string>;
+  };
+};
 
 export type IClearPendingPageDataWriteAction = {
-  type: `CLEAR_PENDING_PAGE_DATA_WRITE`
+  type: "CLEAR_PENDING_PAGE_DATA_WRITE";
   payload: {
-    page: string
-  }
-}
+    page: string;
+  };
+};
 
 export type IClearPendingSliceDataWriteAction = {
-  type: `CLEAR_PENDING_SLICE_DATA_WRITE`
+  type: "CLEAR_PENDING_SLICE_DATA_WRITE";
   payload: {
-    name: string
-  }
-}
+    name: string;
+  };
+};
 
 export type IDeletePageAction = {
-  type: `DELETE_PAGE`
-  payload: IGatsbyPage
-}
+  type: "DELETE_PAGE";
+  payload: IGatsbyPage;
+};
 
 export type IRemoveStaticQuery = {
-  type: `REMOVE_STATIC_QUERY`
-  payload: IGatsbyStaticQueryComponents["id"]
-}
+  type: "REMOVE_STATIC_QUERY";
+  payload: IGatsbyStaticQueryComponents["id"];
+};
 
 export type ISetWebpackCompilationHashAction = {
-  type: `SET_WEBPACK_COMPILATION_HASH`
-  payload: IGatsbyState["webpackCompilationHash"]
-}
+  type: "SET_WEBPACK_COMPILATION_HASH";
+  payload: IGatsbyState["webpackCompilationHash"];
+};
 
 export type ISetSSRGlobalSharedWebpackCompilationHashAction = {
-  type: `SET_SSR_WEBPACK_COMPILATION_HASH`
-  payload: string
-}
+  type: "SET_SSR_WEBPACK_COMPILATION_HASH";
+  payload: string;
+};
 
 export type ISetSSRTemplateWebpackCompilationHashAction = {
-  type: `SET_SSR_TEMPLATE_WEBPACK_COMPILATION_HASH`
+  type: "SET_SSR_TEMPLATE_WEBPACK_COMPILATION_HASH";
   payload: {
-    templateHash: string
-    templatePath: string
-    isSlice: boolean
-    pages: Array<string>
-  }
-}
+    templateHash: string;
+    templatePath: string;
+    isSlice: boolean;
+    pages: Array<string>;
+  };
+};
 
 export type IUpdatePluginsHashAction = {
-  type: `UPDATE_PLUGINS_HASH`
-  payload: Identifier
-}
+  type: "UPDATE_PLUGINS_HASH";
+  payload: Identifier;
+};
 
 export type ISetPluginStatusAction = {
-  type: `SET_PLUGIN_STATUS`
-  plugin: IGatsbyPlugin
+  type: "SET_PLUGIN_STATUS";
+  plugin: IGatsbyPlugin;
   payload: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any
-  }
-}
+    [key: string]: any;
+  };
+};
 
 export type IReplaceWebpackConfigAction = {
-  type: `REPLACE_WEBPACK_CONFIG`
-  payload: IGatsbyState["webpack"]
-}
+  type: "REPLACE_WEBPACK_CONFIG";
+  payload: IGatsbyState["webpack"];
+};
 
 export type ISetWebpackConfigAction = {
-  type: `SET_WEBPACK_CONFIG`
-  payload: Partial<IGatsbyState["webpack"]>
-}
+  type: "SET_WEBPACK_CONFIG";
+  payload: Partial<IGatsbyState["webpack"]>;
+};
 
 export type ISetSchemaAction = {
-  type: `SET_SCHEMA`
-  payload: IGatsbyState["schema"]
-}
+  type: "SET_SCHEMA";
+  payload: IGatsbyState["schema"];
+};
 
 export type ISetGraphQLDefinitionsAction = {
-  type: `SET_GRAPHQL_DEFINITIONS`
-  payload: IGatsbyState["definitions"]
-}
+  type: "SET_GRAPHQL_DEFINITIONS";
+  payload: IGatsbyState["definitions"];
+};
 
 export type ISetSiteConfig = {
-  type: `SET_SITE_CONFIG`
-  payload: IGatsbyState["config"]
-}
+  type: "SET_SITE_CONFIG";
+  payload: IGatsbyState["config"];
+};
 
 export type ISetSiteFunctions = {
-  type: `SET_SITE_FUNCTIONS`
-  payload: IGatsbyState["functions"]
-}
+  type: "SET_SITE_FUNCTIONS";
+  payload: IGatsbyState["functions"];
+};
 
 export type ICreateNodeAction = {
-  type: `CREATE_NODE`
-  payload: IGatsbyNode
-  oldNode?: IGatsbyNode
-  traceId: string
-  parentSpan: Span
-  followsSpan: Span
-  plugin: IGatsbyPlugin
-}
+  type: "CREATE_NODE";
+  payload: IGatsbyNode;
+  oldNode?: IGatsbyNode | undefined;
+  traceId: string;
+  parentSpan: Span;
+  followsSpan: Span;
+  plugin: IGatsbyPlugin;
+};
 
 export type IAddFieldToNodeAction = {
-  type: `ADD_FIELD_TO_NODE`
-  payload: IGatsbyNode
-  addedField: string
-}
+  type: "ADD_FIELD_TO_NODE";
+  payload: IGatsbyNode;
+  addedField: string;
+};
 
 export type IAddChildNodeToParentNodeAction = {
-  type: `ADD_CHILD_NODE_TO_PARENT_NODE`
-  payload: IGatsbyNode
-}
+  type: "ADD_CHILD_NODE_TO_PARENT_NODE";
+  payload: IGatsbyNode;
+};
 
 export type IDeleteNodeAction = {
-  type: `DELETE_NODE`
+  type: "DELETE_NODE";
   // FIXME: figure out why payload can be undefined here
-  payload: IGatsbyNode | void
-  plugin: IGatsbyPlugin
-  isRecursiveChildrenDelete?: boolean
-}
+  payload: IGatsbyNode | void;
+  plugin: IGatsbyPlugin;
+  isRecursiveChildrenDelete?: boolean | undefined;
+};
 
 export type ISetSiteFlattenedPluginsAction = {
-  type: `SET_SITE_FLATTENED_PLUGINS`
-  payload: IGatsbyState["flattenedPlugins"]
-}
+  type: "SET_SITE_FLATTENED_PLUGINS";
+  payload: IGatsbyState["flattenedPlugins"];
+};
 
 export type ISetResolvedNodesAction = {
-  type: `SET_RESOLVED_NODES`
+  type: "SET_RESOLVED_NODES";
   payload: {
-    key: string
-    nodes: IGatsbyState["resolvedNodesCache"]
-  }
-}
+    key: string;
+    nodes: IGatsbyState["resolvedNodesCache"];
+  };
+};
 
 export type IAddPageDataStatsAction = {
-  type: `ADD_PAGE_DATA_STATS`
+  type: "ADD_PAGE_DATA_STATS";
   payload: {
-    pagePath: string
-    filePath: SystemPath
-    size: number
-    pageDataHash: string
-  }
-}
+    pagePath: string;
+    filePath: SystemPath;
+    size: number;
+    pageDataHash: string;
+  };
+};
 
 export type IAddSliceDataStatsAction = {
-  type: `ADD_SLICE_DATA_STATS`
+  type: "ADD_SLICE_DATA_STATS";
   payload: {
-    sliceName: string
-    filePath: SystemPath
-    size: number
-    sliceDataHash: string
-  }
-}
+    sliceName: string;
+    filePath: SystemPath;
+    size: number;
+    sliceDataHash: string;
+  };
+};
 
 export type ITouchNodeAction = {
-  type: `TOUCH_NODE`
-  payload: Identifier
-  typeName: IGatsbyNode["internal"]["type"]
-  plugin: IGatsbyPlugin
-}
+  type: "TOUCH_NODE";
+  payload: Identifier;
+  typeName: IGatsbyNode["internal"]["type"];
+  plugin: IGatsbyPlugin;
+};
 
 type IStartIncrementalInferenceAction = {
-  type: `START_INCREMENTAL_INFERENCE`
-}
+  type: "START_INCREMENTAL_INFERENCE";
+};
 
 type IBuildTypeMetadataAction = {
-  type: `BUILD_TYPE_METADATA`
+  type: "BUILD_TYPE_METADATA";
   payload: {
-    nodes: Array<IGatsbyNode>
-    clearExistingMetadata: boolean
-    typeName: string
-  }
-}
+    nodes: Array<IGatsbyNode>;
+    clearExistingMetadata: boolean;
+    typeName: string;
+  };
+};
 
 type IDisableTypeInferenceAction = {
-  type: `DISABLE_TYPE_INFERENCE`
-  payload: Array<string>
-}
+  type: "DISABLE_TYPE_INFERENCE";
+  payload: Array<string>;
+};
 
 type ISetProgramAction = {
-  type: `SET_PROGRAM`
-  payload: IStateProgram
-}
+  type: "SET_PROGRAM";
+  payload: IStateProgram;
+};
 
 type ISetProgramExtensions = {
-  type: `SET_PROGRAM_EXTENSIONS`
-  payload: Array<string>
-}
+  type: "SET_PROGRAM_EXTENSIONS";
+  payload: Array<string>;
+};
 
 type IRemovedHtml = {
-  type: `HTML_REMOVED`
-  payload: string
-}
+  type: "HTML_REMOVED";
+  payload: string;
+};
 
 type ITrackedHtmlCleanup = {
-  type: `HTML_TRACKED_PAGES_CLEANUP`
-  payload: Set<string>
-}
+  type: "HTML_TRACKED_PAGES_CLEANUP";
+  payload: Set<string>;
+};
 
 type IGeneratedHtml = {
-  type: `HTML_GENERATED`
-  payload: Array<string>
-}
+  type: "HTML_GENERATED";
+  payload: Array<string>;
+};
 
 type IMarkHtmlDirty = {
-  type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`
+  type: "HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED";
   payload: {
-    pages: Set<string>
-    slices: Set<string>
-    staticQueryHashes: Set<string>
-  }
-}
+    pages: Set<string>;
+    slices: Set<string>;
+    staticQueryHashes: Set<string>;
+  };
+};
 
 type ISSRUsedUnsafeBuiltin = {
-  type: `SSR_USED_UNSAFE_BUILTIN`
-}
+  type: "SSR_USED_UNSAFE_BUILTIN";
+};
 
 export type ICreateNodeManifest = {
-  type: `CREATE_NODE_MANIFEST`
+  type: "CREATE_NODE_MANIFEST";
   payload: {
-    manifestId: string
-    node: IGatsbyNode
-    pluginName: string
-    updatedAtUTC?: string | number | undefined
-  }
-}
+    manifestId: string;
+    node: IGatsbyNode;
+    pluginName: string;
+    updatedAtUTC?: string | number | undefined;
+  };
+};
 
 export type IDeleteNodeManifests = {
-  type: `DELETE_NODE_MANIFESTS`
-}
+  type: "DELETE_NODE_MANIFESTS";
+};
 
 export type INodeManifest = {
-  manifestId: string
-  pluginName: string
+  manifestId: string;
+  pluginName: string;
   node: {
-    id: string
-  }
-}
+    id: string;
+  };
+};
 
 export type ISetDomainRequestHeaders = {
-  type: `SET_REQUEST_HEADERS`
+  type: "SET_REQUEST_HEADERS";
   payload: {
-    domain: string
+    domain: string;
     headers: {
-      [header: string]: string
-    }
-  }
-}
+      [header: string]: string;
+    };
+  };
+};
 
 export type IEnableStatefulSourcePluginAction = {
-  type: `ENABLE_STATEFUL_SOURCE_PLUGIN`
-  plugin: IGatsbyPlugin
-}
+  type: "ENABLE_STATEFUL_SOURCE_PLUGIN";
+  plugin: IGatsbyPlugin;
+};
 
 export type IProcessGatsbyImageSourceUrlAction = {
-  type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`
+  type: "PROCESS_GATSBY_IMAGE_SOURCE_URL";
   payload: {
-    sourceUrl: string
-  }
-}
+    sourceUrl: string;
+  };
+};
 
 export type IClearGatsbyImageSourceUrlAction = {
-  type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`
-}
+  type: "CLEAR_GATSBY_IMAGE_SOURCE_URL";
+};
 
 export type ISetAdapterAction = {
-  type: `SET_ADAPTER`
+  type: "SET_ADAPTER";
   payload: {
-    instance?: IAdapter | undefined
-    manager: IAdapterManager
-    config: IAdapterFinalConfig
-  }
-}
+    instance?: IAdapter | undefined;
+    manager: IAdapterManager;
+    config: IAdapterFinalConfig;
+  };
+};
 
 export type IDisablePluginsByNameAction = {
-  type: `DISABLE_PLUGINS_BY_NAME`
+  type: "DISABLE_PLUGINS_BY_NAME";
   payload: {
-    pluginsToDisable: Array<string>
-    reason: string
-  }
-}
+    pluginsToDisable: Array<string>;
+    reason: string;
+  };
+};
 
 export type IAddImageCdnAllowedUrl = {
-  type: `ADD_REMOTE_FILE_ALLOWED_URL`
+  type: "ADD_REMOTE_FILE_ALLOWED_URL";
   payload: {
-    urls: Array<string>
-  }
-  plugin: IGatsbyPlugin
-  traceId?: string | undefined
-}
+    urls: Array<string>;
+  };
+  plugin: IGatsbyPlugin;
+  traceId?: string | undefined;
+};
 
 export type ITelemetry = {
-  gatsbyImageSourceUrls: Set<string>
-}
+  gatsbyImageSourceUrls: Set<string>;
+};
 
 export type IMergeWorkerQueryState = {
-  type: `MERGE_WORKER_QUERY_STATE`
+  type: "MERGE_WORKER_QUERY_STATE";
   payload: {
-    workerId: number
-    queryStateChunk: IGatsbyState["queries"]
-    queryStateTelemetryChunk: IGatsbyState["telemetry"]
-  }
-}
+    workerId: number;
+    queryStateChunk: IGatsbyState["queries"];
+    queryStateTelemetryChunk: IGatsbyState["telemetry"];
+  };
+};
 
 export type IMaterializePageMode = {
-  type: `MATERIALIZE_PAGE_MODE`
+  type: "MATERIALIZE_PAGE_MODE";
   payload: {
-    path: string
-    pageMode: PageMode
-  }
-}
+    path: string;
+    pageMode: PageMode;
+  };
+};
 
 export type ISetJobV2Context = {
-  type: `SET_JOB_V2_CONTEXT`
+  type: "SET_JOB_V2_CONTEXT";
   payload: {
-    job: IGatsbyIncompleteJobV2["job"]
-    requestId: string
-  }
-}
+    job: IGatsbyIncompleteJobV2["job"];
+    requestId: string;
+  };
+};
 
 export type IClearJobV2Context = {
-  type: `CLEAR_JOB_V2_CONTEXT`
+  type: "CLEAR_JOB_V2_CONTEXT";
   payload: {
-    requestId: string
-  }
-}
+    requestId: string;
+  };
+};
 
 export const HTTP_STATUS_CODE = {
   /**
@@ -1685,7 +1687,7 @@ export const HTTP_STATUS_CODE = {
    * to require agreement to Terms of Service before granting full Internet access via a Wi-Fi hotspot).
    */
   NETWORK_AUTHENTICATION_REQUIRED_511: 511,
-} as const
+} as const;
 
 export type HttpStatusCode =
-  (typeof HTTP_STATUS_CODE)[keyof typeof HTTP_STATUS_CODE]
+  (typeof HTTP_STATUS_CODE)[keyof typeof HTTP_STATUS_CODE];

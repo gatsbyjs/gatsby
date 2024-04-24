@@ -16,7 +16,6 @@
   "version": "independent",
   "npmClient": "pnpm",
   "registry": "https://registry.npmjs.org/",
-  "useWorkspaces": true,
   "ignoreChanges": [
     "CHANGELOG.md",
     "**/__tests__/**",

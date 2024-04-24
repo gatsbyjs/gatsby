@@ -3,18 +3,18 @@
  * isn't found.
  */
 
-export default function stripPrefix(str, prefix = ``) {
+export default function stripPrefix(str, prefix = "") {
   if (!prefix) {
-    return str
+    return str;
   }
 
   if (str === prefix) {
-    return `/`
+    return "/";
   }
 
   if (str.startsWith(`${prefix}/`)) {
-    return str.slice(prefix.length)
+    return str.slice(prefix.length);
   }
 
-  return str
+  return str;
 }

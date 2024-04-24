@@ -1,15 +1,15 @@
 module.exports = {
-  parser: `@babel/eslint-parser`,
-  extends: [`eslint:recommended`, `plugin:react/recommended`, `prettier`],
-  plugins: [`prettier`, `react`, `filenames`, `@babel`],
+  parser: "@babel/eslint-parser",
+  extends: ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  plugins: ["react", "filenames", "@babel", "prettier"],
   parserOptions: {
     ecmaVersion: 2016,
-    sourceType: `module`,
+    sourceType: "module",
     ecmaFeatures: {
       jsx: true,
     },
     babelOptions: {
-      configFile: `./.babelrc.js`,
+      configFile: "./.babelrc.js",
     },
   },
   env: {
@@ -35,60 +35,67 @@ module.exports = {
     __TRAILING_SLASH__: true,
   },
   rules: {
-    "react/react-in-jsx-scope": `off`,
+    quotes: [
+      2,
+      "double",
+      {
+        avoidEscape: true,
+      },
+    ],
+    "@typescript-eslint/quotes": "off",
+    "react/react-in-jsx-scope": "off",
     "@babel/no-unused-expressions": [
-      `error`,
+      "error",
       {
         allowTaggedTemplates: true,
       },
     ],
-    "no-unused-expressions": `off`,
-    "@babel/no-invalid-this": `error`,
-    "no-invalid-this": `off`,
-    "arrow-body-style": `off`,
-    "new-cap": `off`,
+    "no-unused-expressions": "off",
+    "@babel/no-invalid-this": "error",
+    "no-invalid-this": "off",
+    "arrow-body-style": "off",
+    "new-cap": "off",
     "no-unused-vars": [
-      `warn`,
+      "warn",
       {
-        varsIgnorePattern: `^_`,
-        argsIgnorePattern: `^_`,
+        varsIgnorePattern: "^_",
+        argsIgnorePattern: "^_",
         ignoreRestSiblings: true,
       },
     ],
-    "consistent-return": [`error`],
-    "filenames/match-regex": [`error`, `^[a-z-\\d\\.]+$`, true],
-    "no-console": `off`,
-    "no-inner-declarations": `off`,
-    "prettier/prettier": `error`,
-    quotes: [`error`, `backtick`],
-    "react/display-name": `off`,
-    "react/jsx-key": `warn`,
-    "react/no-unescaped-entities": `off`,
-    "react/prop-types": `off`,
-    "require-jsdoc": `off`,
-    "valid-jsdoc": `off`,
-    "prefer-promise-reject-errors": `warn`,
-    "no-prototype-builtins": `warn`,
-    "guard-for-in": `warn`,
+    "consistent-return": ["error"],
+    "filenames/match-regex": ["error", "^[a-z-\\d\\.]+$", true],
+    "no-console": "off",
+    "no-inner-declarations": "off",
+    "prettier/prettier": "error",
+    "react/display-name": "off",
+    "react/jsx-key": "warn",
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
+    "prefer-promise-reject-errors": "warn",
+    "no-prototype-builtins": "warn",
+    "guard-for-in": "warn",
     "spaced-comment": [
-      `error`,
-      `always`,
-      { markers: [`/`], exceptions: [`*`, `+`] },
+      "error",
+      "always",
+      { markers: ["/"], exceptions: ["*", "+"] },
     ],
     camelcase: [
-      `error`,
+      "error",
       {
-        properties: `never`,
+        properties: "never",
         ignoreDestructuring: true,
-        allow: [`^unstable_`],
+        allow: ["^unstable_"],
       },
     ],
   },
   overrides: [
     {
       files: [
-        `packages/**/gatsby-browser.js`,
-        `packages/gatsby/cache-dir/**/*`,
+        "packages/**/gatsby-browser.js",
+        "packages/gatsby/cache-dir/**/*",
       ],
       env: {
         browser: true,
@@ -99,103 +106,107 @@ module.exports = {
       },
     },
     {
-      files: [`**/cypress/integration/**/*`, `**/cypress/support/**/*`],
+      files: ["**/cypress/integration/**/*", "**/cypress/support/**/*"],
       globals: {
         cy: false,
         Cypress: false,
       },
     },
     {
-      files: [`*.ts`, `*.tsx`],
-      parser: `@typescript-eslint/parser`,
-      plugins: [`@typescript-eslint/eslint-plugin`],
-      extends: [`plugin:@typescript-eslint/recommended`],
+      files: ["*.ts", "*.tsx"],
+      parser: "@typescript-eslint/parser",
+      plugins: ["@typescript-eslint/eslint-plugin"],
+      extends: ["plugin:@typescript-eslint/recommended"],
       rules: {
         // We should absolutely avoid using ts-ignore, but it's not always possible.
         // particular when a dependencies types are incorrect.
         "@typescript-eslint/ban-ts-comment": [
-          `warn`,
-          { "ts-ignore": `allow-with-description` },
+          "warn",
+          { "ts-ignore": "allow-with-description" },
         ],
         // This rule is great. It helps us not throw on types for areas that are
         // easily inferrable. However we have a desire to have all function inputs
         // and outputs declaratively typed. So this let's us ignore the parameters
         // inferrable lint.
         "@typescript-eslint/no-inferrable-types": [
-          `error`,
+          "error",
           { ignoreParameters: true },
         ],
         "@typescript-eslint/ban-types": [
-          `error`,
+          "error",
           {
             extendDefaults: true,
             types: {
               "{}": {
-                fixWith: `Record<string, unknown>`,
+                fixWith: "Record<string, unknown>",
               },
               object: {
-                fixWith: `Record<string, unknown>`,
+                fixWith: "Record<string, unknown>",
               },
             },
           },
         ],
-        camelcase: `off`,
+        camelcase: "off",
         // TODO: These rules allow a lot of stuff and don't really enforce. If we want to apply our styleguide, we'd need to fix a lot of stuff
         "@typescript-eslint/naming-convention": [
-          `error`,
+          "error",
           {
-            selector: `default`,
-            format: [`camelCase`],
+            selector: "import",
+            format: ["camelCase", "PascalCase"],
           },
           {
-            selector: `variable`,
-            format: [`camelCase`, `UPPER_CASE`, `PascalCase`],
-            leadingUnderscore: `allowSingleOrDouble`,
-            trailingUnderscore: `allowSingleOrDouble`,
+            selector: "default",
+            format: ["camelCase"],
           },
           {
-            selector: `function`,
-            format: [`camelCase`, `PascalCase`],
-            leadingUnderscore: `allow`,
+            selector: "variable",
+            format: ["camelCase", "UPPER_CASE", "PascalCase"],
+            leadingUnderscore: "allowSingleOrDouble",
+            trailingUnderscore: "allowSingleOrDouble",
           },
           {
-            selector: `parameter`,
-            format: [`camelCase`, `PascalCase`, `snake_case`],
-            leadingUnderscore: `allowSingleOrDouble`,
+            selector: "function",
+            format: ["camelCase", "PascalCase"],
+            leadingUnderscore: "allow",
           },
           {
-            selector: `enumMember`,
-            format: [`camelCase`, `UPPER_CASE`, `PascalCase`],
+            selector: "parameter",
+            format: ["camelCase", "PascalCase", "snake_case"],
+            leadingUnderscore: "allowSingleOrDouble",
           },
           {
-            selector: `typeLike`,
-            format: [`PascalCase`],
+            selector: "enumMember",
+            format: ["camelCase", "UPPER_CASE", "PascalCase"],
           },
           {
-            selector: `typeAlias`,
-            format: [`camelCase`, `PascalCase`],
+            selector: "typeLike",
+            format: ["PascalCase"],
           },
           {
-            selector: `property`,
+            selector: "typeAlias",
+            format: ["camelCase", "PascalCase"],
+          },
+          {
+            selector: "property",
             format: null,
           },
           {
-            selector: `objectLiteralProperty`,
+            selector: "objectLiteralProperty",
             format: null,
           },
           {
-            selector: `enum`,
-            format: [`PascalCase`, `UPPER_CASE`],
+            selector: "enum",
+            format: ["PascalCase", "UPPER_CASE"],
           },
           {
-            selector: `method`,
-            format: [`PascalCase`, `camelCase`],
-            leadingUnderscore: `allowSingleOrDouble`,
+            selector: "method",
+            format: ["PascalCase", "camelCase"],
+            leadingUnderscore: "allowSingleOrDouble",
           },
           {
-            selector: `interface`,
-            format: [`PascalCase`],
-            prefix: [`I`],
+            selector: "interface",
+            format: ["PascalCase"],
+            prefix: ["I"],
           },
         ],
         // This rule tries to prevent using `require()`. However in node code,
@@ -203,8 +214,8 @@ module.exports = {
         // problems in our tests where we often want this functionality for module
         // mocking. At this point it's easier to have it off and just encourage
         // using top-level imports via code reviews.
-        "@typescript-eslint/no-var-requires": `off`,
-        "@typescript-eslint/no-extra-semi": `off`,
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-extra-semi": "off",
         // This rule ensures that typescript types do not have semicolons
         // at the end of their lines, since our prettier setup is to have no semicolons
         // e.g.,
@@ -213,46 +224,46 @@ module.exports = {
         // +  baz: string
         // }
         "@typescript-eslint/member-delimiter-style": [
-          `error`,
+          2,
           {
             multiline: {
-              delimiter: `none`,
+              delimiter: "semi",
             },
           },
         ],
-        "@typescript-eslint/no-empty-function": `off`,
+        "@typescript-eslint/no-empty-function": "off",
         // This ensures that we always type the return type of functions
         // a high level focus of our TS setup is typing fn inputs and outputs.
-        "@typescript-eslint/explicit-function-return-type": `error`,
+        "@typescript-eslint/explicit-function-return-type": "error",
         // This forces us to use interfaces over types aliases for object definitions.
         // Type is still useful for opaque types
         // e.g.,
         // type UUID = string
-        "@typescript-eslint/consistent-type-definitions": [`error`, `type`],
+        "@typescript-eslint/consistent-type-definitions": ["error", "type"],
         "@typescript-eslint/no-use-before-define": [
-          `error`,
+          "error",
           { functions: false },
         ],
         // Allows us to write unions like `type Foo = "baz" | "bar"`
         // otherwise eslint will want to switch the strings to backticks,
         // which then crashes the ts compiler
-        quotes: `off`,
+        quotes: "off",
         "@typescript-eslint/quotes": [
           2,
-          `backtick`,
+          "double",
           {
             avoidEscape: true,
           },
         ],
         // bump to @typescript-eslint/parser started showing Flow related errors in ts(x) files
         // so disabling them in .ts(x) files
-        "@typescript-eslint/array-type": [`error`, { default: `generic` }],
+        "@typescript-eslint/array-type": ["error", { default: "generic" }],
       },
     },
   ],
   settings: {
     react: {
-      version: `18.2.0`,
+      version: "18.2.0",
     },
   },
-}
+};

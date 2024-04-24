@@ -1,14 +1,14 @@
-const moment = require(`moment`)
-const chokidar = require(`chokidar`)
-const systemPath = require(`path`)
-const _ = require(`lodash`)
+const moment = require("moment");
+const chokidar = require("chokidar");
+const systemPath = require("path");
+const _ = require("lodash");
 
-const { emitter, store } = require(`../../redux`)
-const { actions } = require(`../../redux/actions`)
-const { getNode } = require(`../../datastore`)
-const { findCompiledLocalPluginModule } = require(
-  `../../utils/parcel/compile-gatsby-files`,
-)
+const { emitter, store } = require("../../redux");
+const { actions } = require("../../redux/actions");
+const { getNode } = require("../../datastore");
+const {
+  findCompiledLocalPluginModule,
+} = require("../../utils/parcel/compile-gatsby-files");
 
 function transformPackageJson(json) {
   const transformDeps = (deps) =>
@@ -16,33 +16,33 @@ function transformPackageJson(json) {
       return {
         name,
         version,
-      }
-    })
+      };
+    });
 
   json = _.pick(json, [
-    `name`,
-    `description`,
-    `version`,
-    `main`,
-    `keywords`,
-    `author`,
-    `license`,
-    `dependencies`,
-    `devDependencies`,
-    `peerDependencies`,
-    `optionalDependecies`,
-    `bundledDependecies`,
-  ])
-  json.dependencies = transformDeps(json.dependencies)
-  json.devDependencies = transformDeps(json.devDependencies)
-  json.peerDependencies = transformDeps(json.peerDependencies)
-  json.optionalDependecies = transformDeps(json.optionalDependecies)
-  json.bundledDependecies = transformDeps(json.bundledDependecies)
+    "name",
+    "description",
+    "version",
+    "main",
+    "keywords",
+    "author",
+    "license",
+    "dependencies",
+    "devDependencies",
+    "peerDependencies",
+    "optionalDependecies",
+    "bundledDependecies",
+  ]);
+  json.dependencies = transformDeps(json.dependencies);
+  json.devDependencies = transformDeps(json.devDependencies);
+  json.peerDependencies = transformDeps(json.peerDependencies);
+  json.optionalDependecies = transformDeps(json.optionalDependecies);
+  json.bundledDependecies = transformDeps(json.bundledDependecies);
 
-  return json
+  return json;
 }
 
-const createPageId = (path) => `SitePage ${path}`
+const createPageId = (path) => `SitePage ${path}`;
 
 exports.sourceNodes = ({
   createContentDigest,
@@ -50,11 +50,11 @@ exports.sourceNodes = ({
   actions,
   store,
 }) => {
-  const { createNode, deleteNode } = actions
-  const { program, flattenedPlugins, config } = store.getState()
+  const { createNode, deleteNode } = actions;
+  const { program, flattenedPlugins, config } = store.getState();
 
   flattenedPlugins.forEach((plugin) => {
-    plugin.pluginFilepath = plugin.resolve
+    plugin.pluginFilepath = plugin.resolve;
 
     createNode({
       ...plugin,
@@ -65,17 +65,17 @@ exports.sourceNodes = ({
       children: [],
       internal: {
         contentDigest: createContentDigest(plugin),
-        type: `SitePlugin`,
+        type: "SitePlugin",
       },
-    })
-  })
+    });
+  });
 
   // Add site node.
 
   const createGatsbyConfigNode = (config = {}) => {
     // Delete plugins from the config as we add plugins above.
-    const configCopy = { ...config }
-    delete configCopy.plugins
+    const configCopy = { ...config };
+    delete configCopy.plugins;
     const node = {
       siteMetadata: {
         ...configCopy.siteMetadata,
@@ -83,49 +83,49 @@ exports.sourceNodes = ({
       port: program.port,
       host: program.host,
       ...configCopy,
-    }
+    };
     createNode({
       ...node,
-      id: `Site`,
+      id: "Site",
       parent: null,
       children: [],
       internal: {
         contentDigest: createContentDigest(node),
-        type: `Site`,
+        type: "Site",
       },
-    })
-  }
+    });
+  };
 
-  createGatsbyConfigNode(config)
+  createGatsbyConfigNode(config);
 
   const buildTime = moment()
-    .subtract(process.uptime(), `seconds`)
-    .startOf(`second`)
-    .toJSON()
+    .subtract(process.uptime(), "seconds")
+    .startOf("second")
+    .toJSON();
 
-  const metadataNode = { buildTime }
+  const metadataNode = { buildTime };
 
   createNode({
     ...metadataNode,
-    id: `SiteBuildMetadata`,
+    id: "SiteBuildMetadata",
     parent: null,
     children: [],
     internal: {
       contentDigest: createContentDigest(metadataNode),
-      type: `SiteBuildMetadata`,
+      type: "SiteBuildMetadata",
     },
-  })
+  });
 
   const pathToGatsbyConfig =
     findCompiledLocalPluginModule(
       program.directory,
-      `default-site-plugin`,
-      `gatsby-config`,
-    ) ?? systemPath.join(program.directory, `gatsby-config.js`)
-  watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
+      "default-site-plugin",
+      "gatsby-config",
+    ) ?? systemPath.join(program.directory, "gatsby-config.js");
+  watchConfig(pathToGatsbyConfig, createGatsbyConfigNode);
 
   // Create nodes for functions
-  const { functions } = store.getState()
+  const { functions } = store.getState();
   const createFunctionNode = (config) => {
     createNode({
       id: `gatsby-function-${config.absoluteCompiledFilePath}`,
@@ -134,60 +134,60 @@ exports.sourceNodes = ({
       children: [],
       internal: {
         contentDigest: createContentDigest(config),
-        type: `SiteFunction`,
+        type: "SiteFunction",
       },
-    })
-  }
+    });
+  };
   functions.forEach((config) => {
-    createFunctionNode(config)
-  })
+    createFunctionNode(config);
+  });
 
   // Listen for updates to functions to update the nodes.
-  emitter.on(`SET_SITE_FUNCTIONS`, (action) => {
+  emitter.on("SET_SITE_FUNCTIONS", (action) => {
     // Identify any now deleted functions and remove their nodes.
-    const existingNodes = getNodesByType(`SiteFunction`)
-    const newFunctionsSet = new Set()
+    const existingNodes = getNodesByType("SiteFunction");
+    const newFunctionsSet = new Set();
     action.payload.forEach((config) =>
       newFunctionsSet.add(`gatsby-function-${config.absoluteCompiledFilePath}`),
-    )
+    );
     const toBeDeleted = existingNodes.filter(
       (node) => !newFunctionsSet.has(node.id),
-    )
-    toBeDeleted.forEach((node) => deleteNode(node))
+    );
+    toBeDeleted.forEach((node) => deleteNode(node));
 
     action.payload.forEach((config) => {
-      createFunctionNode(config)
-    })
-  })
-}
+      createFunctionNode(config);
+    });
+  });
+};
 
 function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode) {
-  chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
-    const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
+  chokidar.watch(pathToGatsbyConfig).on("change", () => {
+    const oldCache = require.cache[require.resolve(pathToGatsbyConfig)];
     try {
       // Delete require cache so we can reload the module.
-      delete require.cache[require.resolve(pathToGatsbyConfig)]
-      const config = require(pathToGatsbyConfig)
-      createGatsbyConfigNode(config)
+      delete require.cache[require.resolve(pathToGatsbyConfig)];
+      const config = require(pathToGatsbyConfig);
+      createGatsbyConfigNode(config);
     } catch (e) {
       // Restore the old cache since requiring the new gatsby-config.js failed.
       if (oldCache !== undefined) {
-        require.cache[require.resolve(pathToGatsbyConfig)] = oldCache
+        require.cache[require.resolve(pathToGatsbyConfig)] = oldCache;
       }
     }
-  })
+  });
 }
 
 exports.createResolvers = ({ createResolvers }) => {
   const resolvers = {
     Site: {
       buildTime: {
-        type: `Date`,
+        type: "Date",
         resolve(source, args, context, info) {
           const { buildTime } = context.nodeModel.getNodeById({
-            id: `SiteBuildMetadata`,
-            type: `SiteBuildMetadata`,
-          })
+            id: "SiteBuildMetadata",
+            type: "SiteBuildMetadata",
+          });
           return info.originalResolver(
             {
               ...source,
@@ -196,18 +196,18 @@ exports.createResolvers = ({ createResolvers }) => {
             args,
             context,
             info,
-          )
+          );
         },
       },
     },
-  }
+  };
 
-  createResolvers(resolvers)
-}
+  createResolvers(resolvers);
+};
 
 // Listen for DELETE_PAGE and delete page nodes.
-emitter.on(`DELETE_PAGE`, (action) => {
-  const nodeId = createPageId(action.payload.path)
-  const node = getNode(nodeId)
-  store.dispatch(actions.deleteNode(node))
-})
+emitter.on("DELETE_PAGE", (action) => {
+  const nodeId = createPageId(action.payload.path);
+  const node = getNode(nodeId);
+  store.dispatch(actions.deleteNode(node));
+});

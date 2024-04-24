@@ -1,4 +1,4 @@
-import type { Rule } from "eslint"
+import type { Rule } from "eslint";
 import type {
   Node,
   Identifier,
@@ -12,48 +12,48 @@ import type {
   ObjectPattern,
   AssignmentProperty,
   ExportNamedDeclaration,
-} from "estree"
-import { store } from "../../redux"
-import { isPageTemplate } from "../eslint-rules-helpers"
+} from "estree";
+import { store } from "../../redux";
+import { isPageTemplate } from "../eslint-rules-helpers";
 
-const DEFAULT_GRAPHQL_TAG_NAME = `graphql`
+const DEFAULT_GRAPHQL_TAG_NAME = "graphql";
 
 function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
   // check for
   // export function name() {}
   // export async function name() {}
   if (
-    node.declaration?.type === `FunctionDeclaration` &&
+    node.declaration?.type === "FunctionDeclaration" &&
     node.declaration.id?.name === name
   ) {
-    return true
+    return true;
   }
 
   // check for
   // export const name = () => {}
-  if (node.declaration?.type === `VariableDeclaration`) {
+  if (node.declaration?.type === "VariableDeclaration") {
     for (const declaration of node.declaration.declarations) {
       if (
-        declaration.type === `VariableDeclarator` &&
-        declaration.id.type === `Identifier` &&
+        declaration.type === "VariableDeclarator" &&
+        declaration.id.type === "Identifier" &&
         declaration.id.name === name
       ) {
-        return true
+        return true;
       }
     }
   }
 
-  if (name === `Head`) {
+  if (name === "Head") {
     // Head can be re-exported, Head can be class components - so the checks above are not sufficient,
     // we need to be more permisive here
 
     // class component
     if (
-      node.declaration?.type === `ClassDeclaration` &&
-      node.declaration?.id?.type === `Identifier` &&
+      node.declaration?.type === "ClassDeclaration" &&
+      node.declaration?.id?.type === "Identifier" &&
       node.declaration?.id?.name === name
     ) {
-      return true
+      return true;
     }
 
     // re-exports
@@ -61,11 +61,11 @@ function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
       node.source &&
       node.specifiers.some((specifier) => specifier.exported.name === name)
     ) {
-      return true
+      return true;
     }
   }
 
-  return false
+  return false;
 }
 
 function hasOneValidNamedDeclaration(
@@ -75,19 +75,19 @@ function hasOneValidNamedDeclaration(
   // Checks for:
   // const query = graphql``
   // export { query }
-  if (node.type === `ExportNamedDeclaration` && node.declaration === null) {
+  if (node.type === "ExportNamedDeclaration" && node.declaration === null) {
     // For export { foobar, query } the declaration will be null and specifiers exists
     // For { foobar, query } it'll return true, for { query } it'll return false
     // It will ignore any { default } declarations since these are allowed
     const nonQueryExports = node.specifiers.some((e) =>
       varName
-        ? e.exported.name !== varName && e.exported.name !== `default`
-        : e.exported.name !== `default`,
-    )
-    return !nonQueryExports
+        ? e.exported.name !== varName && e.exported.name !== "default"
+        : e.exported.name !== "default",
+    );
+    return !nonQueryExports;
   }
 
-  return false
+  return false;
 }
 
 function isTemplateQuery(
@@ -108,31 +108,31 @@ function isTemplateQuery(
   // Gatsby.graphql`` when the import happened with import * as Gatsby from "gatsby"
 
   return (
-    node.type === `ExportNamedDeclaration` &&
-    node.declaration?.type === `VariableDeclaration` &&
+    node.type === "ExportNamedDeclaration" &&
+    node.declaration?.type === "VariableDeclaration" &&
     node.declaration?.declarations.every((el) => {
       if (
-        el?.init?.type === `TaggedTemplateExpression` &&
-        el.init.tag.type === `Identifier`
+        el?.init?.type === "TaggedTemplateExpression" &&
+        el.init.tag.type === "Identifier"
       ) {
-        return el.init.tag.name === graphqlTagName
+        return el.init.tag.name === graphqlTagName;
       } else if (
-        el?.init?.type === `TaggedTemplateExpression` &&
-        el.init.tag.type === `MemberExpression`
+        el?.init?.type === "TaggedTemplateExpression" &&
+        el.init.tag.type === "MemberExpression"
       ) {
         return (
           (el.init.tag.object as Identifier).name === namespaceSpecifierName &&
           (el.init.tag.property as Identifier).name === DEFAULT_GRAPHQL_TAG_NAME
-        )
+        );
       }
-      return false
+      return false;
     })
-  )
+  );
 }
 
 const limitedExports: Rule.RuleModule = {
   meta: {
-    type: `problem`,
+    type: "problem",
     messages: {
       limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named exports of a page query, getServerData, Head or config are allowed.
         All other named exports will cause Fast Refresh to not preserve local component state and do a full refresh.
@@ -143,12 +143,12 @@ const limitedExports: Rule.RuleModule = {
   },
   create: (context) => {
     if (!isPageTemplate(store, context)) {
-      return {}
+      return {};
     }
 
-    let queryVariableName: string | undefined = ``
-    let graphqlTagName = ``
-    let namespaceSpecifierName = ``
+    let queryVariableName: string | undefined = "";
+    let graphqlTagName = "";
+    let namespaceSpecifierName = "";
 
     return {
       // const { graphql } = require('gatsby')
@@ -160,19 +160,19 @@ const limitedExports: Rule.RuleModule = {
           // Handle require(`gatsby`)
           if (
             (el.init as CallExpression)?.arguments?.[0]?.type ===
-            `TemplateLiteral`
+            "TemplateLiteral"
           ) {
             return (
               ((el.init as CallExpression).arguments[0] as TemplateLiteral)
-                ?.quasis[0].value.raw === `gatsby`
-            )
+                ?.quasis[0].value.raw === "gatsby"
+            );
           }
 
           return (
             ((el.init as CallExpression)?.arguments?.[0] as Literal)?.value ===
-            `gatsby`
-          )
-        })
+            "gatsby"
+          );
+        });
 
         if (requiredFromGatsby) {
           // Search for "graphql" in a const { graphql, Link } = require('gatsby')
@@ -182,91 +182,91 @@ const limitedExports: Rule.RuleModule = {
             (el) =>
               ((el as AssignmentProperty).key as Identifier).name ===
               DEFAULT_GRAPHQL_TAG_NAME,
-          )
+          );
 
           if (graphqlTagSpecifier) {
             graphqlTagName = (
               (graphqlTagSpecifier as AssignmentProperty).value as Identifier
-            ).name
+            ).name;
           }
         }
 
-        return undefined
+        return undefined;
       },
       // import { graphql } from "gatsby"
       ImportDeclaration: (node): void => {
         // Make sure that the specifier is imported from "gatsby"
-        if ((node as ImportDeclaration).source.value === `gatsby`) {
+        if ((node as ImportDeclaration).source.value === "gatsby") {
           const graphqlTagSpecifier = (
             node as ImportDeclaration
           ).specifiers.find((el) => {
             // We only want import { graphql } from "gatsby"
             // Not import graphql from "gatsby"
-            if (el.type === `ImportSpecifier`) {
+            if (el.type === "ImportSpecifier") {
               // Only get the specifier with the original name of "graphql"
-              return el.imported.name === DEFAULT_GRAPHQL_TAG_NAME
+              return el.imported.name === DEFAULT_GRAPHQL_TAG_NAME;
             }
             // import * as Gatsby from "gatsby"
-            if (el.type === `ImportNamespaceSpecifier`) {
-              namespaceSpecifierName = el.local.name
-              return false
+            if (el.type === "ImportNamespaceSpecifier") {
+              namespaceSpecifierName = el.local.name;
+              return false;
             }
-            return false
-          })
+            return false;
+          });
           if (graphqlTagSpecifier) {
             // The local.name handles the case for import { graphql as otherName }
             // For normal import { graphql } the imported & local name are the same
-            graphqlTagName = graphqlTagSpecifier.local.name
+            graphqlTagName = graphqlTagSpecifier.local.name;
           }
         }
-        return undefined
+        return undefined;
       },
       TaggedTemplateExpression: (node): void => {
         if (
           (node as TaggedTemplateExpression).type ===
-            `TaggedTemplateExpression` &&
+            "TaggedTemplateExpression" &&
           ((node as TaggedTemplateExpression).tag as Identifier)?.name ===
             graphqlTagName
         ) {
           if (queryVariableName) {
-            return undefined
+            return undefined;
           }
           // @ts-ignore
-          queryVariableName = node.parent?.id?.name
+          queryVariableName = node.parent?.id?.name;
         }
 
-        return undefined
+        return undefined;
       },
       ExportNamedDeclaration: (node): void => {
         if (hasOneValidNamedDeclaration(node, queryVariableName)) {
-          return undefined
+          return undefined;
         }
 
         if (isTemplateQuery(node, graphqlTagName, namespaceSpecifierName)) {
-          return undefined
+          return undefined;
         }
 
-        if (isApiExport(node, `getServerData`)) {
-          return undefined
+        if (isApiExport(node, "getServerData")) {
+          return undefined;
         }
 
-        if (isApiExport(node, `config`)) {
-          return undefined
+        if (isApiExport(node, "config")) {
+          return undefined;
         }
 
-        if (isApiExport(node, `Head`)) {
-          return undefined
+        if (isApiExport(node, "Head")) {
+          return undefined;
         }
 
         context.report({
           node,
-          messageId: `limitedExportsPageTemplates`,
-        })
+          messageId: "limitedExportsPageTemplates",
+        });
 
-        return undefined
+        return undefined;
       },
-    }
+    };
   },
-}
+};
 
-module.exports = limitedExports
+module.exports = limitedExports;

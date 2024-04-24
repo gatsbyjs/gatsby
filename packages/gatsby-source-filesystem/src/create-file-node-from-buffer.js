@@ -1,10 +1,10 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const fileType = require(`file-type`)
+const fs = require("fs-extra");
+const path = require("path");
+const fileType = require("file-type");
 
-const { createFileNode } = require(`./create-file-node`)
-const { createContentDigest, createFilePath } = require(`gatsby-core-utils`)
-const cacheId = hash => `create-file-node-from-buffer-${hash}`
+const { createFileNode } = require("./create-file-node");
+const { createContentDigest, createFilePath } = require("gatsby-core-utils");
+const cacheId = (hash) => `create-file-node-from-buffer-${hash}`;
 
 /********************
  * Type Definitions *
@@ -39,8 +39,8 @@ const cacheId = hash => `create-file-node-from-buffer-${hash}`
  */
 const writeBuffer = (filename, buffer) =>
   new Promise((resolve, reject) => {
-    fs.writeFile(filename, buffer, err => (err ? reject(err) : resolve()))
-  })
+    fs.writeFile(filename, buffer, (err) => (err ? reject(err) : resolve()));
+  });
 
 /**
  * processBufferNode
@@ -60,46 +60,46 @@ async function processBufferNode({
   ext,
   name,
 }) {
-  const pluginCacheDir = cache.directory
+  const pluginCacheDir = cache.directory;
 
   // See if there's a cache file for this buffer's contents from
   // a previous run
-  let filename = await cache.get(cacheId(hash))
+  let filename = await cache.get(cacheId(hash));
   if (!filename) {
     // If the user did not provide an extension and we couldn't get
     // one from remote file, try and guess one
-    if (typeof ext === `undefined`) {
-      const filetype = await fileType.fromBuffer(buffer)
-      ext = filetype ? `.${filetype.ext}` : `.bin`
+    if (typeof ext === "undefined") {
+      const filetype = await fileType.fromBuffer(buffer);
+      ext = filetype ? `.${filetype.ext}` : ".bin";
     }
-    filename = createFilePath(path.join(pluginCacheDir, hash), name, ext)
-    await fs.ensureDir(path.dirname(filename))
+    filename = createFilePath(path.join(pluginCacheDir, hash), name, ext);
+    await fs.ensureDir(path.dirname(filename));
 
     // Cache the buffer contents
-    await writeBuffer(filename, buffer)
+    await writeBuffer(filename, buffer);
 
     // Save the cache file path for future use
-    await cache.set(cacheId(hash), filename)
+    await cache.set(cacheId(hash), filename);
   }
 
   // Create the file node.
-  const fileNode = await createFileNode(filename, createNodeId, {})
-  fileNode.internal.description = `File "Buffer<${hash}>"`
-  fileNode.hash = hash
-  fileNode.parent = parentNodeId
+  const fileNode = await createFileNode(filename, createNodeId, {});
+  fileNode.internal.description = `File "Buffer<${hash}>"`;
+  fileNode.hash = hash;
+  fileNode.parent = parentNodeId;
   // Override the default plugin as gatsby-source-filesystem needs to
   // be the owner of File nodes or there'll be conflicts if any other
   // File nodes are created through normal usages of
   // gatsby-source-filesystem.
-  await createNode(fileNode, { name: `gatsby-source-filesystem` })
+  await createNode(fileNode, { name: "gatsby-source-filesystem" });
 
-  return fileNode
+  return fileNode;
 }
 
 /**
  * Index of promises resolving to File node from buffer cache
  */
-const processingCache = {}
+const processingCache = {};
 
 /***************
  * Entry Point *
@@ -129,40 +129,40 @@ module.exports = ({
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
   // see gatsbyjs/gatsby#6643
-  if (typeof createNodeId !== `function`) {
+  if (typeof createNodeId !== "function") {
     throw new Error(
-      `createNodeId must be a function, was ${typeof createNodeId}`
-    )
+      `createNodeId must be a function, was ${typeof createNodeId}`,
+    );
   }
-  if (typeof createNode !== `function`) {
-    throw new Error(`createNode must be a function, was ${typeof createNode}`)
+  if (typeof createNode !== "function") {
+    throw new Error(`createNode must be a function, was ${typeof createNode}`);
   }
-  if (typeof getCache === `function`) {
+  if (typeof getCache === "function") {
     // use cache of this plugin and not cache of function caller
-    cache = getCache(`gatsby-source-filesystem`)
+    cache = getCache("gatsby-source-filesystem");
   }
-  if (typeof cache !== `object`) {
+  if (typeof cache !== "object") {
     throw new Error(
-      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`
-    )
+      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`,
+    );
   }
 
   if (!buffer) {
-    return Promise.reject(`bad buffer: ${buffer}`)
+    return Promise.reject(`bad buffer: ${buffer}`);
   }
 
   if (!hash) {
-    hash = createContentDigest(buffer)
+    hash = createContentDigest(buffer);
   }
 
   if (!name) {
-    name = hash
+    name = hash;
   }
 
   // Check if we already requested node for this remote file
   // and return stored promise if we did.
   if (processingCache[hash]) {
-    return processingCache[hash]
+    return processingCache[hash];
   }
 
   const bufferCachePromise = processBufferNode({
@@ -174,9 +174,9 @@ module.exports = ({
     createNodeId,
     ext,
     name,
-  })
+  });
 
-  processingCache[hash] = bufferCachePromise
+  processingCache[hash] = bufferCachePromise;
 
-  return processingCache[hash]
-}
+  return processingCache[hash];
+};

@@ -1,52 +1,52 @@
-import { match as reachMatch } from "@gatsbyjs/reach-router"
-import cookie from "cookie"
-import { urlencoded, text, json, raw } from "express"
-import type { RequestHandler, Request, Response, NextFunction } from "express"
-import reporter from "gatsby-cli/lib/reporter"
-import multer from "multer"
+import { match as reachMatch } from "@gatsbyjs/reach-router";
+import cookie from "cookie";
+import { urlencoded, text, json, raw } from "express";
+import type { RequestHandler, Request, Response, NextFunction } from "express";
+import reporter from "gatsby-cli/lib/reporter";
+import multer from "multer";
 
 import {
   createConfig,
   type IGatsbyFunctionConfigProcessed,
   type IGatsbyBodyParserConfigProcessed,
   type IAPIFunctionWarning,
-} from "./config"
-import type { IGatsbyFunction } from "../../redux/types"
+} from "./config";
+import type { IGatsbyFunction } from "../../redux/types";
 
 const expressBuiltinMiddleware = {
   urlencoded,
   text,
   json,
   raw,
-}
+};
 
 type IGatsbyRequestContext = {
-  functionObj: IGatsbyFunction
-  fnToExecute: (req: Request, res: Response) => void | Promise<void>
+  functionObj: IGatsbyFunction;
+  fnToExecute: (req: Request, res: Response) => void | Promise<void>;
   // we massage params early in setContext middleware, but apparently other middlewares
   // reset it, so we will store those on our context and restore later
-  params: Request["params"]
-  config: IGatsbyFunctionConfigProcessed
-  showDebugMessageInResponse: boolean
-}
+  params: Request["params"];
+  config: IGatsbyFunctionConfigProcessed;
+  showDebugMessageInResponse: boolean;
+};
 
 type IGatsbyInternalRequest = {
-  context?: IGatsbyRequestContext | undefined
-} & Request
+  context?: IGatsbyRequestContext | undefined;
+} & Request;
 
 type IGatsbyMiddleware = (
   req: IGatsbyInternalRequest,
   res: Response,
   next: NextFunction,
-) => Promise<void> | void
+) => Promise<void> | void;
 
 type ICreateMiddlewareConfig = {
-  getFunctions: () => Array<IGatsbyFunction>
+  getFunctions: () => Array<IGatsbyFunction>;
   prepareFn?:
     | ((functionObj: IGatsbyFunction) => Promise<void> | void)
-    | undefined
-  showDebugMessageInResponse?: boolean | undefined
-}
+    | undefined;
+  showDebugMessageInResponse?: boolean | undefined;
+};
 
 export function printConfigWarnings(
   warnings: Array<IAPIFunctionWarning>,
@@ -58,7 +58,7 @@ export function printConfigWarnings(
         `${
           warning.property
             ? `\`${warning.property}\` property of exported config`
-            : `Exported config`
+            : "Exported config"
         } in \`${
           functionObj.originalRelativeFilePath
         }\` is misconfigured.\nExpected object:\n\n${
@@ -70,7 +70,7 @@ export function printConfigWarnings(
           null,
           2,
         )}`,
-      )
+      );
     }
   }
 }
@@ -85,76 +85,76 @@ function createSetContextFunctionMiddleware({
     res: Response,
     next: NextFunction,
   ): Promise<void> {
-    const functions = getFunctions()
-    const { "0": pathFragment } = req.params
+    const functions = getFunctions();
+    const { "0": pathFragment } = req.params;
 
     // Check first for exact matches.
     let functionObj = functions.find(
       ({ functionRoute }) => functionRoute === pathFragment,
-    )
+    );
 
     if (!functionObj) {
       // Check if there's any matchPaths that match.
       // We loop until we find the first match.
       functions.some((f) => {
         if (f.matchPath) {
-          const matchResult = reachMatch(f.matchPath, pathFragment)
+          const matchResult = reachMatch(f.matchPath, pathFragment);
           if (matchResult) {
-            req.params = matchResult.params
-            if (req.params[`*`]) {
+            req.params = matchResult.params;
+            if (req.params["*"]) {
               // Backwards compatability for v3
               // TODO remove in v5
-              req.params[`0`] = req.params[`*`]
+              req.params["0"] = req.params["*"];
             }
-            functionObj = f
+            functionObj = f;
 
-            return true
+            return true;
           }
         }
 
-        return false
-      })
+        return false;
+      });
     }
 
     if (functionObj) {
-      let userConfig
+      let userConfig;
       if (prepareFn) {
-        await prepareFn(functionObj)
+        await prepareFn(functionObj);
       }
 
-      const pathToFunction = functionObj.absoluteCompiledFilePath
-      let fnToExecute
+      const pathToFunction = functionObj.absoluteCompiledFilePath;
+      let fnToExecute;
       try {
-        delete require.cache[require.resolve(pathToFunction)]
-        const fn = require(pathToFunction)
-        userConfig = fn?.config
+        delete require.cache[require.resolve(pathToFunction)];
+        const fn = require(pathToFunction);
+        userConfig = fn?.config;
 
-        fnToExecute = (fn && fn.default) || fn
+        fnToExecute = (fn && fn.default) || fn;
       } catch (e) {
-        if (e?.message?.includes(`fnToExecute is not a function`)) {
-          e.message = `${functionObj.originalAbsoluteFilePath} does not export a function.`
+        if (e?.message?.includes("fnToExecute is not a function")) {
+          e.message = `${functionObj.originalAbsoluteFilePath} does not export a function.`;
         }
 
-        fnToExecute = undefined
-        reporter.error(e)
+        fnToExecute = undefined;
+        reporter.error(e);
         if (!res.headersSent) {
           if (showDebugMessageInResponse) {
             res
               .status(500)
               .send(
                 `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`,
-              )
+              );
           } else {
-            res.sendStatus(500)
+            res.sendStatus(500);
           }
         }
-        return
+        return;
       }
 
       if (fnToExecute) {
-        const { config, warnings } = createConfig(userConfig)
+        const { config, warnings } = createConfig(userConfig);
 
-        printConfigWarnings(warnings, functionObj)
+        printConfigWarnings(warnings, functionObj);
 
         req.context = {
           functionObj,
@@ -162,12 +162,12 @@ function createSetContextFunctionMiddleware({
           params: req.params,
           config,
           showDebugMessageInResponse: showDebugMessageInResponse ?? false,
-        }
+        };
       }
     }
 
-    next()
-  }
+    next();
+  };
 }
 
 function setCookies(
@@ -175,15 +175,15 @@ function setCookies(
   _res: Response,
   next: NextFunction,
 ): void {
-  const cookies = req.headers.cookie
+  const cookies = req.headers.cookie;
 
   if (!cookies) {
-    return next()
+    return next();
   }
 
-  req.cookies = cookie.parse(cookies)
+  req.cookies = cookie.parse(cookies);
 
-  return next()
+  return next();
 }
 
 function bodyParserMiddlewareWithConfig(
@@ -195,12 +195,12 @@ function bodyParserMiddlewareWithConfig(
     next: NextFunction,
   ): void {
     if (req.context && req.context.config.bodyParser) {
-      const bodyParserConfig = req.context.config.bodyParser[type]
-      expressBuiltinMiddleware[type](bodyParserConfig)(req, res, next)
+      const bodyParserConfig = req.context.config.bodyParser[type];
+      expressBuiltinMiddleware[type](bodyParserConfig)(req, res, next);
     } else {
-      next()
+      next();
     }
-  }
+  };
 }
 
 async function executeFunction(
@@ -209,20 +209,20 @@ async function executeFunction(
   next: NextFunction,
 ): Promise<void> {
   if (req.context) {
-    reporter.verbose(`Running ${req.context.functionObj.functionRoute}`)
-    req.params = req.context.params
-    const start = Date.now()
-    const context = req.context
+    reporter.verbose(`Running ${req.context.functionObj.functionRoute}`);
+    req.params = req.context.params;
+    const start = Date.now();
+    const context = req.context;
     // we don't want to leak internal context to actual request handler
-    delete req.context
+    delete req.context;
     try {
-      await Promise.resolve(context.fnToExecute(req, res))
+      await Promise.resolve(context.fnToExecute(req, res));
     } catch (e) {
-      if (e?.message?.includes(`fnToExecute is not a function`)) {
-        e.message = `${context.functionObj.originalAbsoluteFilePath} does not export a function.`
+      if (e?.message?.includes("fnToExecute is not a function")) {
+        e.message = `${context.functionObj.originalAbsoluteFilePath} does not export a function.`;
       }
 
-      reporter.error(e)
+      reporter.error(e);
       // Don't send the error if that would cause another error.
       if (!res.headersSent) {
         if (context.showDebugMessageInResponse) {
@@ -230,37 +230,37 @@ async function executeFunction(
             .status(500)
             .send(
               `Error when executing function "${context.functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`,
-            )
+            );
         } else {
-          res.sendStatus(500)
+          res.sendStatus(500);
         }
       }
     }
 
-    const end = Date.now()
+    const end = Date.now();
     reporter.log(
       `Executed function "/api/${context.functionObj.functionRoute}" in ${
         end - start
       }ms`,
-    )
+    );
   } else {
-    next()
+    next();
   }
 }
 
 export function functionMiddlewares(
   middlewareConfig: ICreateMiddlewareConfig,
 ): Array<RequestHandler> {
-  const setContext = createSetContextFunctionMiddleware(middlewareConfig)
+  const setContext = createSetContextFunctionMiddleware(middlewareConfig);
 
   return [
     setCookies,
     setContext,
     multer().any(),
-    bodyParserMiddlewareWithConfig(`raw`),
-    bodyParserMiddlewareWithConfig(`text`),
-    bodyParserMiddlewareWithConfig(`urlencoded`),
-    bodyParserMiddlewareWithConfig(`json`),
+    bodyParserMiddlewareWithConfig("raw"),
+    bodyParserMiddlewareWithConfig("text"),
+    bodyParserMiddlewareWithConfig("urlencoded"),
+    bodyParserMiddlewareWithConfig("json"),
     executeFunction,
-  ]
+  ];
 }

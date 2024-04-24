@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import Configstore from "configstore"
+import Configstore from "configstore";
 
-let config: Configstore
+let config: Configstore;
 /**
  * Copied from gatsby-core-utils to avoid depending on it
  * Gets the configstore instance related to gatsby
@@ -11,13 +10,13 @@ let config: Configstore
 export function getConfigStore(): Configstore {
   if (!config) {
     config = new Configstore(
-      `gatsby`,
+      "gatsby",
       {},
       {
         globalConfigPath: true,
       },
-    )
+    );
   }
 
-  return config
+  return config;
 }

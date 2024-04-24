@@ -7,4 +7,4 @@ checks:
 
 - for a single commit: git commit --no-verify
 - for all future commits: npm run hooks:uninstall
-`)
+`);

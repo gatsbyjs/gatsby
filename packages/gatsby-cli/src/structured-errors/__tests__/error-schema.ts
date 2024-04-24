@@ -1,17 +1,17 @@
-import { errorSchema } from "../error-schema"
+import { errorSchema } from "../error-schema";
 
-test(`returns invalid on an invalid error`, () => {
-  expect(errorSchema.validate({ lol: `true` })).toMatchInlineSnapshot(`
+test("returns invalid on an invalid error", () => {
+  expect(errorSchema.validate({ lol: "true" })).toMatchInlineSnapshot(`
     Object {
       "error": [ValidationError: "lol" is not allowed],
       "value": Object {
         "lol": "true",
       },
     }
-  `)
-})
+  `);
+});
 
-test(`returns a valid value`, () => {
+test("returns a valid value", () => {
   expect(
     errorSchema.validate({
       context: {},
@@ -22,5 +22,5 @@ test(`returns a valid value`, () => {
         "context": Object {},
       },
     }
-  `)
-})
+  `);
+});

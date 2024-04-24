@@ -1,58 +1,58 @@
-import { testPluginOptionsSchema } from "gatsby-plugin-utils"
-import { pluginOptionsSchema } from "../gatsby-node"
+import { testPluginOptionsSchema } from "gatsby-plugin-utils";
+import { pluginOptionsSchema } from "../gatsby-node";
 
-describe(`pluginOptionsSchema`, () => {
-  it(`should invalidate incorrect options`, async () => {
+describe("pluginOptionsSchema", () => {
+  it("should invalidate incorrect options", async () => {
     const options = {
       trackingIds: undefined, // Is required
-      gtagConfig: `test`,
+      gtagConfig: "test",
       pluginConfig: {
-        head: `test`,
-        respectDNT: `test`,
-        exclude: `test`,
+        head: "test",
+        respectDNT: "test",
+        exclude: "test",
         origin: 1,
-        delayOnRouteUpdate: `test`,
+        delayOnRouteUpdate: "test",
       },
-    }
+    };
     const expectedErrors = [
-      `"trackingIds" is required`,
-      `"gtagConfig" must be of type object`,
-      `"pluginConfig.head" must be a boolean`,
-      `"pluginConfig.respectDNT" must be a boolean`,
-      `"pluginConfig.exclude" must be an array`,
-      `"pluginConfig.origin" must be a string`,
-      `"pluginConfig.delayOnRouteUpdate" must be a number`,
-    ]
+      '"trackingIds" is required',
+      '"gtagConfig" must be of type object',
+      '"pluginConfig.head" must be a boolean',
+      '"pluginConfig.respectDNT" must be a boolean',
+      '"pluginConfig.exclude" must be an array',
+      '"pluginConfig.origin" must be a string',
+      '"pluginConfig.delayOnRouteUpdate" must be a number',
+    ];
 
     const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
-      options
-    )
+      options,
+    );
 
-    expect(isValid).toBe(false)
-    expect(errors).toEqual(expectedErrors)
-  })
+    expect(isValid).toBe(false);
+    expect(errors).toEqual(expectedErrors);
+  });
 
-  it(`should validate correct options`, async () => {
+  it("should validate correct options", async () => {
     const options = {
-      trackingIds: [`test`],
+      trackingIds: ["test"],
       gtagConfig: {
         anonymize_ip: true,
       },
       pluginConfig: {
         head: true,
         respectDNT: true,
-        exclude: [`test`],
-        origin: `test`,
+        exclude: ["test"],
+        origin: "test",
         delayOnRouteUpdate: 1,
       },
-    }
+    };
     const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
-      options
-    )
+      options,
+    );
 
-    expect(isValid).toBe(true)
-    expect(errors).toEqual([])
-  })
-})
+    expect(isValid).toBe(true);
+    expect(errors).toEqual([]);
+  });
+});

@@ -1,11 +1,11 @@
-const webpackLodashPlugin = require(`lodash-webpack-plugin`)
+const webpackLodashPlugin = require("lodash-webpack-plugin");
 
 // Add Lodash webpack plugin
 exports.onCreateWebpackConfig = (
   { actions, stage },
-  { disabledFeatures = [] }
+  { disabledFeatures = [] },
 ) => {
-  if (stage !== `build-javascript`) return
+  if (stage !== "build-javascript") return;
 
   const features = {
     shorthands: true,
@@ -24,20 +24,20 @@ exports.onCreateWebpackConfig = (
     flattening: true,
     paths: true,
     placeholders: true,
-  }
+  };
 
-  disabledFeatures.forEach(feature => {
-    delete features[feature]
-  })
+  disabledFeatures.forEach((feature) => {
+    delete features[feature];
+  });
 
   actions.setWebpackConfig({
     plugins: [new webpackLodashPlugin(features)],
-  })
-}
+  });
+};
 
 // Add Lodash Babel plugin
 exports.onCreateBabelConfig = ({ actions }) => {
   actions.setBabelPlugin({
-    name: require.resolve(`@sigmacomputing/babel-plugin-lodash`),
-  })
-}
+    name: require.resolve("@sigmacomputing/babel-plugin-lodash"),
+  });
+};

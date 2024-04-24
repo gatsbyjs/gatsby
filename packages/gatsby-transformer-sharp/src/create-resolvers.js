@@ -1,7 +1,7 @@
-const { supportedExtensions } = require(`./supported-extensions`)
+const { supportedExtensions } = require("./supported-extensions");
 
 module.exports = ({ createResolvers, reporter }, pluginOptions = {}) => {
-  const { checkSupportedExtensions = true } = pluginOptions
+  const { checkSupportedExtensions = true } = pluginOptions;
 
   const resolvers = {
     File: {
@@ -13,14 +13,14 @@ module.exports = ({ createResolvers, reporter }, pluginOptions = {}) => {
             checkSupportedExtensions
           ) {
             reporter.warn(
-              `You can't use childImageSharp together with ${parent.name}.${parent.extension} — use publicURL instead. The childImageSharp portion of the query in this file will return null:\n${context.componentPath}`
-            )
+              `You can't use childImageSharp together with ${parent.name}.${parent.extension} — use publicURL instead. The childImageSharp portion of the query in this file will return null:\n${context.componentPath}`,
+            );
           }
-          return info.originalResolver(parent, args, context, info)
+          return info.originalResolver(parent, args, context, info);
         },
       },
     },
-  }
+  };
 
-  createResolvers(resolvers)
-}
+  createResolvers(resolvers);
+};

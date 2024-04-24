@@ -1,6 +1,6 @@
-import reporter from "gatsby-cli/lib/reporter"
-import { slash } from "gatsby-core-utils"
-import { startRedirectListener } from "./redirects-writer"
+import reporter from "gatsby-cli/lib/reporter";
+import { slash } from "gatsby-core-utils";
+import { startRedirectListener } from "./redirects-writer";
 import {
   type IBuildContext,
   initialize,
@@ -11,83 +11,83 @@ import {
   extractQueries,
   writeOutRedirects,
   postBootstrap,
-} from "../services"
-import { type Runner, createGraphQLRunner } from "./create-graphql-runner"
-import { globalTracer } from "opentracing"
-import type { GatsbyWorkerPool } from "../utils/worker/pool"
-import { handleStalePageData } from "../utils/page-data"
-import { savePartialStateToDisk } from "../redux"
-import type { IProgram } from "../commands/types"
-import type { IAdapterManager } from "../utils/adapter/types"
+} from "../services";
+import { type Runner, createGraphQLRunner } from "./create-graphql-runner";
+import { globalTracer } from "opentracing";
+import type { GatsbyWorkerPool } from "../utils/worker/pool";
+import { handleStalePageData } from "../utils/page-data";
+import { savePartialStateToDisk } from "../redux";
+import type { IProgram } from "../commands/types";
+import type { IAdapterManager } from "../utils/adapter/types";
 
-const tracer = globalTracer()
+const tracer = globalTracer();
 
 export async function bootstrap(
   initialContext: Partial<IBuildContext> & { program: IProgram },
 ): Promise<{
-  gatsbyNodeGraphQLFunction: Runner
-  workerPool: GatsbyWorkerPool
-  adapterManager?: IAdapterManager
+  gatsbyNodeGraphQLFunction: Runner;
+  workerPool: GatsbyWorkerPool;
+  adapterManager?: IAdapterManager | undefined;
 }> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
-    : {}
+    : {};
 
-  const parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
+  const parentSpan = tracer.startSpan("bootstrap", spanArgs);
 
   const bootstrapContext: IBuildContext & {
-    shouldRunCreatePagesStatefully: boolean
+    shouldRunCreatePagesStatefully: boolean;
   } = {
     ...initialContext,
     parentSpan,
     shouldRunCreatePagesStatefully: true,
-  }
+  };
 
   const context = {
     ...bootstrapContext,
     ...(await initialize(bootstrapContext)),
-  }
+  };
 
-  const workerPool = context.workerPool
+  const workerPool = context.workerPool;
 
-  const program = context.store.getState().program
-  const directory = slash(program.directory)
+  const program = context.store.getState().program;
+  const directory = slash(program.directory);
 
-  workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program })
+  workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program });
 
-  await customizeSchema(context)
-  await sourceNodes(context)
+  await customizeSchema(context);
+  await sourceNodes(context);
 
-  await buildSchema(context)
+  await buildSchema(context);
 
   context.gatsbyNodeGraphQLFunction = createGraphQLRunner(
     context.store,
     reporter,
-  )
+  );
 
-  await createPages(context)
+  await createPages(context);
 
-  await handleStalePageData(parentSpan)
+  await handleStalePageData(parentSpan);
 
-  savePartialStateToDisk([`inferenceMetadata`])
+  savePartialStateToDisk(["inferenceMetadata"]);
 
-  workerPool.all.buildSchema()
+  workerPool.all.buildSchema();
 
-  await extractQueries(context)
+  await extractQueries(context);
 
-  savePartialStateToDisk([`components`, `staticQueryComponents`])
+  savePartialStateToDisk(["components", "staticQueryComponents"]);
 
-  await writeOutRedirects(context)
+  await writeOutRedirects(context);
 
-  startRedirectListener()
+  startRedirectListener();
 
-  await postBootstrap(context)
+  await postBootstrap(context);
 
-  parentSpan.finish()
+  parentSpan.finish();
 
   return {
     gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction,
     workerPool,
     adapterManager: context.adapterManager,
-  }
+  };
 }

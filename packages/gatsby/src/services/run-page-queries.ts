@@ -1,7 +1,7 @@
-import { processPageQueries } from "../query"
-import reporter from "gatsby-cli/lib/reporter"
-import type { IQueryRunningContext } from "../state-machines/query-running/types"
-import { assertStore } from "../utils/assert-store"
+import { processPageQueries } from "../query";
+import reporter from "gatsby-cli/lib/reporter";
+import type { IQueryRunningContext } from "../state-machines/query-running/types";
+import { assertStore } from "../utils/assert-store";
 
 export async function runPageQueries({
   parentSpan,
@@ -10,33 +10,34 @@ export async function runPageQueries({
   program,
   graphqlRunner,
 }: Partial<IQueryRunningContext>): Promise<void> {
-  assertStore(store)
-  const state = store.getState()
+  assertStore(store);
+  const state = store.getState();
 
   if (!queryIds) {
-    return
+    return;
   }
 
-  const { pageQueryIds } = queryIds
+  const { pageQueryIds } = queryIds;
 
   if (pageQueryIds.length === 0) {
-    return
+    return;
   }
 
   const activity = reporter.createProgress(
-    `run page queries`,
+    "run page queries",
     pageQueryIds.length,
     0,
+    // @ts-ignore
     {
-      id: `page-query-running`,
+      id: "page-query-running",
       parentSpan,
     },
-  )
+  );
 
   await processPageQueries(pageQueryIds, {
     state,
     activity,
     graphqlRunner,
     graphqlTracing: program?.graphqlTracing,
-  })
+  });
 }

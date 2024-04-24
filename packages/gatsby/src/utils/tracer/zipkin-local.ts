@@ -1,11 +1,11 @@
-import zipkin from "zipkin"
-import { HttpLogger } from "zipkin-transport-http"
+import zipkin from "zipkin";
+import { HttpLogger } from "zipkin-transport-http";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import ZipkinTracer from "zipkin-javascript-opentracing"
-import { ZipkinBatchRecorder, ZipkinHttpLogger } from "./zipkin-types"
+import ZipkinTracer from "zipkin-javascript-opentracing";
+import { ZipkinBatchRecorder, ZipkinHttpLogger } from "./zipkin-types";
 
-let logger: ZipkinHttpLogger
-let recorder: ZipkinBatchRecorder
+let logger: ZipkinHttpLogger;
+let recorder: ZipkinBatchRecorder;
 
 /**
  * Create and return an open-tracing compatible tracer. See
@@ -14,18 +14,18 @@ let recorder: ZipkinBatchRecorder
 export function create(): ZipkinTracer {
   logger = new HttpLogger({
     // endpoint of local docker zipkin instance
-    endpoint: `http://localhost:9411/api/v1/spans`,
-  }) as ZipkinHttpLogger
+    endpoint: "http://localhost:9411/api/v1/spans",
+  }) as ZipkinHttpLogger;
 
   recorder = new zipkin.BatchRecorder({
     logger,
     // timeout = 60 hours, must be longer than site's build time
     timeout: 60 * 60 * 60 * 1000000,
-  }) as ZipkinBatchRecorder
+  }) as ZipkinBatchRecorder;
 
   const tracer = new ZipkinTracer({
-    localServiceName: `gatsby`,
-    serviceName: `gatsby`,
+    localServiceName: "gatsby",
+    serviceName: "gatsby",
     // Sample 1 out of 1 spans (100%). When tracing production
     // services, it is normal to sample 1 out of 10 requests so that
     // tracing information doesn't impact site performance. But Gatsby
@@ -35,10 +35,10 @@ export function create(): ZipkinTracer {
     sampler: new zipkin.sampler.CountingSampler(1),
     traceId128Bit: true,
     recorder,
-    kind: `client`,
-  })
+    kind: "client",
+  });
 
-  return tracer
+  return tracer;
 }
 
 // Workaround for issue in Zipkin HTTP Logger where Spans are not
@@ -47,33 +47,33 @@ export function create(): ZipkinTracer {
 // implementation.
 async function _processQueue(): Promise<void> {
   if (logger.queue.length > 0) {
-    const postBody = `[${logger.queue.join(`,`)}]`
-    const controller = new AbortController()
+    const postBody = `[${logger.queue.join(",")}]`;
+    const controller = new AbortController();
 
     try {
       const response = await globalThis.fetch(logger.endpoint, {
-        method: `POST`,
+        method: "POST",
         body: postBody,
         headers: logger.headers,
         signal: controller.signal,
-      })
+      });
 
       globalThis.setTimeout(() => {
-        controller.abort()
-      }, logger.timeout)
+        controller.abort();
+      }, logger.timeout);
 
       if (response.status !== 202) {
         const err =
-          `Unexpected response while sending Zipkin data, status:` +
-          `${response.status}, body: ${postBody}`
+          "Unexpected response while sending Zipkin data, status:" +
+          `${response.status}, body: ${postBody}`;
 
-        if (logger.errorListenerSet) logger.emit(`error`, new Error(err))
-        else console.error(err)
+        if (logger.errorListenerSet) logger.emit("error", new Error(err));
+        else console.error(err);
       }
     } catch (error) {
-      const err = `Error sending Zipkin data ${error}`
-      if (logger.errorListenerSet) logger.emit(`error`, new Error(err))
-      else console.error(err)
+      const err = `Error sending Zipkin data ${error}`;
+      if (logger.errorListenerSet) logger.emit("error", new Error(err));
+      else console.error(err);
     }
   }
 }
@@ -87,10 +87,10 @@ export async function stop(): Promise<void> {
   // First, write all partial spans to the http logger
   recorder.partialSpans.forEach((span, id) => {
     if (recorder._timedOut(span)) {
-      recorder._writeSpan(id)
+      recorder._writeSpan(id);
     }
-  })
+  });
 
   // Then tell http logger to process all spans in its queue
-  await _processQueue()
+  await _processQueue();
 }

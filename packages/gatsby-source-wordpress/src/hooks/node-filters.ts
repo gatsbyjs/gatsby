@@ -1,19 +1,19 @@
-import { IJSON } from "../utils/fetch-graphql"
-import { getStore } from "~/store"
+import { IJSON } from "../utils/fetch-graphql";
+import { getStore } from "~/store";
 
 type INodeFilterInput = {
-  name: string
-  context: IJSON
-  data: IJSON
-}
+  name: string;
+  context: IJSON;
+  data: IJSON;
+};
 
-type NodeFilterFn = (arg: INodeFilterInput) => IJSON
+type NodeFilterFn = (arg: INodeFilterInput) => IJSON;
 
 type INodeFilter = {
-  name: string
-  filter: NodeFilterFn
-  priority: number
-}
+  name: string;
+  filter: NodeFilterFn;
+  priority: number;
+};
 
 /**
  * Grabs an array of filter functions from the redux store,
@@ -30,23 +30,23 @@ export async function applyNodeFilter({
   data,
 }: INodeFilterInput): Promise<IJSON> {
   if (!name) {
-    return data
+    return data;
   }
 
   const nodeFilters: Array<INodeFilter> =
-    getStore().getState().wpHooks.nodeFilters?.[name]
+    getStore().getState().wpHooks.nodeFilters?.[name];
 
   if (!nodeFilters || !nodeFilters.length) {
-    return data
+    return data;
   }
 
-  const sortedNodeFilters = nodeFilters.sort((a, b) => a.priority - b.priority)
+  const sortedNodeFilters = nodeFilters.sort((a, b) => a.priority - b.priority);
 
   for (const { filter } of sortedNodeFilters) {
-    data = filter({ data, context, name })
+    data = filter({ data, context, name });
   }
 
-  return data
+  return data;
 }
 
 /**
@@ -58,5 +58,5 @@ export async function applyNodeFilter({
  * @param {integer} priority The priority for this filter to run in. lower means earlier execution
  */
 export function addNodeFilter({ name, filter, priority }: INodeFilter): void {
-  getStore().dispatch.wpHooks.addNodeFilter({ name, filter, priority })
+  getStore().dispatch.wpHooks.addNodeFilter({ name, filter, priority });
 }

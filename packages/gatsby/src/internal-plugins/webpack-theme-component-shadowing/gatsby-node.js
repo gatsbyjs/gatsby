@@ -1,7 +1,7 @@
-const GatsbyThemeComponentShadowingResolverPlugin = require(`.`)
+const GatsbyThemeComponentShadowingResolverPlugin = require(".");
 
 exports.onCreateWebpackConfig = ({ store, actions }) => {
-  const { flattenedPlugins, program } = store.getState()
+  const { flattenedPlugins, program } = store.getState();
 
   actions.setWebpackConfig({
     resolve: {
@@ -12,11 +12,11 @@ exports.onCreateWebpackConfig = ({ store, actions }) => {
             return {
               themeDir: plugin.pluginFilepath,
               themeName: plugin.name,
-            }
+            };
           }),
           projectRoot: program.directory,
         }),
       ],
     },
-  })
-}
+  });
+};

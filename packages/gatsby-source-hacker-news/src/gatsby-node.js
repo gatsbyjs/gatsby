@@ -1,10 +1,10 @@
-const url = require(`url`)
-const _ = require(`lodash`)
+const url = require("url");
+const _ = require("lodash");
 
 function get(query) {
   return fetch(
     `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`,
-  )
+  );
 }
 
 exports.createSchemaCustomization = async ({ actions }) => {
@@ -27,9 +27,9 @@ exports.createSchemaCustomization = async ({ actions }) => {
       domain: String
       order: Int!
     }
-  `
-  actions.createTypes(typeDefs)
-}
+  `;
+  actions.createTypes(typeDefs);
+};
 
 exports.sourceNodes = async ({
   actions,
@@ -37,13 +37,13 @@ exports.sourceNodes = async ({
   createNodeId,
   createContentDigest,
 }) => {
-  const { createNode } = actions
+  const { createNode } = actions;
 
   // Do the initial fetch
-  console.time(`fetch HN data`)
+  console.time("fetch HN data");
   console.log(
-    `starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds`,
-  )
+    "starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds",
+  );
   const result = await get(
     `
 {
@@ -95,32 +95,32 @@ fragment commentsFragment on HackerNewsItem {
   }
 }
   `,
-  )
-  console.timeEnd(`fetch HN data`)
+  );
+  console.timeEnd("fetch HN data");
 
   // Create top-story nodes.
   result.data.data.hn.topStories.forEach((story, i) => {
-    const storyStr = JSON.stringify(story)
+    const storyStr = JSON.stringify(story);
 
     // Ask HN, Polls, etc. don't have urls.
     // For those that do, HN displays just the bare domain.
-    let domain
+    let domain;
     if (story.url) {
-      const parsedUrl = url.parse(story.url)
-      const splitHost = parsedUrl.host.split(`.`)
+      const parsedUrl = url.parse(story.url);
+      const splitHost = parsedUrl.host.split(".");
       if (splitHost.length > 2) {
-        domain = splitHost.slice(1).join(`.`)
+        domain = splitHost.slice(1).join(".");
       } else {
-        domain = splitHost.join(`.`)
+        domain = splitHost.join(".");
       }
     }
 
-    const kids = _.pick(story, `kids`)
+    const kids = _.pick(story, "kids");
     if (!kids.kids) {
-      kids.kids = []
+      kids.kids = [];
     }
-    const kidLessStory = _.omit(story, `kids`)
-    const childIds = kids.kids.filter(Boolean).map((k) => createNodeId(k.id))
+    const kidLessStory = _.omit(story, "kids");
+    const childIds = kids.kids.filter(Boolean).map((k) => createNodeId(k.id));
 
     const storyNode = {
       ...kidLessStory,
@@ -129,59 +129,59 @@ fragment commentsFragment on HackerNewsItem {
       parent: null,
       content: storyStr,
       internal: {
-        type: `HNStory`,
+        type: "HNStory",
       },
       domain,
       order: i + 1,
-    }
+    };
 
     // Just store the user id
-    storyNode.by = storyNode.by.id
+    storyNode.by = storyNode.by.id;
 
     // Get content digest of node.
-    const contentDigest = createContentDigest(storyNode)
-    storyNode.internal.contentDigest = contentDigest
-    createNode(storyNode)
+    const contentDigest = createContentDigest(storyNode);
+    storyNode.internal.contentDigest = contentDigest;
+    createNode(storyNode);
 
     // Recursively create comment nodes.
     const createCommentNodes = (comments, parent, depth = 0) => {
       comments.forEach((comment, i) => {
         if (!comment) {
-          return
+          return;
         }
         if (!comment.kids) {
-          comment.kids = []
+          comment.kids = [];
         }
-        const commentChildIds = comment.kids.map((k) => createNodeId(k.id))
+        const commentChildIds = comment.kids.map((k) => createNodeId(k.id));
         const commentNode = {
-          ..._.omit(comment, `kids`),
+          ..._.omit(comment, "kids"),
           id: createNodeId(comment.id),
           children: commentChildIds,
           parent,
           internal: {
-            type: `HNComment`,
+            type: "HNComment",
           },
           order: i + 1,
-        }
+        };
 
-        commentNode.by = commentNode.by.id
-        const nodeStr = JSON.stringify(commentNode)
+        commentNode.by = commentNode.by.id;
+        const nodeStr = JSON.stringify(commentNode);
 
         // Get content digest of comment node.
-        const contentDigest = createContentDigest(nodeStr)
-        commentNode.internal.contentDigest = contentDigest
-        commentNode.internal.content = nodeStr
+        const contentDigest = createContentDigest(nodeStr);
+        commentNode.internal.contentDigest = contentDigest;
+        commentNode.internal.content = nodeStr;
 
-        createNode(commentNode)
+        createNode(commentNode);
 
         if (comment.kids.length > 0) {
-          createCommentNodes(comment.kids, commentNode.id, depth + 1)
+          createCommentNodes(comment.kids, commentNode.id, depth + 1);
         }
-      })
-    }
+      });
+    };
 
-    createCommentNodes(kids.kids, storyNode.id)
-  })
+    createCommentNodes(kids.kids, storyNode.id);
+  });
 
-  return
-}
+  return;
+};

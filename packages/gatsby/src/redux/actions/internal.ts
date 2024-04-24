@@ -1,4 +1,4 @@
-import reporter from "gatsby-cli/lib/reporter"
+import reporter from "gatsby-cli/lib/reporter";
 
 import type {
   IGatsbyConfig,
@@ -27,17 +27,17 @@ import type {
   ICreatePageDependencyActionPayloadType,
   IDeleteNodeManifests,
   IClearGatsbyImageSourceUrlAction,
-} from "../types"
+} from "../types";
 
-import { gatsbyConfigSchema } from "../../joi-schemas/joi"
-import { didYouMean } from "../../utils/did-you-mean"
+import { gatsbyConfigSchema } from "../../joi-schemas/joi";
+import { didYouMean } from "../../utils/did-you-mean";
 import {
   enqueueJob,
   type InternalJob,
   removeInProgressJob,
   getInProcessJobPromise,
-} from "../../utils/jobs/manager"
-import { getEngineContext } from "../../utils/engine-context"
+} from "../../utils/jobs/manager";
+import { getEngineContext } from "../../utils/engine-context";
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -46,19 +46,19 @@ import { getEngineContext } from "../../utils/engine-context"
  */
 export function createPageDependencies(
   payload: Array<ICreatePageDependencyActionPayloadType>,
-  plugin = ``,
+  plugin = "",
 ): ICreatePageDependencyAction {
   return {
-    type: `CREATE_COMPONENT_DEPENDENCY`,
+    type: "CREATE_COMPONENT_DEPENDENCY",
     plugin,
     payload: payload.map(({ path, nodeId, connection }) => {
       return {
         path,
         nodeId,
         connection,
-      }
+      };
     }),
-  }
+  };
 }
 
 /**
@@ -70,9 +70,9 @@ export function createPageDependencies(
  */
 export function createPageDependency(
   payload: ICreatePageDependencyActionPayloadType,
-  plugin = ``,
+  plugin = "",
 ): ICreatePageDependencyAction {
-  return createPageDependencies([payload], plugin)
+  return createPageDependencies([payload], plugin);
 }
 
 /**
@@ -84,11 +84,11 @@ export function deleteComponentsDependencies(
   paths: Array<string>,
 ): IDeleteComponentDependenciesAction {
   return {
-    type: `DELETE_COMPONENTS_DEPENDENCIES`,
+    type: "DELETE_COMPONENTS_DEPENDENCIES",
     payload: {
       paths,
     },
-  }
+  };
 }
 
 /**
@@ -100,25 +100,25 @@ export function replaceComponentQuery({
   query,
   componentPath,
 }: {
-  query: string
-  componentPath: string
+  query: string;
+  componentPath: string;
 }): IReplaceComponentQueryAction {
   return {
-    type: `REPLACE_COMPONENT_QUERY`,
+    type: "REPLACE_COMPONENT_QUERY",
     payload: {
       query,
       componentPath,
     },
-  }
+  };
 }
 
 export function apiFinished(
   payload: IApiFinishedAction["payload"],
 ): IApiFinishedAction {
   return {
-    type: `API_FINISHED`,
+    type: "API_FINISHED",
     payload,
-  }
+  };
 }
 
 /**
@@ -128,19 +128,19 @@ export function apiFinished(
  */
 export function replaceStaticQuery(
   args: {
-    name: string
-    componentPath: string
-    id: string
-    query: string
-    hash: string
+    name: string;
+    componentPath: string;
+    id: string;
+    query: string;
+    hash: string;
   },
   plugin: IGatsbyPlugin | null | undefined = null,
 ): IReplaceStaticQueryAction {
   return {
-    type: `REPLACE_STATIC_QUERY`,
+    type: "REPLACE_STATIC_QUERY",
     plugin,
     payload: args,
-  }
+  };
 }
 
 /**
@@ -155,11 +155,11 @@ export function queryExtracted(
   traceId?: string | undefined,
 ): IQueryExtractedAction {
   return {
-    type: `QUERY_EXTRACTED`,
+    type: "QUERY_EXTRACTED",
     plugin,
     traceId,
     payload: { componentPath, query },
-  }
+  };
 }
 
 /**
@@ -174,9 +174,9 @@ export function setGraphQLDefinitions(
   definitionsByName: Map<string, IDefinitionMeta>,
 ): ISetGraphQLDefinitionsAction {
   return {
-    type: `SET_GRAPHQL_DEFINITIONS`,
+    type: "SET_GRAPHQL_DEFINITIONS",
     payload: definitionsByName,
-  }
+  };
 }
 
 /**
@@ -193,11 +193,11 @@ export function queryExtractionGraphQLError(
   traceId?: string | undefined,
 ): IQueryExtractionGraphQLErrorAction {
   return {
-    type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
+    type: "QUERY_EXTRACTION_GRAPHQL_ERROR",
     plugin,
     traceId,
     payload: { componentPath, error },
-  }
+  };
 }
 
 /**
@@ -212,11 +212,11 @@ export function queryExtractedBabelSuccess(
   traceId?: string | undefined,
 ): IQueryExtractedBabelSuccessAction {
   return {
-    type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
+    type: "QUERY_EXTRACTION_BABEL_SUCCESS",
     plugin,
     traceId,
     payload: { componentPath },
-  }
+  };
 }
 
 /**
@@ -230,11 +230,11 @@ export function queryExtractionBabelError(
   traceId?: string | undefined,
 ): IQueryExtractionBabelErrorAction {
   return {
-    type: `QUERY_EXTRACTION_BABEL_ERROR`,
+    type: "QUERY_EXTRACTION_BABEL_ERROR",
     plugin,
     traceId,
     payload: { componentPath, error },
-  }
+  };
 }
 
 /**
@@ -247,11 +247,11 @@ export function setProgramStatus(
   traceId?: string | undefined,
 ): ISetProgramStatusAction {
   return {
-    type: `SET_PROGRAM_STATUS`,
+    type: "SET_PROGRAM_STATUS",
     plugin,
     traceId,
     payload: status,
-  }
+  };
 }
 
 /**
@@ -264,11 +264,11 @@ export function pageQueryRun(
   traceId?: string | undefined,
 ): IPageQueryRunAction {
   return {
-    type: `PAGE_QUERY_RUN`,
+    type: "PAGE_QUERY_RUN",
     plugin,
     traceId,
     payload,
-  }
+  };
 }
 
 export function queryStart(
@@ -277,19 +277,19 @@ export function queryStart(
   traceId?: string | undefined,
 ): IQueryStartAction {
   return {
-    type: `QUERY_START`,
+    type: "QUERY_START",
     plugin,
     traceId,
     payload: { path, componentPath, isPage },
-  }
+  };
 }
 
 export const clearDirtyQueriesListToEmitViaWebsocket =
   (): IQueryClearDirtyQueriesListToEmitViaWebsocket => {
     return {
-      type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`,
-    }
-  }
+      type: "QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET",
+    };
+  };
 
 /**
  * Remove jobs which are marked as stale (inputPath doesn't exists)
@@ -301,13 +301,13 @@ export function removeStaleJob(
   traceId?: string | undefined,
 ): IRemoveStaleJobAction {
   return {
-    type: `REMOVE_STALE_JOB_V2`,
+    type: "REMOVE_STALE_JOB_V2",
     plugin,
     traceId,
     payload: {
       contentDigest,
     },
-  }
+  };
 }
 
 /**
@@ -315,47 +315,47 @@ export function removeStaleJob(
  * @private
  */
 export function setSiteConfig(config?: unknown | undefined): ISetSiteConfig {
-  const result = gatsbyConfigSchema.validate(config || {})
-  const normalizedPayload = result.value as IGatsbyConfig
+  const result = gatsbyConfigSchema.validate(config || {});
+  const normalizedPayload = result.value as IGatsbyConfig;
 
   if (result.error) {
     const hasUnknownKeys = result.error.details.filter(
-      (details) => details.type === `object.unknown`,
-    )
+      (details) => details.type === "object.unknown",
+    );
 
     if (Array.isArray(hasUnknownKeys) && hasUnknownKeys.length) {
       const errorMessages = hasUnknownKeys.map((unknown) => {
-        const { context, message } = unknown
-        const key = context?.key
-        const suggestion = key && didYouMean(key)
+        const { context, message } = unknown;
+        const key = context?.key;
+        const suggestion = key && didYouMean(key);
 
         if (suggestion) {
-          return `${message}. ${suggestion}`
+          return `${message}. ${suggestion}`;
         }
 
-        return message
-      })
+        return message;
+      });
 
       reporter.panic({
-        id: `10122`,
+        id: "10122",
         context: {
-          sourceMessage: errorMessages.join(`\n`),
+          sourceMessage: errorMessages.join("\n"),
         },
-      })
+      });
     }
 
     reporter.panic({
-      id: `10122`,
+      id: "10122",
       context: {
         sourceMessage: result.error.message,
       },
-    })
+    });
   }
 
   return {
-    type: `SET_SITE_CONFIG`,
+    type: "SET_SITE_CONFIG",
     payload: normalizedPayload,
-  }
+  };
 }
 
 /**
@@ -366,23 +366,23 @@ export function setFunctions(
   functions: IGatsbyState["functions"],
 ): ISetSiteFunctions {
   return {
-    type: `SET_SITE_FUNCTIONS`,
+    type: "SET_SITE_FUNCTIONS",
     payload: functions,
-  }
+  };
 }
 
 export function deleteNodeManifests(): IDeleteNodeManifests {
   return {
-    type: `DELETE_NODE_MANIFESTS`,
-  }
+    type: "DELETE_NODE_MANIFESTS",
+  };
 }
 
 export const createJobV2FromInternalJob = (
   internalJob: InternalJob,
 ): ICreateJobV2FromInternalAction => {
   return (dispatch, getState): Promise<Record<string, unknown>> => {
-    const jobContentDigest = internalJob.contentDigest
-    const currentState = getState()
+    const jobContentDigest = internalJob.contentDigest;
+    const currentState = getState();
 
     // Check if we already ran this job before, if yes we return the result
     // We have an inflight (in progress) queue inside the jobs manager to make sure
@@ -393,9 +393,9 @@ export const createJobV2FromInternalJob = (
     ) {
       return Promise.resolve(
         currentState.jobsV2.complete.get(jobContentDigest)!.result,
-      )
+      );
     }
-    const engineContext = getEngineContext()
+    const engineContext = getEngineContext();
 
     // Always set context, even if engineContext is undefined.
     // We do this because the final list of jobs for a given engine request includes both:
@@ -405,50 +405,50 @@ export const createJobV2FromInternalJob = (
     // See https://nodejs.org/dist/latest-v16.x/docs/api/async_context.html#async_context_troubleshooting_context_loss
     // on cases when async context could be lost.
     dispatch({
-      type: `SET_JOB_V2_CONTEXT`,
+      type: "SET_JOB_V2_CONTEXT",
       payload: {
         job: internalJob,
-        requestId: engineContext?.requestId ?? ``,
+        requestId: engineContext?.requestId ?? "",
       },
-    })
+    });
 
-    const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
+    const inProgressJobPromise = getInProcessJobPromise(jobContentDigest);
     if (inProgressJobPromise) {
-      return inProgressJobPromise
+      return inProgressJobPromise;
     }
 
     dispatch({
-      type: `CREATE_JOB_V2`,
+      type: "CREATE_JOB_V2",
       payload: {
         job: internalJob,
       },
       plugin: { name: internalJob.plugin.name },
-    })
+    });
 
-    const enqueuedJobPromise = enqueueJob(internalJob)
+    const enqueuedJobPromise = enqueueJob(internalJob);
     return enqueuedJobPromise.then((result) => {
       // store the result in redux so we have it for the next run
       dispatch({
-        type: `END_JOB_V2`,
+        type: "END_JOB_V2",
         plugin: { name: internalJob.plugin.name },
         payload: {
           jobContentDigest,
           result,
         },
-      })
+      });
 
       // remove the job from our inProgressJobQueue as it's available in our done state.
       // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
-      removeInProgressJob(jobContentDigest)
+      removeInProgressJob(jobContentDigest);
 
-      return result
-    })
-  }
-}
+      return result;
+    });
+  };
+};
 
 export const clearGatsbyImageSourceUrls =
   (): IClearGatsbyImageSourceUrlAction => {
     return {
-      type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`,
-    }
-  }
+      type: "CLEAR_GATSBY_IMAGE_SOURCE_URL",
+    };
+  };

@@ -2,73 +2,75 @@
  * @jest-environment jsdom
  */
 
-import React from "react"
+import React from "react";
 import {
   LocationProvider,
   History,
   createMemorySource,
   createHistory,
-} from "@reach/router"
-import { render, fireEvent } from "@testing-library/react"
-import { useScrollRestoration } from "../use-scroll-restoration"
-import { ScrollHandler } from "../scroll-handler"
-import { SessionStorage } from "../session-storage"
+  // @ts-ignore
+} from "@reach/router";
+// @ts-ignore
+import { render, fireEvent } from "@testing-library/react";
+import { useScrollRestoration } from "../use-scroll-restoration";
+import { ScrollHandler } from "../scroll-handler";
+import { SessionStorage } from "../session-storage";
 
-const TRUE = (): boolean => true
+const TRUE = (): boolean => true;
 
 const Fixture: React.FunctionComponent = () => {
-  const scrollRestorationProps = useScrollRestoration<HTMLDivElement>(`test`)
+  const scrollRestorationProps = useScrollRestoration<HTMLDivElement>("test");
   return (
     <div
       {...scrollRestorationProps}
-      style={{ overflow: `auto` }}
-      data-testid="scrollfixture"
+      style={{ overflow: "auto" }}
+      data-testid='scrollfixture'
     >
       Test
     </div>
-  )
-}
+  );
+};
 
-describe(`useScrollRestoration`, () => {
-  let history: History
-  const session = new SessionStorage()
-  let htmlElementPrototype: HTMLElement
-  let fakedScrollTo = false
+describe("useScrollRestoration", () => {
+  let history: History;
+  const session = new SessionStorage();
+  let htmlElementPrototype: HTMLElement;
+  let fakedScrollTo = false;
 
   beforeAll(() => {
-    const wrapper = render(<div>hello</div>)
-    htmlElementPrototype = wrapper.container.constructor.prototype
+    const wrapper = render(<div>hello</div>);
+    htmlElementPrototype = wrapper.container.constructor.prototype;
 
     // jsdom doesn't support .scrollTo(), lets fix this temporarily
-    if (typeof htmlElementPrototype.scrollTo === `undefined`) {
+    if (typeof htmlElementPrototype.scrollTo === "undefined") {
       htmlElementPrototype.scrollTo = function scrollTo(
-        optionsOrX?: ScrollToOptions | number,
-        y?: number
+        optionsOrX?: ScrollToOptions | number | undefined,
+        y?: number | undefined,
       ): void {
-        if (typeof optionsOrX === `number`) {
-          this.scrollLeft = optionsOrX
+        if (typeof optionsOrX === "number") {
+          this.scrollLeft = optionsOrX;
         }
-        if (typeof y === `number`) {
-          this.scrollTop = y
+        if (typeof y === "number") {
+          this.scrollTop = y;
         }
-      }
-      fakedScrollTo = true
+      };
+      fakedScrollTo = true;
     }
-  })
+  });
 
   beforeEach(() => {
-    history = createHistory(createMemorySource(`/`))
-    sessionStorage.clear()
-  })
+    history = createHistory(createMemorySource("/"));
+    sessionStorage.clear();
+  });
 
   afterAll(() => {
     if (fakedScrollTo && htmlElementPrototype.scrollTo) {
       // @ts-ignore
-      delete htmlElementPrototype.scrollTo
+      delete htmlElementPrototype.scrollTo;
     }
-  })
+  });
 
-  it(`stores current scroll position in storage`, () => {
+  it("stores current scroll position in storage", () => {
     const wrapper = render(
       <LocationProvider history={history}>
         <ScrollHandler
@@ -78,18 +80,18 @@ describe(`useScrollRestoration`, () => {
         >
           <Fixture />
         </ScrollHandler>
-      </LocationProvider>
-    )
+      </LocationProvider>,
+    );
 
-    fireEvent.scroll(wrapper.getByTestId(`scrollfixture`), {
+    fireEvent.scroll(wrapper.getByTestId("scrollfixture"), {
       target: { scrollTop: 123 },
-    })
+    });
 
-    expect(session.read(history.location, `test`)).toBe(123)
-  })
+    expect(session.read(history.location, "test")).toBe(123);
+  });
 
-  it(`scrolls to stored offset on render`, () => {
-    session.save(history.location, `test`, 684)
+  it("scrolls to stored offset on render", () => {
+    session.save(history.location, "test", 684);
 
     const wrapper = render(
       <LocationProvider history={history}>
@@ -100,16 +102,16 @@ describe(`useScrollRestoration`, () => {
         >
           <Fixture />
         </ScrollHandler>
-      </LocationProvider>
-    )
+      </LocationProvider>,
+    );
 
-    expect(wrapper.getByTestId(`scrollfixture`)).toHaveProperty(
-      `scrollTop`,
-      684
-    )
-  })
+    expect(wrapper.getByTestId("scrollfixture")).toHaveProperty(
+      "scrollTop",
+      684,
+    );
+  });
 
-  it(`scrolls to 0 on render when session has no entry`, () => {
+  it("scrolls to 0 on render when session has no entry", () => {
     const wrapper = render(
       <LocationProvider history={history}>
         <ScrollHandler
@@ -119,13 +121,13 @@ describe(`useScrollRestoration`, () => {
         >
           <Fixture />
         </ScrollHandler>
-      </LocationProvider>
-    )
+      </LocationProvider>,
+    );
 
-    expect(wrapper.getByTestId(`scrollfixture`)).toHaveProperty(`scrollTop`, 0)
-  })
+    expect(wrapper.getByTestId("scrollfixture")).toHaveProperty("scrollTop", 0);
+  });
 
-  it(`updates scroll position on location change`, async () => {
+  it("updates scroll position on location change", async () => {
     const wrapper = render(
       <LocationProvider history={history}>
         <ScrollHandler
@@ -135,19 +137,19 @@ describe(`useScrollRestoration`, () => {
         >
           <Fixture />
         </ScrollHandler>
-      </LocationProvider>
-    )
+      </LocationProvider>,
+    );
 
-    fireEvent.scroll(wrapper.getByTestId(`scrollfixture`), {
+    fireEvent.scroll(wrapper.getByTestId("scrollfixture"), {
       target: { scrollTop: 356 },
-    })
+    });
 
-    await history.navigate(`/another-location`)
+    await history.navigate("/another-location");
 
-    expect(wrapper.getByTestId(`scrollfixture`)).toHaveProperty(`scrollTop`, 0)
-  })
+    expect(wrapper.getByTestId("scrollfixture")).toHaveProperty("scrollTop", 0);
+  });
 
-  it(`restores scroll position when navigating back`, async () => {
+  it("restores scroll position when navigating back", async () => {
     const wrapper = render(
       <LocationProvider history={history}>
         <ScrollHandler
@@ -157,19 +159,19 @@ describe(`useScrollRestoration`, () => {
         >
           <Fixture />
         </ScrollHandler>
-      </LocationProvider>
-    )
+      </LocationProvider>,
+    );
 
-    fireEvent.scroll(wrapper.getByTestId(`scrollfixture`), {
+    fireEvent.scroll(wrapper.getByTestId("scrollfixture"), {
       target: { scrollTop: 356 },
-    })
+    });
 
-    await history.navigate(`/another-location`)
-    await history.navigate(-1)
+    await history.navigate("/another-location");
+    await history.navigate(-1);
 
-    expect(wrapper.getByTestId(`scrollfixture`)).toHaveProperty(
-      `scrollTop`,
-      356
-    )
-  })
-})
+    expect(wrapper.getByTestId("scrollfixture")).toHaveProperty(
+      "scrollTop",
+      356,
+    );
+  });
+});

@@ -4,35 +4,35 @@ import {
   type ITelemetryTagsPayload,
   type ITelemetryOptsPayload,
   type IDefaultTelemetryTagsPayload,
-} from "./telemetry"
-import { Request, Response } from "express"
-import { createFlush } from "./create-flush"
-import time, { TimeUnit } from "@turist/time"
+} from "./telemetry";
+import { Request, Response } from "express";
+import { createFlush } from "./create-flush";
+import time, { TimeUnit } from "@turist/time";
 
-const instance = new AnalyticsTracker()
+const instance = new AnalyticsTracker();
 
-export const flush = createFlush(instance.isTrackingEnabled())
+export const flush = createFlush(instance.isTrackingEnabled());
 
-process.on(`exit`, flush)
+process.on("exit", flush);
 
 // For long running commands we want to occasionally flush the data
 //
 // The data is also sent on exit.
 
-const intervalDuration = process.env.TELEMETRY_BUFFER_INTERVAL
+const intervalDuration = process.env.TELEMETRY_BUFFER_INTERVAL;
 const interval =
   intervalDuration && Number.isFinite(+intervalDuration)
     ? Math.max(Number(intervalDuration), 1000)
-    : time(10, TimeUnit.Minute)
+    : time(10, TimeUnit.Minute);
 
 function tick(): void {
   flush()
     .catch(console.error)
-    .then(() => setTimeout(tick, interval))
+    .then(() => setTimeout(tick, interval));
 }
 
 export function trackFeatureIsUsed(name: string): void {
-  instance.trackFeatureIsUsed(name)
+  instance.trackFeatureIsUsed(name);
 }
 
 export function trackCli(
@@ -40,7 +40,7 @@ export function trackCli(
   tags?: ITelemetryTagsPayload,
   opts?: ITelemetryOptsPayload,
 ): void {
-  instance.trackCli(input, tags, opts)
+  instance.trackCli(input, tags, opts);
 }
 
 export function captureEvent(
@@ -48,74 +48,74 @@ export function captureEvent(
   tags?: ITelemetryTagsPayload,
   opts?: ITelemetryOptsPayload,
 ): void {
-  instance.captureEvent(input, tags, opts)
+  instance.captureEvent(input, tags, opts);
 }
 
 export function trackError(input: string, tags?: ITelemetryTagsPayload): void {
-  instance.captureError(input, tags)
+  instance.captureError(input, tags);
 }
 
 export function trackBuildError(
   input: string,
   tags?: ITelemetryTagsPayload,
 ): void {
-  instance.captureBuildError(input, tags)
+  instance.captureBuildError(input, tags);
 }
 
 export function setDefaultTags(tags: IDefaultTelemetryTagsPayload): void {
-  instance.decorateAll(tags)
+  instance.decorateAll(tags);
 }
 
 export function decorateEvent(
   event: string,
   tags?: Record<string, unknown>,
 ): void {
-  instance.decorateNextEvent(event, tags)
+  instance.decorateNextEvent(event, tags);
 }
 
 export function setTelemetryEnabled(enabled: boolean): void {
-  instance.setTelemetryEnabled(enabled)
+  instance.setTelemetryEnabled(enabled);
 }
 
 export function startBackgroundUpdate(): void {
-  setTimeout(tick, interval)
+  setTimeout(tick, interval);
 }
 
 export function isTrackingEnabled(): boolean {
-  return instance.isTrackingEnabled()
+  return instance.isTrackingEnabled();
 }
 
 export function aggregateStats(data: Array<number>): IAggregateStats {
-  return instance.aggregateStats(data)
+  return instance.aggregateStats(data);
 }
 
 export function addSiteMeasurement(
   event: string,
   obj: ITelemetryTagsPayload["siteMeasurements"],
 ): void {
-  instance.addSiteMeasurement(event, obj)
+  instance.addSiteMeasurement(event, obj);
 }
 
 export function expressMiddleware(source: string) {
   return function (req: Request, _res: Response, next): void {
     try {
       instance.trackActivity(`${source}_ACTIVE`, {
-        userAgent: req.headers[`user-agent`],
-      })
+        userAgent: req.headers["user-agent"],
+      });
     } catch (e) {
       // ignore
     }
-    next()
-  }
+    next();
+  };
 }
 
 // Internal
 export function setDefaultComponentId(componentId: string): void {
-  instance.componentId = componentId
+  instance.componentId = componentId;
 }
 
 export function setGatsbyCliVersion(version: string): void {
-  instance.gatsbyCliVersion = version
+  instance.gatsbyCliVersion = version;
 }
 
 export {
@@ -124,4 +124,4 @@ export {
   type ITelemetryTagsPayload,
   type ITelemetryOptsPayload,
   type IDefaultTelemetryTagsPayload,
-}
+};

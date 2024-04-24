@@ -1,45 +1,45 @@
-import reporter from "gatsby-cli/lib/reporter"
-import { getNonGatsbyCodeFrameFormatted } from "./stack-trace-utils"
-import type { IGatsbyNode } from "../redux/types"
+import reporter from "gatsby-cli/lib/reporter";
+import { getNonGatsbyCodeFrameFormatted } from "./stack-trace-utils";
+import type { IGatsbyNode } from "../redux/types";
 
-const reported = new Set<string>()
+const reported = new Set<string>();
 
-const genericProxy = createProxyHandler()
+const genericProxy = createProxyHandler();
 const nodeInternalProxy = createProxyHandler({
   onGet(key, value) {
-    if (key === `fieldOwners` || key === `content`) {
+    if (key === "fieldOwners" || key === "content") {
       // all allowed in here
-      return value
+      return value;
     }
-    return undefined
+    return undefined;
   },
   onSet(target, key, value) {
-    if (key === `fieldOwners` || key === `content`) {
-      target[key] = value
-      return true
+    if (key === "fieldOwners" || key === "content") {
+      target[key] = value;
+      return true;
     }
-    return undefined
+    return undefined;
   },
-})
+});
 
 const nodeProxy = createProxyHandler({
   onGet(key, value) {
-    if (key === `internal`) {
-      return memoizedProxy(value, nodeInternalProxy)
-    } else if (key === `fields` || key === `children`) {
+    if (key === "internal") {
+      return memoizedProxy(value, nodeInternalProxy);
+    } else if (key === "fields" || key === "children") {
       // all allowed in here
-      return value
+      return value;
     }
-    return undefined
+    return undefined;
   },
   onSet(target, key, value) {
-    if (key === `fields` || key === `children`) {
-      target[key] = value
-      return true
+    if (key === "fields" || key === "children") {
+      target[key] = value;
+      return true;
     }
-    return undefined
+    return undefined;
   },
-})
+});
 
 /**
  * Every time we create proxy for object, we store it in WeakMap,
@@ -48,16 +48,16 @@ const nodeProxy = createProxyHandler({
  * If we didn't reuse already created proxy above comparison would return false.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const referenceMap = new WeakMap<any, any>()
+const referenceMap = new WeakMap<any, any>();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function memoizedProxy<T>(target: T, handler: ProxyHandler<any>): T {
-  const alreadyWrapped = referenceMap.get(target)
+  const alreadyWrapped = referenceMap.get(target);
   if (alreadyWrapped) {
-    return alreadyWrapped
+    return alreadyWrapped;
   } else {
-    const wrapped = new Proxy(target, handler)
-    referenceMap.set(target, wrapped)
-    return wrapped
+    const wrapped = new Proxy(target, handler);
+    referenceMap.set(target, wrapped);
+    return wrapped;
   }
 }
 
@@ -66,49 +66,49 @@ function createProxyHandler({
   onSet,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onGet?: ((key: string | symbol, value: any) => any) | undefined
+  onGet?: ((key: string | symbol, value: any) => any) | undefined;
   onSet?: // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ((target: any, key: string | symbol, value: any) => boolean | undefined)
-    | undefined
+    | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } = {}): ProxyHandler<any> {
   function set(target, key, value): boolean {
     if (onSet) {
-      const result = onSet(target, key, value)
+      const result = onSet(target, key, value);
       if (result !== undefined) {
-        return result
+        return result;
       }
     }
 
-    const error = new Error(`Stack trace:`)
-    Error.captureStackTrace(error, set)
+    const error = new Error("Stack trace:");
+    Error.captureStackTrace(error, set);
 
     if (error.stack && !reported.has(error.stack)) {
-      reported.add(error.stack)
+      reported.add(error.stack);
       const codeFrame = getNonGatsbyCodeFrameFormatted({
         stack: error.stack,
-      })
+      });
       reporter.warn(
         `Node mutation detected\n\n${
-          codeFrame ? `${codeFrame}\n\n` : ``
-        }${error.stack.replace(/^Error:?\s*/, ``)}`,
-      )
+          codeFrame ? `${codeFrame}\n\n` : ""
+        }${error.stack.replace(/^Error:?\s*/, "")}`,
+      );
     }
-    return true
+    return true;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function get(target, key): any {
-    const value = target[key]
+    const value = target[key];
 
     if (onGet) {
-      const result = onGet(key, value)
+      const result = onGet(key, value);
       if (result !== undefined) {
-        return result
+        return result;
       }
     }
 
-    const fieldDescriptor = Object.getOwnPropertyDescriptor(target, key)
+    const fieldDescriptor = Object.getOwnPropertyDescriptor(target, key);
     if (fieldDescriptor && !fieldDescriptor.writable) {
       // this is to prevent errors like:
       // ```
@@ -117,36 +117,36 @@ function createProxyHandler({
       // did not return its actual value
       // (expected '[object Object]' but got '[object Object]')
       // ```
-      return value
+      return value;
     }
 
-    if (typeof value === `object` && value !== null) {
-      return memoizedProxy(value, genericProxy)
+    if (typeof value === "object" && value !== null) {
+      return memoizedProxy(value, genericProxy);
     }
 
-    return value
+    return value;
   }
 
   return {
     get,
     set,
-  }
+  };
 }
 
-let shouldWrapNodesInProxies = !!process.env.GATSBY_DETECT_NODE_MUTATIONS
+let shouldWrapNodesInProxies = !!process.env.GATSBY_DETECT_NODE_MUTATIONS;
 export function enableNodeMutationsDetection(): void {
-  shouldWrapNodesInProxies = true
+  shouldWrapNodesInProxies = true;
 
   reporter.warn(
-    `Node mutation detection is enabled. Remember to disable it after you are finished with diagnostic as it will cause build performance degradation.`,
-  )
+    "Node mutation detection is enabled. Remember to disable it after you are finished with diagnostic as it will cause build performance degradation.",
+  );
 }
 
 export function wrapNode<T extends IGatsbyNode | undefined>(node: T): T {
   if (node && shouldWrapNodesInProxies) {
-    return memoizedProxy(node, nodeProxy)
+    return memoizedProxy(node, nodeProxy);
   } else {
-    return node
+    return node;
   }
 }
 
@@ -154,8 +154,8 @@ export function wrapNodes<T extends Array<IGatsbyNode> | undefined>(
   nodes: T,
 ): T {
   if (nodes && shouldWrapNodesInProxies && nodes.length > 0) {
-    return nodes.map((node) => memoizedProxy(node, nodeProxy)) as T
+    return nodes.map((node) => memoizedProxy(node, nodeProxy)) as T;
   } else {
-    return nodes
+    return nodes;
   }
 }

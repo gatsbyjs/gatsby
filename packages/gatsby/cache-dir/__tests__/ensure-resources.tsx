@@ -2,40 +2,40 @@
  * @jest-environment jsdom
  */
 
-import React from "react"
-import EnsureResources from "../ensure-resources"
-import { render, getNodeText, cleanup } from "@testing-library/react"
+import React from "react";
+import EnsureResources from "../ensure-resources";
+import { render, getNodeText, cleanup } from "@testing-library/react";
 
-jest.mock(`../loader`, () => {
+jest.mock("../loader", () => {
   return {
     PageResourceStatus: {
-      Error: `error`,
+      Error: "error",
     },
     loadPageSync(path: string): { loadPageSync: boolean; path: string } {
-      return { loadPageSync: true, path }
+      return { loadPageSync: true, path };
     },
     loadPage(path: string): Promise<{ loadPage: boolean; path: string }> {
-      return Promise.resolve({ loadPage: true, path })
+      return Promise.resolve({ loadPage: true, path });
     },
-  }
-})
+  };
+});
 
-afterAll(cleanup)
+afterAll(cleanup);
 
-describe(`EnsureResources`, () => {
-  it(`loads pages synchronously`, () => {
+describe("EnsureResources", () => {
+  it("loads pages synchronously", () => {
     const location = {
-      pathname: `/`,
-      search: ``,
-    }
+      pathname: "/",
+      search: "",
+    };
     const { container } = render(
       <EnsureResources location={location}>
         {(data: any): string => JSON.stringify(data.pageResources)}
-      </EnsureResources>
-    )
+      </EnsureResources>,
+    );
 
     expect(getNodeText(container)).toMatchInlineSnapshot(
-      `"{\\"loadPageSync\\":true,\\"path\\":\\"/\\"}"`
-    )
-  })
-})
+      '"{\\"loadPageSync\\":true,\\"path\\":\\"/\\"}"',
+    );
+  });
+});

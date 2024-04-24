@@ -8,21 +8,21 @@ export function getDependantPackages({
   packagesToPublish = new Set<string>(),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: {
-  packageName: string
+  packageName: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  depTree: Record<string, Array<string>>
+  depTree: Record<string, Array<string>>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  packagesToPublish?: Set<string> | undefined
+  packagesToPublish?: Set<string> | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }): Set<string> {
   if (packagesToPublish.has(packageName)) {
     // bail early if package was already handled
-    return packagesToPublish
+    return packagesToPublish;
   }
 
-  packagesToPublish.add(packageName)
+  packagesToPublish.add(packageName);
 
-  const dependants = depTree[packageName]
+  const dependants = depTree[packageName];
 
   if (dependants) {
     dependants.forEach((dependant: string): Set<string> => {
@@ -30,9 +30,9 @@ export function getDependantPackages({
         packageName: dependant,
         depTree,
         packagesToPublish,
-      })
-    })
+      });
+    });
   }
 
-  return packagesToPublish
+  return packagesToPublish;
 }

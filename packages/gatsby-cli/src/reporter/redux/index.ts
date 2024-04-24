@@ -1,11 +1,11 @@
-import { createStore, combineReducers, type Store } from "redux"
-import { reducer as logsReducer } from "./reducers/logs"
-import { reducer as pageTreeReducer } from "./reducers/page-tree"
-import type { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
-import { isInternalAction } from "./utils"
-import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics"
-import { Actions } from "../constants"
-import type { IRenderPageArgs } from "../../reporter/types"
+import { createStore, combineReducers, type Store } from "redux";
+import { reducer as logsReducer } from "./reducers/logs";
+import { reducer as pageTreeReducer } from "./reducers/page-tree";
+import type { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types";
+import { isInternalAction } from "./utils";
+import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics";
+import { Actions } from "../constants";
+import type { IRenderPageArgs } from "../../reporter/types";
 
 let store: Store<{ logs: IGatsbyCLIState; pageTree: IRenderPageArgs }> =
   createStore(
@@ -14,34 +14,34 @@ let store: Store<{ logs: IGatsbyCLIState; pageTree: IRenderPageArgs }> =
       pageTree: pageTreeReducer,
     }),
     {},
-  )
+  );
 
-export type GatsbyCLIStore = typeof store
-type StoreListener = (store: GatsbyCLIStore) => void
+export type GatsbyCLIStore = typeof store;
+type StoreListener = (store: GatsbyCLIStore) => void;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ActionLogListener = (action: ActionsUnion) => any
+type ActionLogListener = (action: ActionsUnion) => any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Thunk = (...args: Array<any>) => ActionsUnion
+type Thunk = (...args: Array<any>) => ActionsUnion;
 
-const storeSwapListeners: Array<StoreListener> = []
-const onLogActionListeners = new Set<ActionLogListener>()
+const storeSwapListeners: Array<StoreListener> = [];
+const onLogActionListeners = new Set<ActionLogListener>();
 
-export const getStore = (): typeof store => store
+export const getStore = (): typeof store => store;
 
 const diagnosticsMiddleware =
-  createStructuredLoggingDiagnosticsMiddleware(getStore)
+  createStructuredLoggingDiagnosticsMiddleware(getStore);
 
 export function dispatch(action: ActionsUnion | Thunk): void {
   if (!action) {
-    return
+    return;
   }
 
   if (Array.isArray(action)) {
-    action.forEach((item) => dispatch(item))
-    return
-  } else if (typeof action === `function`) {
-    action(dispatch)
-    return
+    action.forEach((item) => dispatch(item));
+    return;
+  } else if (typeof action === "function") {
+    action(dispatch);
+    return;
   }
 
   action = {
@@ -51,40 +51,40 @@ export function dispatch(action: ActionsUnion | Thunk): void {
     // but for now, the structured logs integration tests expect it
     // so it's easier to leave it and then explore as a follow up
     timestamp: new Date().toJSON(),
-  } as ActionsUnion
+  } as ActionsUnion;
 
-  store.dispatch(action)
+  store.dispatch(action);
 
-  diagnosticsMiddleware(action)
+  diagnosticsMiddleware(action);
 
   if (isInternalAction(action)) {
     // consumers (ipc, yurnalist, json logger) shouldn't have to
     // deal with actions needed just for internal tracking of status
-    return
+    return;
   }
   for (const fn of onLogActionListeners) {
-    fn(action)
+    fn(action);
   }
 }
 
 export function onStoreSwap(fn: StoreListener): void {
-  storeSwapListeners.push(fn)
+  storeSwapListeners.push(fn);
 }
 
 export function onLogAction(fn: ActionLogListener): () => void {
-  onLogActionListeners.add(fn)
+  onLogActionListeners.add(fn);
 
   return function (): void {
-    onLogActionListeners.delete(fn)
-  }
+    onLogActionListeners.delete(fn);
+  };
 }
 
 export function setStore(s: GatsbyCLIStore): void {
   s.dispatch({
     type: Actions.SetLogs,
     payload: store.getState().logs,
-  } satisfies ISetLogs)
+  } satisfies ISetLogs);
 
-  store = s
-  storeSwapListeners.forEach((fn) => fn(store))
+  store = s;
+  storeSwapListeners.forEach((fn) => fn(store));
 }

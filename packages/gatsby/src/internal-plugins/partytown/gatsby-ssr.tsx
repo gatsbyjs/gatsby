@@ -1,27 +1,27 @@
-import { collectedScriptsByPage } from "gatsby-script"
-import { getForwards } from "./utils/get-forwards"
-import { partytownSnippet } from "@builder.io/partytown/integration"
+import { collectedScriptsByPage } from "gatsby-script";
+import { getForwards } from "./utils/get-forwards";
+import { partytownSnippet } from "@builder.io/partytown/integration";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import React from "react"
-import type { GatsbySSR } from "../../.."
+import React from "react";
+import type { GatsbySSR } from "../../..";
 
-export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
+export const onRenderBody: GatsbySSR["onRenderBody"] = ({
   pathname,
   setHeadComponents,
 }) => {
-  const collectedScripts = collectedScriptsByPage.get(pathname)
+  const collectedScripts = collectedScriptsByPage.get(pathname);
 
   if (!collectedScripts?.length) {
-    return
+    return;
   }
 
-  const forwards = getForwards(collectedScripts)
+  const forwards = getForwards(collectedScripts);
 
   // Adapted from https://github.com/BuilderIO/partytown/blob/main/src/react/snippet.tsx to only include SSR logic
   setHeadComponents([
     <script
-      key="partytown"
-      data-partytown=""
+      key='partytown'
+      data-partytown=''
       suppressHydrationWarning={true}
       dangerouslySetInnerHTML={{
         __html: `
@@ -30,8 +30,8 @@ export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
         `,
       }}
     />,
-  ])
+  ]);
 
   // Clear scripts after we've used them to avoid leaky behavior
-  collectedScriptsByPage.delete(pathname)
-}
+  collectedScriptsByPage.delete(pathname);
+};

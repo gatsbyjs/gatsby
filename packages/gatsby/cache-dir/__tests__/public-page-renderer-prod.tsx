@@ -2,45 +2,45 @@
  * @jest-environment jsdom
  */
 
-import React from "react"
-import { render, cleanup } from "@testing-library/react"
+import React from "react";
+import { render, cleanup } from "@testing-library/react";
 
-jest.mock(`../loader`, () => {
+jest.mock("../loader", () => {
   return {
     loadPageSync: jest.fn(
       (
-        path: string
+        path: string,
       ): {
-        loadPageSync: boolean
-        path: string
+        loadPageSync: boolean;
+        path: string;
       } => {
-        return { loadPageSync: true, path }
-      }
+        return { loadPageSync: true, path };
+      },
     ),
     loadPage: function loadPage(
-      path: string
+      path: string,
     ): Promise<{ loadPage: boolean; path: string }> {
-      return Promise.resolve({ loadPage: true, path })
+      return Promise.resolve({ loadPage: true, path });
     },
-  }
-})
+  };
+});
 
-jest.mock(`../page-renderer`, (): string => `InternalPageRenderer`)
+jest.mock("../page-renderer", (): string => "InternalPageRenderer");
 
-import ProdPageRenderer from "../public-page-renderer-prod"
-import loader from "../loader"
+import ProdPageRenderer from "../public-page-renderer-prod";
+import loader from "../loader";
 
-describe(`ProdPageRenderer`, () => {
-  it(`loads pages synchronously`, () => {
+describe("ProdPageRenderer", () => {
+  it("loads pages synchronously", () => {
     const location = {
-      pathname: `/`,
-    }
-    render(<ProdPageRenderer location={location} />)
+      pathname: "/",
+    };
+    render(<ProdPageRenderer location={location} />);
 
-    expect(loader.loadPageSync).toHaveBeenCalled()
-  })
-})
+    expect(loader.loadPageSync).toHaveBeenCalled();
+  });
+});
 
-afterAll(cleanup)
+afterAll(cleanup);
 
-afterAll(jest.clearAllMocks)
+afterAll(jest.clearAllMocks);

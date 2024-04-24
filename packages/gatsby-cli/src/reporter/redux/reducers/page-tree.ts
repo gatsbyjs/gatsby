@@ -1,6 +1,6 @@
-import type { ActionsUnion } from "../types"
-import type { IRenderPageArgs } from "../../types"
-import { Actions } from "../../constants"
+import type { ActionsUnion } from "../types";
+import type { IRenderPageArgs } from "../../types";
+import { Actions } from "../../constants";
 
 export function reducer(
   state: IRenderPageArgs | null | undefined = null,
@@ -8,9 +8,9 @@ export function reducer(
 ): IRenderPageArgs | null {
   switch (action.type) {
     case Actions.RenderPageTree: {
-      return action.payload
+      return action.payload;
     }
   }
 
-  return state
+  return state;
 }

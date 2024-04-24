@@ -8,7 +8,7 @@ type Props = {
   literalsAndUnion: "string" | "otherstring" | number,
   arr: Array<any>,
   func?: (value: string) => void,
-  obj?: { subvalue: ?boolean },
+  obj?: { subvalue: boolean | null | undefined },
   /**
    * Bad Documented
    * @memberof Props

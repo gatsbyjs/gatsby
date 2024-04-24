@@ -1,22 +1,22 @@
-import stringLength from "string-length"
+import stringLength from "string-length";
 // ansi and emoji-safe string length
-import wordWrap from "ansi-wordwrap"
+import wordWrap from "ansi-wordwrap";
 
-const DEFAULT_WIDTH = process.stdout.columns
+const DEFAULT_WIDTH = process.stdout.columns;
 
 export function wrap(text: string, width = DEFAULT_WIDTH): string {
-  return wordWrap(text, { width })
+  return wordWrap(text, { width });
 }
 
-export function rule(char = `\u2501`, width = DEFAULT_WIDTH): string {
-  return char.repeat(width)
+export function rule(char = "\u2501", width = DEFAULT_WIDTH): string {
+  return char.repeat(width);
 }
 
 export function center(
   text: string,
-  padding = ` `,
+  padding = " ",
   width = DEFAULT_WIDTH,
 ): string {
-  const pad = padding.repeat(Math.round((width - stringLength(text)) / 2))
-  return pad + text
+  const pad = padding.repeat(Math.round((width - stringLength(text)) / 2));
+  return pad + text;
 }

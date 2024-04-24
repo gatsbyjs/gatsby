@@ -1,107 +1,107 @@
-jest.mock(`glob`, () => {
-  const sync = jest.fn().mockImplementation(() => [])
+jest.mock("glob", () => {
+  const sync = jest.fn().mockImplementation(() => []);
   return {
     sync,
-  }
-})
+  };
+});
 
-const _ = require(`lodash`)
-const { parse, buildSchema } = require(`graphql`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const glob = require(`glob`)
+const _ = require("lodash");
+const { parse, buildSchema } = require("graphql");
+const fs = require("fs-extra");
+const path = require("path");
+const glob = require("glob");
 const {
   resolveThemes,
   parseQueries,
   processQueries,
-} = require(`../query-compiler`)
+} = require("../query-compiler");
 
-const base = path.resolve(``)
+const base = path.resolve("");
 
-describe(`Runner`, () => {
+describe("Runner", () => {
   beforeEach(() => {
-    glob.sync.mockClear()
-  })
+    glob.sync.mockClear();
+  });
 
-  describe(`expected directories`, () => {
-    it(`compiles src directory`, async () => {
-      const errors = []
+  describe("expected directories", () => {
+    it("compiles src directory", async () => {
+      const errors = [];
       await parseQueries({
         base,
         additional: [],
-        addError: e => {
-          errors.push(e)
+        addError: (e) => {
+          errors.push(e);
         },
-      })
+      });
 
-      expect(errors).toEqual([])
+      expect(errors).toEqual([]);
 
       expect(glob.sync).toHaveBeenCalledWith(
-        expect.stringContaining(path.join(base, `src`)),
-        expect.any(Object)
-      )
-    })
+        expect.stringContaining(path.join(base, "src")),
+        expect.any(Object),
+      );
+    });
 
-    it(`compiles fragments directory`, async () => {
-      const errors = []
+    it("compiles fragments directory", async () => {
+      const errors = [];
       await parseQueries({
         base,
         additional: [],
-        addError: e => {
-          errors.push(e)
+        addError: (e) => {
+          errors.push(e);
         },
-      })
+      });
 
-      expect(errors).toEqual([])
+      expect(errors).toEqual([]);
 
       expect(glob.sync).toHaveBeenCalledWith(
-        expect.stringContaining(path.join(base, `src`)),
-        expect.any(Object)
-      )
-    })
+        expect.stringContaining(path.join(base, "src")),
+        expect.any(Object),
+      );
+    });
 
-    it(`compiles themes directory(s)`, async () => {
-      const theme = `gatsby-theme-whatever`
-      const errors = []
+    it("compiles themes directory(s)", async () => {
+      const theme = "gatsby-theme-whatever";
+      const errors = [];
       await parseQueries({
         base,
-        additional: [path.join(base, `node_modules`, theme)],
-        addError: e => {
-          errors.push(e)
+        additional: [path.join(base, "node_modules", theme)],
+        addError: (e) => {
+          errors.push(e);
         },
-      })
+      });
 
-      expect(errors).toEqual([])
+      expect(errors).toEqual([]);
 
       expect(glob.sync).toHaveBeenCalledWith(
-        expect.stringContaining(path.join(base, `node_modules`, theme)),
-        expect.any(Object)
-      )
-    })
-  })
-})
+        expect.stringContaining(path.join(base, "node_modules", theme)),
+        expect.any(Object),
+      );
+    });
+  });
+});
 
-describe(`resolveThemes`, () => {
-  it(`returns empty array if zero themes appear in store`, () => {
-    ;[[], undefined].forEach(testRun => {
-      expect(resolveThemes(testRun)).toEqual([])
-    })
-  })
+describe("resolveThemes", () => {
+  it("returns empty array if zero themes appear in store", () => {
+    [[], undefined].forEach((testRun) => {
+      expect(resolveThemes(testRun)).toEqual([]);
+    });
+  });
 
-  it(`returns themes in the store`, () => {
-    const theme = `gatsby-theme-example`
+  it("returns themes in the store", () => {
+    const theme = "gatsby-theme-example";
     expect(
       resolveThemes([
         {
           name: theme,
-          themeDir: path.join(base, `gatsby-theme-example`),
+          themeDir: path.join(base, "gatsby-theme-example"),
         },
-      ])
-    ).toEqual([expect.stringContaining(theme)])
-  })
+      ]),
+    ).toEqual([expect.stringContaining(theme)]);
+  });
 
-  it(`handles scoped packages`, () => {
-    const theme = `@dschau/gatsby-theme-example`
+  it("handles scoped packages", () => {
+    const theme = "@dschau/gatsby-theme-example";
 
     expect(
       resolveThemes([
@@ -109,50 +109,50 @@ describe(`resolveThemes`, () => {
           name: theme,
           themeDir: path.join(base, theme),
         },
-      ])
-    ).toEqual([expect.stringContaining(theme.split(`/`).join(path.sep))])
-  })
-})
+      ]),
+    ).toEqual([expect.stringContaining(theme.split("/").join(path.sep))]);
+  });
+});
 
-describe(`actual compiling`, () => {
-  let schema
+describe("actual compiling", () => {
+  let schema;
   beforeAll(async () => {
     const ast = await fs.readFile(
-      path.join(__dirname, `./fixtures/query-compiler-schema.graphql`),
-      { encoding: `utf-8` }
-    )
-    schema = buildSchema(ast)
-  })
+      path.join(__dirname, "./fixtures/query-compiler-schema.graphql"),
+      { encoding: "utf-8" },
+    );
+    schema = buildSchema(ast);
+  });
 
-  it(`compiles a query`, async () => {
+  it("compiles a query", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
                  id
                }
             }
-          }`
+          }`,
       ),
-    ]
-    const errors = []
+    ];
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
+    });
+    expect(errors).toEqual([]);
+    expect(result.get("mockFile")).toMatchSnapshot();
+  });
 
-  it(`compiles static query`, async () => {
+  it("compiles static query", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
@@ -162,30 +162,30 @@ describe(`actual compiling`, () => {
           }`,
         {
           isStaticQuery: true,
-        }
+        },
       ),
-    ]
-    const errors = []
+    ];
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot({
+    });
+    expect(errors).toEqual([]);
+    expect(result.get("mockFile")).toMatchSnapshot({
       id: expect.any(String),
-    })
-  })
+    });
+  });
 
-  describe(`config queries`, () => {
+  describe("config queries", () => {
     // config query is kept as is (at least for now)
     // it is validated but not extracted
-    it(`validates config query`, async () => {
+    it("validates config query", async () => {
       const nodes = [
         createGatsbyDoc(
-          `mockFile`,
+          "mockFile",
           `query mockFileQuery {
              allPostsJson {
                nodes {
@@ -195,18 +195,18 @@ describe(`actual compiling`, () => {
           }`,
           {
             isConfigQuery: true,
-          }
+          },
         ),
-      ]
-      const errors = []
+      ];
+      const errors = [];
       const result = processQueries({
         schema,
         parsedQueries: nodes,
-        addError: e => {
-          errors.push(e)
+        addError: (e) => {
+          errors.push(e);
         },
-      })
-      expect(errors.length).toEqual(1)
+      });
+      expect(errors.length).toEqual(1);
       expect(errors[0]).toMatchInlineSnapshot(`
         Object {
           "context": Object {
@@ -227,14 +227,14 @@ describe(`actual compiling`, () => {
             },
           },
         }
-      `)
-      expect(result).toEqual(new Map())
-    })
+      `);
+      expect(result).toEqual(new Map());
+    });
 
-    it(`doesn't extract config query`, async () => {
+    it("doesn't extract config query", async () => {
       const nodes = [
         createGatsbyDoc(
-          `mockFile`,
+          "mockFile",
           `query mockFileQuery {
              allPostsJson {
                nodes {
@@ -244,43 +244,43 @@ describe(`actual compiling`, () => {
           }`,
           {
             isConfigQuery: true,
-          }
+          },
         ),
-      ]
-      const errors = []
+      ];
+      const errors = [];
       const result = processQueries({
         schema,
         parsedQueries: nodes,
-        addError: e => {
-          errors.push(e)
+        addError: (e) => {
+          errors.push(e);
         },
-      })
-      expect(errors).toEqual([])
-      expect(result.get(`mockFile`)).toBeUndefined()
-    })
+      });
+      expect(errors).toEqual([]);
+      expect(result.get("mockFile")).toBeUndefined();
+    });
 
-    it(`supports page and config query in one file`, () => {
+    it("supports page and config query in one file", () => {
       const nodes = [
         createGatsbyDoc(
-          `mockFile`,
-          `query page { allPostsJson { nodes { id } } }`
+          "mockFile",
+          "query page { allPostsJson { nodes { id } } }",
         ),
         createGatsbyDoc(
-          `mockFile`,
-          `query config { allPostsJson { nodes { id } } }`,
-          { isConfigQuery: true }
+          "mockFile",
+          "query config { allPostsJson { nodes { id } } }",
+          { isConfigQuery: true },
         ),
-      ]
-      const errors = []
+      ];
+      const errors = [];
       const result = processQueries({
         schema,
         parsedQueries: nodes,
-        addError: e => {
-          errors.push(e)
+        addError: (e) => {
+          errors.push(e);
         },
-      })
-      expect(errors).toEqual([])
-      expect(result.get(`mockFile`)).toMatchInlineSnapshot(`
+      });
+      expect(errors).toEqual([]);
+      expect(result.get("mockFile")).toMatchInlineSnapshot(`
         Object {
           "hash": "hash",
           "isConfigQuery": false,
@@ -298,14 +298,14 @@ describe(`actual compiling`, () => {
           }
         }",
         }
-      `)
-    })
-  })
+      `);
+    });
+  });
 
-  it(`adds fragments from same documents`, async () => {
+  it("adds fragments from same documents", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
@@ -316,66 +316,66 @@ describe(`actual compiling`, () => {
 
           fragment PostsJsonFragment on PostsJson {
             id
-          }`
+          }`,
       ),
-    ]
-    const errors = []
+    ];
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
+    });
+    expect(errors).toEqual([]);
+    expect(result.get("mockFile")).toMatchSnapshot();
+  });
 
-  it(`adds fragments from different documents`, async () => {
+  it("adds fragments from different documents", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
                  ...PostsJsonFragment
                }
             }
-          }`
+          }`,
       ),
       createGatsbyDoc(
-        `mockComponent`,
+        "mockComponent",
         `fragment PostsJsonFragment on PostsJson {
              id
-          }`
+          }`,
       ),
-    ]
-    const errors = []
+    ];
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
+    });
+    expect(errors).toEqual([]);
+    expect(result.get("mockFile")).toMatchSnapshot();
+  });
 
-  it(`handles fragments that use other fragments`, async () => {
+  it("handles fragments that use other fragments", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
                  ...PostsJsonFragment
                }
             }
-          }`
+          }`,
       ),
       createGatsbyDoc(
-        `mockComponent`,
+        "mockComponent",
         `fragment PostsJsonFragment on PostsJson {
              id
              ...AnotherPostsJsonFragment
@@ -383,26 +383,26 @@ describe(`actual compiling`, () => {
 
           fragment AnotherPostsJsonFragment on PostsJson {
             text
-          }`
+          }`,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
+    });
+    expect(errors).toEqual([]);
+    expect(result.get("mockFile")).toMatchSnapshot();
+  });
 
-  it(`handles multiple fragment usages`, async () => {
+  it("handles multiple fragment usages", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile1`,
+        "mockFile1",
         `query mockFileQuery1 {
           allDirectory {
             nodes {
@@ -410,20 +410,20 @@ describe(`actual compiling`, () => {
               ...Bar
             }
           }
-        }`
+        }`,
       ),
       createGatsbyDoc(
-        `mockFile2`,
+        "mockFile2",
         `query mockFileQuery2 {
           allDirectory {
             nodes {
               ...Bar
             }
           }
-        }`
+        }`,
       ),
       createGatsbyDoc(
-        `mockComponent1`,
+        "mockComponent1",
         `fragment Bar on Directory {
           parent {
             ...Foo
@@ -432,20 +432,20 @@ describe(`actual compiling`, () => {
         fragment Foo on Directory {
           id
         }
-        `
+        `,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors.length).toEqual(0)
-    expect(result.get(`mockFile1`)).toMatchInlineSnapshot(`
+    });
+    expect(errors.length).toEqual(0);
+    expect(result.get("mockFile1")).toMatchInlineSnapshot(`
       Object {
         "hash": "hash",
         "isConfigQuery": false,
@@ -481,8 +481,8 @@ describe(`actual compiling`, () => {
         }
       }",
       }
-    `)
-    expect(result.get(`mockFile2`)).toMatchInlineSnapshot(`
+    `);
+    expect(result.get("mockFile2")).toMatchInlineSnapshot(`
       Object {
         "hash": "hash",
         "isConfigQuery": false,
@@ -516,13 +516,13 @@ describe(`actual compiling`, () => {
         }
       }",
       }
-    `)
-  })
+    `);
+  });
 
-  it(`handles circular fragments`, async () => {
+  it("handles circular fragments", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
           allDirectory {
             nodes {
@@ -541,19 +541,19 @@ describe(`actual compiling`, () => {
           children {
             ...Bar
           }
-        }`
+        }`,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors.length).toEqual(1)
+    });
+    expect(errors.length).toEqual(1);
     expect(errors[0]).toMatchInlineSnapshot(
       {
         location: expect.any(Object),
@@ -580,15 +580,15 @@ describe(`actual compiling`, () => {
         "id": "85901",
         "location": Any<Object>,
       }
-    `
-    )
-    expect(result.size).toEqual(0)
-  })
+    `,
+    );
+    expect(result.size).toEqual(0);
+  });
 
-  it(`removes unused fragments from documents`, async () => {
+  it("removes unused fragments from documents", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
@@ -603,43 +603,43 @@ describe(`actual compiling`, () => {
 
           fragment UnusedFragment on PostsJson {
             id
-          }`
+          }`,
       ),
-    ]
-    const errors = []
+    ];
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
+    });
+    expect(errors).toEqual([]);
+    expect(result.get("mockFile")).toMatchSnapshot();
+  });
 
-  it(`errors on unknown fragment`, async () => {
+  it("errors on unknown fragment", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
                  ...UnknownFragment
                }
             }
-          }`
+          }`,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
+    });
     expect(errors).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -659,39 +659,39 @@ describe(`actual compiling`, () => {
           "id": "85908",
         },
       ]
-    `)
-    expect(result).toEqual(new Map())
-  })
+    `);
+    expect(result).toEqual(new Map());
+  });
 
-  it(`errors on unknown fragment in other fragments`, async () => {
+  it("errors on unknown fragment in other fragments", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
                  ...PostsJsonFragment
                }
             }
-          }`
+          }`,
       ),
       createGatsbyDoc(
-        `mockComponent`,
+        "mockComponent",
         `fragment PostsJsonFragment on PostsJson {
              id
              ...UnknownFragment
-          }`
+          }`,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
+    });
     expect(errors).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -708,14 +708,14 @@ describe(`actual compiling`, () => {
           "id": "85908",
         },
       ]
-    `)
-    expect(result).toEqual(new Map())
-  })
+    `);
+    expect(result).toEqual(new Map());
+  });
 
-  it(`advices on similarly named fragment`, async () => {
+  it("advices on similarly named fragment", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
@@ -726,18 +726,18 @@ describe(`actual compiling`, () => {
 
           fragment PostsJsonFragment on PostsJson {
             id
-          }`
+          }`,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
+    });
 
     expect(errors).toMatchInlineSnapshot(`
       Array [
@@ -762,14 +762,14 @@ describe(`actual compiling`, () => {
           "id": "85908",
         },
       ]
-    `)
-    expect(result).toEqual(new Map())
-  })
+    `);
+    expect(result).toEqual(new Map());
+  });
 
-  it(`accepts identical fragment definitions`, async () => {
+  it("accepts identical fragment definitions", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
            allPostsJson {
              nodes {
@@ -780,33 +780,33 @@ describe(`actual compiling`, () => {
 
         fragment PostsJsonFragment on PostsJson {
           id
-        }`
+        }`,
       ),
 
       createGatsbyDoc(
-        `mockComponent`,
+        "mockComponent",
         `fragment PostsJsonFragment on PostsJson {
             id
-          }`
+          }`,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors).toEqual([])
-    expect(result).toMatchSnapshot()
-  })
+    });
+    expect(errors).toEqual([]);
+    expect(result).toMatchSnapshot();
+  });
 
-  it(`errors on duplicate fragment names`, async () => {
+  it("errors on duplicate fragment names", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
            allPostsJson {
              nodes {
@@ -818,24 +818,24 @@ describe(`actual compiling`, () => {
         fragment PostsJsonFragment on PostsJson {
           id
           node
-        }`
+        }`,
       ),
       createGatsbyDoc(
-        `mockComponent`,
+        "mockComponent",
         `fragment PostsJsonFragment on PostsJson {
             id
-          }`
+          }`,
       ),
-    ]
-    const errors = []
+    ];
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(_.orderBy(errors, e => e.id)).toMatchInlineSnapshot(`
+    });
+    expect(_.orderBy(errors, (e) => e.id)).toMatchInlineSnapshot(`
       Array [
         Object {
           "context": Object {
@@ -888,40 +888,40 @@ describe(`actual compiling`, () => {
           "id": "85919",
         },
       ]
-    `)
-    expect(result).toEqual(new Map())
-  })
+    `);
+    expect(result).toEqual(new Map());
+  });
 
-  it(`errors on wrong type of fragment`, async () => {
+  it("errors on wrong type of fragment", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
            allPostsJson {
              nodes {
                ...PostsJsonFragment
              }
           }
-        }`
+        }`,
       ),
       createGatsbyDoc(
-        `mockComponent`,
+        "mockComponent",
         `fragment PostsJsonFragment on PostsJsonConnection {
           nodes {
             id
           }
-        }`
+        }`,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
+    });
     expect(errors).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -949,14 +949,14 @@ describe(`actual compiling`, () => {
           },
         },
       ]
-    `)
-    expect(result).toEqual(new Map())
-  })
+    `);
+    expect(result).toEqual(new Map());
+  });
 
-  it(`errors on double root`, async () => {
+  it("errors on double root", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                nodes {
@@ -971,25 +971,25 @@ describe(`actual compiling`, () => {
                 id
               }
             }
-          }`
+          }`,
       ),
-    ]
-    const errors = []
+    ];
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors).toMatchSnapshot()
-    expect(result).toMatchSnapshot()
-  })
+    });
+    expect(errors).toMatchSnapshot();
+    expect(result).toMatchSnapshot();
+  });
 
-  it(`errors on invalid graphql`, async () => {
+  it("errors on invalid graphql", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query {
              allPostsJson {
                nodes {
@@ -1004,17 +1004,17 @@ describe(`actual compiling`, () => {
                 id
               }
             }
-          }`
+          }`,
       ),
-    ]
-    const errors = []
+    ];
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
+    });
     expect(errors).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -1032,29 +1032,29 @@ describe(`actual compiling`, () => {
           },
         },
       ]
-    `)
-    expect(result).toEqual(new Map())
-  })
+    `);
+    expect(result).toEqual(new Map());
+  });
 
-  it(`errors on schema-aware invalid graphql`, async () => {
+  it("errors on schema-aware invalid graphql", async () => {
     const nodes = [
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
              allPostsJson {
                id
             }
-          }`
+          }`,
       ),
-    ]
-    const errors = []
+    ];
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
+    });
     expect(errors).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -1077,39 +1077,39 @@ describe(`actual compiling`, () => {
           },
         },
       ]
-    `)
-    expect(result).toEqual(new Map())
-  })
+    `);
+    expect(result).toEqual(new Map());
+  });
 
-  it(`doesn't error if unknown type is used in unused fragment`, async () => {
+  it("doesn't error if unknown type is used in unused fragment", async () => {
     const nodes = [
       createGatsbyDoc(
-        `unusedFragment`,
+        "unusedFragment",
         `fragment Foo on ThisTypeSurelyDoesntExistInSchema {
           field
-        }`
+        }`,
       ),
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
           allPostsJson {
             nodes {
               id
             }
           }
-        }`
+        }`,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
-    expect(errors).toMatchInlineSnapshot(`Array []`)
+    });
+    expect(errors).toMatchInlineSnapshot("Array []");
     expect(result).toMatchInlineSnapshot(`
       Map {
         "mockFile" => Object {
@@ -1136,37 +1136,37 @@ describe(`actual compiling`, () => {
       }",
         },
       }
-    `)
-  })
+    `);
+  });
 
-  it(`does error if unknown type is used in used fragment`, async () => {
+  it("does error if unknown type is used in used fragment", async () => {
     const nodes = [
       createGatsbyDoc(
-        `usedFragment`,
+        "usedFragment",
         `fragment Foo on ThisTypeSurelyDoesntExistInSchema {
           field
-        }`
+        }`,
       ),
       createGatsbyDoc(
-        `mockFile`,
+        "mockFile",
         `query mockFileQuery {
           allPostsJson {
             nodes {
               ...Foo
             }
           }
-        }`
+        }`,
       ),
-    ]
+    ];
 
-    const errors = []
+    const errors = [];
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
+      addError: (e) => {
+        errors.push(e);
       },
-    })
+    });
     expect(errors).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -1193,17 +1193,17 @@ describe(`actual compiling`, () => {
           },
         },
       ]
-    `)
-    expect(result).toEqual(new Map())
-  })
-})
+    `);
+    expect(result).toEqual(new Map());
+  });
+});
 
 const createGatsbyDoc = (
   filePath,
   query,
-  { isHook = false, isStaticQuery = false, isConfigQuery = false } = {}
+  { isHook = false, isStaticQuery = false, isConfigQuery = false } = {},
 ) => {
-  const doc = parse(query)
+  const doc = parse(query);
   return {
     filePath,
     doc,
@@ -1211,7 +1211,7 @@ const createGatsbyDoc = (
     isHook,
     isStaticQuery,
     isConfigQuery,
-    hash: `hash`,
+    hash: "hash",
     templateLoc: {
       start: {
         // so no idea, but it seems to work correctly on websites
@@ -1223,5 +1223,5 @@ const createGatsbyDoc = (
         column: 0,
       },
     },
-  }
-}
+  };
+};

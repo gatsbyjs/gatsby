@@ -1,35 +1,35 @@
-import { type MachineConfig, createMachine, assign } from "xstate"
-import type { IQueryRunningContext } from "./types"
-import { queryRunningServices } from "./services"
-import { queryActions } from "./actions"
+import { type MachineConfig, createMachine, assign } from "xstate";
+import type { IQueryRunningContext } from "./types";
+import { queryRunningServices } from "./services";
+import { queryActions } from "./actions";
 
 /**
  * This is a child state machine, spawned to perform the query running
  */
 
-const PAGE_QUERY_ENQUEUING_TIMEOUT = 50
+const PAGE_QUERY_ENQUEUING_TIMEOUT = 50;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   predictableActionArguments: true,
-  initial: `extractingQueries`,
-  id: `queryRunningMachine`,
+  initial: "extractingQueries",
+  id: "queryRunningMachine",
   on: {
     SOURCE_FILE_CHANGED: {
-      actions: `markSourceFilesDirty`,
+      actions: "markSourceFilesDirty",
     },
     QUERY_RUN_REQUESTED: {
-      actions: `trackRequestedQueryRun`,
+      actions: "trackRequestedQueryRun",
     },
   },
   states: {
     extractingQueries: {
-      id: `extracting-queries`,
+      id: "extracting-queries",
       invoke: {
-        id: `extracting-queries`,
-        src: `extractQueries`,
+        id: "extracting-queries",
+        src: "extractQueries",
         onDone: {
-          target: `waitingPendingQueries`,
+          target: "waitingPendingQueries",
         },
       },
     },
@@ -45,20 +45,20 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     // FIXME: this has to be fixed properly by not leaving "extractingQueries" state
     //   until all extracted queries are enqueued for execution (but requires a refactor)
     waitingPendingQueries: {
-      id: `waiting-pending-queries`,
+      id: "waiting-pending-queries",
       after: {
         [PAGE_QUERY_ENQUEUING_TIMEOUT]: {
-          target: `writingRequires`,
-          actions: `markSourceFilesClean`,
+          target: "writingRequires",
+          actions: "markSourceFilesClean",
         },
       },
     },
     writingRequires: {
       invoke: {
-        src: `writeOutRequires`,
-        id: `writing-requires`,
+        src: "writeOutRequires",
+        id: "writing-requires",
         onDone: {
-          target: `calculatingDirtyQueries`,
+          target: "calculatingDirtyQueries",
         },
       },
     },
@@ -67,45 +67,45 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         return {
           pendingQueryRuns: new Set(),
           currentlyHandledPendingQueryRuns: pendingQueryRuns,
-        }
+        };
       }),
       invoke: {
-        id: `calculating-dirty-queries`,
-        src: `calculateDirtyQueries`,
+        id: "calculating-dirty-queries",
+        src: "calculateDirtyQueries",
         onDone: {
-          target: `runningStaticQueries`,
+          target: "runningStaticQueries",
           actions: [
-            `assignDirtyQueries`,
-            `clearCurrentlyHandledPendingQueryRuns`,
+            "assignDirtyQueries",
+            "clearCurrentlyHandledPendingQueryRuns",
           ],
         },
       },
     },
     runningStaticQueries: {
       invoke: {
-        src: `runStaticQueries`,
-        id: `running-static-queries`,
+        src: "runStaticQueries",
+        id: "running-static-queries",
         onDone: {
-          target: `runningPageQueries`,
+          target: "runningPageQueries",
         },
       },
     },
     runningPageQueries: {
       invoke: {
-        src: `runPageQueries`,
-        id: `running-page-queries`,
+        src: "runPageQueries",
+        id: "running-page-queries",
         onDone: {
-          target: `runningSliceQueries`,
+          target: "runningSliceQueries",
         },
       },
     },
     runningSliceQueries: {
       invoke: {
-        src: `runSliceQueries`,
-        id: `running-slice-queries`,
+        src: "runSliceQueries",
+        id: "running-slice-queries",
         onDone: {
-          target: `waitingForJobs`,
-          actions: `flushPageData`,
+          target: "waitingForJobs",
+          actions: "flushPageData",
         },
       },
     },
@@ -115,28 +115,30 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       always: [
         {
           cond: (ctx): boolean => !!ctx.filesDirty,
-          target: `extractingQueries`,
+          target: "extractingQueries",
         },
         {
           cond: ({ pendingQueryRuns }): boolean =>
             !!pendingQueryRuns && pendingQueryRuns.size > 0,
-          target: `calculatingDirtyQueries`,
+          target: "calculatingDirtyQueries",
         },
       ],
       invoke: {
-        src: `waitUntilAllJobsComplete`,
-        id: `waiting-for-jobs`,
+        src: "waitUntilAllJobsComplete",
+        id: "waiting-for-jobs",
         onDone: {
-          target: `done`,
+          target: "done",
         },
       },
     },
     done: {
-      type: `final`,
+      type: "final",
     },
   },
-}
+};
+
+// @ts-ignore
 export const queryRunningMachine = createMachine(queryStates, {
   actions: queryActions,
   services: queryRunningServices,
-})
+});

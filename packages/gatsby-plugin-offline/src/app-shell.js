@@ -1,9 +1,9 @@
-import React from "react"
+import React from "react";
 
 class AppShell extends React.Component {
   render() {
-    return <React.Fragment />
+    return <React.Fragment />;
   }
 }
 
-export default AppShell
+export default AppShell;

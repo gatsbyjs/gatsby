@@ -1,9 +1,9 @@
-import sourceNodesAndRemoveStaleNodes from "../utils/source-nodes"
-import reporter from "gatsby-cli/lib/reporter"
-import type { IDataLayerContext } from "../state-machines/data-layer/types"
-import { assertStore } from "../utils/assert-store"
-import type { IGatsbyPage } from "../redux/types"
-import { findChangedPages } from "../utils/changed-pages"
+import sourceNodesAndRemoveStaleNodes from "../utils/source-nodes";
+import reporter from "gatsby-cli/lib/reporter";
+import type { IDataLayerContext } from "../state-machines/data-layer/types";
+import { assertStore } from "../utils/assert-store";
+import type { IGatsbyPage } from "../redux/types";
+import { findChangedPages } from "../utils/changed-pages";
 
 export async function sourceNodes({
   parentSpan,
@@ -12,49 +12,51 @@ export async function sourceNodes({
   store,
   deferNodeMutation = false,
 }: Partial<IDataLayerContext>): Promise<{
-  deletedPages: Array<string>
-  changedPages: Array<string>
+  deletedPages: Array<string>;
+  changedPages: Array<string>;
 }> {
-  assertStore(store)
+  assertStore(store);
 
-  const activity = reporter.activityTimer(`source and transform nodes`, {
+  // @ts-ignore
+  const activity = reporter.activityTimer("source and transform nodes", {
     parentSpan,
-  })
-  activity.start()
-  const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
+  });
+  activity.start();
+  const currentPages = new Map<string, IGatsbyPage>(store.getState().pages);
   await sourceNodesAndRemoveStaleNodes({
     parentSpan: activity.span,
     deferNodeMutation,
     webhookBody,
     pluginName: webhookSourcePluginName,
-  })
+  });
 
-  reporter.verbose(`Checking for deleted pages`)
+  reporter.verbose("Checking for deleted pages");
 
-  const tim = reporter.activityTimer(`Checking for changed pages`, {
+  // @ts-ignore
+  const tim = reporter.activityTimer("Checking for changed pages", {
     parentSpan,
-  })
-  tim.start()
+  });
+  tim.start();
 
   const { changedPages, deletedPages } = findChangedPages(
     currentPages,
     store.getState().pages,
-  )
+  );
 
   reporter.verbose(
-    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`,
-  )
+    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? "" : "s"}`,
+  );
 
   reporter.verbose(
     `Found ${changedPages.length} changed page${
-      changedPages.length === 1 ? `` : `s`
+      changedPages.length === 1 ? "" : "s"
     }`,
-  )
-  tim.end()
+  );
+  tim.end();
 
-  activity.end()
+  activity.end();
   return {
     deletedPages,
     changedPages,
-  }
+  };
 }

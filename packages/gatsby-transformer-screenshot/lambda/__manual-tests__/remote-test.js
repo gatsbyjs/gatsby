@@ -5,7 +5,7 @@ const start = async () => {
   let screenshotResponse
   try {
     screenshotResponse = await fetch({
-      type: `POST`,
+      type: "POST",
       url: SCREENSHOT_ENDPOINT
     }, { url })
     const { status, data /* , headers */ } = screenshotResponse

@@ -1,5 +1,5 @@
-import { parse } from "gatsby/graphql"
-import { stripIndent } from "common-tags"
+import { parse } from "gatsby/graphql";
+import { stripIndent } from "common-tags";
 
 const feed = ({ Joi }) =>
   Joi.object({
@@ -14,16 +14,16 @@ const feed = ({ Joi }) =>
     .external(({ query }) => {
       if (query) {
         try {
-          parse(query)
+          parse(query);
         } catch (e) {
           throw new Error(
             stripIndent`
       Invalid plugin options for "gatsby-plugin-feed":
-      "query" must be a valid GraphQL query. Received the error "${e.message}"`
-          )
+      "query" must be a valid GraphQL query. Received the error "${e.message}"`,
+          );
         }
       }
-    })
+    });
 
 export default ({ Joi }) =>
   Joi.object({
@@ -36,13 +36,13 @@ export default ({ Joi }) =>
     .external(({ query }) => {
       if (query) {
         try {
-          parse(query)
+          parse(query);
         } catch (e) {
           throw new Error(
             stripIndent`
         Invalid plugin options for "gatsby-plugin-feed":
-        "query" must be a valid GraphQL query. Received the error "${e.message}"`
-          )
+        "query" must be a valid GraphQL query. Received the error "${e.message}"`,
+          );
         }
       }
-    })
+    });

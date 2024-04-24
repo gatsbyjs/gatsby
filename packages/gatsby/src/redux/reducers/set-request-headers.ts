@@ -1,4 +1,4 @@
-import type { IGatsbyState, ISetDomainRequestHeaders } from "../types"
+import type { IGatsbyState, ISetDomainRequestHeaders } from "../types";
 
 /**
  * Takes in a domain and headers for that domain, from the setRequestHeaders action, and stores them in a Map to be accessed when making requests.
@@ -8,13 +8,13 @@ export function setRequestHeadersReducer(
   action: ISetDomainRequestHeaders,
 ): IGatsbyState["requestHeaders"] {
   switch (action.type) {
-    case `SET_REQUEST_HEADERS`: {
-      const { headers, domain } = action.payload
+    case "SET_REQUEST_HEADERS": {
+      const { headers, domain } = action.payload;
 
-      state.set(domain, headers)
-      return state
+      state.set(domain, headers);
+      return state;
     }
     default:
-      return state
+      return state;
   }
 }

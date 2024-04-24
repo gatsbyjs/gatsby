@@ -1,13 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import Resolver from "enhanced-resolve/lib/Resolver"
-import mod from "module"
+import Resolver from "enhanced-resolve/lib/Resolver";
+import mod from "module";
 
 type IRequest = {
-  request?: string | undefined
-  path: string
-}
+  request?: string | undefined;
+  path: string;
+};
 
-type ProcessWithPNP = NodeJS.ProcessVersions & { pnp?: string }
+type ProcessWithPNP = NodeJS.ProcessVersions & { pnp?: string | undefined };
 
 /**
  * To support Yarn PNP and pnpm we have to make sure dependencies resolved from
@@ -28,18 +28,18 @@ type ProcessWithPNP = NodeJS.ProcessVersions & { pnp?: string }
  * html renderer runtime files directly from gatsby package
  */
 export class CacheFolderResolver {
-  private requestsFolder: string
-  private isEnabled = false
+  private requestsFolder: string;
+  private isEnabled = false;
 
   constructor(requestsFolder: string) {
-    this.requestsFolder = requestsFolder
+    this.requestsFolder = requestsFolder;
 
     if ((process.versions as ProcessWithPNP).pnp) {
       // Yarn PnP
-      this.isEnabled = true
-    } else if (/node_modules[/\\]\.pnpm/.test(process.env.NODE_PATH ?? ``)) {
+      this.isEnabled = true;
+    } else if (/node_modules[/\\]\.pnpm/.test(process.env.NODE_PATH ?? "")) {
       // pnpm when executing through `pnpm` CLI
-      this.isEnabled = true
+      this.isEnabled = true;
     } else {
       // pnpm when executing through regular `gatsby` CLI / `./node_modules/.bin/gatsby`
       // would not set NODE_PATH, but node_modules structure would not allow to resolve
@@ -54,38 +54,38 @@ export class CacheFolderResolver {
       // It might be good idea to always enable it overall, but to limit potential
       // regressions we only enable it if we are sure we need it.
       const modulesToCheck = [
-        `prop-types`,
-        `lodash/isEqual`,
-        `mitt`,
-        `shallow-compare`,
-        `@gatsbyjs/reach-router`,
-        `gatsby-react-router-scroll`,
-        `react-server-dom-webpack`,
-        `gatsby-link`,
-      ]
+        "prop-types",
+        "lodash/isEqual",
+        "mitt",
+        "shallow-compare",
+        "@gatsbyjs/reach-router",
+        "gatsby-react-router-scroll",
+        "react-server-dom-webpack",
+        "gatsby-link",
+      ];
 
       // test if we can resolve deps from the cache folder
-      let isEverythingResolvableFromCacheDir = true
-      const cacheDirReq = mod.createRequire(requestsFolder)
+      let isEverythingResolvableFromCacheDir = true;
+      const cacheDirReq = mod.createRequire(requestsFolder);
       for (const cacheDirDep of modulesToCheck) {
         try {
-          cacheDirReq.resolve(cacheDirDep)
+          cacheDirReq.resolve(cacheDirDep);
         } catch {
           // something is not resolvable from the cache folder, so we should not enable this plugin
-          isEverythingResolvableFromCacheDir = false
-          break
+          isEverythingResolvableFromCacheDir = false;
+          break;
         }
       }
 
       // test if we can resolve deps from the gatsby package
-      let isEverythingResolvableFromGatsbyPackage = true
+      let isEverythingResolvableFromGatsbyPackage = true;
       for (const cacheDirDep of modulesToCheck) {
         try {
-          require.resolve(cacheDirDep)
+          require.resolve(cacheDirDep);
         } catch {
           // something is not resolvable from the gatsby package
-          isEverythingResolvableFromGatsbyPackage = false
-          break
+          isEverythingResolvableFromGatsbyPackage = false;
+          break;
         }
       }
 
@@ -95,54 +95,57 @@ export class CacheFolderResolver {
         !isEverythingResolvableFromCacheDir &&
         isEverythingResolvableFromGatsbyPackage
       ) {
-        this.isEnabled = true
+        this.isEnabled = true;
       }
     }
   }
 
   apply(resolver: Resolver): void {
     if (!this.isEnabled) {
-      return
+      return;
     }
 
-    const target = resolver.ensureHook(`raw-module`)
+    const target = resolver.ensureHook("raw-module");
     resolver
-      .getHook(`raw-module`)
+      .getHook("raw-module")
       .tapAsync(
-        `CacheFolderResolver`,
+        "CacheFolderResolver",
         (
           request: IRequest,
           resolveContext: unknown,
-          callback: (err?: Error | null, result?: unknown) => void,
+          callback: (
+            err?: Error | null | undefined,
+            result?: unknown | undefined,
+          ) => void,
         ) => {
-          const req = request.request
+          const req = request.request;
           if (!req) {
-            return callback()
+            return callback();
           }
 
           if (!request.path.startsWith(this.requestsFolder)) {
-            return callback()
+            return callback();
           }
 
-          const packageMatch = /^(@[^/]+\/)?[^/]+/.exec(req)
+          const packageMatch = /^(@[^/]+\/)?[^/]+/.exec(req);
           if (!packageMatch) {
-            return callback()
+            return callback();
           }
 
           // We change the issuer but keep everything as is and re-run resolve
           const obj = {
             ...request,
             path: __dirname,
-          }
+          };
 
           return resolver.doResolve(
             target,
             obj,
-            `change issuer to gatsby package by cache-folder-resolver to fix pnp`,
+            "change issuer to gatsby package by cache-folder-resolver to fix pnp",
             resolveContext,
             callback,
-          )
+          );
         },
-      )
+      );
   }
 }

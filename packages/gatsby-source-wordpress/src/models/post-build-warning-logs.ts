@@ -1,24 +1,24 @@
-import { createModel } from "@rematch/core"
-import type { IRootModel } from "."
+import { createModel } from "@rematch/core";
+import type { IRootModel } from ".";
 
 export enum StateKey {
-  mimeTypeExcluded = `mimeTypeExcluded`,
-  maxFileSizeBytesExceeded = `maxFileSizeBytesExceeded`,
+  mimeTypeExcluded = "mimeTypeExcluded",
+  maxFileSizeBytesExceeded = "maxFileSizeBytesExceeded",
 }
 
 type IPostBuildWarningLogState = {
-  [StateKey.mimeTypeExcluded]: number
-  [StateKey.maxFileSizeBytesExceeded]: number
-}
+  [StateKey.mimeTypeExcluded]: number;
+  [StateKey.maxFileSizeBytesExceeded]: number;
+};
 
 function incrementReducerCreator(
   stateKey: StateKey,
 ): (state: IPostBuildWarningLogState) => IPostBuildWarningLogState {
   return (state: IPostBuildWarningLogState): IPostBuildWarningLogState => {
-    state[stateKey]++
+    state[stateKey]++;
 
-    return state
-  }
+    return state;
+  };
 }
 
 const postBuildWarningCounts = createModel<IRootModel>()({
@@ -35,8 +35,8 @@ const postBuildWarningCounts = createModel<IRootModel>()({
     ),
   },
   effects: () => {
-    return {}
+    return {};
   },
-})
+});
 
-export default postBuildWarningCounts
+export default postBuildWarningCounts;

@@ -1,5 +1,5 @@
-import React from "react"
-import { stripIndent } from "common-tags"
+import React from "react";
+import { stripIndent } from "common-tags";
 
 export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
   const {
@@ -7,17 +7,17 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
     cookie = false,
     debug = false,
     includeInDevelopment = false,
-    language = `en_US`,
-    version = `v3.3`,
+    language = "en_US",
+    version = "v3.3",
     xfbml = true,
-  } = pluginOptions
+  } = pluginOptions;
 
-  const sdkFile = debug === true ? `sdk/debug.js` : `sdk.js`
+  const sdkFile = debug === true ? "sdk/debug.js" : "sdk.js";
 
-  if (process.env.NODE_ENV === `production` || includeInDevelopment || debug) {
+  if (process.env.NODE_ENV === "production" || includeInDevelopment || debug) {
     setPostBodyComponents([
       <script
-        key="plugin-facebook-analytics"
+        key='plugin-facebook-analytics'
         dangerouslySetInnerHTML={{
           __html: stripIndent(`
             window.fbAsyncInit = function() {
@@ -41,6 +41,6 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
         `),
         }}
       />,
-    ])
+    ]);
   }
-}
+};

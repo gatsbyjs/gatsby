@@ -1,30 +1,30 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import Joi from "joi"
+import Joi from "joi";
 import type {
   GatsbyFunctionBodyParserCommonMiddlewareConfig,
   GatsbyFunctionBodyParserUrlencodedConfig,
-} from "../../.."
+} from "../../..";
 
-const DEFAULT_LIMIT = `100kb`
+const DEFAULT_LIMIT = "100kb";
 
 // similar to `GatsbyFunctionBodyParserConfig` and `IGatsbyFunctionConfigProcessed`
 // from index.d.ts, just with fields required (not optional).
 // `createConfig()` will fill in defaults
 export type IGatsbyBodyParserConfigProcessed = {
-  json: GatsbyFunctionBodyParserCommonMiddlewareConfig
-  raw: GatsbyFunctionBodyParserCommonMiddlewareConfig
-  text: GatsbyFunctionBodyParserCommonMiddlewareConfig
-  urlencoded: GatsbyFunctionBodyParserUrlencodedConfig
-}
+  json: GatsbyFunctionBodyParserCommonMiddlewareConfig;
+  raw: GatsbyFunctionBodyParserCommonMiddlewareConfig;
+  text: GatsbyFunctionBodyParserCommonMiddlewareConfig;
+  urlencoded: GatsbyFunctionBodyParserUrlencodedConfig;
+};
 export type IGatsbyFunctionConfigProcessed = {
-  bodyParser: IGatsbyBodyParserConfigProcessed
-}
+  bodyParser: IGatsbyBodyParserConfigProcessed;
+};
 
 const defaultBodyParserOptions: GatsbyFunctionBodyParserCommonMiddlewareConfig =
   {
     limit: DEFAULT_LIMIT,
-  }
-const defaultUrlEncoded = { extended: true }
+  };
+const defaultUrlEncoded = { extended: true };
 const defaultConfig = {
   bodyParser: {
     text: defaultBodyParserOptions,
@@ -32,18 +32,18 @@ const defaultConfig = {
     json: defaultBodyParserOptions,
     urlencoded: { ...defaultBodyParserOptions, ...defaultUrlEncoded },
   },
-}
+};
 
 export type IAPIFunctionWarning = {
-  property: string | null
+  property: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  original: any
-  expectedType: string
+  original: any;
+  expectedType: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  replacedWith: any
-}
+  replacedWith: any;
+};
 
-let warnings: Array<IAPIFunctionWarning> = []
+let warnings: Array<IAPIFunctionWarning> = [];
 
 function bodyParserConfigFailover(
   property: keyof IGatsbyBodyParserConfigProcessed,
@@ -55,7 +55,7 @@ function bodyParserConfigFailover(
     original,
   }: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    original: any
+    original: any;
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => any {
@@ -66,10 +66,10 @@ function bodyParserConfigFailover(
       original,
       expectedType,
       replacedWith: defaultConfig.bodyParser[property],
-    })
+    });
 
-    return defaultConfig.bodyParser[property]
-  }
+    return defaultConfig.bodyParser[property];
+  };
 }
 
 const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
@@ -85,8 +85,8 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
             .default(defaultConfig.bodyParser.json)
             .failover(
               bodyParserConfigFailover(
-                `json`,
-                `{\n  type?: string\n  limit?: string | number\n}`,
+                "json",
+                "{\n  type?: string\n  limit?: string | number\n}",
               ),
             )
             .unknown(false),
@@ -99,8 +99,8 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
             .default(defaultConfig.bodyParser.text)
             .failover(
               bodyParserConfigFailover(
-                `text`,
-                `{\n  type?: string\n  limit?: string | number\n}`,
+                "text",
+                "{\n  type?: string\n  limit?: string | number\n}",
               ),
             ),
           raw: Joi.object()
@@ -112,8 +112,8 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
             .default(defaultConfig.bodyParser.raw)
             .failover(
               bodyParserConfigFailover(
-                `raw`,
-                `{\n  type?: string\n  limit?: string | number\n}`,
+                "raw",
+                "{\n  type?: string\n  limit?: string | number\n}",
               ),
             ),
           urlencoded: Joi.object()
@@ -126,8 +126,8 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
             .default(defaultConfig.bodyParser.urlencoded)
             .failover(
               bodyParserConfigFailover(
-                `urlencoded`,
-                `{\n  type?: string\n  limit: string | number\n  extended: boolean\n}`,
+                "urlencoded",
+                "{\n  type?: string\n  limit: string | number\n  extended: boolean\n}",
               ),
             ),
         })
@@ -135,12 +135,13 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
         .default(defaultConfig.bodyParser)
         .failover((_, { original }) => {
           warnings.push({
-            property: `bodyParser`,
+            property: "bodyParser",
             original,
-            expectedType: `{\n  text?: GatsbyFunctionBodyParserCommonMiddlewareConfig\n  json?: GatsbyFunctionBodyParserCommonMiddlewareConfig\n  raw?: GatsbyFunctionBodyParserCommonMiddlewareConfig\n  urlencoded?: GatsbyFunctionBodyParserUrlencodedConfig\n}`,
+            expectedType:
+              "{\n  text?: GatsbyFunctionBodyParserCommonMiddlewareConfig\n  json?: GatsbyFunctionBodyParserCommonMiddlewareConfig\n  raw?: GatsbyFunctionBodyParserCommonMiddlewareConfig\n  urlencoded?: GatsbyFunctionBodyParserUrlencodedConfig\n}",
             replacedWith: defaultConfig.bodyParser,
-          })
-          return defaultConfig.bodyParser
+          });
+          return defaultConfig.bodyParser;
         }),
     })
     .unknown(false)
@@ -149,18 +150,18 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
       warnings.push({
         property: null,
         original,
-        expectedType: `{\n  bodyParser?: GatsbyFunctionBodyParserConfig\n}`,
+        expectedType: "{\n  bodyParser?: GatsbyFunctionBodyParserConfig\n}",
         replacedWith: defaultConfig,
-      })
-      return defaultConfig
-    })
+      });
+      return defaultConfig;
+    });
 
 export function createConfig(userConfig: unknown): {
-  config: IGatsbyFunctionConfigProcessed
-  warnings: Array<IAPIFunctionWarning>
+  config: IGatsbyFunctionConfigProcessed;
+  warnings: Array<IAPIFunctionWarning>;
 } {
-  warnings = []
-  const { value } = functionConfigSchema.validate(userConfig)
-  const config = value as IGatsbyFunctionConfigProcessed
-  return { config, warnings }
+  warnings = [];
+  const { value } = functionConfigSchema.validate(userConfig);
+  const config = value as IGatsbyFunctionConfigProcessed;
+  return { config, warnings };
 }

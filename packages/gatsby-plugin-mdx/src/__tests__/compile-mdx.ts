@@ -1,28 +1,28 @@
-import { readFileSync } from "fs"
-import path from "path"
-import { mockGatsbyApi } from "../__fixtures__/test-utils"
+import { readFileSync } from "fs";
+import path from "path";
+import { mockGatsbyApi } from "../__fixtures__/test-utils";
 
-import { compileMDX, compileMDXWithCustomOptions } from "../compile-mdx"
+import { compileMDX, compileMDXWithCustomOptions } from "../compile-mdx";
 
 const exampleMdxPath = path.resolve(
   __dirname,
-  `..`,
-  `__fixtures__`,
-  `example.mdx`
-)
-const exampleMdxContent = readFileSync(exampleMdxPath)
+  "..",
+  "__fixtures__",
+  "example.mdx",
+);
+const exampleMdxContent = readFileSync(exampleMdxPath);
 
-const { reporter, cache } = mockGatsbyApi()
+const { reporter, cache } = mockGatsbyApi();
 
-describe(`compiles MDX`, () => {
-  it(`default`, async () => {
+describe("compiles MDX", () => {
+  it("default", async () => {
     await expect(
       compileMDX(
         { absolutePath: exampleMdxPath, source: exampleMdxContent.toString() },
         {},
         cache,
-        reporter
-      )
+        reporter,
+      ),
     ).resolves.toMatchInlineSnapshot(`
             Object {
               "metadata": Object {},
@@ -57,6 +57,6 @@ describe(`compiles MDX`, () => {
             }
             ",
             }
-          `)
-  })
-})
+          `);
+  });
+});

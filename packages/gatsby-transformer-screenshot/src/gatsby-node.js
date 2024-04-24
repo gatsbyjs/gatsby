@@ -1,21 +1,21 @@
-const Queue = require(`fastq`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const Queue = require("fastq");
+const { createRemoteFileNode } = require("gatsby-source-filesystem");
 
-const LAMBDA_CONCURRENCY_LIMIT = 50
-const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER
+const LAMBDA_CONCURRENCY_LIMIT = 50;
+const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER;
 
-const screenshotQueue = Queue.promise(worker, LAMBDA_CONCURRENCY_LIMIT)
+const screenshotQueue = Queue.promise(worker, LAMBDA_CONCURRENCY_LIMIT);
 
 async function worker(input) {
   // maxRetries: 3, retryDelay: 1000
   for (let i = 0; i < 2; i++) {
     try {
-      return await createScreenshotNode(input)
+      return await createScreenshotNode(input);
     } catch (e) {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
-  return await createScreenshotNode(input)
+  return await createScreenshotNode(input);
 }
 
 exports.onPreBootstrap = (
@@ -30,14 +30,14 @@ exports.onPreBootstrap = (
   },
   pluginOptions,
 ) => {
-  const { createNode, touchNode } = actions
-  const screenshotNodes = getNodesByType(`Screenshot`)
+  const { createNode, touchNode } = actions;
+  const screenshotNodes = getNodesByType("Screenshot");
 
   if (screenshotNodes.length === 0) {
-    return null
+    return null;
   }
 
-  let anyQueued = false
+  let anyQueued = false;
 
   // Check for updated screenshots and placeholder flag
   // and prevent Gatsby from garbage collecting remote file nodes
@@ -46,7 +46,7 @@ exports.onPreBootstrap = (
       (n.expires && new Date() >= new Date(n.expires)) ||
       USE_PLACEHOLDER_IMAGE !== n.usingPlaceholder
     ) {
-      anyQueued = true
+      anyQueued = true;
       // Screenshot expired, re-run Lambda
       screenshotQueue.push({
         url: n.url,
@@ -58,41 +58,41 @@ exports.onPreBootstrap = (
         parentNodeId: n.id,
         createContentDigest,
         pluginOptions,
-      })
+      });
     } else {
       // Screenshot hasn't yet expired, touch the image node
       // to prevent garbage collection
-      touchNode(getNode(n.screenshotFile___NODE))
+      touchNode(getNode(n.screenshotFile___NODE));
     }
-  })
+  });
 
   if (!anyQueued) {
-    return null
+    return null;
   }
 
   return new Promise((resolve) => {
     screenshotQueue.drain = () => {
-      resolve()
-    }
-  })
-}
+      resolve();
+    };
+  });
+};
 
 function shouldOnCreateNode({ node }, pluginOptions) {
   /*
    * Check if node is of a type we care about, and has a url field
    * (originally only checked sites.yml, hence including by default)
    */
-  const validNodeTypes = [`SitesYaml`].concat(pluginOptions.nodeTypes || [])
-  return validNodeTypes.includes(node.internal.type) && node.url
+  const validNodeTypes = ["SitesYaml"].concat(pluginOptions.nodeTypes || []);
+  return validNodeTypes.includes(node.internal.type) && node.url;
 }
 
-exports.shouldOnCreateNode = shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode;
 
 exports.onCreateNode = async (
   { node, actions, store, cache, createNodeId, createContentDigest, getCache },
   pluginOptions,
 ) => {
-  const { createNode, createParentChildLink } = actions
+  const { createNode, createParentChildLink } = actions;
 
   try {
     const screenshotNode = await screenshotQueue.push({
@@ -106,16 +106,16 @@ exports.onCreateNode = async (
       createContentDigest,
       parentNodeId: node.id,
       pluginOptions,
-    })
+    });
 
     createParentChildLink({
       parent: node,
       child: screenshotNode,
-    })
+    });
   } catch (e) {
-    return
+    return;
   }
-}
+};
 
 const createScreenshotNode = async ({
   url,
@@ -129,23 +129,23 @@ const createScreenshotNode = async ({
   pluginOptions,
 }) => {
   try {
-    let fileNode
-    let expires
+    let fileNode;
+    let expires;
     if (USE_PLACEHOLDER_IMAGE) {
-      const getPlaceholderFileNode = require(`./placeholder-file-node`)
+      const getPlaceholderFileNode = require("./placeholder-file-node");
       fileNode = await getPlaceholderFileNode({
         createNode,
         createNodeId,
-      })
-      expires = new Date(2999, 1, 1).getTime()
+      });
+      expires = new Date(2999, 1, 1).getTime();
     } else {
       const screenshotResponse = await fetch(
         {
-          type: `POST`,
+          type: "POST",
           url: pluginOptions.screenshotEndpoint,
         },
         { url },
-      )
+      );
 
       fileNode = await createRemoteFileNode({
         url: screenshotResponse.data.url,
@@ -154,11 +154,14 @@ const createScreenshotNode = async ({
         createNodeId,
         getCache,
         parentNodeId,
-      })
-      expires = screenshotResponse.data.expires
+      });
+      expires = screenshotResponse.data.expires;
 
       if (!fileNode) {
-        throw new Error(`Remote file node is null`, screenshotResponse.data.url)
+        throw new Error(
+          "Remote file node is null",
+          screenshotResponse.data.url,
+        );
       }
     }
 
@@ -169,20 +172,20 @@ const createScreenshotNode = async ({
       parent,
       children: [],
       internal: {
-        type: `Screenshot`,
+        type: "Screenshot",
       },
       screenshotFile___NODE: fileNode.id,
       usingPlaceholder: USE_PLACEHOLDER_IMAGE,
-    }
+    };
 
-    screenshotNode.internal.contentDigest = createContentDigest(screenshotNode)
+    screenshotNode.internal.contentDigest = createContentDigest(screenshotNode);
 
-    createNode(screenshotNode)
+    createNode(screenshotNode);
 
-    return screenshotNode
+    return screenshotNode;
   } catch (e) {
-    console.log(`Failed to screenshot ${url}. Retrying...`)
+    console.log(`Failed to screenshot ${url}. Retrying...`);
 
-    throw e
+    throw e;
   }
-}
+};

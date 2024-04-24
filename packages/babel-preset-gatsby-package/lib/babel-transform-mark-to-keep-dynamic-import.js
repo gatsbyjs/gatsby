@@ -1,6 +1,6 @@
 "use strict";
 
-const path = require(`path`);
+const path = require("path");
 
 /**
  * @typedef {import('@babel/core').NodePath} NodePath
@@ -24,13 +24,13 @@ const path = require(`path`);
  */
 module.exports = function keepDynamicImports(_unused, opts) {
   if (!opts.keepDynamicImports) {
-    throw new Error(`keepDynamicImports option needs to be set`);
+    throw new Error("keepDynamicImports option needs to be set");
   } else if (!Array.isArray(opts.keepDynamicImports)) {
-    throw new Error(`keepDynamicImports option needs to be an array`);
+    throw new Error("keepDynamicImports option needs to be an array");
   }
   const absolutePaths = opts.keepDynamicImports.map(p => path.resolve(p));
   return {
-    name: `babel-transform-mark-to-keep-dynamic-import`,
+    name: "babel-transform-mark-to-keep-dynamic-import",
     visitor: {
       Program() {
         const filename = this.file?.opts?.filename;
@@ -43,7 +43,7 @@ module.exports = function keepDynamicImports(_unused, opts) {
           // on top of that `BabelFile` doesn't expose delete for the metadata,
           // so we reach into internal `_map` to delete it
           // @ts-ignore
-          this.file._map.delete(`@babel/plugin-proposal-dynamic-import`);
+          this.file._map.delete("@babel/plugin-proposal-dynamic-import");
         }
       }
     }

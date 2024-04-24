@@ -1,14 +1,14 @@
-import { v5 as uuidv5 } from "uuid"
-import report from "gatsby-cli/lib/reporter"
+import { v5 as uuidv5 } from "uuid";
+import report from "gatsby-cli/lib/reporter";
 
-const seedConstant = `638f7a53-c567-4eca-8fc1-b23efb1cfb2b`
+const seedConstant = "638f7a53-c567-4eca-8fc1-b23efb1cfb2b";
 
 // This cache prevents duplicate calls to uuid which is relevant for certain cases
-const unprefixedCache: Map<string, string> = new Map()
+const unprefixedCache: Map<string, string> = new Map();
 // ns -> name -> uuid
 const namespacedCache: Map<string, Map<string, string>> = new Map([
-  [``, unprefixedCache],
-])
+  ["", unprefixedCache],
+]);
 
 /**
  * Generate a unique id that is consistent, deterministic, and fast while resulting in predictably short hashes.
@@ -34,38 +34,38 @@ const namespacedCache: Map<string, Map<string, string>> = new Map([
  * @return {String} - UUID
  */
 export function createNodeId(id: string | number, namespace: string): string {
-  if (typeof id === `number`) {
-    id = id.toString()
-  } else if (typeof id !== `string`) {
+  if (typeof id === "number") {
+    id = id.toString();
+  } else if (typeof id !== "string") {
     report.panic(
       `The \`id\` parameter passed to createNodeId must be a String or Number (got ${typeof id})`,
-    )
-  } else if (typeof namespace !== `string`) {
+    );
+  } else if (typeof namespace !== "string") {
     report.panic(
       `The \`namespace\` parameter passed to createNodeId must be a String (got ${typeof namespace})`,
-    )
+    );
   }
 
-  let nsHash = unprefixedCache.get(namespace)
+  let nsHash = unprefixedCache.get(namespace);
   if (!nsHash) {
-    nsHash = uuidv5(namespace, seedConstant) as string
-    unprefixedCache.set(namespace, nsHash)
+    nsHash = uuidv5(namespace, seedConstant) as string;
+    unprefixedCache.set(namespace, nsHash);
   }
 
   // Calling uuid is relatively expensive because it calls into crypto for sha1.
   // We use a local map to cache calls with the same ns+id pair, which helps a lot.
-  let nsCache = namespacedCache.get(namespace)
+  let nsCache = namespacedCache.get(namespace);
   if (!nsCache) {
-    nsCache = new Map()
-    namespacedCache.set(namespace, nsCache)
+    nsCache = new Map();
+    namespacedCache.set(namespace, nsCache);
   }
 
-  let hash = nsCache.get(id)
+  let hash = nsCache.get(id);
   if (hash) {
-    return hash
+    return hash;
   }
 
-  hash = uuidv5(id, nsHash) as string
-  nsCache.set(id, hash)
-  return hash
+  hash = uuidv5(id, nsHash) as string;
+  nsCache.set(id, hash);
+  return hash;
 }

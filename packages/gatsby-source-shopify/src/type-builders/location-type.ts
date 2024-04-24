@@ -88,5 +88,5 @@ export function locationTypeBuilder(prefix: string): string {
       extend type ${prefix}ProductVariant {
         inventoryItem: ${prefix}InventoryItem!
       }
-    `
+    `;
 }

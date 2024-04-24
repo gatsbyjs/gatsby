@@ -2,21 +2,21 @@ import type {
   IGatsbyState,
   IDeleteCacheAction,
   ICreateServerVisitedPage,
-} from "../types"
+} from "../types";
 
-type StateMap = Map<"server", Set<string>>
+type StateMap = Map<"server", Set<string>>;
 
 // The develop server always wants these page components.
 function createDefault(): StateMap {
-  const defaults = new Set<string>()
+  const defaults = new Set<string>();
 
-  defaults.add(`component---cache-dev-404-page-js`)
-  defaults.add(`component---src-pages-404-js`)
-  defaults.add(`component---src-pages-index-js`)
+  defaults.add("component---cache-dev-404-page-js");
+  defaults.add("component---src-pages-404-js");
+  defaults.add("component---src-pages-index-js");
 
-  const state: StateMap = new Map([[`server`, new Set(defaults)]])
+  const state: StateMap = new Map([["server", new Set(defaults)]]);
 
-  return state
+  return state;
 }
 
 export function visitedPagesReducer(
@@ -24,19 +24,19 @@ export function visitedPagesReducer(
   action: IDeleteCacheAction | ICreateServerVisitedPage,
 ): IGatsbyState["visitedPages"] {
   switch (action.type) {
-    case `DELETE_CACHE`:
-      return createDefault()
+    case "DELETE_CACHE":
+      return createDefault();
 
-    case `CREATE_SERVER_VISITED_PAGE`: {
-      const server = state.get(`server`)
+    case "CREATE_SERVER_VISITED_PAGE": {
+      const server = state.get("server");
       if (server) {
-        server.add(action.payload.componentChunkName)
+        server.add(action.payload.componentChunkName);
       }
 
-      return state
+      return state;
     }
 
     default:
-      return state
+      return state;
   }
 }

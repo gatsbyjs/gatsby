@@ -1,4 +1,4 @@
-import preval from "preval.macro"
+import preval from "preval.macro";
 
 // TODO re:system-ui, keep an eye on https://github.com/primer/css/issues/838
 const f = preval`
@@ -41,7 +41,7 @@ const f = preval`
   }
 
   module.exports = { fonts, fontsStrings }
-`
+`;
 
-export const fonts = f.fontsStrings
-export const fontsLists = f.fonts
+export const fonts = f.fontsStrings;
+export const fontsLists = f.fonts;

@@ -1,217 +1,217 @@
-import { onRenderBody } from "../gatsby-ssr"
+import { onRenderBody } from "../gatsby-ssr";
 
-describe(`gatsby-plugin-google-analytics`, () => {
-  describe(`gatsby-ssr`, () => {
-    describe(`onRenderBody`, () => {
-      describe(`in non-production env`, () => {
-        it(`does not set tracking script`, () => {
-          const setHeadComponents = jest.fn()
+describe("gatsby-plugin-google-analytics", () => {
+  describe("gatsby-ssr", () => {
+    describe("onRenderBody", () => {
+      describe("in non-production env", () => {
+        it("does not set tracking script", () => {
+          const setHeadComponents = jest.fn();
 
-          onRenderBody({ setHeadComponents })
+          onRenderBody({ setHeadComponents });
 
-          expect(setHeadComponents).not.toHaveBeenCalled()
-        })
-      })
+          expect(setHeadComponents).not.toHaveBeenCalled();
+        });
+      });
 
-      describe(`in production env`, () => {
-        let env
+      describe("in production env", () => {
+        let env;
 
         beforeAll(() => {
-          env = process.env.NODE_ENV
-          process.env.NODE_ENV = `production`
-        })
+          env = process.env.NODE_ENV;
+          process.env.NODE_ENV = "production";
+        });
 
         afterAll(() => {
-          process.env.NODE_ENV = env
-        })
+          process.env.NODE_ENV = env;
+        });
 
-        const setup = options => {
-          const setHeadComponents = jest.fn()
-          const setPostBodyComponents = jest.fn()
+        const setup = (options) => {
+          const setHeadComponents = jest.fn();
+          const setPostBodyComponents = jest.fn();
 
-          options = Object.assign({ trackingId: `TEST_TRACKING_ID` }, options)
+          options = Object.assign({ trackingId: "TEST_TRACKING_ID" }, options);
 
-          onRenderBody({ setHeadComponents, setPostBodyComponents }, options)
+          onRenderBody({ setHeadComponents, setPostBodyComponents }, options);
 
           return {
             setHeadComponents,
             setPostBodyComponents,
-          }
-        }
+          };
+        };
 
-        it(`does not set tracking script when trackingId not given`, () => {
+        it("does not set tracking script when trackingId not given", () => {
           const { setHeadComponents, setPostBodyComponents } = setup({
-            trackingId: ``,
-          })
+            trackingId: "",
+          });
 
-          expect(setHeadComponents).not.toHaveBeenCalled()
-          expect(setPostBodyComponents).not.toHaveBeenCalled()
-        })
+          expect(setHeadComponents).not.toHaveBeenCalled();
+          expect(setPostBodyComponents).not.toHaveBeenCalled();
+        });
 
-        it(`sets tracking script`, () => {
-          const { setHeadComponents, setPostBodyComponents } = setup()
+        it("sets tracking script", () => {
+          const { setHeadComponents, setPostBodyComponents } = setup();
 
-          expect(setHeadComponents).toHaveBeenCalledTimes(1)
-          expect(setPostBodyComponents).toHaveBeenCalledTimes(1)
-        })
+          expect(setHeadComponents).toHaveBeenCalledTimes(1);
+          expect(setPostBodyComponents).toHaveBeenCalledTimes(1);
+        });
 
-        it(`sets tracking script in head`, () => {
+        it("sets tracking script in head", () => {
           const { setHeadComponents, setPostBodyComponents } = setup({
             head: true,
-          })
+          });
 
-          expect(setHeadComponents).toHaveBeenCalledTimes(2)
-          expect(setPostBodyComponents).not.toHaveBeenCalled()
-        })
+          expect(setHeadComponents).toHaveBeenCalledTimes(2);
+          expect(setPostBodyComponents).not.toHaveBeenCalled();
+        });
 
-        it(`sets trackingId`, () => {
-          const { setPostBodyComponents } = setup()
+        it("sets trackingId", () => {
+          const { setPostBodyComponents } = setup();
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
 
-          expect(result).toMatch(/TEST_TRACKING_ID/)
-        })
+          expect(result).toMatch(/TEST_TRACKING_ID/);
+        });
 
-        it(`sets anonymize`, () => {
+        it("sets anonymize", () => {
           const { setPostBodyComponents } = setup({
             anonymize: true,
-          })
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
 
-          expect(result).toMatch(/anonymizeIp/)
-        })
+          expect(result).toMatch(/anonymizeIp/);
+        });
 
-        it(`sets respectDNT`, () => {
+        it("sets respectDNT", () => {
           const { setPostBodyComponents } = setup({
             respectDNT: true,
-          })
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
 
-          expect(result).toMatch(/doNotTrack/)
-        })
+          expect(result).toMatch(/doNotTrack/);
+        });
 
-        it(`sets excluded paths`, () => {
+        it("sets excluded paths", () => {
           const { setPostBodyComponents } = setup({
-            exclude: [`/some-path`],
-          })
+            exclude: ["/some-path"],
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
 
-          expect(result).toMatch(/excludeGAPaths/)
-        })
+          expect(result).toMatch(/excludeGAPaths/);
+        });
 
-        it(`sets optimizeId`, () => {
+        it("sets optimizeId", () => {
           const { setPostBodyComponents } = setup({
-            optimizeId: `TEST_OPTIMIZE_ID`,
-          })
+            optimizeId: "TEST_OPTIMIZE_ID",
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
 
-          expect(result).toMatch(/TEST_OPTIMIZE_ID/)
-        })
+          expect(result).toMatch(/TEST_OPTIMIZE_ID/);
+        });
 
-        it(`sets experimentId`, () => {
+        it("sets experimentId", () => {
           const { setPostBodyComponents } = setup({
-            optimizeId: `TEST_EXPERIMENT_ID`,
-          })
+            optimizeId: "TEST_EXPERIMENT_ID",
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
 
-          expect(result).toMatch(/TEST_EXPERIMENT_ID/)
-        })
+          expect(result).toMatch(/TEST_EXPERIMENT_ID/);
+        });
 
-        it(`sets variationId`, () => {
+        it("sets variationId", () => {
           const { setPostBodyComponents } = setup({
-            optimizeId: `TEST_VARIATION_ID`,
-          })
+            optimizeId: "TEST_VARIATION_ID",
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
 
-          expect(result).toMatch(/TEST_VARIATION_ID/)
-        })
+          expect(result).toMatch(/TEST_VARIATION_ID/);
+        });
 
-        it(`sets additional create only fields`, () => {
+        it("sets additional create only fields", () => {
           const { setPostBodyComponents } = setup({
-            cookieName: `COOKIE_NAME`,
+            cookieName: "COOKIE_NAME",
             sampleRate: 5,
-          })
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
 
-          expect(result).toMatch(/cookieName/)
-          expect(result).toMatch(/sampleRate/)
-        })
+          expect(result).toMatch(/cookieName/);
+          expect(result).toMatch(/sampleRate/);
+        });
 
-        it(`sets additional general fields`, () => {
+        it("sets additional general fields", () => {
           const { setPostBodyComponents } = setup({
-            transport: `beacon`,
+            transport: "beacon",
             allowAdFeatures: true,
             queueTime: 5,
-          })
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
-          expect(result).toContain(`ga('set', 'transport', 'beacon')`)
-          expect(result).toContain(`ga('set', 'allowAdFeatures', 'true')`)
-          expect(result).toContain(`ga('set', 'queueTime', '5')`)
-        })
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
+          expect(result).toContain("ga('set', 'transport', 'beacon')");
+          expect(result).toContain("ga('set', 'allowAdFeatures', 'true')");
+          expect(result).toContain("ga('set', 'queueTime', '5')");
+        });
 
-        it(`does not set fields that have an invalid value`, () => {
+        it("does not set fields that have an invalid value", () => {
           const { setPostBodyComponents } = setup({
-            allowAdFeatures: `swag`,
-          })
+            allowAdFeatures: "swag",
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
-          expect(result).not.toContain(`allowAdFeatures`)
-        })
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
+          expect(result).not.toContain("allowAdFeatures");
+        });
 
-        it(`does not set fields that were not set`, () => {
-          const { setPostBodyComponents } = setup({})
+        it("does not set fields that were not set", () => {
+          const { setPostBodyComponents } = setup({});
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
-          expect(result).not.toContain(`allowAdFeatures`)
-        })
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
+          expect(result).not.toContain("allowAdFeatures");
+        });
 
-        it(`should defer script after the site render when set`, () => {
+        it("should defer script after the site render when set", () => {
           const { setPostBodyComponents } = setup({
             defer: true,
-          })
+          });
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
-          expect(result).toContain(`defer=1;`)
-          expect(result).not.toContain(`async=1;`)
-        })
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
+          expect(result).toContain("defer=1;");
+          expect(result).not.toContain("async=1;");
+        });
 
-        it(`should not defer script after the site render`, () => {
-          const { setPostBodyComponents } = setup({})
+        it("should not defer script after the site render", () => {
+          const { setPostBodyComponents } = setup({});
 
-          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
-          expect(result).not.toContain(`defer=1;`)
-          expect(result).toContain(`async=1;`)
-        })
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0]);
+          expect(result).not.toContain("defer=1;");
+          expect(result).toContain("async=1;");
+        });
 
-        it(`adds the web-vitals polyfill to the head`, () => {
+        it("adds the web-vitals polyfill to the head", () => {
           const { setHeadComponents } = setup({
             enableWebVitalsTracking: true,
             head: false,
-          })
+          });
 
-          expect(setHeadComponents.mock.calls.length).toBe(2)
+          expect(setHeadComponents.mock.calls.length).toBe(2);
           expect(setHeadComponents.mock.calls[1][0][0].key).toBe(
-            `gatsby-plugin-google-analytics-web-vitals`
-          )
-        })
+            "gatsby-plugin-google-analytics-web-vitals",
+          );
+        });
 
-        it(`should not add the web-vitals polyfill when enableWebVitalsTracking is false `, () => {
+        it("should not add the web-vitals polyfill when enableWebVitalsTracking is false ", () => {
           const { setHeadComponents } = setup({
             enableWebVitalsTracking: false,
             head: false,
-          })
+          });
 
-          expect(setHeadComponents.mock.calls.length).toBe(1)
-        })
-      })
-    })
-  })
-})
+          expect(setHeadComponents.mock.calls.length).toBe(1);
+        });
+      });
+    });
+  });
+});

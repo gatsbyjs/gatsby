@@ -1,59 +1,59 @@
-import { sanitizeError, cleanPaths } from "../error-helpers"
+import { sanitizeError, cleanPaths } from "../error-helpers";
 
-describe(`Errors Helpers`, () => {
-  describe(`sanitizeError`, () => {
-    it(`Removes env, output and converts buffers to strings from execa output`, () => {
+describe("Errors Helpers", () => {
+  describe("sanitizeError", () => {
+    it("Removes env, output and converts buffers to strings from execa output", () => {
       const error = {
         error: null,
-        cmd: `git commit -m"test"`,
-        file: `/bin/sh`,
-        args: [`/bin/sh`, `-c`, `git commit -m"test`],
+        cmd: 'git commit -m"test"',
+        file: "/bin/sh",
+        args: ["/bin/sh", "-c", 'git commit -m"test'],
         options: {
-          cwd: `here`,
+          cwd: "here",
           shell: true,
-          envPairs: [`VERSION=1.2.3`],
+          envPairs: ["VERSION=1.2.3"],
           stdio: [{}, {}, {}], // pipes
         },
-        envPairs: [`VERSION=1.2.3`],
+        envPairs: ["VERSION=1.2.3"],
 
-        stderr: Buffer.from(`this is a an error`),
-        stdout: Buffer.from(`this is a test`),
-      }
+        stderr: Buffer.from("this is a an error"),
+        stdout: Buffer.from("this is a test"),
+      };
 
-      const errorString = sanitizeError(error)
+      const errorString = sanitizeError(error);
 
-      const sanitizedError = JSON.parse(errorString)
+      const sanitizedError = JSON.parse(errorString);
 
-      expect(sanitizedError.stderr).toStrictEqual(`this is a an error`)
-      expect(sanitizedError.stdout).toStrictEqual(`this is a test`)
-      expect(sanitizedError.envPairs).toBeUndefined()
-      expect(sanitizedError.options).toBeUndefined()
-    })
+      expect(sanitizedError.stderr).toStrictEqual("this is a an error");
+      expect(sanitizedError.stdout).toStrictEqual("this is a test");
+      expect(sanitizedError.envPairs).toBeUndefined();
+      expect(sanitizedError.options).toBeUndefined();
+    });
 
-    it(`Sanitizes current path from error stacktraces`, () => {
-      const errorMessage = `this is a test`
-      let e
+    it("Sanitizes current path from error stacktraces", () => {
+      const errorMessage = "this is a test";
+      let e;
       try {
-        throw new Error(errorMessage)
+        throw new Error(errorMessage);
       } catch (error) {
-        e = error
+        e = error;
       }
-      expect(e).toBeDefined()
-      expect(e.message).toEqual(errorMessage)
-      expect(e.stack).toEqual(expect.stringContaining(process.cwd()))
+      expect(e).toBeDefined();
+      expect(e.message).toEqual(errorMessage);
+      expect(e.stack).toEqual(expect.stringContaining(process.cwd()));
 
-      const sanitizedErrorString = sanitizeError(e)
+      const sanitizedErrorString = sanitizeError(e);
 
       expect(sanitizedErrorString).toEqual(
-        expect.stringContaining(errorMessage)
-      )
+        expect.stringContaining(errorMessage),
+      );
       expect(sanitizedErrorString).toEqual(
-        expect.not.stringContaining(process.cwd().replace(`\\`, `\\\\`))
-      )
-    })
+        expect.not.stringContaining(process.cwd().replace("\\", "\\\\")),
+      );
+    });
 
-    it(`Sanitizes a section of the current path from error stacktrace`, () => {
-      const errorMessage = `this is a test`
+    it("Sanitizes a section of the current path from error stacktrace", () => {
+      const errorMessage = "this is a test";
 
       const e = {
         message: errorMessage,
@@ -72,67 +72,69 @@ describe(`Errors Helpers`, () => {
           at executeUserCode (internal/bootstrap/node.js:526:15)
           at startMainThreadExecution (internal/bootstrap/node.js:439:3)
         `,
-      }
+      };
 
-      expect(e).toBeDefined()
-      expect(e.message).toEqual(errorMessage)
-      expect(e.stack).toBeDefined()
+      expect(e).toBeDefined();
+      expect(e.message).toEqual(errorMessage);
+      expect(e.stack).toBeDefined();
 
       const mockCwd = jest
-        .spyOn(process, `cwd`)
-        .mockImplementation(() => `/Users/sidharthachatterjee/Code/gatsby-site`)
+        .spyOn(process, "cwd")
+        .mockImplementation(
+          () => "/Users/sidharthachatterjee/Code/gatsby-site",
+        );
 
-      expect(e.stack).toEqual(expect.stringContaining(`sidharthachatterjee`))
+      expect(e.stack).toEqual(expect.stringContaining("sidharthachatterjee"));
 
-      const sanitizedErrorString = sanitizeError(e, `/`)
+      const sanitizedErrorString = sanitizeError(e, "/");
 
-      expect(sanitizedErrorString.includes(errorMessage)).toBe(true)
+      expect(sanitizedErrorString.includes(errorMessage)).toBe(true);
       expect(sanitizedErrorString).toEqual(
-        expect.not.stringContaining(`sidharthachatterjee`)
-      )
-      const result = sanitizedErrorString.match(/\$SNIP/g) as Array<string>
-      expect(result.length).toBe(4)
+        expect.not.stringContaining("sidharthachatterjee"),
+      );
+      const result = sanitizedErrorString.match(/\$SNIP/g) as Array<string>;
+      expect(result.length).toBe(4);
 
-      mockCwd.mockRestore()
-    })
-  })
-  describe(`cleanPaths`, () => {
-    it.each([`gatsby-config.js`, `src/pages/index.js`])(
-      `should clean path on unix: %s`,
-      filePath => {
-        const cwdMockPath = `/Users/username/gatsby-site`
-        const fullPath = `${cwdMockPath}/${filePath}`
-
-        const mockCwd = jest
-          .spyOn(process, `cwd`)
-          .mockImplementation(() => cwdMockPath)
-
-        const errorMessage = `This path ${fullPath} is a test ${fullPath}`
-
-        expect(cleanPaths(errorMessage, `/`)).toBe(
-          `This path $SNIP/${filePath} is a test $SNIP/${filePath}`
-        )
-        mockCwd.mockRestore()
-      }
-    )
-
-    it.each([`gatsby-config.js`, `src\\pages\\index.js`])(
-      `should clean path on windows: %s`,
-      filePath => {
-        const cwdMockPath = `C:\\Users\\username\\gatsby-site`
-        const fullPath = `${cwdMockPath}\\${filePath}`
+      mockCwd.mockRestore();
+    });
+  });
+  describe("cleanPaths", () => {
+    it.each(["gatsby-config.js", "src/pages/index.js"])(
+      "should clean path on unix: %s",
+      (filePath) => {
+        const cwdMockPath = "/Users/username/gatsby-site";
+        const fullPath = `${cwdMockPath}/${filePath}`;
 
         const mockCwd = jest
-          .spyOn(process, `cwd`)
-          .mockImplementation(() => cwdMockPath)
+          .spyOn(process, "cwd")
+          .mockImplementation(() => cwdMockPath);
 
-        const errorMessage = `This path ${fullPath} is a test ${fullPath}`
+        const errorMessage = `This path ${fullPath} is a test ${fullPath}`;
 
-        expect(cleanPaths(errorMessage, `\\`)).toBe(
-          `This path $SNIP\\${filePath} is a test $SNIP\\${filePath}`
-        )
-        mockCwd.mockRestore()
-      }
-    )
-  })
-})
+        expect(cleanPaths(errorMessage, "/")).toBe(
+          `This path $SNIP/${filePath} is a test $SNIP/${filePath}`,
+        );
+        mockCwd.mockRestore();
+      },
+    );
+
+    it.each(["gatsby-config.js", "src\\pages\\index.js"])(
+      "should clean path on windows: %s",
+      (filePath) => {
+        const cwdMockPath = "C:\\Users\\username\\gatsby-site";
+        const fullPath = `${cwdMockPath}\\${filePath}`;
+
+        const mockCwd = jest
+          .spyOn(process, "cwd")
+          .mockImplementation(() => cwdMockPath);
+
+        const errorMessage = `This path ${fullPath} is a test ${fullPath}`;
+
+        expect(cleanPaths(errorMessage, "\\")).toBe(
+          `This path $SNIP\\${filePath} is a test $SNIP\\${filePath}`,
+        );
+        mockCwd.mockRestore();
+      },
+    );
+  });
+});

@@ -1,29 +1,29 @@
-const React = require(`react`)
-const { grabMatchParams } = require(`../find-path`)
-const { StaticQueryContext } = require(`gatsby`)
+const React = require("react");
+const { grabMatchParams } = require("../find-path");
+const { StaticQueryContext } = require("gatsby");
 const {
   headExportValidator,
   filterHeadProps,
   isElementType,
   isValidNodeName,
   warnForInvalidTag,
-} = require(`./utils`)
-const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
-const { renderToString } = require(`react-dom/server`)
-const { parse } = require(`node-html-parser`)
-const styleToOjbect = require(`style-to-object`)
-import { apiRunner } from "../api-runner-ssr"
+} = require("./utils");
+const { ServerLocation, Router } = require("@gatsbyjs/reach-router");
+const { renderToString } = require("react-dom/server");
+const { parse } = require("node-html-parser");
+const styleToOjbect = require("style-to-object");
+import { apiRunner } from "../api-runner-ssr";
 
 export function applyHtmlAndBodyAttributesSSR(
   htmlAndBodyAttributes,
-  { setHtmlAttributes, setBodyAttributes }
+  { setHtmlAttributes, setBodyAttributes },
 ) {
-  if (!htmlAndBodyAttributes) return
+  if (!htmlAndBodyAttributes) return;
 
-  const { html, body } = htmlAndBodyAttributes
+  const { html, body } = htmlAndBodyAttributes;
 
-  setHtmlAttributes(html)
-  setBodyAttributes(body)
+  setHtmlAttributes(html);
+  setBodyAttributes(body);
 }
 
 export function getValidHeadNodesAndAttributesSSR(
@@ -31,39 +31,39 @@ export function getValidHeadNodesAndAttributesSSR(
   htmlAndBodyAttributes = {
     html: {},
     body: {},
-  }
+  },
 ) {
-  const seenIds = new Map()
-  const validHeadNodes = []
+  const seenIds = new Map();
+  const validHeadNodes = [];
 
   // Filter out non-element nodes before looping since we don't care about them
   for (const node of rootNode.childNodes) {
-    const { rawTagName } = node
-    const id = node.attributes?.id
+    const { rawTagName } = node;
+    const id = node.attributes?.id;
 
-    if (!isElementType(node)) continue
+    if (!isElementType(node)) continue;
 
     if (isValidNodeName(rawTagName)) {
-      if (rawTagName === `html` || rawTagName === `body`) {
-        const { style, ...nonStyleAttributes } = node.attributes
+      if (rawTagName === "html" || rawTagName === "body") {
+        const { style, ...nonStyleAttributes } = node.attributes;
 
         htmlAndBodyAttributes[rawTagName] = {
           ...htmlAndBodyAttributes[rawTagName],
           ...nonStyleAttributes,
-        }
+        };
 
         // Unfortunately renderToString converts inline styles to a string, so we have to convert them back to an object
         if (style) {
           htmlAndBodyAttributes[rawTagName].style = {
             ...htmlAndBodyAttributes[rawTagName]?.style,
             ...styleToOjbect(style),
-          }
+          };
         }
       } else {
-        let element
-        const attributes = { ...node.attributes, "data-gatsby-head": true }
+        let element;
+        const attributes = { ...node.attributes, "data-gatsby-head": true };
 
-        if (rawTagName === `script` || rawTagName === `style`) {
+        if (rawTagName === "script" || rawTagName === "style") {
           element = (
             <node.rawTagName
               {...attributes}
@@ -71,7 +71,7 @@ export function getValidHeadNodesAndAttributesSSR(
                 __html: node.text,
               }}
             />
-          )
+          );
         } else {
           element =
             node.textContent.length > 0 ? (
@@ -80,34 +80,34 @@ export function getValidHeadNodesAndAttributesSSR(
               </node.rawTagName>
             ) : (
               <node.rawTagName {...attributes} />
-            )
+            );
         }
 
         if (id) {
           if (!seenIds.has(id)) {
-            validHeadNodes.push(element)
-            seenIds.set(id, validHeadNodes.length - 1)
+            validHeadNodes.push(element);
+            seenIds.set(id, validHeadNodes.length - 1);
           } else {
-            const indexOfPreviouslyInsertedNode = seenIds.get(id)
-            validHeadNodes[indexOfPreviouslyInsertedNode] = element
+            const indexOfPreviouslyInsertedNode = seenIds.get(id);
+            validHeadNodes[indexOfPreviouslyInsertedNode] = element;
           }
         } else {
-          validHeadNodes.push(element)
+          validHeadNodes.push(element);
         }
       }
     } else {
-      warnForInvalidTag(rawTagName)
+      warnForInvalidTag(rawTagName);
     }
 
     if (node.childNodes.length) {
       validHeadNodes.push(
         ...getValidHeadNodesAndAttributesSSR(node, htmlAndBodyAttributes)
-          .validHeadNodes
-      )
+          .validHeadNodes,
+      );
     }
   }
 
-  return { validHeadNodes, htmlAndBodyAttributes }
+  return { validHeadNodes, htmlAndBodyAttributes };
 }
 
 export function headHandlerForSSR({
@@ -120,7 +120,7 @@ export function headHandlerForSSR({
   pagePath,
 }) {
   if (pageComponent?.Head) {
-    headExportValidator(pageComponent.Head)
+    headExportValidator(pageComponent.Head);
 
     function HeadRouteHandler(props) {
       const _props = {
@@ -130,20 +130,20 @@ export function headHandlerForSSR({
           ...grabMatchParams(props.location.pathname),
           ...(pageData.result?.pageContext?.__params || {}),
         },
-      }
+      };
 
-      const HeadElement = <pageComponent.Head {...filterHeadProps(_props)} />
+      const HeadElement = <pageComponent.Head {...filterHeadProps(_props)} />;
 
       const headWithWrapRootElement = apiRunner(
-        `wrapRootElement`,
+        "wrapRootElement",
         { element: HeadElement },
         HeadElement,
         ({ result }) => {
-          return { element: result }
-        }
-      ).pop()
+          return { element: result };
+        },
+      ).pop();
 
-      return headWithWrapRootElement
+      return headWithWrapRootElement;
     }
 
     const routerElement = (
@@ -153,22 +153,22 @@ export function headHandlerForSSR({
             baseuri={__BASE_PATH__}
             component={({ children }) => <>{children}</>}
           >
-            <HeadRouteHandler path="/*" />
+            <HeadRouteHandler path='/*' />
           </Router>
         </ServerLocation>
       </StaticQueryContext.Provider>
-    )
+    );
 
-    const rawString = renderToString(routerElement)
-    const rootNode = parse(rawString)
+    const rawString = renderToString(routerElement);
+    const rootNode = parse(rawString);
     const { validHeadNodes, htmlAndBodyAttributes } =
-      getValidHeadNodesAndAttributesSSR(rootNode)
+      getValidHeadNodesAndAttributesSSR(rootNode);
 
     applyHtmlAndBodyAttributesSSR(htmlAndBodyAttributes, {
       setHtmlAttributes,
       setBodyAttributes,
-    })
+    });
 
-    setHeadComponents(validHeadNodes)
+    setHeadComponents(validHeadNodes);
   }
 }

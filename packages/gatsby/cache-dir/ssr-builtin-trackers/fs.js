@@ -1,3 +1,3 @@
-const { wrapModuleWithTracking } = require(`./tracking-unsafe-module-wrapper`)
+const { wrapModuleWithTracking } = require("./tracking-unsafe-module-wrapper");
 
-module.exports = wrapModuleWithTracking(`fs`)
+module.exports = wrapModuleWithTracking("fs");

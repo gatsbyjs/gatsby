@@ -4,18 +4,18 @@ import {
   forwardTo,
   createMachine,
   assign,
-} from "xstate"
-import type { IDataLayerContext } from "../data-layer/types"
-import type { IQueryRunningContext } from "../query-running/types"
-import type { IWaitingContext } from "../waiting/types"
-import { buildActions } from "./actions"
-import { developServices } from "./services"
-import type { IBuildContext } from "../../services"
+} from "xstate";
+import type { IDataLayerContext } from "../data-layer/types";
+import type { IQueryRunningContext } from "../query-running/types";
+import type { IWaitingContext } from "../waiting/types";
+import { buildActions } from "./actions";
+import { developServices } from "./services";
+import type { IBuildContext } from "../../services";
 
-const RECOMPILE_PANIC_LIMIT = 6
+const RECOMPILE_PANIC_LIMIT = 6;
 
 function getGraphqlTypegenConfig(ctx: IBuildContext): boolean {
-  return !!ctx.store!.getState().config.graphqlTypegen
+  return !!ctx.store!.getState().config.graphqlTypegen;
 }
 
 /**
@@ -24,35 +24,35 @@ function getGraphqlTypegenConfig(ctx: IBuildContext): boolean {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
   predictableActionArguments: true,
-  id: `build`,
-  initial: `initializing`,
+  id: "build",
+  initial: "initializing",
   // These are mutation events, sent to this machine by the mutation listener
   // in `services/listen-for-mutations.ts`
   on: {
     // These are deferred node mutations, mainly `createNode`
     ADD_NODE_MUTATION: {
-      actions: `addNodeMutation`,
+      actions: "addNodeMutation",
     },
     // Sent when webpack or chokidar sees a changed file
     SOURCE_FILE_CHANGED: {
-      actions: `markSourceFilesDirty`,
+      actions: "markSourceFilesDirty",
     },
     // These are calls to the refresh endpoint. Also used by Gatsby Preview.
     // Saves the webhook body from the event into context, then reloads data
     WEBHOOK_RECEIVED: {
-      target: `reloadingData`,
-      actions: `assignWebhookBody`,
+      target: "reloadingData",
+      actions: "assignWebhookBody",
     },
     QUERY_RUN_REQUESTED: {
-      actions: `trackRequestedQueryRun`,
+      actions: "trackRequestedQueryRun",
     },
     SET_SCHEMA: {
-      actions: `schemaTypegen`,
+      actions: "schemaTypegen",
       cond: (ctx: IBuildContext): boolean =>
         getGraphqlTypegenConfig(ctx) && !ctx.shouldRunInitialTypegen,
     },
     SET_GRAPHQL_DEFINITIONS: {
-      actions: `definitionsTypegen`,
+      actions: "definitionsTypegen",
       cond: (ctx: IBuildContext): boolean =>
         getGraphqlTypegenConfig(ctx) && !ctx.shouldRunInitialTypegen,
     },
@@ -67,14 +67,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         WEBHOOK_RECEIVED: undefined,
       },
       invoke: {
-        id: `initialize`,
-        src: `initialize`,
+        id: "initialize",
+        src: "initialize",
         onDone: {
-          target: `initializingData`,
-          actions: [`assignStoreAndWorkerPool`, `spawnMutationListener`],
+          target: "initializingData",
+          actions: ["assignStoreAndWorkerPool", "spawnMutationListener"],
         },
         onError: {
-          actions: `panic`,
+          actions: "panic",
         },
       },
     },
@@ -83,12 +83,12 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       on: {
         // We need to run mutations immediately when in this state
         ADD_NODE_MUTATION: {
-          actions: `callApi`,
+          actions: "callApi",
         },
       },
       invoke: {
-        id: `initialize-data`,
-        src: `initializeData`,
+        id: "initialize-data",
+        src: "initializeData",
         data: ({
           parentSpan,
           store,
@@ -104,45 +104,45 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             deferNodeMutation: true,
             program,
             reporter,
-          }
+          };
         },
         onDone: {
           actions: [
-            `assignServiceResult`,
-            `clearWebhookBody`,
-            `finishParentSpan`,
+            "assignServiceResult",
+            "clearWebhookBody",
+            "finishParentSpan",
           ],
-          target: `runningPostBootstrap`,
+          target: "runningPostBootstrap",
         },
         onError: {
-          actions: `logError`,
-          target: `waiting`,
+          actions: "logError",
+          target: "waiting",
         },
       },
     },
     runningPostBootstrap: {
       invoke: {
-        id: `post-bootstrap`,
-        src: `postBootstrap`,
-        onDone: `runningQueries`,
+        id: "post-bootstrap",
+        src: "postBootstrap",
+        onDone: "runningQueries",
       },
     },
     // Running page and static queries and generating the SSRed HTML and page data
     runningQueries: {
       on: {
         SOURCE_FILE_CHANGED: {
-          actions: [forwardTo(`run-queries`), `markSourceFilesDirty`],
+          actions: [forwardTo("run-queries"), "markSourceFilesDirty"],
         },
         ADD_NODE_MUTATION: {
-          actions: [`markNodesDirty`, `callApi`],
+          actions: ["markNodesDirty", "callApi"],
         },
         QUERY_RUN_REQUESTED: {
-          actions: forwardTo(`run-queries`),
+          actions: forwardTo("run-queries"),
         },
       },
       invoke: {
-        id: `run-queries`,
-        src: `runQueries`,
+        id: "run-queries",
+        src: "runQueries",
         // This is all the data that we're sending to the child machine
         data: ({
           program,
@@ -163,13 +163,13 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             websocketManager,
             pendingQueryRuns,
             reporter,
-          }
+          };
         },
         onDone: [
           {
             // If we're at the recompile limit and nodes were mutated again then panic
-            target: `waiting`,
-            actions: `panicBecauseOfInfiniteLoop`,
+            target: "waiting",
+            actions: "panicBecauseOfInfiniteLoop",
             cond: ({
               nodesMutatedDuringQueryRun = false,
               nodesMutatedDuringQueryRunRecompileCount = 0,
@@ -179,38 +179,38 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           },
           {
             // Nodes were mutated while querying, so we need to re-run everything
-            target: `recreatingPages`,
+            target: "recreatingPages",
             cond: ({ nodesMutatedDuringQueryRun }: IBuildContext): boolean =>
               !!nodesMutatedDuringQueryRun,
             actions: [
-              `markNodesClean`,
-              `incrementRecompileCount`,
-              `clearPendingQueryRuns`,
+              "markNodesClean",
+              "incrementRecompileCount",
+              "clearPendingQueryRuns",
             ],
           },
           {
             // If we have no compiler (i.e. it's first run), then spin up the
             // webpack and socket.io servers
-            target: `startingDevServers`,
-            actions: [`setQueryRunningFinished`, `clearPendingQueryRuns`],
+            target: "startingDevServers",
+            actions: ["setQueryRunningFinished", "clearPendingQueryRuns"],
             cond: ({ compiler }: IBuildContext): boolean => !compiler,
           },
           {
             // If source files have changed, then recompile the JS bundle
-            target: `recompiling`,
+            target: "recompiling",
             cond: ({ sourceFilesDirty }: IBuildContext): boolean =>
               !!sourceFilesDirty,
-            actions: [`clearPendingQueryRuns`],
+            actions: ["clearPendingQueryRuns"],
           },
           {
             // ...otherwise just wait.
-            target: `waiting`,
-            actions: [`clearPendingQueryRuns`],
+            target: "waiting",
+            actions: ["clearPendingQueryRuns"],
           },
         ],
         onError: {
-          actions: [`logError`, `clearPendingQueryRuns`],
-          target: `waiting`,
+          actions: ["logError", "clearPendingQueryRuns"],
+          target: "waiting",
         },
       },
       exit: assign<IBuildContext>({ shouldRunInitialTypegen: false }),
@@ -220,47 +220,47 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       // Important: mark source files as clean when recompiling starts
       // Doing this `onDone` will wipe all file change events that occur **during** recompilation
       // See https://github.com/gatsbyjs/gatsby/issues/27609
-      entry: [`setRecompiledFiles`, `markSourceFilesClean`],
+      entry: ["setRecompiledFiles", "markSourceFilesClean"],
       invoke: {
-        src: `recompile`,
+        src: "recompile",
         onDone: {
-          target: `waiting`,
+          target: "waiting",
         },
         onError: {
-          actions: `logError`,
-          target: `waiting`,
+          actions: "logError",
+          target: "waiting",
         },
       },
     },
     // Spin up webpack and socket.io
     startingDevServers: {
       invoke: {
-        src: `startWebpackServer`,
+        src: "startWebpackServer",
         onDone: [
           {
-            target: `initialGraphQLTypegen`,
+            target: "initialGraphQLTypegen",
             cond: (ctx: IBuildContext): boolean => getGraphqlTypegenConfig(ctx),
           },
           {
-            target: `waiting`,
+            target: "waiting",
           },
         ],
         onError: {
-          actions: `panic`,
-          target: `waiting`,
+          actions: "panic",
+          target: "waiting",
         },
       },
-      exit: [`assignServers`, `spawnWebpackListener`, `markSourceFilesClean`],
+      exit: ["assignServers", "spawnWebpackListener", "markSourceFilesClean"],
     },
     initialGraphQLTypegen: {
       invoke: {
-        src: `graphQLTypegen`,
+        src: "graphQLTypegen",
         onDone: {
-          target: `waiting`,
+          target: "waiting",
         },
         onError: {
-          actions: `logError`,
-          target: `waiting`,
+          actions: "logError",
+          target: "waiting",
         },
       },
     },
@@ -268,28 +268,28 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     waiting: {
       always: [
         {
-          target: `runningQueries`,
+          target: "runningQueries",
           cond: ({ pendingQueryRuns }: IBuildContext): boolean =>
             !!pendingQueryRuns && pendingQueryRuns.size > 0,
         },
       ],
-      entry: [`saveDbState`, `resetRecompileCount`],
+      entry: ["saveDbState", "resetRecompileCount"],
       on: {
         // Forward these events to the child machine, so it can handle batching
         ADD_NODE_MUTATION: {
-          actions: forwardTo(`waiting`),
+          actions: forwardTo("waiting"),
         },
         SOURCE_FILE_CHANGED: {
-          actions: [forwardTo(`waiting`), `markSourceFilesDirty`],
+          actions: [forwardTo("waiting"), "markSourceFilesDirty"],
         },
         // This event is sent from the child
         EXTRACT_QUERIES_NOW: {
-          target: `runningQueries`,
+          target: "runningQueries",
         },
       },
       invoke: {
-        id: `waiting`,
-        src: `waitForMutations`,
+        id: "waiting",
+        src: "waitForMutations",
         // Send existing queued mutations to the child machine, which will execute them
         data: ({
           store,
@@ -301,15 +301,15 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             nodeMutationBatch,
             sourceFilesDirty,
             runningBatch: [],
-          }
+          };
         },
         // "done" means we need to rebuild
         onDone: {
-          actions: `assignServiceResult`,
-          target: `recreatingPages`,
+          actions: "assignServiceResult",
+          target: "recreatingPages",
         },
         onError: {
-          actions: `panic`,
+          actions: "panic",
         },
       },
     },
@@ -318,11 +318,11 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       on: {
         // We need to run mutations immediately when in this state
         ADD_NODE_MUTATION: {
-          actions: `callApi`,
+          actions: "callApi",
         },
       },
       invoke: {
-        src: `reloadData`,
+        src: "reloadData",
         data: ({
           parentSpan,
           store,
@@ -341,19 +341,19 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             shouldRunCreatePagesStatefully: false,
             program,
             reporter,
-          }
+          };
         },
         onDone: {
           actions: [
-            `assignServiceResult`,
-            `clearWebhookBody`,
-            `finishParentSpan`,
+            "assignServiceResult",
+            "clearWebhookBody",
+            "finishParentSpan",
           ],
-          target: `runningQueries`,
+          target: "runningQueries",
         },
         onError: {
-          actions: `logError`,
-          target: `waiting`,
+          actions: "logError",
+          target: "waiting",
         },
       },
     },
@@ -362,12 +362,12 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       on: {
         // We need to run mutations immediately when in this state
         ADD_NODE_MUTATION: {
-          actions: `callApi`,
+          actions: "callApi",
         },
       },
       invoke: {
-        id: `recreate-pages`,
-        src: `recreatePages`,
+        id: "recreate-pages",
+        src: "recreatePages",
         data: ({
           parentSpan,
           store,
@@ -381,22 +381,23 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             deferNodeMutation: true,
             shouldRunCreatePagesStatefully: false,
             reporter,
-          }
+          };
         },
         onDone: {
-          actions: `assignServiceResult`,
-          target: `runningQueries`,
+          actions: "assignServiceResult",
+          target: "runningQueries",
         },
         onError: {
-          actions: `logError`,
-          target: `waiting`,
+          actions: "logError",
+          target: "waiting",
         },
       },
     },
   },
-}
+};
 
+// @ts-ignore
 export const developMachine = createMachine(developConfig, {
   services: developServices,
   actions: buildActions,
-})
+});

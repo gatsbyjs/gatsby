@@ -1,5 +1,5 @@
-import type { FunctionComponent } from "react"
-import { Text, type TextProps } from "ink"
+import type { FunctionComponent } from "react";
+import { Text, type TextProps } from "ink";
 
 export function createLabel(
   text: string,
@@ -10,6 +10,6 @@ export function createLabel(
       <Text color={color} {...props}>
         {text}
       </Text>
-    )
-  }
+    );
+  };
 }

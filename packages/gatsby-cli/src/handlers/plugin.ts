@@ -1,9 +1,9 @@
-import { listPlugins } from "gatsby-core-utils"
-import reporter from "../reporter"
+import { listPlugins } from "gatsby-core-utils";
+import reporter from "../reporter";
 
 export default async (root: string, cmd: string | undefined): Promise<void> => {
   switch (cmd) {
-    case `docs`:
+    case "docs":
       console.log(`
 Using a plugin:
 - What is a Plugin? (https://www.gatsbyjs.com/docs/what-is-a-plugin/)
@@ -21,28 +21,28 @@ Creating a plugin:
 - Submit to Plugin Library (https://www.gatsbyjs.com/contributing/submit-to-plugin-library/)
 - Maintaining a Plugin (https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/maintaining-a-plugin/)
 - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
-`)
-      return
-    case `ls`: {
+`);
+      return;
+    case "ls": {
       try {
-        const plugins = await listPlugins({ root })
-        let list = ``
-        plugins.forEach((plugin) => (list += `- ${plugin}\n`))
+        const plugins = await listPlugins({ root });
+        let list = "";
+        plugins.forEach((plugin) => (list += `- ${plugin}\n`));
         console.log(`
 Following plugins are installed:
 
 ${list}
-        `)
+        `);
       } catch {
         reporter.error(
-          `There was a problem parsing your \`gatsby-config.js\` file.\nIt may be malformed. Or, the syntax you're using is not currently supported by this command.`,
-        )
+          "There was a problem parsing your `gatsby-config.js` file.\nIt may be malformed. Or, the syntax you're using is not currently supported by this command.",
+        );
       }
 
-      return
+      return;
     }
     default:
-      reporter.error(`Unknown command ${cmd}`)
+      reporter.error(`Unknown command ${cmd}`);
   }
-  return
-}
+  return;
+};

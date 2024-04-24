@@ -1,12 +1,12 @@
-import path from "node:path"
-import hasha from "hasha"
-import fs from "fs-extra"
-import pDefer, { type DeferredPromise } from "p-defer"
+import path from "node:path";
+import hasha from "hasha";
+import fs from "fs-extra";
+import pDefer, { type DeferredPromise } from "p-defer";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import { createContentDigest, slash, uuid } from "gatsby-core-utils"
-import reporter from "gatsby-cli/lib/reporter"
-import { IPhantomReporter } from "gatsby-cli"
+import _ from "lodash";
+import { createContentDigest, slash, uuid } from "gatsby-core-utils";
+import reporter from "gatsby-cli/lib/reporter";
+import { IPhantomReporter } from "gatsby-cli";
 import {
   type JobInput,
   type InternalJob,
@@ -16,55 +16,55 @@ import {
   type IJobFailed,
   type IJobNotWhitelisted,
   WorkerError,
-} from "./types"
-import { importGatsbyPlugin } from "../import-gatsby-plugin"
+} from "./types";
+import { importGatsbyPlugin } from "../import-gatsby-plugin";
 
-type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
+type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted;
 
-type OutgoingMessages = IJobCreatedMessage
+type OutgoingMessages = IJobCreatedMessage;
 
-export type { InternalJob }
-export type JobResultInterface = Record<string, unknown>
+export type { InternalJob };
+export type JobResultInterface = Record<string, unknown>;
 
-let activityForJobs: IPhantomReporter | null = null
-let activeJobs = 0
-let isListeningForMessages = false
-let hasShownIPCDisabledWarning = false
+let activityForJobs: IPhantomReporter | null = null;
+let activeJobs = 0;
+let isListeningForMessages = false;
+let hasShownIPCDisabledWarning = false;
 
 const jobsInProcess: Map<
   string,
   { id: string; deferred: DeferredPromise<Record<string, unknown>> }
-> = new Map()
+> = new Map();
 const externalJobsMap: Map<
   string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   { job: InternalJob; deferred: DeferredPromise<any> }
-> = new Map()
+> = new Map();
 
 /**
  * We want to use absolute paths to make sure they are on the filesystem
  */
 function convertPathsToAbsolute(filePath: string): string {
   if (!path.isAbsolute(filePath)) {
-    throw new Error(`${filePath} should be an absolute path.`)
+    throw new Error(`${filePath} should be an absolute path.`);
   }
 
-  return slash(filePath)
+  return slash(filePath);
 }
 /**
  * Get contenthash of a file
  */
 function createFileHash(path: string): string {
-  return hasha.hashFileSync(path, { algorithm: `sha1` })
+  return hasha.hashFileSync(path, { algorithm: "sha1" });
 }
 
-let hasActiveJobs: DeferredPromise<void> | null = null
+let hasActiveJobs: DeferredPromise<void> | null = null;
 
 function hasExternalJobsEnabled(): boolean {
   return (
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
-  )
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === "true" ||
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === "1"
+  );
 }
 
 /**
@@ -74,7 +74,7 @@ async function runLocalWorker<T>(
   workerFn: { ({ inputPaths, outputDir, args }: InternalJob): T },
   job: InternalJob,
 ): Promise<T> {
-  await fs.ensureDir(job.outputDir)
+  await fs.ensureDir(job.outputDir);
 
   return new Promise((resolve, reject) => {
     // execute worker nextTick
@@ -87,12 +87,12 @@ async function runLocalWorker<T>(
             outputDir: job.outputDir,
             args: job.args,
           } as InternalJob),
-        )
+        );
       } catch (err) {
-        reject(new WorkerError(err))
+        reject(new WorkerError(err));
       }
-    })
-  })
+    });
+  });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -103,52 +103,52 @@ function isJobsIPCMessage(msg: any): msg is IncomingMessages {
     msg.payload &&
     msg.payload.id &&
     externalJobsMap.has(msg.payload.id)
-  )
+  );
 }
 
 function listenForJobMessages(): void {
-  process.on(`message`, (msg) => {
+  process.on("message", (msg) => {
     if (isJobsIPCMessage(msg)) {
-      const { job, deferred } = externalJobsMap.get(msg.payload.id)!
+      const { job, deferred } = externalJobsMap.get(msg.payload.id)!;
 
       switch (msg.type) {
         case MESSAGE_TYPES.JOB_COMPLETED: {
-          deferred.resolve(msg.payload.result)
-          break
+          deferred.resolve(msg.payload.result);
+          break;
         }
         case MESSAGE_TYPES.JOB_FAILED: {
-          deferred.reject(new WorkerError(msg.payload.error))
-          break
+          deferred.reject(new WorkerError(msg.payload.error));
+          break;
         }
         case MESSAGE_TYPES.JOB_NOT_WHITELISTED: {
-          deferred.resolve(runJob(job, true))
-          break
+          deferred.resolve(runJob(job, true));
+          break;
         }
       }
 
-      externalJobsMap.delete(msg.payload.id)
+      externalJobsMap.delete(msg.payload.id);
     }
-  })
+  });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function runExternalWorker(job: InternalJob): Promise<any> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const deferred = pDefer<any>()
+  const deferred = pDefer<any>();
 
   externalJobsMap.set(job.id, {
     job,
     deferred,
-  })
+  });
 
   const jobCreatedMessage: OutgoingMessages = {
     type: MESSAGE_TYPES.JOB_CREATED,
     payload: job,
-  }
+  };
 
-  process.send!(jobCreatedMessage)
+  process.send!(jobCreatedMessage);
 
-  return deferred.promise
+  return deferred.promise;
 }
 
 /**
@@ -160,37 +160,37 @@ function runJob(
   job: InternalJob,
   forceLocal = false,
 ): Promise<Record<string, unknown>> {
-  const { plugin } = job
+  const { plugin } = job;
   try {
-    return importGatsbyPlugin(plugin, `gatsby-worker`).then((worker) => {
+    return importGatsbyPlugin(plugin, "gatsby-worker").then((worker) => {
       if (!worker[job.name]) {
-        throw new Error(`No worker function found for ${job.name}`)
+        throw new Error(`No worker function found for ${job.name}`);
       }
 
       if (!forceLocal && !job.plugin.isLocal && hasExternalJobsEnabled()) {
         if (process.send) {
           if (!isListeningForMessages) {
-            isListeningForMessages = true
-            listenForJobMessages()
+            isListeningForMessages = true;
+            listenForJobMessages();
           }
 
-          return runExternalWorker(job)
+          return runExternalWorker(job);
         } else {
           // only show the offloading warning once
           if (!hasShownIPCDisabledWarning) {
-            hasShownIPCDisabledWarning = true
+            hasShownIPCDisabledWarning = true;
             reporter.warn(
-              `Offloading of a job failed as IPC could not be detected. Running job locally.`,
-            )
+              "Offloading of a job failed as IPC could not be detected. Running job locally.",
+            );
           }
         }
       }
-      return runLocalWorker(worker[job.name], job)
-    })
+      return runLocalWorker(worker[job.name], job);
+    });
   } catch (err) {
     throw new Error(
       `We couldn't find a gatsby-worker.js(${plugin.resolve}/gatsby-worker.js) file for ${plugin.name}@${plugin.version}`,
-    )
+    );
   }
 }
 
@@ -198,7 +198,7 @@ function isInternalJob(job: JobInput | InternalJob): job is InternalJob {
   return (
     (job as InternalJob).id !== undefined &&
     (job as InternalJob).contentDigest !== undefined
-  )
+  );
 }
 
 /**
@@ -207,17 +207,17 @@ function isInternalJob(job: JobInput | InternalJob): job is InternalJob {
 export function createInternalJob(
   job: JobInput | InternalJob,
   plugin: {
-    name: string
-    version?: string | undefined
-    resolve?: string | undefined
+    name: string;
+    version?: string | undefined;
+    resolve?: string | undefined;
   },
 ): InternalJob {
   // It looks like we already have an augmented job so we shouldn't redo this work
   if (isInternalJob(job)) {
-    return job
+    return job;
   }
 
-  const { name, inputPaths, outputDir, args } = job
+  const { name, inputPaths, outputDir, args } = job;
 
   // TODO see if we can make this async, filehashing might be expensive to wait for
   // currently this needs to be sync as we could miss jobs to have been scheduled and
@@ -226,13 +226,13 @@ export function createInternalJob(
     return {
       path: convertPathsToAbsolute(pth),
       contentDigest: createFileHash(pth),
-    }
-  })
+    };
+  });
 
   const internalJob: InternalJob = {
     id: uuid.v4(),
     name,
-    contentDigest: ``,
+    contentDigest: "",
     inputPaths: inputPathsWithContentDigest,
     outputDir: convertPathsToAbsolute(outputDir),
     args,
@@ -240,9 +240,9 @@ export function createInternalJob(
       name: plugin.name,
       version: plugin.version,
       resolve: plugin.resolve,
-      isLocal: !plugin.resolve?.includes(`/node_modules/`),
+      isLocal: !plugin.resolve?.includes("/node_modules/"),
     },
-  }
+  };
 
   // generate a contentDigest based on all parameters including file content
   internalJob.contentDigest = createContentDigest({
@@ -253,15 +253,15 @@ export function createInternalJob(
     outputDir: internalJob.outputDir,
     args: internalJob.args,
     plugin: internalJob.plugin,
-  })
+  });
 
-  return internalJob
+  return internalJob;
 }
 
 const activitiesForJobTypes = new Map<
   string,
   ReturnType<typeof reporter.createProgress>
->()
+>();
 
 /**
  * Creates a job
@@ -272,66 +272,66 @@ export async function enqueueJob(
   // When we already have a job that's executing, return the same promise.
   // we have another check in our createJobV2 action to return jobs that have been done in a previous gatsby run
   if (jobsInProcess.has(job.contentDigest)) {
-    return jobsInProcess.get(job.contentDigest)!.deferred.promise
+    return jobsInProcess.get(job.contentDigest)!.deferred.promise;
   }
 
   if (activeJobs === 0) {
-    hasActiveJobs = pDefer<void>()
+    hasActiveJobs = pDefer<void>();
   }
 
   // Bump active jobs
-  activeJobs++
+  activeJobs++;
   if (!activityForJobs) {
-    activityForJobs = reporter.phantomActivity(`Running jobs v2`)
-    activityForJobs!.start()
+    activityForJobs = reporter.phantomActivity("Running jobs v2");
+    activityForJobs!.start();
   }
 
-  const jobType = `${job.plugin.name}.${job.name}`
+  const jobType = `${job.plugin.name}.${job.name}`;
 
-  let activityForJobsProgress = activitiesForJobTypes.get(jobType)
+  let activityForJobsProgress = activitiesForJobTypes.get(jobType);
 
   if (!activityForJobsProgress) {
     activityForJobsProgress = reporter.createProgress(
       `Running ${jobType} jobs`,
       1,
       0,
-    )
-    activityForJobsProgress.start()
-    activitiesForJobTypes.set(jobType, activityForJobsProgress)
+    );
+    activityForJobsProgress.start();
+    activitiesForJobTypes.set(jobType, activityForJobsProgress);
   } else {
-    activityForJobsProgress.total++
+    activityForJobsProgress.total++;
   }
 
-  const deferred = pDefer<Record<string, unknown>>()
+  const deferred = pDefer<Record<string, unknown>>();
   jobsInProcess.set(job.contentDigest, {
     id: job.id,
     deferred,
-  })
+  });
 
   try {
-    const result = await runJob(job)
+    const result = await runJob(job);
     // this check is to keep our worker results consistent for cloud
     if (result != null && !_.isPlainObject(result)) {
       throw new Error(
         `Result of a worker should be an object, type of "${typeof result}" was given`,
-      )
+      );
     }
-    deferred.resolve(result)
+    deferred.resolve(result);
   } catch (err) {
-    deferred.reject(new WorkerError(err))
+    deferred.reject(new WorkerError(err));
   } finally {
     // when all jobs are done we end the activity
     if (--activeJobs === 0) {
-      hasActiveJobs!.resolve()
-      activityForJobs!.end()
+      hasActiveJobs!.resolve();
+      activityForJobs!.end();
       // eslint-disable-next-line require-atomic-updates
-      activityForJobs = null
+      activityForJobs = null;
     }
 
-    activityForJobsProgress.tick()
+    activityForJobsProgress.tick();
   }
 
-  return deferred.promise
+  return deferred.promise;
 }
 
 /**
@@ -340,25 +340,25 @@ export async function enqueueJob(
 export function getInProcessJobPromise(
   contentDigest: string,
 ): Promise<Record<string, unknown>> | undefined {
-  return jobsInProcess.get(contentDigest)?.deferred.promise
+  return jobsInProcess.get(contentDigest)?.deferred.promise;
 }
 
 /**
  * Remove a job from our inProgressQueue to reduce memory usage
  */
 export function removeInProgressJob(contentDigest: string): void {
-  jobsInProcess.delete(contentDigest)
+  jobsInProcess.delete(contentDigest);
 }
 
 /**
  * Wait for all processing jobs to have finished
  */
 export async function waitUntilAllJobsComplete(): Promise<void> {
-  await (hasActiveJobs ? hasActiveJobs.promise : Promise.resolve())
+  await (hasActiveJobs ? hasActiveJobs.promise : Promise.resolve());
   for (const progressActivity of activitiesForJobTypes.values()) {
-    progressActivity.end()
+    progressActivity.end();
   }
-  activitiesForJobTypes.clear()
+  activitiesForJobTypes.clear();
 }
 
 /**
@@ -366,13 +366,13 @@ export async function waitUntilAllJobsComplete(): Promise<void> {
  */
 export async function waitJobs(jobDigests: Set<string>): Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const promises: Array<Promise<any>> = []
+  const promises: Array<Promise<any>> = [];
   for (const [digest, job] of jobsInProcess) {
     if (jobDigests.has(digest)) {
-      promises.push(job.deferred.promise)
+      promises.push(job.deferred.promise);
     }
   }
-  await Promise.all(promises)
+  await Promise.all(promises);
 }
 
 export function isJobStale(
@@ -381,13 +381,13 @@ export function isJobStale(
   const areInputPathsStale = job.inputPaths.some((inputPath) => {
     // does the inputPath still exists?
     if (!fs.existsSync(inputPath.path)) {
-      return true
+      return true;
     }
 
     // check if we're talking about the same file
-    const fileHash = createFileHash(inputPath.path)
-    return fileHash !== inputPath.contentDigest
-  })
+    const fileHash = createFileHash(inputPath.path);
+    return fileHash !== inputPath.contentDigest;
+  });
 
-  return areInputPathsStale
+  return areInputPathsStale;
 }

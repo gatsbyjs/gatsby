@@ -1,62 +1,62 @@
-import { WorkerPool } from "gatsby-worker"
-import fs from "fs-extra"
-import nodePath from "path"
-import report from "gatsby-cli/lib/reporter"
-import { isCI } from "gatsby-core-utils"
-import type { Request } from "express"
-import { ROUTES_DIRECTORY } from "../../constants"
-import { startListener } from "../../bootstrap/requires-writer"
-import { findPageByPath } from "../find-page-by-path"
-import { getPageData as getPageDataExperimental } from "../get-page-data"
-import { getDevSSRWebpack } from "../../commands/build-html"
-import type { GatsbyReduxStore } from "../../redux"
-import type { IGatsbyPage } from "../../redux/types"
-import { getServerData, type IServerData } from "../get-server-data"
-import { getPageMode } from "../page-mode"
-import { parseError, type IErrorRenderMeta } from "./parse-error"
+import { WorkerPool } from "gatsby-worker";
+import fs from "fs-extra";
+import nodePath from "path";
+import report from "gatsby-cli/lib/reporter";
+import { isCI } from "gatsby-core-utils";
+import type { Request } from "express";
+import { ROUTES_DIRECTORY } from "../../constants";
+import { startListener } from "../../bootstrap/requires-writer";
+import { findPageByPath } from "../find-page-by-path";
+import { getPageData as getPageDataExperimental } from "../get-page-data";
+import { getDevSSRWebpack } from "../../commands/build-html";
+import type { GatsbyReduxStore } from "../../redux";
+import type { IGatsbyPage } from "../../redux/types";
+import { getServerData, type IServerData } from "../get-server-data";
+import { getPageMode } from "../page-mode";
+import { parseError, type IErrorRenderMeta } from "./parse-error";
 
 type GatsbyDevSSRWorkerPool = WorkerPool<
   typeof import("./render-dev-html-child")
->
+>;
 
 function startWorker(): GatsbyDevSSRWorkerPool {
   const newWorker = new WorkerPool<typeof import("./render-dev-html-child")>(
-    require.resolve(`./render-dev-html-child`),
+    require.resolve("./render-dev-html-child"),
     {
       numWorkers: 1,
       env: {
-        NODE_ENV: isCI() ? `production` : `development`,
-        forceColors: `true`,
-        GATSBY_EXPERIMENTAL_DEV_SSR: `true`,
+        NODE_ENV: isCI() ? "production" : "development",
+        forceColors: "true",
+        GATSBY_EXPERIMENTAL_DEV_SSR: "true",
       },
     },
-  )
+  );
 
-  return newWorker
+  return newWorker;
 }
 
-let worker: GatsbyDevSSRWorkerPool
+let worker: GatsbyDevSSRWorkerPool;
 
 export function initDevWorkerPool(): void {
-  worker = startWorker()
+  worker = startWorker();
 }
 
-let changeCount = 0
+let changeCount = 0;
 export function restartWorker(htmlComponentRendererPath: string): void {
-  changeCount += 1
+  changeCount += 1;
   // Forking is expensive — each time we re-require the outputted webpack
   // file, memory grows ~10 mb — 25 regenerations means ~250mb which seems
   // like an acceptable amount of memory to grow before we reclaim it
   // by rebooting the worker process.
   if (changeCount > 25) {
-    const oldWorker = worker
-    const newWorker = startWorker()
-    worker = newWorker
-    oldWorker.end()
-    changeCount = 0
+    const oldWorker = worker;
+    const newWorker = startWorker();
+    worker = newWorker;
+    oldWorker.end();
+    changeCount = 0;
   } else {
-    worker.all.deleteModuleCache(htmlComponentRendererPath)
-    delete require.cache[require.resolve(htmlComponentRendererPath)]
+    worker.all.deleteModuleCache(htmlComponentRendererPath);
+    delete require.cache[require.resolve(htmlComponentRendererPath)];
   }
 }
 
@@ -65,29 +65,29 @@ function searchFileForString(
   filePath: string,
 ): Promise<boolean> {
   return new Promise((resolve) => {
-    const escapedSubString = substring.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`)
+    const escapedSubString = substring.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
     // See if the chunk is in the newComponents array (not the notVisited).
     const chunkRegex = RegExp(
       `exports.ssrComponents.*${escapedSubString}.*}`,
-      `gs`,
-    )
-    const stream = fs.createReadStream(filePath)
-    let found = false
-    stream.on(`data`, function (d) {
+      "gs",
+    );
+    const stream = fs.createReadStream(filePath);
+    let found = false;
+    stream.on("data", function (d) {
       if (chunkRegex.test(d.toString())) {
-        found = true
-        stream.close()
-        resolve(found)
+        found = true;
+        stream.close();
+        resolve(found);
       }
-    })
-    stream.on(`error`, function () {
-      resolve(found)
-    })
-    stream.on(`close`, function () {
-      resolve(found)
-    })
-  })
+    });
+    stream.on("error", function () {
+      resolve(found);
+    });
+    stream.on("close", function () {
+      resolve(found);
+    });
+  });
 }
 
 async function ensurePathComponentInSSRBundle(
@@ -97,15 +97,15 @@ async function ensurePathComponentInSSRBundle(
 ): Promise<boolean> {
   // This shouldn't happen.
   if (!page) {
-    report.panic(`page not found`, page)
+    report.panic("page not found", page);
   }
 
   // Now check if it's written to the correct path
   const htmlComponentRendererPath = nodePath.join(
     directory,
     ROUTES_DIRECTORY,
-    `render-page.js`,
-  )
+    "render-page.js",
+  );
 
   // This search takes 1-10ms
   // We do it as there can be a race conditions where two pages
@@ -115,39 +115,39 @@ async function ensurePathComponentInSSRBundle(
   let found = await searchFileForString(
     page.componentChunkName,
     htmlComponentRendererPath,
-  )
+  );
 
   if (!found) {
     await new Promise<void>((resolve) => {
-      let readAttempts = 0
+      let readAttempts = 0;
       const searchForStringInterval = setInterval(async () => {
-        readAttempts += 1
+        readAttempts += 1;
         found = await searchFileForString(
           page.componentChunkName,
           htmlComponentRendererPath,
-        )
+        );
         if (found || (allowTimedFallback && readAttempts > 5)) {
-          clearInterval(searchForStringInterval)
-          resolve()
+          clearInterval(searchForStringInterval);
+          resolve();
         }
-      }, 300)
-    })
+      }, 300);
+    });
   }
 
-  return found
+  return found;
 }
 
 type IRenderDevHtmlProps = {
-  path: string
-  page?: IGatsbyPage | undefined
-  skipSsr?: boolean | undefined
-  store: GatsbyReduxStore
-  error?: IErrorRenderMeta | undefined
-  htmlComponentRendererPath: string
-  directory: string
-  req: Request
-  allowTimedFallback: boolean
-}
+  path: string;
+  page?: IGatsbyPage | undefined;
+  skipSsr?: boolean | undefined;
+  store: GatsbyReduxStore;
+  error?: IErrorRenderMeta | undefined;
+  htmlComponentRendererPath: string;
+  directory: string;
+  req: Request;
+  allowTimedFallback: boolean;
+};
 
 export function renderDevHTML({
   path,
@@ -160,29 +160,29 @@ export function renderDevHTML({
   directory,
   req,
 }: IRenderDevHtmlProps): Promise<{
-  html: string
-  serverData?: IServerData | undefined
+  html: string;
+  serverData?: IServerData | undefined;
 }> {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    startListener()
-    let pageObj
+    startListener();
+    let pageObj;
     if (!page) {
-      pageObj = findPageByPath(store.getState(), path)
+      pageObj = findPageByPath(store.getState(), path);
     } else {
-      pageObj = page
+      pageObj = page;
     }
 
-    let isClientOnlyPage = false
+    let isClientOnlyPage = false;
     if (pageObj.matchPath) {
-      isClientOnlyPage = true
+      isClientOnlyPage = true;
     }
 
-    const { actions } = require(`../../redux/actions`)
-    const { createServerVisitedPage } = actions
+    const { actions } = require("../../redux/actions");
+    const { createServerVisitedPage } = actions;
     // Record this page was requested. This will kick off adding its page
     // component to the ssr bundle (if that's not already happened)
-    store.dispatch(createServerVisitedPage(pageObj.componentChunkName))
+    store.dispatch(createServerVisitedPage(pageObj.componentChunkName));
 
     // Ensure the query has been run and written out.
     try {
@@ -192,11 +192,11 @@ export function renderDevHTML({
         // that allow waiting on it, and set to impossibly high value in case
         // we want to ensure SSR happens
         allowTimedFallback ? 15000 : Number.MAX_SAFE_INTEGER,
-      )
+      );
     } catch {
       // If we can't get the page, it was probably deleted recently
       // so let's just do a 404 page.
-      return reject(`404 page`)
+      return reject("404 page");
     }
 
     // Resume the webpack watcher and wait for any compilation necessary to happen.
@@ -204,11 +204,11 @@ export function renderDevHTML({
     //
     // We pause and resume so there's no excess webpack activity during normal development.
     const { recompileAndResumeWatching, needToRecompileSSRBundle } =
-      getDevSSRWebpack()
+      getDevSSRWebpack();
 
-    let stopWatching: (() => void) | undefined = undefined
+    let stopWatching: (() => void) | undefined = undefined;
     if (recompileAndResumeWatching && needToRecompileSSRBundle) {
-      stopWatching = await recompileAndResumeWatching(allowTimedFallback)
+      stopWatching = await recompileAndResumeWatching(allowTimedFallback);
     }
 
     // Wait for html-renderer to update w/ the page component.
@@ -220,10 +220,10 @@ export function renderDevHTML({
       pageObj,
       directory,
       allowTimedFallback,
-    )
+    );
 
     if (stopWatching) {
-      stopWatching()
+      stopWatching();
     }
 
     // If we can't find the page, just force set isClientOnlyPage
@@ -233,19 +233,19 @@ export function renderDevHTML({
     // This only happens on the first time we try to render a page component
     // and it's taking a while to bundle its page component.
     if (!found) {
-      isClientOnlyPage = true
+      isClientOnlyPage = true;
     }
 
     // If the user added the query string `skip-ssr`, we always just render an empty shell.
     if (skipSsr) {
-      isClientOnlyPage = true
+      isClientOnlyPage = true;
     }
 
-    let serverData: IServerData | undefined = undefined
-    const pageMode = getPageMode(pageObj)
-    if (pageMode === `SSR` && found && !isClientOnlyPage) {
-      const renderer = require(htmlComponentRendererPath)
-      const componentInstance = await renderer.getPageChunk(pageObj)
+    let serverData: IServerData | undefined = undefined;
+    const pageMode = getPageMode(pageObj);
+    if (pageMode === "SSR" && found && !isClientOnlyPage) {
+      const renderer = require(htmlComponentRendererPath);
+      const componentInstance = await renderer.getPageChunk(pageObj);
 
       try {
         serverData = await getServerData(
@@ -253,7 +253,7 @@ export function renderDevHTML({
           pageObj,
           req.path,
           componentInstance,
-        )
+        );
       } catch (err) {
         return reject(
           parseError({
@@ -262,11 +262,11 @@ export function renderDevHTML({
             componentPath: pageObj.component,
             htmlComponentRendererPath,
           }),
-        )
+        );
       }
     }
 
-    const publicDir = nodePath.join(directory, `public`)
+    const publicDir = nodePath.join(directory, "public");
 
     try {
       const htmlString = await worker.single.renderHTML({
@@ -278,10 +278,10 @@ export function renderDevHTML({
         isClientOnlyPage,
         error,
         serverData: serverData?.props,
-      })
-      return resolve({ html: htmlString, serverData })
+      });
+      return resolve({ html: htmlString, serverData });
     } catch (error) {
-      return reject(error)
+      return reject(error);
     }
-  })
+  });
 }

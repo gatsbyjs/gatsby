@@ -1,38 +1,38 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import type { Express } from "express"
-import type { TrailingSlash } from "gatsby-page-utils"
+import _ from "lodash";
+import type { Express } from "express";
+import type { TrailingSlash } from "gatsby-page-utils";
 
 export type IPluginEntryWithParentDir = {
-  resolve: string
-  options?: Record<string, unknown> | undefined
-  parentDir: string | undefined
-}
+  resolve: string;
+  options?: Record<string, unknown> | undefined;
+  parentDir: string | undefined;
+};
 // TODO export it in index.d.ts
-export type PluginEntry = string | IPluginEntryWithParentDir
+export type PluginEntry = string | IPluginEntryWithParentDir;
 
 export type IGatsbyConfigInput = {
-  siteMetadata?: Record<string, unknown> | undefined
-  plugins?: Array<PluginEntry> | undefined
-  pathPrefix?: string | undefined
-  assetPrefix?: string | undefined
-  polyfill?: boolean | undefined
-  mapping?: Record<string, string> | undefined
+  siteMetadata?: Record<string, unknown> | undefined;
+  plugins?: Array<PluginEntry> | undefined;
+  pathPrefix?: string | undefined;
+  assetPrefix?: string | undefined;
+  polyfill?: boolean | undefined;
+  mapping?: Record<string, string> | undefined;
   proxy?:
     | {
-        prefix: string
-        url: string
+        prefix: string;
+        url: string;
       }
-    | undefined
-  developMiddleware?: ((app: Express) => void) | undefined
-  jsxRuntime?: "classic" | "automatic" | undefined
-  jsxImportSource?: string | undefined
-  trailingSlash?: TrailingSlash | undefined
-}
+    | undefined;
+  developMiddleware?: ((app: Express) => void) | undefined;
+  jsxRuntime?: "classic" | "automatic" | undefined;
+  jsxImportSource?: string | undefined;
+  trailingSlash?: TrailingSlash | undefined;
+};
 
-type ConfigKey = keyof IGatsbyConfigInput
-type Metadata = IGatsbyConfigInput["siteMetadata"]
-type Mapping = IGatsbyConfigInput["mapping"]
+type ConfigKey = keyof IGatsbyConfigInput;
+type Metadata = IGatsbyConfigInput["siteMetadata"];
+type Mapping = IGatsbyConfigInput["mapping"];
 
 const howToMerge = {
   /**
@@ -42,7 +42,7 @@ const howToMerge = {
    */
   byDefault: (a: ConfigKey, b: ConfigKey): ConfigKey => b || a,
   siteMetadata: (objA: Metadata, objB: Metadata): Metadata => {
-    return _.merge({}, objA, objB)
+    return _.merge({}, objA, objB);
   },
   // plugins are concatenated and uniq'd, so we don't get two of the same plugin value
   plugins: (
@@ -50,7 +50,7 @@ const howToMerge = {
     b: Array<PluginEntry> = [],
   ): Array<PluginEntry> => a.concat(b),
   mapping: (objA: Mapping, objB: Mapping): Mapping => _.merge({}, objA, objB),
-} as const
+} as const;
 
 /**
  * Defines how a theme object is merged with the user's config
@@ -62,22 +62,22 @@ export function mergeGatsbyConfig(
   // a and b are gatsby configs, If they have keys, that means there are values to merge
   const allGatsbyConfigKeysWithAValue = _.uniq(
     Object.keys(a).concat(Object.keys(b)),
-  ) as Array<ConfigKey>
+  ) as Array<ConfigKey>;
 
   // reduce the array of mergable keys into a single gatsby config object
   const mergedConfig = allGatsbyConfigKeysWithAValue.reduce(
     (config, gatsbyConfigKey) => {
       // choose a merge function for the config key if there's one defined,
       // otherwise use the default value merge function
-      const mergeFn = howToMerge[gatsbyConfigKey] || howToMerge.byDefault
+      const mergeFn = howToMerge[gatsbyConfigKey] || howToMerge.byDefault;
       return {
         ...config,
         [gatsbyConfigKey]: mergeFn(a[gatsbyConfigKey], b[gatsbyConfigKey]),
-      }
+      };
     },
     {} as IGatsbyConfigInput,
-  )
+  );
 
   // return the fully merged config
-  return mergedConfig
+  return mergedConfig;
 }

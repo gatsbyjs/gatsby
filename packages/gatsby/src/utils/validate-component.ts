@@ -1,33 +1,33 @@
-import path from "node:path"
-import fs from "fs-extra"
-import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
-import type { IPageInput as ICreatePageInput } from "../redux/actions/public"
-import type { ICreateSliceInput } from "../redux/actions/restricted"
+import path from "node:path";
+import fs from "fs-extra";
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path";
+import type { IPageInput as ICreatePageInput } from "../redux/actions/public";
+import type { ICreateSliceInput } from "../redux/actions/restricted";
 
-const validationCache = new Set<string>()
+const validationCache = new Set<string>();
 
 type IErrorMeta = {
-  id: string
-  context: Record<string, unknown>
-}
+  id: string;
+  context: Record<string, unknown>;
+};
 
 type IErrorIdMap = {
-  noPath: string
-  notAbsolute: string
-  doesNotExist: string
-  empty: string
-  noDefaultExport: string
-}
+  noPath: string;
+  notAbsolute: string;
+  doesNotExist: string;
+  empty: string;
+  noDefaultExport: string;
+};
 
-const isNotTestEnv = process.env.NODE_ENV !== `test`
-const isProductionEnv = process.env.NODE_ENV === `production`
+const isNotTestEnv = process.env.NODE_ENV !== "test";
+const isProductionEnv = process.env.NODE_ENV === "production";
 
 export function validateComponent(args: {
-  input: ICreatePageInput | ICreateSliceInput
-  pluginName: string
-  errorIdMap: IErrorIdMap
+  input: ICreatePageInput | ICreateSliceInput;
+  pluginName: string;
+  errorIdMap: IErrorIdMap;
 }): { error?: IErrorMeta | undefined; panicOnBuild?: boolean | undefined } {
-  const { input, pluginName, errorIdMap } = args || {}
+  const { input, pluginName, errorIdMap } = args || {};
 
   // No component path passed
   if (!input?.component) {
@@ -39,20 +39,20 @@ export function validateComponent(args: {
           input,
         },
       },
-    }
+    };
   }
 
-  const componentPath = getPathToLayoutComponent(input?.component)
+  const componentPath = getPathToLayoutComponent(input?.component);
 
   const errorContext = {
     input,
     pluginName,
     componentPath,
-  }
+  };
 
   // Component path already validated in previous pass
   if (validationCache.has(componentPath)) {
-    return {}
+    return {};
   }
 
   // Component path must be absolute
@@ -62,7 +62,7 @@ export function validateComponent(args: {
         id: errorIdMap.notAbsolute,
         context: errorContext,
       },
-    }
+    };
   }
 
   // Component path must exist
@@ -73,33 +73,33 @@ export function validateComponent(args: {
           id: errorIdMap.doesNotExist,
           context: errorContext,
         },
-      }
+      };
     }
   }
 
-  if (!componentPath.includes(`/.cache/`) && isProductionEnv) {
-    const fileContent = fs.readFileSync(componentPath, `utf-8`)
+  if (!componentPath.includes("/.cache/") && isProductionEnv) {
+    const fileContent = fs.readFileSync(componentPath, "utf-8");
 
     // Component must not be empty
-    if (fileContent === ``) {
+    if (fileContent === "") {
       return {
         error: {
           id: errorIdMap.empty,
           context: errorContext,
         },
         panicOnBuild: true,
-      }
+      };
     }
 
     // Component must have a default export
-    if ([`.js`, `.jsx`, `.ts`, `.tsx`].includes(path.extname(componentPath))) {
+    if ([".js", ".jsx", ".ts", ".tsx"].includes(path.extname(componentPath))) {
       const includesDefaultExport =
-        fileContent.includes(`export default`) ||
-        fileContent.includes(`module.exports`) ||
-        fileContent.includes(`exports.default`) ||
-        fileContent.includes(`exports["default"]`) ||
+        fileContent.includes("export default") ||
+        fileContent.includes("module.exports") ||
+        fileContent.includes("exports.default") ||
+        fileContent.includes('exports["default"]') ||
         fileContent.match(/export \{.* as default.*\}/s) ||
-        fileContent.match(/export \{\s*default\s*\}/s)
+        fileContent.match(/export \{\s*default\s*\}/s);
 
       if (!includesDefaultExport) {
         return {
@@ -108,15 +108,15 @@ export function validateComponent(args: {
             context: errorContext,
           },
           panicOnBuild: true,
-        }
+        };
       }
     }
   }
 
-  validationCache.add(componentPath)
-  return {}
+  validationCache.add(componentPath);
+  return {};
 }
 
 export function clearValidationCache(): void {
-  validationCache.clear()
+  validationCache.clear();
 }

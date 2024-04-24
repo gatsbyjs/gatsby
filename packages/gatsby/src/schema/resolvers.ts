@@ -1,5 +1,5 @@
-import systemPath from "path"
-import normalize from "normalize-path"
+import systemPath from "path";
+import normalize from "normalize-path";
 import {
   GraphQLList,
   type GraphQLType,
@@ -15,30 +15,30 @@ import {
   type SelectionSetNode,
   type SelectionNode,
   type FieldNode,
-} from "graphql"
-import type { Path } from "graphql/jsutils/Path"
-import reporter from "gatsby-cli/lib/reporter"
-import { pathToArray } from "../query/utils"
-import { getValueAt } from "../utils/get-value-at"
+} from "graphql";
+import type { Path } from "graphql/jsutils/Path";
+import reporter from "gatsby-cli/lib/reporter";
+import { pathToArray } from "../query/utils";
+import { getValueAt } from "../utils/get-value-at";
 import type {
   GatsbyResolver,
   IGatsbyConnection,
   IGatsbyEdge,
   IGatsbyResolverContext,
-} from "./type-definitions"
-import type { IGatsbyNode } from "../redux/types"
-import type { IQueryResult, ISort } from "../datastore/types"
-import { GatsbyIterable } from "../datastore/common/iterable"
+} from "./type-definitions";
+import type { IGatsbyNode } from "../redux/types";
+import type { IQueryResult, ISort } from "../datastore/types";
+import { GatsbyIterable } from "../datastore/common/iterable";
 import {
   getResolvedFields,
   fieldPathNeedToResolve,
   pathObjectToPathString,
-} from "./utils"
+} from "./utils";
 
-type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
+type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null;
 
-type nestedListOfStrings = Array<string | nestedListOfStrings>
-type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>
+type nestedListOfStrings = Array<string | nestedListOfStrings>;
+type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>;
 
 export function getMaybeResolvedValue(
   node: IGatsbyNode,
@@ -46,8 +46,8 @@ export function getMaybeResolvedValue(
   nodeInterfaceName?: string | undefined,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any {
-  if (typeof field !== `string`) {
-    field = pathObjectToPathString(field).path
+  if (typeof field !== "string") {
+    field = pathObjectToPathString(field).path;
   }
 
   if (
@@ -56,9 +56,12 @@ export function getMaybeResolvedValue(
       type: nodeInterfaceName,
     })
   ) {
-    return getValueAt(getResolvedFields(node) as Record<string, unknown>, field)
+    return getValueAt(
+      getResolvedFields(node) as Record<string, unknown>,
+      field,
+    );
   } else {
-    return getValueAt(node, field)
+    return getValueAt(node, field);
   }
 }
 
@@ -68,7 +71,7 @@ export function findOne<TSource, TArgs>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function findOneResolver(_source, args, context, info): any {
     if (context.stats) {
-      context.stats.totalRunQuery++
+      context.stats.totalRunQuery++;
     }
     return context.nodeModel.findOne(
       {
@@ -78,12 +81,17 @@ export function findOne<TSource, TArgs>(
         tracer: context.tracer,
       },
       { path: context.path },
-    )
-  }
+    );
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type PaginatedArgs<TArgs> = TArgs & { skip?: number; limit?: number; sort: any }
+type PaginatedArgs<TArgs> = TArgs & {
+  skip?: number | undefined;
+  limit?: number | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sort: any;
+};
 
 export function findManyPaginated<TSource, TArgs>(
   typeName: string,
@@ -96,16 +104,16 @@ export function findManyPaginated<TSource, TArgs>(
   ): Promise<IGatsbyConnection<IGatsbyNode>> {
     // Peek into selection set and pass on the `field` arg of `group` and
     // `distinct` which might need to be resolved.
-    const group = getProjectedField(info, `group`)
-    const distinct = getProjectedField(info, `distinct`)
-    const max = getProjectedField(info, `max`)
-    const min = getProjectedField(info, `min`)
-    const sum = getProjectedField(info, `sum`)
+    const group = getProjectedField(info, "group");
+    const distinct = getProjectedField(info, "distinct");
+    const max = getProjectedField(info, "max");
+    const min = getProjectedField(info, "min");
+    const sum = getProjectedField(info, "sum");
 
     // Apply paddings for pagination
     // (for previous/next node and also to detect if there is a previous/next page)
-    const skip = typeof args.skip === `number` ? Math.max(0, args.skip - 1) : 0
-    const limit = typeof args.limit === `number` ? args.limit + 2 : undefined
+    const skip = typeof args.skip === "number" ? Math.max(0, args.skip - 1) : 0;
+    const limit = typeof args.limit === "number" ? args.limit + 2 : undefined;
 
     const extendedArgs = {
       ...args,
@@ -116,11 +124,11 @@ export function findManyPaginated<TSource, TArgs>(
       sum: sum || [],
       skip,
       limit,
-    }
+    };
     // Note: stats are passed to telemetry in src/commands/build.ts
     if (context.stats) {
-      context.stats.totalRunQuery++
-      context.stats.totalPluralRunQuery++
+      context.stats.totalRunQuery++;
+      context.stats.totalPluralRunQuery++;
     }
     const result = await context.nodeModel.findAll(
       {
@@ -130,31 +138,31 @@ export function findManyPaginated<TSource, TArgs>(
         tracer: context.tracer,
       },
       { path: context.path, connectionType: typeName },
-    )
+    );
     return paginate(result, {
       resultOffset: skip,
-      skip: args.skip,
-      limit: args.limit,
-    })
-  }
+      skip: args.skip ?? 0,
+      limit: args.limit ?? 0,
+    });
+  };
 }
 
 type IFieldConnectionArgs = {
-  field: string | ISort
-}
+  field: string | ISort;
+};
 
 export function createDistinctResolver(
   nodeInterfaceName: string,
 ): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
   return function distinctResolver(source, args): Array<string> {
-    const { field } = args
-    const { edges } = source
+    const { field } = args;
+    const { edges } = source;
 
-    const values = new Set<string>()
+    const values = new Set<string>();
     edges.forEach(({ node }: IGatsbyEdge<IGatsbyNode>): void => {
-      const value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+      const value = getMaybeResolvedValue(node, field, nodeInterfaceName);
       if (value === null || value === undefined) {
-        return
+        return;
       }
       if (Array.isArray(value)) {
         value.forEach((subValue) =>
@@ -162,95 +170,95 @@ export function createDistinctResolver(
             // @ts-ignore
             subValue instanceof Date ? subValue.toISOString() : subValue,
           ),
-        )
+        );
       } else if (value instanceof Date) {
-        values.add(value.toISOString())
+        values.add(value.toISOString());
       } else {
-        values.add(value)
+        values.add(value);
       }
-    })
-    return Array.from(values).sort()
-  }
+    });
+    return Array.from(values).sort();
+  };
 }
 
 export function createMinResolver(
   nodeInterfaceName: string,
 ): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
   return function minResolver(source, args): number | null {
-    const { field } = args
-    const { edges } = source
+    const { field } = args;
+    const { edges } = source;
 
-    let min = Number.MAX_SAFE_INTEGER
+    let min = Number.MAX_SAFE_INTEGER;
 
     edges.forEach(({ node }) => {
-      let value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+      let value = getMaybeResolvedValue(node, field, nodeInterfaceName);
 
-      if (typeof value !== `number`) {
-        value = Number(value)
+      if (typeof value !== "number") {
+        value = Number(value);
       }
       if (!isNaN(value) && value < min) {
-        min = value
+        min = value;
       }
-    })
+    });
     if (min === Number.MAX_SAFE_INTEGER) {
-      return null
+      return null;
     }
-    return min
-  }
+    return min;
+  };
 }
 
 export function createMaxResolver(
   nodeInterfaceName: string,
 ): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
   return function maxResolver(source, args): number | null {
-    const { field } = args
-    const { edges } = source
+    const { field } = args;
+    const { edges } = source;
 
-    let max = Number.MIN_SAFE_INTEGER
+    let max = Number.MIN_SAFE_INTEGER;
 
     edges.forEach(({ node }) => {
-      let value = getMaybeResolvedValue(node, field, nodeInterfaceName)
-      if (typeof value !== `number`) {
-        value = Number(value)
+      let value = getMaybeResolvedValue(node, field, nodeInterfaceName);
+      if (typeof value !== "number") {
+        value = Number(value);
       }
       if (!isNaN(value) && value > max) {
-        max = value
+        max = value;
       }
-    })
+    });
     if (max === Number.MIN_SAFE_INTEGER) {
-      return null
+      return null;
     }
-    return max
-  }
+    return max;
+  };
 }
 
 export function createSumResolver(
   nodeInterfaceName: string,
 ): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
   return function sumResolver(source, args): number | null {
-    const { field } = args
-    const { edges } = source
+    const { field } = args;
+    const { edges } = source;
 
     return edges.reduce<number | null>((prev, { node }) => {
-      let value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+      let value = getMaybeResolvedValue(node, field, nodeInterfaceName);
 
-      if (typeof value !== `number`) {
-        value = Number(value)
+      if (typeof value !== "number") {
+        value = Number(value);
       }
       if (!isNaN(value)) {
-        return (prev || 0) + value
+        return (prev || 0) + value;
       }
-      return prev
-    }, null)
-  }
+      return prev;
+    }, null);
+  };
 }
 
 type IGatsbyGroupReturnValue<NodeType> = Array<
   IGatsbyConnection<NodeType> & {
-    field: string
-    fieldValue: string | undefined
+    field: string;
+    fieldValue: string | undefined;
   }
->
+>;
 
 export function createGroupResolver(
   nodeInterfaceName: string,
@@ -262,31 +270,31 @@ export function createGroupResolver(
     source,
     args,
   ): IGatsbyGroupReturnValue<IGatsbyNode> {
-    const { field } = args
-    const { edges } = source
+    const { field } = args;
+    const { edges } = source;
     const groupedResults: Record<string, Array<IGatsbyNode>> = edges.reduce(
       (acc, { node }) => {
-        const value = getMaybeResolvedValue(node, field, nodeInterfaceName)
-        const values = Array.isArray(value) ? value : [value]
+        const value = getMaybeResolvedValue(node, field, nodeInterfaceName);
+        const values = Array.isArray(value) ? value : [value];
         values
           .filter((value) => value != null)
           .forEach((value) => {
-            const key = value instanceof Date ? value.toISOString() : value
-            acc[key] = (acc[key] || []).concat(node)
-          })
-        return acc
+            const key = value instanceof Date ? value.toISOString() : value;
+            acc[key] = (acc[key] || []).concat(node);
+          });
+        return acc;
         // Note: using Object.create on purpose:
         //   object key may be arbitrary string including reserved words (i.e. `constructor`)
         //   see: https://github.com/gatsbyjs/gatsby/issues/22508
       },
       Object.create(null),
-    )
+    );
 
     return Object.keys(groupedResults)
       .sort()
       .reduce(
         (acc: IGatsbyGroupReturnValue<IGatsbyNode>, fieldValue: string) => {
-          const entries = groupedResults[fieldValue] || []
+          const entries = groupedResults[fieldValue] || [];
           acc.push({
             ...paginate(
               {
@@ -296,43 +304,47 @@ export function createGroupResolver(
               args,
             ),
             field:
-              typeof field === `string`
+              typeof field === "string"
                 ? field
                 : pathObjectToPathString(field).path,
             fieldValue,
-          })
-          return acc
+          });
+          return acc;
         },
         [],
-      )
-  }
+      );
+  };
 }
 
 export function paginate(
   results: IQueryResult,
-  params: { skip?: number; limit?: number; resultOffset?: number },
+  params: {
+    skip?: number | undefined;
+    limit?: number | undefined;
+    resultOffset?: number | undefined;
+  },
 ): IGatsbyConnection<IGatsbyNode> {
-  const { resultOffset = 0, skip = 0, limit } = params
+  const { resultOffset = 0, skip = 0, limit } = params;
   if (resultOffset > skip) {
-    throw new Error("Result offset cannot be greater than `skip` argument")
+    throw new Error("Result offset cannot be greater than `skip` argument");
   }
-  const allItems = Array.from(results.entries)
+  const allItems = Array.from(results.entries);
 
-  const start = skip - resultOffset
-  const items = allItems.slice(start, limit && start + limit)
+  const start = skip - resultOffset;
+  const items = allItems.slice(start, limit && start + limit);
 
-  const totalCount = results.totalCount
+  const totalCount = results.totalCount;
   const pageCount = async (): Promise<number> => {
-    const count = await totalCount()
+    const count = await totalCount();
     return limit
       ? Math.ceil(skip / limit) + Math.ceil((count - skip) / limit)
       : skip
         ? 2
-        : 1
-  }
-  const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1
-  const hasPreviousPage = currentPage > 1
-  const hasNextPage = limit ? allItems.length - start > limit : false
+        : 1;
+  };
+  const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1;
+  const hasPreviousPage = currentPage > 1;
+  const hasNextPage = limit ? allItems.length - start > limit : false;
 
   return {
     totalCount,
@@ -341,7 +353,7 @@ export function paginate(
         node: item,
         next: arr[i + 1],
         previous: arr[i - 1],
-      }
+      };
     }),
     nodes: items,
     pageInfo: {
@@ -353,17 +365,17 @@ export function paginate(
       perPage: limit,
       totalCount,
     },
-  }
+  };
 }
 
 export function link<TSource, TArgs>(
   options: {
-    by: string
-    type?: GraphQLType
-    from?: string
-    fromNode?: boolean
+    by: string;
+    type?: GraphQLType | undefined;
+    from?: string | undefined;
+    fromNode?: boolean | undefined;
   } = {
-    by: `id`,
+    by: "id",
   },
   fieldConfig: GraphQLFieldConfig<
     TSource,
@@ -380,22 +392,22 @@ export function link<TSource, TArgs>(
     context,
     info,
   ): ResolvedLink | Promise<ResolvedLink> {
-    const resolver = fieldConfig.resolve || context.defaultFieldResolver
+    const resolver = fieldConfig.resolve || context.defaultFieldResolver;
     const fieldValueOrPromise = resolver(source, args, context, {
       ...info,
       from: options.from || info.from,
       fromNode: options.from ? options.fromNode : info.fromNode,
-    })
+    });
 
     // Note: for this function, at scale, conditional .then is more efficient than generic await
-    if (typeof fieldValueOrPromise?.then === `function`) {
+    if (typeof fieldValueOrPromise?.then === "function") {
       return fieldValueOrPromise.then((fieldValue) =>
         linkResolverValue(fieldValue, args, context, info),
-      )
+      );
     }
 
-    return linkResolverValue(fieldValueOrPromise, args, context, info)
-  }
+    return linkResolverValue(fieldValueOrPromise, args, context, info);
+  };
 
   function linkResolverValue(
     fieldValue,
@@ -404,49 +416,49 @@ export function link<TSource, TArgs>(
     info,
   ): ResolvedLink | Promise<ResolvedLink> {
     if (fieldValue == null) {
-      return null
+      return null;
     }
 
-    const returnType = getNullableType(options.type || info.returnType)
-    const type = getNamedType(returnType)
+    const returnType = getNullableType(options.type || info.returnType);
+    const type = getNamedType(returnType);
 
-    if (options.by === `id`) {
+    if (options.by === "id") {
       if (Array.isArray(fieldValue)) {
         return context.nodeModel.getNodesByIds(
           { ids: fieldValue, type: type },
           { path: context.path },
-        )
+        );
       } else {
         return context.nodeModel.getNodeById(
           { id: fieldValue, type: type },
           { path: context.path },
-        )
+        );
       }
     }
 
     // Return early if fieldValue is [] since { in: [] } doesn't make sense
     if (Array.isArray(fieldValue) && fieldValue.length === 0) {
-      return fieldValue as ResolvedLink
+      return fieldValue as ResolvedLink;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const runQueryArgs = args as TArgs & { filter: Record<string, any> }
-    runQueryArgs.filter = options.by.split(`.`).reduceRight(
+    const runQueryArgs = args as TArgs & { filter: Record<string, any> };
+    runQueryArgs.filter = options.by.split(".").reduceRight(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (acc: Record<string, any>, key: string) => {
-        const obj = {}
-        obj[key] = acc
-        return obj
+        const obj = {};
+        obj[key] = acc;
+        return obj;
       },
       Array.isArray(fieldValue) ? { in: fieldValue } : { eq: fieldValue },
-    )
+    );
 
-    const firstOnly = !(returnType instanceof GraphQLList)
+    const firstOnly = !(returnType instanceof GraphQLList);
 
     if (context.stats) {
-      context.stats.totalRunQuery++
+      context.stats.totalRunQuery++;
       if (firstOnly) {
-        context.stats.totalPluralRunQuery++
+        context.stats.totalPluralRunQuery++;
       }
     }
 
@@ -464,9 +476,9 @@ export function link<TSource, TArgs>(
           )
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .then((result: any) => {
-            return linkResolverQueryResult(fieldValue, result, returnType)
+            return linkResolverQueryResult(fieldValue, result, returnType);
           })
-      )
+      );
     }
 
     return context.nodeModel
@@ -481,7 +493,7 @@ export function link<TSource, TArgs>(
       )
       .then(({ entries }) =>
         linkResolverQueryResult(fieldValue, Array.from(entries), returnType),
-      )
+      );
   }
 
   function linkResolverQueryResult(
@@ -497,19 +509,19 @@ export function link<TSource, TArgs>(
       return fieldValue.map((value) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return queryResult.find((obj: any) => {
-          return getValueAt(obj, options.by) === value
-        })
-      }) as Array<IGatsbyNode>
+          return getValueAt(obj, options.by) === value;
+        });
+      }) as Array<IGatsbyNode>;
     } else {
-      return queryResult
+      return queryResult;
     }
   }
 }
 
 export function fileByPath<TSource, TArgs>(
   options: {
-    from?: string | undefined
-    fromNode?: boolean | undefined
+    from?: string | undefined;
+    fromNode?: boolean | undefined;
   } = {},
   fieldConfig,
 ): GatsbyResolver<TSource, TArgs> {
@@ -519,7 +531,7 @@ export function fileByPath<TSource, TArgs>(
     context,
     info,
   ): Promise<IGatsbyNode | nestedListOfNodes | null> {
-    const resolver = fieldConfig.resolve || context.defaultFieldResolver
+    const resolver = fieldConfig.resolve || context.defaultFieldResolver;
     const fieldValue: nestedListOfStrings = await resolver(
       source,
       args,
@@ -529,29 +541,29 @@ export function fileByPath<TSource, TArgs>(
         from: options.from || info.from,
         fromNode: options.from ? options.fromNode : info.fromNode,
       },
-    )
+    );
 
     if (fieldValue == null) {
-      return null
+      return null;
     }
 
     // Find the File node for this node (we assume the node is something
     // like markdown which would be a child node of a File node).
     const parentFileNode = context.nodeModel.findRootNodeAncestor(
       source,
-      (node) => node.internal && node.internal.type === `File`,
-    )
+      (node) => node.internal && node.internal.type === "File",
+    );
 
     async function queryNodesByPath(
       relPaths: nestedListOfStrings,
     ): Promise<nestedListOfNodes> {
-      const arr: nestedListOfNodes = []
+      const arr: nestedListOfNodes = [];
       for (let i = 0; i < relPaths.length; ++i) {
         arr[i] = await (Array.isArray(relPaths[i])
           ? queryNodesByPath(relPaths[i] as nestedListOfStrings)
-          : queryNodeByPath(relPaths[i] as string))
+          : queryNodeByPath(relPaths[i] as string));
       }
-      return arr
+      return arr;
     }
 
     function queryNodeByPath(relPath: string): Promise<IGatsbyNode> {
@@ -563,88 +575,88 @@ export function fileByPath<TSource, TArgs>(
             },
           },
         },
-        type: `File`,
-      })
+        type: "File",
+      });
     }
 
     if (Array.isArray(fieldValue)) {
-      return queryNodesByPath(fieldValue)
+      return queryNodesByPath(fieldValue);
     } else {
-      return queryNodeByPath(fieldValue)
+      return queryNodeByPath(fieldValue);
     }
-  }
+  };
 }
 
 function getProjectedField(
   info: GraphQLResolveInfo,
   fieldName: string,
 ): Array<string> {
-  const selectionSet = info.fieldNodes[0].selectionSet
+  const selectionSet = info.fieldNodes[0].selectionSet;
   if (selectionSet) {
     const fieldNodes = getFieldNodeByNameInSelectionSet(
       selectionSet,
       fieldName,
       info,
-    )
+    );
 
     if (fieldNodes.length === 0) {
-      return []
+      return [];
     }
 
-    const returnType = getNullableType(info.returnType)
+    const returnType = getNullableType(info.returnType);
 
     if (isObjectType(returnType) || isInterfaceType(returnType)) {
-      const field = returnType.getFields()[fieldName]
-      const fieldArg = field?.args?.find((arg) => arg.name === `field`)
+      const field = returnType.getFields()[fieldName];
+      const fieldArg = field?.args?.find((arg) => arg.name === "field");
       if (fieldArg) {
-        const fieldTC = getNullableType(fieldArg.type)
+        const fieldTC = getNullableType(fieldArg.type);
 
         if (isEnumType(fieldTC) || isInputObjectType(fieldTC)) {
           return fieldNodes.reduce(
             (acc: Array<string>, fieldNode: FieldNode) => {
               const fieldArg = fieldNode.arguments?.find(
-                (arg) => arg.name.value === `field`,
-              )
+                (arg) => arg.name.value === "field",
+              );
               if (isEnumType(fieldTC)) {
                 if (fieldArg?.value.kind === Kind.ENUM) {
-                  const enumKey = fieldArg.value.value
-                  const enumValue = fieldTC.getValue(enumKey)
+                  const enumKey = fieldArg.value.value;
+                  const enumValue = fieldTC.getValue(enumKey);
                   if (enumValue) {
-                    acc.push(enumValue.value)
+                    acc.push(enumValue.value);
                   }
                 }
               } else if (isInputObjectType(fieldTC)) {
-                const path: Array<string> = []
-                let currentValue = fieldArg?.value
+                const path: Array<string> = [];
+                let currentValue = fieldArg?.value;
                 while (currentValue) {
                   if (currentValue.kind === Kind.OBJECT) {
                     if (currentValue.fields.length !== 1) {
-                      throw new Error(`Invalid field arg`)
+                      throw new Error("Invalid field arg");
                     }
 
-                    const fieldArg = currentValue.fields[0]
-                    path.push(fieldArg.name.value)
-                    currentValue = fieldArg.value
+                    const fieldArg = currentValue.fields[0];
+                    path.push(fieldArg.name.value);
+                    currentValue = fieldArg.value;
                   } else {
-                    currentValue = undefined
+                    currentValue = undefined;
                   }
                 }
 
                 if (path.length > 0) {
-                  const sortPath = path.join(`.`)
-                  acc.push(sortPath)
+                  const sortPath = path.join(".");
+                  acc.push(sortPath);
                 }
               }
-              return acc
+              return acc;
             },
             [],
-          )
+          );
         }
       }
     }
   }
 
-  return []
+  return [];
 }
 
 function getFieldNodeByNameInSelectionSet(
@@ -655,7 +667,7 @@ function getFieldNodeByNameInSelectionSet(
   return selectionSet.selections.reduce(
     (acc: Array<FieldNode>, selection: SelectionNode) => {
       if (selection.kind === Kind.FRAGMENT_SPREAD) {
-        const fragmentDef = info.fragments[selection.name.value]
+        const fragmentDef = info.fragments[selection.name.value];
         if (fragmentDef) {
           return [
             ...acc,
@@ -664,7 +676,7 @@ function getFieldNodeByNameInSelectionSet(
               fieldName,
               info,
             ),
-          ]
+          ];
         }
       } else if (selection.kind === Kind.INLINE_FRAGMENT) {
         return [
@@ -674,53 +686,56 @@ function getFieldNodeByNameInSelectionSet(
             fieldName,
             info,
           ),
-        ]
+        ];
       } /* FIELD_NODE */ else {
         if (selection.name.value === fieldName) {
-          return [...acc, selection]
+          return [...acc, selection];
         }
       }
-      return acc
+      return acc;
     },
     [],
-  )
+  );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const defaultFieldResolver: GatsbyResolver<any, any> =
   function defaultFieldResolver(source, args, context, info) {
     if (
-      (typeof source == `object` && source !== null) ||
-      typeof source === `function`
+      (typeof source == "object" && source !== null) ||
+      typeof source === "function"
     ) {
       if (info.from) {
         if (info.fromNode) {
-          const node = context.nodeModel.findRootNodeAncestor(source)
-          if (!node) return null
-          return getValueAt(node, info.from)
+          const node = context.nodeModel.findRootNodeAncestor(source);
+          if (!node) return null;
+          return getValueAt(node, info.from);
         }
-        return getValueAt(source, info.from)
+        return getValueAt(source, info.from);
       }
-      const property = source[info.fieldName]
-      if (typeof property === `function`) {
-        return source[info.fieldName](args, context, info)
+      const property = source[info.fieldName];
+      if (typeof property === "function") {
+        return source[info.fieldName](args, context, info);
       }
-      return property
+      return property;
     }
 
-    return null
-  }
+    return null;
+  };
 
-let WARNED_ABOUT_RESOLVERS = false
-function badResolverInvocationMessage(missingVar: string, path?: Path): string {
-  const resolverName = path ? `${pathToArray(path)} ` : ``
+let WARNED_ABOUT_RESOLVERS = false;
+function badResolverInvocationMessage(
+  missingVar: string,
+  path?: Path | undefined,
+): string {
+  const resolverName = path ? `${pathToArray(path)} ` : "";
   return `GraphQL Resolver ${resolverName}got called without "${missingVar}" argument. This might cause unexpected errors.
 
 It's likely that this has happened in a schemaCustomization with manually invoked resolver. If manually invoking resolvers, it's best to invoke them as follows:
 
   resolve(parent, args, context, info)
 
-`
+`;
 }
 
 export function wrappingResolver<TSource, TArgs>(
@@ -730,39 +745,39 @@ export function wrappingResolver<TSource, TArgs>(
   //       it does not return a promise and this makes a significant difference at scale.
   //       GraphQL will gracefully handle the resolver result of a promise or non-promise.
 
-  if (resolver[`isTracingResolver`]) {
-    return resolver
+  if (resolver["isTracingResolver"]) {
+    return resolver;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function wrappedTracingResolver(parent, args, context, info): Promise<any> {
     if (!WARNED_ABOUT_RESOLVERS) {
       if (!info) {
-        reporter.warn(badResolverInvocationMessage(`info`))
-        WARNED_ABOUT_RESOLVERS = true
+        reporter.warn(badResolverInvocationMessage("info"));
+        WARNED_ABOUT_RESOLVERS = true;
       } else if (!context) {
-        reporter.warn(badResolverInvocationMessage(`context`, info.path))
-        WARNED_ABOUT_RESOLVERS = true
+        reporter.warn(badResolverInvocationMessage("context", info.path));
+        WARNED_ABOUT_RESOLVERS = true;
       }
     }
 
-    let activity
-    let time
+    let activity;
+    let time;
     if (context?.tracer) {
       activity = context.tracer.createResolverActivity(
         info.path,
         `${info.parentType.name}.${info.fieldName}`,
-      )
-      activity.start()
+      );
+      activity.start();
     }
     if (context?.telemetryResolverTimings) {
-      time = process.hrtime.bigint()
+      time = process.hrtime.bigint();
     }
 
-    const result = resolver(parent, args, context, info)
+    const result = resolver(parent, args, context, info);
 
     if (!activity && !time) {
-      return result
+      return result;
     }
 
     const endActivity = (): void => {
@@ -770,23 +785,23 @@ export function wrappingResolver<TSource, TArgs>(
         context.telemetryResolverTimings.push({
           name: `${info.parentType}.${info.fieldName}`,
           duration: Number(process.hrtime.bigint() - time) / 1000 / 1000,
-        })
+        });
       }
       if (activity) {
-        activity.end()
+        activity.end();
       }
-    }
-    if (typeof result?.then === `function`) {
-      result.then(endActivity, endActivity)
+    };
+    if (typeof result?.then === "function") {
+      result.then(endActivity, endActivity);
     } else {
-      endActivity()
+      endActivity();
     }
-    return result
+    return result;
   }
 
-  wrappedTracingResolver.isTracingResolver = true
+  wrappedTracingResolver.isTracingResolver = true;
 
-  return wrappedTracingResolver
+  return wrappedTracingResolver;
 }
 
-export const defaultResolver = wrappingResolver(defaultFieldResolver)
+export const defaultResolver = wrappingResolver(defaultFieldResolver);

@@ -65,5 +65,5 @@ export function productTypeBuilder(prefix: string): string {
         ARCHIVED
         DRAFT
       }
-    `
+    `;
 }

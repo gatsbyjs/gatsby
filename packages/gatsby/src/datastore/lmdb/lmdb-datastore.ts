@@ -1,16 +1,16 @@
-import { type RootDatabase, open } from "lmdb"
+import { type RootDatabase, open } from "lmdb";
 // import { performance } from "perf_hooks"
-import type { ActionsUnion, IGatsbyNode } from "../../redux/types"
-import { updateNodes } from "./updates/nodes"
-import { updateNodesByType } from "./updates/nodes-by-type"
-import type { IDataStore, ILmdbDatabases, IQueryResult } from "../types"
-import { emitter, replaceReducer } from "../../redux"
-import { GatsbyIterable } from "../common/iterable"
-import { doRunQuery } from "./query/run-query"
+import type { ActionsUnion, IGatsbyNode } from "../../redux/types";
+import { updateNodes } from "./updates/nodes";
+import { updateNodesByType } from "./updates/nodes-by-type";
+import type { IDataStore, ILmdbDatabases, IQueryResult } from "../types";
+import { emitter, replaceReducer } from "../../redux";
+import { GatsbyIterable } from "../common/iterable";
+import { doRunQuery } from "./query/run-query";
 import {
   type IRunFilterArg,
   runFastFiltersAndSort,
-} from "../in-memory/run-fast-filters"
+} from "../in-memory/run-fast-filters";
 
 const lmdbDatastore: IDataStore = {
   getNode,
@@ -25,35 +25,35 @@ const lmdbDatastore: IDataStore = {
   // deprecated:
   getNodes,
   getNodesByType,
-}
+};
 
-const preSyncDeletedNodeIdsCache = new Set()
+const preSyncDeletedNodeIdsCache = new Set();
 
 export function getDefaultDbPath(): string {
   const dbFileName =
-    process.env.NODE_ENV === `test`
+    process.env.NODE_ENV === "test"
       ? `test-datastore-${
           // FORCE_TEST_DATABASE_ID will be set if this gets executed in worker context
           // when running jest tests. JEST_WORKER_ID will be set when this gets executed directly
           // in test context (jest will use jest-worker internally).
           process.env.FORCE_TEST_DATABASE_ID ?? process.env.JEST_WORKER_ID
         }`
-      : `datastore`
+      : "datastore";
 
-  return process.cwd() + `/.cache/data/` + dbFileName
+  return process.cwd() + "/.cache/data/" + dbFileName;
 }
 
-let fullDbPath
-let rootDb
-let databases
+let fullDbPath;
+let rootDb;
+let databases;
 
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {
   namespace NodeJS {
     // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/consistent-type-definitions
     interface Global {
-      __GATSBY_OPEN_LMDBS?: Map<string, ILmdbDatabases>
-      __GATSBY_OPEN_ROOT_LMDBS?: Map<string, RootDatabase>
+      __GATSBY_OPEN_LMDBS?: Map<string, ILmdbDatabases> | undefined;
+      __GATSBY_OPEN_ROOT_LMDBS?: Map<string, RootDatabase> | undefined;
     }
   }
 }
@@ -61,26 +61,26 @@ declare global {
 function getRootDb(): RootDatabase {
   if (!rootDb) {
     if (!fullDbPath) {
-      throw new Error(`LMDB path is not set!`)
+      throw new Error("LMDB path is not set!");
     }
 
     if (!globalThis.__GATSBY_OPEN_ROOT_LMDBS) {
-      globalThis.__GATSBY_OPEN_ROOT_LMDBS = new Map()
+      globalThis.__GATSBY_OPEN_ROOT_LMDBS = new Map();
     }
-    rootDb = globalThis.__GATSBY_OPEN_ROOT_LMDBS.get(fullDbPath)
+    rootDb = globalThis.__GATSBY_OPEN_ROOT_LMDBS.get(fullDbPath);
     if (rootDb) {
-      return rootDb
+      return rootDb;
     }
 
     rootDb = open({
-      name: `root`,
+      name: "root",
       path: fullDbPath,
       compression: true,
-    })
+    });
 
-    globalThis.__GATSBY_OPEN_ROOT_LMDBS.set(fullDbPath, rootDb)
+    globalThis.__GATSBY_OPEN_ROOT_LMDBS.set(fullDbPath, rootDb);
   }
-  return rootDb
+  return rootDb;
 }
 
 function getDatabases(): ILmdbDatabases {
@@ -91,17 +91,17 @@ function getDatabases(): ILmdbDatabases {
     // redirect middleware). This ensure there is single instance within a process.
     // Using more instances seems to cause weird random errors.
     if (!globalThis.__GATSBY_OPEN_LMDBS) {
-      globalThis.__GATSBY_OPEN_LMDBS = new Map()
+      globalThis.__GATSBY_OPEN_LMDBS = new Map();
     }
-    databases = globalThis.__GATSBY_OPEN_LMDBS.get(fullDbPath)
+    databases = globalThis.__GATSBY_OPEN_LMDBS.get(fullDbPath);
     if (databases) {
-      return databases
+      return databases;
     }
 
-    const rootDb = getRootDb()
+    const rootDb = getRootDb();
     databases = {
       nodes: rootDb.openDB({
-        name: `nodes`,
+        name: "nodes",
         // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
         // sharedStructuresKey: Symbol.for(`structures`),
         cache: {
@@ -112,22 +112,22 @@ function getDatabases(): ILmdbDatabases {
         },
       }),
       nodesByType: rootDb.openDB({
-        name: `nodesByType`,
+        name: "nodesByType",
         dupSort: true,
       }),
       metadata: rootDb.openDB({
-        name: `metadata`,
+        name: "metadata",
         useVersions: true,
       }),
       indexes: rootDb.openDB({
-        name: `indexes`,
+        name: "indexes",
         // TODO: use dupSort when this is ready: https://github.com/DoctorEvidence/lmdb-store/issues/66
         // dupSort: true
       }),
-    }
-    globalThis.__GATSBY_OPEN_LMDBS.set(fullDbPath, databases)
+    };
+    globalThis.__GATSBY_OPEN_LMDBS.set(fullDbPath, databases);
   }
-  return databases
+  return databases;
 }
 
 /**
@@ -135,13 +135,13 @@ function getDatabases(): ILmdbDatabases {
  */
 function getNodes(): Array<IGatsbyNode> {
   // const start = performance.now()
-  const result = Array.from<IGatsbyNode>(iterateNodes())
+  const result = Array.from<IGatsbyNode>(iterateNodes());
   // const timeTotal = performance.now() - start
   // console.warn(
   //   `getNodes() is deprecated, use iterateNodes() instead; ` +
   //     `array length: ${result.length}; time(ms): ${timeTotal}`
   // )
-  return result ?? []
+  return result ?? [];
 }
 
 /**
@@ -149,62 +149,62 @@ function getNodes(): Array<IGatsbyNode> {
  */
 function getNodesByType(type: string): Array<IGatsbyNode> {
   // const start = performance.now()
-  const result = Array.from<IGatsbyNode>(iterateNodesByType(type))
+  const result = Array.from<IGatsbyNode>(iterateNodesByType(type));
   // const timeTotal = performance.now() - start
   // console.warn(
   //   `getNodesByType() is deprecated, use iterateNodesByType() instead; ` +
   //     `array length: ${result.length}; time(ms): ${timeTotal}`
   // )
-  return result ?? []
+  return result ?? [];
 }
 
 function iterateNodes(): GatsbyIterable<IGatsbyNode> {
   // Additionally fetching items by id to leverage lmdb-store cache
-  const nodesDb = getDatabases().nodes
+  const nodesDb = getDatabases().nodes;
   return new GatsbyIterable(
     nodesDb
       .getKeys({ snapshot: false })
       .map((nodeId) =>
-        typeof nodeId === `string` ? getNode(nodeId) : undefined,
+        typeof nodeId === "string" ? getNode(nodeId) : undefined,
       )
       .filter(Boolean) as Iterable<IGatsbyNode>,
-  )
+  );
 }
 
 function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
-  const nodesByType = getDatabases().nodesByType
+  const nodesByType = getDatabases().nodesByType;
   return new GatsbyIterable(
     nodesByType
       .getValues(type)
       .map((nodeId) => getNode(nodeId))
       .filter(Boolean) as Iterable<IGatsbyNode>,
-  )
+  );
 }
 
 function getNode(id: string): IGatsbyNode | undefined {
   if (!id || preSyncDeletedNodeIdsCache.has(id)) {
-    return undefined
+    return undefined;
   }
 
-  const { nodes } = getDatabases()
-  return nodes.get(id)
+  const { nodes } = getDatabases();
+  return nodes.get(id);
 }
 
 function getTypes(): Array<string> {
-  return getDatabases().nodesByType.getKeys({}).asArray
+  return getDatabases().nodesByType.getKeys({}).asArray;
 }
 
-function countNodes(typeName?: string): number {
+function countNodes(typeName?: string | undefined): number {
   if (!typeName) {
-    const stats = getDatabases().nodes.getStats() as { entryCount: number }
+    const stats = getDatabases().nodes.getStats() as { entryCount: number };
     return Math.max(
       Number(stats.entryCount) - preSyncDeletedNodeIdsCache.size,
       0,
-    ) // FIXME: add -1 when restoring shared structures key
+    ); // FIXME: add -1 when restoring shared structures key
   }
 
-  const { nodesByType } = getDatabases()
-  return nodesByType.getValuesCount(typeName)
+  const { nodesByType } = getDatabases();
+  return nodesByType.getValuesCount(typeName);
 }
 
 async function runQuery(args: IRunFilterArg): Promise<IQueryResult> {
@@ -213,94 +213,94 @@ async function runQuery(args: IRunFilterArg): Promise<IQueryResult> {
       datastore: lmdbDatastore,
       databases: getDatabases(),
       ...args,
-    })
+    });
   }
-  return Promise.resolve(runFastFiltersAndSort(args))
+  return Promise.resolve(runFastFiltersAndSort(args));
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let lastOperationPromise: Promise<any> = Promise.resolve()
+let lastOperationPromise: Promise<any> = Promise.resolve();
 
 function updateDataStore(action: ActionsUnion): void {
   switch (action.type) {
-    case `DELETE_CACHE`: {
-      const dbs = getDatabases()
+    case "DELETE_CACHE": {
+      const dbs = getDatabases();
       // Force sync commit
       dbs.nodes.transactionSync(() => {
-        dbs.nodes.clearSync()
-        dbs.nodesByType.clearSync()
-        dbs.metadata.clearSync()
-        dbs.indexes.clearSync()
-      })
-      break
+        dbs.nodes.clearSync();
+        dbs.nodesByType.clearSync();
+        dbs.metadata.clearSync();
+        dbs.indexes.clearSync();
+      });
+      break;
     }
-    case `SET_PROGRAM`: {
+    case "SET_PROGRAM": {
       // TODO: remove this when we have support for incremental indexes in lmdb
-      clearIndexes()
-      break
+      clearIndexes();
+      break;
     }
-    case `CREATE_NODE`:
-    case `DELETE_NODE`:
-    case `ADD_FIELD_TO_NODE`:
-    case `ADD_CHILD_NODE_TO_PARENT_NODE`:
-    case `MATERIALIZE_PAGE_MODE`: {
-      const dbs = getDatabases()
+    case "CREATE_NODE":
+    case "DELETE_NODE":
+    case "ADD_FIELD_TO_NODE":
+    case "ADD_CHILD_NODE_TO_PARENT_NODE":
+    case "MATERIALIZE_PAGE_MODE": {
+      const dbs = getDatabases();
       const operationPromise = Promise.all([
         updateNodes(dbs.nodes, action),
         updateNodesByType(dbs.nodesByType, action),
-      ])
-      lastOperationPromise = operationPromise
+      ]);
+      lastOperationPromise = operationPromise;
 
       // if create is used in the same transaction as delete we should remove it from cache
-      if (action.type === `CREATE_NODE`) {
-        preSyncDeletedNodeIdsCache.delete(action.payload.id)
+      if (action.type === "CREATE_NODE") {
+        preSyncDeletedNodeIdsCache.delete(action.payload.id);
       }
 
-      if (action.type === `DELETE_NODE` && action.payload?.id) {
-        preSyncDeletedNodeIdsCache.add(action.payload.id)
+      if (action.type === "DELETE_NODE" && action.payload?.id) {
+        preSyncDeletedNodeIdsCache.add(action.payload.id);
         operationPromise.then(() => {
           // only clear if no other operations have been done in the meantime
           if (lastOperationPromise === operationPromise) {
-            preSyncDeletedNodeIdsCache.clear()
+            preSyncDeletedNodeIdsCache.clear();
           }
-        })
+        });
       }
     }
   }
 }
 
 function clearIndexes(): void {
-  const dbs = getDatabases()
+  const dbs = getDatabases();
   dbs.nodes.transactionSync(() => {
-    dbs.metadata.clearSync()
-    dbs.indexes.clearSync()
-  })
+    dbs.metadata.clearSync();
+    dbs.indexes.clearSync();
+  });
 }
 
 /**
  * Resolves when all the data is synced
  */
 async function ready(): Promise<void> {
-  await lastOperationPromise
+  await lastOperationPromise;
 }
 
 export function setupLmdbStore({
   dbPath = getDefaultDbPath(),
-}: { dbPath?: string } = {}): IDataStore {
-  fullDbPath = dbPath
+}: { dbPath?: string | undefined } = {}): IDataStore {
+  fullDbPath = dbPath;
 
   replaceReducer({
     nodes: (state = new Map(), action) =>
-      action.type === `DELETE_CACHE` ? new Map() : state,
+      action.type === "DELETE_CACHE" ? new Map() : state,
     nodesByType: (state = new Map(), action) =>
-      action.type === `DELETE_CACHE` ? new Map() : state,
-  })
-  emitter.on(`*`, (action) => {
+      action.type === "DELETE_CACHE" ? new Map() : state,
+  });
+  emitter.on("*", (action) => {
     if (action) {
-      updateDataStore(action)
+      updateDataStore(action);
     }
-  })
+  });
   // TODO: remove this when we have support for incremental indexes in lmdb
-  clearIndexes()
-  return lmdbDatastore
+  clearIndexes();
+  return lmdbDatastore;
 }

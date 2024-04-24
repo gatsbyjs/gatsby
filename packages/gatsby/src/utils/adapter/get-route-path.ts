@@ -1,18 +1,18 @@
-import type { IGatsbyFunction, IGatsbyPage } from "../../redux/types"
+import type { IGatsbyFunction, IGatsbyPage } from "../../redux/types";
 
 function maybeDropNamedPartOfWildcard(
   path: string | null | undefined,
 ): string | null | undefined {
   if (!path) {
-    return path
+    return path;
   }
 
   // Replaces `/foo/*bar` with `/foo/*`
-  return path.replace(/\*.+$/, `*`)
+  return path.replace(/\*.+$/, "*");
 }
 
 export function getRoutePathFromPage(page: IGatsbyPage): string {
-  return maybeDropNamedPartOfWildcard(page.matchPath) ?? page.path
+  return maybeDropNamedPartOfWildcard(page.matchPath) ?? page.path;
 }
 
 export function getRoutePathFromFunction(
@@ -21,5 +21,5 @@ export function getRoutePathFromFunction(
   return (
     maybeDropNamedPartOfWildcard(functionInfo.matchPath) ??
     functionInfo.functionRoute
-  )
+  );
 }

@@ -1,28 +1,28 @@
-const fs = require(`fs-extra`)
+const fs = require("fs-extra");
 
-const apiRunnerNode = require(`../../utils/api-runner-node`)
-import { withBasePath } from "../../utils/path"
+const apiRunnerNode = require("../../utils/api-runner-node");
+import { withBasePath } from "../../utils/path";
 
 exports.onPreBootstrap = async ({ store, parentSpan }) => {
-  const { directory, browserslist } = store.getState().program
-  const directoryPath = withBasePath(directory)
+  const { directory, browserslist } = store.getState().program;
+  const directoryPath = withBasePath(directory);
 
-  await apiRunnerNode(`onCreateBabelConfig`, {
-    stage: `develop`,
+  await apiRunnerNode("onCreateBabelConfig", {
+    stage: "develop",
     parentSpan,
-  })
-  await apiRunnerNode(`onCreateBabelConfig`, {
-    stage: `develop-html`,
+  });
+  await apiRunnerNode("onCreateBabelConfig", {
+    stage: "develop-html",
     parentSpan,
-  })
-  await apiRunnerNode(`onCreateBabelConfig`, {
-    stage: `build-javascript`,
+  });
+  await apiRunnerNode("onCreateBabelConfig", {
+    stage: "build-javascript",
     parentSpan,
-  })
-  await apiRunnerNode(`onCreateBabelConfig`, {
-    stage: `build-html`,
+  });
+  await apiRunnerNode("onCreateBabelConfig", {
+    stage: "build-html",
     parentSpan,
-  })
+  });
 
   const babelState = JSON.stringify(
     {
@@ -31,7 +31,7 @@ exports.onPreBootstrap = async ({ store, parentSpan }) => {
     },
     null,
     2,
-  )
+  );
 
-  await fs.writeFile(directoryPath(`.cache/babelState.json`), babelState)
-}
+  await fs.writeFile(directoryPath(".cache/babelState.json"), babelState);
+};

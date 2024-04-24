@@ -1,61 +1,61 @@
-import { parse, type ParserOptions } from "@babel/parser"
-import type { File } from "@babel/types"
+import { parse, type ParserOptions } from "@babel/parser";
+import type { File } from "@babel/types";
 
 const PARSER_OPTIONS: ParserOptions = {
   allowImportExportEverywhere: true,
   allowReturnOutsideFunction: true,
   allowSuperOutsideMethod: true,
-  sourceType: `unambiguous`,
+  sourceType: "unambiguous",
   plugins: [
-    `jsx`,
-    `flow`,
-    `doExpressions`,
-    `objectRestSpread`,
+    "jsx",
+    "flow",
+    "doExpressions",
+    "objectRestSpread",
     [
-      `decorators`,
+      "decorators",
       {
         decoratorsBeforeExport: true,
       },
     ],
-    `classProperties`,
-    `classPrivateProperties`,
-    `classPrivateMethods`,
-    `exportDefaultFrom`,
-    `exportNamespaceFrom`,
-    `asyncGenerators`,
-    `functionBind`,
-    `functionSent`,
-    `dynamicImport`,
-    `numericSeparator`,
-    `optionalChaining`,
-    `importMeta`,
-    `bigInt`,
-    `optionalCatchBinding`,
-    `throwExpressions`,
+    "classProperties",
+    "classPrivateProperties",
+    "classPrivateMethods",
+    "exportDefaultFrom",
+    "exportNamespaceFrom",
+    "asyncGenerators",
+    "functionBind",
+    "functionSent",
+    "dynamicImport",
+    "numericSeparator",
+    "optionalChaining",
+    "importMeta",
+    "bigInt",
+    "optionalCatchBinding",
+    "throwExpressions",
     [
-      `pipelineOperator`,
+      "pipelineOperator",
       {
-        proposal: `minimal`,
+        proposal: "minimal",
       },
     ],
-    `nullishCoalescingOperator`,
+    "nullishCoalescingOperator",
   ],
-}
+};
 
 export function getBabelParserOptions(filePath: string): ParserOptions {
   // Flow and TypeScript plugins can't be enabled simultaneously
   if (/\.tsx?/.test(filePath)) {
-    const { plugins } = PARSER_OPTIONS
+    const { plugins } = PARSER_OPTIONS;
     return {
       ...PARSER_OPTIONS,
       plugins: plugins!.map((plugin) =>
-        plugin === `flow` ? `typescript` : plugin,
+        plugin === "flow" ? "typescript" : plugin,
       ),
-    }
+    };
   }
-  return PARSER_OPTIONS
+  return PARSER_OPTIONS;
 }
 
 export function babelParseToAst(contents: string, filePath: string): File {
-  return parse(contents, getBabelParserOptions(filePath))
+  return parse(contents, getBabelParserOptions(filePath));
 }

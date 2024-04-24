@@ -1,5 +1,5 @@
-import type { ExportNamedDeclaration, ObjectPattern } from "@babel/types"
-import { NodePath } from "@babel/core"
+import type { ExportNamedDeclaration, ObjectPattern } from "@babel/types";
+import { NodePath } from "@babel/core";
 
 /**
  * Check the node has at least one sibling.
@@ -7,7 +7,7 @@ import { NodePath } from "@babel/core"
 export function hasSibling(path: NodePath): boolean {
   return (
     [...path.getAllPrevSiblings(), ...path.getAllNextSiblings()].length !== 0
-  )
+  );
 }
 
 /**
@@ -31,30 +31,30 @@ export function removeExportProperties(
   propertiesToRemove: Array<string>,
 ): void {
   for (let i = 0; i < objectPath.node.properties.length; i++) {
-    const property = objectPath.node.properties[i]
+    const property = objectPath.node.properties[i];
 
     if (
-      property.type !== `ObjectProperty` ||
-      property.value.type !== `Identifier` ||
+      property.type !== "ObjectProperty" ||
+      property.value.type !== "Identifier" ||
       !propertiesToRemove.includes(property.value.name)
     ) {
-      continue
+      continue;
     }
 
-    const propertyPath = objectPath.get(`properties.${i}`) as NodePath
+    const propertyPath = objectPath.get(`properties.${i}`) as NodePath;
 
     if (hasSibling(propertyPath) && !propertyPath.removed) {
-      propertyPath.remove()
-      continue
+      propertyPath.remove();
+      continue;
     }
 
     if (hasSibling(objectPath.parentPath) && !objectPath.parentPath.removed) {
-      objectPath.parentPath.remove()
-      break
+      objectPath.parentPath.remove();
+      break;
     }
 
     if (!exportPath.removed) {
-      exportPath.remove()
+      exportPath.remove();
     }
   }
 }

@@ -1,5 +1,5 @@
-import { tmpdir } from "node:os"
-import report from "../reporter"
+import { tmpdir } from "node:os";
+import report from "../reporter";
 
 /**
  * This function ensures that the current working directory on Windows
@@ -21,18 +21,18 @@ import report from "../reporter"
  * because it expects module paths to be case-sensitive.
  */
 export function ensureWindowsDriveLetterIsUppercase(): void {
-  const cwd = process.cwd()
-  const normalizedCwd = driveLetterToUpperCase(cwd)
+  const cwd = process.cwd();
+  const normalizedCwd = driveLetterToUpperCase(cwd);
 
   if (cwd !== normalizedCwd) {
     try {
       // When cwd is "c:\dir" then command "cd C:\dir" won't do anything
       // You have to change the dir twice to actually change the casing of the path
-      process.chdir(tmpdir())
-      process.chdir(normalizedCwd)
+      process.chdir(tmpdir());
+      process.chdir(normalizedCwd);
     } catch {
       // rollback
-      process.chdir(cwd)
+      process.chdir(cwd);
     }
 
     if (normalizedCwd !== process.cwd()) {
@@ -46,14 +46,14 @@ export function ensureWindowsDriveLetterIsUppercase(): void {
             cd "${normalizedCwd}"
           (Windows requires two directory switches to change the case of the drive letter)
         `),
-      )
+      );
     }
   }
 }
 
 function driveLetterToUpperCase(path: string): string {
-  const segments = path.split(`:\\`)
+  const segments = path.split(":\\");
   return segments.length > 1
-    ? segments.shift()!.toUpperCase() + `:\\` + segments.join(`:\\`)
-    : path
+    ? segments.shift()!.toUpperCase() + ":\\" + segments.join(":\\")
+    : path;
 }

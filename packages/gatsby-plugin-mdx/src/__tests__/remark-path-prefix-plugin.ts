@@ -1,39 +1,39 @@
-import { createProcessor } from "@mdx-js/mdx"
+import { createProcessor } from "@mdx-js/mdx";
 
-import { remarkPathPlugin } from "../remark-path-prefix-plugin"
+import { remarkPathPlugin } from "../remark-path-prefix-plugin";
 
-describe(`remark: path prefix`, () => {
-  it(`do not touch with empty prefix`, async () => {
+describe("remark: path prefix", () => {
+  it("do not touch with empty prefix", async () => {
     const processor = createProcessor({
       remarkPlugins: [
         [
           remarkPathPlugin,
           {
-            pathPrefix: ``,
+            pathPrefix: "",
           },
         ],
       ],
-    })
+    });
 
-    const res = await processor.process(`[Some Link](/some-page/)`)
+    const res = await processor.process("[Some Link](/some-page/)");
 
-    expect(res.value).toContain(`href: "/some-page/"`)
-  })
+    expect(res.value).toContain('href: "/some-page/"');
+  });
 
-  it(`attach prefix`, async () => {
+  it("attach prefix", async () => {
     const processor = createProcessor({
       remarkPlugins: [
         [
           remarkPathPlugin,
           {
-            pathPrefix: `/some/prefix`,
+            pathPrefix: "/some/prefix",
           },
         ],
       ],
-    })
+    });
 
-    const res = await processor.process(`[Some Link](/some-page/)`)
+    const res = await processor.process("[Some Link](/some-page/)");
 
-    expect(res.value).toContain(`href: "/some/prefix/some-page/"`)
-  })
-})
+    expect(res.value).toContain('href: "/some/prefix/some-page/"');
+  });
+});

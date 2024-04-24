@@ -1,28 +1,28 @@
-describe(`gatsby-plugin-stylus`, () => {
-  jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+describe("gatsby-plugin-stylus", () => {
+  jest.mock("../resolve", () => (module) => `/resolved/path/${module}`);
 
   const actions = {
     setWebpackConfig: jest.fn(),
-  }
+  };
 
   // loaders "mocks"
   const loaders = {
-    miniCssExtract: () => `miniCssExtract`,
-    css: args => `css(${JSON.stringify(args)})`,
-    postcss: args => `postcss(${JSON.stringify(args)})`,
-    null: () => `null`,
-  }
+    miniCssExtract: () => "miniCssExtract",
+    css: (args) => `css(${JSON.stringify(args)})`,
+    postcss: (args) => `postcss(${JSON.stringify(args)})`,
+    null: () => "null",
+  };
 
-  const { onCreateWebpackConfig } = require(`../gatsby-node`)
+  const { onCreateWebpackConfig } = require("../gatsby-node");
 
   beforeEach(() => {
-    actions.setWebpackConfig.mockReset()
-  })
+    actions.setWebpackConfig.mockReset();
+  });
 
-  const stylusPlugin = jest.fn().mockReturnValue(`foo`)
+  const stylusPlugin = jest.fn().mockReturnValue("foo");
 
   const tests = {
-    stages: [`develop`, `build-javascript`, `develop-html`, `build-html`],
+    stages: ["develop", "build-javascript", "develop-html", "build-html"],
     options: {
       "No options": {},
       "Stylus options #1": {
@@ -30,10 +30,10 @@ describe(`gatsby-plugin-stylus`, () => {
       },
       "Stylus options #2": {
         use: [stylusPlugin()],
-        import: [`file.js`, `file2.js`],
+        import: ["file.js", "file2.js"],
       },
       "PostCss plugins": {
-        postCssPlugins: [`test1`],
+        postCssPlugins: ["test1"],
       },
       "css-loader use commonjs": {
         cssLoaderOptions: {
@@ -44,11 +44,11 @@ describe(`gatsby-plugin-stylus`, () => {
         },
       },
     },
-  }
+  };
 
-  tests.stages.forEach(stage => {
+  tests.stages.forEach((stage) => {
     for (const label in tests.options) {
-      const options = tests.options[label]
+      const options = tests.options[label];
       it(`Stage: ${stage} / ${label}`, () => {
         onCreateWebpackConfig(
           {
@@ -56,10 +56,10 @@ describe(`gatsby-plugin-stylus`, () => {
             loaders,
             stage,
           },
-          options
-        )
-        expect(actions.setWebpackConfig).toMatchSnapshot()
-      })
+          options,
+        );
+        expect(actions.setWebpackConfig).toMatchSnapshot();
+      });
     }
-  })
-})
+  });
+});

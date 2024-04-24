@@ -1,58 +1,58 @@
-import { GatsbyHelpers } from "~/utils/gatsby-types"
-import manager from "cache-manager"
-import fs from "fs-extra"
-import fsStore from "cache-manager-fs-hash"
-import path from "node:path"
-import rimraf from "rimraf"
+import { GatsbyHelpers } from "~/utils/gatsby-types";
+import manager from "cache-manager";
+import fs from "fs-extra";
+import fsStore from "cache-manager-fs-hash";
+import path from "node:path";
+import rimraf from "rimraf";
 
-import { getStore, withPluginKey } from "~/store"
-import { getGatsbyApi } from "~/utils/get-gatsby-api"
+import { getStore, withPluginKey } from "~/store";
+import { getGatsbyApi } from "~/utils/get-gatsby-api";
 
-import fetchGraphql from "~/utils/fetch-graphql"
+import fetchGraphql from "~/utils/fetch-graphql";
 
 import {
   getTypeSettingsByType,
   buildTypeName,
-} from "~/steps/create-schema-customization/helpers"
+} from "~/steps/create-schema-customization/helpers";
 
-import { createMediaItemNode } from "~/steps/source-nodes/fetch-nodes/fetch-referenced-media-items"
-import type { Node } from "gatsby"
+import { createMediaItemNode } from "~/steps/source-nodes/fetch-nodes/fetch-referenced-media-items";
+import type { Node } from "gatsby";
 
-const MAX_CACHE_SIZE = 250
-const TTL = Number.MAX_SAFE_INTEGER
-const cacheDir = `.wordpress-cache/caches`
+const MAX_CACHE_SIZE = 250;
+const TTL = Number.MAX_SAFE_INTEGER;
+const cacheDir = ".wordpress-cache/caches";
 
-type Store = manager.StoreConfig["store"]
+type Store = manager.StoreConfig["store"];
 
 type ICacheOptions = {
-  name?: string | undefined
-  store?: Store | undefined
-}
+  name?: string | undefined;
+  store?: Store | undefined;
+};
 export default class Cache {
-  private store: Store
-  private name: string
-  private cacheDirectory: string
-  private cache: manager.MultiCache
-  constructor({ name = `db`, store = fsStore }: ICacheOptions = {}) {
-    this.name = name
-    this.store = store
-    this.cacheDirectory = cacheDir
+  private store: Store;
+  private name: string;
+  private cacheDirectory: string;
+  private cache: manager.MultiCache;
+  constructor({ name = "db", store = fsStore }: ICacheOptions = {}) {
+    this.name = name;
+    this.store = store;
+    this.cacheDirectory = cacheDir;
   }
 
   get cacheBase(): string {
-    return path.join(process.cwd(), this.cacheDirectory)
+    return path.join(process.cwd(), this.cacheDirectory);
   }
 
   get directory(): string {
-    return `${this.cacheBase}/${this.name}`
+    return `${this.cacheBase}/${this.name}`;
   }
 
   init(): Cache {
-    fs.ensureDirSync(this.directory)
+    fs.ensureDirSync(this.directory);
 
     const configs: Array<manager.StoreConfig> = [
       {
-        store: `memory`,
+        store: "memory",
         max: MAX_CACHE_SIZE,
         ttl: TTL,
       },
@@ -64,169 +64,171 @@ export default class Cache {
           ttl: TTL,
         },
       },
-    ]
+    ];
 
-    const caches = configs.map(cache => manager.caching(cache))
+    const caches = configs.map((cache) => manager.caching(cache));
 
-    this.cache = manager.multiCaching(caches)
+    this.cache = manager.multiCaching(caches);
 
-    return this
+    return this;
   }
 
   get(key: string): Promise<unknown> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialized yet, please run the init method first`,
-        )
+          "Cache wasn't initialized yet, please run the init method first",
+        );
       }
       this.cache.get(key, (err, res) => {
-        resolve(err ? undefined : res)
-      })
-    })
+        resolve(err ? undefined : res);
+      });
+    });
   }
 
   set(key: string, value: unknown, args = { ttl: TTL }): Promise<unknown> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialised yet, please run the init method first`,
-        )
+          "Cache wasn't initialised yet, please run the init method first",
+        );
       }
-      this.cache.set(key, value, args, err => {
-        resolve(err ? undefined : value)
-      })
-    })
+      this.cache.set(key, value, args, (err) => {
+        resolve(err ? undefined : value);
+      });
+    });
   }
 }
 
-const caches = new Map()
+const caches = new Map();
 
 export const getCacheInstance = (name: string): Cache => {
-  let cache = caches.get(name)
+  let cache = caches.get(name);
   if (!cache) {
-    cache = new Cache({ name }).init()
-    caches.set(name, cache)
+    cache = new Cache({ name }).init();
+    caches.set(name, cache);
   }
-  return cache
-}
+  return cache;
+};
 
 export const shouldHardCacheData = (): boolean => {
-  const isDevelop = process.env.NODE_ENV === `development`
+  const isDevelop = process.env.NODE_ENV === "development";
 
   if (!isDevelop) {
-    return false
+    return false;
   }
 
   const {
     pluginOptions: {
       develop: { hardCacheData },
     },
-  } = getStore().getState().gatsbyApi
+  } = getStore().getState().gatsbyApi;
 
-  return hardCacheData
-}
+  return hardCacheData;
+};
 
 export const setHardCachedData = async ({
   key,
   value,
 }: {
-  key: string
-  value: unknown
+  key: string;
+  value: unknown;
 }): Promise<unknown> => {
   if (!shouldHardCacheData()) {
-    return
+    return;
   }
 
-  const hardCache = getCacheInstance(withPluginKey(`wordpress-data`))
+  const hardCache = getCacheInstance(withPluginKey("wordpress-data"));
 
-  await hardCache.set(key, value)
-}
+  await hardCache.set(key, value);
+};
 
 export const getHardCachedData = async <T = Node>({
   key,
 }: {
-  key: string
+  key: string;
 }): Promise<T> => {
   if (!shouldHardCacheData()) {
-    return null
+    return null;
   }
 
-  const hardCache = getCacheInstance(withPluginKey(`wordpress-data`))
+  const hardCache = getCacheInstance(withPluginKey("wordpress-data"));
 
-  const data = await hardCache.get(key)
+  const data = await hardCache.get(key);
 
-  return data as T
-}
+  return data as T;
+};
 
 export const getHardCachedNodes = async (): Promise<null | Array<Node>> => {
-  const allWpNodes = await getHardCachedData<Array<Node>>({ key: `allWpNodes` })
+  const allWpNodes = await getHardCachedData<Array<Node>>({
+    key: "allWpNodes",
+  });
 
-  const shouldUseHardDataCache = allWpNodes?.length
+  const shouldUseHardDataCache = allWpNodes?.length;
 
   if (shouldUseHardDataCache) {
-    return allWpNodes
+    return allWpNodes;
   }
 
-  return null
-}
+  return null;
+};
 
-const staticFileCacheDirectory = `${process.cwd()}/.wordpress-cache/caches/public/static`
-const staticFileDirectory = `${process.cwd()}/public/static`
+const staticFileCacheDirectory = `${process.cwd()}/.wordpress-cache/caches/public/static`;
+const staticFileDirectory = `${process.cwd()}/public/static`;
 
 export const restoreStaticDirectory = async (): Promise<void> => {
-  await fs.copy(staticFileCacheDirectory, staticFileDirectory)
-}
+  await fs.copy(staticFileCacheDirectory, staticFileDirectory);
+};
 
 const copyStaticDirectory = async (): Promise<void> => {
-  await fs.copy(staticFileDirectory, staticFileCacheDirectory)
-}
+  await fs.copy(staticFileDirectory, staticFileCacheDirectory);
+};
 
 export const setHardCachedNodes = async ({
   helpers,
 }: {
-  helpers: GatsbyHelpers
+  helpers: GatsbyHelpers;
 }): Promise<void> => {
   if (!shouldHardCacheData()) {
-    return
+    return;
   }
 
-  const allNodes = await helpers.getNodes()
+  const allNodes = await helpers.getNodes();
 
   const allWpNodes = allNodes.filter(
-    (node: Node) => node.internal.owner === `gatsby-source-wordpress`,
-  )
+    (node: Node) => node.internal.owner === "gatsby-source-wordpress",
+  );
 
   await setHardCachedData({
-    key: `allWpNodes`,
+    key: "allWpNodes",
     value: allWpNodes,
-  })
+  });
 
   // if we're hard caching data,
   // that means any inline html images paths will be baked into
   // the processed hard cached nodes.
   // so we need to copy the static directory
-  await copyStaticDirectory()
-}
+  await copyStaticDirectory();
+};
 
 export async function clearHardCache(): Promise<void> {
-  await new Promise(resolve => {
-    const directory = new Cache().cacheBase
+  await new Promise((resolve) => {
+    const directory = new Cache().cacheBase;
 
-    rimraf.rimrafSync(directory)
+    rimraf.rimrafSync(directory);
 
-    resolve(undefined)
-  })
+    resolve(undefined);
+  });
 }
 
 export async function clearHardCachedNodes(): Promise<void> {
-  const hardCachedNodes = !!(await getHardCachedNodes())
+  const hardCachedNodes = !!(await getHardCachedNodes());
 
   if (hardCachedNodes) {
     await setHardCachedData({
-      key: `allWpNodes`,
+      key: "allWpNodes",
       value: null,
-    })
+    });
   }
 }
 
@@ -235,92 +237,92 @@ export async function setPersistentCache({
   key,
   value,
 }: {
-  key: string
-  value: unknown
+  key: string;
+  value: unknown;
 }): Promise<void> {
-  const { helpers } = getGatsbyApi()
+  const { helpers } = getGatsbyApi();
 
   await Promise.all([
     // set Gatsby cache
     helpers.cache.set(withPluginKey(key), value),
     // and hard cache
     setHardCachedData({ key, value }),
-  ])
+  ]);
 }
 
 export async function getPersistentCache({
   key,
 }: {
-  key: string
+  key: string;
 }): Promise<unknown> {
-  const { helpers } = getGatsbyApi()
+  const { helpers } = getGatsbyApi();
 
-  const cachedData = await helpers.cache.get(withPluginKey(key))
+  const cachedData = await helpers.cache.get(withPluginKey(key));
 
   if (cachedData) {
-    return cachedData
+    return cachedData;
   }
 
-  const hardCachedData = await getHardCachedData({ key })
+  const hardCachedData = await getHardCachedData({ key });
 
-  return hardCachedData
+  return hardCachedData;
 }
 
 export async function restoreHardCachedNodes({
   hardCachedNodes,
 }: {
-  hardCachedNodes: Array<Node>
+  hardCachedNodes: Array<Node>;
 }): Promise<Array<string>> {
-  const loggerTypeCounts = {}
+  const loggerTypeCounts = {};
 
-  const { helpers, pluginOptions } = getGatsbyApi()
-  const { reporter } = helpers
+  const { helpers, pluginOptions } = getGatsbyApi();
+  const { reporter } = helpers;
 
   // restore nodes
   await Promise.all(
-    hardCachedNodes.map(async node => {
+    hardCachedNodes.map(async (node) => {
       if (!loggerTypeCounts[node.internal.type]) {
-        loggerTypeCounts[node.internal.type] = 0
+        loggerTypeCounts[node.internal.type] = 0;
       }
 
-      loggerTypeCounts[node.internal.type] += 1
+      loggerTypeCounts[node.internal.type] += 1;
 
       // media items are created in a special way
-      if (node.internal.type.endsWith(`MediaItem`)) {
-        delete node.internal
+      if (node.internal.type.endsWith("MediaItem")) {
+        delete node.internal;
 
-        const { createContentDigest, actions } = helpers
+        const { createContentDigest, actions } = helpers;
 
         return createMediaItemNode({
           node,
           helpers,
           createContentDigest,
           actions,
-          parentName: `Hard cache restoration`,
+          parentName: "Hard cache restoration",
           // referencedMediaItemNodeIds,
           // allMediaItemNodes = [],
-        })
+        });
       }
 
       node.internal = {
         contentDigest: node.internal.contentDigest,
         type: node.internal.type,
-      } as Node["internal"]
+      } as Node["internal"];
 
-      const typeSettingsCache = {}
+      const typeSettingsCache = {};
 
       const typeSettings =
         // TODO: extend node type for wordpress?
         typeSettingsCache[node.type as string] ??
         getTypeSettingsByType({
           name: node.type,
-        })
+        });
 
-      let remoteNode = node
+      let remoteNode = node;
 
       if (
         typeSettings.beforeChangeNode &&
-        typeof typeSettings.beforeChangeNode === `function`
+        typeof typeSettings.beforeChangeNode === "function"
       ) {
         const {
           // additionalNodeIds: receivedAdditionalNodeIds,
@@ -328,7 +330,7 @@ export async function restoreHardCachedNodes({
           // cancelUpdate: receivedCancelUpdate,
         } =
           (await typeSettings.beforeChangeNode({
-            actionType: `CREATE_ALL`,
+            actionType: "CREATE_ALL",
             remoteNode,
             actions: helpers.actions,
             helpers,
@@ -337,45 +339,45 @@ export async function restoreHardCachedNodes({
             buildTypeName,
             type: node.type,
             wpStore: getStore(),
-          })) || {}
+          })) || {};
 
         if (receivedRemoteNode) {
-          remoteNode = receivedRemoteNode
+          remoteNode = receivedRemoteNode;
         }
       }
 
       // restore each node
       // TODO: update gatsby types
-      await helpers.actions.createNode(remoteNode)
+      await helpers.actions.createNode(remoteNode);
 
-      return null
+      return null;
     }),
-  )
+  );
 
   Object.entries(loggerTypeCounts).forEach(([typeName, count]) => {
     getStore().dispatch.logger.createActivityTimer({
       typeName,
       pluginOptions,
       reporter,
-    })
+    });
 
     getStore().dispatch.logger.incrementActivityTimer({
       typeName,
       by: count,
-      action: `restored`,
-    })
+      action: "restored",
+    });
 
     getStore().dispatch.logger.stopActivityTimer({
       typeName,
-      action: `restored`,
-    })
-  })
+      action: "restored",
+    });
+  });
 
   // restore static directory
-  await restoreStaticDirectory()
+  await restoreStaticDirectory();
 
   // build createdNodeIds id array to be cached 1 level above
-  const createdNodeIds = hardCachedNodes.map(node => node.id)
+  const createdNodeIds = hardCachedNodes.map((node) => node.id);
 
-  return createdNodeIds
+  return createdNodeIds;
 }

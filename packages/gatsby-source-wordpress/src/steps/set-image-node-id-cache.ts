@@ -1,5 +1,5 @@
-import { getStore } from "~/store"
-import { setPersistentCache } from "~/utils/cache"
+import { getStore } from "~/store";
+import { setPersistentCache } from "~/utils/cache";
 
 // since we create image nodes in resolvers
 // we cache our image node id's on post build for production
@@ -7,13 +7,13 @@ import { setPersistentCache } from "~/utils/cache"
 // so we can touch our image nodes in both develop and build
 // so they don't get garbage collected by Gatsby
 export async function setImageNodeIdCache(): Promise<void> {
-  const state = getStore().getState()
-  const { imageNodes } = state
+  const state = getStore().getState();
+  const { imageNodes } = state;
 
   if (imageNodes.nodeMetaByUrl) {
     await setPersistentCache({
-      key: `image-node-meta-by-url`,
+      key: "image-node-meta-by-url",
       value: imageNodes.nodeMetaByUrl,
-    })
+    });
   }
 }

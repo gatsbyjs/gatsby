@@ -1,6 +1,6 @@
-const path = require(`path`)
-const Url = require(`url`)
-const { createFilePath } = require(`gatsby-core-utils`)
+const path = require("path");
+const Url = require("url");
+const { createFilePath } = require("gatsby-core-utils");
 
 /**
  * getParsedPath
@@ -12,7 +12,7 @@ const { createFilePath } = require(`gatsby-core-utils`)
  * @return {Object}          path
  */
 function getParsedPath(url) {
-  return path.parse(Url.parse(url).pathname)
+  return path.parse(Url.parse(url).pathname);
 }
 
 /**
@@ -25,7 +25,7 @@ function getParsedPath(url) {
  * @return {String}          extension
  */
 export function getRemoteFileExtension(url) {
-  return getParsedPath(url).ext
+  return getParsedPath(url).ext;
 }
 
 /**
@@ -38,10 +38,10 @@ export function getRemoteFileExtension(url) {
  * @return {String}          filename
  */
 export function getRemoteFileName(url) {
-  return decodeURIComponent(getParsedPath(url).name)
+  return decodeURIComponent(getParsedPath(url).name);
 }
 
 // createFilePath should be imported from `gatsby-core-utils`
 // but some plugins already do import it from `gatsby-source-filesystem/utils`
 // so just keeping re-export here for backward compatibility
-export { createFilePath }
+export { createFilePath };

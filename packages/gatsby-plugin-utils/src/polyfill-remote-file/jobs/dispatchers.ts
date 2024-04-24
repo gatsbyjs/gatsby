@@ -1,27 +1,27 @@
-import path from "path"
-import { getGatsbyVersion } from "../utils/get-gatsby-version"
-import { generateFileUrl, generateImageUrl } from "../utils/url-generator"
-import type { Actions, Store } from "gatsby"
-import { getRequestHeadersForUrl } from "../utils/get-request-headers-for-url"
+import path from "path";
+import { getGatsbyVersion } from "../utils/get-gatsby-version";
+import { generateFileUrl, generateImageUrl } from "../utils/url-generator";
+import type { Actions, Store } from "gatsby";
+import { getRequestHeadersForUrl } from "../utils/get-request-headers-for-url";
 
 export function shouldDispatchLocalFileServiceJob(): boolean {
   return (
     !(
       global.__GATSBY?.fileCDNUrlGeneratorModulePath ||
-      process.env.GATSBY_CLOUD_IMAGE_CDN === `1` ||
-      process.env.GATSBY_CLOUD_IMAGE_CDN === `true`
-    ) && process.env.NODE_ENV === `production`
-  )
+      process.env.GATSBY_CLOUD_IMAGE_CDN === "1" ||
+      process.env.GATSBY_CLOUD_IMAGE_CDN === "true"
+    ) && process.env.NODE_ENV === "production"
+  );
 }
 
 export function shouldDispatchLocalImageServiceJob(): boolean {
   return (
     !(
       global.__GATSBY?.imageCDNUrlGeneratorModulePath ||
-      process.env.GATSBY_CLOUD_IMAGE_CDN === `1` ||
-      process.env.GATSBY_CLOUD_IMAGE_CDN === `true`
-    ) && process.env.NODE_ENV === `production`
-  )
+      process.env.GATSBY_CLOUD_IMAGE_CDN === "1" ||
+      process.env.GATSBY_CLOUD_IMAGE_CDN === "true"
+    ) && process.env.NODE_ENV === "production"
+  );
 }
 
 export function dispatchLocalFileServiceJob(
@@ -31,15 +31,15 @@ export function dispatchLocalFileServiceJob(
     mimeType,
     contentDigest,
   }: {
-    url: string
-    filename: string
-    mimeType: string
-    contentDigest: string
+    url: string;
+    filename: string;
+    mimeType: string;
+    contentDigest: string;
   },
   actions: Actions,
-  store?: Store
+  store?: Store,
 ): void {
-  const GATSBY_VERSION = getGatsbyVersion()
+  const GATSBY_VERSION = getGatsbyVersion();
   const publicUrl = generateFileUrl(
     {
       url,
@@ -47,23 +47,23 @@ export function dispatchLocalFileServiceJob(
       filename,
       internal: { contentDigest },
     },
-    store
-  ).split(`/`)
+    store,
+  ).split("/");
 
-  publicUrl.unshift(`public`)
+  publicUrl.unshift("public");
   // get filename and remove querystring
-  const outputFilename = decodeURI(publicUrl.pop()?.split(`?`)?.[0] as string)
+  const outputFilename = decodeURI(publicUrl.pop()?.split("?")?.[0] as string);
 
-  const httpHeaders = getRequestHeadersForUrl(url, store)
+  const httpHeaders = getRequestHeadersForUrl(url, store);
 
   actions.createJobV2(
     {
-      name: `FILE_CDN`,
+      name: "FILE_CDN",
       inputPaths: [],
       // we know it's an image so we just mimic an image
       outputDir: path.join(
         global.__GATSBY?.root || process.cwd(),
-        ...publicUrl.filter(Boolean)
+        ...publicUrl.filter(Boolean),
       ),
       args: {
         url,
@@ -73,12 +73,12 @@ export function dispatchLocalFileServiceJob(
       },
     },
     {
-      name: `gatsby`,
+      name: "gatsby",
       // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
       resolve: __dirname,
-    }
-  )
+    },
+  );
 }
 
 export function dispatchLocalImageServiceJob(
@@ -88,16 +88,16 @@ export function dispatchLocalImageServiceJob(
     mimeType,
     contentDigest,
   }: {
-    url: string
-    filename: string
-    mimeType: string
-    contentDigest: string
+    url: string;
+    filename: string;
+    mimeType: string;
+    contentDigest: string;
   },
   imageArgs: Parameters<typeof generateImageUrl>[1],
   actions: Actions,
-  store?: Store
+  store?: Store,
 ): void {
-  const GATSBY_VERSION = getGatsbyVersion()
+  const GATSBY_VERSION = getGatsbyVersion();
   const publicUrl = generateImageUrl(
     {
       url,
@@ -106,23 +106,23 @@ export function dispatchLocalImageServiceJob(
       internal: { contentDigest },
     },
     imageArgs,
-    store
-  ).split(`/`)
-  publicUrl.unshift(`public`)
+    store,
+  ).split("/");
+  publicUrl.unshift("public");
   // get filename and remove querystring
-  const outputFilename = decodeURI(publicUrl.pop()?.split(`?`)?.[0] as string)
+  const outputFilename = decodeURI(publicUrl.pop()?.split("?")?.[0] as string);
 
   const httpHeaders = getRequestHeadersForUrl(url, store) as
     | Record<string, string>
-    | undefined
+    | undefined;
 
   actions.createJobV2(
     {
-      name: `IMAGE_CDN`,
+      name: "IMAGE_CDN",
       inputPaths: [],
       outputDir: path.join(
         global.__GATSBY?.root || process.cwd(),
-        ...publicUrl.filter(Boolean)
+        ...publicUrl.filter(Boolean),
       ),
       args: {
         url,
@@ -133,10 +133,10 @@ export function dispatchLocalImageServiceJob(
       },
     },
     {
-      name: `gatsby`,
+      name: "gatsby",
       // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
       resolve: __dirname,
-    }
-  )
+    },
+  );
 }

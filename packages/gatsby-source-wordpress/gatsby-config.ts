@@ -1,17 +1,19 @@
-import { GatsbyConfig } from "gatsby"
+import type { GatsbyConfig } from "gatsby";
 
-function createConfig(config: { catchLinks?: boolean } = {}): GatsbyConfig {
-  const plugins = [`gatsby-plugin-image`, `gatsby-plugin-sharp`]
+function createConfig(
+  config: { catchLinks?: boolean | undefined } = {},
+): GatsbyConfig {
+  const plugins = ["gatsby-plugin-image", "gatsby-plugin-sharp"];
 
   if (config.catchLinks) {
-    plugins.push(`gatsby-plugin-catch-links`)
+    plugins.push("gatsby-plugin-catch-links");
   }
 
   return {
     plugins,
-  }
+  };
 }
 
-const config = createConfig()
+const config = createConfig();
 
-module.exports = config
+module.exports = config;

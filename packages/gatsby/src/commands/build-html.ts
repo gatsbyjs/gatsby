@@ -1,199 +1,196 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import Bluebird from "bluebird"
-import fs from "fs-extra"
-// @ts-ignore
-import reporter from "gatsby-cli/lib/reporter"
-// @ts-ignore
-import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
-import { chunk } from "lodash"
-import { build, watch } from "../utils/webpack/bundle"
-import * as path from "path"
-import fastq from "fastq"
+import Bluebird from "bluebird";
+import fs from "fs-extra";
+import reporter from "gatsby-cli/lib/reporter";
+import { createErrorFromString } from "gatsby-cli/lib/reporter/errors";
+import { chunk } from "lodash";
+import { build, watch } from "../utils/webpack/bundle";
+import * as path from "path";
+import fastq from "fastq";
 
-import { emitter, store } from "../redux"
-import webpack from "webpack"
-import { webpackConfig } from "../utils/webpack.config"
-import { structureWebpackErrors } from "../utils/webpack-error-utils"
-import * as buildUtils from "./build-utils"
-import { getPageData } from "../utils/get-page-data"
+import { emitter, store } from "../redux";
+import webpack from "webpack";
+import { webpackConfig } from "../utils/webpack.config";
+import { structureWebpackErrors } from "../utils/webpack-error-utils";
+import * as buildUtils from "./build-utils";
+import { getPageData } from "../utils/get-page-data";
 
-import { Span, SpanContext } from "opentracing"
-import type { IProgram, Stage } from "./types"
-import { ROUTES_DIRECTORY } from "../constants"
-import type { PackageJson } from "../.."
-import { getPublicPath } from "../utils/get-public-path"
+import { Span, SpanContext } from "opentracing";
+import type { IProgram, Stage } from "./types";
+import { ROUTES_DIRECTORY } from "../constants";
+import type { PackageJson } from "../..";
+import { getPublicPath } from "../utils/get-public-path";
 
-import type { GatsbyWorkerPool } from "../utils/worker/pool"
-import { stitchSliceForAPage } from "../utils/slices/stitching"
-import type { ISlicePropsEntry } from "../utils/worker/child/render-html"
-import { getPageMode } from "../utils/page-mode"
-import { extractUndefinedGlobal } from "../utils/extract-undefined-global"
-import { modifyPageDataForErrorMessage } from "../utils/page-data"
-import { setFilesFromDevelopHtmlCompilation } from "../utils/webpack/utils/is-file-inside-compilations"
+import type { GatsbyWorkerPool } from "../utils/worker/pool";
+import { stitchSliceForAPage } from "../utils/slices/stitching";
+import type { ISlicePropsEntry } from "../utils/worker/child/render-html";
+import { getPageMode } from "../utils/page-mode";
+import { extractUndefinedGlobal } from "../utils/extract-undefined-global";
+import { modifyPageDataForErrorMessage } from "../utils/page-data";
+import { setFilesFromDevelopHtmlCompilation } from "../utils/webpack/utils/is-file-inside-compilations";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type IActivity = any // TODO
+type IActivity = any; // TODO
 
-const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
+const isPreview = process.env.GATSBY_IS_PREVIEW === "true";
 
 export type IBuildArgs = IProgram & {
-  directory: string
-  sitePackageJson: PackageJson
-  prefixPaths: boolean
-  noUglify: boolean
-  logPages: boolean
-  writeToFile: boolean
-  profile: boolean
-  graphqlTracing: boolean
-  openTracingConfigFile: string
-  functionsPlatform?: string | undefined
-  functionsArch?: string | undefined
+  directory: string;
+  sitePackageJson: PackageJson;
+  prefixPaths: boolean;
+  noUglify: boolean;
+  logPages: boolean;
+  writeToFile: boolean;
+  profile: boolean;
+  graphqlTracing: boolean;
+  openTracingConfigFile: string;
+  functionsPlatform?: string | undefined;
+  functionsArch?: string | undefined;
   // TODO remove in v4
-  keepPageRenderer: boolean
-}
+  keepPageRenderer: boolean;
+};
 
 export type IBuildRendererResult = {
-  rendererPath: string
-  stats: webpack.Stats
-  close: ReturnType<typeof watch>["close"]
-}
+  rendererPath: string;
+  stats: webpack.Stats;
+  close: ReturnType<typeof watch>["close"];
+};
 
-let devssrWebpackCompiler: webpack.Watching | undefined
-let SSRBundleReceivedInvalidEvent = true
-let SSRBundleWillInvalidate = false
+let devssrWebpackCompiler: webpack.Watching | undefined;
+let SSRBundleReceivedInvalidEvent = true;
+let SSRBundleWillInvalidate = false;
 
 export function devSSRWillInvalidate(): void {
   // we only get one `invalid` callback, so if we already
   // set this to true, we can't really await next `invalid` event
   if (!SSRBundleReceivedInvalidEvent) {
-    SSRBundleWillInvalidate = true
+    SSRBundleWillInvalidate = true;
   }
 }
 
-let activeRecompilations = 0
+let activeRecompilations = 0;
 
 export function getDevSSRWebpack(): {
   recompileAndResumeWatching: (
     allowTimedFallback: boolean,
-  ) => Promise<() => void>
-  needToRecompileSSRBundle: boolean
+  ) => Promise<() => void>;
+  needToRecompileSSRBundle: boolean;
 } {
-  if (process.env.gatsby_executing_command !== `develop`) {
-    throw new Error(`This function can only be called in development`)
+  if (process.env.gatsby_executing_command !== "develop") {
+    throw new Error("This function can only be called in development");
   }
 
-  const watcher = devssrWebpackCompiler
-  const compiler = devssrWebpackCompiler?.compiler
+  const watcher = devssrWebpackCompiler;
+  const compiler = devssrWebpackCompiler?.compiler;
 
-  if (typeof watcher !== `undefined` && typeof compiler !== `undefined`) {
+  if (typeof watcher !== "undefined" && typeof compiler !== "undefined") {
     return {
       async recompileAndResumeWatching(
         allowTimedFallback: boolean,
       ): Promise<() => void> {
-        let isResolved = false
+        let isResolved = false;
 
         return await new Promise<() => void>((resolve) => {
           function stopWatching(): void {
-            activeRecompilations--
+            activeRecompilations--;
             if (activeRecompilations === 0) {
-              watcher?.suspend()
+              watcher?.suspend();
             }
           }
 
-          let timeout: NodeJS.Timeout | undefined
+          let timeout: NodeJS.Timeout | undefined;
 
           function finish(): void {
-            emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
+            emitter.off("DEV_SSR_COMPILATION_DONE", finish);
             if (!isResolved) {
-              isResolved = true
-              resolve(stopWatching)
+              isResolved = true;
+              resolve(stopWatching);
             }
             if (timeout) {
-              clearTimeout(timeout)
+              clearTimeout(timeout);
             }
           }
-          emitter.on(`DEV_SSR_COMPILATION_DONE`, finish)
+          emitter.on("DEV_SSR_COMPILATION_DONE", finish);
           // we reset it before we start compilation to be able to catch any invalid events
-          SSRBundleReceivedInvalidEvent = false
+          SSRBundleReceivedInvalidEvent = false;
           if (activeRecompilations === 0) {
-            watcher.resume()
+            watcher.resume();
           }
-          activeRecompilations++
+          activeRecompilations++;
 
           if (allowTimedFallback) {
             // Timeout after 1.5s.
             timeout = globalThis.setTimeout(() => {
               if (!isResolved) {
-                isResolved = true
-                resolve(stopWatching)
+                isResolved = true;
+                resolve(stopWatching);
               }
-            }, 1500)
+            }, 1500);
           }
-        })
+        });
       },
       needToRecompileSSRBundle:
         SSRBundleReceivedInvalidEvent || SSRBundleWillInvalidate,
-    }
+    };
   } else {
     return {
       needToRecompileSSRBundle: false,
       recompileAndResumeWatching: (): Promise<() => void> =>
         Promise.resolve((): void => {}),
-    }
+    };
   }
 }
 
-let oldHash = ``
-let newHash = ``
+let oldHash = "";
+let newHash = "";
 function runWebpack(
   compilerConfig,
   stage: Stage,
   directory: string,
 ): Promise<{
-  stats: webpack.Stats
-  close: ReturnType<typeof watch>["close"]
+  stats: webpack.Stats;
+  close: ReturnType<typeof watch>["close"];
 }> {
   const isDevSSREnabledAndViable =
-    process.env.GATSBY_EXPERIMENTAL_DEV_SSR && stage === `develop-html`
+    process.env.GATSBY_EXPERIMENTAL_DEV_SSR && stage === "develop-html";
 
   return new Promise((resolve, reject) => {
     if (isDevSSREnabledAndViable) {
-      const compiler = webpack(compilerConfig)
+      const compiler = webpack(compilerConfig);
 
       // because of this line we can't use our watch helper
       // These things should use emitter
-      compiler.hooks.invalid.tap(`ssr file invalidation`, () => {
-        SSRBundleReceivedInvalidEvent = true
-        SSRBundleWillInvalidate = false // we were waiting for this event, we are no longer waiting for it
-      })
+      compiler.hooks.invalid.tap("ssr file invalidation", () => {
+        SSRBundleReceivedInvalidEvent = true;
+        SSRBundleWillInvalidate = false; // we were waiting for this event, we are no longer waiting for it
+      });
 
-      let isFirstCompile = true
+      let isFirstCompile = true;
       const watcher = compiler.watch(
         {
           ignored: /node_modules/,
         },
         (err, stats) => {
           // this runs multiple times
-          emitter.emit(`DEV_SSR_COMPILATION_DONE`)
+          emitter.emit("DEV_SSR_COMPILATION_DONE");
           if (isFirstCompile) {
-            watcher.suspend()
-            isFirstCompile = false
+            watcher.suspend();
+            isFirstCompile = false;
           }
 
           if (err) {
-            return reject(err)
+            return reject(err);
           } else {
-            newHash = stats?.hash || ``
+            newHash = stats?.hash || "";
 
-            const { restartWorker } = require(
-              `../utils/dev-ssr/render-dev-html`,
-            )
+            const {
+              restartWorker,
+            } = require("../utils/dev-ssr/render-dev-html");
             // Make sure we use the latest version during development
-            if (oldHash !== `` && newHash !== oldHash) {
-              restartWorker(`${directory}/${ROUTES_DIRECTORY}render-page.js`)
+            if (oldHash !== "" && newHash !== oldHash) {
+              restartWorker(`${directory}/${ROUTES_DIRECTORY}render-page.js`);
             }
 
-            oldHash = newHash
+            oldHash = newHash;
 
             return resolve({
               stats: stats as webpack.Stats,
@@ -201,20 +198,20 @@ function runWebpack(
                 new Promise((resolve, reject): void =>
                   watcher.close((err) => (err ? reject(err) : resolve())),
                 ),
-            })
+            });
           }
         },
-      )
-      devssrWebpackCompiler = watcher
+      );
+      devssrWebpackCompiler = watcher;
     } else {
       build(compilerConfig).then(
         ({ stats, close }) => {
-          resolve({ stats, close })
+          resolve({ stats, close });
         },
         (err) => reject(err),
-      )
+      );
     }
-  })
+  });
 }
 
 async function doBuildRenderer(
@@ -222,16 +219,16 @@ async function doBuildRenderer(
   webpackConfig: webpack.Configuration,
   stage: Stage,
 ): Promise<IBuildRendererResult> {
-  const { stats, close } = await runWebpack(webpackConfig, stage, directory)
+  const { stats, close } = await runWebpack(webpackConfig, stage, directory);
 
   if (stats?.hasErrors()) {
     reporter.panicOnBuild(
       structureWebpackErrors(stage, stats.compilation.errors),
-    )
+    );
   }
 
-  if (stage === `develop-html`) {
-    setFilesFromDevelopHtmlCompilation(stats.compilation)
+  if (stage === "develop-html") {
+    setFilesFromDevelopHtmlCompilation(stats.compilation);
   }
 
   // render-page.js is hard coded in webpack.config
@@ -239,7 +236,7 @@ async function doBuildRenderer(
     rendererPath: `${directory}/${ROUTES_DIRECTORY}render-page.js`,
     stats,
     close,
-  }
+  };
 }
 
 async function doBuildPartialHydrationRenderer(
@@ -247,11 +244,11 @@ async function doBuildPartialHydrationRenderer(
   webpackConfig: webpack.Configuration,
   stage: Stage,
 ): Promise<IBuildRendererResult> {
-  const { stats, close } = await runWebpack(webpackConfig, stage, directory)
+  const { stats, close } = await runWebpack(webpackConfig, stage, directory);
   if (stats?.hasErrors()) {
     reporter.panicOnBuild(
       structureWebpackErrors(stage, stats.compilation.errors),
-    )
+    );
   }
 
   // render-page.js is hard coded in webpack.config
@@ -259,7 +256,7 @@ async function doBuildPartialHydrationRenderer(
     rendererPath: `${directory}/${ROUTES_DIRECTORY}render-page.js`,
     stats,
     close,
-  }
+  };
 }
 
 export async function buildRenderer(
@@ -277,15 +274,15 @@ export async function buildRenderer(
       parentSpan,
     },
     nonce,
-  )
+  );
 
-  return doBuildRenderer(program.directory, config, stage)
+  return doBuildRenderer(program.directory, config, stage);
 }
 
 export async function buildPartialHydrationRenderer(
   program: IProgram,
   stage: Stage,
-  parentSpan?: IActivity | undefined,
+  parentSpan?: Span | undefined,
   nonce?: string | undefined,
 ): Promise<IBuildRendererResult> {
   const config = await webpackConfig(
@@ -297,111 +294,111 @@ export async function buildPartialHydrationRenderer(
       parentSpan,
     },
     nonce,
-  )
+  );
 
   for (const rule of config.module?.rules ?? []) {
     // @ts-ignore
-    if (`./test.js`.match(rule?.test)) {
+    if ("./test.js".match(rule?.test)) {
       // @ts-ignore
       if (rule && !rule.use) {
         // @ts-ignore
-        rule.use = []
+        rule.use = [];
       }
 
       // @ts-ignore
       if (!Array.isArray(rule?.use)) {
         // @ts-ignore
-        rule.use = [rule.use]
+        rule.use = [rule.use];
       }
 
       // @ts-ignore
       rule.use.push({
         loader: require.resolve(
-          `../utils/webpack/loaders/partial-hydration-reference-loader`,
+          "../utils/webpack/loaders/partial-hydration-reference-loader",
         ),
-      })
+      });
     }
   }
 
   // TODO add caching
-  config.cache = false
+  config.cache = false;
 
   // @ts-ignore
   config.output.path = path.join(
     program.directory,
-    `.cache`,
-    `partial-hydration`,
-  )
+    ".cache",
+    "partial-hydration",
+  );
 
   // require.resolve might fail the build if the package is not installed
   // Instead of failing it'll be ignored
   try {
     // TODO collect javascript aliases to match the partial hydration bundle
     // @ts-ignore
-    config.resolve.alias[`gatsby-plugin-image`] = require.resolve(
-      `gatsby-plugin-image/dist/gatsby-image.browser.modern`,
-    )
+    config.resolve.alias["gatsby-plugin-image"] = require.resolve(
+      "gatsby-plugin-image/dist/gatsby-image.browser.modern",
+    );
   } catch (e) {
     // do nothing
   }
 
-  return doBuildPartialHydrationRenderer(program.directory, config, stage)
+  return doBuildPartialHydrationRenderer(program.directory, config, stage);
 }
 
 // TODO remove after v4 release and update cloud internals
 export async function deleteRenderer(rendererPath: string): Promise<void> {
   try {
-    await fs.remove(rendererPath)
-    await fs.remove(`${rendererPath}.map`)
+    await fs.remove(rendererPath);
+    await fs.remove(`${rendererPath}.map`);
   } catch (e) {
     // This function will fail on Windows with no further consequences.
   }
 }
 export type IRenderHtmlResult = {
-  unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
+  unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  previewErrors: Record<string, any>
+  previewErrors: Record<string, any>;
 
   slicesPropsPerPage: Record<
     string,
     Record<
       string,
       {
-        props: Record<string, unknown>
-        sliceName: string
-        hasChildren: boolean
+        props: Record<string, unknown>;
+        sliceName: string;
+        hasChildren: boolean;
       }
     >
-  >
-}
+  >;
+};
 
 async function renderHTMLQueue(
   workerPool: GatsbyWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
   pages: Array<string>,
-  stage: Stage = `build-html`,
+  stage: Stage = "build-html",
 ): Promise<void> {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
   const envVars: Array<[string, string | undefined]> = [
-    [`NODE_ENV`, process.env.NODE_ENV],
-    [`gatsby_executing_command`, process.env.gatsby_executing_command],
-    [`gatsby_log_level`, process.env.gatsby_log_level],
-  ]
+    ["NODE_ENV", process.env.NODE_ENV],
+    ["gatsby_executing_command", process.env.gatsby_executing_command],
+    ["gatsby_log_level", process.env.gatsby_log_level],
+  ];
 
-  const segments = chunk(pages, 50)
+  const segments = chunk(pages, 50);
 
-  const sessionId = Date.now()
+  const sessionId = Date.now();
 
-  const { webpackCompilationHash } = store.getState()
+  const { webpackCompilationHash } = store.getState();
 
   const renderHTML =
-    stage === `build-html`
+    stage === "build-html"
       ? workerPool.single.renderHTMLProd
-      : workerPool.single.renderHTMLDev
+      : workerPool.single.renderHTMLDev;
 
-  const uniqueUnsafeBuiltinUsedStacks = new Set<string>()
+  const uniqueUnsafeBuiltinUsedStacks = new Set<string>();
 
   try {
     await Bluebird.map(segments, async (pageSegment) => {
@@ -411,62 +408,62 @@ async function renderHTMLQueue(
         paths: pageSegment,
         sessionId,
         webpackCompilationHash,
-      })
+      });
 
       if (isPreview) {
-        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
-        const seenErrors = new Set()
-        const errorMessages = new Map()
+        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult;
+        const seenErrors = new Set();
+        const errorMessages = new Map();
         await Promise.all(
           Object.entries(htmlRenderMeta.previewErrors).map(
             async ([pagePath, error]) => {
               if (!seenErrors.has(error.stack)) {
                 errorMessages.set(error.stack, {
                   pagePaths: [pagePath],
-                })
-                seenErrors.add(error.stack)
+                });
+                seenErrors.add(error.stack);
                 const prettyError = createErrorFromString(
                   error.stack,
                   `${htmlComponentRendererPath}.map`,
-                )
+                );
 
-                const errorMessageStr = `${prettyError.stack}${prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``}`
+                const errorMessageStr = `${prettyError.stack}${prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ""}`;
 
-                const errorMessage = errorMessages.get(error.stack)
-                errorMessage.errorMessage = errorMessageStr
-                errorMessages.set(error.stack, errorMessage)
+                const errorMessage = errorMessages.get(error.stack);
+                errorMessage.errorMessage = errorMessageStr;
+                errorMessages.set(error.stack, errorMessage);
               } else {
-                const errorMessage = errorMessages.get(error.stack)
-                errorMessage.pagePaths.push(pagePath)
-                errorMessages.set(error.stack, errorMessage)
+                const errorMessage = errorMessages.get(error.stack);
+                errorMessage.pagePaths.push(pagePath);
+                errorMessages.set(error.stack, errorMessage);
               }
             },
           ),
-        )
+        );
 
         for (const value of errorMessages.values()) {
           const errorMessage = `The following page(s) saw this error when building their HTML:\n\n${value.pagePaths
             .map((p) => `- ${p}`)
-            .join(`\n`)}\n\n${value.errorMessage}`
+            .join("\n")}\n\n${value.errorMessage}`;
           reporter.error({
-            id: `95314`,
+            id: "95314",
             context: { errorMessage },
-          })
+          });
         }
       }
 
-      if (stage === `build-html`) {
-        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
+      if (stage === "build-html") {
+        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult;
         store.dispatch({
-          type: `HTML_GENERATED`,
+          type: "HTML_GENERATED",
           payload: pageSegment,
-        })
+        });
 
-        if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+        if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
           store.dispatch({
-            type: `SET_SLICES_PROPS`,
+            type: "SET_SLICES_PROPS",
             payload: htmlRenderMeta.slicesPropsPerPage,
-          })
+          });
         }
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -474,15 +471,15 @@ async function renderHTMLQueue(
           htmlRenderMeta.unsafeBuiltinsUsageByPagePath,
         )) {
           for (const unsafeUsageStack of arrayOfUsages) {
-            uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
+            uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack);
           }
         }
       }
 
       if (activity && activity.tick) {
-        activity.tick(pageSegment.length)
+        activity.tick(pageSegment.length);
       }
-    })
+    });
   } catch (e) {
     if (e?.context?.unsafeBuiltinsUsageByPagePath) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -491,30 +488,30 @@ async function renderHTMLQueue(
       )) {
         // @ts-ignore TS doesn't know arrayOfUsages is Iterable
         for (const unsafeUsageStack of arrayOfUsages) {
-          uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
+          uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack);
         }
       }
     }
-    throw e
+    throw e;
   } finally {
     if (uniqueUnsafeBuiltinUsedStacks.size > 0) {
       console.warn(
-        `Unsafe builtin method was used, future builds will need to rebuild all pages`,
-      )
+        "Unsafe builtin method was used, future builds will need to rebuild all pages",
+      );
       store.dispatch({
-        type: `SSR_USED_UNSAFE_BUILTIN`,
-      })
+        type: "SSR_USED_UNSAFE_BUILTIN",
+      });
     }
 
     for (const unsafeBuiltinUsedStack of uniqueUnsafeBuiltinUsedStacks) {
       const prettyError = createErrorFromString(
         unsafeBuiltinUsedStack,
         `${htmlComponentRendererPath}.map`,
-      )
+      );
 
-      const warningMessage = `${prettyError.stack}${prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``}`
+      const warningMessage = `${prettyError.stack}${prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ""}`;
 
-      reporter.warn(warningMessage)
+      reporter.warn(warningMessage);
     }
   }
 }
@@ -528,16 +525,16 @@ async function renderPartialHydrationQueue(
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
   const envVars: Array<[string, string | undefined]> = [
-    [`NODE_ENV`, process.env.NODE_ENV],
-    [`gatsby_executing_command`, process.env.gatsby_executing_command],
-    [`gatsby_log_level`, process.env.gatsby_log_level],
-  ]
+    ["NODE_ENV", process.env.NODE_ENV],
+    ["gatsby_executing_command", process.env.gatsby_executing_command],
+    ["gatsby_log_level", process.env.gatsby_log_level],
+  ];
 
-  const segments = chunk(pages, 50)
-  const sessionId = Date.now()
+  const segments = chunk(pages, 50);
+  const sessionId = Date.now();
 
-  const { config } = store.getState()
-  const { assetPrefix, pathPrefix } = config
+  const { config } = store.getState();
+  const { assetPrefix, pathPrefix } = config;
 
   // Let the error bubble up
   await Promise.all(
@@ -547,29 +544,29 @@ async function renderPartialHydrationQueue(
         paths: pageSegment,
         sessionId,
         pathPrefix: getPublicPath({ assetPrefix, pathPrefix, ...program }),
-      })
+      });
 
       if (activity && activity.tick) {
-        activity.tick(pageSegment.length)
+        activity.tick(pageSegment.length);
       }
     }),
-  )
+  );
 }
 
 class BuildHTMLError extends Error {
-  codeFrame = ``
+  codeFrame = "";
   context?: {
-    path: string
-  }
+    path: string;
+  };
 
   constructor(error: Error) {
-    super(error.message)
+    super(error.message);
 
     // We must use getOwnProperty because keys like `stack` are not enumerable,
     // but we want to copy over the entire error
     Object.getOwnPropertyNames(error).forEach((key) => {
-      this[key] = error[key]
-    })
+      this[key] = error[key];
+    });
   }
 }
 
@@ -581,36 +578,36 @@ export async function doBuildPages(
   stage: Stage,
 ): Promise<void> {
   try {
-    await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
+    await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage);
   } catch (error) {
-    const prettyError = createErrorFromString(error, `${rendererPath}.map`)
+    const prettyError = createErrorFromString(error, `${rendererPath}.map`);
 
-    const buildError = new BuildHTMLError(prettyError)
-    buildError.context = error.context
+    const buildError = new BuildHTMLError(prettyError);
+    buildError.context = error.context;
 
     if (error?.context?.path) {
-      const pageData = await getPageData(error.context.path)
+      const pageData = await getPageData(error.context.path);
       const modifiedPageDataForErrorMessage =
-        modifyPageDataForErrorMessage(pageData)
+        modifyPageDataForErrorMessage(pageData);
 
-      const errorMessage = `Truncated page data information for the failed page "${error.context.path}": ${JSON.stringify(modifiedPageDataForErrorMessage, null, 2)}`
+      const errorMessage = `Truncated page data information for the failed page "${error.context.path}": ${JSON.stringify(modifiedPageDataForErrorMessage, null, 2)}`;
 
       // This is our only error during preview so customize it a bit + add the
       // pretty build error.
       if (isPreview) {
         reporter.error({
-          id: `95314`,
+          id: "95314",
           context: { errorMessage },
           error: buildError,
-        })
+        });
       } else {
-        reporter.error(errorMessage)
+        reporter.error(errorMessage);
       }
     }
 
     // Don't crash the builder when we're in preview-mode.
     if (!isPreview) {
-      throw buildError
+      throw buildError;
     }
   }
 }
@@ -623,21 +620,21 @@ export async function buildHTML({
   activity,
   workerPool,
 }: {
-  program: IProgram
-  stage: Stage
-  pagePaths: Array<string>
-  activity: IActivity
-  workerPool: GatsbyWorkerPool
+  program: IProgram;
+  stage: Stage;
+  pagePaths: Array<string>;
+  activity: IActivity;
+  workerPool: GatsbyWorkerPool;
 }): Promise<void> {
-  const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
-  await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
+  const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`;
+  await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage);
 
   if (
-    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
-      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
-    _CFLAGS_.GATSBY_MAJOR === `5`
+    (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
+      process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
+    _CFLAGS_.GATSBY_MAJOR === "5"
   ) {
-    await renderPartialHydrationQueue(workerPool, activity, pagePaths, program)
+    await renderPartialHydrationQueue(workerPool, activity, pagePaths, program);
   }
 }
 
@@ -646,135 +643,137 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   parentSpan,
   program,
 }: {
-  workerPool: GatsbyWorkerPool
-  parentSpan?: Span | undefined
-  program: IBuildArgs
+  workerPool: GatsbyWorkerPool;
+  parentSpan?: Span | undefined;
+  program: IBuildArgs;
 }): Promise<{
-  toRegenerate: Array<string>
-  toDelete: Array<string>
+  toRegenerate: Array<string>;
+  toDelete: Array<string>;
 }> {
-  const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
-  buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
+  const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`;
+  buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged();
 
   const { toRegenerate, toDelete, toCleanupFromTrackedState } =
-    buildUtils.calcDirtyHtmlFiles(store.getState())
+    buildUtils.calcDirtyHtmlFiles(store.getState());
 
   store.dispatch({
-    type: `HTML_TRACKED_PAGES_CLEANUP`,
+    type: "HTML_TRACKED_PAGES_CLEANUP",
     payload: toCleanupFromTrackedState,
-  })
+  });
 
   if (toRegenerate.length > 0) {
     const buildHTMLActivityProgress = reporter.createProgress(
-      `Building static HTML for pages`,
+      "Building static HTML for pages",
       toRegenerate.length,
       0,
+      // @ts-ignore
       {
         parentSpan,
       },
-    )
-    buildHTMLActivityProgress.start()
+    );
+    buildHTMLActivityProgress.start();
     try {
       await doBuildPages(
         rendererPath,
         toRegenerate,
         buildHTMLActivityProgress,
         workerPool,
-        `build-html`,
-      )
+        "build-html",
+      );
     } catch (err) {
-      let id = `95313`
+      let id = "95313";
       const context = {
         errorPath: err.context && err.context.path,
-        undefinedGlobal: ``,
-      }
+        undefinedGlobal: "",
+      };
 
-      const undefinedGlobal = extractUndefinedGlobal(err)
+      const undefinedGlobal = extractUndefinedGlobal(err);
 
       if (undefinedGlobal) {
-        id = `95312`
-        context.undefinedGlobal = undefinedGlobal
+        id = "95312";
+        context.undefinedGlobal = undefinedGlobal;
       }
 
       buildHTMLActivityProgress.panic({
         id,
         context,
         error: err,
-      })
+      });
     }
-    buildHTMLActivityProgress.end()
+    buildHTMLActivityProgress.end();
   } else {
-    reporter.info(`There are no new or changed html files to build.`)
+    reporter.info("There are no new or changed html files to build.");
   }
 
   if (
-    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
-      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
-    _CFLAGS_.GATSBY_MAJOR === `5`
+    (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
+      process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
+    _CFLAGS_.GATSBY_MAJOR === "5"
   ) {
     if (toRegenerate.length > 0) {
       const buildHTMLActivityProgress = reporter.createProgress(
-        `Building partial HTML for pages`,
+        "Building partial HTML for pages",
         toRegenerate.length,
         0,
+        // @ts-ignore
         {
           parentSpan,
         },
-      )
+      );
       try {
-        buildHTMLActivityProgress.start()
+        buildHTMLActivityProgress.start();
         await renderPartialHydrationQueue(
           workerPool,
           buildHTMLActivityProgress,
           toRegenerate,
           program,
-        )
+        );
       } catch (error) {
         // Generic error with page path and useful stack trace, accurate code frame can be a future improvement
         buildHTMLActivityProgress.panic({
-          id: `80000`,
+          id: "80000",
           context: error.context,
           error,
-        })
+        });
       } finally {
-        buildHTMLActivityProgress.end()
+        buildHTMLActivityProgress.end();
       }
     }
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR !== `5` && !program.keepPageRenderer) {
+  if (_CFLAGS_.GATSBY_MAJOR !== "5" && !program.keepPageRenderer) {
     try {
-      await deleteRenderer(rendererPath)
+      await deleteRenderer(rendererPath);
     } catch (err) {
       // pass through
     }
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+  if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
     await buildSlices({
       program,
       workerPool,
       parentSpan,
-    })
+    });
 
     await stitchSlicesIntoPagesHTML({
-      publicDir: path.join(program.directory, `public`),
+      publicDir: path.join(program.directory, "public"),
       parentSpan,
-    })
+    });
   }
 
   if (toDelete.length > 0) {
-    const publicDir = path.join(program.directory, `public`)
+    const publicDir = path.join(program.directory, "public");
     const deletePageDataActivityTimer = reporter.activityTimer(
-      `Delete previous page data`,
-    )
-    deletePageDataActivityTimer.start()
-    await buildUtils.removePageFiles(publicDir, toDelete)
+      "Delete previous page data",
+    );
+    deletePageDataActivityTimer.start();
+    await buildUtils.removePageFiles(publicDir, toDelete);
 
-    deletePageDataActivityTimer.end()
+    deletePageDataActivityTimer.end();
   }
 
-  return { toRegenerate, toDelete }
+  return { toRegenerate, toDelete };
 }
 
 export async function buildSlices({
@@ -782,14 +781,14 @@ export async function buildSlices({
   workerPool,
   parentSpan,
 }: {
-  workerPool: GatsbyWorkerPool
-  parentSpan?: Span | undefined
-  program: IBuildArgs
+  workerPool: GatsbyWorkerPool;
+  parentSpan?: Span | undefined;
+  program: IBuildArgs;
 }): Promise<void> {
-  const state = store.getState()
+  const state = store.getState();
 
   // for now we always render everything, everytime
-  const slicesProps: Array<ISlicePropsEntry> = []
+  const slicesProps: Array<ISlicePropsEntry> = [];
   for (const [
     sliceId,
     { props, sliceName, hasChildren, pages, dirty },
@@ -800,115 +799,117 @@ export async function buildSlices({
         props,
         sliceName,
         hasChildren,
-      })
+      });
     }
   }
 
   if (slicesProps.length > 0) {
     const buildHTMLActivityProgress = reporter.activityTimer(
       `Building slices HTML (${slicesProps.length})`,
+      // @ts-ignore
       {
         parentSpan,
       },
-    )
-    buildHTMLActivityProgress.start()
+    );
+    buildHTMLActivityProgress.start();
 
-    const htmlComponentRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
+    const htmlComponentRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`;
     try {
-      const slices = Array.from(state.slices.entries())
+      const slices = Array.from(state.slices.entries());
 
-      const staticQueriesBySliceTemplate = {}
+      const staticQueriesBySliceTemplate = {};
       for (const slice of state.slices.values()) {
         staticQueriesBySliceTemplate[slice.componentPath] =
-          state.staticQueriesByTemplate.get(slice.componentPath)
+          state.staticQueriesByTemplate.get(slice.componentPath);
       }
 
       await workerPool.single.renderSlices({
-        publicDir: path.join(program.directory, `public`),
+        publicDir: path.join(program.directory, "public"),
         htmlComponentRendererPath,
         slices,
         slicesProps,
         staticQueriesBySliceTemplate,
-      })
+      });
     } catch (err) {
       const prettyError = createErrorFromString(
         err.stack,
         `${htmlComponentRendererPath}.map`,
-      )
+      );
 
-      const undefinedGlobal = extractUndefinedGlobal(err)
+      const undefinedGlobal = extractUndefinedGlobal(err);
 
-      let id = `11339`
+      let id = "11339";
 
       if (undefinedGlobal) {
-        id = `11340`
-        err.context.undefinedGlobal = undefinedGlobal
+        id = "11340";
+        err.context.undefinedGlobal = undefinedGlobal;
       }
 
       buildHTMLActivityProgress.panic({
         id,
         context: err.context,
         error: prettyError,
-      })
+      });
     } finally {
-      buildHTMLActivityProgress.end()
+      buildHTMLActivityProgress.end();
     }
 
     // for now separate action for cleaning dirty flag and removing stale entries
     store.dispatch({
-      type: `SLICES_PROPS_RENDERED`,
+      type: "SLICES_PROPS_RENDERED",
       payload: slicesProps,
-    })
+    });
   } else {
-    reporter.info(`There are no new or changed slice html files to build.`)
+    reporter.info("There are no new or changed slice html files to build.");
   }
 
   store.dispatch({
-    type: `SLICES_PROPS_REMOVE_STALE`,
-  })
+    type: "SLICES_PROPS_REMOVE_STALE",
+  });
 }
 
 export async function stitchSlicesIntoPagesHTML({
   publicDir,
   parentSpan,
 }: {
-  publicDir: string
-  parentSpan?: Span | undefined
+  publicDir: string;
+  parentSpan?: Span | undefined;
 }): Promise<void> {
-  const stitchSlicesActivity = reporter.activityTimer(`stitching slices`, {
+  // @ts-ignore
+  const stitchSlicesActivity = reporter.activityTimer("stitching slices", {
     parentSpan,
-  })
-  stitchSlicesActivity.start()
+  });
+  stitchSlicesActivity.start();
   try {
     const {
       html: { pagesThatNeedToStitchSlices },
       pages,
-    } = store.getState()
+    } = store.getState();
 
     const stitchQueue = fastq<void, string, void>(async (pagePath, cb) => {
-      await stitchSliceForAPage({ pagePath, publicDir })
-      cb(null)
-    }, 25)
+      await stitchSliceForAPage({ pagePath, publicDir });
+      cb(null);
+    }, 25);
 
     for (const pagePath of pagesThatNeedToStitchSlices) {
-      const page = pages.get(pagePath)
+      const page = pages.get(pagePath);
       if (!page) {
-        continue
+        continue;
       }
 
-      if (getPageMode(page) === `SSG`) {
-        stitchQueue.push(pagePath)
+      if (getPageMode(page) === "SSG") {
+        stitchQueue.push(pagePath);
       }
     }
 
     if (!stitchQueue.idle()) {
       await new Promise((resolve) => {
-        stitchQueue.drain = resolve as () => unknown
-      })
+        stitchQueue.drain = resolve as () => unknown;
+      });
     }
 
-    store.dispatch({ type: `SLICES_STITCHED` })
+    store.dispatch({ type: "SLICES_STITCHED" });
   } finally {
-    stitchSlicesActivity.end()
+    stitchSlicesActivity.end();
   }
 }

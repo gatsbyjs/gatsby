@@ -1,25 +1,25 @@
-import slugify from "slugify"
+import slugify from "slugify";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import { lexicographicSortSchema } from "graphql"
-import type { GraphQLSchema } from "graphql"
-import type { IDefinitionMeta } from "../../redux/types"
+import _ from "lodash";
+import { lexicographicSortSchema } from "graphql";
+import type { GraphQLSchema } from "graphql";
+import type { IDefinitionMeta } from "../../redux/types";
 
-type DefinitionName = string
-type DefinitionMap = Map<DefinitionName, IDefinitionMeta>
+type DefinitionName = string;
+type DefinitionMap = Map<DefinitionName, IDefinitionMeta>;
 
 /**
  * Makes the schema deterministic by sorting it (so on new saves the whole file doesn't change, only the change that was made). It can be used for e.g. tests when two schema diffs should be compared.
  */
 export function stabilizeSchema(schema: GraphQLSchema): GraphQLSchema {
-  return lexicographicSortSchema(schema)
+  return lexicographicSortSchema(schema);
 }
 
 export function sortDefinitions(
   a: IDefinitionMeta,
   b: IDefinitionMeta,
 ): number {
-  return a.name.localeCompare(b.name)
+  return a.name.localeCompare(b.name);
 }
 
 /**
@@ -32,25 +32,25 @@ function guessIfUnnnamedQuery({
   name,
   filePath,
 }: IDefinitionMeta): boolean {
-  const queryType = isStaticQuery ? `static` : `page`
+  const queryType = isStaticQuery ? "static" : "page";
   const generatedQueryName = slugify(filePath, {
-    replacement: ` `,
+    replacement: " ",
     lower: false,
-  })
-  const pattern = _.camelCase(`${queryType}-${generatedQueryName}`)
-  return name.startsWith(pattern)
+  });
+  const pattern = _.camelCase(`${queryType}-${generatedQueryName}`);
+  return name.startsWith(pattern);
 }
 
 function guessIfThirdpartyDefinition({ filePath }: IDefinitionMeta): boolean {
-  return /(node_modules|\.yarn|\.cache)/.test(filePath)
+  return /(node_modules|\.yarn|\.cache)/.test(filePath);
 }
 
 function isFragmentDefinition(def: IDefinitionMeta): boolean {
-  return def.isFragment
+  return def.isFragment;
 }
 
 function isThirdpartyFragment(def: IDefinitionMeta): boolean {
-  return isFragmentDefinition(def) && guessIfThirdpartyDefinition(def)
+  return isFragmentDefinition(def) && guessIfThirdpartyDefinition(def);
 }
 
 /**
@@ -59,19 +59,19 @@ function isThirdpartyFragment(def: IDefinitionMeta): boolean {
  */
 function isTargetDefinition(def: IDefinitionMeta): boolean {
   if (isThirdpartyFragment(def)) {
-    return true
+    return true;
   }
-  return !(guessIfThirdpartyDefinition(def) || guessIfUnnnamedQuery(def))
+  return !(guessIfThirdpartyDefinition(def) || guessIfUnnnamedQuery(def));
 }
 
 export function filterTargetDefinitions(
   defMap: DefinitionMap,
 ): Map<string, IDefinitionMeta> {
-  const defs: Array<[name: string, def: IDefinitionMeta]> = []
+  const defs: Array<[name: string, def: IDefinitionMeta]> = [];
   for (const [name, def] of defMap) {
     if (isTargetDefinition(def)) {
-      defs.push([name, def])
+      defs.push([name, def]);
     }
   }
-  return new Map(defs)
+  return new Map(defs);
 }

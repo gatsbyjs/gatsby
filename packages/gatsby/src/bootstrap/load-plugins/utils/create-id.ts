@@ -1,5 +1,5 @@
-import { createNodeId } from "../../../utils/create-node-id"
-import type { IPluginRefObject } from "../types"
+import { createNodeId } from "../../../utils/create-node-id";
+import type { IPluginRefObject } from "../types";
 
 /**
  * Make sure key is unique to plugin options. E.g. there could
@@ -14,7 +14,7 @@ export function createPluginId(
   pluginObject: IPluginRefObject | null = null,
 ): string {
   return createNodeId(
-    name + (pluginObject ? JSON.stringify(pluginObject.options) : ``),
-    `Plugin`,
-  )
+    name + (pluginObject ? JSON.stringify(pluginObject.options) : ""),
+    "Plugin",
+  );
 }

@@ -1,33 +1,33 @@
-import { sourceNodes } from "../src/source-nodes"
-import * as helpersModule from "../src/helpers"
-import * as updateCacheModule from "../src/update-cache"
-import * as createOperationsModule from "../src/create-operations"
-import * as sourceFromOperationModule from "../src/source-from-operation"
-import { mockGatsbyApi, mockPluginOptions, mockOperations } from "./fixtures"
+import { sourceNodes } from "../src/source-nodes";
+import * as helpersModule from "../src/helpers";
+import * as updateCacheModule from "../src/update-cache";
+import * as createOperationsModule from "../src/create-operations";
+import * as sourceFromOperationModule from "../src/source-from-operation";
+import { mockGatsbyApi, mockPluginOptions, mockOperations } from "./fixtures";
 
-const getLastBuildTime = jest.spyOn(helpersModule, `getLastBuildTime`)
+const getLastBuildTime = jest.spyOn(helpersModule, "getLastBuildTime");
 
 jest
-  .spyOn(createOperationsModule, `createOperations`)
+  .spyOn(createOperationsModule, "createOperations")
   // @ts-ignore
-  .mockImplementation(mockOperations)
+  .mockImplementation(mockOperations);
 
-const sourceFromOperation = jest.fn()
+const sourceFromOperation = jest.fn();
 
 const makeSourceFromOperation = jest
-  .spyOn(sourceFromOperationModule, `makeSourceFromOperation`)
-  .mockImplementation(() => sourceFromOperation)
+  .spyOn(sourceFromOperationModule, "makeSourceFromOperation")
+  .mockImplementation(() => sourceFromOperation);
 
 const updateCache = jest
-  .spyOn(updateCacheModule, `updateCache`)
+  .spyOn(updateCacheModule, "updateCache")
   // @ts-ignore
-  .getMockImplementation.mockReturnValue(undefined)
+  .getMockImplementation.mockReturnValue(undefined);
 
 const setLastBuildTime = jest
-  .spyOn(helpersModule, `setLastBuildTime`)
-  .mockReturnValue(undefined)
+  .spyOn(helpersModule, "setLastBuildTime")
+  .mockReturnValue(undefined);
 
-const connections = [`collections`, `orders`, `locations`]
+const connections = ["collections", "orders", "locations"];
 
 function generateTestName(
   prioritize,
@@ -35,20 +35,20 @@ function generateTestName(
   shopifyConnections,
 ): string {
   const modifiers = [
-    lastBuildTime ? `fresh` : `incremental`,
-    prioritize ? `priority` : `non-priority`,
-    shopifyConnections.length > 0 ? `with` : `without`,
-  ]
-  return `successfully runs a ${modifiers[0]} ${modifiers[1]} build ${modifiers[2]} connections`
+    lastBuildTime ? "fresh" : "incremental",
+    prioritize ? "priority" : "non-priority",
+    shopifyConnections.length > 0 ? "with" : "without",
+  ];
+  return `successfully runs a ${modifiers[0]} ${modifiers[1]} build ${modifiers[2]} connections`;
 }
 
-const gatsbyApi = mockGatsbyApi()
-const pluginOptions = mockPluginOptions()
+const gatsbyApi = mockGatsbyApi();
+const pluginOptions = mockPluginOptions();
 
-describe(`sourceNodes`, () => {
+describe("sourceNodes", () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-  })
+    jest.clearAllMocks();
+  });
 
   for (const prioritize of [false, true]) {
     for (const lastBuildTime of [undefined, new Date(0)]) {
@@ -56,24 +56,26 @@ describe(`sourceNodes`, () => {
         it(
           generateTestName(prioritize, lastBuildTime, shopifyConnections),
           async () => {
-            getLastBuildTime.mockImplementationOnce(() => lastBuildTime)
+            getLastBuildTime.mockImplementationOnce(() => lastBuildTime);
 
             // @ts-ignore
             await sourceNodes(gatsbyApi, {
               ...pluginOptions,
               prioritize,
               shopifyConnections,
-            })
+            });
 
-            expect(makeSourceFromOperation.mock.calls.length).toEqual(1)
+            expect(makeSourceFromOperation.mock.calls.length).toEqual(1);
             expect(sourceFromOperation.mock.calls.length).toEqual(
               shopifyConnections.length > 0 ? 5 : 2,
-            )
-            expect(updateCache.mock.calls.length).toEqual(lastBuildTime ? 1 : 0)
-            expect(setLastBuildTime.mock.calls.length).toEqual(1)
+            );
+            expect(updateCache.mock.calls.length).toEqual(
+              lastBuildTime ? 1 : 0,
+            );
+            expect(setLastBuildTime.mock.calls.length).toEqual(1);
           },
-        )
+        );
       }
     }
   }
-})
+});

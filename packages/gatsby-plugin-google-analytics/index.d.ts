@@ -1,10 +1,10 @@
-import * as React from "react"
+import * as React from "react";
 
 interface OutboundLinkProps {
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
-  eventAction?: string
-  eventCategory?: string
-  eventLabel?: string
+  onClick?: ((event: React.MouseEvent<HTMLAnchorElement>) => void) | undefined;
+  eventAction?: string | undefined;
+  eventCategory?: string | undefined;
+  eventLabel?: string | undefined;
 }
 
 export class OutboundLink extends React.Component<
@@ -13,14 +13,14 @@ export class OutboundLink extends React.Component<
 > {}
 
 export interface CustomEventArgs {
-  category: string
-  action: string
-  label?: string
-  value?: number
-  nonInteraction?: boolean
-  transport?: "beacon" | "xhr" | "image"
-  hitCallback?: Function
-  callbackTimeout?: Number
+  category: string;
+  action: string;
+  label?: string | undefined;
+  value?: number | undefined;
+  nonInteraction?: boolean | undefined;
+  transport?: "beacon" | "xhr" | "image" | undefined;
+  hitCallback?: Function | undefined;
+  callbackTimeout?: number | undefined;
 }
 
-export function trackCustomEvent(args: CustomEventArgs): void
+export function trackCustomEvent(args: CustomEventArgs): void;

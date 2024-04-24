@@ -1,12 +1,12 @@
-const _ = require(`lodash`)
-const babylon = require(`@babel/parser`)
-const traverse = require(`@babel/traverse`).default
+const _ = require("lodash");
+const babylon = require("@babel/parser");
+const traverse = require("@babel/traverse").default;
 
-const fileExtsToProcess = [`js`, `jsx`, `ts`, `tsx`]
+const fileExtsToProcess = ["js", "jsx", "ts", "tsx"];
 
 function shouldOnCreateNode({ node }) {
   // This only processes JavaScript and TypeScript files.
-  return fileExtsToProcess.includes(node.extension)
+  return fileExtsToProcess.includes(node.extension);
 }
 
 async function onCreateNode({
@@ -15,88 +15,88 @@ async function onCreateNode({
   loadNodeContent,
   createContentDigest,
 }) {
-  const { createNode, createParentChildLink } = actions
+  const { createNode, createParentChildLink } = actions;
 
-  const code = await loadNodeContent(node)
+  const code = await loadNodeContent(node);
   const options = {
-    sourceType: `module`,
+    sourceType: "module",
     allowImportExportEverywhere: true,
     plugins: [
-      `jsx`,
-      `doExpressions`,
-      `objectRestSpread`,
+      "jsx",
+      "doExpressions",
+      "objectRestSpread",
       [
-        `decorators`,
+        "decorators",
         {
           decoratorsBeforeExport: true,
         },
       ],
-      `classProperties`,
-      `exportExtensions`,
-      `asyncGenerators`,
-      `functionBind`,
-      `functionSent`,
-      `dynamicImport`,
-      _.includes([`ts`, `tsx`], node.extension) ? `typescript` : `flow`,
+      "classProperties",
+      "exportExtensions",
+      "asyncGenerators",
+      "functionBind",
+      "functionSent",
+      "dynamicImport",
+      _.includes(["ts", "tsx"], node.extension) ? "typescript" : "flow",
     ],
-  }
+  };
 
-  let exportsData
-  let frontmatter
-  let error
+  let exportsData;
+  let frontmatter;
+  let error;
   try {
-    const ast = babylon.parse(code, options)
+    const ast = babylon.parse(code, options);
 
     const parseData = function parseData(node) {
-      let value
+      let value;
 
-      if (node.type === `TemplateLiteral`) {
+      if (node.type === "TemplateLiteral") {
         // Experimental basic support for template literals:
         // Extract and join any text content; ignore interpolations
-        value = node.quasis.map(quasi => quasi.value.cooked).join(``)
-      } else if (node.type === `ObjectExpression`) {
-        value = {}
-        node.properties.forEach(elem => {
-          value[elem.key.name] = parseData(elem.value)
-        })
-      } else if (node.type === `ArrayExpression`) {
-        value = node.elements.map(elem => parseData(elem))
+        value = node.quasis.map((quasi) => quasi.value.cooked).join("");
+      } else if (node.type === "ObjectExpression") {
+        value = {};
+        node.properties.forEach((elem) => {
+          value[elem.key.name] = parseData(elem.value);
+        });
+      } else if (node.type === "ArrayExpression") {
+        value = node.elements.map((elem) => parseData(elem));
       } else {
-        value = node.value
+        value = node.value;
       }
 
-      return value
-    }
+      return value;
+    };
 
-    frontmatter = {}
-    error = false
+    frontmatter = {};
+    error = false;
     traverse(ast, {
       AssignmentExpression: function AssignmentExpression(astPath) {
         if (
-          astPath.node.left.type === `MemberExpression` &&
-          astPath.node.left.property.name === `frontmatter`
+          astPath.node.left.type === "MemberExpression" &&
+          astPath.node.left.property.name === "frontmatter"
         ) {
-          astPath.node.right.properties.forEach(node => {
-            frontmatter[node.key.name] = parseData(node.value)
-          })
+          astPath.node.right.properties.forEach((node) => {
+            frontmatter[node.key.name] = parseData(node.value);
+          });
         }
       },
       ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
-        const { declaration } = astPath.node
-        if (declaration && declaration.type === `VariableDeclaration`) {
+        const { declaration } = astPath.node;
+        if (declaration && declaration.type === "VariableDeclaration") {
           const dataVariableDeclarator = _.find(
             declaration.declarations,
-            d => d.id.name === `frontmatter`
-          )
+            (d) => d.id.name === "frontmatter",
+          );
 
           if (dataVariableDeclarator && dataVariableDeclarator.init) {
-            dataVariableDeclarator.init.properties.forEach(node => {
-              frontmatter[node.key.name] = parseData(node.value)
-            })
+            dataVariableDeclarator.init.properties.forEach((node) => {
+              frontmatter[node.key.name] = parseData(node.value);
+            });
           }
         }
       },
-    })
+    });
   } catch (e) {
     // stick the error on the query so the user can
     // react to an error as they see fit
@@ -105,16 +105,16 @@ async function onCreateNode({
       code: e.code,
       message: e.message,
       stack: e.stack,
-    }
+    };
   } finally {
     // only create node if frontmatter is not empty
     if (!_.isEmpty(frontmatter)) {
       exportsData = {
         ...frontmatter,
         error: error,
-      }
+      };
 
-      const contentDigest = createContentDigest(node)
+      const contentDigest = createContentDigest(node);
       const nodeData = {
         id: `${node.id} >>> JavascriptFrontmatter`,
         children: [],
@@ -122,21 +122,21 @@ async function onCreateNode({
         node: { ...node },
         internal: {
           contentDigest,
-          type: `JavascriptFrontmatter`,
+          type: "JavascriptFrontmatter",
         },
+      };
+
+      nodeData.frontmatter = { ...exportsData };
+
+      if (node.internal.type === "File") {
+        nodeData.fileAbsolutePath = node.absolutePath;
       }
 
-      nodeData.frontmatter = { ...exportsData }
-
-      if (node.internal.type === `File`) {
-        nodeData.fileAbsolutePath = node.absolutePath
-      }
-
-      createNode(nodeData)
-      createParentChildLink({ parent: node, child: nodeData })
+      createNode(nodeData);
+      createParentChildLink({ parent: node, child: nodeData });
     }
   }
 }
 
-exports.shouldOnCreateNode = shouldOnCreateNode
-exports.onCreateNode = onCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode;
+exports.onCreateNode = onCreateNode;

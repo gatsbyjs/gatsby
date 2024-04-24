@@ -1,19 +1,19 @@
-import { reporter } from "./reporter"
+import { reporter } from "./reporter";
 
 enum Flag {
-  yes = `-y`, // Skip prompts
-  ts = `-ts`, // Use TypeScript
+  yes = "-y", // Skip prompts
+  ts = "-ts", // Use TypeScript
 }
 
 export type IFlags = {
-  yes: boolean
-  ts: boolean
-}
+  yes: boolean;
+  ts: boolean;
+};
 
 type IArgs = {
-  flags: IFlags
-  dirName: string
-}
+  flags: IFlags;
+  dirName: string;
+};
 
 /**
  * Parse arguments without considering position. Both cases should work the same:
@@ -29,33 +29,33 @@ export function parseArgs(args: Array<string>): IArgs {
     (sortedArgs, arg) => {
       switch (arg) {
         case Flag.yes:
-          sortedArgs.flags.yes = true
-          break
+          sortedArgs.flags.yes = true;
+          break;
         case Flag.ts:
-          sortedArgs.flags.ts = true
-          break
+          sortedArgs.flags.ts = true;
+          break;
         default:
-          if (arg.startsWith(`-`)) {
+          if (arg.startsWith("-")) {
             reporter.warn(
               `Found unknown argument "${arg}", ignoring. Known arguments are: ${Flag.yes}, ${Flag.ts}`,
-            )
-            break
+            );
+            break;
           }
-          sortedArgs.dirName = arg
+          sortedArgs.dirName = arg;
       }
-      return sortedArgs
+      return sortedArgs;
     },
     {
       flags: {
         yes: false,
         ts: false,
       },
-      dirName: ``,
+      dirName: "",
     },
-  )
+  );
 
   return {
     flags,
     dirName,
-  }
+  };
 }

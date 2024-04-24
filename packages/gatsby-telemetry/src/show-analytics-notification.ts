@@ -1,24 +1,24 @@
-import boxen, { type Options } from "boxen"
+import boxen, { type Options } from "boxen";
 
 const defaultConfig = {
   padding: 1,
-  borderColor: `blue`,
-  borderStyle: `double`,
-} satisfies Options
+  borderColor: "blue",
+  borderStyle: "double",
+} satisfies Options;
 
 const defaultMessage =
-  `Gatsby collects anonymous usage analytics\n` +
-  `to help improve Gatsby for all users.\n` +
-  `\n` +
-  `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +
-  `To learn more, checkout https://gatsby.dev/telemetry`
+  "Gatsby collects anonymous usage analytics\n" +
+  "to help improve Gatsby for all users.\n" +
+  "\n" +
+  "If you'd like to opt-out, you can use `gatsby telemetry --disable`\n" +
+  "To learn more, checkout https://gatsby.dev/telemetry";
 
 /**
  * Analytics notice for the end-user
  */
 export function showAnalyticsNotification(
   config: Options = defaultConfig,
-  message: string = defaultMessage
+  message: string = defaultMessage,
 ): void {
-  console.log(boxen(message, config))
+  console.log(boxen(message, config));
 }

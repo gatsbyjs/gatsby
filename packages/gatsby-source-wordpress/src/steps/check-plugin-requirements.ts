@@ -1,40 +1,40 @@
-import url from "node:url"
+import url from "node:url";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import Range from "semver/classes/range"
+import Range from "semver/classes/range";
 
-import type { NodePluginArgs } from "gatsby"
+import type { NodePluginArgs } from "gatsby";
 
-import fetchGraphql from "~/utils/fetch-graphql"
-import { formatLogMessage } from "~/utils/format-log-message"
-import { getPersistentCache } from "~/utils/cache"
+import fetchGraphql from "~/utils/fetch-graphql";
+import { formatLogMessage } from "~/utils/format-log-message";
+import { getPersistentCache } from "~/utils/cache";
 
-import { getStore } from "~/store"
-import { MD5_CACHE_KEY } from "~/constants"
+import { getStore } from "~/store";
+import { MD5_CACHE_KEY } from "~/constants";
 
 import {
   supportedWpPluginVersions,
   genericDownloadMessage,
-} from "~/supported-remote-plugin-versions"
+} from "~/supported-remote-plugin-versions";
 
 function parseRange(range: string): {
-  message: string
-  minVersion: string
-  maxVersion: string
-  isARange: boolean
+  message: string;
+  minVersion: string;
+  maxVersion: string;
+  isARange: boolean;
 } {
   const {
     set: [versions],
-  } = new Range(range)
+  } = new Range(range);
 
-  const isARange = versions.length >= 2
-  const minVersion = versions[0].semver.version
-  const maxVersion = versions[1]?.semver?.version
+  const isARange = versions.length >= 2;
+  const minVersion = versions[0].semver.version;
+  const maxVersion = versions[1]?.semver?.version;
 
-  let message: string
+  let message: string;
   if (isARange) {
-    message = `Install a version between ${minVersion} and ${maxVersion}.`
+    message = `Install a version between ${minVersion} and ${maxVersion}.`;
   } else {
-    message = `Install version ${minVersion}.`
+    message = `Install version ${minVersion}.`;
   }
 
   return {
@@ -42,7 +42,7 @@ function parseRange(range: string): {
     minVersion,
     maxVersion,
     isARange,
-  }
+  };
 }
 
 async function areRemotePluginVersionsSatisfied({
@@ -50,16 +50,16 @@ async function areRemotePluginVersionsSatisfied({
   disableCompatibilityCheck,
   url: wpGraphQLEndpoint,
 }: {
-  helpers: NodePluginArgs
-  url: string
-  disableCompatibilityCheck: boolean
+  helpers: NodePluginArgs;
+  url: string;
+  disableCompatibilityCheck: boolean;
 }): Promise<void> {
   if (disableCompatibilityCheck) {
-    return
+    return;
   }
 
-  let wpgqlIsSatisfied
-  let wpGatsbyIsSatisfied
+  let wpgqlIsSatisfied;
+  let wpGatsbyIsSatisfied;
 
   try {
     const { data } = await fetchGraphql({
@@ -86,55 +86,55 @@ async function areRemotePluginVersionsSatisfied({
       panicOnError: false,
       throwGqlErrors: true,
       isFirstRequest: true,
-    })
+    });
 
-    wpgqlIsSatisfied = data.wpGatsbyCompatibility.satisfies.wpGQL
-    wpGatsbyIsSatisfied = data.wpGatsbyCompatibility.satisfies.wpGatsby
+    wpgqlIsSatisfied = data.wpGatsbyCompatibility.satisfies.wpGQL;
+    wpGatsbyIsSatisfied = data.wpGatsbyCompatibility.satisfies.wpGatsby;
   } catch (e) {
     if (
       e.message.includes(
-        `Cannot query field "wpGatsbyCompatibility" on type "RootQuery".`,
+        'Cannot query field "wpGatsbyCompatibility" on type "RootQuery".',
       )
     ) {
       helpers.reporter.panic(
         formatLogMessage(
           `Your version of WPGatsby is too old to determine if we're compatible.${genericDownloadMessage}`,
         ),
-      )
+      );
     } else {
-      helpers.reporter.panic(e.message)
+      helpers.reporter.panic(e.message);
     }
   }
 
   const shouldDisplayWPGraphQLReason =
-    !wpgqlIsSatisfied && supportedWpPluginVersions.WPGraphQL.reason
+    !wpgqlIsSatisfied && supportedWpPluginVersions.WPGraphQL.reason;
 
   const shouldDisplayWPGatsbyReason =
-    !wpGatsbyIsSatisfied && supportedWpPluginVersions.WPGatsby.reason
+    !wpGatsbyIsSatisfied && supportedWpPluginVersions.WPGatsby.reason;
 
   const shouldDisplayAtleastOneReason =
-    shouldDisplayWPGraphQLReason || shouldDisplayWPGatsbyReason
+    shouldDisplayWPGraphQLReason || shouldDisplayWPGatsbyReason;
 
   const shouldDisplayBothReasons =
-    shouldDisplayWPGraphQLReason && shouldDisplayWPGatsbyReason
+    shouldDisplayWPGraphQLReason && shouldDisplayWPGatsbyReason;
 
   // a message explaining why these are the minimum versions
-  const reasons = `${shouldDisplayAtleastOneReason ? `\n\nReasons:\n\n` : ``}${
+  const reasons = `${shouldDisplayAtleastOneReason ? "\n\nReasons:\n\n" : ""}${
     shouldDisplayWPGraphQLReason
       ? `- ${supportedWpPluginVersions.WPGraphQL.reason}`
-      : ``
-  }${shouldDisplayBothReasons ? `\n\n` : ``}${
+      : ""
+  }${shouldDisplayBothReasons ? "\n\n" : ""}${
     shouldDisplayWPGatsbyReason
       ? `- ${supportedWpPluginVersions.WPGatsby.reason}`
-      : ``
-  }`
+      : ""
+  }`;
 
-  let message = ``
+  let message = "";
 
   if (!wpgqlIsSatisfied) {
     const { minVersion, maxVersion } = parseRange(
       supportedWpPluginVersions.WPGraphQL.version,
-    )
+    );
 
     message += `Your remote version of WPGraphQL is not within the accepted range\n(${supportedWpPluginVersions.WPGraphQL.version}).\n\nThis is not a bug and it means one of two things:\n you either need to upgrade WPGraphQL or gatsby-source-wordpress.
 
@@ -144,19 +144,19 @@ it means you need to upgrade your version of gatsby-source-wordpress.
 2. If the version of WPGraphQL in your WordPress instance is lower than ${minVersion}
 it means you need to upgrade your version of WPGraphQL.
 
-You can find a matching WPGraphQL version at https://github.com/wp-graphql/wp-graphql/releases`
+You can find a matching WPGraphQL version at https://github.com/wp-graphql/wp-graphql/releases`;
   }
 
   if (!wpGatsbyIsSatisfied && !wpgqlIsSatisfied) {
-    message += `\n\n---------------\n\n`
+    message += "\n\n---------------\n\n";
   }
 
   if (!wpGatsbyIsSatisfied) {
     const { minVersion, maxVersion } = parseRange(
       supportedWpPluginVersions.WPGatsby.version,
-    )
+    );
 
-    const { hostname, protocol } = url.parse(wpGraphQLEndpoint)
+    const { hostname, protocol } = url.parse(wpGraphQLEndpoint);
 
     message += `Your remote version of WPGatsby is not within the accepted range\n(${supportedWpPluginVersions.WPGatsby.version})\n\nThis is not a bug and it means one of two things:\n you either need to upgrade WPGatsby or gatsby-source-wordpress.
 
@@ -167,16 +167,16 @@ it means you need to upgrade your version of gatsby-source-wordpress.
 it means you need to upgrade your version of WPGatsby.
 
 Download a matching version at https://github.com/gatsbyjs/wp-gatsby/releases
-or update via ${protocol}//${hostname}/wp-admin/plugins.php`
+or update via ${protocol}//${hostname}/wp-admin/plugins.php`;
   }
 
   if (!wpGatsbyIsSatisfied || !wpgqlIsSatisfied) {
     message += `
-${reasons}`
+${reasons}`;
   }
 
   if (message) {
-    helpers.reporter.panic(formatLogMessage(message))
+    helpers.reporter.panic(formatLogMessage(message));
   }
 }
 
@@ -188,20 +188,20 @@ async function blankGetRequest({
   url,
   helpers,
 }: {
-  url: string
-  helpers: NodePluginArgs
+  url: string;
+  helpers: NodePluginArgs;
 }): Promise<void> {
   return fetch(url)
-    .then(response => response.json())
-    .then(json => {
+    .then((response) => response.json())
+    .then((json) => {
       if (json?.errors?.length) {
-        const firstError = json.errors[0]
+        const firstError = json.errors[0];
 
         if (
           firstError.debugMessage ||
           (firstError.message &&
             !firstError.message?.includes(
-              `GraphQL Request must include at least one of those two parameters: "query" or "queryId"`,
+              'GraphQL Request must include at least one of those two parameters: "query" or "queryId"',
             ))
         ) {
           helpers.reporter.panic(
@@ -209,11 +209,11 @@ async function blankGetRequest({
 
 ${firstError.debugMessage || firstError.message}
           `),
-          )
+          );
         }
       }
     })
-    .catch(() => {})
+    .catch(() => {});
 }
 
 async function isWpGatsby(): Promise<void> {
@@ -224,19 +224,19 @@ async function isWpGatsby(): Promise<void> {
       }
     `,
     errorMap: {
-      from: `Cannot query field "isWpGatsby" on type "RootQuery".`,
+      from: 'Cannot query field "isWpGatsby" on type "RootQuery".',
       // @todo replace this link with another once we're out of alpha
-      to: `WPGatsby is not active in your WordPress installation.\nTo download the latest version of WPGatsby visit https://wordpress.org/plugins/wp-gatsby/`,
+      to: "WPGatsby is not active in your WordPress installation.\nTo download the latest version of WPGatsby visit https://wordpress.org/plugins/wp-gatsby/",
     },
     panicOnError: true,
     isFirstRequest: true,
-  })
+  });
 }
 
 async function prettyPermalinksAreEnabled({
   helpers,
 }: {
-  helpers: NodePluginArgs
+  helpers: NodePluginArgs;
 }): Promise<void> {
   try {
     const { data } = await fetchGraphql({
@@ -252,10 +252,10 @@ async function prettyPermalinksAreEnabled({
       `,
       throwGqlErrors: true,
       isFirstRequest: true,
-    })
+    });
 
     if (!data.wpGatsby.arePrettyPermalinksEnabled) {
-      helpers.reporter.log(``)
+      helpers.reporter.log("");
       helpers.reporter.warn(
         formatLogMessage(`
 Pretty permalinks are not enabled in your WordPress instance.
@@ -263,7 +263,7 @@ Gatsby routing requires this setting to function properly.
 Please enable pretty permalinks by changing your settings at
 ${data.generalSettings.url}/wp-admin/options-permalink.php.
 `),
-      )
+      );
     }
   } catch (e) {
     // the WPGatsby version is too old to query for wpGatsby.arePrettyPermalinksEnabled
@@ -274,19 +274,19 @@ export async function ensurePluginRequirementsAreMet(
   helpers: NodePluginArgs,
 ): Promise<void> {
   if (
-    helpers.traceId === `refresh-createSchemaCustomization` ||
+    helpers.traceId === "refresh-createSchemaCustomization" ||
     // PQR doesn't have a trace id.
     // By the time this runs in PQR we don't need it to run again.
     !helpers.traceId
   ) {
-    return
+    return;
   }
 
   const activity = helpers.reporter.activityTimer(
-    formatLogMessage(`ensuring plugin requirements are met`),
-  )
+    formatLogMessage("ensuring plugin requirements are met"),
+  );
 
-  activity.start()
+  activity.start();
 
   const {
     gatsbyApi: {
@@ -296,22 +296,22 @@ export async function ensurePluginRequirementsAreMet(
       },
     },
     remoteSchema: { schemaWasChanged },
-  } = getStore().getState()
+  } = getStore().getState();
 
   // if we don't have a cached remote schema MD5, this is a cold build
-  const isFirstBuild = !(await getPersistentCache({ key: MD5_CACHE_KEY }))
+  const isFirstBuild = !(await getPersistentCache({ key: MD5_CACHE_KEY }));
 
   if (
     !schemaWasChanged &&
     !isFirstBuild &&
-    helpers.traceId !== `schemaWasChanged`
+    helpers.traceId !== "schemaWasChanged"
   ) {
-    activity.end()
-    return
+    activity.end();
+    return;
   }
 
-  await blankGetRequest({ url, helpers })
-  await isWpGatsby()
+  await blankGetRequest({ url, helpers });
+  await isWpGatsby();
 
   await Promise.all([
     prettyPermalinksAreEnabled({ helpers }),
@@ -320,7 +320,7 @@ export async function ensurePluginRequirementsAreMet(
       url,
       disableCompatibilityCheck,
     }),
-  ])
+  ]);
 
-  activity.end()
+  activity.end();
 }

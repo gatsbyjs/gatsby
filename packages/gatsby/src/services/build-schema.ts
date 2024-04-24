@@ -1,6 +1,6 @@
-import { build } from "../schema"
-import reporter from "gatsby-cli/lib/reporter"
-import type { IDataLayerContext } from "../state-machines/data-layer/types"
+import { build } from "../schema";
+import reporter from "gatsby-cli/lib/reporter";
+import type { IDataLayerContext } from "../state-machines/data-layer/types";
 
 export async function buildSchema({
   parentSpan,
@@ -10,12 +10,14 @@ export async function buildSchema({
     refresh &&
     Boolean(process.env.GATSBY_EXPERIMENTAL_DISABLE_SCHEMA_REBUILD)
   ) {
-    return
+    return;
   }
-  const activity = reporter.activityTimer(`building schema`, {
+
+  // @ts-ignore
+  const activity = reporter.activityTimer("building schema", {
     parentSpan,
-  })
-  activity.start()
-  await build({ parentSpan: activity.span })
-  activity.end()
+  });
+  activity.start();
+  await build({ parentSpan: activity.span });
+  activity.end();
 }

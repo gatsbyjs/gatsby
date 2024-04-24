@@ -5,43 +5,43 @@ import type {
   UnionTypeComposerAsObjectDefinition as ComposeUnionTypeConfig,
   EnumTypeComposerAsObjectDefinition as ComposeEnumTypeConfig,
   ScalarTypeComposerAsObjectDefinition as ComposeScalarTypeConfig,
-} from "graphql-compose"
+} from "graphql-compose";
 
 enum GatsbyGraphQLTypeKind {
-  OBJECT = `OBJECT`,
-  INPUT_OBJECT = `INPUT_OBJECT`,
-  UNION = `UNION`,
-  INTERFACE = `INTERFACE`,
-  ENUM = `ENUM`,
-  SCALAR = `SCALAR`,
+  OBJECT = "OBJECT",
+  INPUT_OBJECT = "INPUT_OBJECT",
+  UNION = "UNION",
+  INTERFACE = "INTERFACE",
+  ENUM = "ENUM",
+  SCALAR = "SCALAR",
 }
 
 export type GatsbyGraphQLType<TSource, TContext> =
   | {
-      kind: GatsbyGraphQLTypeKind.OBJECT
-      config: ComposeObjectTypeConfig<TSource, TContext>
+      kind: GatsbyGraphQLTypeKind.OBJECT;
+      config: ComposeObjectTypeConfig<TSource, TContext>;
     }
   | {
-      kind: GatsbyGraphQLTypeKind.INPUT_OBJECT
-      config: ComposeInputObjectTypeConfig
+      kind: GatsbyGraphQLTypeKind.INPUT_OBJECT;
+      config: ComposeInputObjectTypeConfig;
     }
   | {
-      kind: GatsbyGraphQLTypeKind.UNION
-      config: ComposeUnionTypeConfig<TSource, TContext>
+      kind: GatsbyGraphQLTypeKind.UNION;
+      config: ComposeUnionTypeConfig<TSource, TContext>;
     }
   | {
-      kind: GatsbyGraphQLTypeKind.INTERFACE
-      config: ComposeInterfaceTypeConfig<TSource, TContext>
+      kind: GatsbyGraphQLTypeKind.INTERFACE;
+      config: ComposeInterfaceTypeConfig<TSource, TContext>;
     }
   | {
-      kind: GatsbyGraphQLTypeKind.ENUM
-      config: ComposeEnumTypeConfig
+      kind: GatsbyGraphQLTypeKind.ENUM;
+      config: ComposeEnumTypeConfig;
     }
   | {
-      kind: GatsbyGraphQLTypeKind.SCALAR
+      kind: GatsbyGraphQLTypeKind.SCALAR;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      config: ComposeScalarTypeConfig<any, any>
-    }
+      config: ComposeScalarTypeConfig<any, any>;
+    };
 
 function buildObjectType<TSource, TContext>(
   config: ComposeObjectTypeConfig<TSource, TContext>,
@@ -49,7 +49,7 @@ function buildObjectType<TSource, TContext>(
   return {
     kind: GatsbyGraphQLTypeKind.OBJECT,
     config,
-  }
+  };
 }
 
 function buildUnionType<TSource, TContext>(
@@ -58,7 +58,7 @@ function buildUnionType<TSource, TContext>(
   return {
     kind: GatsbyGraphQLTypeKind.UNION,
     config,
-  }
+  };
 }
 
 function buildInterfaceType<TSource, TContext>(
@@ -67,7 +67,7 @@ function buildInterfaceType<TSource, TContext>(
   return {
     kind: GatsbyGraphQLTypeKind.INTERFACE,
     config,
-  }
+  };
 }
 
 function buildInputObjectType<TSource, TContext>(
@@ -76,7 +76,7 @@ function buildInputObjectType<TSource, TContext>(
   return {
     kind: GatsbyGraphQLTypeKind.INPUT_OBJECT,
     config,
-  }
+  };
 }
 
 function buildEnumType<TSource, TContext>(
@@ -85,7 +85,7 @@ function buildEnumType<TSource, TContext>(
   return {
     kind: GatsbyGraphQLTypeKind.ENUM,
     config,
-  }
+  };
 }
 
 function buildScalarType<TSource, TContext>(
@@ -95,16 +95,16 @@ function buildScalarType<TSource, TContext>(
   return {
     kind: GatsbyGraphQLTypeKind.SCALAR,
     config,
-  }
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isGatsbyType(something: any): something is GatsbyGraphQLTypeKind {
   return (
-    typeof something === `object` &&
+    typeof something === "object" &&
     something.kind &&
     GatsbyGraphQLTypeKind[something.kind]
-  )
+  );
 }
 
 export {
@@ -116,4 +116,4 @@ export {
   buildEnumType,
   buildScalarType,
   isGatsbyType,
-}
+};

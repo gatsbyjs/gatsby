@@ -2,23 +2,23 @@ import {
   type IGroupedQueryIds,
   runPageQueries,
   runStaticQueries,
-} from "../../../services"
-import { savePartialStateToDisk, store } from "../../../redux"
-import { GraphQLRunner } from "../../../query/graphql-runner"
-import { getDataStore } from "../../../datastore"
-import { setState } from "./state"
-import { buildSchema } from "./schema"
+} from "../../../services";
+import { savePartialStateToDisk, store } from "../../../redux";
+import { GraphQLRunner } from "../../../query/graphql-runner";
+import { getDataStore } from "../../../datastore";
+import { setState } from "./state";
+import { buildSchema } from "./schema";
 import type {
   IAddPendingPageDataWriteAction,
   ICreatePageDependencyAction,
   IGatsbyState,
   IPageQueryRunAction,
   IQueryStartAction,
-} from "../../../redux/types"
-import { waitUntilPageQueryResultsAreStored } from "../../page-data"
+} from "../../../redux/types";
+import { waitUntilPageQueryResultsAreStored } from "../../page-data";
 
 export function setComponents(): void {
-  setState([`components`, `staticQueryComponents`])
+  setState(["components", "staticQueryComponents"]);
 }
 
 export async function saveQueriesDependencies(): Promise<void> {
@@ -27,29 +27,29 @@ export async function saveQueriesDependencies(): Promise<void> {
   const pickNecessaryQueryState = <T extends Partial<IGatsbyState>>(
     state: T,
   ): T => {
-    if (!state?.queries?.queryNodes) return state
-    return { ...state, queries: { ...state.queries, queryNodes: new Map() } }
-  }
+    if (!state?.queries?.queryNodes) return state;
+    return { ...state, queries: { ...state.queries, queryNodes: new Map() } };
+  };
   savePartialStateToDisk(
-    [`queries`, `telemetry`],
+    ["queries", "telemetry"],
     process.env.GATSBY_WORKER_ID,
     pickNecessaryQueryState,
-  )
+  );
 
   // make sure page query results we put in lmdb-store are flushed
-  await waitUntilPageQueryResultsAreStored()
+  await waitUntilPageQueryResultsAreStored();
 }
 
-let gqlRunner
+let gqlRunner;
 
 function getGraphqlRunner(): GraphQLRunner {
   if (!gqlRunner) {
     gqlRunner = new GraphQLRunner(store, {
       collectStats: true,
       graphqlTracing: store.getState().program.graphqlTracing,
-    })
+    });
   }
-  return gqlRunner
+  return gqlRunner;
 }
 
 type ActionsToReplay = Array<
@@ -57,55 +57,55 @@ type ActionsToReplay = Array<
   | IPageQueryRunAction
   | IAddPendingPageDataWriteAction
   | ICreatePageDependencyAction
->
+>;
 
 export async function runQueries(
   queryIds: IGroupedQueryIds,
 ): Promise<ActionsToReplay> {
-  const actionsToReplay: ActionsToReplay = []
+  const actionsToReplay: ActionsToReplay = [];
 
   const unsubscribe = store.subscribe(() => {
-    const action = store.getState().lastAction
+    const action = store.getState().lastAction;
     if (
-      action.type === `QUERY_START` ||
-      action.type === `PAGE_QUERY_RUN` ||
-      action.type === `ADD_PENDING_PAGE_DATA_WRITE`
+      action.type === "QUERY_START" ||
+      action.type === "PAGE_QUERY_RUN" ||
+      action.type === "ADD_PENDING_PAGE_DATA_WRITE"
       // Note: Instead of saving/replaying `CREATE_COMPONENT_DEPENDENCY` action
       // we do state merging once at the end of the query running (replaying this action is expensive)
     ) {
-      actionsToReplay.push(action)
+      actionsToReplay.push(action);
     }
-  })
+  });
 
   try {
-    await doRunQueries(queryIds)
-    return actionsToReplay
+    await doRunQueries(queryIds);
+    return actionsToReplay;
   } finally {
-    unsubscribe()
+    unsubscribe();
   }
 }
 
 async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
-  const workerStore = store.getState()
+  const workerStore = store.getState();
 
   // If buildSchema() didn't run yet, execute it
   if (workerStore.schemaCustomization.composer === null) {
-    await buildSchema()
+    await buildSchema();
   }
 
-  const graphqlRunner = getGraphqlRunner()
+  const graphqlRunner = getGraphqlRunner();
 
   await runStaticQueries({
     queryIds,
     store,
     graphqlRunner,
-  })
+  });
 
   await runPageQueries({
     queryIds,
     store,
     graphqlRunner,
-  })
+  });
 
-  await getDataStore().ready()
+  await getDataStore().ready();
 }

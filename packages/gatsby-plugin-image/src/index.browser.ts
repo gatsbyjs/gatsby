@@ -1,12 +1,12 @@
-import "./global"
+import "./global";
 export {
   GatsbyImage,
   GatsbyImageProps,
   IGatsbyImageData,
-} from "./components/gatsby-image.browser"
-export { Placeholder } from "./components/placeholder"
-export { MainImage } from "./components/main-image"
-export { StaticImage } from "./components/static-image"
+} from "./components/gatsby-image.browser";
+export { Placeholder } from "./components/placeholder";
+export { MainImage } from "./components/main-image";
+export { StaticImage } from "./components/static-image";
 export {
   getImage,
   getSrc,
@@ -16,7 +16,7 @@ export {
   IArtDirectedImage,
   IGetImageDataArgs,
   IUrlBuilderArgs,
-} from "./components/hooks"
+} from "./components/hooks";
 export {
   generateImageData,
   getLowResolutionImageURL,
@@ -25,4 +25,4 @@ export {
   ImageFormat,
   Layout,
   Fit,
-} from "./image-utils"
+} from "./image-utils";

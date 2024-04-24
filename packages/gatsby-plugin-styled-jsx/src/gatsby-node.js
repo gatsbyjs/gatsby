@@ -5,15 +5,15 @@ exports.onCreateBabelConfig = ({ actions }, pluginOptions) => {
     optimizeForSpeed,
     sourceMaps,
     vendorPrefixes,
-  } = pluginOptions
+  } = pluginOptions;
 
   actions.setBabelPlugin({
-    name: `styled-jsx/babel`,
+    name: "styled-jsx/babel",
     options: {
       optimizeForSpeed,
       sourceMaps,
       vendorPrefixes,
       ...(plugins ? { plugins } : {}),
     },
-  })
-}
+  });
+};

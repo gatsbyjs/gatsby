@@ -1,85 +1,85 @@
-const { GraphQLString, graphql } = require(`graphql`)
-const { build } = require(`../..`)
-const withResolverContext = require(`../../context`)
-import { buildObjectType } from "../../types/type-builders"
-const { store } = require(`../../../redux`)
-const { actions } = require(`../../../redux/actions`)
-const { dispatch } = store
-const { createFieldExtension, createTypes } = actions
+const { GraphQLString, graphql } = require("graphql");
+const { build } = require("../..");
+const withResolverContext = require("../../context");
+import { buildObjectType } from "../../types/type-builders";
+const { store } = require("../../../redux");
+const { actions } = require("../../../redux/actions");
+const { dispatch } = store;
+const { createFieldExtension, createTypes } = actions;
 
-const report = require(`gatsby-cli/lib/reporter`)
-report.error = jest.fn()
-report.panic = jest.fn()
-report.warn = jest.fn()
-report.log = jest.fn()
+const report = require("gatsby-cli/lib/reporter");
+report.error = jest.fn();
+report.panic = jest.fn();
+report.warn = jest.fn();
+report.log = jest.fn();
 report.activityTimer = jest.fn(() => {
   return {
     start: jest.fn(),
     setStatus: jest.fn(),
     end: jest.fn(),
-  }
-})
+  };
+});
 afterEach(() => {
-  report.error.mockClear()
-  report.panic.mockClear()
-  report.warn.mockClear()
-  report.log.mockClear()
-})
+  report.error.mockClear();
+  report.panic.mockClear();
+  report.warn.mockClear();
+  report.log.mockClear();
+});
 
-describe(`GraphQL field extensions`, () => {
+describe("GraphQL field extensions", () => {
   beforeEach(() => {
-    dispatch({ type: `DELETE_CACHE` })
+    dispatch({ type: "DELETE_CACHE" });
     const nodes = [
       {
-        id: `test1`,
-        parent: `test5`,
-        internal: { type: `Test`, contentDigest: `0` },
-        somedate: `2019-09-01`,
-        otherdate: `2019-09-01`,
+        id: "test1",
+        parent: "test5",
+        internal: { type: "Test", contentDigest: "0" },
+        somedate: "2019-09-01",
+        otherdate: "2019-09-01",
         nested: {
-          onemoredate: `2019-07-30`,
-          title: `Hello World`,
+          onemoredate: "2019-07-30",
+          title: "Hello World",
         },
       },
       {
-        id: `test2`,
-        parent: `test6`,
-        internal: { type: `Test`, contentDigest: `0` },
-        somedate: `2019-09-13`,
-        otherdate: `2019-09-13`,
+        id: "test2",
+        parent: "test6",
+        internal: { type: "Test", contentDigest: "0" },
+        somedate: "2019-09-13",
+        otherdate: "2019-09-13",
         nested: {
-          onemoredate: `2019-09-26`,
+          onemoredate: "2019-09-26",
         },
       },
       {
-        id: `test3`,
+        id: "test3",
         parent: null,
-        internal: { type: `Test`, contentDigest: `0` },
-        somedate: `2019-09-26`,
-        otherdate: `2019-09-26`,
+        internal: { type: "Test", contentDigest: "0" },
+        somedate: "2019-09-26",
+        otherdate: "2019-09-26",
       },
       {
-        id: `test4`,
-        internal: { type: `Test`, contentDigest: `0` },
-        olleh: `world`,
+        id: "test4",
+        internal: { type: "Test", contentDigest: "0" },
+        olleh: "world",
       },
       {
-        id: `test5`,
-        children: [`test1`],
+        id: "test5",
+        children: ["test1"],
 
-        internal: { type: `AnotherTest`, contentDigest: `0` },
-        date: `2019-01-01`,
+        internal: { type: "AnotherTest", contentDigest: "0" },
+        date: "2019-01-01",
       },
       {
-        id: `test6`,
-        children: [`test2`],
+        id: "test6",
+        children: ["test2"],
 
-        internal: { type: `AnotherTest`, contentDigest: `0` },
+        internal: { type: "AnotherTest", contentDigest: "0" },
         date: 0,
       },
       {
-        id: `test7`,
-        internal: { type: `NestedTest`, contentDigest: `0` },
+        id: "test7",
+        internal: { type: "NestedTest", contentDigest: "0" },
         top: 78,
         first: {
           next: 26,
@@ -88,10 +88,10 @@ describe(`GraphQL field extensions`, () => {
               third: {
                 fourth: [
                   {
-                    fifth: `lorem`,
+                    fifth: "lorem",
                   },
                   {
-                    fifth: `ipsum`,
+                    fifth: "ipsum",
                   },
                 ],
               },
@@ -100,10 +100,10 @@ describe(`GraphQL field extensions`, () => {
               third: {
                 fourth: [
                   {
-                    fifth: `dolor`,
+                    fifth: "dolor",
                   },
                   {
-                    fifth: `sit`,
+                    fifth: "sit",
                   },
                 ],
               },
@@ -111,16 +111,16 @@ describe(`GraphQL field extensions`, () => {
           ],
         },
       },
-    ]
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
-    )
-  })
+    ];
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: "test" })(store.dispatch),
+    );
+  });
 
-  it(`allows creating a custom field extension`, async () => {
+  it("allows creating a custom field extension", async () => {
     dispatch(
       createFieldExtension({
-        name: `birthday`,
+        name: "birthday",
         args: {
           greeting: {
             type: GraphQLString,
@@ -128,34 +128,34 @@ describe(`GraphQL field extensions`, () => {
         },
         extend(options, prevFieldConfig) {
           return {
-            type: `String`,
+            type: "String",
             args: {
               emoji: {
-                type: `Boolean`,
+                type: "Boolean",
               },
             },
             resolve(source, args, context, info) {
-              const fieldValue = source[info.fieldName]
-              const date = new Date(fieldValue)
+              const fieldValue = source[info.fieldName];
+              const date = new Date(fieldValue);
               if (date.getUTCMonth() === 8 && date.getUTCDate() === 26) {
                 return args.emoji
-                  ? `:cake:`
-                  : options.greeting || `Happy birthday!`
+                  ? ":cake:"
+                  : options.greeting || "Happy birthday!";
               }
-              return fieldValue
+              return fieldValue;
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(`
         type Test implements Node @dontInfer {
           somedate: Date @birthday(greeting: "Cheers!")
           otherdate: Date @birthday
         }
-      `)
-    )
+      `),
+    );
     const query = `
       {
         test(id: { eq: "test3" }) {
@@ -164,22 +164,22 @@ describe(`GraphQL field extensions`, () => {
           withoutArgs: otherdate
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        withQueryArg: `:cake:`,
-        withDefaultArgs: `Cheers!`,
-        withoutArgs: `Happy birthday!`,
+        withQueryArg: ":cake:",
+        withDefaultArgs: "Cheers!",
+        withoutArgs: "Happy birthday!",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`allows creating a custom field extension (used in type builder)`, async () => {
+  it("allows creating a custom field extension (used in type builder)", async () => {
     dispatch(
       createFieldExtension({
-        name: `birthday`,
+        name: "birthday",
         args: {
           greeting: {
             type: GraphQLString,
@@ -187,51 +187,51 @@ describe(`GraphQL field extensions`, () => {
         },
         extend(options, prevFieldConfig) {
           return {
-            type: `String`,
+            type: "String",
             args: {
               emoji: {
-                type: `Boolean`,
+                type: "Boolean",
               },
             },
             resolve(source, args, context, info) {
-              const fieldValue = source[info.fieldName]
-              const date = new Date(fieldValue)
+              const fieldValue = source[info.fieldName];
+              const date = new Date(fieldValue);
               if (date.getUTCMonth() === 8 && date.getUTCDate() === 26) {
                 return args.emoji
-                  ? `:cake:`
-                  : options.greeting || `Happy birthday!`
+                  ? ":cake:"
+                  : options.greeting || "Happy birthday!";
               }
-              return fieldValue
+              return fieldValue;
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         buildObjectType({
-          name: `Test`,
+          name: "Test",
           fields: {
             somedate: {
-              type: `Date`,
+              type: "Date",
               extensions: {
                 birthday: {
-                  greeting: `Cheers!`,
+                  greeting: "Cheers!",
                 },
               },
             },
             otherdate: {
-              type: `Date`,
+              type: "Date",
               extensions: {
                 birthday: {},
               },
             },
           },
-          interfaces: [`Node`],
+          interfaces: ["Node"],
           extensions: { infer: false },
-        })
-      )
-    )
+        }),
+      ),
+    );
     const query = `
       {
         test(id: { eq: "test3" }) {
@@ -240,27 +240,27 @@ describe(`GraphQL field extensions`, () => {
           withoutArgs: otherdate
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        withQueryArg: `:cake:`,
-        withDefaultArgs: `Cheers!`,
-        withoutArgs: `Happy birthday!`,
+        withQueryArg: ":cake:",
+        withDefaultArgs: "Cheers!",
+        withoutArgs: "Happy birthday!",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`creates built-in field extensions`, async () => {
+  it("creates built-in field extensions", async () => {
     dispatch(
       createTypes(`
         type Test implements Node @dontInfer {
           somedate: Date @dateformat
           proxy: Date @proxy(from: "somedate")
         }
-      `)
-    )
+      `),
+    );
     const query = `
       {
         test(id: { eq: "test3" }) {
@@ -268,44 +268,44 @@ describe(`GraphQL field extensions`, () => {
           proxy
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        proxy: `2019-09-26`,
-        somedate: `2019`,
+        proxy: "2019-09-26",
+        somedate: "2019",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`allows specifying extension options with type string`, async () => {
+  it("allows specifying extension options with type string", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
           planet: {
             // type provided as string
-            type: `String`,
+            type: "String",
           },
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet || `world`
+              return options.planet || "world";
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         `type Test implements Node {
           hello: String @hello
           hi: String @hello(planet: "mars")
-        }`
-      )
-    )
+        }`,
+      ),
+    );
     const query = `
       {
         test {
@@ -313,42 +313,42 @@ describe(`GraphQL field extensions`, () => {
           hi
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        hello: `world`,
-        hi: `mars`,
+        hello: "world",
+        hi: "mars",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`allows specifying extension options with flat type string`, async () => {
+  it("allows specifying extension options with flat type string", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
           // type provided as flat string
-          planet: `String`,
+          planet: "String",
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet || `world`
+              return options.planet || "world";
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         `type Test implements Node {
           hello: String @hello
           hi: String @hello(planet: "mars")
-        }`
-      )
-    )
+        }`,
+      ),
+    );
     const query = `
       {
         test {
@@ -356,44 +356,44 @@ describe(`GraphQL field extensions`, () => {
           hi
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        hello: `world`,
-        hi: `mars`,
+        hello: "world",
+        hi: "mars",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`allows specifying extension options with default value`, async () => {
+  it("allows specifying extension options with default value", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
           planet: {
-            type: `String!`,
-            defaultValue: `world`,
+            type: "String!",
+            defaultValue: "world",
           },
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet
+              return options.planet;
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         `type Test implements Node {
           hello: String @hello
           hi: String @hello(planet: "mars")
-        }`
-      )
-    )
+        }`,
+      ),
+    );
     const query = `
       {
         test {
@@ -401,58 +401,58 @@ describe(`GraphQL field extensions`, () => {
           hi
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        hello: `world`,
-        hi: `mars`,
+        hello: "world",
+        hi: "mars",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`allows specifying extension options with default value (type builder)`, async () => {
+  it("allows specifying extension options with default value (type builder)", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
           planet: {
-            type: `String!`,
-            defaultValue: `world`,
+            type: "String!",
+            defaultValue: "world",
           },
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet
+              return options.planet;
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         buildObjectType({
-          name: `Test`,
-          interfaces: [`Node`],
+          name: "Test",
+          interfaces: ["Node"],
           fields: {
             hello: {
-              type: `String`,
+              type: "String",
               extensions: {
                 hello: {},
               },
             },
             hi: {
-              type: `String`,
+              type: "String",
               extensions: {
-                hello: { planet: `mars` },
+                hello: { planet: "mars" },
               },
             },
           },
-        })
-      )
-    )
+        }),
+      ),
+    );
     const query = `
       {
         test {
@@ -460,44 +460,44 @@ describe(`GraphQL field extensions`, () => {
           hi
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        hello: `world`,
-        hi: `mars`,
+        hello: "world",
+        hi: "mars",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`allows List and NonNull type modifiers in extension type`, async () => {
+  it("allows List and NonNull type modifiers in extension type", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
           planets: {
-            type: `[String!]`,
-            defaultValue: [`world`],
+            type: "[String!]",
+            defaultValue: ["world"],
           },
         },
         extend(options) {
           return {
             resolve() {
-              return options.planets
+              return options.planets;
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         `type Test implements Node {
           hello: [String] @hello
           hi: [String] @hello(planets: ["mars", "venus"])
-        }`
-      )
-    )
+        }`,
+      ),
+    );
     const query = `
       {
         test {
@@ -505,57 +505,57 @@ describe(`GraphQL field extensions`, () => {
           hi
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        hello: [`world`],
-        hi: [`mars`, `venus`],
+        hello: ["world"],
+        hi: ["mars", "venus"],
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`allows wrapping existing field resolver`, async () => {
+  it("allows wrapping existing field resolver", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
-          planet: `String`,
+          planet: "String",
         },
         extend(options, prevFieldConfig) {
-          const { resolve } = prevFieldConfig
+          const { resolve } = prevFieldConfig;
           return {
             resolve(...rp) {
-              const planet = resolve(...rp)
+              const planet = resolve(...rp);
               return options.planet
-                ? [planet, options.planet].join(`, `)
-                : planet
+                ? [planet, options.planet].join(", ")
+                : planet;
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         buildObjectType({
-          name: `Test`,
-          interfaces: [`Node`],
+          name: "Test",
+          interfaces: ["Node"],
           fields: {
             hello: {
-              type: `String`,
-              resolve: () => `world`,
+              type: "String",
+              resolve: () => "world",
               extensions: { hello: {} },
             },
             hi: {
-              type: `String`,
-              resolve: () => `world`,
-              extensions: { hello: { planet: `mars` } },
+              type: "String",
+              resolve: () => "world",
+              extensions: { hello: { planet: "mars" } },
             },
           },
-        })
-      )
-    )
+        }),
+      ),
+    );
     const query = `
       {
         test {
@@ -563,243 +563,243 @@ describe(`GraphQL field extensions`, () => {
           hi
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        hello: `world`,
-        hi: `world, mars`,
+        hello: "world",
+        hi: "world, mars",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
   // TODO: Decide on intended behavior
-  it(`input type reflects changed type when extension changes field type`, async () => {
+  it("input type reflects changed type when extension changes field type", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         extend(options) {
           return {
-            type: `String`,
-            resolve: () => `world`,
-          }
+            type: "String",
+            resolve: () => "world",
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         `type Test implements Node {
           hello: Boolean @hello
-        }`
-      )
-    )
+        }`,
+      ),
+    );
     const query = `
       {
         test {
           hello
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        hello: `world`,
+        hello: "world",
       },
-    }
-    expect(results).toEqual(expected)
+    };
+    expect(results).toEqual(expected);
     const { hello } = store
       .getState()
-      .schema.getType(`TestFilterInput`)
-      .getFields()
-    expect(hello.type.toString()).toBe(`StringQueryOperatorInput`)
-  })
+      .schema.getType("TestFilterInput")
+      .getFields();
+    expect(hello.type.toString()).toBe("StringQueryOperatorInput");
+  });
 
-  it(`handles multiple extensions per field`, async () => {
+  it("handles multiple extensions per field", async () => {
     dispatch(
       createFieldExtension({
-        name: `uppercase`,
+        name: "uppercase",
         extend(options, prevFieldConfig) {
           return {
-            type: `String`,
+            type: "String",
             async resolve(source, args, context, info) {
               const resolver =
-                prevFieldConfig.resolve || context.defaultFieldResolver
-              const resolved = await resolver(source, args, context, info)
-              return String(resolved).toUpperCase()
+                prevFieldConfig.resolve || context.defaultFieldResolver;
+              const resolved = await resolver(source, args, context, info);
+              return String(resolved).toUpperCase();
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createFieldExtension({
-        name: `reverse`,
+        name: "reverse",
         extend(options, prevFieldConfig) {
           return {
-            type: `String`,
+            type: "String",
             async resolve(source, args, context, info) {
               const resolver =
-                prevFieldConfig.resolve || context.defaultFieldResolver
-              const resolved = await resolver(source, args, context, info)
-              return [...String(resolved)].reverse().join(``)
+                prevFieldConfig.resolve || context.defaultFieldResolver;
+              const resolved = await resolver(source, args, context, info);
+              return [...String(resolved)].reverse().join("");
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         `type Test implements Node {
           olleh: String @uppercase @reverse
-        }`
-      )
-    )
+        }`,
+      ),
+    );
     const query = `
       {
         test(id: { eq: "test4" }) {
           olleh
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       test: {
-        olleh: `DLROW`,
+        olleh: "DLROW",
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`shows error message when extension name is reserved`, async () => {
+  it("shows error message when extension name is reserved", async () => {
     dispatch(
       createFieldExtension({
-        name: `dateformat`,
+        name: "dateformat",
         extend: () => {
-          return {}
+          return {};
         },
-      })
-    )
-    const schema = await buildSchema()
+      }),
+    );
+    const schema = await buildSchema();
     expect(report.error).toBeCalledWith(
-      `The field extension name \`dateformat\` is reserved for internal use.`
-    )
-    const directive = schema.getDirective(`dateformat`)
-    expect(directive).toBeDefined()
-    expect(directive.args).toHaveLength(4)
-  })
+      "The field extension name `dateformat` is reserved for internal use.",
+    );
+    const directive = schema.getDirective("dateformat");
+    expect(directive).toBeDefined();
+    expect(directive.args).toHaveLength(4);
+  });
 
-  it(`shows error message when extension is already defined`, async () => {
+  it("shows error message when extension is already defined", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {},
         extend: () => {
           return {
-            resolve: () => `world`,
-          }
+            resolve: () => "world",
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
-          planet: `String`,
+          planet: "String",
         },
         extend: () => {
           return {
-            resolve: () => `again`,
-          }
+            resolve: () => "again",
+          };
         },
-      })
-    )
-    const schema = await buildSchema()
+      }),
+    );
+    const schema = await buildSchema();
     expect(report.error).toBeCalledWith(
-      `A field extension with the name \`hello\` has already been registered.`
-    )
-    const directive = schema.getDirective(`hello`)
-    expect(directive).toBeDefined()
-    expect(directive.args).toHaveLength(0)
-  })
+      "A field extension with the name `hello` has already been registered.",
+    );
+    const directive = schema.getDirective("hello");
+    expect(directive).toBeDefined();
+    expect(directive.args).toHaveLength(0);
+  });
 
-  it(`shows error message when no extension name provided`, () => {
+  it("shows error message when no extension name provided", () => {
     dispatch(
       createFieldExtension({
         args: {},
         extend: () => {
           return {
-            resolve: () => `world`,
-          }
+            resolve: () => "world",
+          };
         },
-      })
-    )
+      }),
+    );
     expect(report.error).toBeCalledWith(
-      `The provided field extension must have a \`name\` property.`
-    )
-  })
+      "The provided field extension must have a `name` property.",
+    );
+  });
 
   // FIXME: error message for directive is different from extension error,
   // because directive is checked before by graphql-compose. also: we get
   // parsing panics, not error messages.
   // we get an extension option with a wrong type
-  it(`validates type of extension options`, async () => {
+  it("validates type of extension options", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
-          planet: `String`,
+          planet: "String",
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet || `world`
+              return options.planet || "world";
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         `type Test implements Node {
           hi: String @hello(planet: 2)
-        }`
-      )
-    )
-    await buildSchema()
+        }`,
+      ),
+    );
+    await buildSchema();
     expect(report.panic).toBeCalledWith(
       expect.stringContaining(
-        `Encountered an error parsing the provided GraphQL type definitions:\n` +
-          `Argument "planet" has invalid value 2.`
-      )
-    )
-  })
+        "Encountered an error parsing the provided GraphQL type definitions:\n" +
+          'Argument "planet" has invalid value 2.',
+      ),
+    );
+  });
 
   // we get an extension option with a wrong type
-  it(`validates type of extension options (type builder)`, async () => {
+  it("validates type of extension options (type builder)", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
-          planet: `String`,
+          planet: "String",
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet || `world`
+              return options.planet || "world";
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         buildObjectType({
-          name: `Test`,
-          interfaces: [`Node`],
+          name: "Test",
+          interfaces: ["Node"],
           fields: {
             hi: {
-              type: `String`,
+              type: "String",
               extensions: {
                 hello: {
                   planet: 2,
@@ -807,36 +807,36 @@ describe(`GraphQL field extensions`, () => {
               },
             },
           },
-        })
-      )
-    )
-    await buildSchema()
+        }),
+      ),
+    );
+    await buildSchema();
     expect(report.error).toBeCalledWith(
-      `Field extension \`hello\` on \`Test.hi\` has argument \`planet\` with ` +
-        `invalid value "2". String cannot represent a non string value: 2`
-    )
-  })
+      "Field extension `hello` on `Test.hi` has argument `planet` with " +
+        'invalid value "2". String cannot represent a non string value: 2',
+    );
+  });
 
   // FIXME: See above (directive error messages different than with extensions,
   // because they are reported as parsing errors (which are panics, not errors))
-  it(`validates non-null and list types of extension options`, async () => {
+  it("validates non-null and list types of extension options", async () => {
     dispatch(
       createFieldExtension({
-        name: `test`,
+        name: "test",
         args: {
-          one: `Int!`,
-          two: `[Int]`,
-          three: `[Int!]!`,
+          one: "Int!",
+          two: "[Int]",
+          three: "[Int!]!",
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet || `world`
+              return options.planet || "world";
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes([
         `type Test implements Node {
@@ -852,55 +852,55 @@ describe(`GraphQL field extensions`, () => {
           sixth: String @test(three: [], one: 1, two: [1])
           seventh: String @test(three: [null], one: 1, two: [1])
         }`,
-      ])
-    )
-    await buildSchema()
+      ]),
+    );
+    await buildSchema();
     expect(report.panic).toBeCalledWith(
       expect.stringContaining(
-        `Encountered an error parsing the provided GraphQL type definitions:\n` +
-          `Argument "one" has invalid value "1".`
-      )
-    )
+        "Encountered an error parsing the provided GraphQL type definitions:\n" +
+          'Argument "one" has invalid value "1".',
+      ),
+    );
     expect(report.panic).toBeCalledWith(
       expect.stringContaining(
-        `Encountered an error parsing the provided GraphQL type definitions:\n` +
-          `Argument "two" has invalid value ["1"].`
-      )
-    )
+        "Encountered an error parsing the provided GraphQL type definitions:\n" +
+          'Argument "two" has invalid value ["1"].',
+      ),
+    );
     expect(report.panic).toBeCalledWith(
       expect.stringContaining(
-        `Encountered an error parsing the provided GraphQL type definitions:\n` +
-          `Argument "three" has invalid value [null].`
-      )
-    )
-  })
+        "Encountered an error parsing the provided GraphQL type definitions:\n" +
+          'Argument "three" has invalid value [null].',
+      ),
+    );
+  });
 
-  it(`validates non-null and list types of extension options (type builder)`, async () => {
+  it("validates non-null and list types of extension options (type builder)", async () => {
     dispatch(
       createFieldExtension({
-        name: `test`,
+        name: "test",
         args: {
-          one: `Int!`,
-          two: `[Int]`,
-          three: `[Int!]!`,
+          one: "Int!",
+          two: "[Int]",
+          three: "[Int!]!",
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet || `world`
+              return options.planet || "world";
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes([
         buildObjectType({
-          name: `Test`,
-          interfaces: [`Node`],
+          name: "Test",
+          interfaces: ["Node"],
           fields: {
             first: {
-              type: `String`,
+              type: "String",
               extensions: {
                 test: {
                   one: 1,
@@ -910,10 +910,10 @@ describe(`GraphQL field extensions`, () => {
               },
             },
             second: {
-              type: `String`,
+              type: "String",
               extensions: {
                 test: {
-                  one: `1`,
+                  one: "1",
                   two: [1],
                   three: [1],
                 },
@@ -922,11 +922,11 @@ describe(`GraphQL field extensions`, () => {
           },
         }),
         buildObjectType({
-          name: `Test`,
-          interfaces: [`Node`],
+          name: "Test",
+          interfaces: ["Node"],
           fields: {
             third: {
-              type: `String`,
+              type: "String",
               extensions: {
                 test: {
                   two: [1],
@@ -936,10 +936,10 @@ describe(`GraphQL field extensions`, () => {
               },
             },
             fourth: {
-              type: `String`,
+              type: "String",
               extensions: {
                 test: {
-                  two: [`1`],
+                  two: ["1"],
                   one: 1,
                   three: [1],
                 },
@@ -948,11 +948,11 @@ describe(`GraphQL field extensions`, () => {
           },
         }),
         buildObjectType({
-          name: `Test`,
-          interfaces: [`Node`],
+          name: "Test",
+          interfaces: ["Node"],
           fields: {
             fifth: {
-              type: `String`,
+              type: "String",
               extensions: {
                 test: {
                   three: [1],
@@ -962,7 +962,7 @@ describe(`GraphQL field extensions`, () => {
               },
             },
             sixth: {
-              type: `String`,
+              type: "String",
               extensions: {
                 test: {
                   three: [],
@@ -972,7 +972,7 @@ describe(`GraphQL field extensions`, () => {
               },
             },
             seventh: {
-              type: `String`,
+              type: "String",
               extensions: {
                 test: {
                   three: [null],
@@ -983,77 +983,77 @@ describe(`GraphQL field extensions`, () => {
             },
           },
         }),
-      ])
-    )
-    await buildSchema()
+      ]),
+    );
+    await buildSchema();
     expect(report.error).toBeCalledWith(
-      `Field extension \`test\` on \`Test.second\` has argument \`one\` with ` +
-        `invalid value "1". Int cannot represent non-integer value: "1"`
-    )
+      "Field extension `test` on `Test.second` has argument `one` with " +
+        'invalid value "1". Int cannot represent non-integer value: "1"',
+    );
     expect(report.error).toBeCalledWith(
-      `Field extension \`test\` on \`Test.fourth\` has argument \`two\` with ` +
-        `invalid value "1". Int cannot represent non-integer value: "1"`
-    )
+      "Field extension `test` on `Test.fourth` has argument `two` with " +
+        'invalid value "1". Int cannot represent non-integer value: "1"',
+    );
     expect(report.error).toBeCalledWith(
-      `Field extension \`test\` on \`Test.seventh\` has argument \`three\` with ` +
-        `invalid value "". Expected non-null field value.`
-    )
-  })
+      "Field extension `test` on `Test.seventh` has argument `three` with " +
+        'invalid value "". Expected non-null field value.',
+    );
+  });
 
   // FIXME: `graphql-compose` (in `parseDirectives`) silently omits invalid extension options.
   // we get an extension option that has not been defined.
-  it.skip(`validates non-existing extension options`, async () => {
+  it.skip("validates non-existing extension options", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
-          planet: `String`,
+          planet: "String",
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet || `world`
+              return options.planet || "world";
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         `type Test implements Node {
           hi: String @hello(what: 2)
-        }`
-      )
-    )
-    await buildSchema()
-    expect(report.error).toBeCalledWith(`Some error message`)
-  })
+        }`,
+      ),
+    );
+    await buildSchema();
+    expect(report.error).toBeCalledWith("Some error message");
+  });
 
   // we get an extension option that has not been defined.
-  it(`validates non-existing extension options (type builder)`, async () => {
+  it("validates non-existing extension options (type builder)", async () => {
     dispatch(
       createFieldExtension({
-        name: `hello`,
+        name: "hello",
         args: {
-          planet: `String`,
+          planet: "String",
         },
         extend(options) {
           return {
             resolve() {
-              return options.planet || `world`
+              return options.planet || "world";
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(
         buildObjectType({
-          name: `Test`,
-          interfaces: [`Node`],
+          name: "Test",
+          interfaces: ["Node"],
           fields: {
             hi: {
-              type: `String`,
+              type: "String",
               extensions: {
                 hello: {
                   what: 2,
@@ -1061,40 +1061,40 @@ describe(`GraphQL field extensions`, () => {
               },
             },
           },
-        })
-      )
-    )
-    await buildSchema()
+        }),
+      ),
+    );
+    await buildSchema();
     expect(report.error).toBeCalledWith(
-      `Field extension \`hello\` on \`Test.hi\` has invalid argument \`what\`.`
-    )
-  })
+      "Field extension `hello` on `Test.hi` has invalid argument `what`.",
+    );
+  });
 
   // we get an extension that has not been defined
-  it(`validates non-existing extension`, async () => {
+  it("validates non-existing extension", async () => {
     dispatch(
       createTypes(
         `type Test implements Node {
           hi: String @what(what: 2)
-        }`
-      )
-    )
-    await buildSchema()
+        }`,
+      ),
+    );
+    await buildSchema();
     expect(report.error).toBeCalledWith(
-      `Field extension \`what\` on \`Test.hi\` is not available.`
-    )
-  })
+      "Field extension `what` on `Test.hi` is not available.",
+    );
+  });
 
   // we get an extension that has not been defined
-  it(`validates non-existing extension (type builder)`, async () => {
+  it("validates non-existing extension (type builder)", async () => {
     dispatch(
       createTypes(
         buildObjectType({
-          name: `Test`,
-          interfaces: [`Node`],
+          name: "Test",
+          interfaces: ["Node"],
           fields: {
             hi: {
-              type: `String`,
+              type: "String",
               extensions: {
                 what: {
                   what: 2,
@@ -1102,42 +1102,42 @@ describe(`GraphQL field extensions`, () => {
               },
             },
           },
-        })
-      )
-    )
-    await buildSchema()
+        }),
+      ),
+    );
+    await buildSchema();
     expect(report.error).toBeCalledWith(
-      `Field extension \`what\` on \`Test.hi\` is not available.`
-    )
-  })
+      "Field extension `what` on `Test.hi` is not available.",
+    );
+  });
 
-  it(`built-in extensions wrap resolver`, async () => {
+  it("built-in extensions wrap resolver", async () => {
     dispatch(
       createFieldExtension({
-        name: `zeroToNull`,
+        name: "zeroToNull",
         extend(options, prevFieldConfig) {
           return {
             async resolve(source, args, context, info) {
               const resolver =
-                prevFieldConfig.resolve || context.defaultFieldResolver
-              const fieldValue = await resolver(source, args, context, info)
+                prevFieldConfig.resolve || context.defaultFieldResolver;
+              const fieldValue = await resolver(source, args, context, info);
               if (fieldValue === 0) {
-                return null
+                return null;
               }
-              return fieldValue
+              return fieldValue;
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(`
         type AnotherTest implements Node {
           date: Date @zeroToNull @dateformat
           reverse: Date @dateformat @zeroToNull @proxy(from: "date")
         }
-      `)
-    )
+      `),
+    );
     const query = `
       {
         allAnotherTest {
@@ -1147,57 +1147,57 @@ describe(`GraphQL field extensions`, () => {
           }
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       allAnotherTest: {
         nodes: [
           {
-            date: `01/01/2019`,
-            reverse: `01/01/2019`,
+            date: "01/01/2019",
+            reverse: "01/01/2019",
           },
           {
             date: null,
-            reverse: `Invalid date`,
+            reverse: "Invalid date",
           },
         ],
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`built-in extensions merge extension args`, async () => {
+  it("built-in extensions merge extension args", async () => {
     dispatch(
       createFieldExtension({
-        name: `replace`,
+        name: "replace",
         extend(options, prevFieldConfig) {
           return {
             args: {
               ...prevFieldConfig.args,
-              match: `String!`,
-              replaceWith: `String!`,
+              match: "String!",
+              replaceWith: "String!",
             },
             async resolve(source, args, context, info) {
               const resolver =
-                prevFieldConfig.resolve || context.defaultFieldResolver
-              const fieldValue = await resolver(source, args, context, info)
+                prevFieldConfig.resolve || context.defaultFieldResolver;
+              const fieldValue = await resolver(source, args, context, info);
               if (fieldValue == args.match) {
-                return args.replaceWith
+                return args.replaceWith;
               }
-              return fieldValue
+              return fieldValue;
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(`
         type AnotherTest implements Node {
           date: Date @replace @dateformat
           reverse: Date @dateformat @replace @proxy(from: "date")
         }
-      `)
-    )
+      `),
+    );
     const query = `
       {
         allAnotherTest {
@@ -1207,52 +1207,52 @@ describe(`GraphQL field extensions`, () => {
           }
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       allAnotherTest: {
         nodes: [
           {
-            date: `01/01/2019`,
-            reverse: `01/01/2019`,
+            date: "01/01/2019",
+            reverse: "01/01/2019",
           },
           {
-            date: `09/26/1978`,
-            reverse: `WRONG!`,
+            date: "09/26/1978",
+            reverse: "WRONG!",
           },
         ],
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  it(`built-in extensions wraps custom resolver`, async () => {
+  it("built-in extensions wraps custom resolver", async () => {
     dispatch(
       createTypes(
         buildObjectType({
-          name: `AnotherTest`,
-          interfaces: [`Node`],
+          name: "AnotherTest",
+          interfaces: ["Node"],
           fields: {
             date: {
-              type: `Date`,
+              type: "Date",
               extensions: {
                 dateformat: true,
               },
               args: {
-                replaceZeroWith: `String!`,
+                replaceZeroWith: "String!",
               },
               resolve(source, args, context, info) {
-                const fieldValue = source[info.fieldName]
+                const fieldValue = source[info.fieldName];
                 if (fieldValue === 0) {
-                  return args.alt
+                  return args.alt;
                 }
-                return fieldValue
+                return fieldValue;
               },
             },
           },
-        })
-      )
-    )
+        }),
+      ),
+    );
     const query = `
       {
         allAnotherTest {
@@ -1261,25 +1261,25 @@ describe(`GraphQL field extensions`, () => {
           }
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       allAnotherTest: {
         nodes: [
           {
-            date: `01/01/2019`,
+            date: "01/01/2019",
           },
           {
             date: null,
           },
         ],
       },
-    }
-    expect(results).toEqual(expected)
-  })
+    };
+    expect(results).toEqual(expected);
+  });
 
-  describe(`nested-fields-aware default field resolver`, () => {
-    it(`@proxy extension works with nested fields`, async () => {
+  describe("nested-fields-aware default field resolver", () => {
+    it("@proxy extension works with nested fields", async () => {
       dispatch(
         createTypes(`
           type Fourth {
@@ -1300,8 +1300,8 @@ describe(`GraphQL field extensions`, () => {
             fromNextLevel: Int @proxy(from: "first.next")
             fromBottomLevel: [[String]] @proxy(from: "first.second.third.fourth.fifth")
           }
-        `)
-      )
+        `),
+      );
       const query = `
         {
           nestedTest {
@@ -1309,21 +1309,21 @@ describe(`GraphQL field extensions`, () => {
             fromBottomLevel
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         nestedTest: {
           fromNextLevel: 26,
           fromBottomLevel: [
-            [`lorem`, `ipsum`],
-            [`dolor`, `sit`],
+            ["lorem", "ipsum"],
+            ["dolor", "sit"],
           ],
         },
-      }
-      expect(results).toEqual(expected)
-    })
+      };
+      expect(results).toEqual(expected);
+    });
 
-    it(`@proxy extension works with parent node fields`, async () => {
+    it("@proxy extension works with parent node fields", async () => {
       dispatch(
         createTypes(`
           type Fourth {
@@ -1345,8 +1345,8 @@ describe(`GraphQL field extensions`, () => {
             first: First
             top: Int
           }
-        `)
-      )
+        `),
+      );
       const query = `
         {
           nestedTest {
@@ -1362,8 +1362,8 @@ describe(`GraphQL field extensions`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         nestedTest: {
           first: {
@@ -1399,11 +1399,11 @@ describe(`GraphQL field extensions`, () => {
             ],
           },
         },
-      }
-      expect(results).toEqual(expected)
-    })
+      };
+      expect(results).toEqual(expected);
+    });
 
-    it(`works with multiple field extensions`, async () => {
+    it("works with multiple field extensions", async () => {
       dispatch(
         createTypes(`
           type Nested {
@@ -1413,25 +1413,25 @@ describe(`GraphQL field extensions`, () => {
             nested: Nested
             proxied: Date @dateformat(formatString: "YYYY") @proxy(from: "nested.onemoredate")
           }
-        `)
-      )
+        `),
+      );
       const query = `
         {
           test {
             proxied
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         test: {
-          proxied: `2019`,
+          proxied: "2019",
         },
-      }
-      expect(results).toEqual(expected)
-    })
+      };
+      expect(results).toEqual(expected);
+    });
 
-    it(`allows linking from nested fields`, async () => {
+    it("allows linking from nested fields", async () => {
       dispatch(
         createTypes(`
           type Nested {
@@ -1441,8 +1441,8 @@ describe(`GraphQL field extensions`, () => {
             linked: Test @link(by: "nested.onemoredate", from: "nested.onemoredate")
             nested: Nested
           }
-        `)
-      )
+        `),
+      );
       const query = `
         {
           test {
@@ -1453,26 +1453,26 @@ describe(`GraphQL field extensions`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         test: {
           linked: {
             nested: {
-              onemoredate: `07/30/2019`,
+              onemoredate: "07/30/2019",
             },
           },
         },
-      }
-      expect(results).toEqual(expected)
-    })
+      };
+      expect(results).toEqual(expected);
+    });
 
-    it(`works in a custom field extension`, async () => {
+    it("works in a custom field extension", async () => {
       dispatch(
         createFieldExtension({
-          name: `slug`,
+          name: "slug",
           args: {
-            from: `String!`,
+            from: "String!",
           },
           extend(options) {
             return {
@@ -1485,16 +1485,16 @@ describe(`GraphQL field extensions`, () => {
                     ...info,
                     from: options.from || info.from,
                     fromNode: options.from ? options.fromNode : info.fromNode,
-                  }
-                )
+                  },
+                );
                 return String(fieldValue)
                   .toLowerCase()
-                  .replace(/[^\w]+/g, `-`)
+                  .replace(/[^\w]+/g, "-");
               },
-            }
+            };
           },
-        })
-      )
+        }),
+      );
       dispatch(
         createTypes(`
           type Test implements Node @dontInfer {
@@ -1504,51 +1504,51 @@ describe(`GraphQL field extensions`, () => {
           type Nested {
             title: String
           }
-        `)
-      )
+        `),
+      );
       const query = `
         {
           test {
             slug
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         test: {
-          slug: `hello-world`,
+          slug: "hello-world",
         },
-      }
-      expect(results).toEqual(expected)
-    })
+      };
+      expect(results).toEqual(expected);
+    });
 
-    it(`proxies to field from parent node with helper extension`, async () => {
+    it("proxies to field from parent node with helper extension", async () => {
       dispatch(
         createFieldExtension({
-          name: `parent`,
+          name: "parent",
           extend(options, fieldConfig) {
             return {
               resolve(source, args, context, info) {
                 const resolver =
-                  fieldConfig.resolve || context.defaultFieldResolver
+                  fieldConfig.resolve || context.defaultFieldResolver;
                 return resolver(
                   context.nodeModel.getNodeById({ id: source.parent }),
                   args,
                   context,
-                  info
-                )
+                  info,
+                );
               },
-            }
+            };
           },
-        })
-      )
+        }),
+      );
       dispatch(
         createTypes(`
           type Test implements Node {
             fromParentNode: Date @dateformat(formatString: "YYYY") @parent @proxy(from: "date")
           }
-        `)
-      )
+        `),
+      );
       const query = `
         {
           test {
@@ -1558,50 +1558,50 @@ describe(`GraphQL field extensions`, () => {
             fromParentNode
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         test: {
-          fromParentNode: `2019`,
+          fromParentNode: "2019",
         },
         filtered: {
-          fromParentNode: `2019`,
+          fromParentNode: "2019",
         },
-      }
-      expect(results).toEqual(expected)
-    })
+      };
+      expect(results).toEqual(expected);
+    });
 
-    describe(`proxies to fields on other nodes when combined with projection extension`, () => {
-      it.todo(`proxies to field on parent node`)
-      it.todo(`proxies to nested field on parent node`)
-      it.todo(`proxies to field on ancestor node`)
-      it.todo(`proxies to nested field on ancestor node`)
-      it.todo(`proxies to field on linked in node`)
-      it.todo(`proxies to nested field on linked in node`)
-    })
-  })
+    describe("proxies to fields on other nodes when combined with projection extension", () => {
+      it.todo("proxies to field on parent node");
+      it.todo("proxies to nested field on parent node");
+      it.todo("proxies to field on ancestor node");
+      it.todo("proxies to nested field on ancestor node");
+      it.todo("proxies to field on linked in node");
+      it.todo("proxies to nested field on linked in node");
+    });
+  });
 
-  it(`link extension accepts return type argument`, async () => {
+  it("link extension accepts return type argument", async () => {
     dispatch(
       createFieldExtension({
-        name: `reduce`,
+        name: "reduce",
         args: {
-          to: `String!`,
+          to: "String!",
         },
         extend(options, fieldConfig) {
           return {
             async resolve(source, args, context, info) {
-              const { getValueAt } = require(`../../../utils/get-value-at`)
+              const { getValueAt } = require("../../../utils/get-value-at");
               const resolver =
-                fieldConfig.resolve || context.defaultFieldResolver
-              const fieldValue = await resolver(source, args, context, info)
-              if (fieldValue == null) return null
-              return getValueAt(fieldValue, options.to)
+                fieldConfig.resolve || context.defaultFieldResolver;
+              const fieldValue = await resolver(source, args, context, info);
+              if (fieldValue == null) return null;
+              return getValueAt(fieldValue, options.to);
             },
-          }
+          };
         },
-      })
-    )
+      }),
+    );
     dispatch(
       createTypes(`
         type Test implements Node @dontInfer {
@@ -1611,8 +1611,8 @@ describe(`GraphQL field extensions`, () => {
           fieldsFromChildren: [Date] @link(from: "children", on: "[Test!]!") @reduce(to: "somedate") @dateformat(formatString: "DD/MM/YYYY")
           nestedFieldsFromChildren: [Date] @link(from: "children", on: "[Test!]!") @reduce(to: "nested.onemoredate") @dateformat(formatString: "DD/MM/YYYY")
         }
-      `)
-    )
+      `),
+    );
     const query = `
       {
         allTest {
@@ -1629,25 +1629,25 @@ describe(`GraphQL field extensions`, () => {
           }
         }
       }
-    `
-    const results = await runQuery(query)
+    `;
+    const results = await runQuery(query);
     const expected = {
       allTest: {
         nodes: [
           {
-            id: `test1`,
-            fieldFromParent: `01/01/2019`,
+            id: "test1",
+            fieldFromParent: "01/01/2019",
           },
           {
-            id: `test2`,
-            fieldFromParent: `Invalid date`,
+            id: "test2",
+            fieldFromParent: "Invalid date",
           },
           {
-            id: `test3`,
+            id: "test3",
             fieldFromParent: null,
           },
           {
-            id: `test4`,
+            id: "test4",
             fieldFromParent: null,
           },
         ],
@@ -1655,33 +1655,33 @@ describe(`GraphQL field extensions`, () => {
       allAnotherTest: {
         nodes: [
           {
-            id: `test5`,
-            fieldsFromChildren: [`01/09/2019`],
-            nestedFieldsFromChildren: [`30/07/2019`],
+            id: "test5",
+            fieldsFromChildren: ["01/09/2019"],
+            nestedFieldsFromChildren: ["30/07/2019"],
           },
           {
-            id: `test6`,
-            fieldsFromChildren: [`13/09/2019`],
-            nestedFieldsFromChildren: [`26/09/2019`],
+            id: "test6",
+            fieldsFromChildren: ["13/09/2019"],
+            nestedFieldsFromChildren: ["26/09/2019"],
           },
         ],
       },
-    }
-    expect(results).toEqual(expected)
-  })
-})
+    };
+    expect(results).toEqual(expected);
+  });
+});
 
 const buildSchema = async () => {
-  await build({})
-  return store.getState().schema
-}
+  await build({});
+  return store.getState().schema;
+};
 
-const runQuery = async query => {
-  await build({})
+const runQuery = async (query) => {
+  await build({});
   const {
     schema,
     schemaCustomization: { composer: schemaComposer },
-  } = store.getState()
+  } = store.getState();
   const results = await graphql({
     schema,
     source: query,
@@ -1690,7 +1690,7 @@ const runQuery = async query => {
       schema,
       schemaComposer,
     }),
-  })
-  expect(results.errors).toBeUndefined()
-  return results.data
-}
+  });
+  expect(results.errors).toBeUndefined();
+  return results.data;
+};

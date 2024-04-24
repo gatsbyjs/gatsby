@@ -5,24 +5,27 @@ import React, {
   createElement,
   type ComponentType,
   type WeakValidationMap,
-} from "react"
-import { getWrapperProps, getMainProps, getPlaceholderProps } from "./hooks"
-import { Placeholder } from "./placeholder"
-import { MainImage, MainImageProps } from "./main-image"
-import { LayoutWrapper } from "./layout-wrapper"
+} from "react";
+import { getWrapperProps, getMainProps, getPlaceholderProps } from "./hooks";
+import { Placeholder } from "./placeholder";
+import { MainImage, MainImageProps } from "./main-image";
+import { LayoutWrapper } from "./layout-wrapper";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import PropTypes from "prop-types"
-import type { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
+import PropTypes from "prop-types";
+import type {
+  GatsbyImageProps,
+  IGatsbyImageData,
+} from "./gatsby-image.browser";
 
-const removeNewLines = (str: string): string => str.replace(/\n/g, ``)
+const removeNewLines = (str: string): string => str.replace(/\n/g, "");
 
 function _GatsbyImage({
-  as = `div`,
+  as = "div",
   className,
   class: preactClass,
   style,
   image,
-  loading = `lazy`,
+  loading = "lazy",
   imgClassName,
   imgStyle,
   backgroundColor,
@@ -31,12 +34,12 @@ function _GatsbyImage({
   ...props
 }: GatsbyImageProps): JSX.Element {
   if (!image) {
-    console.warn(`[gatsby-plugin-image] Missing image prop`)
-    return null
+    console.warn("[gatsby-plugin-image] Missing image prop");
+    return null;
   }
 
   if (preactClass) {
-    className = preactClass
+    className = preactClass;
   }
 
   imgStyle = {
@@ -44,7 +47,7 @@ function _GatsbyImage({
     objectPosition,
     backgroundColor,
     ...imgStyle,
-  }
+  };
 
   const {
     width,
@@ -53,34 +56,34 @@ function _GatsbyImage({
     images,
     placeholder,
     backgroundColor: placeholderBackgroundColor,
-  } = image
+  } = image;
 
   const {
     style: wStyle,
     className: wClass,
     ...wrapperProps
-  } = getWrapperProps(width, height, layout)
+  } = getWrapperProps(width, height, layout);
 
   const cleanedImages: IGatsbyImageData["images"] = {
     fallback: undefined,
     sources: [],
-  }
+  };
   if (images.fallback) {
     cleanedImages.fallback = {
       ...images.fallback,
       srcSet: images.fallback.srcSet
         ? removeNewLines(images.fallback.srcSet)
         : undefined,
-    }
+    };
   }
 
   if (images.sources) {
-    cleanedImages.sources = images.sources.map(source => {
+    cleanedImages.sources = images.sources.map((source) => {
       return {
         ...source,
         srcSet: removeNewLines(source.srcSet),
-      }
-    })
+      };
+    });
   }
 
   return createElement(
@@ -92,7 +95,7 @@ function _GatsbyImage({
         ...style,
         backgroundColor,
       },
-      className: `${wClass}${className ? ` ${className}` : ``}`,
+      className: `${wClass}${className ? ` ${className}` : ""}`,
     },
     <LayoutWrapper layout={layout} width={width} height={height}>
       <Placeholder
@@ -109,7 +112,7 @@ function _GatsbyImage({
       />
 
       <MainImage
-        data-gatsby-image-ssr=""
+        data-gatsby-image-ssr=''
         className={imgClassName}
         {...(props as Omit<
           MainImageProps,
@@ -117,7 +120,7 @@ function _GatsbyImage({
         >)}
         // When eager is set we want to start the isLoading state on true (we want to load the img without react)
         {...getMainProps(
-          loading === `eager`,
+          loading === "eager",
           false,
           cleanedImages,
           loading,
@@ -125,11 +128,11 @@ function _GatsbyImage({
         )}
       />
     </LayoutWrapper>,
-  )
+  );
 }
 
 export const GatsbyImage: ComponentType<GatsbyImageProps> =
-  memo<GatsbyImageProps>(_GatsbyImage)
+  memo<GatsbyImageProps>(_GatsbyImage);
 
 export const altValidator: PropTypes.Validator<string> = (
   props: GatsbyImageProps,
@@ -137,16 +140,16 @@ export const altValidator: PropTypes.Validator<string> = (
   componentName,
   ...rest
 ): Error | undefined => {
-  if (!props.alt && props.alt !== ``) {
+  if (!props.alt && props.alt !== "") {
     return new Error(
       `The "alt" prop is required in ${componentName}. If the image is purely presentational then pass an empty string: e.g. alt="". Learn more: https://a11y-style-guide.com/style-guide/section-media.html`,
-    )
+    );
   }
 
-  return PropTypes.string(props, propName, componentName, ...rest)
-}
+  return PropTypes.string(props, propName, componentName, ...rest);
+};
 
 export const propTypes = {
   image: PropTypes.object.isRequired,
   alt: altValidator,
-} as WeakValidationMap<GatsbyImageProps>
+} as WeakValidationMap<GatsbyImageProps>;

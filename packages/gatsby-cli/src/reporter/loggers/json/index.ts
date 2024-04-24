@@ -1,33 +1,35 @@
-import { onLogAction } from "../../redux/index"
-import type { ActionsUnion, ISetStatus } from "../../redux/types"
-import stripAnsi from "strip-ansi"
-import { cloneDeep } from "lodash"
+import { onLogAction } from "../../redux/index";
+import type { ActionsUnion, ISetStatus } from "../../redux/types";
+import stripAnsi from "strip-ansi";
+import { cloneDeep } from "lodash";
 
 function isStringPayload(action: ActionsUnion): action is ISetStatus {
-  return typeof action.payload === `string`
+  return typeof action.payload === "string";
 }
 
 function sanitizeAction(action: ActionsUnion): ActionsUnion {
-  const copiedAction = cloneDeep(action)
+  const copiedAction = cloneDeep(action);
 
   if (isStringPayload(copiedAction)) {
-    return copiedAction
+    return copiedAction;
   }
 
-  if (`text` in copiedAction.payload && copiedAction.payload.text) {
-    copiedAction.payload.text = stripAnsi(copiedAction.payload.text)
+  if ("text" in copiedAction.payload && copiedAction.payload.text) {
+    copiedAction.payload.text = stripAnsi(copiedAction.payload.text);
   }
-  if (`statusText` in copiedAction.payload && copiedAction.payload.statusText) {
-    copiedAction.payload.statusText = stripAnsi(copiedAction.payload.statusText)
+  if ("statusText" in copiedAction.payload && copiedAction.payload.statusText) {
+    copiedAction.payload.statusText = stripAnsi(
+      copiedAction.payload.statusText,
+    );
   }
 
-  return copiedAction
+  return copiedAction;
 }
 
 export function initializeJSONLogger(): void {
   onLogAction((action: ActionsUnion) => {
-    const sanitizedAction = sanitizeAction(action)
+    const sanitizedAction = sanitizeAction(action);
 
-    process.stdout.write(JSON.stringify(sanitizedAction) + `\n`)
-  })
+    process.stdout.write(JSON.stringify(sanitizedAction) + "\n");
+  });
 }

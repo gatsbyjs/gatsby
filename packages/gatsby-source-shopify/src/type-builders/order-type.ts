@@ -21,5 +21,5 @@ export function orderTypeBuilder(prefix: string): string {
         createdAt: Date @dateformat
         shopifyId: String!
       }
-    `
+    `;
 }

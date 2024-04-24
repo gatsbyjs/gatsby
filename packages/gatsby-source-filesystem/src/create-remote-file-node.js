@@ -1,6 +1,6 @@
-const { fetchRemoteFile } = require(`gatsby-core-utils/fetch-remote-file`)
-const { isWebUri } = require(`valid-url`)
-const { createFileNode } = require(`./create-file-node`)
+const { fetchRemoteFile } = require("gatsby-core-utils/fetch-remote-file");
+const { isWebUri } = require("valid-url");
+const { createFileNode } = require("./create-file-node");
 
 /********************
  * Type Definitions *
@@ -60,26 +60,26 @@ async function processRemoteNode({
     httpHeaders,
     ext,
     name,
-  })
+  });
 
   // Create the file node.
-  const fileNode = await createFileNode(filename, createNodeId, {})
-  fileNode.internal.description = `File "${url}"`
-  fileNode.url = url
-  fileNode.parent = parentNodeId
+  const fileNode = await createFileNode(filename, createNodeId, {});
+  fileNode.internal.description = `File "${url}"`;
+  fileNode.url = url;
+  fileNode.parent = parentNodeId;
   // Override the default plugin as gatsby-source-filesystem needs to
   // be the owner of File nodes or there'll be conflicts if any other
   // File nodes are created through normal usages of
   // gatsby-source-filesystem.
-  await createNode(fileNode, { name: `gatsby-source-filesystem` })
+  await createNode(fileNode, { name: "gatsby-source-filesystem" });
 
-  return fileNode
+  return fileNode;
 }
 
 /**
  * Index of promises resolving to File node from remote url
  */
-const processingCache = {}
+const processingCache = {};
 
 /***************
  * Entry Point *
@@ -111,34 +111,34 @@ module.exports = function createRemoteFileNode({
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
   // see gatsbyjs/gatsby#6643
-  if (typeof createNodeId !== `function`) {
+  if (typeof createNodeId !== "function") {
     throw new Error(
-      `createNodeId must be a function, was ${typeof createNodeId}`
-    )
+      `createNodeId must be a function, was ${typeof createNodeId}`,
+    );
   }
-  if (typeof createNode !== `function`) {
-    throw new Error(`createNode must be a function, was ${typeof createNode}`)
+  if (typeof createNode !== "function") {
+    throw new Error(`createNode must be a function, was ${typeof createNode}`);
   }
-  if (typeof getCache === `function`) {
+  if (typeof getCache === "function") {
     // use cache of this plugin and not cache of function caller
-    cache = getCache(`gatsby-source-filesystem`)
+    cache = getCache("gatsby-source-filesystem");
   }
-  if (typeof cache !== `object`) {
+  if (typeof cache !== "object") {
     throw new Error(
-      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`
-    )
+      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`,
+    );
   }
 
   // Check if we already requested node for this remote file
   // and return stored promise if we did.
   if (processingCache[url]) {
-    return processingCache[url]
+    return processingCache[url];
   }
 
   if (!url || isWebUri(url) === undefined) {
     throw new Error(
-      `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
-    )
+      `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`,
+    );
   }
 
   const fileDownloadPromise = processRemoteNode({
@@ -151,9 +151,9 @@ module.exports = function createRemoteFileNode({
     httpHeaders,
     ext,
     name,
-  })
+  });
 
-  processingCache[url] = fileDownloadPromise.then(node => node)
+  processingCache[url] = fileDownloadPromise.then((node) => node);
 
-  return processingCache[url]
-}
+  return processingCache[url];
+};

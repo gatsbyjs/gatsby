@@ -1,5 +1,5 @@
-import React from "react"
-import { css } from "../css-to-object"
+import React from "react";
+import { css } from "../css-to-object";
 
 export const Style = () => (
   <style
@@ -17,8 +17,16 @@ export const Style = () => (
         }
 
         [data-gatsby-loading-indicator="root"] {
-          font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-            Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          font:
+            14px/1.5 -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif,
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
             "Segoe UI Symbol" !important;
           background: var(--background);
           color: var(--color);
@@ -96,4 +104,4 @@ export const Style = () => (
       `,
     }}
   />
-)
+);

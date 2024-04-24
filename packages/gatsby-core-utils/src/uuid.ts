@@ -2,35 +2,35 @@
  * Copied from https://github.com/lukeed/uuid
  * https://github.com/lukeed/uuid/blob/master/src/secure.js
  */
-import { randomBytes } from "node:crypto"
+import { randomBytes } from "node:crypto";
 
-const SIZE = 4096
-const HEX: Array<string> = []
-let IDX = 0
-let BUFFER: Buffer
+const SIZE = 4096;
+const HEX: Array<string> = [];
+let IDX = 0;
+let BUFFER: Buffer;
 
 for (; IDX < 256; IDX++) {
-  HEX[IDX] = (IDX + 256).toString(16).substring(1)
+  HEX[IDX] = (IDX + 256).toString(16).substring(1);
 }
 
 export function v4(): string {
   if (!BUFFER || IDX + 16 > SIZE) {
-    BUFFER = randomBytes(SIZE)
-    IDX = 0
+    BUFFER = randomBytes(SIZE);
+    IDX = 0;
   }
 
-  let i = 0
-  let tmp
-  let out = ``
+  let i = 0;
+  let tmp;
+  let out = "";
   for (; i < 16; i++) {
-    tmp = BUFFER[IDX + i]
-    if (i == 6) out += HEX[(tmp & 15) | 64]
-    else if (i == 8) out += HEX[(tmp & 63) | 128]
-    else out += HEX[tmp]
+    tmp = BUFFER[IDX + i];
+    if (i == 6) out += HEX[(tmp & 15) | 64];
+    else if (i == 8) out += HEX[(tmp & 63) | 128];
+    else out += HEX[tmp];
 
-    if (i & 1 && i > 1 && i < 11) out += `-`
+    if (i & 1 && i > 1 && i < 11) out += "-";
   }
 
-  IDX += 16
-  return out
+  IDX += 16;
+  return out;
 }

@@ -1,8 +1,8 @@
-import { breakpoints } from "./breakpoints"
+import { breakpoints } from "./breakpoints";
 
-const mq = {}
+const mq = {};
 for (const breakpoint in breakpoints) {
-  mq[breakpoint] = `@media (min-width: ${breakpoints[breakpoint]})`
+  mq[breakpoint] = `@media (min-width: ${breakpoints[breakpoint]})`;
 }
 
-export const mediaQueries = mq
+export const mediaQueries = mq;

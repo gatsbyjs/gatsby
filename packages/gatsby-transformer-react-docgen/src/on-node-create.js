@@ -1,19 +1,19 @@
-import parseMetadata from "./parse"
+import parseMetadata from "./parse";
 
-const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`
-const descId = parentId => `${parentId}--ComponentDescription`
+const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`;
+const descId = (parentId) => `${parentId}--ComponentDescription`;
 
 function canParse(node) {
   return (
     node &&
-    (node.internal.mediaType === `application/javascript` ||
+    (node.internal.mediaType === "application/javascript" ||
       // TypeScript doesn't really have a mime type and .ts files are a media file :/
-      node.internal.mediaType === `application/typescript` ||
-      node.internal.mediaType === `text/jsx` ||
-      node.internal.mediaType === `text/tsx` ||
-      node.extension === `tsx` ||
-      node.extension === `ts`)
-  )
+      node.internal.mediaType === "application/typescript" ||
+      node.internal.mediaType === "text/jsx" ||
+      node.internal.mediaType === "text/tsx" ||
+      node.extension === "tsx" ||
+      node.extension === "ts")
+  );
 }
 
 function createDescriptionNode(
@@ -21,11 +21,11 @@ function createDescriptionNode(
   entry,
   actions,
   createNodeId,
-  createContentDigest
+  createContentDigest,
 ) {
-  const { createNode } = actions
+  const { createNode } = actions;
 
-  delete node.description
+  delete node.description;
 
   const descriptionNode = {
     id: createNodeId(descId(node.id)),
@@ -33,18 +33,18 @@ function createDescriptionNode(
     children: [],
     text: entry.description,
     internal: {
-      type: `ComponentDescription`,
-      mediaType: `text/markdown`,
+      type: "ComponentDescription",
+      mediaType: "text/markdown",
       content: entry.description,
       contentDigest: createContentDigest(entry.description),
     },
-  }
+  };
 
-  node.description___NODE = descriptionNode.id
-  node.children = node.children.concat([descriptionNode.id])
-  createNode(descriptionNode)
+  node.description___NODE = descriptionNode.id;
+  node.children = node.children.concat([descriptionNode.id]);
+  createNode(descriptionNode);
 
-  return node
+  return node;
 }
 
 function createPropNodes(
@@ -52,14 +52,14 @@ function createPropNodes(
   component,
   actions,
   createNodeId,
-  createContentDigest
+  createContentDigest,
 ) {
-  const { createNode } = actions
-  const children = new Array(component.props.length)
+  const { createNode } = actions;
+  const children = new Array(component.props.length);
 
   component.props.forEach((prop, i) => {
-    const propNodeId = propsId(node.id, prop.name)
-    const content = JSON.stringify(prop)
+    const propNodeId = propsId(node.id, prop.name);
+    const content = JSON.stringify(prop);
 
     let propNode = {
       ...prop,
@@ -68,28 +68,28 @@ function createPropNodes(
       parent: node.id,
       parentType: prop.type,
       internal: {
-        type: `ComponentProp`,
+        type: "ComponentProp",
         contentDigest: createContentDigest(content),
       },
-    }
-    children[i] = propNode.id
+    };
+    children[i] = propNode.id;
     propNode = createDescriptionNode(
       propNode,
       prop,
       actions,
       createNodeId,
-      createContentDigest
-    )
-    createNode(propNode)
-  })
+      createContentDigest,
+    );
+    createNode(propNode);
+  });
 
-  node.props___NODE = children
-  node.children = node.children.concat(children)
-  return node
+  node.props___NODE = children;
+  node.children = node.children.concat(children);
+  return node;
 }
 
 export function shouldOnCreateNode({ node }) {
-  return canParse(node)
+  return canParse(node);
 }
 
 export async function onCreateNode(
@@ -101,29 +101,29 @@ export async function onCreateNode(
     reporter,
     createContentDigest,
   },
-  pluginOptions
+  pluginOptions,
 ) {
-  if (!canParse(node)) return
+  if (!canParse(node)) return;
 
-  const { createNode, createParentChildLink } = actions
+  const { createNode, createParentChildLink } = actions;
 
-  const content = await loadNodeContent(node)
+  const content = await loadNodeContent(node);
 
-  let components
+  let components;
   try {
-    components = parseMetadata(content, node, pluginOptions)
+    components = parseMetadata(content, node, pluginOptions);
   } catch (err) {
     reporter.error(
       `There was a problem parsing component metadata for file: "${node.relativePath}"`,
-      err
-    )
-    return
+      err,
+    );
+    return;
   }
 
-  components.forEach(component => {
-    const strContent = JSON.stringify(component)
-    const contentDigest = createContentDigest(strContent)
-    const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`
+  components.forEach((component) => {
+    const strContent = JSON.stringify(component);
+    const contentDigest = createContentDigest(strContent);
+    const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`;
 
     let metadataNode = {
       ...component,
@@ -133,25 +133,25 @@ export async function onCreateNode(
       parent: node.id,
       internal: {
         contentDigest,
-        type: `ComponentMetadata`,
+        type: "ComponentMetadata",
       },
-    }
+    };
 
-    createParentChildLink({ parent: node, child: metadataNode })
+    createParentChildLink({ parent: node, child: metadataNode });
     metadataNode = createPropNodes(
       metadataNode,
       component,
       actions,
       createNodeId,
-      createContentDigest
-    )
+      createContentDigest,
+    );
     metadataNode = createDescriptionNode(
       metadataNode,
       component,
       actions,
       createNodeId,
-      createContentDigest
-    )
-    createNode(metadataNode)
-  })
+      createContentDigest,
+    );
+    createNode(metadataNode);
+  });
 }

@@ -1,81 +1,81 @@
-import { buildInterfacesListForType } from "./helpers"
+import { buildInterfacesListForType } from "./helpers";
 
 export const typeDefinitionFilters = [
   {
-    typeName: `__all`,
+    typeName: "__all",
     typeDef: (typeDef, { type }) => {
       if (type.interfaces && typeDef) {
-        typeDef.interfaces ||= []
-        typeDef.interfaces.push(...buildInterfacesListForType(type))
+        typeDef.interfaces ||= [];
+        typeDef.interfaces.push(...buildInterfacesListForType(type));
       }
 
-      if (typeDef?.interfaces?.includes(`Node`)) {
+      if (typeDef?.interfaces?.includes("Node")) {
         // used to filter by different node types within a node interface
-        typeDef.fields.nodeType = `String`
+        typeDef.fields.nodeType = "String";
       }
 
       if (typeDef?.fields?.date) {
         const dateField = {
           ...typeDef.fields.date,
-          type: `Date`,
+          type: "Date",
           extensions: {
             dateformat: {},
           },
-        }
+        };
 
-        typeDef.fields.date = dateField
+        typeDef.fields.date = dateField;
       }
 
       if (typeDef?.fields?.dateGmt) {
         const dateField = {
           ...typeDef.fields.dateGmt,
-          type: `Date`,
+          type: "Date",
           extensions: {
             dateformat: {},
           },
-        }
+        };
 
-        typeDef.fields.dateGmt = dateField
+        typeDef.fields.dateGmt = dateField;
       }
 
       if (typeDef?.fields?.modified) {
         const dateField = {
           ...typeDef.fields.modified,
-          type: `Date`,
+          type: "Date",
           extensions: {
             dateformat: {},
           },
-        }
+        };
 
-        typeDef.fields.modified = dateField
+        typeDef.fields.modified = dateField;
       }
 
       if (typeDef?.fields?.modifiedGmt) {
         const dateField = {
           ...typeDef.fields.modifiedGmt,
-          type: `Date`,
+          type: "Date",
           extensions: {
             dateformat: {},
           },
-        }
+        };
 
-        typeDef.fields.modifiedGmt = dateField
+        typeDef.fields.modifiedGmt = dateField;
       }
 
-      return typeDef
+      return typeDef;
     },
   },
   {
-    typeName: `MediaItem`,
-    typeDef: objectType => {
+    typeName: "MediaItem",
+    typeDef: (objectType) => {
       objectType.fields.localFile = {
-        type: `File`,
+        type: "File",
         extensions: {
-          link: { from: `localFile.id` },
+          link: { from: "localFile.id" },
         },
-      }
+      };
 
-      return objectType
+      return objectType;
     },
   },
-]
+];

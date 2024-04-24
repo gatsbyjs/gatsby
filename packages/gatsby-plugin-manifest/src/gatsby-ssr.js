@@ -1,13 +1,13 @@
-import * as React from "react"
-import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
-import { defaultIcons, addDigestToPath, favicons } from "./common.js"
-import getManifestForPathname from "./get-manifest-pathname"
+import * as React from "react";
+import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby";
+import { defaultIcons, addDigestToPath, favicons } from "./common.js";
+import getManifestForPathname from "./get-manifest-pathname";
 
 // TODO: remove for v3
-const withPrefix = withAssetPrefix || fallbackWithPrefix
+const withPrefix = withAssetPrefix || fallbackWithPrefix;
 
 exports.onRenderBody = (
-  { setHeadComponents, pathname = `/` },
+  { setHeadComponents, pathname = "/" },
   {
     localize,
     legacy,
@@ -18,42 +18,42 @@ exports.onRenderBody = (
     include_favicon: insertFaviconLinkTag,
     theme_color_in_head: insertMetaTag,
     theme_color: themeColor,
-    crossOrigin = `anonymous`,
-  }
+    crossOrigin = "anonymous",
+  },
 ) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
-  const headComponents = []
+  const headComponents = [];
 
-  const srcIconExists = !!icon
-  const icons = pluginIcons || defaultIcons
-  const manifestFileName = getManifestForPathname(pathname, localize)
+  const srcIconExists = !!icon;
+  const icons = pluginIcons || defaultIcons;
+  const manifestFileName = getManifestForPathname(pathname, localize);
 
   // If icons were generated, also add a favicon link.
   if (srcIconExists) {
     if (insertFaviconLinkTag) {
-      favicons.forEach(favicon => {
+      favicons.forEach((favicon) => {
         headComponents.push(
           <link
-            key={`gatsby-plugin-manifest-icon-link-png`}
-            rel="icon"
+            key={"gatsby-plugin-manifest-icon-link-png"}
+            rel='icon'
             href={withPrefix(
-              addDigestToPath(favicon.src, cacheDigest, cacheBusting)
+              addDigestToPath(favicon.src, cacheDigest, cacheBusting),
             )}
-            type="image/png"
-          />
-        )
-      })
-      if (icon?.endsWith(`.svg`)) {
+            type='image/png'
+          />,
+        );
+      });
+      if (icon?.endsWith(".svg")) {
         headComponents.push(
           <link
-            key={`gatsby-plugin-manifest-icon-link-svg`}
-            rel="icon"
+            key={"gatsby-plugin-manifest-icon-link-svg"}
+            rel='icon'
             href={withPrefix(
-              addDigestToPath(`favicon.svg`, cacheDigest, cacheBusting)
+              addDigestToPath("favicon.svg", cacheDigest, cacheBusting),
             )}
-            type="image/svg+xml"
-          />
-        )
+            type='image/svg+xml'
+          />,
+        );
       }
     }
   }
@@ -61,44 +61,44 @@ exports.onRenderBody = (
   // Add manifest link tag.
   headComponents.push(
     <link
-      key={`gatsby-plugin-manifest-link`}
-      rel="manifest"
+      key={"gatsby-plugin-manifest-link"}
+      rel='manifest'
       href={fallbackWithPrefix(`/${manifestFileName}`)}
       crossOrigin={crossOrigin}
-    />
-  )
+    />,
+  );
 
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
   if (themeColor && insertMetaTag) {
     headComponents.push(
       <meta
-        key={`gatsby-plugin-manifest-meta`}
-        name="theme-color"
+        key={"gatsby-plugin-manifest-meta"}
+        name='theme-color'
         content={themeColor}
-      />
-    )
+      />,
+    );
   }
 
   if (legacy) {
-    icons.forEach(icon => {
+    icons.forEach((icon) => {
       headComponents.push(
         <link
           key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}
-          rel="apple-touch-icon"
+          rel='apple-touch-icon'
           sizes={icon.sizes}
           href={withPrefix(
             addDigestToPath(
               icon.src,
               cacheDigest,
-              srcIconExists ? cacheBusting : `none`
-            )
+              srcIconExists ? cacheBusting : "none",
+            ),
           )}
-        />
-      )
-    })
+        />,
+      );
+    });
   }
 
-  setHeadComponents(headComponents)
+  setHeadComponents(headComponents);
 
-  return true
-}
+  return true;
+};

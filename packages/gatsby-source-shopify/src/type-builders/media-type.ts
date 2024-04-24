@@ -147,5 +147,5 @@ export function mediaTypeBuilder(prefix: string): string {
         url: String!
         width: Int!
       }
-    `
+    `;
 }

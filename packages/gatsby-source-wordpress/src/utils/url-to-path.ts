@@ -1,5 +1,5 @@
-import { parse } from "url"
+import { parse } from "url";
 
 export default function urlToPath(link: string): string {
-  return parse(link).pathname
+  return parse(link).pathname;
 }

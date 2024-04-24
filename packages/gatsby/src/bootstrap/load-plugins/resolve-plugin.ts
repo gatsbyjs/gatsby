@@ -1,15 +1,15 @@
-import path from "node:path"
-import fs from "node:fs"
-import { slash, createRequireFromPath } from "gatsby-core-utils"
-import { warnOnIncompatiblePeerDependency } from "./validate"
-import type { PackageJson } from "../../.."
-import type { IPluginInfo, PluginRef } from "./types"
-import { createPluginId } from "./utils/create-id"
-import { createFileContentHash } from "./utils/create-hash"
-import reporter from "gatsby-cli/lib/reporter"
-import { isString } from "lodash"
-import { checkLocalPlugin } from "./utils/check-local-plugin"
-import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-files"
+import path from "node:path";
+import fs from "node:fs";
+import { slash, createRequireFromPath } from "gatsby-core-utils";
+import { warnOnIncompatiblePeerDependency } from "./validate";
+import type { PackageJson } from "../../..";
+import type { IPluginInfo, PluginRef } from "./types";
+import { createPluginId } from "./utils/create-id";
+import { createFileContentHash } from "./utils/create-hash";
+import reporter from "gatsby-cli/lib/reporter";
+import { isString } from "lodash";
+import { checkLocalPlugin } from "./utils/check-local-plugin";
+import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-files";
 
 /**
  * @param plugin
@@ -23,29 +23,29 @@ import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-fi
  * This is the project location, from which are found the plugins
  */
 export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
-  const pluginName = isString(plugin) ? plugin : plugin.resolve
+  const pluginName = isString(plugin) ? plugin : plugin.resolve;
 
   // Handle local plugins
-  const { validLocalPlugin, localPluginPath = `` } = checkLocalPlugin(
+  const { validLocalPlugin, localPluginPath = "" } = checkLocalPlugin(
     plugin,
     rootDir,
-  )
+  );
 
   if (validLocalPlugin && localPluginPath) {
     const packageJSON = JSON.parse(
-      fs.readFileSync(`${localPluginPath}/package.json`, `utf-8`),
-    ) as PackageJson
-    const name = packageJSON.name || pluginName
-    warnOnIncompatiblePeerDependency(name, packageJSON)
+      fs.readFileSync(`${localPluginPath}/package.json`, "utf-8"),
+    ) as PackageJson;
+    const name = packageJSON.name || pluginName;
+    warnOnIncompatiblePeerDependency(name, packageJSON);
 
     return {
       resolve: localPluginPath,
       name,
       id: createPluginId(name),
       version:
-        packageJSON?.version || createFileContentHash(localPluginPath, `**`),
+        packageJSON?.version || createFileContentHash(localPluginPath, "**"),
       ...getResolvedFieldsForPlugin(rootDir, name),
-    }
+    };
   }
 
   /**
@@ -56,7 +56,7 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
     const requireSource =
       rootDir !== null
         ? createRequireFromPath(`${rootDir}/:internal:`)
-        : require
+        : require;
 
     // If the path is absolute, resolve the directory of the internal plugin,
     // otherwise resolve the directory containing the package.json
@@ -68,30 +68,30 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
             : `${pluginName}/package.json`,
         ),
       ),
-    )
+    );
 
     const packageJSON = JSON.parse(
-      fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`),
-    ) as PackageJson
-    warnOnIncompatiblePeerDependency(packageJSON.name ?? ``, packageJSON)
+      fs.readFileSync(`${resolvedPath}/package.json`, "utf-8"),
+    ) as PackageJson;
+    warnOnIncompatiblePeerDependency(packageJSON.name ?? "", packageJSON);
 
     return {
       resolve: resolvedPath,
-      id: createPluginId(packageJSON.name ?? ``),
-      name: packageJSON.name ?? ``,
-      version: packageJSON.version ?? ``,
-    }
+      id: createPluginId(packageJSON.name ?? ""),
+      name: packageJSON.name ?? "",
+      version: packageJSON.version ?? "",
+    };
   } catch (err) {
-    if (process.env.gatsby_log_level === `verbose`) {
+    if (process.env.gatsby_log_level === "verbose") {
       reporter.panicOnBuild(
         `plugin "${pluginName} threw the following error:\n`,
         err,
-      )
+      );
     } else {
       reporter.panicOnBuild(
         `There was a problem loading plugin "${pluginName}". Perhaps you need to install its package?\nUse --verbose to see actual error.`,
-      )
+      );
     }
-    throw new Error(`unreachable`)
+    throw new Error("unreachable");
   }
 }

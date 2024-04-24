@@ -1,1 +1,1 @@
-exports.pluginOptionsSchema = ({ Joi }) => Joi.object({})
+exports.pluginOptionsSchema = ({ Joi }) => Joi.object({});

@@ -1,21 +1,21 @@
-import { Span } from "opentracing"
-import { webpackConfig } from "../utils/webpack.config"
-import { build } from "../utils/webpack/bundle"
-import type { IProgram } from "./types"
+import { Span } from "opentracing";
+import { webpackConfig } from "../utils/webpack.config";
+import { build } from "../utils/webpack/bundle";
+import type { IProgram } from "./types";
 
 export const buildProductionBundle = async (
   program: IProgram,
   parentSpan: Span,
 ): Promise<ReturnType<typeof build>> => {
-  const { directory } = program
+  const { directory } = program;
 
   const compilerConfig = await webpackConfig(
     program,
     directory,
-    `build-javascript`,
+    "build-javascript",
     undefined,
     { parentSpan },
-  )
+  );
 
-  return build(compilerConfig)
-}
+  return build(compilerConfig);
+};

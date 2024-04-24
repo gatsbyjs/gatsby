@@ -1,7 +1,7 @@
-import { relative } from "path"
-import { PluginObj, types as BabelTypes, PluginPass } from "@babel/core"
-import type { ObjectProperty } from "@babel/types"
-import { store } from "../../redux"
+import { relative } from "path";
+import { PluginObj, types as BabelTypes, PluginPass } from "@babel/core";
+import type { ObjectProperty } from "@babel/types";
+import { store } from "../../redux";
 
 /**
  * This is a plugin that finds Slice placeholder components and injects the __renderedByLocation prop
@@ -15,22 +15,22 @@ export default function addSlicePlaceholderLocation(
   {
     types: t,
   }: {
-    types: typeof BabelTypes
+    types: typeof BabelTypes;
   },
 ): PluginObj {
   return {
-    name: `babel-plugin-add-slice-placeholder-location`,
+    name: "babel-plugin-add-slice-placeholder-location",
     visitor: {
       JSXOpeningElement(nodePath): void {
-        if (!nodePath.get(`name`).referencesImport(`gatsby`, `Slice`)) {
-          return
+        if (!nodePath.get("name").referencesImport("gatsby", "Slice")) {
+          return;
         }
 
         // @ts-ignore
         if (this.file.opts.filename) {
           const __renderedByLocationProperties: Array<ObjectProperty> = [
             t.objectProperty(
-              t.identifier(`fileName`),
+              t.identifier("fileName"),
               t.stringLiteral(
                 relative(
                   store.getState().program.directory,
@@ -39,54 +39,54 @@ export default function addSlicePlaceholderLocation(
                 ),
               ),
             ),
-          ]
+          ];
 
           if (nodePath.node.loc?.start.line) {
             __renderedByLocationProperties.push(
               t.objectProperty(
-                t.identifier(`lineNumber`),
+                t.identifier("lineNumber"),
                 t.numericLiteral(nodePath.node.loc.start.line),
               ),
-            )
+            );
 
             if (nodePath.node.loc?.start.column) {
               __renderedByLocationProperties.push(
                 t.objectProperty(
-                  t.identifier(`columnNumber`),
+                  t.identifier("columnNumber"),
                   t.numericLiteral(nodePath.node.loc.start.column + 1),
                 ),
-              )
+              );
             }
 
             if (nodePath.node.loc?.end.line) {
               __renderedByLocationProperties.push(
                 t.objectProperty(
-                  t.identifier(`endLineNumber`),
+                  t.identifier("endLineNumber"),
                   t.numericLiteral(nodePath.node.loc.end.line),
                 ),
-              )
+              );
 
               if (nodePath.node.loc?.end.column) {
                 __renderedByLocationProperties.push(
                   t.objectProperty(
-                    t.identifier(`endColumnNumber`),
+                    t.identifier("endColumnNumber"),
                     t.numericLiteral(nodePath.node.loc.end.column + 1),
                   ),
-                )
+                );
               }
             }
           }
 
           const newProp = t.jsxAttribute(
-            t.jsxIdentifier(`__renderedByLocation`),
+            t.jsxIdentifier("__renderedByLocation"),
             t.jsxExpressionContainer(
               t.objectExpression(__renderedByLocationProperties),
             ),
-          )
+          );
 
-          nodePath.node.attributes.push(newProp)
+          nodePath.node.attributes.push(newProp);
         }
       },
     },
-  }
+  };
 }

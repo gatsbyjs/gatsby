@@ -1,14 +1,14 @@
-import { getRepositoryId } from "gatsby-telemetry/lib/repository-id"
-import { murmurhash } from "gatsby-core-utils/murmurhash"
+import { getRepositoryId } from "gatsby-telemetry/lib/repository-id";
+import { murmurhash } from "gatsby-core-utils/murmurhash";
 
 const sampleSite = (experimentName: string, percentage: number): boolean => {
   const bucketNumber =
     murmurhash(
-      experimentName + `` + JSON.stringify(getRepositoryId().repositoryId),
+      experimentName + "" + JSON.stringify(getRepositoryId().repositoryId),
       0,
-    ) % 100
+    ) % 100;
 
-  return bucketNumber < percentage
-}
+  return bucketNumber < percentage;
+};
 
-export default sampleSite
+export default sampleSite;

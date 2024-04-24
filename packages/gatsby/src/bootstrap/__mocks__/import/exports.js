@@ -1,3 +1,3 @@
-exports.foo = () => {}
-exports.bar = () => {}
-exports.__esModule = true
+exports.foo = () => {};
+exports.bar = () => {};
+exports.__esModule = true;

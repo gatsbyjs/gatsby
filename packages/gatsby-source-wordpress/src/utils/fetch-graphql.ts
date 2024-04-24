@@ -1,21 +1,21 @@
-import type { IPluginOptions } from "~/models/gatsby-api"
-import type { GatsbyReporter } from "./gatsby-types"
-import prettier from "prettier"
+import type { IPluginOptions } from "~/models/gatsby-api";
+import type { GatsbyReporter } from "./gatsby-types";
+import prettier from "prettier";
 import axios, {
   type AxiosRequestConfig,
   type AxiosResponse,
   type RawAxiosRequestHeaders,
-} from "axios"
-import rateLimit, { type RateLimitedAxiosInstance } from "axios-rate-limit"
-import chalk from "chalk"
-import retry from "async-retry"
-import { formatLogMessage } from "./format-log-message"
-import { getStore } from "~/store"
-import { getPluginOptions } from "./get-gatsby-api"
-import urlUtil from "url"
-import { CODES } from "./report"
+} from "axios";
+import rateLimit, { type RateLimitedAxiosInstance } from "axios-rate-limit";
+import chalk from "chalk";
+import retry from "async-retry";
+import { formatLogMessage } from "./format-log-message";
+import { getStore } from "~/store";
+import { getPluginOptions } from "./get-gatsby-api";
+import urlUtil from "url";
+import { CODES } from "./report";
 
-let http = null
+let http = null;
 
 // this is an object so that we can override getHttp in our tests
 export const moduleHelpers = {
@@ -23,28 +23,28 @@ export const moduleHelpers = {
     if (!http) {
       http = rateLimit(axios.create(), {
         maxRPS: limit,
-      })
+      });
     }
-    return http
+    return http;
   },
-}
+};
 
 function errorIs500ish(e: Error): boolean {
   return (
-    e.message.includes(`Request failed with status code 50`) &&
-    (e.message.includes(`502`) ||
-      e.message.includes(`503`) ||
-      e.message.includes(`500`) ||
-      e.message.includes(`504`))
-  )
+    e.message.includes("Request failed with status code 50") &&
+    (e.message.includes("502") ||
+      e.message.includes("503") ||
+      e.message.includes("500") ||
+      e.message.includes("504"))
+  );
 }
 
 type IHandleErrorOptionsInput = {
-  variables: IJSON
-  query: string
-  pluginOptions: IPluginOptions
-  reporter: GatsbyReporter
-}
+  variables: IJSON;
+  query: string;
+  pluginOptions: IPluginOptions;
+  reporter: GatsbyReporter;
+};
 
 async function handleErrorOptions({
   variables,
@@ -59,24 +59,24 @@ async function handleErrorOptions({
   ) {
     reporter.info(
       formatLogMessage(`GraphQL vars: ${JSON.stringify(variables)}`),
-    )
+    );
   }
 
   try {
-    query = await prettier.format(query, { parser: `graphql` })
+    query = await prettier.format(query, { parser: "graphql" });
   } catch (e) {
     // do nothing
   }
 
   if (pluginOptions.debug.graphql.showQueryOnError) {
-    reporter.error(formatLogMessage(`GraphQL query: ${query}`))
+    reporter.error(formatLogMessage(`GraphQL query: ${query}`));
   }
 
   if (pluginOptions.debug.graphql.copyQueryOnError) {
     try {
       // clipboardy is ESM-only package
-      const { default: clipboardy } = await import(`clipboardy`)
-      await clipboardy.write(query)
+      const { default: clipboardy } = await import("clipboardy");
+      await clipboardy.write(query);
     } catch (e) {
       // do nothing
     }
@@ -84,14 +84,14 @@ async function handleErrorOptions({
 }
 
 type IHandleErrors = {
-  variables: IJSON
-  query: string
-  pluginOptions: IPluginOptions
-  reporter: GatsbyReporter
-  responseJSON: IJSON
-  panicOnError: boolean
-  errorContext: string
-}
+  variables: IJSON;
+  query: string;
+  pluginOptions: IPluginOptions;
+  reporter: GatsbyReporter;
+  responseJSON: IJSON;
+  panicOnError: boolean;
+  errorContext: string;
+};
 
 async function handleErrors({
   variables,
@@ -107,10 +107,10 @@ async function handleErrors({
     query,
     pluginOptions,
     reporter,
-  })
+  });
 
   if (!responseJSON) {
-    return
+    return;
   }
 
   if (
@@ -122,23 +122,23 @@ async function handleErrors({
       id: CODES.BadResponse,
       context: {
         sourceMessage: formatLogMessage(
-          errorContext || `Encountered errors. See above for details.`,
+          errorContext || "Encountered errors. See above for details.",
         ),
       },
-    })
+    });
   }
 }
 
 type IHandleGraphQLErrorsInput = {
-  query: string
-  variables: IJSON
-  response: AxiosResponse
-  errorMap: IErrorMap
-  panicOnError: boolean
-  reporter: GatsbyReporter
-  errorContext: string
-  forceReportCriticalErrors: boolean
-}
+  query: string;
+  variables: IJSON;
+  response: AxiosResponse;
+  errorMap: IErrorMap;
+  panicOnError: boolean;
+  reporter: GatsbyReporter;
+  errorContext: string;
+  forceReportCriticalErrors: boolean;
+};
 
 async function handleGraphQLErrors({
   query,
@@ -150,13 +150,13 @@ async function handleGraphQLErrors({
   errorContext,
   forceReportCriticalErrors = false,
 }: IHandleGraphQLErrorsInput): Promise<void> {
-  const pluginOptions = getPluginOptions()
+  const pluginOptions = getPluginOptions();
 
-  const json = response?.data
-  const { errors } = json || {}
+  const json = response?.data;
+  const { errors } = json || {};
 
   if (!errors) {
-    return
+    return;
   }
 
   // if we have json data, the error wasn't critical.
@@ -169,7 +169,7 @@ async function handleGraphQLErrors({
     // for ex during the Preview process
     !forceReportCriticalErrors
   ) {
-    return
+    return;
   }
 
   for (const error of errors) {
@@ -177,7 +177,7 @@ async function handleGraphQLErrors({
       errorMap &&
       errorMap.from &&
       errorMap.to &&
-      error.message === errorMap.from
+      error.message === errorMap.from;
 
     if (errorWasMapped && panicOnError) {
       reporter.panic({
@@ -185,38 +185,38 @@ async function handleGraphQLErrors({
         context: {
           sourceMessage: formatLogMessage(errorMap.to),
         },
-      })
+      });
     } else if (errorWasMapped) {
       reporter.error({
         id: CODES.RemoteGraphQLError,
         context: {
           sourceMessage: formatLogMessage(errorMap.to),
         },
-      })
+      });
     }
 
     // convert the error path array into a string like "mediaItems.nodes[55].mediaDetails.meta.focalLength"
     let errorPath = error?.path
       ?.map((field, index) => {
         // if this is a number it's the index of a node
-        if (typeof field === `number`) {
-          return `[${field}].`
+        if (typeof field === "number") {
+          return `[${field}].`;
         } else if (
           // otherwise if the next field isn't a number
-          typeof error.path[index + 1] !== `number`
+          typeof error.path[index + 1] !== "number"
         ) {
           // add dot notation
-          return `${field}.`
+          return `${field}.`;
         }
 
         // or just return the field
-        return field
+        return field;
       })
-      ?.join(``)
+      ?.join("");
 
-    if (errorPath?.endsWith(`.`)) {
+    if (errorPath?.endsWith(".")) {
       // trim "." off the end of the errorPath
-      errorPath = errorPath.slice(0, -1)
+      errorPath = errorPath.slice(0, -1);
     }
 
     if (error.debugMessage) {
@@ -224,7 +224,7 @@ async function handleGraphQLErrors({
         formatLogMessage(
           `Error category: ${error.category} \n\nError: \n  ${error.message} \n\n Debug message: \n  ${error.debugMessage} \n\n Error path: ${errorPath}`,
         ),
-      )
+      );
     } else {
       reporter.error(
         formatLogMessage(
@@ -232,15 +232,15 @@ async function handleGraphQLErrors({
             error?.locations?.length
               ? error.locations
                   .map((location) => {
-                    return `location: line ${location.line}, column: ${location.column}`
+                    return `location: line ${location.line}, column: ${location.column}`;
                   })
-                  ?.join(`. `)
-              : ``
+                  ?.join(". ")
+              : ""
           } \n\t ${error.message}  \n\n Error path: ${errorPath} \n\n If you haven't already, try adding ${chalk.bold(
-            `define( 'GRAPHQL_DEBUG', true );`,
+            "define( 'GRAPHQL_DEBUG', true );",
           )} to your wp-config.php for more detailed error messages.`,
         ),
-      )
+      );
     }
   }
 
@@ -252,27 +252,28 @@ async function handleGraphQLErrors({
     query,
     panicOnError,
     errorContext,
-  })
+  });
 }
 
 const ensureStatementsAreTrue = `${chalk.bold(
-  `Please ensure the following statements are true`,
-)} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed and active in your WordPress backend\n  - Your WordPress debug.log does not contain critical errors`
+  "Please ensure the following statements are true",
+)} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed and active in your WordPress backend\n  - Your WordPress debug.log does not contain critical errors`;
 
 // @todo add a link to docs page for debugging
 const genericError = ({ url }: { url: string }): string =>
-  `GraphQL request to ${chalk.bold(url)} failed.\n\n${ensureStatementsAreTrue}`
+  `GraphQL request to ${chalk.bold(url)} failed.\n\n${ensureStatementsAreTrue}`;
 
-const slackChannelSupportMessage = `If you're still having issues, please visit https://www.wpgraphql.com/community-and-support/\nand follow the link to join the WPGraphQL Slack.\nThere are a lot of folks there in the #gatsby channel who are happy to help with debugging.`
+const slackChannelSupportMessage =
+  "If you're still having issues, please visit https://www.wpgraphql.com/community-and-support/\nand follow the link to join the WPGraphQL Slack.\nThere are a lot of folks there in the #gatsby channel who are happy to help with debugging.";
 
 const getLowerRequestConcurrencyOptionMessage = (): string => {
   const { requestConcurrency, previewRequestConcurrency, perPage } =
-    getStore().getState().gatsbyApi.pluginOptions.schema
+    getStore().getState().gatsbyApi.pluginOptions.schema;
 
   return `Try reducing the ${chalk.bold(
-    `requestConcurrency`,
+    "requestConcurrency",
   )} for content updates or the ${chalk.bold(
-    `previewRequestConcurrency`,
+    "previewRequestConcurrency",
   )} for previews, and/or reducing the schema.perPage option:
 
 {
@@ -284,22 +285,22 @@ const getLowerRequestConcurrencyOptionMessage = (): string => {
       previewRequestConcurrency: 2, // currently set to ${previewRequestConcurrency}
     }
   },
-}`
-}
+}`;
+};
 
 type IHandleFetchErrors = {
-  e: Error
-  reporter: GatsbyReporter
-  url: string
-  timeout: number
-  pluginOptions: IPluginOptions
-  query: string
-  response: AxiosResponse
-  errorContext: string
-  variables?: IJSON | undefined
-  isFirstRequest?: boolean | undefined
-  headers?: IFetchGraphQLHeaders | undefined
-}
+  e: Error;
+  reporter: GatsbyReporter;
+  url: string;
+  timeout: number;
+  pluginOptions: IPluginOptions;
+  query: string;
+  response: AxiosResponse;
+  errorContext: string;
+  variables?: IJSON | undefined;
+  isFirstRequest?: boolean | undefined;
+  headers?: IFetchGraphQLHeaders | undefined;
+};
 
 const handleFetchErrors = async ({
   e,
@@ -322,10 +323,10 @@ const handleFetchErrors = async ({
     query,
     errorContext,
     responseJSON: null,
-  })
+  });
 
   if (e.message.includes(`timeout of ${timeout}ms exceeded`)) {
-    reporter.error(e.message)
+    reporter.error(e.message);
     reporter.panic({
       id: CODES.Timeout,
       context: {
@@ -338,13 +339,13 @@ const handleFetchErrors = async ({
           { useVerboseStyle: true },
         ),
       },
-    })
-    return
+    });
+    return;
   }
 
-  if (errorIs500ish(e) && !e.message.includes(`500`)) {
-    if (`message` in e) {
-      console.error(formatLogMessage(new Error(e.message).stack))
+  if (errorIs500ish(e) && !e.message.includes("500")) {
+    if ("message" in e) {
+      console.error(formatLogMessage(new Error(e.message).stack));
     }
 
     reporter.panic({
@@ -357,10 +358,10 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
           { useVerboseStyle: true },
         ),
       },
-    })
+    });
 
-    return
-  } else if (e.message.includes(`Request failed with status code 500`)) {
+    return;
+  } else if (e.message.includes("Request failed with status code 500")) {
     reporter.panic({
       id: CODES.WordPress500ishError,
       context: {
@@ -368,7 +369,7 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
           `${e.message}
 
 Your WordPress server is either overloaded or encountered a PHP error.
-${errorContext ? `\n${errorContext}\n` : ``}
+${errorContext ? `\n${errorContext}\n` : ""}
 Enable WordPress debugging by adding the following to your wp-config.php file:
 
 define("WP_DEBUG", true);
@@ -385,17 +386,19 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
           { useVerboseStyle: true },
         ),
       },
-    })
+    });
 
-    return
+    return;
   }
 
-  const unauthorized = e.message.includes(`Request failed with status code 401`)
+  const unauthorized = e.message.includes(
+    "Request failed with status code 401",
+  );
 
-  const htaccessCredentials = pluginOptions.auth.htaccess
+  const htaccessCredentials = pluginOptions.auth.htaccess;
 
   const missingCredentials =
-    !htaccessCredentials.password || !htaccessCredentials.username
+    !htaccessCredentials.password || !htaccessCredentials.username;
 
   if (unauthorized && !missingCredentials) {
     reporter.panic({
@@ -406,9 +409,9 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
           { useVerboseStyle: true },
         ),
       },
-    })
+    });
 
-    return
+    return;
   } else if (unauthorized) {
     reporter.panic({
       id: CODES.Authentication,
@@ -430,12 +433,12 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
           { useVerboseStyle: true },
         ),
       },
-    })
+    });
 
-    return
+    return;
   }
 
-  const forbidden = e.message.includes(`Request failed with status code 403`)
+  const forbidden = e.message.includes("Request failed with status code 403");
 
   if (forbidden) {
     reporter.panic({
@@ -445,15 +448,15 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
           `${e.message}\n\nThe GraphQL request was forbidden.\nIf you are using a security plugin like WordFence or a server firewall you may need to add your IP address to the allow list or adjust your firewall settings for your GraphQL endpoint.\n\n${errorContext}`,
         ),
       },
-    })
+    });
 
-    return
+    return;
   }
 
-  const redirected = e.message.includes(`GraphQL request was redirected`)
+  const redirected = e.message.includes("GraphQL request was redirected");
 
   if (redirected) {
-    await handleErrorOptions({ variables, query, pluginOptions, reporter })
+    await handleErrorOptions({ variables, query, pluginOptions, reporter });
     reporter.panic({
       id: CODES.WordPressFilters,
       context: {
@@ -466,27 +469,27 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
 ${slackChannelSupportMessage}`,
         ),
       },
-    })
+    });
 
-    return
+    return;
   }
 
   const responseReturnedHtml =
-    !!response?.headers[`content-type`].includes(`text/html;`)
-  const limit = pluginOptions?.schema?.requestConcurrency
+    !!response?.headers["content-type"].includes("text/html;");
+  const limit = pluginOptions?.schema?.requestConcurrency;
 
   if (responseReturnedHtml && isFirstRequest) {
     const requestOptions: AxiosRequestConfig = {
       timeout,
       headers,
-    }
+    };
 
     if (!missingCredentials) {
-      requestOptions.auth = htaccessCredentials
+      requestOptions.auth = htaccessCredentials;
     }
 
     try {
-      const urlWithoutTrailingSlash = url.replace(/\/$/, ``)
+      const urlWithoutTrailingSlash = url.replace(/\/$/, "");
 
       const response: AxiosResponse = await moduleHelpers
         .getHttp(limit)
@@ -494,12 +497,13 @@ ${slackChannelSupportMessage}`,
           `${urlWithoutTrailingSlash}/graphql`,
           { query, variables },
           requestOptions,
-        )
+        );
 
-      const contentType = response?.headers[`content-type`]
+      const contentType = response?.headers["content-type"];
 
-      if (contentType?.includes(`application/json;`)) {
-        const docsLink = `https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#url-string`
+      if (contentType?.includes("application/json;")) {
+        const docsLink =
+          "https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#url-string";
 
         // if adding `/graphql` works, panic with a useful message
         reporter.panic({
@@ -507,40 +511,40 @@ ${slackChannelSupportMessage}`,
           context: {
             sourceMessage: formatLogMessage(
               `${
-                errorContext ? `${errorContext}` : ``
+                errorContext ? `${errorContext}` : ""
               }\n\nThe supplied url ${chalk.bold(
                 urlWithoutTrailingSlash,
               )} is invalid,\nhowever ${chalk.bold(
-                urlWithoutTrailingSlash + `/graphql`,
+                urlWithoutTrailingSlash + "/graphql",
               )} works!\n\nFor this plugin to consume the wp-graphql schema, you'll need to specify the full URL\n(${chalk.bold(
-                urlWithoutTrailingSlash + `/graphql`,
+                urlWithoutTrailingSlash + "/graphql",
               )}) in your gatsby-config.\n\nYou can learn more about configuring the source plugin URL here:\n${docsLink}\n\n`,
             ),
           },
-        })
+        });
 
-        return
+        return;
       }
     } catch (err) {
       // elsewise, continue to handle HTML response as normal
     }
 
     const copyHtmlResponseOnError =
-      pluginOptions?.debug?.graphql?.copyHtmlResponseOnError
+      pluginOptions?.debug?.graphql?.copyHtmlResponseOnError;
 
     if (copyHtmlResponseOnError) {
       try {
         // clipboardy is ESM-only package
-        const { default: clipboardy } = await import(`clipboardy`)
-        if (`writeSync` in clipboardy) {
-          clipboardy.writeSync(response.data)
+        const { default: clipboardy } = await import("clipboardy");
+        if ("writeSync" in clipboardy) {
+          clipboardy.writeSync(response.data);
         }
       } catch (e) {
         reporter.error(
           formatLogMessage(
-            `Unable to copy html response on error.\n\n${e.message ?? ``}`,
+            `Unable to copy html response on error.\n\n${e.message ?? ""}`,
           ),
-        )
+        );
       }
     }
 
@@ -548,13 +552,13 @@ ${slackChannelSupportMessage}`,
       id: CODES.BadResponse,
       context: {
         sourceMessage: formatLogMessage(
-          `${errorContext || ``}\n\n${
+          `${errorContext || ""}\n\n${
             e.message
           } \n\nReceived HTML as a response. Are you sure ${url} is the correct URL and WPGraphQL is active?\n\nIf you're sure WPGraphQL is active, visit that URL in a browser - if it redirects to the correct URL,\nor you've entered the wrong URL in settings,\nyou might receive this error.\nVisit that URL in your browser and if it looks good copy/paste it from your URL bar to your gatsby-config.js.\n\n${ensureStatementsAreTrue}${
             copyHtmlResponseOnError
-              ? `\n\nCopied HTML response to your clipboard.`
+              ? "\n\nCopied HTML response to your clipboard."
               : `\n\n${chalk.bold(
-                  `Further debugging`,
+                  "Further debugging",
                 )}\nIf you still receive this error after following the steps above, this may be a problem with your WordPress instance.\nA plugin or theme may be adding additional output for some posts or pages.\nAdd the following plugin option to copy the html response to your clipboard for debugging.\nYou can paste the response into an html file to see what's being returned.\n
 {
   resolve: "gatsby-source-wordpress",
@@ -573,9 +577,9 @@ ${slackChannelSupportMessage}`,
           },
         ),
       },
-    })
+    });
 
-    return
+    return;
   } else if (responseReturnedHtml && !isFirstRequest) {
     reporter.panic({
       id: CODES.WordPressFilters,
@@ -588,35 +592,35 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
 }\n\nYou can use the gatsby-source-wordpress debug options to determine which GraphQL request is causing this error.\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debuggraphql-object`,
         ),
       },
-    })
+    });
 
-    return
+    return;
   }
 
-  const sharedEmptyStringReponseError = `\n\nAn empty string was returned instead of a response when making a GraphQL request.\nThis may indicate that you have a WordPress filter running which is causing WPGraphQL\nto return an empty string instead of a response.\nPlease open an issue with a reproduction at\nhttps://github.com/gatsbyjs/gatsby/issues/new\nfor more help\n\n${errorContext}\n`
+  const sharedEmptyStringReponseError = `\n\nAn empty string was returned instead of a response when making a GraphQL request.\nThis may indicate that you have a WordPress filter running which is causing WPGraphQL\nto return an empty string instead of a response.\nPlease open an issue with a reproduction at\nhttps://github.com/gatsbyjs/gatsby/issues/new\nfor more help\n\n${errorContext}\n`;
 
   const emptyStringResponse =
-    e.message === `GraphQL request returned an empty string.`
+    e.message === "GraphQL request returned an empty string.";
 
   if (emptyStringResponse) {
-    reporter.log(``)
-    if (process.env.NODE_ENV === `development`) {
-      reporter.warn(formatLogMessage(sharedEmptyStringReponseError))
+    reporter.log("");
+    if (process.env.NODE_ENV === "development") {
+      reporter.warn(formatLogMessage(sharedEmptyStringReponseError));
     } else {
       reporter.panic({
         id: CODES.BadResponse,
         context: {
           sourceMessage: formatLogMessage(sharedEmptyStringReponseError),
         },
-      })
+      });
 
-      return
+      return;
     }
 
-    return
+    return;
   }
 
-  if (e.message.includes(`self signed certificate`)) {
+  if (e.message.includes("self signed certificate")) {
     reporter.panic({
       id: CODES.SelfSignedCert,
       context: {
@@ -624,9 +628,9 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
           `${e.message}\n\nSee the docs for more information:\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/tutorials/using-self-signed-certificates.md`,
         ),
       },
-    })
+    });
 
-    return
+    return;
   }
 
   // generic error if none of the above exit the process
@@ -635,53 +639,53 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
     context: {
       sourceMessage: formatLogMessage(
         `${e.stack} ${
-          errorContext ? `\n\n` + errorContext : ``
+          errorContext ? "\n\n" + errorContext : ""
         }\n\n${genericError({ url })}`,
         {
           useVerboseStyle: true,
         },
       ),
     },
-  })
+  });
 
-  return
-}
+  return;
+};
 
 export type IJSON = {
   // these will always be different depending on where this is used
   // we need this for GraphQL results and the node filter api
   // which can be used in any way by users
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
+  [key: string]: any;
+};
 
 type IFetchGraphQLHeaders = {
-  WPGatsbyPreview?: string | undefined
-  Authorization?: string | undefined
-  WPGatsbyPreviewUser?: number | undefined
-} & RawAxiosRequestHeaders
+  WPGatsbyPreview?: string | undefined;
+  Authorization?: string | undefined;
+  WPGatsbyPreviewUser?: number | undefined;
+} & RawAxiosRequestHeaders;
 
 type IErrorMap = {
-  from: string
-  to: string
-}
+  from: string;
+  to: string;
+};
 
 type IFetchGraphQLInput = {
-  url?: string | undefined
-  query: string
-  errorContext?: string | undefined
-  ignoreGraphQLErrors?: boolean | undefined
-  panicOnError?: boolean | undefined
-  throwGqlErrors?: boolean | undefined
-  throwFetchErrors?: boolean | undefined
-  isFirstRequest?: boolean | undefined
-  forceReportCriticalErrors?: boolean | undefined
-  errorMap?: IErrorMap | undefined
-  variables?: IJSON | undefined
-  headers?: IFetchGraphQLHeaders | undefined
-}
+  url?: string | undefined;
+  query: string;
+  errorContext?: string | undefined;
+  ignoreGraphQLErrors?: boolean | undefined;
+  panicOnError?: boolean | undefined;
+  throwGqlErrors?: boolean | undefined;
+  throwFetchErrors?: boolean | undefined;
+  isFirstRequest?: boolean | undefined;
+  forceReportCriticalErrors?: boolean | undefined;
+  errorMap?: IErrorMap | undefined;
+  variables?: IJSON | undefined;
+  headers?: IFetchGraphQLHeaders | undefined;
+};
 
-type IGraphQLDataResponse = IJSON
+type IGraphQLDataResponse = IJSON;
 
 export default async function fetchGraphql({
   query,
@@ -697,42 +701,42 @@ export default async function fetchGraphql({
   isFirstRequest = false,
   forceReportCriticalErrors = false,
 }: IFetchGraphQLInput): Promise<IGraphQLDataResponse> {
-  const { helpers, pluginOptions } = getStore().getState().gatsbyApi
-  const limit = pluginOptions?.schema?.requestConcurrency
+  const { helpers, pluginOptions } = getStore().getState().gatsbyApi;
+  const limit = pluginOptions?.schema?.requestConcurrency;
 
-  const { url: pluginOptionsUrl } = pluginOptions
-  let { reporter } = helpers
+  const { url: pluginOptionsUrl } = pluginOptions;
+  let { reporter } = helpers;
 
-  if (!reporter || typeof reporter === `undefined`) {
+  if (!reporter || typeof reporter === "undefined") {
     reporter = {
       panic: (message: { id: string; context: { sourceMessage: string } }) => {
-        throw new Error(message?.context?.sourceMessage)
+        throw new Error(message?.context?.sourceMessage);
       },
       error: console.error as GatsbyReporter["error"],
-    } as GatsbyReporter
+    } as GatsbyReporter;
   }
 
   if (!url) {
-    url = pluginOptionsUrl
+    url = pluginOptionsUrl;
   }
 
-  const timeout = pluginOptions.schema.timeout
+  const timeout = pluginOptions.schema.timeout;
 
-  const htaccessCredentials = pluginOptions.auth.htaccess
+  const htaccessCredentials = pluginOptions.auth.htaccess;
 
   const missingCredentials =
-    !htaccessCredentials.password || !htaccessCredentials.username
+    !htaccessCredentials.password || !htaccessCredentials.username;
 
-  let response: AxiosResponse
+  let response: AxiosResponse;
 
   try {
     const requestOptions: AxiosRequestConfig = {
       timeout,
       headers,
-    }
+    };
 
     if (!missingCredentials) {
-      requestOptions.auth = htaccessCredentials
+      requestOptions.auth = htaccessCredentials;
     }
 
     response = await retry(
@@ -743,41 +747,41 @@ export default async function fetchGraphql({
           .catch((e) => {
             if (!errorIs500ish(e)) {
               // for any error that is not a 50x error, we bail, meaning we stop retrying. error will be thrown one level higher
-              bail(e)
+              bail(e);
 
-              return null
+              return null;
             } else {
               // otherwise throwing the error will cause the retry to happen again
-              throw e
+              throw e;
             }
           }),
       { retries: 5 },
-    )
+    );
 
-    if (response.data === ``) {
-      throw new Error(`GraphQL request returned an empty string.`)
+    if (response.data === "") {
+      throw new Error("GraphQL request returned an empty string.");
     }
 
-    const { path }: { path: string } = urlUtil.parse(url)
+    const { path }: { path: string } = urlUtil.parse(url);
 
-    const responsePath = response.request.path
+    const responsePath = response.request.path;
 
     if (
       path !== responsePath &&
       responsePath !== undefined &&
       responsePath !== url
     ) {
-      throw new Error(`GraphQL request was redirected to ${responsePath}`)
+      throw new Error(`GraphQL request was redirected to ${responsePath}`);
     }
 
-    const contentType: string = response.headers[`content-type`]
+    const contentType: string = response.headers["content-type"];
 
-    if (!contentType.includes(`application/json;`)) {
-      throw new Error(`Unable to connect to WPGraphQL.`)
+    if (!contentType.includes("application/json;")) {
+      throw new Error("Unable to connect to WPGraphQL.");
     }
   } catch (e) {
     if (throwFetchErrors) {
-      throw e
+      throw e;
     }
 
     await handleFetchErrors({
@@ -791,15 +795,15 @@ export default async function fetchGraphql({
       response,
       errorContext,
       isFirstRequest,
-    })
+    });
   }
 
   if (throwGqlErrors && response.data.errors) {
     const stringifiedErrors: string = response.data.errors
       .map((error: { message: string }) => error.message)
-      .join(`\n\n`)
+      .join("\n\n");
 
-    throw new Error(stringifiedErrors)
+    throw new Error(stringifiedErrors);
   }
 
   if (!ignoreGraphQLErrors) {
@@ -812,8 +816,8 @@ export default async function fetchGraphql({
       reporter,
       errorContext,
       forceReportCriticalErrors,
-    })
+    });
   }
 
-  return response?.data
+  return response?.data;
 }

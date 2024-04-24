@@ -4,15 +4,15 @@ import React, {
   type JSX,
   type ComponentType,
   type ImgHTMLAttributes,
-} from "react"
+} from "react";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import * as PropTypes from "prop-types"
-import { Picture, SourceProps } from "./picture"
+import * as PropTypes from "prop-types";
+import { Picture, SourceProps } from "./picture";
 
 export type PlaceholderProps = ImgHTMLAttributes<HTMLImageElement> & {
-  fallback?: string | undefined
-  sources?: Array<SourceProps> | undefined
-}
+  fallback?: string | undefined;
+  sources?: Array<SourceProps> | undefined;
+};
 
 function _Placeholder({ fallback, ...props }: PlaceholderProps): JSX.Element {
   if (fallback) {
@@ -23,28 +23,28 @@ function _Placeholder({ fallback, ...props }: PlaceholderProps): JSX.Element {
           src: fallback,
         }}
         aria-hidden
-        alt=""
+        alt=''
       />
-    )
+    );
   } else {
-    return <div {...props}></div>
+    return <div {...props}></div>;
   }
 }
 
 export const Placeholder: ComponentType<PlaceholderProps> =
-  memo<PlaceholderProps>(_Placeholder)
+  memo<PlaceholderProps>(_Placeholder);
 
-Placeholder.displayName = `Placeholder`
+Placeholder.displayName = "Placeholder";
 Placeholder.propTypes = {
   fallback: PropTypes.string,
   sources: Picture.propTypes?.sources,
   alt: function (props, propName, componentName): Error | null {
     if (!props[propName]) {
-      return null
+      return null;
     }
 
     return new Error(
       `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Validation failed.`,
-    )
+    );
   },
-}
+};

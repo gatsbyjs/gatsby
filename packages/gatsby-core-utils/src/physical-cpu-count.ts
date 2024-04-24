@@ -1,10 +1,10 @@
 // Forked from physical-cpu-count package from npm
-import os from "node:os"
-import childProcess from "node:child_process"
+import os from "node:os";
+import childProcess from "node:child_process";
 
 function exec(command: string): string {
-  const output = childProcess.execSync(command, { encoding: `utf8` })
-  return output
+  const output = childProcess.execSync(command, { encoding: "utf8" });
+  return output;
 }
 
 /*
@@ -12,41 +12,41 @@ function exec(command: string): string {
  */
 function fallbackToNodeJSCheck(): number {
   const cores = os.cpus().filter(function (cpu, index) {
-    const hasHyperthreading = cpu.model.includes(`Intel`)
-    const isOdd = index % 2 === 1
-    return !hasHyperthreading || isOdd
-  })
+    const hasHyperthreading = cpu.model.includes("Intel");
+    const isOdd = index % 2 === 1;
+    return !hasHyperthreading || isOdd;
+  });
 
-  return cores.length
+  return cores.length;
 }
 
 export function getPhysicalCpuCount(): number {
-  const platform = os.platform()
+  const platform = os.platform();
   try {
-    if (platform === `linux`) {
+    if (platform === "linux") {
       const output = exec(
-        `lscpu -p | grep -E -v "^#" | sort -u -t, -k 2,4 | wc -l`,
-      )
-      return Number(output.trim())
+        'lscpu -p | grep -E -v "^#" | sort -u -t, -k 2,4 | wc -l',
+      );
+      return Number(output.trim());
     }
 
-    if (platform === `darwin`) {
-      const output = exec(`sysctl -n hw.physicalcpu_max`)
-      return Number(output.trim())
+    if (platform === "darwin") {
+      const output = exec("sysctl -n hw.physicalcpu_max");
+      return Number(output.trim());
     }
 
-    if (platform === `win32`) {
-      const output = exec(`WMIC CPU Get NumberOfCores`)
+    if (platform === "win32") {
+      const output = exec("WMIC CPU Get NumberOfCores");
       return output
-        .replace(/\r/g, ``)
-        .split(`\n`)
+        .replace(/\r/g, "")
+        .split("\n")
         .map((line) => Number(line))
         .filter((value) => !isNaN(value))
-        .reduce((sum, number) => sum + number, 0)
+        .reduce((sum, number) => sum + number, 0);
     }
   } catch (err) {
     // carry on
   }
 
-  return fallbackToNodeJSCheck()
+  return fallbackToNodeJSCheck();
 }

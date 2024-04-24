@@ -6,46 +6,47 @@ import {
   GraphQLFloat,
   GraphQLEnumType,
   GraphQLNonNull,
-  GraphQLInputFieldConfigMap,
-} from "gatsby/graphql"
-import type Sharp from "sharp"
+  type GraphQLInputFieldConfigMap,
+} from "gatsby/graphql";
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import type Sharp from "sharp";
 
-const sharp: typeof Sharp = require(`./safe-sharp`)
-const DEFAULT_PNG_COMPRESSION_SPEED = 4
+const sharp: typeof Sharp = require("./safe-sharp");
+const DEFAULT_PNG_COMPRESSION_SPEED = 4;
 
 export const ImageFormatType = new GraphQLEnumType({
-  name: `ImageFormat`,
+  name: "ImageFormat",
   values: {
-    NO_CHANGE: { value: `` },
-    AUTO: { value: `` },
-    JPG: { value: `jpg` },
-    PNG: { value: `png` },
-    WEBP: { value: `webp` },
-    AVIF: { value: `avif` },
+    NO_CHANGE: { value: "" },
+    AUTO: { value: "" },
+    JPG: { value: "jpg" },
+    PNG: { value: "png" },
+    WEBP: { value: "webp" },
+    AVIF: { value: "avif" },
   },
-})
+});
 
 export const ImageLayoutType = new GraphQLEnumType({
-  name: `ImageLayout`,
+  name: "ImageLayout",
   values: {
-    FIXED: { value: `fixed` },
-    FULL_WIDTH: { value: `fullWidth` },
-    CONSTRAINED: { value: `constrained` },
+    FIXED: { value: "fixed" },
+    FULL_WIDTH: { value: "fullWidth" },
+    CONSTRAINED: { value: "constrained" },
   },
-})
+});
 
 export const ImagePlaceholderType = new GraphQLEnumType({
-  name: `ImagePlaceholder`,
+  name: "ImagePlaceholder",
   values: {
-    DOMINANT_COLOR: { value: `dominantColor` },
-    TRACED_SVG: { value: `tracedSVG` },
-    BLURRED: { value: `blurred` },
-    NONE: { value: `none` },
+    DOMINANT_COLOR: { value: "dominantColor" },
+    TRACED_SVG: { value: "tracedSVG" },
+    BLURRED: { value: "blurred" },
+    NONE: { value: "none" },
   },
-})
+});
 
 export const ImageFitType = new GraphQLEnumType({
-  name: `ImageFit`,
+  name: "ImageFit",
   values: {
     COVER: { value: sharp.fit.cover },
     CONTAIN: { value: sharp.fit.contain },
@@ -53,10 +54,10 @@ export const ImageFitType = new GraphQLEnumType({
     INSIDE: { value: sharp.fit.inside },
     OUTSIDE: { value: sharp.fit.outside },
   },
-})
+});
 
 export const ImageCropFocusType = new GraphQLEnumType({
-  name: `ImageCropFocus`,
+  name: "ImageCropFocus",
   values: {
     CENTER: { value: sharp.gravity.center },
     NORTH: { value: sharp.gravity.north },
@@ -70,10 +71,10 @@ export const ImageCropFocusType = new GraphQLEnumType({
     ENTROPY: { value: sharp.strategy.entropy },
     ATTENTION: { value: sharp.strategy.attention },
   },
-})
+});
 
 export const PNGOptionsType = new GraphQLInputObjectType({
-  name: `PNGOptions`,
+  name: "PNGOptions",
   fields: (): GraphQLInputFieldConfigMap => {
     return {
       quality: {
@@ -83,12 +84,12 @@ export const PNGOptionsType = new GraphQLInputObjectType({
         type: GraphQLInt,
         defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
       },
-    }
+    };
   },
-})
+});
 
 export const JPGOptionsType = new GraphQLInputObjectType({
-  name: `JPGOptions`,
+  name: "JPGOptions",
   fields: (): GraphQLInputFieldConfigMap => {
     return {
       quality: {
@@ -98,39 +99,40 @@ export const JPGOptionsType = new GraphQLInputObjectType({
         type: GraphQLBoolean,
         defaultValue: true,
       },
-    }
+    };
   },
-})
+});
 
 export const BlurredOptionsType = new GraphQLInputObjectType({
-  name: `BlurredOptions`,
+  name: "BlurredOptions",
   fields: (): GraphQLInputFieldConfigMap => {
     return {
       width: {
         type: GraphQLInt,
-        description: `Width of the generated low-res preview. Default is 20px`,
+        description: "Width of the generated low-res preview. Default is 20px",
       },
       toFormat: {
         type: ImageFormatType,
-        description: `Force the output format for the low-res preview. Default is to use the same format as the input. You should rarely need to change this`,
+        description:
+          "Force the output format for the low-res preview. Default is to use the same format as the input. You should rarely need to change this",
       },
-    }
+    };
   },
-})
+});
 
 export const WebPOptionsType = new GraphQLInputObjectType({
-  name: `WebPOptions`,
+  name: "WebPOptions",
   fields: (): GraphQLInputFieldConfigMap => {
     return {
       quality: {
         type: GraphQLInt,
       },
-    }
+    };
   },
-})
+});
 
 export const AVIFOptionsType = new GraphQLInputObjectType({
-  name: `AVIFOptions`,
+  name: "AVIFOptions",
   fields: (): GraphQLInputFieldConfigMap => {
     return {
       quality: {
@@ -142,35 +144,35 @@ export const AVIFOptionsType = new GraphQLInputObjectType({
       speed: {
         type: GraphQLInt,
       },
-    }
+    };
   },
-})
+});
 
 export const DuotoneGradientType = new GraphQLInputObjectType({
-  name: `DuotoneGradient`,
+  name: "DuotoneGradient",
   fields: (): GraphQLInputFieldConfigMap => {
     return {
       highlight: { type: new GraphQLNonNull(GraphQLString) },
       shadow: { type: new GraphQLNonNull(GraphQLString) },
       opacity: { type: GraphQLInt },
-    }
+    };
   },
-})
+});
 
 export const PotraceTurnPolicyType = new GraphQLEnumType({
-  name: `PotraceTurnPolicy`,
+  name: "PotraceTurnPolicy",
   values: {
-    TURNPOLICY_BLACK: { value: `black` },
-    TURNPOLICY_WHITE: { value: `white` },
-    TURNPOLICY_LEFT: { value: `left` },
-    TURNPOLICY_RIGHT: { value: `right` },
-    TURNPOLICY_MINORITY: { value: `minority` },
-    TURNPOLICY_MAJORITY: { value: `majority` },
+    TURNPOLICY_BLACK: { value: "black" },
+    TURNPOLICY_WHITE: { value: "white" },
+    TURNPOLICY_LEFT: { value: "left" },
+    TURNPOLICY_RIGHT: { value: "right" },
+    TURNPOLICY_MINORITY: { value: "minority" },
+    TURNPOLICY_MAJORITY: { value: "majority" },
   },
-})
+});
 
 export const PotraceType = new GraphQLInputObjectType({
-  name: `Potrace`,
+  name: "Potrace",
   fields: (): GraphQLInputFieldConfigMap => {
     return {
       turnPolicy: {
@@ -184,12 +186,12 @@ export const PotraceType = new GraphQLInputObjectType({
       blackOnWhite: { type: GraphQLBoolean },
       color: { type: GraphQLString },
       background: { type: GraphQLString },
-    }
+    };
   },
-})
+});
 
 export const TransformOptionsType = new GraphQLInputObjectType({
-  name: `TransformOptions`,
+  name: "TransformOptions",
   fields: (): GraphQLInputFieldConfigMap => {
     return {
       grayscale: {
@@ -216,6 +218,6 @@ export const TransformOptionsType = new GraphQLInputObjectType({
         type: ImageFitType,
         defaultValue: sharp.fit.cover,
       },
-    }
+    };
   },
-})
+});

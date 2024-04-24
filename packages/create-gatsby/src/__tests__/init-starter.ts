@@ -1,193 +1,193 @@
 // import { execSync } from "child_process"
-import { execa } from "execa"
-import fs from "fs-extra"
-import path from "node:path"
-import { initStarter } from "../init-starter"
-import { reporter } from "../utils/reporter"
+import { execa } from "execa";
+import fs from "fs-extra";
+import path from "node:path";
+import { initStarter } from "../init-starter";
+import { reporter } from "../utils/reporter";
 
-jest.mock(`tiny-spin`, () => {
+jest.mock("tiny-spin", () => {
   return {
     spin: (): (() => void) => jest.fn(),
-  }
-})
-jest.mock(`../utils/clear-line`)
-jest.mock(`../utils/make-npm-safe`)
-jest.mock(`execa`)
-jest.mock(`child_process`)
-jest.mock(`fs-extra`)
-jest.mock(`path`)
-jest.mock(`../utils/reporter`)
-jest.mock(`../utils/get-config-store`, () => {
+  };
+});
+jest.mock("../utils/clear-line");
+jest.mock("../utils/make-npm-safe");
+jest.mock("execa");
+jest.mock("child_process");
+jest.mock("fs-extra");
+jest.mock("path");
+jest.mock("../utils/reporter");
+jest.mock("../utils/get-config-store", () => {
   return {
     getConfigStore: (): unknown => {
       return {
         items: {},
         set(key: string, value: unknown): void {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ;(this as any).items[key] = value
+          (this as any).items[key] = value;
         },
         get(key: string): unknown {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          return (this as any).items[key]
+          return (this as any).items[key];
         },
 
         __reset(): void {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ;(this as any).items = {}
+          (this as any).items = {};
         },
-      }
+      };
     },
-  }
-})
+  };
+});
 
-describe(`init-starter`, () => {
+describe("init-starter", () => {
   beforeEach(() => {
-    process.chdir = jest.fn()
-  })
+    process.chdir = jest.fn();
+  });
 
   afterEach(() => {
-    jest.resetAllMocks()
-  })
+    jest.resetAllMocks();
+  });
 
-  describe(`initStarter / cloning`, () => {
-    it(`reports an error when it s not possible to clone the repo`, async () => {
+  describe("initStarter / cloning", () => {
+    it("reports an error when it s not possible to clone the repo", async () => {
       // @ts-ignore
-      path.join.mockImplementation(() => `/somewhere-here`)
+      path.join.mockImplementation(() => "/somewhere-here");
       // @ts-ignore
       execa.mockImplementation(() => {
-        throw new Error(`Not possible to clone the repo`)
-      })
+        throw new Error("Not possible to clone the repo");
+      });
 
       try {
         await initStarter(
-          `gatsby-starter-hello-world`,
-          `./somewhere`,
+          "gatsby-starter-hello-world",
+          "./somewhere",
           [],
-          `A site`,
-        )
+          "A site",
+        );
       } catch (e) {
-        expect(execa).toBeCalledWith(`git`, [
-          `clone`,
-          `gatsby-starter-hello-world`,
-          `--recursive`,
-          `--depth=1`,
-          `--quiet`,
-        ])
-        expect(reporter.panic).toBeCalledWith(`Not possible to clone the repo`)
+        expect(execa).toBeCalledWith("git", [
+          "clone",
+          "gatsby-starter-hello-world",
+          "--recursive",
+          "--depth=1",
+          "--quiet",
+        ]);
+        expect(reporter.panic).toBeCalledWith("Not possible to clone the repo");
         expect(reporter.success).not.toBeCalledWith(
-          `Created site from template`,
-        )
-        expect(fs.remove).toBeCalledWith(`/somewhere-here`)
+          "Created site from template",
+        );
+        expect(fs.remove).toBeCalledWith("/somewhere-here");
       }
-    })
+    });
 
-    it(`reports a success when everything is going ok`, async () => {
+    it("reports a success when everything is going ok", async () => {
       // @ts-ignore
-      path.join.mockImplementation(() => `/somewhere-here`)
+      path.join.mockImplementation(() => "/somewhere-here");
       // @ts-ignore
-      execa.mockImplementation(() => Promise.resolve())
+      execa.mockImplementation(() => Promise.resolve());
       // @ts-ignore
       fs.readJSON.mockImplementation(() => {
-        return { name: `gatsby-project` }
-      })
+        return { name: "gatsby-project" };
+      });
 
       await initStarter(
-        `gatsby-starter-hello-world`,
-        `./somewhere`,
+        "gatsby-starter-hello-world",
+        "./somewhere",
         [],
-        `A site`,
-      )
+        "A site",
+      );
 
-      expect(execa).toBeCalledWith(`git`, [
-        `clone`,
-        `gatsby-starter-hello-world`,
-        `--recursive`,
-        `--depth=1`,
-        `--quiet`,
-      ])
-      expect(reporter.panic).not.toBeCalled()
-      expect(reporter.success).toBeCalledWith(`Created site from template`)
-      expect(fs.remove).toBeCalledWith(`/somewhere-here`)
-    })
-  })
+      expect(execa).toBeCalledWith("git", [
+        "clone",
+        "gatsby-starter-hello-world",
+        "--recursive",
+        "--depth=1",
+        "--quiet",
+      ]);
+      expect(reporter.panic).not.toBeCalled();
+      expect(reporter.success).toBeCalledWith("Created site from template");
+      expect(fs.remove).toBeCalledWith("/somewhere-here");
+    });
+  });
 
-  describe(`initStarter / install`, () => {
-    it(`process package installation with pnpm`, async () => {
-      process.env.npm_config_user_agent = `pnpm`
+  describe("initStarter / install", () => {
+    it("process package installation with pnpm", async () => {
+      process.env.npm_config_user_agent = "pnpm";
       // @ts-ignore
-      path.join.mockImplementation(() => `/somewhere-here`)
+      path.join.mockImplementation(() => "/somewhere-here");
       // @ts-ignore
-      execa.mockImplementation(() => Promise.resolve())
+      execa.mockImplementation(() => Promise.resolve());
       // @ts-ignore
       fs.readJSON.mockImplementation(() => {
-        return { name: `gatsby-project` }
-      })
+        return { name: "gatsby-project" };
+      });
 
       await initStarter(
-        `gatsby-starter-hello-world`,
-        `./somewhere`,
+        "gatsby-starter-hello-world",
+        "./somewhere",
         [],
-        `A site`,
-      )
+        "A site",
+      );
 
-      expect(fs.remove).toBeCalledWith(`package-lock.json`)
-      expect(reporter.success).toBeCalledWith(`Installed plugins`)
-      expect(reporter.panic).not.toBeCalled()
-      expect(execa).toBeCalledWith(`yarnpkg`, [`--silent`], {
-        stderr: `inherit`,
-      })
-    })
+      expect(fs.remove).toBeCalledWith("package-lock.json");
+      expect(reporter.success).toBeCalledWith("Installed plugins");
+      expect(reporter.panic).not.toBeCalled();
+      expect(execa).toBeCalledWith("yarnpkg", ["--silent"], {
+        stderr: "inherit",
+      });
+    });
 
-    it(`process package installation with NPM`, async () => {
-      process.env.npm_config_user_agent = `npm`
+    it("process package installation with NPM", async () => {
+      process.env.npm_config_user_agent = "npm";
       // @ts-ignore
-      path.join.mockImplementation(() => `/somewhere-here`)
+      path.join.mockImplementation(() => "/somewhere-here");
       // @ts-ignore
-      execa.mockImplementation(() => Promise.resolve())
+      execa.mockImplementation(() => Promise.resolve());
       // @ts-ignore
       fs.readJSON.mockImplementation(() => {
-        return { name: `gatsby-project` }
-      })
+        return { name: "gatsby-project" };
+      });
 
       await initStarter(
-        `gatsby-starter-hello-world`,
-        `./somewhere`,
-        [`one-package`],
-        `A site`,
-      )
+        "gatsby-starter-hello-world",
+        "./somewhere",
+        ["one-package"],
+        "A site",
+      );
 
-      expect(fs.remove).toBeCalledWith(`yarn.lock`)
-      expect(reporter.success).toBeCalledWith(`Installed Gatsby`)
-      expect(reporter.success).toBeCalledWith(`Installed plugins`)
-      expect(reporter.panic).not.toBeCalled()
+      expect(fs.remove).toBeCalledWith("yarn.lock");
+      expect(reporter.success).toBeCalledWith("Installed Gatsby");
+      expect(reporter.success).toBeCalledWith("Installed plugins");
+      expect(reporter.panic).not.toBeCalled();
       expect(execa).toBeCalledWith(
-        `npm`,
+        "npm",
         [
-          `install`,
-          `--loglevel`,
-          `error`,
-          `--color`,
-          `always`,
-          `--legacy-peer-deps`,
-          `--no-audit`,
+          "install",
+          "--loglevel",
+          "error",
+          "--color",
+          "always",
+          "--legacy-peer-deps",
+          "--no-audit",
         ],
-        { stderr: `inherit` },
-      )
+        { stderr: "inherit" },
+      );
       expect(execa).toBeCalledWith(
-        `npm`,
+        "npm",
         [
-          `install`,
-          `--loglevel`,
-          `error`,
-          `--color`,
-          `always`,
-          `--legacy-peer-deps`,
-          `--no-audit`,
-          `one-package`,
+          "install",
+          "--loglevel",
+          "error",
+          "--color",
+          "always",
+          "--legacy-peer-deps",
+          "--no-audit",
+          "one-package",
         ],
-        { stderr: `inherit` },
-      )
-    })
+        { stderr: "inherit" },
+      );
+    });
 
     // it(`gently informs the user that yarn is not available when trying to use it`, async () => {
     //   process.env.npm_config_user_agent = `yarn`
@@ -211,5 +211,5 @@ describe(`init-starter`, () => {
     //     `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`,
     //   )
     // })
-  })
-})
+  });
+});

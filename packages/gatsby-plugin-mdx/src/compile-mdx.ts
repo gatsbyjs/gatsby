@@ -1,10 +1,10 @@
-import deepmerge from "deepmerge"
-import type { NodePluginArgs, PluginOptions } from "gatsby"
-import type { ProcessorOptions } from "@mdx-js/mdx"
-import type { IMdxMetadata } from "./types"
-import { enhanceMdxOptions, type IMdxPluginOptions } from "./plugin-options"
-import { ERROR_CODES } from "./error-utils"
-import { cachedImport, createFileToMdxCacheKey } from "./cache-helpers"
+import deepmerge from "deepmerge";
+import type { NodePluginArgs, PluginOptions } from "gatsby";
+import type { ProcessorOptions } from "@mdx-js/mdx";
+import type { IMdxMetadata } from "./types";
+import { enhanceMdxOptions, type IMdxPluginOptions } from "./plugin-options";
+import { ERROR_CODES } from "./error-utils";
+import { cachedImport, createFileToMdxCacheKey } from "./cache-helpers";
 
 // Compiles MDX into JS
 // Differences to original @mdx-js/loader:
@@ -18,32 +18,32 @@ export async function compileMDX(
 ): Promise<{ processedMDX: string; metadata: IMdxMetadata } | null> {
   try {
     const { createProcessor } =
-      await cachedImport<typeof import("@mdx-js/mdx")>(`@mdx-js/mdx`)
-    const { VFile } = await cachedImport<typeof import("vfile")>(`vfile`)
+      await cachedImport<typeof import("@mdx-js/mdx")>("@mdx-js/mdx");
+    const { VFile } = await cachedImport<typeof import("vfile")>("vfile");
 
-    const processor = createProcessor(options)
+    const processor = createProcessor(options);
 
     // Pass required custom data into the processor
     processor.data(
       // @ts-ignore
-      `mdxNodeId`,
+      "mdxNodeId",
       await cache.get(createFileToMdxCacheKey(absolutePath)),
-    )
+    );
     // @ts-ignore
-    processor.data(`mdxMetadata`, {})
+    processor.data("mdxMetadata", {});
 
     const result = await processor.process(
       // Inject path to original file for remark plugins. See: https://github.com/gatsbyjs/gatsby/issues/26914
       new VFile({ value: source, path: absolutePath }),
-    )
+    );
 
     // Clone metadata so ensure it won't be overridden by later processings
     // @ts-ignore
-    const clonedMetadata = Object.assign({}, processor.data(`mdxMetadata`))
-    const processedMDX = result.toString()
+    const clonedMetadata = Object.assign({}, processor.data("mdxMetadata"));
+    const processedMDX = result.toString();
 
     // @ts-ignore
-    return { processedMDX, metadata: clonedMetadata }
+    return { processedMDX, metadata: clonedMetadata };
   } catch (error) {
     reporter.panicOnBuild({
       id: ERROR_CODES.MdxCompilation,
@@ -51,8 +51,8 @@ export async function compileMDX(
         absolutePath,
         errorMeta: error,
       },
-    })
-    return null
+    });
+    return null;
   }
 }
 
@@ -73,23 +73,23 @@ export async function compileMDXWithCustomOptions(
     cache,
     store,
   }: {
-    pluginOptions: PluginOptions
-    customOptions: Partial<IMdxPluginOptions>
-    getNode: NodePluginArgs["getNode"]
-    getNodesByType: NodePluginArgs["getNodesByType"]
-    pathPrefix: string
-    reporter: NodePluginArgs["reporter"]
-    cache: NodePluginArgs["cache"]
-    store: NodePluginArgs["store"]
+    pluginOptions: PluginOptions;
+    customOptions: Partial<IMdxPluginOptions>;
+    getNode: NodePluginArgs["getNode"];
+    getNodesByType: NodePluginArgs["getNodesByType"];
+    pathPrefix: string;
+    reporter: NodePluginArgs["reporter"];
+    cache: NodePluginArgs["cache"];
+    store: NodePluginArgs["store"];
   },
 ): Promise<{
-  processedMDX: string
-  metadata: IMdxMetadata
+  processedMDX: string;
+  metadata: IMdxMetadata;
 } | null> {
   const customPluginOptions = deepmerge(
     Object.assign({}, pluginOptions),
     customOptions,
-  )
+  );
 
   // Prepare MDX compile
   const mdxOptions = await enhanceMdxOptions(customPluginOptions, {
@@ -99,7 +99,7 @@ export async function compileMDXWithCustomOptions(
     reporter,
     cache,
     store,
-  })
+  });
 
   // Compile MDX and extract metadata
   return compileMDX(
@@ -110,5 +110,5 @@ export async function compileMDXWithCustomOptions(
     mdxOptions,
     cache,
     reporter,
-  )
+  );
 }

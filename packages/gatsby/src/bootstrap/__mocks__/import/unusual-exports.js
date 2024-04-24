@@ -1,9 +1,9 @@
-Object.defineProperty(exports, `foo`, {
+Object.defineProperty(exports, "foo", {
   enumerable: true,
   get: function get() {
-    return () => {}
+    return () => {};
   },
-})
-Object.defineProperty(exports, `__esModule`, {
+});
+Object.defineProperty(exports, "__esModule", {
   value: true,
-})
+});

@@ -1,18 +1,16 @@
-// @flow
-
-import fs from "fs-extra"
-import { print, visit, getLocation } from "graphql"
-import { codeFrameColumns } from "@babel/code-frame"
-import { distance as levenshtein } from "fastest-levenshtein"
+import fs from "fs-extra";
+import { print, visit, getLocation } from "graphql";
+import { codeFrameColumns } from "@babel/code-frame";
+import { distance as levenshtein } from "fastest-levenshtein";
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-import report from "gatsby-cli/lib/reporter"
-import { locInGraphQlToLocInFile } from "./error-parser"
-import { getCodeFrame } from "./graphql-errors-codeframe"
+import _ from "lodash";
+import report from "gatsby-cli/lib/reporter";
+import { locInGraphQlToLocInFile } from "./error-parser";
+import { getCodeFrame } from "./graphql-errors-codeframe";
 
 type RelayGraphQLError = Error & {
-  validationErrors?: Record<string, unknown> | undefined
-}
+  validationErrors?: Record<string, unknown> | undefined;
+};
 
 // These handle specific errors throw by RelayParser. If an error matches
 // you get a pointer to the location in the query that is broken, otherwise
@@ -24,36 +22,36 @@ const handlers: Array<Array<RegExp | (([name]: [string], node: any) => any)>> =
       /Unknown field `(.+)` on type `(.+)`/i,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ([name], node): any => {
-        if (node.kind === `Field` && node.name.value === name) {
-          return node.name.loc
+        if (node.kind === "Field" && node.name.value === name) {
+          return node.name.loc;
         }
-        return null
+        return null;
       },
     ],
     [
       /Unknown argument `(.+)`/i,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ([name], node): any => {
-        if (node.kind === `Argument` && node.name.value === name) {
-          return node.name.loc
+        if (node.kind === "Argument" && node.name.value === name) {
+          return node.name.loc;
         }
-        return null
+        return null;
       },
     ],
     [
       /Unknown directive `@(.+)`/i,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ([name], node): any => {
-        if (node.kind === `Directive` && node.name.value === name) {
-          return node.name.loc
+        if (node.kind === "Directive" && node.name.value === name) {
+          return node.name.loc;
         }
-        return null
+        return null;
       },
     ],
-  ]
+  ];
 
 function formatFilePath(filePath: string): string {
-  return `${report.format.bold(`file:`)} ${report.format.blue(filePath)}`
+  return `${report.format.bold("file:")} ${report.format.blue(filePath)}`;
 }
 
 function formatError(
@@ -67,58 +65,58 @@ function formatError(
 
       ${formatFilePath(filePath)}
   ` + `\n\n${codeFrame}\n`
-  )
+  );
 }
 
 function extractError(error: Error): {
-  message: string
-  docName: string
-  codeBlock: string
+  message: string;
+  docName: string;
+  codeBlock: string;
 } {
   const docRegex =
-    /Error:.(RelayParser|GraphQLParser):(.*)Source: document.`(.*)`.file.*(GraphQL.request.*^\s*$)/gms
-  let matches
-  let message = ``
-  let docName = ``
-  let codeBlock = ``
+    /Error:.(RelayParser|GraphQLParser):(.*)Source: document.`(.*)`.file.*(GraphQL.request.*^\s*$)/gms;
+  let matches;
+  let message = "";
+  let docName = "";
+  let codeBlock = "";
   while ((matches = docRegex.exec(error.toString())) !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
-    if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
-    ;[, , message, docName, codeBlock] = matches
+    if (matches.index === docRegex.lastIndex) docRegex.lastIndex++;
+    [, , message, docName, codeBlock] = matches;
   }
 
   if (!message) {
-    message = error.toString()
+    message = error.toString();
   }
 
-  message = message.trim()
+  message = message.trim();
 
-  return { message, codeBlock, docName }
+  return { message, codeBlock, docName };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function findLocation(extractedMessage, def): any | null | undefined {
-  let location = null
+  let location = null;
   visit(def, {
     enter(node) {
       if (location) {
-        return
+        return;
       }
       for (const [regex, handler] of handlers) {
-        const match = extractedMessage.match(regex)
+        const match = extractedMessage.match(regex);
         if (!match) {
-          continue
+          continue;
         }
         if (
-          typeof handler === `function` &&
+          typeof handler === "function" &&
           (location = handler(match.slice(1), node))
         ) {
-          break
+          break;
         }
       }
     },
-  })
-  return location
+  });
+  return location;
 }
 
 function getCodeFrameFromRelayError(
@@ -127,13 +125,13 @@ function getCodeFrameFromRelayError(
   extractedMessage: string,
   // error: Error,
 ): string {
-  const { start, source } = findLocation(extractedMessage, def) || {}
-  const query = source ? source.body : print(def)
+  const { start, source } = findLocation(extractedMessage, def) || {};
+  const query = source ? source.body : print(def);
 
   // we can't reliably get a location without the location source, since
   // the printed query may differ from the original.
-  const { line, column } = (source && getLocation(source, start)) || {}
-  return getCodeFrame(query, line, column)
+  const { line, column } = (source && getLocation(source, start)) || {};
+  return getCodeFrame(query, line, column);
 }
 
 export function multipleRootQueriesError(
@@ -143,32 +141,32 @@ export function multipleRootQueriesError(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   otherDef: any,
 ): {
-  id: string
-  filePath: string
+  id: string;
+  filePath: string;
   context: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    name: any
+    name: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    otherName: any
-    beforeCodeFrame: string
-    afterCodeFrame: string
-  }
+    otherName: any;
+    beforeCodeFrame: string;
+    afterCodeFrame: string;
+  };
 } {
-  const name = def.name.value
-  const otherName = otherDef.name.value
-  const field = def.selectionSet.selections[0].name.value
-  const otherField = otherDef.selectionSet.selections[0].name.value
+  const name = def.name.value;
+  const otherName = otherDef.name.value;
+  const field = def.selectionSet.selections[0].name.value;
+  const otherField = otherDef.selectionSet.selections[0].name.value;
   const unifiedName = `${_.camelCase(name)}And${_.upperFirst(
     _.camelCase(otherName),
-  )}`
+  )}`;
 
   // colors are problematic for tests as we can different
   // results depending on platform, so we don't
   // highlight code for tests
-  const highlightCode = process.env.NODE_ENV !== `test`
+  const highlightCode = process.env.NODE_ENV !== "test";
 
   return {
-    id: `85910`,
+    id: "85910",
     filePath,
     context: {
       name,
@@ -221,7 +219,7 @@ export function multipleRootQueriesError(
         },
       ),
     },
-  }
+  };
 }
 
 export function graphqlError(
@@ -229,36 +227,36 @@ export function graphqlError(
   definitionsByName: Map<string, any>,
   error: Error | RelayGraphQLError,
 ): {
-  formattedMessage: string
-  docName: string
-  message: string
-  codeBlock: string
+  formattedMessage: string;
+  docName: string;
+  message: string;
+  codeBlock: string;
 } {
-  let codeBlock
-  const { message, docName } = extractError(error)
-  const { def, filePath } = definitionsByName.get(docName) || {}
+  let codeBlock;
+  const { message, docName } = extractError(error);
+  const { def, filePath } = definitionsByName.get(docName) || {};
 
   if (filePath && docName) {
-    codeBlock = getCodeFrameFromRelayError(def, message)
+    codeBlock = getCodeFrameFromRelayError(def, message);
 
-    const formattedMessage = formatError(message, filePath, codeBlock)
+    const formattedMessage = formatError(message, filePath, codeBlock);
 
-    return { formattedMessage, docName, message, codeBlock }
+    return { formattedMessage, docName, message, codeBlock };
   }
 
-  let reportedMessage = `There was an error while compiling your site's GraphQL queries. ${message || error.message}`
+  let reportedMessage = `There was an error while compiling your site's GraphQL queries. ${message || error.message}`;
 
   if (error.message.match(/must be an instance of/)) {
     reportedMessage +=
-      `This usually means that more than one instance of 'graphql' is installed ` +
-      `in your node_modules. Remove all but the top level one or run \`npm dedupe\` to fix it.`
+      "This usually means that more than one instance of 'graphql' is installed " +
+      "in your node_modules. Remove all but the top level one or run `npm dedupe` to fix it.";
   }
 
   if (error.message.match(/Duplicate document/)) {
-    reportedMessage += `${error.message.slice(21)}\n`
+    reportedMessage += `${error.message.slice(21)}\n`;
   }
 
-  return { formattedMessage: reportedMessage, docName, message, codeBlock }
+  return { formattedMessage: reportedMessage, docName, message, codeBlock };
 }
 
 export function unknownFragmentError({
@@ -267,28 +265,28 @@ export function unknownFragmentError({
   definition,
   node,
 }): {
-  id: string
-  filePath: string
+  id: string;
+  filePath: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: { fragmentName: string; closestFragment: any; codeFrame: string }
+  context: { fragmentName: string; closestFragment: any; codeFrame: string };
 } {
-  const name = node.name.value
+  const name = node.name.value;
   const closestFragment = fragmentNames
     .map((f) => {
-      return { fragment: f, score: levenshtein(name, f) }
+      return { fragment: f, score: levenshtein(name, f) };
     })
     .filter((f) => f.score < 10)
-    .sort((a, b) => a.score > b.score)[0]?.fragment
+    .sort((a, b) => a.score > b.score)[0]?.fragment;
 
-  let text
+  let text;
   try {
-    text = fs.readFileSync(filePath, { encoding: `utf-8` })
+    text = fs.readFileSync(filePath, { encoding: "utf-8" });
   } catch {
-    text = definition.text
+    text = definition.text;
   }
 
   return {
-    id: `85908`,
+    id: "85908",
     filePath,
     context: {
       fragmentName: name,
@@ -301,12 +299,12 @@ export function unknownFragmentError({
             getLocation(
               {
                 body: definition.text,
-                name: ``,
+                name: "",
                 locationOffset: {
                   line: 0,
                   column: 0,
                 },
-                [Symbol.toStringTag]: ``,
+                [Symbol.toStringTag]: "",
               },
               node.loc.start,
             ),
@@ -316,12 +314,12 @@ export function unknownFragmentError({
             getLocation(
               {
                 body: definition.text,
-                name: ``,
+                name: "",
                 locationOffset: {
                   line: 0,
                   column: 0,
                 },
-                [Symbol.toStringTag]: ``,
+                [Symbol.toStringTag]: "",
               },
               node.loc.end,
             ),
@@ -333,7 +331,7 @@ export function unknownFragmentError({
         },
       ),
     },
-  }
+  };
 }
 
 export function duplicateFragmentError({
@@ -341,15 +339,15 @@ export function duplicateFragmentError({
   leftDefinition,
   rightDefinition,
 }): {
-  id: string
+  id: string;
   context: {
-    fragmentName: string
-    leftFragment: { filePath: string; codeFrame: string }
-    rightFragment: { filePath: string; codeFrame: string }
-  }
+    fragmentName: string;
+    leftFragment: { filePath: string; codeFrame: string };
+    rightFragment: { filePath: string; codeFrame: string };
+  };
 } {
   return {
-    id: `85919`,
+    id: "85919",
     context: {
       fragmentName: name,
       leftFragment: {
@@ -360,24 +358,24 @@ export function duplicateFragmentError({
             start: getLocation(
               {
                 body: leftDefinition.text,
-                name: ``,
+                name: "",
                 locationOffset: {
                   line: 0,
                   column: 0,
                 },
-                [Symbol.toStringTag]: ``,
+                [Symbol.toStringTag]: "",
               },
               leftDefinition.def.name.loc.start,
             ),
             end: getLocation(
               {
                 body: leftDefinition.text,
-                name: ``,
+                name: "",
                 locationOffset: {
                   line: 0,
                   column: 0,
                 },
-                [Symbol.toStringTag]: ``,
+                [Symbol.toStringTag]: "",
               },
               leftDefinition.def.name.loc.end,
             ),
@@ -396,24 +394,24 @@ export function duplicateFragmentError({
             start: getLocation(
               {
                 body: rightDefinition.text,
-                name: ``,
+                name: "",
                 locationOffset: {
                   line: 0,
                   column: 0,
                 },
-                [Symbol.toStringTag]: ``,
+                [Symbol.toStringTag]: "",
               },
               rightDefinition.def.name.loc.start,
             ),
             end: getLocation(
               {
                 body: rightDefinition.text,
-                name: ``,
+                name: "",
                 locationOffset: {
                   line: 0,
                   column: 0,
                 },
-                [Symbol.toStringTag]: ``,
+                [Symbol.toStringTag]: "",
               },
               rightDefinition.def.name.loc.end,
             ),
@@ -425,5 +423,5 @@ export function duplicateFragmentError({
         ),
       },
     },
-  }
+  };
 }

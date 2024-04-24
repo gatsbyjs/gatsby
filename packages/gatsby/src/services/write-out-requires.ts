@@ -1,23 +1,24 @@
-import reporter from "gatsby-cli/lib/reporter"
-import { writeAll } from "../bootstrap/requires-writer"
-import type { IQueryRunningContext } from "../state-machines/query-running/types"
-import { assertStore } from "../utils/assert-store"
+import reporter from "gatsby-cli/lib/reporter";
+import { writeAll } from "../bootstrap/requires-writer";
+import type { IQueryRunningContext } from "../state-machines/query-running/types";
+import { assertStore } from "../utils/assert-store";
 
 export async function writeOutRequires({
   store,
   parentSpan,
 }: Partial<IQueryRunningContext>): Promise<void> {
-  assertStore(store)
+  assertStore(store);
 
   // Write out files.
-  const activity = reporter.activityTimer(`write out requires`, {
+  // @ts-ignore
+  const activity = reporter.activityTimer("write out requires", {
     parentSpan,
-  })
-  activity.start()
+  });
+  activity.start();
   try {
-    await writeAll(store.getState())
+    await writeAll(store.getState());
   } catch (err) {
-    reporter.panic(`Failed to write out requires`, err)
+    reporter.panic("Failed to write out requires", err);
   }
-  activity.end()
+  activity.end();
 }

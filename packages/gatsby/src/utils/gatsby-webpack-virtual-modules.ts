@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import VirtualModulesPlugin from "webpack-virtual-modules"
-import * as path from "path"
-import * as fs from "fs-extra"
-import type { Compiler } from "webpack"
+import VirtualModulesPlugin from "webpack-virtual-modules";
+import * as path from "path";
+import * as fs from "fs-extra";
+import type { Compiler } from "webpack";
 /*
  * This module allows creating virtual (in memory only) modules / files
  * that webpack compilation can access without the need to write module
@@ -19,43 +19,43 @@ import type { Compiler } from "webpack"
  */
 
 type IGatsbyWebpackVirtualModulesContext = {
-  writeModule: VirtualModulesPlugin["writeModule"]
-}
+  writeModule: VirtualModulesPlugin["writeModule"];
+};
 
-const fileContentLookup: Record<string, string> = {}
-const instances: Array<IGatsbyWebpackVirtualModulesContext> = []
+const fileContentLookup: Record<string, string> = {};
+const instances: Array<IGatsbyWebpackVirtualModulesContext> = [];
 
-export const VIRTUAL_MODULES_BASE_PATH = `.cache/_this_is_virtual_fs_path_`
+export const VIRTUAL_MODULES_BASE_PATH = ".cache/_this_is_virtual_fs_path_";
 
 export class GatsbyWebpackVirtualModules {
   apply(compiler: Compiler): void {
-    const virtualModules = new VirtualModulesPlugin(fileContentLookup)
-    virtualModules.apply(compiler)
+    const virtualModules = new VirtualModulesPlugin(fileContentLookup);
+    virtualModules.apply(compiler);
     instances.push({
       writeModule: virtualModules.writeModule.bind(virtualModules),
-    })
+    });
   }
 }
 
 export function getAbsolutePathForVirtualModule(filePath: string): string {
-  return path.join(process.cwd(), VIRTUAL_MODULES_BASE_PATH, filePath)
+  return path.join(process.cwd(), VIRTUAL_MODULES_BASE_PATH, filePath);
 }
 
 export function writeModule(filePath: string, fileContents: string): void {
-  const adjustedFilePath = getAbsolutePathForVirtualModule(filePath)
+  const adjustedFilePath = getAbsolutePathForVirtualModule(filePath);
 
   if (fileContentLookup[adjustedFilePath] === fileContents) {
     // we already have this, no need to cause invalidation
-    return
+    return;
   }
 
   // workaround webpack marking virtual modules as deleted because those files don't really exist
   // so we create those files just so watchpack doesn't mark them as initially missing
-  fs.outputFileSync(adjustedFilePath, fileContents)
+  fs.outputFileSync(adjustedFilePath, fileContents);
 
-  fileContentLookup[adjustedFilePath] = fileContents
+  fileContentLookup[adjustedFilePath] = fileContents;
 
   instances.forEach((instance) => {
-    instance.writeModule(adjustedFilePath, fileContents)
-  })
+    instance.writeModule(adjustedFilePath, fileContents);
+  });
 }

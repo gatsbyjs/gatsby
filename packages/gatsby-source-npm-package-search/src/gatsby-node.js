@@ -1,6 +1,6 @@
-const got = require(`got`)
-const url = require(`url`)
-const { browse } = require(`./search`)
+const got = require("got");
+const url = require("url");
+const { browse } = require("./search");
 
 exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
@@ -69,37 +69,37 @@ exports.createSchemaCustomization = ({ actions }) => {
       jsDelivrPopularity: Int
       concatenatedName: String
     }
-  `)
-}
+  `);
+};
 
 exports.sourceNodes = async (
   { actions, createNodeId, createContentDigest },
-  { keywords }
+  { keywords },
 ) => {
-  const { createNode } = actions
+  const { createNode } = actions;
 
-  const buildFilter = keywords.map(keyword => `keywords:${keyword}`)
+  const buildFilter = keywords.map((keyword) => `keywords:${keyword}`);
 
   const hits = await browse({
-    filters: `(${buildFilter.join(` OR `)})`,
+    filters: `(${buildFilter.join(" OR ")})`,
     hitsPerPage: 1000,
-  })
+  });
 
   await Promise.all(
-    hits.map(async hit => {
-      const parentId = createNodeId(`plugin ${hit.objectID}`)
+    hits.map(async (hit) => {
+      const parentId = createNodeId(`plugin ${hit.objectID}`);
 
       if (
         !hit.readme ||
-        hit.objectID === `gatsby-plugin-gatsby-cloud` ||
-        hit.objectID === `gatsby-source-contentful`
+        hit.objectID === "gatsby-plugin-gatsby-cloud" ||
+        hit.objectID === "gatsby-source-contentful"
       ) {
         try {
           hit.readme = (
             await got.get(
-              url.resolve(`https://unpkg.com/`, `/${hit.objectID}/README.md`)
+              url.resolve("https://unpkg.com/", `/${hit.objectID}/README.md`),
             )
-          ).body
+          ).body;
         } catch (err) {
           // carry-on
         }
@@ -111,15 +111,15 @@ exports.sourceNodes = async (
         slug: `/packages/en/${hit.objectID}`,
         children: [],
         internal: {
-          type: `NPMPackageReadme`,
-          mediaType: `text/markdown`,
-          content: hit.readme !== undefined ? hit.readme : ``,
+          type: "NPMPackageReadme",
+          mediaType: "text/markdown",
+          content: hit.readme !== undefined ? hit.readme : "",
         },
-      }
-      readmeNode.internal.contentDigest = createContentDigest(readmeNode)
+      };
+      readmeNode.internal.contentDigest = createContentDigest(readmeNode);
       // Remove unneeded data
-      delete hit.readme
-      delete hit.versions
+      delete hit.readme;
+      delete hit.versions;
 
       const node = {
         ...hit,
@@ -133,15 +133,15 @@ exports.sourceNodes = async (
         readme: readmeNode.id,
         title: `${hit.objectID}`,
         internal: {
-          type: `NPMPackage`,
-          content: hit.readme !== undefined ? hit.readme : ``,
+          type: "NPMPackage",
+          content: hit.readme !== undefined ? hit.readme : "",
         },
-      }
-      node.internal.contentDigest = createContentDigest(node)
-      createNode(readmeNode)
-      createNode(node)
-    })
-  )
+      };
+      node.internal.contentDigest = createContentDigest(node);
+      createNode(readmeNode);
+      createNode(node);
+    }),
+  );
 
-  return
-}
+  return;
+};

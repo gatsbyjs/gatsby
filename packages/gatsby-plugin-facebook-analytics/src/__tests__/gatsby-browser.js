@@ -2,43 +2,43 @@
  * @jest-environment jsdom
  */
 
-import { onRouteUpdate } from "../gatsby-browser"
+import { onRouteUpdate } from "../gatsby-browser";
 
-describe(`gatsby-plugin-facebook-analytics`, () => {
-  describe(`onRouteUpdate`, () => {
-    describe(`in development mode`, () => {
-      it(`does not log page views`, () => {
-        const logPageView = jest.fn()
-        window.FB = function () {}
-        window.FB.AppEvents = { logPageView }
+describe("gatsby-plugin-facebook-analytics", () => {
+  describe("onRouteUpdate", () => {
+    describe("in development mode", () => {
+      it("does not log page views", () => {
+        const logPageView = jest.fn();
+        window.FB = function () {};
+        window.FB.AppEvents = { logPageView };
 
-        onRouteUpdate()
+        onRouteUpdate();
 
-        expect(logPageView).not.toHaveBeenCalled()
-      })
-    })
+        expect(logPageView).not.toHaveBeenCalled();
+      });
+    });
 
-    describe(`in production mode`, () => {
-      let env
+    describe("in production mode", () => {
+      let env;
 
       beforeAll(() => {
-        env = process.env.NODE_ENV
-        process.env.NODE_ENV = `production`
-      })
+        env = process.env.NODE_ENV;
+        process.env.NODE_ENV = "production";
+      });
 
       afterAll(() => {
-        process.env.NODE_ENV = env
-      })
+        process.env.NODE_ENV = env;
+      });
 
-      it(`logs page views`, () => {
-        const logPageView = jest.fn()
-        window.FB = function () {}
-        window.FB.AppEvents = { logPageView }
+      it("logs page views", () => {
+        const logPageView = jest.fn();
+        window.FB = function () {};
+        window.FB.AppEvents = { logPageView };
 
-        onRouteUpdate()
+        onRouteUpdate();
 
-        expect(logPageView).toHaveBeenCalledTimes(1)
-      })
-    })
-  })
-})
+        expect(logPageView).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+});

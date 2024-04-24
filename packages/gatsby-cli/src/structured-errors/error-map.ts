@@ -1,21 +1,21 @@
-import { stripIndent, stripIndents } from "common-tags"
+import { stripIndent, stripIndents } from "common-tags";
 import {
   Type,
   Level,
   ErrorCategory,
   type IOptionalGraphQLInfoContext,
-} from "./types"
+} from "./types";
 
 function optionalGraphQLInfo(context: IOptionalGraphQLInfoContext): string {
-  return `${context.codeFrame ? `\n\n${context.codeFrame}` : ``}${context.filePath ? `\n\nFile path: ${context.filePath}` : ``}${context.urlPath ? `\nUrl path: ${context.urlPath}` : ``}${context.plugin ? `\nPlugin: ${context.plugin}` : ``}`
+  return `${context.codeFrame ? `\n\n${context.codeFrame}` : ""}${context.filePath ? `\n\nFile path: ${context.filePath}` : ""}${context.urlPath ? `\nUrl path: ${context.urlPath}` : ""}${context.plugin ? `\nPlugin: ${context.plugin}` : ""}`;
 }
 
 function getSharedNodeManifestWarning(inputManifest: {
-  manifestId: string
-  node: { id: string }
-  pluginName: string
+  manifestId: string;
+  node: { id: string };
+  pluginName: string;
 }): string {
-  return `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
+  return `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`;
 }
 
 const errors: Record<string, IErrorMapEntry> = {
@@ -24,8 +24,8 @@ const errors: Record<string, IErrorMapEntry> = {
       const sourceMessage =
         context && context.sourceMessage
           ? context.sourceMessage
-          : `There was an unhandled error and we could not retrieve more information. Please run the command with the --verbose flag again.`
-      return sourceMessage
+          : "There was an unhandled error and we could not retrieve more information. Please run the command with the --verbose flag again.";
+      return sourceMessage;
     },
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
@@ -33,34 +33,34 @@ const errors: Record<string, IErrorMapEntry> = {
   },
   "95312": {
     text: (context): string => {
-      return `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`
+      return `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`;
     },
     level: Level.ERROR,
-    docsUrl: `https://gatsby.dev/debug-html`,
+    docsUrl: "https://gatsby.dev/debug-html",
     category: ErrorCategory.USER,
     type: Type.HTML_COMPILATION,
   },
   "95313": {
     text: (context): string => {
-      return `Building static HTML failed${context.errorPath ? ` for path "${context.errorPath}"` : ``}`
+      return `Building static HTML failed${context.errorPath ? ` for path "${context.errorPath}"` : ""}`;
     },
     level: Level.ERROR,
-    docsUrl: `https://gatsby.dev/debug-html`,
+    docsUrl: "https://gatsby.dev/debug-html",
     category: ErrorCategory.UNKNOWN,
     type: Type.HTML_COMPILATION,
   },
   "95314": {
     text: (context): string => {
-      return context.errorMessage
+      return context.errorMessage;
     },
     level: Level.ERROR,
-    docsUrl: `https://gatsby.dev/debug-html`,
+    docsUrl: "https://gatsby.dev/debug-html",
     type: Type.HTML_COMPILATION,
     category: ErrorCategory.UNKNOWN,
   },
   "95315": {
     text: (context): string => {
-      return `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`
+      return `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`;
     },
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -68,7 +68,7 @@ const errors: Record<string, IErrorMapEntry> = {
   },
   "98001": {
     text: (): string =>
-      `Built Rendering Engines failed validation.\n\nPlease open an issue with a reproduction at https://gatsby.dev/new-issue for more help.`,
+      "Built Rendering Engines failed validation.\n\nPlease open an issue with a reproduction at https://gatsby.dev/new-issue for more help.",
     type: Type.ENGINE_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
@@ -78,14 +78,14 @@ const errors: Record<string, IErrorMapEntry> = {
       `Rendering Engines attempted to use unsupported "${
         context.package
       }" package${
-        context.importedBy ? ` (imported by "${context.importedBy}")` : ``
-      }${context.advisory ? `\n\n${context.advisory}` : ``}`,
+        context.importedBy ? ` (imported by "${context.importedBy}")` : ""
+      }${context.advisory ? `\n\n${context.advisory}` : ""}`,
     type: Type.ENGINE_COMPILATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "98051": {
-    text: (): string => `Built Rendering Engines failed to load.`,
+    text: (): string => "Built Rendering Engines failed to load.",
     type: Type.ENGINE_EXECUTION,
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
@@ -98,31 +98,31 @@ const errors: Record<string, IErrorMapEntry> = {
     type: (context): `${Type}` =>
       `WEBPACK.${
         context.stage.toUpperCase() as
-          | `DEVELOP`
-          | `DEVELOP-HTML`
-          | `BUILD-JAVASCRIPT`
-          | `BUILD-HTML`
+          | "DEVELOP"
+          | "DEVELOP-HTML"
+          | "BUILD-JAVASCRIPT"
+          | "BUILD-HTML"
       }`,
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
   },
   "98124": {
     text: (context): string => {
-      let message = `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nIf you're trying to use a package make sure that '${context.packageName}' is installed. If you're trying to use a local file make sure that the path is correct.`
+      let message = `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nIf you're trying to use a package make sure that '${context.packageName}' is installed. If you're trying to use a local file make sure that the path is correct.`;
 
       if (context.deprecationReason) {
-        message += `\n\n${context.deprecationReason}`
+        message += `\n\n${context.deprecationReason}`;
       }
 
-      return message
+      return message;
     },
     type: (context): `${Type}` =>
       `WEBPACK.${
         context.stage.toUpperCase() as
-          | `DEVELOP`
-          | `DEVELOP-HTML`
-          | `BUILD-JAVASCRIPT`
-          | `BUILD-HTML`
+          | "DEVELOP"
+          | "DEVELOP-HTML"
+          | "BUILD-JAVASCRIPT"
+          | "BUILD-HTML"
       }`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -140,10 +140,10 @@ const errors: Record<string, IErrorMapEntry> = {
   "85908": {
     text: (context): string => {
       const closestFragment = context.closestFragment
-        ? `\n\nDid you mean to use ` + `"${context.closestFragment}"?`
-        : ``
+        ? "\n\nDid you mean to use " + `"${context.closestFragment}"?`
+        : "";
 
-      return `There was an error in your GraphQL query:\n\nThe fragment "${context.fragmentName}" does not exist.\n\n${context.codeFrame}${closestFragment}`
+      return `There was an error in your GraphQL query:\n\nThe fragment "${context.fragmentName}" does not exist.\n\n${context.codeFrame}${closestFragment}`;
     },
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
@@ -168,7 +168,7 @@ const errors: Record<string, IErrorMapEntry> = {
       `),
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.com/docs/how-to/querying-data/`,
+    docsUrl: "https://www.gatsbyjs.com/docs/how-to/querying-data/",
     category: ErrorCategory.USER,
   },
   "85911": {
@@ -216,7 +216,7 @@ const errors: Record<string, IErrorMapEntry> = {
   "85917": {
     text: (context): string =>
       `Unexpected empty graphql tag${
-        context.codeFrame ? `\n\n${context.codeFrame}` : ``
+        context.codeFrame ? `\n\n${context.codeFrame}` : ""
       }`,
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
@@ -226,7 +226,7 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string =>
       stripIndent(`
         GraphQL syntax error in query:\n\n${context.sourceMessage}${
-          context.codeFrame ? `\n\n${context.codeFrame}` : ``
+          context.codeFrame ? `\n\n${context.codeFrame}` : ""
         }`),
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
@@ -253,18 +253,18 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string => {
       const staticQueryMessage = stripIndents(`Suggestion 1:
 
-      If you're not using a page query but useStaticQuery you see this error because it doesn't support variables. To learn more about the limitations: https://gatsby.dev/use-static-query`)
+      If you're not using a page query but useStaticQuery you see this error because it doesn't support variables. To learn more about the limitations: https://gatsby.dev/use-static-query`);
 
       const generalMessage = stripIndents(`Suggestion 2:
 
-      You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Learn how to add data to context: https://gatsby.dev/graphql-variables-how-to`)
+      You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Learn how to add data to context: https://gatsby.dev/graphql-variables-how-to`);
 
       return stripIndent(`
         There was an error in your GraphQL query:\n\n${
           context.sourceMessage
         }${optionalGraphQLInfo(
           context,
-        )}\n\n${staticQueryMessage}\n\n${generalMessage}`)
+        )}\n\n${staticQueryMessage}\n\n${generalMessage}`);
     },
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
@@ -290,7 +290,7 @@ const errors: Record<string, IErrorMapEntry> = {
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    docsUrl: `https://gatsby.dev/creating-type-definitions`,
+    docsUrl: "https://gatsby.dev/creating-type-definitions",
   },
   "85923": {
     text: (context): string =>
@@ -298,7 +298,7 @@ const errors: Record<string, IErrorMapEntry> = {
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    docsUrl: `https://gatsby.dev/creating-type-definitions`,
+    docsUrl: "https://gatsby.dev/creating-type-definitions",
   },
   "85924": {
     text: (context): string =>
@@ -325,7 +325,7 @@ const errors: Record<string, IErrorMapEntry> = {
     type: Type.GRAPHQL_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    docsUrl: `https://gatsby.dev/creating-type-definitions`,
+    docsUrl: "https://gatsby.dev/creating-type-definitions",
   },
   "85926": {
     text: (context): string =>
@@ -343,7 +343,7 @@ const errors: Record<string, IErrorMapEntry> = {
   },
   "85928": {
     text: (): string =>
-      `An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback`,
+      "An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback",
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
     type: Type.GRAPHQL_QUERY_RUNNING,
@@ -374,7 +374,7 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string =>
       `It looks like you were trying to add the config file? Please rename "${
         context.nearMatch
-      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
+      }" to "${context.configName}.${context.isTSX ? "ts" : "js"}"`,
     type: Type.API_CONFIG_LOADING,
     // TODO: Make this a warning? Needs to be also changed where this error is called + tests
     level: Level.ERROR,
@@ -392,9 +392,9 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string =>
       `${context.path}/${context.configName} cannot export a function.` +
       `\n\nA ${context.configName} exported as a function can only be used as a theme and not run directly.` +
-      `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
-      `\nIf you are in the root gatsby-config for your site, change the export to be an object and not a function as functions` +
-      `\nare not supported in the root gatsby-config.`,
+      "\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test." +
+      "\nIf you are in the root gatsby-config for your site, change the export to be an object and not a function as functions" +
+      "\nare not supported in the root gatsby-config.",
     type: Type.API_CONFIG_LOADING,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -410,7 +410,7 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string =>
       `It looks like you were trying to add the gatsby-node file? Please rename "${
         context.nearMatch
-      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
+      }" to "${context.configName}.${context.isTSX ? "ts" : "js"}"`,
     type: Type.API_CONFIG_LOADING,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -423,10 +423,10 @@ const errors: Record<string, IErrorMapEntry> = {
           `Tried looking for a local plugin in ${context.pathToLocalTheme}.`,
         `Tried looking for an installed package in the following paths:\n${context.nodeResolutionPaths
           .map((potentialLocationPath) => ` - ${potentialLocationPath}`)
-          .join(`\n`)}`,
+          .join("\n")}`,
       ]
         .filter(Boolean)
-        .join(`\n\n`),
+        .join("\n\n"),
     type: Type.API_CONFIG_LOADING,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -455,7 +455,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     type: Type.API_NODE_VALIDATION,
     category: ErrorCategory.USER,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+    docsUrl:
+      "https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage",
   },
   "11323": {
     text: (context): string =>
@@ -469,7 +470,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+    docsUrl:
+      "https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage",
   },
   "11324": {
     text: (context): string =>
@@ -477,7 +479,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+    docsUrl:
+      "https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage",
   },
   "11325": {
     text: (context): string =>
@@ -493,7 +496,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+    docsUrl:
+      "https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage",
   },
   "11326": {
     text: (context): string =>
@@ -511,7 +515,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+    docsUrl:
+      "https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage",
   },
   "11327": {
     text: (context): string =>
@@ -519,7 +524,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+    docsUrl:
+      "https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage",
   },
   "11328": {
     text: (context): string =>
@@ -527,7 +533,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+    docsUrl:
+      "https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage",
   },
   // invalid or deprecated APIs
   "11329": {
@@ -539,18 +546,18 @@ const errors: Record<string, IErrorMapEntry> = {
           See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-${context.exportType}/ for the list of Gatsby ${context.exportType} APIs.
         `),
       ]
-        .concat([``].concat(context.errors))
+        .concat([""].concat(context.errors))
         .concat(
           context.fixes.length > 0
             ? [
-                ``,
-                `Some of the following may help fix the error(s):`,
-                ``,
+                "",
+                "Some of the following may help fix the error(s):",
+                "",
                 ...context.fixes.map((fix) => `- ${fix}`),
               ]
             : [],
         )
-        .join(`\n`),
+        .join("\n"),
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
@@ -579,28 +586,28 @@ const errors: Record<string, IErrorMapEntry> = {
       [
         stripIndent(`
           Invalid plugin options for "${context.pluginName}"${
-            context.configDir ? `, configured by ${context.configDir}` : ``
+            context.configDir ? `, configured by ${context.configDir}` : ""
           }:
         `),
       ]
-        .concat([``])
+        .concat([""])
         .concat(
           context.validationErrors
             .map((error) => `- ${error.message}`)
-            .join(`\n`),
+            .join("\n"),
         )
-        .join(`\n`),
+        .join("\n"),
     type: Type.API_NODE_VALIDATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "11332": {
     text: (): string =>
-      `Failed to compile Gatsby Functions. See the error below for more details.\nNote: The src/api folder is a reserved folder for Gatsby Functions and can't be used for any other files.`,
+      "Failed to compile Gatsby Functions. See the error below for more details.\nNote: The src/api folder is a reserved folder for Gatsby Functions and can't be used for any other files.",
     type: Type.FUNCTIONS_COMPILATION,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
+    docsUrl: "https://www.gatsbyjs.com/docs/reference/functions/",
   },
   // slices
   "11333": {
@@ -615,7 +622,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl:
+      "https://gatsbyjs.com/docs/reference/config-files/actions#createSlice",
   },
   "11334": {
     text: (context): string =>
@@ -629,7 +637,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl:
+      "https://gatsbyjs.com/docs/reference/config-files/actions#createSlice",
   },
   "11335": {
     text: (context): string =>
@@ -647,7 +656,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl:
+      "https://gatsbyjs.com/docs/reference/config-files/actions#createSlice",
   },
   "11336": {
     text: (context): string =>
@@ -663,7 +673,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl:
+      "https://gatsbyjs.com/docs/reference/config-files/actions#createSlice",
   },
   "11337": {
     text: (context): string =>
@@ -671,7 +682,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl:
+      "https://gatsbyjs.com/docs/reference/config-files/actions#createSlice",
   },
   "11338": {
     text: (context): string =>
@@ -679,7 +691,8 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl:
+      "https://gatsbyjs.com/docs/reference/config-files/actions#createSlice",
   },
   "11339": {
     text: (context): string =>
@@ -689,11 +702,12 @@ const errors: Record<string, IErrorMapEntry> = {
         `Slice props: ${JSON.stringify(context?.sliceProps || {}, null, 2)}`,
       ]
         .filter(Boolean)
-        .join(`\n\n`),
+        .join("\n\n"),
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.HTML_COMPILATION,
-    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl:
+      "https://gatsbyjs.com/docs/reference/config-files/actions#createSlice",
   },
   "11340": {
     text: (context): string =>
@@ -702,43 +716,46 @@ const errors: Record<string, IErrorMapEntry> = {
         `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
       ]
         .filter(Boolean)
-        .join(`\n\n`),
+        .join("\n\n"),
     level: Level.ERROR,
     category: ErrorCategory.USER,
     type: Type.HTML_COMPILATION,
-    docsUrl: `https://gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    docsUrl:
+      "https://gatsbyjs.com/docs/reference/config-files/actions#createSlice",
   },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>
       [
         `The new node didn't pass validation: ${context.validationErrorMessage}`,
-        `Failing node:`,
+        "Failing node:",
         JSON.stringify(context.node, null, 4),
-        `Note: there might be more nodes that failed validation. Output is limited to one node per type of validation failure to limit terminal spam.`,
+        "Note: there might be more nodes that failed validation. Output is limited to one node per type of validation failure to limit terminal spam.",
         context.codeFrame,
       ]
         .filter(Boolean)
-        .join(`\n\n`),
+        .join("\n\n"),
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
     type: Type.API_NODE_VALIDATION,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode`,
+    docsUrl:
+      "https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode",
   },
   // local SSL certificate errors
   "11521": {
     text: (): string =>
-      `for custom ssl --https, --cert-file, and --key-file must be used together`,
+      "for custom ssl --https, --cert-file, and --key-file must be used together",
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.com/docs/local-https#custom-key-and-certificate-files`,
+    docsUrl:
+      "https://www.gatsbyjs.com/docs/local-https#custom-key-and-certificate-files",
     category: ErrorCategory.USER,
     type: Type.CLI_VALIDATION,
   },
   "11522": {
-    text: (): string => `Failed to generate dev SSL certificate`,
+    text: (): string => "Failed to generate dev SSL certificate",
     level: Level.ERROR,
     category: ErrorCategory.THIRD_PARTY,
-    docsUrl: `https://www.gatsbyjs.com/docs/local-https#setup`,
+    docsUrl: "https://www.gatsbyjs.com/docs/local-https#setup",
     type: Type.CLI_VALIDATION,
   },
   // cli new command errors
@@ -746,7 +763,7 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string =>
       `It looks like you gave wrong argument orders. Try running instead "gatsby new ${context.starter} ${context.rootPath}"`,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
+    docsUrl: "https://www.gatsbyjs.com/docs/reference/gatsby-cli#new",
     category: ErrorCategory.USER,
     type: Type.CLI_VALIDATION,
   },
@@ -754,7 +771,7 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string =>
       `It looks like you passed a URL to your project name. Try running instead "gatsby new new-gatsby-project ${context.rootPath}"`,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
+    docsUrl: "https://www.gatsbyjs.com/docs/reference/gatsby-cli#new",
     category: ErrorCategory.USER,
     type: Type.CLI_VALIDATION,
   },
@@ -762,7 +779,7 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string =>
       `Could not create a project in "${context.path}" because it's not a valid path`,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
+    docsUrl: "https://www.gatsbyjs.com/docs/reference/gatsby-cli#new",
     category: ErrorCategory.USER,
     type: Type.CLI_VALIDATION,
   },
@@ -771,7 +788,7 @@ const errors: Record<string, IErrorMapEntry> = {
       `Directory ${context.rootPath} is already an npm project`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
-    docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
+    docsUrl: "https://www.gatsbyjs.com/docs/reference/gatsby-cli#new",
     type: Type.CLI_VALIDATION,
   },
   "11614": {
@@ -779,7 +796,7 @@ const errors: Record<string, IErrorMapEntry> = {
       stripIndent(`
         The path "${context.path}" errored during SSR.
         Edit its component ${context.filePath}${
-          context.line ? `:${context.line}:${context.column}` : ``
+          context.line ? `:${context.line}:${context.column}` : ""
         } to resolve the error.`),
     level: Level.WARNING,
     category: ErrorCategory.USER,
@@ -818,7 +835,7 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     category: ErrorCategory.UNKNOWN,
     type: Type.UNKNOWN,
-    docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
+    docsUrl: "https://support.gatsbyjs.com/hc/en-us/articles/360056811354",
   },
   // Node Manifest warnings
   "11801": {
@@ -869,10 +886,10 @@ const errors: Record<string, IErrorMapEntry> = {
     text: (context): string =>
       stripIndent(`
     Failed to compile Gatsby files ${
-      context.origin ? `(${context.origin})` : ``
+      context.origin ? `(${context.origin})` : ""
     }:
 
-    ${context.generalMessage}. ${context.specificMessage ?? ``}
+    ${context.generalMessage}. ${context.specificMessage ?? ""}
     ${
       context.hints
         ? context.hints.map(
@@ -880,9 +897,9 @@ const errors: Record<string, IErrorMapEntry> = {
     Hints:
     - ${h}\n`,
           )
-        : ``
+        : ""
     }
-    ${context.filePath ? `File path: ${context.filePath}` : ``}`),
+    ${context.filePath ? `File path: ${context.filePath}` : ""}`),
     level: Level.ERROR,
     type: Type.API_TYPESCRIPT_COMPILATION,
     category: ErrorCategory.USER,
@@ -910,7 +927,7 @@ const errors: Record<string, IErrorMapEntry> = {
       }${
         context.sourceFileLocation
           ? `\nCompiled from: ${context.sourceFileLocation}`
-          : ``
+          : ""
       }\n\nPlease run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://gatsby.dev/new-issue for more help.`,
     level: Level.ERROR,
     type: Type.API_TYPESCRIPT_COMPILATION,
@@ -925,12 +942,12 @@ const errors: Record<string, IErrorMapEntry> = {
     level: Level.ERROR,
     type: Type.API_TYPESCRIPT_TYPEGEN,
     category: ErrorCategory.USER,
-    docsUrl: `https://gatsby.dev/graphql-typegen`,
+    docsUrl: "https://gatsby.dev/graphql-typegen",
   },
   // Gatsby Adapters
   "12200": {
     text: (): string =>
-      `Tried to create adapter routes for webpack assets but failed. If the issue persists, please open an issue with a reproduction at https://gatsby.dev/bug-report for more help.`,
+      "Tried to create adapter routes for webpack assets but failed. If the issue persists, please open an issue with a reproduction at https://gatsby.dev/bug-report for more help.",
     level: Level.ERROR,
     type: Type.ADAPTER,
     category: ErrorCategory.SYSTEM,
@@ -944,7 +961,7 @@ const errors: Record<string, IErrorMapEntry> = {
         context.adapterName
       }" is not compatible with following settings:\n${context.incompatibleFeatures
         .map((line) => ` - ${line}`)
-        .join(`\n`)}`,
+        .join("\n")}`,
     level: Level.ERROR,
     type: Type.ADAPTER,
     category: ErrorCategory.THIRD_PARTY,
@@ -953,7 +970,7 @@ const errors: Record<string, IErrorMapEntry> = {
   "80000": {
     text: (context): string =>
       stripIndents(`Building partial HTML failed${
-        context?.path ? ` for path "${context.path}"` : ``
+        context?.path ? ` for path "${context.path}"` : ""
       }
 
       This can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers are used in a component without declaring the "use client" directive at the top of the file.
@@ -962,7 +979,7 @@ const errors: Record<string, IErrorMapEntry> = {
     `),
     level: Level.ERROR,
     type: Type.RSC_COMPILATION,
-    docsUrl: `https://gatsby.dev/partial-hydration-error`,
+    docsUrl: "https://gatsby.dev/partial-hydration-error",
     category: ErrorCategory.USER,
   },
   "80001": {
@@ -978,28 +995,28 @@ const errors: Record<string, IErrorMapEntry> = {
       ),
     level: Level.ERROR,
     type: Type.RSC_COMPILATION,
-    docsUrl: `https://gatsby.dev/partial-hydration-error`,
+    docsUrl: "https://gatsby.dev/partial-hydration-error",
     category: ErrorCategory.THIRD_PARTY,
   },
-}
+};
 
-export type ErrorId = string | keyof typeof errors
+export type ErrorId = string | keyof typeof errors;
 
-export const errorMap: Record<ErrorId, IErrorMapEntry> = errors
+export const errorMap: Record<ErrorId, IErrorMapEntry> = errors;
 
-export const defaultError = errorMap[``]
+export const defaultError = errorMap[""];
 
 export type IErrorMapEntry = {
-  text: (context) => string
+  text: (context) => string;
   // Public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union with string interpolation
-  level: `${Level}`
-  type: `${Type}` | ((context) => `${Type}`)
-  category: `${ErrorCategory}`
-  docsUrl?: string
-}
+  level: `${Level}`;
+  type: `${Type}` | ((context) => `${Type}`);
+  category: `${ErrorCategory}`;
+  docsUrl?: string | undefined;
+};
 
 // Make level and type optional for plugins
 export type IErrorMapEntryPublicApi = {
-  level?: `${Level}`
-  type?: `${Type}` | ((context) => `${Type}`)
-} & Omit<IErrorMapEntry, "level" | "type">
+  level?: `${Level}` | undefined;
+  type?: `${Type}` | ((context) => `${Type}`) | undefined;
+} & Omit<IErrorMapEntry, "level" | "type">;

@@ -20,21 +20,21 @@
  * ],
  */
 
-const resolve = require(`./resolve`)
+const resolve = require("./resolve");
 
 exports.onCreateWebpackConfig = (
   { actions, stage, loaders },
-  { cssLoaderOptions = {}, postCssPlugins, ...stylusOptions }
+  { cssLoaderOptions = {}, postCssPlugins, ...stylusOptions },
 ) => {
-  const isSSR = [`develop-html`, `build-html`].includes(stage)
-  const { setWebpackConfig } = actions
+  const isSSR = ["develop-html", "build-html"].includes(stage);
+  const { setWebpackConfig } = actions;
 
   const stylusLoader = {
-    loader: resolve(`stylus-loader`),
+    loader: resolve("stylus-loader"),
     options: {
       ...stylusOptions,
     },
-  }
+  };
 
   const stylusRule = {
     test: /\.styl$/,
@@ -50,7 +50,7 @@ exports.onCreateWebpackConfig = (
           loaders.postcss({ plugins: postCssPlugins }),
           stylusLoader,
         ],
-  }
+  };
 
   const stylusRuleModules = {
     test: /\.module\.styl$/,
@@ -69,17 +69,17 @@ exports.onCreateWebpackConfig = (
       loaders.postcss({ plugins: postCssPlugins }),
       stylusLoader,
     ].filter(Boolean),
-  }
+  };
 
   const configRules = [
     {
       oneOf: [stylusRuleModules, stylusRule],
     },
-  ]
+  ];
 
   setWebpackConfig({
     module: {
       rules: configRules,
     },
-  })
-}
+  });
+};

@@ -1,21 +1,21 @@
-jest.mock(`fs-extra`, () => {
-  const fs = jest.requireActual(`fs-extra`)
+jest.mock("fs-extra", () => {
+  const fs = jest.requireActual("fs-extra");
   return {
     ...fs,
     readFile: jest.fn(),
-  }
-})
-jest.mock(`../../utils/api-runner-node`, () => () => [])
-jest.mock(`gatsby-cli/lib/reporter/index`)
-const reporter = require(`gatsby-cli/lib/reporter`)
-const fs = require(`fs-extra`)
-const { store } = require(`../../redux`)
+  };
+});
+jest.mock("../../utils/api-runner-node", () => () => []);
+jest.mock("gatsby-cli/lib/reporter/index");
+const reporter = require("gatsby-cli/lib/reporter");
+const fs = require("fs-extra");
+const { store } = require("../../redux");
 
-const dispatchSpy = jest.spyOn(store, `dispatch`)
+const dispatchSpy = jest.spyOn(store, "dispatch");
 
-const FileParser = require(`../file-parser`).default
+const FileParser = require("../file-parser").default;
 
-const specialChars = `ж-ä-!@#$%^&*()_-=+:;'"?,~\``
+const specialChars = "ж-ä-!@#$%^&*()_-=+:;'\"?,~`";
 
 const SLICES_FILE_INFO = {
   "slice-simple.js": `import { Slice } from 'gatsby'
@@ -53,7 +53,7 @@ export default () => {
   return <Slice alias={foo} />;
 }
 `,
-}
+};
 
 const HEAD_FILE_INFO = {
   "no-head": `import React from "react"
@@ -71,12 +71,12 @@ export const Head = () => {
   return <title>foo</title>
 }
 `,
-}
+};
 
-const HEAD_SAMPLES_WITHOUT_HEAD = [`no-head`]
+const HEAD_SAMPLES_WITHOUT_HEAD = ["no-head"];
 
 const QUERY_FILE_INFO = {
-  "no-query.js": `import React from "react"`,
+  "no-query.js": 'import React from "react"',
   "other-graphql-tag.js": `import { graphql } from 'relay'
   export const query = graphql\`
 query PageQueryName {
@@ -332,112 +332,112 @@ export const config = async () => {
 const query = graphql\`{ __typename }\`
 }
 `,
-}
+};
 
 const MOCK_FILE_INFO = {
   ...SLICES_FILE_INFO,
   ...QUERY_FILE_INFO,
   ...HEAD_FILE_INFO,
-}
+};
 
-describe(`File parser`, () => {
-  const parser = new FileParser()
+describe("File parser", () => {
+  const parser = new FileParser();
 
   beforeAll(() => {
-    fs.readFile.mockImplementation(file =>
-      Promise.resolve(MOCK_FILE_INFO[file])
-    )
-  })
+    fs.readFile.mockImplementation((file) =>
+      Promise.resolve(MOCK_FILE_INFO[file]),
+    );
+  });
 
   beforeEach(() => {
-    reporter.warn.mockClear()
-    dispatchSpy.mockClear()
-  })
+    reporter.warn.mockClear();
+    dispatchSpy.mockClear();
+  });
 
-  it(`extracts query AST correctly from files`, async () => {
-    const errors = []
-    const addError = errors.push.bind(errors)
+  it("extracts query AST correctly from files", async () => {
+    const errors = [];
+    const addError = errors.push.bind(errors);
     const results = await parser.parseFiles(
       Object.keys(QUERY_FILE_INFO),
-      addError
-    )
+      addError,
+    );
 
     // Check that invalid entries are not in the results and thus haven't been extracted
     expect(results).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ filePath: `static-query-hooks-commonjs.js` }),
-        expect.not.objectContaining({ filePath: `no-query.js` }),
-        expect.not.objectContaining({ filePath: `other-graphql-tag.js` }),
-        expect.not.objectContaining({ filePath: `global-query.js` }),
+        expect.objectContaining({ filePath: "static-query-hooks-commonjs.js" }),
+        expect.not.objectContaining({ filePath: "no-query.js" }),
+        expect.not.objectContaining({ filePath: "other-graphql-tag.js" }),
+        expect.not.objectContaining({ filePath: "global-query.js" }),
         expect.not.objectContaining({
-          filePath: `global-static-query-hooks.js`,
+          filePath: "global-static-query-hooks.js",
         }),
-      ])
-    )
+      ]),
+    );
 
     expect({
       results,
       warnCalls: reporter.warn.mock.calls,
       panicOnBuildCalls: reporter.panicOnBuild.mock.calls,
-    }).toMatchSnapshot()
-    expect(errors.length).toEqual(1)
-  })
+    }).toMatchSnapshot();
+    expect(errors.length).toEqual(1);
+  });
 
-  it(`generates spec-compliant query names out of path`, async () => {
+  it("generates spec-compliant query names out of path", async () => {
     const { astDefinitions: ast } = await parser.parseFile(
       `${specialChars}.js`,
-      jest.fn()
-    )
-    const nameNode = ast[0].doc.definitions[0].name
+      jest.fn(),
+    );
+    const nameNode = ast[0].doc.definitions[0].name;
     expect(nameNode).toEqual({
-      kind: `Name`,
-      value: `staticZhADollarpercentandJs1125018085`,
-    })
+      kind: "Name",
+      value: "staticZhADollarpercentandJs1125018085",
+    });
 
     // TODO(v6): Remove since StaticQuery is deprecated
     const { astDefinitions: ast2 } = await parser.parseFile(
       `static-${specialChars}.js`,
-      jest.fn()
-    )
-    const nameNode2 = ast2[0].doc.definitions[0].name
+      jest.fn(),
+    );
+    const nameNode2 = ast2[0].doc.definitions[0].name;
     expect(nameNode2).toEqual({
-      kind: `Name`,
-      value: `staticStaticZhADollarpercentandJs1125018085`,
-    })
-  })
+      kind: "Name",
+      value: "staticStaticZhADollarpercentandJs1125018085",
+    });
+  });
 
-  const SLICES_KEYS = Object.keys(SLICES_FILE_INFO)
+  const SLICES_KEYS = Object.keys(SLICES_FILE_INFO);
 
   it.each(SLICES_KEYS)(
-    `extracts slices and their props correctly (%s)`,
-    async sliceFileName => {
+    "extracts slices and their props correctly (%s)",
+    async (sliceFileName) => {
       const { pageSlices } = await parser.parseFile(
         `${sliceFileName}`,
-        jest.fn()
-      )
+        jest.fn(),
+      );
       expect({
         pageSlices,
         warnCalls: reporter.warn.mock.calls,
-      }).toMatchSnapshot()
-    }
-  )
+      }).toMatchSnapshot();
+    },
+  );
 
-  describe(`Head export`, () => {
-    const HEAD_KEYS = Object.keys(HEAD_FILE_INFO)
+  describe("Head export", () => {
+    const HEAD_KEYS = Object.keys(HEAD_FILE_INFO);
     it.each(HEAD_KEYS)(
-      `extracts Head feature correctly (%s)`,
-      async headFileName => {
-        await parser.parseFile(`${headFileName}`, jest.fn())
+      "extracts Head feature correctly (%s)",
+      async (headFileName) => {
+        await parser.parseFile(`${headFileName}`, jest.fn());
 
-        expect(dispatchSpy).toHaveBeenCalledTimes(1)
+        expect(dispatchSpy).toHaveBeenCalledTimes(1);
         expect(dispatchSpy).toHaveBeenLastCalledWith({
-          type: `SET_COMPONENT_FEATURES`,
+          type: "SET_COMPONENT_FEATURES",
           payload: expect.objectContaining({
             componentPath: headFileName,
             Head: !HEAD_SAMPLES_WITHOUT_HEAD.includes(headFileName),
           }),
-        })
-      }
-    )
-  })
-})
+        });
+      },
+    );
+  });
+});

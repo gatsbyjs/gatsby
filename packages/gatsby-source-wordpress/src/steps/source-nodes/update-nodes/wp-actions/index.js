@@ -1,13 +1,13 @@
-import { actionMonitorQuery } from "~/utils/graphql-queries"
-import wpActionDELETE from "./delete"
-import wpActionUPDATE from "./update"
-import { LAST_COMPLETED_SOURCE_TIME } from "~/constants"
-import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated"
+import { actionMonitorQuery } from "~/utils/graphql-queries";
+import wpActionDELETE from "./delete";
+import wpActionUPDATE from "./update";
+import { LAST_COMPLETED_SOURCE_TIME } from "~/constants";
+import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated";
 
-import fetchAndCreateNonNodeRootFields from "~/steps/source-nodes/create-nodes/fetch-and-create-non-node-root-fields"
-import { setHardCachedNodes } from "~/utils/cache"
-import { sourceNodes } from "~/steps/source-nodes"
-import { withPluginKey } from "~/store"
+import fetchAndCreateNonNodeRootFields from "~/steps/source-nodes/create-nodes/fetch-and-create-non-node-root-fields";
+import { setHardCachedNodes } from "~/utils/cache";
+import { sourceNodes } from "~/steps/source-nodes";
+import { withPluginKey } from "~/store";
 
 /**
  * getWpActions
@@ -23,54 +23,57 @@ export const getWpActions = async ({
   throwFetchErrors = false,
   throwGqlErrors = false,
 }) => {
-  const sourceTime = Date.now()
+  const sourceTime = Date.now();
 
   // @todo add pagination in case there are more than 100 actions since the last build
   const actionMonitorActions = await paginatedWpNodeFetch({
-    contentTypePlural: `actionMonitorActions`,
+    contentTypePlural: "actionMonitorActions",
     query: actionMonitorQuery,
-    nodeTypeName: `ActionMonitor`,
+    nodeTypeName: "ActionMonitor",
     helpers,
     throwFetchErrors,
     throwGqlErrors,
     ...variables,
-  })
+  });
 
   if (!actionMonitorActions || !actionMonitorActions.length) {
-    return []
+    return [];
   }
 
-  await helpers.cache.set(withPluginKey(LAST_COMPLETED_SOURCE_TIME), sourceTime)
+  await helpers.cache.set(
+    withPluginKey(LAST_COMPLETED_SOURCE_TIME),
+    sourceTime,
+  );
 
-  return actionMonitorActions
-}
+  return actionMonitorActions;
+};
 
 /**
  * Acts on changes in WordPress to call functions that sync Gatsby with
  * the latest WP changes
  */
-export const handleWpActions = async api => {
-  const { cachedNodeIds, helpers } = api
+export const handleWpActions = async (api) => {
+  const { cachedNodeIds, helpers } = api;
 
   switch (api.wpAction.actionType) {
-    case `DELETE`:
-      await wpActionDELETE(api)
-      break
-    case `UPDATE`:
-    case `CREATE`:
-      await wpActionUPDATE(api)
-      break
-    case `NON_NODE_ROOT_FIELDS`:
-      await fetchAndCreateNonNodeRootFields()
-      break
-    case `REFETCH_ALL`:
-      await sourceNodes({ ...helpers, refetchAll: true }, {})
+    case "DELETE":
+      await wpActionDELETE(api);
+      break;
+    case "UPDATE":
+    case "CREATE":
+      await wpActionUPDATE(api);
+      break;
+    case "NON_NODE_ROOT_FIELDS":
+      await fetchAndCreateNonNodeRootFields();
+      break;
+    case "REFETCH_ALL":
+      await sourceNodes({ ...helpers, refetchAll: true }, {});
   }
 
-  await setHardCachedNodes({ helpers })
+  await setHardCachedNodes({ helpers });
 
-  return cachedNodeIds
-}
+  return cachedNodeIds;
+};
 
 /**
  * fetchAndRunWpActions
@@ -93,9 +96,9 @@ export const fetchAndRunWpActions = async ({
     helpers,
     throwFetchErrors,
     throwGqlErrors,
-  })
+  });
 
-  const didUpdate = !!wpActions.length
+  const didUpdate = !!wpActions.length;
 
   if (didUpdate) {
     for (const wpAction of wpActions) {
@@ -104,12 +107,12 @@ export const fetchAndRunWpActions = async ({
         helpers,
         pluginOptions,
         wpAction,
-      })
+      });
     }
   }
 
   return {
     wpActions,
     didUpdate,
-  }
-}
+  };
+};

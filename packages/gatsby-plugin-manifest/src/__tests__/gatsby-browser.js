@@ -2,35 +2,36 @@
  * @jest-environment jsdom
  */
 
-describe(`gatsby-plugin-manifest`, () => {
+describe("gatsby-plugin-manifest", () => {
   const pluginOptions = {
-    name: `My Website`,
-    start_url: `/`,
+    name: "My Website",
+    start_url: "/",
     localize: [
       {
-        start_url: `/es/`,
-        lang: `es`,
+        start_url: "/es/",
+        lang: "es",
       },
     ],
-  }
-  let onRouteUpdate
+  };
+  let onRouteUpdate;
 
   beforeEach(() => {
-    global.__PATH_PREFIX__ = ``
-    global.__MANIFEST_PLUGIN_HAS_LOCALISATION__ = true
-    onRouteUpdate = require(`../gatsby-browser`).onRouteUpdate
-    document.head.innerHTML = `<link rel="manifest" href="/manifest.webmanifest">`
-  })
+    global.__PATH_PREFIX__ = "";
+    global.__MANIFEST_PLUGIN_HAS_LOCALISATION__ = true;
+    onRouteUpdate = require("../gatsby-browser").onRouteUpdate;
+    document.head.innerHTML =
+      '<link rel="manifest" href="/manifest.webmanifest">';
+  });
 
   afterAll(() => {
-    delete global.__MANIFEST_PLUGIN_HAS_LOCALISATION__
-  })
+    delete global.__MANIFEST_PLUGIN_HAS_LOCALISATION__;
+  });
 
-  test(`has manifest in head`, () => {
+  test("has manifest in head", () => {
     const location = {
-      pathname: `/`,
-    }
-    onRouteUpdate({ location }, pluginOptions)
+      pathname: "/",
+    };
+    onRouteUpdate({ location }, pluginOptions);
     expect(document.head).toMatchInlineSnapshot(`
       <head>
         <link
@@ -38,16 +39,16 @@ describe(`gatsby-plugin-manifest`, () => {
           rel="manifest"
         />
       </head>
-    `)
-  })
+    `);
+  });
 
-  test(`changes href of manifest if navigating to a localized app`, () => {
+  test("changes href of manifest if navigating to a localized app", () => {
     const location = {
-      pathname: `/es/`,
-    }
+      pathname: "/es/",
+    };
     // add default lang
-    pluginOptions.lang = `en`
-    onRouteUpdate({ location }, pluginOptions)
+    pluginOptions.lang = "en";
+    onRouteUpdate({ location }, pluginOptions);
     expect(document.head).toMatchInlineSnapshot(`
       <head>
         <link
@@ -55,16 +56,16 @@ describe(`gatsby-plugin-manifest`, () => {
           rel="manifest"
         />
       </head>
-    `)
-  })
+    `);
+  });
 
-  test(`keeps default manifest if not navigating to a localized app`, () => {
+  test("keeps default manifest if not navigating to a localized app", () => {
     const location = {
-      pathname: `/random-path/`,
-    }
+      pathname: "/random-path/",
+    };
     // add default lang
-    pluginOptions.lang = `en`
-    onRouteUpdate({ location }, pluginOptions)
+    pluginOptions.lang = "en";
+    onRouteUpdate({ location }, pluginOptions);
     expect(document.head).toMatchInlineSnapshot(`
       <head>
         <link
@@ -72,18 +73,18 @@ describe(`gatsby-plugin-manifest`, () => {
           rel="manifest"
         />
       </head>
-    `)
-  })
+    `);
+  });
 
-  test(`use correct localized manifest when path prefix is used`, () => {
-    global.__PATH_PREFIX__ = `/test`
+  test("use correct localized manifest when path prefix is used", () => {
+    global.__PATH_PREFIX__ = "/test";
 
     const location = {
-      pathname: `/test/es/`,
-    }
+      pathname: "/test/es/",
+    };
     // add default lang
-    pluginOptions.lang = `en`
-    onRouteUpdate({ location }, pluginOptions)
+    pluginOptions.lang = "en";
+    onRouteUpdate({ location }, pluginOptions);
     expect(document.head).toMatchInlineSnapshot(`
       <head>
         <link
@@ -91,6 +92,6 @@ describe(`gatsby-plugin-manifest`, () => {
           rel="manifest"
         />
       </head>
-    `)
-  })
-})
+    `);
+  });
+});

@@ -1,16 +1,16 @@
-import type { GatsbyNodeApiHelpers, GatsbyReporter } from "./gatsby-types"
-import type { IPluginOptions } from "~/models/gatsby-api"
-import { formatLogMessage } from "~/utils/format-log-message"
-import { invokeAndCleanupLeftoverPreviewCallbacks } from "../steps/preview/cleanup"
-import { CODES } from "./report"
-import { type IGatsbyApiHook, wrapApiHook } from "~/store"
+import type { GatsbyNodeApiHelpers, GatsbyReporter } from "./gatsby-types";
+import type { IPluginOptions } from "~/models/gatsby-api";
+import { formatLogMessage } from "~/utils/format-log-message";
+import { invokeAndCleanupLeftoverPreviewCallbacks } from "../steps/preview/cleanup";
+import { CODES } from "./report";
+import { type IGatsbyApiHook, wrapApiHook } from "~/store";
 
 export type Step = (
   helpers?: GatsbyNodeApiHelpers | undefined,
   pluginOptions?: IPluginOptions | undefined,
-) => Promise<void> | void
+) => Promise<void> | void;
 
-export type ActivityTimer = ReturnType<GatsbyReporter["activityTimer"]>
+export type ActivityTimer = ReturnType<GatsbyReporter["activityTimer"]>;
 
 export async function runSteps(
   steps: Array<Step>,
@@ -20,44 +20,44 @@ export async function runSteps(
 ): Promise<void> {
   for (const step of steps) {
     try {
-      const { timeBuildSteps } = pluginOptions?.debug ?? {}
+      const { timeBuildSteps } = pluginOptions?.debug ?? {};
       const timeStep =
-        typeof timeBuildSteps === `boolean`
+        typeof timeBuildSteps === "boolean"
           ? timeBuildSteps
           : timeBuildSteps?.includes(step.name) ||
-            timeBuildSteps?.includes(apiName)
+            timeBuildSteps?.includes(apiName);
 
-      let activity: ActivityTimer
+      let activity: ActivityTimer;
 
       if (timeStep) {
         activity = helpers.reporter.activityTimer(
-          formatLogMessage(`step -${!apiName ? `-` : ``}> ${step.name}`, {
+          formatLogMessage(`step -${!apiName ? "-" : ""}> ${step.name}`, {
             useVerboseStyle: true,
           }),
-        )
-        activity.start()
+        );
+        activity.start();
       }
 
-      if (typeof step === `function`) {
-        await step(helpers, pluginOptions)
+      if (typeof step === "function") {
+        await step(helpers, pluginOptions);
       } else if (Array.isArray(step)) {
-        await runSteps(step, helpers, pluginOptions, apiName)
+        await runSteps(step, helpers, pluginOptions, apiName);
       }
 
       if (activity) {
-        activity.end()
+        activity.end();
       }
     } catch (e) {
-      const sharedError = `Encountered a critical error when running the ${apiName ? `${apiName}.` : ``}${step.name} build step.`
+      const sharedError = `Encountered a critical error when running the ${apiName ? `${apiName}.` : ""}${step.name} build step.`;
 
       // on errors, invoke any preview callbacks to send news of this error back to the WP Preview window.
       await invokeAndCleanupLeftoverPreviewCallbacks({
-        status: `GATSBY_PREVIEW_PROCESS_ERROR`,
+        status: "GATSBY_PREVIEW_PROCESS_ERROR",
         context: sharedError,
         error: e,
-      })
+      });
 
-      console.error(e)
+      console.error(e);
       helpers.reporter.panic({
         id: CODES.SourcePluginCodeError,
         context: {
@@ -66,7 +66,7 @@ export async function runSteps(
             { useVerboseStyle: true },
           ),
         },
-      })
+      });
     }
   }
 }
@@ -78,33 +78,33 @@ export async function runSteps(
  * Example output: "onPluginInit"
  */
 export function findApiName(initialApiNameString: string): string {
-  if (!initialApiNameString.includes(`|`)) {
-    return initialApiNameString
+  if (!initialApiNameString.includes("|")) {
+    return initialApiNameString;
   }
 
-  const potentialApiNames = initialApiNameString.split(`|`)
+  const potentialApiNames = initialApiNameString.split("|");
 
   try {
-    const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+    const { isGatsbyNodeLifecycleSupported } = require("gatsby-plugin-utils");
 
     for (const apiName of potentialApiNames) {
       if (isGatsbyNodeLifecycleSupported(apiName)) {
-        return apiName
+        return apiName;
       }
     }
   } catch (e) {
     console.error(
       `Could not check if Gatsby supports node API's [${potentialApiNames.join(
-        `, `,
+        ", ",
       )}]. Trying to use the first available API name (${potentialApiNames[0]})`,
-    )
+    );
 
-    return potentialApiNames[0]
+    return potentialApiNames[0];
   }
 
   throw new Error(
     `Couldn't find any supported Gatsby Node API's in ${initialApiNameString}`,
-  )
+  );
 }
 
 export function runApiSteps(
@@ -116,5 +116,5 @@ export function runApiSteps(
       helpers: GatsbyNodeApiHelpers,
       pluginOptions: IPluginOptions,
     ): Promise<void> => runSteps(steps, helpers, pluginOptions, apiName),
-  )
+  );
 }

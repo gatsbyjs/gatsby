@@ -20,39 +20,39 @@ node node_modules/gatsby/dist/schema/graphql-engine/standalone-regenerate.js
 ```
 */
 
-import { createGraphqlEngineBundle } from "./bundle-webpack"
-import { createPageSSRBundle } from "./../../utils/page-ssr-module/bundle-webpack"
-import reporter from "gatsby-cli/lib/reporter"
-import { loadConfigAndPlugins } from "../../utils/worker/child/load-config-and-plugins"
-import * as fs from "fs-extra"
-import { store } from "../../redux"
-import { validateEnginesWithActivity } from "../../utils/validate-engines"
+import { createGraphqlEngineBundle } from "./bundle-webpack";
+import { createPageSSRBundle } from "./../../utils/page-ssr-module/bundle-webpack";
+import reporter from "gatsby-cli/lib/reporter";
+import { loadConfigAndPlugins } from "../../utils/worker/child/load-config-and-plugins";
+import * as fs from "fs-extra";
+import { store } from "../../redux";
+import { validateEnginesWithActivity } from "../../utils/validate-engines";
 
 async function run(): Promise<void> {
-  process.env.GATSBY_SLICES = `1`
+  process.env.GATSBY_SLICES = "1";
   // load config
-  reporter.verbose(`loading config and plugins`)
+  reporter.verbose("loading config and plugins");
   await loadConfigAndPlugins({
     siteDirectory: process.cwd(),
-  })
+  });
 
   try {
-    reporter.verbose(`clearing webpack cache`)
+    reporter.verbose("clearing webpack cache");
     // get rid of cache if it exist
-    await fs.remove(process.cwd() + `/.cache/webpack/query-engine`)
-    await fs.remove(process.cwd() + `/.cache/webpack/page-ssr`)
+    await fs.remove(process.cwd() + "/.cache/webpack/query-engine");
+    await fs.remove(process.cwd() + "/.cache/webpack/page-ssr");
   } catch (e) {
     // eslint-disable no-empty
   }
 
-  const state = store.getState()
+  const state = store.getState();
 
   // recompile
   const buildActivityTimer = reporter.activityTimer(
-    `(Re)Building Rendering Engines`,
-  )
+    "(Re)Building Rendering Engines",
+  );
   try {
-    buildActivityTimer.start()
+    buildActivityTimer.start();
     await Promise.all([
       createGraphqlEngineBundle(process.cwd(), reporter, true),
       createPageSSRBundle({
@@ -63,16 +63,16 @@ async function run(): Promise<void> {
         reporter,
         isVerbose: state.program.verbose,
       }),
-    ])
+    ]);
   } catch (err) {
-    buildActivityTimer.panic(err)
+    buildActivityTimer.panic(err);
   } finally {
-    buildActivityTimer.end()
+    buildActivityTimer.end();
   }
 
-  await validateEnginesWithActivity(process.cwd())
+  await validateEnginesWithActivity(process.cwd());
 
-  reporter.info(`Rebuilding Rendering Engines finished`)
+  reporter.info("Rebuilding Rendering Engines finished");
 }
 
-run()
+run();

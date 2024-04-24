@@ -1,64 +1,64 @@
 function localFetch(username, limit = 100) {
-  const url = `https://medium.com/${username}/?format=json&limit=${limit}`
-  return fetch(url)
+  const url = `https://medium.com/${username}/?format=json&limit=${limit}`;
+  return fetch(url);
 }
 
-const prefix = `])}while(1);</x>`
+const prefix = "])}while(1);</x>";
 
 function convertTimestamps(nextObj, prevObj, prevKey) {
-  if (typeof nextObj === `object`) {
+  if (typeof nextObj === "object") {
     Object.keys(nextObj).map((key) =>
       convertTimestamps(nextObj[key], nextObj, key),
-    )
+    );
   } else {
-    if (typeof nextObj === `number` && nextObj >> 0 !== nextObj) {
-      const date = new Date(nextObj)
+    if (typeof nextObj === "number" && nextObj >> 0 !== nextObj) {
+      const date = new Date(nextObj);
       if (date.getTime() === nextObj) {
-        prevObj[prevKey] = date.toISOString().slice(0, 10)
+        prevObj[prevKey] = date.toISOString().slice(0, 10);
       }
     }
   }
 }
 
 function strip(payload) {
-  return payload.replace(prefix, ``)
+  return payload.replace(prefix, "");
 }
 
 exports.sourceNodes = async (
   { actions, createNodeId, createContentDigest },
   { username, limit },
 ) => {
-  const { createNode } = actions
+  const { createNode } = actions;
 
   try {
-    const { data } = await localFetch(username, limit)
-    const { payload } = JSON.parse(strip(data))
+    const { data } = await localFetch(username, limit);
+    const { payload } = JSON.parse(strip(data));
 
-    let importableResources = []
-    let posts = {} // because `posts` needs to be in a scope accessible by `links` below
+    let importableResources = [];
+    let posts = {}; // because `posts` needs to be in a scope accessible by `links` below
 
     const users = Object.keys(payload.references.User).map(
       (key) => payload.references.User[key],
-    )
-    importableResources = importableResources.concat(users)
+    );
+    importableResources = importableResources.concat(users);
 
     if (payload.posts) {
-      posts = payload.posts
-      importableResources = importableResources.concat(posts)
+      posts = payload.posts;
+      importableResources = importableResources.concat(posts);
     }
 
     if (payload.references.Post) {
       posts = Object.keys(payload.references.Post).map(
         (key) => payload.references.Post[key],
-      )
-      importableResources = importableResources.concat(posts)
+      );
+      importableResources = importableResources.concat(posts);
     }
 
     if (payload.references.Collection) {
       const collections = Object.keys(payload.references.Collection).map(
         (key) => payload.references.Collection[key],
-      )
-      importableResources = importableResources.concat(collections)
+      );
+      importableResources = importableResources.concat(collections);
     }
 
     const resources = [...importableResources].map((resource) => {
@@ -66,32 +66,32 @@ exports.sourceNodes = async (
         ...resource,
         medium_id: resource.id,
         id: createNodeId(resource.id ? resource.id : resource.userId),
-      }
-    })
+      };
+    });
 
     function getID(node) {
-      return node ? node.id : null
+      return node ? node.id : null;
     }
 
     resources.map((resource) => {
-      convertTimestamps(resource)
+      convertTimestamps(resource);
 
-      const contentDigest = createContentDigest(resource)
+      const contentDigest = createContentDigest(resource);
 
-      let links = {}
+      let links = {};
 
-      if (resource.type === `Post`) {
+      if (resource.type === "Post") {
         links = {
           author___NODE: getID(
             resources.find((r) => r.userId === resource.creatorId),
           ),
-        }
-      } else if (resource.type === `User`) {
+        };
+      } else if (resource.type === "User") {
         links = {
           posts___NODE: resources
-            .filter((r) => r.type === `Post` && r.creatorId === resource.userId)
+            .filter((r) => r.type === "Post" && r.creatorId === resource.userId)
             .map((r) => r.id),
-        }
+        };
       }
 
       const node = {
@@ -103,15 +103,15 @@ exports.sourceNodes = async (
           type: `Medium${resource.type}`,
           contentDigest,
         },
-      }
+      };
 
-      createNode(node)
-    })
+      createNode(node);
+    });
   } catch (error) {
-    console.error(error)
-    process.exit(1)
+    console.error(error);
+    process.exit(1);
   }
-}
+};
 
 exports.createSchemaCustomization = async ({ actions }) => {
   const typeDefs = `
@@ -619,7 +619,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
     type MediumPostPreviewContent2BodyModelSections {
       startIndex: Int
     }
-  `
+  `;
 
-  actions.createTypes(typeDefs)
-}
+  actions.createTypes(typeDefs);
+};

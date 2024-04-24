@@ -1,16 +1,16 @@
-import { createModel } from "@rematch/core"
-import type { IRootModel } from "."
+import { createModel } from "@rematch/core";
+import type { IRootModel } from ".";
 
 export type INodeFilter = {
-  name: string
+  name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  filter: (arg: any) => any
-  priority?: number
-}
+  filter: (arg: any) => any;
+  priority?: number | undefined;
+};
 
 export type IWPHooksState = {
-  nodeFilters: { [name: string]: Array<INodeFilter> }
-}
+  nodeFilters: { [name: string]: Array<INodeFilter> };
+};
 
 const wpHooks = createModel<IRootModel>()({
   state: {
@@ -22,10 +22,10 @@ const wpHooks = createModel<IRootModel>()({
       state: IWPHooksState,
       nodeFilter: INodeFilter,
     ): IWPHooksState {
-      const { name, filter, priority = 10 } = nodeFilter
+      const { name, filter, priority = 10 } = nodeFilter;
 
-      if (!name || typeof filter === `undefined`) {
-        return state
+      if (!name || typeof filter === "undefined") {
+        return state;
       }
 
       state.nodeFilters[nodeFilter.name] = [
@@ -35,14 +35,14 @@ const wpHooks = createModel<IRootModel>()({
           filter,
           priority,
         },
-      ]
+      ];
 
-      return state
+      return state;
     },
   },
   effects: () => {
-    return {}
+    return {};
   },
-})
+});
 
-export default wpHooks
+export default wpHooks;

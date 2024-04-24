@@ -1,85 +1,84 @@
-import { join } from "path"
-import type { AdapterInit, IAdapterConfig } from "gatsby"
-import { prepareFunctionVariants } from "./lambda-handler"
-import { prepareFileCdnHandler } from "./file-cdn-handler"
-import { handleRoutesManifest } from "./route-handler"
-// @ts-ignore
-import packageJson from "gatsby-adapter-netlify/package.json"
-import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
+import { join } from "node:path";
+import type { AdapterInit, IAdapterConfig } from "gatsby";
+import { prepareFunctionVariants } from "./lambda-handler";
+import { prepareFileCdnHandler } from "./file-cdn-handler";
+import { handleRoutesManifest } from "./route-handler";
+import packageJson from "../package.json";
+import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls";
 
 type INetlifyCacheUtils = {
-  restore: (paths: Array<string>) => Promise<boolean>
-  save: (paths: Array<string>) => Promise<boolean>
-}
+  restore: (paths: Array<string>) => Promise<boolean>;
+  save: (paths: Array<string>) => Promise<boolean>;
+};
 
 type INetlifyAdapterOptions = {
-  excludeDatastoreFromEngineFunction?: boolean | undefined
-  imageCDN?: boolean | undefined
-}
+  excludeDatastoreFromEngineFunction?: boolean | undefined;
+  imageCDN?: boolean | undefined;
+};
 
-let _cacheUtils: INetlifyCacheUtils | undefined
+let _cacheUtils: INetlifyCacheUtils | undefined;
 async function getCacheUtils(): Promise<undefined | INetlifyCacheUtils> {
   if (_cacheUtils) {
-    return _cacheUtils
+    return _cacheUtils;
   }
-  let CACHE_DIR: string | undefined
+  let CACHE_DIR: string | undefined;
   if (process.env.NETLIFY_LOCAL) {
-    CACHE_DIR = join(process.cwd(), `.netlify`, `build-cache`)
+    CACHE_DIR = join(process.cwd(), ".netlify", "build-cache");
   } else if (process.env.NETLIFY) {
-    CACHE_DIR = `/opt/build/cache`
+    CACHE_DIR = "/opt/build/cache";
   }
   if (CACHE_DIR) {
-    _cacheUtils = (await import(`@netlify/cache-utils`)).bindOpts({
+    _cacheUtils = (await import("@netlify/cache-utils")).bindOpts({
       cacheDir: CACHE_DIR,
-    })
-    return _cacheUtils
+    });
+    return _cacheUtils;
   }
-  return undefined
+  return undefined;
 }
 
 const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions | undefined> = (
   options: INetlifyAdapterOptions | undefined,
 ) => {
-  let useNetlifyImageCDN = options?.imageCDN
+  let useNetlifyImageCDN = options?.imageCDN;
   if (
-    typeof useNetlifyImageCDN === `undefined` &&
-    typeof process.env.NETLIFY_IMAGE_CDN !== `undefined`
+    typeof useNetlifyImageCDN === "undefined" &&
+    typeof process.env.NETLIFY_IMAGE_CDN !== "undefined"
   ) {
     useNetlifyImageCDN =
-      process.env.NETLIFY_IMAGE_CDN === `true` ||
-      process.env.NETLIFY_IMAGE_CDN === `1`
+      process.env.NETLIFY_IMAGE_CDN === "true" ||
+      process.env.NETLIFY_IMAGE_CDN === "1";
   }
 
   return {
-    name: `gatsby-adapter-netlify`,
+    name: "gatsby-adapter-netlify",
     cache: {
       async restore({ directories, reporter }): Promise<boolean> {
-        const utils = await getCacheUtils()
+        const utils = await getCacheUtils();
         if (utils) {
           reporter.verbose(
-            `[gatsby-adapter-netlify] using @netlify/cache-utils restore`,
-          )
-          const didRestore = await utils.restore(directories)
+            "[gatsby-adapter-netlify] using @netlify/cache-utils restore",
+          );
+          const didRestore = await utils.restore(directories);
           if (didRestore) {
             reporter.info(
-              `[gatsby-adapter-netlify] Found a Gatsby cache. We're about to go FAST. ⚡`,
-            )
+              "[gatsby-adapter-netlify] Found a Gatsby cache. We're about to go FAST. ⚡",
+            );
           }
-          return didRestore
+          return didRestore;
         }
 
-        return false
+        return false;
       },
       async store({ directories, reporter }): Promise<void> {
-        const utils = await getCacheUtils()
+        const utils = await getCacheUtils();
         if (utils) {
           reporter.verbose(
-            `[gatsby-adapter-netlify] using @netlify/cache-utils save`,
-          )
-          await utils.save(directories)
+            "[gatsby-adapter-netlify] using @netlify/cache-utils save",
+          );
+          await utils.save(directories);
           reporter.info(
-            `[gatsby-adapter-netlify] Stored the Gatsby cache to speed up future builds. 🔥`,
-          )
+            "[gatsby-adapter-netlify] Stored the Gatsby cache to speed up future builds. 🔥",
+          );
         }
       },
     },
@@ -95,82 +94,82 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions | undefined> = (
         await handleAllowedRemoteUrlsNetlifyConfig({
           remoteFileAllowedUrls,
           reporter,
-        })
+        });
 
         await prepareFileCdnHandler({
           pathPrefix,
           remoteFileAllowedUrls,
-        })
+        });
       }
 
       const { lambdasThatUseCaching } = await handleRoutesManifest(
         routesManifest,
         headerRoutes,
-      )
+      );
 
       // functions handling
       for (const fun of functionsManifest) {
         await prepareFunctionVariants(
           fun,
           lambdasThatUseCaching.get(fun.functionId),
-        )
+        );
       }
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(
-        `[gatsby-adapter-netlify] version: ${packageJson?.version ?? `unknown`}`,
-      )
+        `[gatsby-adapter-netlify] version: ${packageJson?.version ?? "unknown"}`,
+      );
       // excludeDatastoreFromEngineFunction can be enabled either via options or via env var (to preserve handling of env var that existed in Netlify build plugin).
       let excludeDatastoreFromEngineFunction =
-        options?.excludeDatastoreFromEngineFunction
+        options?.excludeDatastoreFromEngineFunction;
 
       if (
-        typeof excludeDatastoreFromEngineFunction === `undefined` &&
-        typeof process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE !== `undefined`
+        typeof excludeDatastoreFromEngineFunction === "undefined" &&
+        typeof process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE !== "undefined"
       ) {
         excludeDatastoreFromEngineFunction =
-          process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE === `true` ||
-          process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE === `1`
+          process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE === "true" ||
+          process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE === "1";
       }
 
-      if (typeof excludeDatastoreFromEngineFunction === `undefined`) {
-        excludeDatastoreFromEngineFunction = false
+      if (typeof excludeDatastoreFromEngineFunction === "undefined") {
+        excludeDatastoreFromEngineFunction = false;
       }
 
       const deployURL = process.env.NETLIFY_LOCAL
-        ? `http://localhost:8888`
-        : process.env.DEPLOY_URL
+        ? "http://localhost:8888"
+        : process.env.DEPLOY_URL;
 
       if (excludeDatastoreFromEngineFunction && !deployURL) {
         reporter.warn(
-          `[gatsby-adapter-netlify] excludeDatastoreFromEngineFunction is set to true but no DEPLOY_URL is set. Disabling excludeDatastoreFromEngineFunction.`,
-        )
-        excludeDatastoreFromEngineFunction = false
+          "[gatsby-adapter-netlify] excludeDatastoreFromEngineFunction is set to true but no DEPLOY_URL is set. Disabling excludeDatastoreFromEngineFunction.",
+        );
+        excludeDatastoreFromEngineFunction = false;
       }
-
+      // @ts-ignore
       return {
         excludeDatastoreFromEngineFunction,
-        deployURL: deployURL ?? ``,
+        deployURL: deployURL ?? "",
         supports: {
           pathPrefix: true,
-          trailingSlash: [`always`, `never`, `ignore`],
+          trailingSlash: ["always", "never", "ignore"],
         },
         pluginsToDisable: [
-          `gatsby-plugin-netlify-cache`,
-          `gatsby-plugin-netlify`,
+          "gatsby-plugin-netlify-cache",
+          "gatsby-plugin-netlify",
         ],
+
         imageCDNUrlGeneratorModulePath: useNetlifyImageCDN
-          ? require.resolve(`./image-cdn-url-generator`)
+          ? require.resolve("./image-cdn-url-generator")
           : undefined,
         fileCDNUrlGeneratorModulePath: useNetlifyImageCDN
-          ? require.resolve(`./file-cdn-url-generator`)
+          ? require.resolve("./file-cdn-url-generator")
           : undefined,
-        // @ts-ignore
-        functionsPlatform: `linux`,
-        functionsArch: `x64`,
-      }
+        functionsPlatform: "linux",
+        functionsArch: "x64",
+      };
     },
-  }
-}
+  };
+};
 
-export default createNetlifyAdapter
+export default createNetlifyAdapter;

@@ -4,7 +4,7 @@
 export function untilNextEventLoopTick() {
   return new Promise((res) => {
     setImmediate(() => {
-      res(null)
-    })
-  })
+      res(null);
+    });
+  });
 }

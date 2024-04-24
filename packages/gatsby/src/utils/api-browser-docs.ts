@@ -18,7 +18,7 @@
  *   callAnalyticsAPI()
  * }
  */
-export const onClientEntry = true
+export const onClientEntry = true;
 
 /**
  * Called when the initial (but not subsequent) render of Gatsby App is done on the client.
@@ -29,7 +29,7 @@ export const onClientEntry = true
  *   console.log("ReactDOM.render has executed")
  * }
  */
-export const onInitialClientRender = true
+export const onInitialClientRender = true;
 
 /**
  * Called when changing location is started.
@@ -43,7 +43,7 @@ export const onInitialClientRender = true
  *   console.log("Gatsby started to change location from", prevLocation ? prevLocation.pathname : null)
  * }
  */
-export const onPreRouteUpdate = true
+export const onPreRouteUpdate = true;
 
 /**
  * Called when changing location is longer than 1 second.
@@ -56,7 +56,7 @@ export const onPreRouteUpdate = true
  *   console.log("We can show loading indicator now")
  * }
  */
-export const onRouteUpdateDelayed = true
+export const onRouteUpdateDelayed = true;
 
 /**
  * Called when the user changes routes, including on the initial load of the app
@@ -70,7 +70,7 @@ export const onRouteUpdateDelayed = true
  *   console.log('old pathname', prevLocation ? prevLocation.pathname : null)
  * }
  */
-export const onRouteUpdate = true
+export const onRouteUpdate = true;
 
 /**
  * Allows a plugin to influence scrolling behavior on navigation.
@@ -102,7 +102,7 @@ export const onRouteUpdate = true
  *   return false
  * }
  */
-export const shouldUpdateScroll = true
+export const shouldUpdateScroll = true;
 
 /**
  * Allow a plugin to register a Service Worker. Should be a function that returns true.
@@ -112,7 +112,7 @@ export const shouldUpdateScroll = true
  * @example
  * exports.registerServiceWorker = () => true
  */
-export const registerServiceWorker = true
+export const registerServiceWorker = true;
 
 /**
  * Can be used to wrap each page element.
@@ -139,7 +139,7 @@ export const registerServiceWorker = true
  *   return <Layout {...props}>{element}</Layout>
  * }
  */
-export const wrapPageElement = true
+export const wrapPageElement = true;
 
 /**
  * Can be used to the wrap the root element.
@@ -170,7 +170,7 @@ export const wrapPageElement = true
  *   )
  * }
  */
-export const wrapRootElement = true
+export const wrapRootElement = true;
 
 /**
  * Called when prefetching for a pathname is triggered. Allows
@@ -180,7 +180,7 @@ export const wrapRootElement = true
  * @param {function} $0.loadPage Function for fetching resources related to pathname
  * @param {pluginOptions} pluginOptions
  */
-export const onPrefetchPathname = true
+export const onPrefetchPathname = true;
 
 /**
  * Called when prefetching for a pathname is successful. Allows
@@ -189,7 +189,7 @@ export const onPrefetchPathname = true
  * @param {string} $0.pathname The pathname whose resources have now been prefetched
  * @param {pluginOptions} pluginOptions
  */
-export const onPostPrefetchPathname = true
+export const onPostPrefetchPathname = true;
 
 /**
  * Plugins can take over prefetching logic. If they do, they should call this
@@ -200,7 +200,7 @@ export const onPostPrefetchPathname = true
  * @example
  * exports.disableCorePrefetching = () => true
  */
-export const disableCorePrefetching = true
+export const disableCorePrefetching = true;
 
 /**
  * Allow a plugin to replace the `ReactDOM.createRoot`/`render` function calls with a custom renderer.
@@ -219,7 +219,7 @@ export const disableCorePrefetching = true
  *   }
  * }
  */
-export const replaceHydrateFunction = true
+export const replaceHydrateFunction = true;
 
 /**
  * Inform plugins when a service worker has been installed.
@@ -227,7 +227,7 @@ export const replaceHydrateFunction = true
  * @param {object} $0.serviceWorker The service worker instance.
  * @param {pluginOptions} pluginOptions
  */
-export const onServiceWorkerInstalled = true
+export const onServiceWorkerInstalled = true;
 
 /**
  * Inform plugins of when a service worker has an update available.
@@ -235,7 +235,7 @@ export const onServiceWorkerInstalled = true
  * @param {object} $0.serviceWorker The service worker instance.
  * @param {pluginOptions} pluginOptions
  */
-export const onServiceWorkerUpdateFound = true
+export const onServiceWorkerUpdateFound = true;
 
 /**
  * Inform plugins when a service worker has been updated in the background
@@ -244,7 +244,7 @@ export const onServiceWorkerUpdateFound = true
  * @param {object} $0.serviceWorker The service worker instance.
  * @param {pluginOptions} pluginOptions
  */
-export const onServiceWorkerUpdateReady = true
+export const onServiceWorkerUpdateReady = true;
 
 /**
  * Inform plugins when a service worker has become active.
@@ -252,7 +252,7 @@ export const onServiceWorkerUpdateReady = true
  * @param {object} $0.serviceWorker The service worker instance.
  * @param {pluginOptions} pluginOptions
  */
-export const onServiceWorkerActive = true
+export const onServiceWorkerActive = true;
 
 /**
  * Inform plugins when a service worker is redundant.
@@ -260,4 +260,4 @@ export const onServiceWorkerActive = true
  * @param {object} $0.serviceWorker The service worker instance.
  * @param {pluginOptions} pluginOptions
  */
-export const onServiceWorkerRedundant = true
+export const onServiceWorkerRedundant = true;

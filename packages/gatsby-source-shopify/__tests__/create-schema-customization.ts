@@ -1,24 +1,24 @@
-import { createSchemaCustomization } from "../src/create-schema-customization"
-import { mockGatsbyApi, mockPluginOptions } from "./fixtures"
+import { createSchemaCustomization } from "../src/create-schema-customization";
+import { mockGatsbyApi, mockPluginOptions } from "./fixtures";
 
-const connections = [`orders`, `collections`, `locations`]
+const connections = ["orders", "collections", "locations"];
 
 function generateTestName(downloadImages, shopifyConnections): string {
   const modifiers = [
-    downloadImages ? `with` : `without`,
-    shopifyConnections.length > 0 ? `with` : `without`,
-  ]
+    downloadImages ? "with" : "without",
+    shopifyConnections.length > 0 ? "with" : "without",
+  ];
 
-  return `Creates the correct definitions ${modifiers[0]} downloadImages and ${modifiers[1]} connections`
+  return `Creates the correct definitions ${modifiers[0]} downloadImages and ${modifiers[1]} connections`;
 }
 
-const gatsbyApi = mockGatsbyApi()
-const pluginOptions = mockPluginOptions()
+const gatsbyApi = mockGatsbyApi();
+const pluginOptions = mockPluginOptions();
 
-describe(`createSchemaCustomization`, () => {
+describe("createSchemaCustomization", () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-  })
+    jest.clearAllMocks();
+  });
 
   for (const downloadImages of [false, true]) {
     for (const shopifyConnections of [[], connections]) {
@@ -28,12 +28,12 @@ describe(`createSchemaCustomization`, () => {
           ...pluginOptions,
           downloadImages,
           shopifyConnections,
-          typePrefix: `__PREFIX__`,
-        })
+          typePrefix: "__PREFIX__",
+        });
 
         // @ts-ignore
-        expect(gatsbyApi.actions.createTypes.mock.calls).toMatchSnapshot()
-      })
+        expect(gatsbyApi.actions.createTypes.mock.calls).toMatchSnapshot();
+      });
     }
   }
-})
+});

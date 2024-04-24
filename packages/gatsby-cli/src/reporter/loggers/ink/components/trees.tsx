@@ -4,31 +4,31 @@ import {
   useContext,
   type ComponentType,
   type ReactElement,
-} from "react"
-import path from "path"
-import { Box, Text, type BoxProps, Spacer } from "ink"
-import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
-import { StoreStateContext } from "../context"
+} from "react";
+import path from "path";
+import { Box, Text, type BoxProps, Spacer } from "ink";
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path";
+import { StoreStateContext } from "../context";
 import {
   generatePageTree,
   generateSliceTree,
   type ITreeLine,
   type IComponentWithPageModes,
-} from "../../../../util/generate-trees"
+} from "../../../../util/generate-trees";
 
 type IPageAndSliceTreesProps = {
-  components: Map<string, IComponentWithPageModes>
-  root: string
-  slices: Map<string, Set<string>>
-}
+  components: Map<string, IComponentWithPageModes>;
+  root: string;
+  slices: Map<string, Set<string>>;
+};
 
 function _Description(props: BoxProps): JSX.Element {
   return (
     <Box>
       <Box
         {...props}
-        flexDirection="column"
-        borderStyle="round"
+        flexDirection='column'
+        borderStyle='round'
         padding={1}
         marginLeft={2}
         marginRight={2}
@@ -47,18 +47,18 @@ function _Description(props: BoxProps): JSX.Element {
       </Box>
       <Spacer />
     </Box>
-  )
+  );
 }
 
-const Description: ComponentType<BoxProps> = memo<BoxProps>(_Description)
+const Description: ComponentType<BoxProps> = memo<BoxProps>(_Description);
 
 type TreeGeneratorProps = {
-  file: string
-  isFirst: boolean
-  isLast: boolean
-  pages?: IComponentWithPageModes | undefined
-  slices?: Set<string> | undefined
-}
+  file: string;
+  isFirst: boolean;
+  isLast: boolean;
+  pages?: IComponentWithPageModes | undefined;
+  slices?: Set<string> | undefined;
+};
 
 function _TreeGenerator({
   file,
@@ -67,38 +67,38 @@ function _TreeGenerator({
   pages,
   slices,
 }: TreeGeneratorProps): JSX.Element {
-  let topLevelIcon = `├`
+  let topLevelIcon = "├";
   if (isFirst) {
-    topLevelIcon = `┌`
+    topLevelIcon = "┌";
   }
   if (isLast) {
-    topLevelIcon = `└`
+    topLevelIcon = "└";
   }
 
-  let items: Array<ITreeLine> = []
+  let items: Array<ITreeLine> = [];
 
   if (pages) {
-    items = generatePageTree(pages)
+    items = generatePageTree(pages);
   } else if (slices) {
-    items = generateSliceTree(slices)
+    items = generateSliceTree(slices);
   }
 
   return (
-    <Box flexDirection="column">
+    <Box flexDirection='column'>
       <Box>
         <Box paddingRight={1}>
           <Text>{topLevelIcon}</Text>
         </Box>
 
-        <Text wrap="truncate-middle">{file}</Text>
+        <Text wrap='truncate-middle'>{file}</Text>
       </Box>
 
       {items.map((item, index) => (
         <Box key={item.text}>
-          <Text>{isLast ? ` ` : `│`}</Text>
+          <Text>{isLast ? " " : "│"}</Text>
 
           <Box paddingLeft={1} paddingRight={1}>
-            <Text>{index === items.length - 1 ? `└` : `├`}</Text>
+            <Text>{index === items.length - 1 ? "└" : "├"}</Text>
           </Box>
 
           <Box>
@@ -109,24 +109,24 @@ function _TreeGenerator({
         </Box>
       ))}
     </Box>
-  )
+  );
 }
 
 const TreeGenerator: ComponentType<TreeGeneratorProps> =
-  memo<TreeGeneratorProps>(_TreeGenerator)
+  memo<TreeGeneratorProps>(_TreeGenerator);
 
 function _PageAndSliceTrees({
   components,
   root,
   slices,
 }: IPageAndSliceTreesProps): JSX.Element {
-  const componentList: Array<ReactElement> = []
+  const componentList: Array<ReactElement> = [];
 
-  const sliceList: Array<ReactElement> = []
+  const sliceList: Array<ReactElement> = [];
 
-  let i = 0
+  let i = 0;
 
-  let j = 0
+  let j = 0;
 
   for (const [componentPath, pages] of components) {
     componentList.push(
@@ -137,9 +137,9 @@ function _PageAndSliceTrees({
         file={path.posix.relative(root, componentPath)}
         pages={pages}
       />,
-    )
+    );
 
-    i++
+    i++;
   }
 
   for (const [componentPath, sliceNames] of slices) {
@@ -151,13 +151,13 @@ function _PageAndSliceTrees({
         file={path.posix.relative(root, componentPath)}
         slices={sliceNames}
       />,
-    )
+    );
 
-    j++
+    j++;
   }
 
   return (
-    <Box flexDirection="column" marginTop={2}>
+    <Box flexDirection='column' marginTop={2}>
       <Box paddingBottom={1}>
         <Text underline>Pages</Text>
       </Box>
@@ -175,45 +175,45 @@ function _PageAndSliceTrees({
       )}
       <Description marginTop={1} marginBottom={1} />
     </Box>
-  )
+  );
 }
 
 const PageAndSliceTrees: ComponentType<IPageAndSliceTreesProps> =
-  memo<IPageAndSliceTreesProps>(_PageAndSliceTrees)
+  memo<IPageAndSliceTreesProps>(_PageAndSliceTrees);
 
 function _Trees(): JSX.Element {
-  const state = useContext(StoreStateContext)
+  const state = useContext(StoreStateContext);
 
-  const componentWithPages = new Map<string, IComponentWithPageModes>()
-  const sliceWithComponents = new Map<string, Set<string>>()
+  const componentWithPages = new Map<string, IComponentWithPageModes>();
+  const sliceWithComponents = new Map<string, Set<string>>();
 
   for (const {
     componentPath,
     pages,
     isSlice,
   } of state.pageTree!.components.values()) {
-    const layoutComponent = getPathToLayoutComponent(componentPath)
+    const layoutComponent = getPathToLayoutComponent(componentPath);
     const pagesByMode = componentWithPages.get(layoutComponent) || {
       SSG: new Set<string>(),
       DSG: new Set<string>(),
       SSR: new Set<string>(),
       FN: new Set<string>(),
-    }
+    };
     const sliceByComponent =
-      sliceWithComponents.get(layoutComponent) || new Set<string>()
+      sliceWithComponents.get(layoutComponent) || new Set<string>();
 
     if (isSlice) {
       pages.forEach((sliceName) => {
-        sliceByComponent.add(sliceName)
-      })
-      sliceWithComponents.set(layoutComponent, sliceByComponent)
+        sliceByComponent.add(sliceName);
+      });
+      sliceWithComponents.set(layoutComponent, sliceByComponent);
     } else {
       pages.forEach((pagePath) => {
-        const gatsbyPage = state.pageTree!.pages.get(pagePath)
+        const gatsbyPage = state.pageTree!.pages.get(pagePath);
 
-        pagesByMode[gatsbyPage!.mode].add(pagePath)
-      })
-      componentWithPages.set(layoutComponent, pagesByMode)
+        pagesByMode[gatsbyPage!.mode].add(pagePath);
+      });
+      componentWithPages.set(layoutComponent, pagesByMode);
     }
   }
 
@@ -226,7 +226,7 @@ function _Trees(): JSX.Element {
       DSG: new Set<string>(),
       SSR: new Set<string>(),
       FN: new Set<string>([`/api/${functionRoute}`]),
-    })
+    });
   }
 
   return (
@@ -235,7 +235,7 @@ function _Trees(): JSX.Element {
       slices={sliceWithComponents}
       root={state.pageTree!.root}
     />
-  )
+  );
 }
 
-export const Trees: ComponentType = memo(_Trees)
+export const Trees: ComponentType = memo(_Trees);

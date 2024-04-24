@@ -1,6 +1,6 @@
-import type reporter from "gatsby-cli/lib/reporter"
-import type { TrailingSlash } from "gatsby-page-utils"
-import type { IHeader, HttpStatusCode } from "../../redux/types"
+import type reporter from "gatsby-cli/lib/reporter";
+import type { TrailingSlash } from "gatsby-page-utils";
+import type { IHeader, HttpStatusCode } from "../../redux/types";
 
 import type {
   ImageCdnUrlGeneratorFn,
@@ -8,7 +8,7 @@ import type {
   ImageCdnTransformArgs,
   FileCdnUrlGeneratorFn,
   FileCdnSourceImage,
-} from "gatsby-plugin-utils/dist/polyfill-remote-file/types"
+} from "gatsby-plugin-utils/dist/polyfill-remote-file/types";
 
 export type {
   ImageCdnUrlGeneratorFn,
@@ -16,7 +16,7 @@ export type {
   ImageCdnTransformArgs,
   FileCdnUrlGeneratorFn,
   FileCdnSourceImage,
-}
+};
 
 type IBaseRoute = {
   /**
@@ -27,141 +27,141 @@ type IBaseRoute = {
    *    - parameterized: `/blog/:slug/`
    *    - catch-all / wildcard: `/app/*`
    */
-  path: string
-}
+  path: string;
+};
 
 export type IStaticRoute = {
-  type: `static`
+  type: "static";
   /**
    * Location of the file that should be served for this route.
    */
-  filePath: string
+  filePath: string;
   /**
    * HTTP headers that should be set for this route.
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/headers/
    */
-  headers: IHeader["headers"]
-} & IBaseRoute
+  headers: IHeader["headers"];
+} & IBaseRoute;
 
 export type IFunctionRoute = {
-  type: `function`
+  type: "function";
   /**
    * Unique identifier of this function. Corresponds to the `functionId` inside the `functionsManifest`.
    * Some functions will be shared for multiple routes, e.g. SSR or DSG functions.
    */
-  functionId: string
+  functionId: string;
   /**
    * If `cache` is true, response of function should be cached for current deployment and served on subsequent requests for this route.
    */
-  cache?: true | undefined
-} & IBaseRoute
+  cache?: true | undefined;
+} & IBaseRoute;
 
 /**
  * Redirects are being created through the `createRedirect` action.
  * @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createRedirect
  */
 export type IRedirectRoute = {
-  type: `redirect`
+  type: "redirect";
   /**
    * The redirect should happen from `path` to `toPath`.
    */
-  toPath: string
+  toPath: string;
   /**
    * HTTP status code that should be used for this redirect.
    */
-  status: HttpStatusCode
-  ignoreCase?: boolean | undefined
+  status: HttpStatusCode;
+  ignoreCase?: boolean | undefined;
   /**
    * HTTP headers that should be used for this redirect.
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/headers/
    */
-  headers: IHeader["headers"]
-  [key: string]: unknown
-} & IBaseRoute
+  headers: IHeader["headers"];
+  [key: string]: unknown;
+} & IBaseRoute;
 
-export type Route = IStaticRoute | IFunctionRoute | IRedirectRoute
+export type Route = IStaticRoute | IFunctionRoute | IRedirectRoute;
 
-export type RoutesManifest = Array<Route>
+export type RoutesManifest = Array<Route>;
 
 export type IHeaderRoute = {
-  headers: IHeader["headers"]
-} & IBaseRoute
+  headers: IHeader["headers"];
+} & IBaseRoute;
 
-export type HeaderRoutes = Array<IHeaderRoute>
+export type HeaderRoutes = Array<IHeaderRoute>;
 export type IFunctionDefinition = {
   /**
    * Unique identifier of this function. Corresponds to the `functionId` inside the `routesManifest`.
    */
-  functionId: string
+  functionId: string;
   /**
    * Unique name of this function. Use this as a display name for the function.
    */
-  name: string
+  name: string;
   /**
    * Path to function entrypoint that will be used to create function
    */
-  pathToEntryPoint: string
+  pathToEntryPoint: string;
   /**
    * List of all required files that this function needs to run
    */
-  requiredFiles: Array<string>
-}
+  requiredFiles: Array<string>;
+};
 
-export type FunctionsManifest = Array<IFunctionDefinition>
+export type FunctionsManifest = Array<IFunctionDefinition>;
 
 type IDefaultContext = {
   /**
    * Reporter instance that can be used to log messages to terminal
    * @see https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#reporter
    */
-  reporter: typeof reporter
-}
+  reporter: typeof reporter;
+};
 
 export type RemoteFileAllowedUrls = Array<{
   /**
    * Allowed url in URLPattern format. In particular it uses wildcard `*` and param `:param` syntax.
    */
-  urlPattern: string
+  urlPattern: string;
   /**
    *Allowed url in regex source format
    */
-  regexSource: string
-}>
+  regexSource: string;
+}>;
 
 export type IAdaptContext = {
-  routesManifest: RoutesManifest
-  functionsManifest: FunctionsManifest
-  headerRoutes: HeaderRoutes
+  routesManifest: RoutesManifest;
+  functionsManifest: FunctionsManifest;
+  headerRoutes: HeaderRoutes;
   /**
    * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#pathprefix
    */
-  pathPrefix: string
+  pathPrefix: string;
   /**
    * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash
    */
-  trailingSlash: TrailingSlash
+  trailingSlash: TrailingSlash;
   /**
    * List of allowed remote file URLs represented in URLPattern and Regex formats.
    * Allowed urls are provided by user or plugins using `addRemoteFileAllowedUrl` action.
    * @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#addRemoteFileAllowedUrl
    */
-  remoteFileAllowedUrls: RemoteFileAllowedUrls
-} & IDefaultContext
+  remoteFileAllowedUrls: RemoteFileAllowedUrls;
+} & IDefaultContext;
 
 export type ICacheContext = {
-  directories: Array<string>
-} & IDefaultContext
+  directories: Array<string>;
+} & IDefaultContext;
 
 export type IAdapterConfig = {
   /**
    * URL representing the unique URL for an individual deploy
    */
-  deployURL?: string | undefined
+  deployURL?: string | undefined;
   /**
    * If `true`, Gatsby will not include the LMDB datastore in the serverless functions used for SSR/DSG.
    * Instead, it will try to download the datastore from the given `deployURL`.
    */
-  excludeDatastoreFromEngineFunction?: boolean | undefined
+  excludeDatastoreFromEngineFunction?: boolean | undefined;
   /**
    * Adapters can optionally describe which features they support to prevent potentially faulty deployments
    */
@@ -170,20 +170,20 @@ export type IAdapterConfig = {
         /**
          * If `false`, Gatsby will fail the build if user tries to use pathPrefix.
          */
-        pathPrefix?: boolean | undefined
+        pathPrefix?: boolean | undefined;
         /**
          * Provide array of supported traling slash options
          * @example [`always`]
          */
-        trailingSlash?: Array<TrailingSlash> | undefined
+        trailingSlash?: Array<TrailingSlash> | undefined;
       }
-    | undefined
+    | undefined;
   /**
    * List of plugins that should be disabled when using this adapter. Purpose of this is to disable
    * any potential plugins that serve similar role as adapter that would cause conflicts when both
    * plugin and adapter is used at the same time.
    */
-  pluginsToDisable?: Array<string> | undefined
+  pluginsToDisable?: Array<string> | undefined;
   /**
    * Path to a CommonJS module that implements an image CDN URL generation function. The function
    * is used to optimize image delivery by generating URLs that leverage CDN capabilities. This module
@@ -193,7 +193,7 @@ export type IAdapterConfig = {
    * See 'packages/gatsby-adapter-netlify/src/image-cdn-url-generator.ts' as an implementation
    * example for the Netlify adapter.
    */
-  imageCDNUrlGeneratorModulePath?: string | undefined
+  imageCDNUrlGeneratorModulePath?: string | undefined;
   /**
    * Path to a CommonJS module that implements an file CDN URL generation function. This module
    * should have a default export function that conforms to the {@link FileCdnUrlGeneratorFn} type:
@@ -202,22 +202,22 @@ export type IAdapterConfig = {
    * See 'packages/gatsby-adapter-netlify/src/file-cdn-url-generator.ts' as an implementation
    * example for the Netlify adapter.
    */
-  fileCDNUrlGeneratorModulePath?: string | undefined
+  fileCDNUrlGeneratorModulePath?: string | undefined;
   /**
    * The platform bundled functions will execute on. Usually should be `linux`.
    * This will be used if user didn't specify `GATSBY_FUNCTIONS_PLATFORM` environment variable
    * or used `-functions-platform` CLI toggle. If none is defined current platform (process.platform) will be used.
    */
-  functionsPlatform?: string | undefined
+  functionsPlatform?: string | undefined;
   /**
    * The architecture bundled functions will execute on. Usually should be `x64`.
    * This will be used if user didn't specify `GATSBY_FUNCTIONS_ARCH` environment variable
    * or used `-functions-arch` CLI toggle. If none is defined current arch (process.arch) will be used.
    */
-  functionsArch?: string | undefined
-}
+  functionsArch?: string | undefined;
+};
 
-type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
+type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
 /**
  * This is the internal version of "IAdapterConfig" to enforce that certain keys must be present.
@@ -226,25 +226,27 @@ type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
 export type IAdapterFinalConfig = WithRequired<
   IAdapterConfig,
   "excludeDatastoreFromEngineFunction" | "pluginsToDisable"
->
+>;
 
 export type IAdapter = {
   /**
    * Unique name of the adapter. Used to identify adapter in manifest.
    */
-  name: string
-  cache?: {
-    /**
-     * Hook to restore `directories` from previous builds. This is executed very early on in the build process. If `false` is returned Gatsby will skip its cache restoration.
-     */
-    restore: (
-      context: ICacheContext,
-    ) => Promise<boolean | void> | boolean | void
-    /**
-     * Hook to store `directories` for the current build. Executed as one of the last steps in the build process.
-     */
-    store: (context: ICacheContext) => Promise<void> | void
-  }
+  name: string;
+  cache?:
+    | {
+        /**
+         * Hook to restore `directories` from previous builds. This is executed very early on in the build process. If `false` is returned Gatsby will skip its cache restoration.
+         */
+        restore: (
+          context: ICacheContext,
+        ) => Promise<boolean | void> | boolean | void;
+        /**
+         * Hook to store `directories` for the current build. Executed as one of the last steps in the build process.
+         */
+        store: (context: ICacheContext) => Promise<void> | void;
+      }
+    | undefined;
   /**
    * Hook to take Gatsby’s output and preparing it for deployment on the adapter’s platform. Executed as one of the last steps in the build process.
    *
@@ -257,7 +259,7 @@ export type IAdapter = {
    *
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
    */
-  adapt: (context: IAdaptContext) => Promise<void> | void
+  adapt: (context: IAdaptContext) => Promise<void> | void;
   /**
    * Hook to pass information from the adapter to Gatsby. You must return an object with a predefined shape.
    * Gatsby uses this information to adjust its build process. The information can be e.g. things that are only known once the project is deployed.
@@ -266,25 +268,25 @@ export type IAdapter = {
    *
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
    */
-  config?: (
-    context: IDefaultContext,
-  ) => Promise<IAdapterConfig> | IAdapterConfig
-}
+  config?:
+    | ((context: IDefaultContext) => Promise<IAdapterConfig> | IAdapterConfig)
+    | undefined;
+};
 
 /**
  * Adapter initialization function that returns an instance of the adapter.
  * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/creating-an-adapter/
  */
 export type AdapterInit<T = Record<string, unknown>> = (
-  adapterOptions?: T,
-) => IAdapter
+  adapterOptions?: T | undefined,
+) => IAdapter;
 
 export type IAdapterManager = {
-  restoreCache: () => Promise<void> | void
-  storeCache: () => Promise<void> | void
-  adapt: () => Promise<void> | void
-  config: () => Promise<IAdapterFinalConfig>
-}
+  restoreCache: () => Promise<void> | void;
+  storeCache: () => Promise<void> | void;
+  adapt: () => Promise<void> | void;
+  config: () => Promise<IAdapterFinalConfig>;
+};
 /**
  * Types for gatsby/adapters.js
  * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/
@@ -293,15 +295,15 @@ export type IAdapterManifestEntry = {
   /**
    * Name of the adapter
    */
-  name: string
+  name: string;
   /**
    * Test function to determine if adapter should be used
    */
-  test: () => boolean
+  test: () => boolean;
   /**
    * npm module name of the adapter
    */
-  module: string
+  module: string;
   /**
    * List of version pairs that are supported by the adapter.
    * This allows to have multiple versions of the adapter for different versions of Gatsby.
@@ -311,14 +313,14 @@ export type IAdapterManifestEntry = {
     /**
      * Version of the `gatsby` package. This is a semver range.
      */
-    gatsbyVersion: string
+    gatsbyVersion: string;
     /**
      * Version of the adapter. This is a semver range.
      */
-    moduleVersion: string
+    moduleVersion: string;
     /**
      * Can override the module defined in the parent manifest entry - useful for when the adapter is renamed.
      */
-    module?: string
-  }>
-}
+    module?: string | undefined;
+  }>;
+};

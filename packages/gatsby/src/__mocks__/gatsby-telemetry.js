@@ -11,4 +11,4 @@ module.exports = {
   aggregateStats: jest.fn(),
   addSiteMeasurement: jest.fn(),
   expressMiddleware: jest.fn(),
-}
+};

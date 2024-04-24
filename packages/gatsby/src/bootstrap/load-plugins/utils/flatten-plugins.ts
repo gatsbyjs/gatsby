@@ -1,4 +1,4 @@
-import type { IPluginInfo } from "../types"
+import type { IPluginInfo } from "../types";
 
 // Create a "flattened" array of plugins with all subplugins
 // brought to the top-level. This simplifies running gatsby-* files
@@ -6,7 +6,7 @@ import type { IPluginInfo } from "../types"
 export function flattenPlugins(
   plugins: Array<IPluginInfo>,
 ): Array<IPluginInfo> {
-  const flattened: Array<IPluginInfo> = []
+  const flattened: Array<IPluginInfo> = [];
   const extractPlugins = (plugin: IPluginInfo): void => {
     if (plugin.subPluginPaths) {
       for (const subPluginPath of plugin.subPluginPaths) {
@@ -14,30 +14,30 @@ export function flattenPlugins(
         // subPluginPath can look like someOption.randomFieldThatIsMarkedAsSubplugins
         // Reason for doing stringified path with . separator was that it was just easier to prevent duplicates
         // in subPluginPaths array (as each subplugin in the gatsby-config would add subplugin path).
-        const segments = subPluginPath.split(`.`)
+        const segments = subPluginPath.split(".");
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let roots: Array<any> = [plugin.pluginOptions]
+        let roots: Array<any> = [plugin.pluginOptions];
         for (const segment of segments) {
-          if (segment === `[]`) {
-            roots = roots.flat()
+          if (segment === "[]") {
+            roots = roots.flat();
           } else {
-            roots = roots.map((root) => root[segment])
+            roots = roots.map((root) => root[segment]);
           }
         }
-        roots = roots.flat()
+        roots = roots.flat();
 
         roots.forEach((subPlugin) => {
-          flattened.push(subPlugin)
-          extractPlugins(subPlugin)
-        })
+          flattened.push(subPlugin);
+          extractPlugins(subPlugin);
+        });
       }
     }
-  }
+  };
 
   plugins.forEach((plugin) => {
-    flattened.push(plugin)
-    extractPlugins(plugin)
-  })
+    flattened.push(plugin);
+    extractPlugins(plugin);
+  });
 
-  return flattened
+  return flattened;
 }

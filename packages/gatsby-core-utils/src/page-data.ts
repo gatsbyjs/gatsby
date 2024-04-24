@@ -1,7 +1,7 @@
-import path from "node:path"
+import path from "node:path";
 
 export function fixedPagePath(pagePath: string): string {
-  return pagePath === `/` ? `index` : pagePath
+  return pagePath === "/" ? "index" : pagePath;
 }
 
 export function generatePageDataPath(
@@ -10,8 +10,8 @@ export function generatePageDataPath(
 ): string {
   return path.join(
     publicDir,
-    `page-data`,
+    "page-data",
     fixedPagePath(pagePath),
-    `page-data.json`,
-  )
+    "page-data.json",
+  );
 }

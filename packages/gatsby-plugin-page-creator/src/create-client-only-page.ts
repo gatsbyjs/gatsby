@@ -1,10 +1,10 @@
-import { Actions } from "gatsby"
+import { Actions } from "gatsby";
 import {
   createPath,
   applyTrailingSlashOption,
   TrailingSlash,
-} from "gatsby-page-utils"
-import { getMatchPath } from "gatsby-core-utils"
+} from "gatsby-page-utils";
+import { getMatchPath } from "gatsby-core-utils";
 
 // Create a client side page with a matchPath
 // based on the `[]` existing in it's file path.
@@ -14,15 +14,15 @@ export function createClientOnlyPage(
   filePath: string,
   absolutePath: string,
   actions: Actions,
-  trailingSlash: TrailingSlash
+  trailingSlash: TrailingSlash,
 ): void {
-  const path = createPath(filePath)
-  const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
+  const path = createPath(filePath);
+  const modifiedPath = applyTrailingSlashOption(path, trailingSlash);
 
   actions.createPage({
     path: modifiedPath,
     matchPath: getMatchPath(path),
     component: absolutePath,
     context: {},
-  })
+  });
 }

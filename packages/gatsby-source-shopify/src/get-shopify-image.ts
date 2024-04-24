@@ -2,9 +2,9 @@ import {
   type IUrlBuilderArgs,
   getImageData,
   type IGatsbyImageData,
-} from "gatsby-plugin-image"
+} from "gatsby-plugin-image";
 
-const validFormats = new Set([`jpg`, `jpeg`, `png`, `webp`, `auto`])
+const validFormats = new Set(["jpg", "jpeg", "png", "webp", "auto"]);
 
 export function urlBuilder({
   width,
@@ -16,28 +16,28 @@ export function urlBuilder({
     console.warn(
       `${format} is not a valid format. Valid formats are: ${[
         ...validFormats,
-      ].join(`, `)}`,
-    )
-    format = `auto`
+      ].join(", ")}`,
+    );
+    format = "auto";
   }
 
   // eslint-disable-next-line prefer-const
-  let [basename, version] = baseUrl.split(`?`)
+  let [basename, version] = baseUrl.split("?");
 
-  const dot = basename.lastIndexOf(`.`)
-  let ext = ``
+  const dot = basename.lastIndexOf(".");
+  let ext = "";
   if (dot !== -1) {
-    ext = basename.slice(dot + 1)
-    basename = basename.slice(0, dot)
+    ext = basename.slice(dot + 1);
+    basename = basename.slice(0, dot);
   }
-  let suffix = ``
-  if (format === ext || format === `auto`) {
-    suffix = `.${ext}`
+  let suffix = "";
+  if (format === ext || format === "auto") {
+    suffix = `.${ext}`;
   } else {
-    suffix = `.${ext}.${format}`
+    suffix = `.${ext}.${format}`;
   }
 
-  return `${basename}_${width}x${height}_crop_center${suffix}?${version}`
+  return `${basename}_${width}x${height}_crop_center${suffix}?${version}`;
 }
 
 export function getShopifyImage({
@@ -48,7 +48,7 @@ export function getShopifyImage({
     originalSrc: baseUrl,
     width: sourceWidth,
     height: sourceHeight,
-  } = image
+  } = image;
 
   return getImageData({
     ...args,
@@ -56,6 +56,6 @@ export function getShopifyImage({
     sourceWidth,
     sourceHeight,
     urlBuilder,
-    formats: [`auto`],
-  })
+    formats: ["auto"],
+  });
 }

@@ -1,16 +1,16 @@
-import * as internalActions from "./internal"
-import { actions as publicActions } from "./public"
+import * as internalActions from "./internal";
+import { actions as publicActions } from "./public";
 import {
   actions as restrictedActions,
   availableActionsByAPI,
-} from "./restricted"
+} from "./restricted";
 
 export const actions = {
   ...internalActions,
   ...publicActions,
   ...restrictedActions,
-}
+};
 
-export const restrictedActionsAvailableInAPI = availableActionsByAPI
+export const restrictedActionsAvailableInAPI = availableActionsByAPI;
 
-export { internalActions, publicActions, restrictedActions }
+export { internalActions, publicActions, restrictedActions };

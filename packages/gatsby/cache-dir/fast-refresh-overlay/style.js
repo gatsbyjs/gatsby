@@ -1,5 +1,5 @@
-import * as React from "react"
-import { css } from "../css-to-object"
+import * as React from "react";
+import { css } from "../css-to-object";
 
 export const Style = () => (
   <style
@@ -63,8 +63,16 @@ export const Style = () => (
         }
 
         [data-gatsby-overlay="root"] {
-          font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-            Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          font:
+            18px/1.5 -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif,
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
             "Segoe UI Symbol" !important;
           background: var(--background);
           color: var(--color);
@@ -76,8 +84,8 @@ export const Style = () => (
           top: 50%;
           left: 50%;
           transform: translateX(-50%) translateY(-50%);
-          box-shadow: rgba(46, 41, 51, var(--rootBoxShadowOpacity)) 0px 7px 19px
-              11px,
+          box-shadow:
+            rgba(46, 41, 51, var(--rootBoxShadowOpacity)) 0px 7px 19px 11px,
             rgba(71, 63, 79, var(--rootBoxShadowOpacity)) 0px 2px 4px;
           border-radius: var(--radii);
           display: inline-flex;
@@ -410,4 +418,4 @@ export const Style = () => (
       `,
     }}
   />
-)
+);

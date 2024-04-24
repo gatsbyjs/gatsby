@@ -1,34 +1,34 @@
-import { getStore } from "~/store"
+import { getStore } from "~/store";
 
-import { diffBuiltTypeDefs, fieldOfTypeWasFetched } from "./helpers"
+import { diffBuiltTypeDefs, fieldOfTypeWasFetched } from "./helpers";
 
-import buildType from "./build-types"
-import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
-import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
-import { formatLogMessage } from "../../utils/format-log-message"
-import { CODES } from "../../utils/report"
-import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
+import buildType from "./build-types";
+import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes";
+import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded";
+import { formatLogMessage } from "../../utils/format-log-message";
+import { CODES } from "../../utils/report";
+import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file";
 
 /**
  * createSchemaCustomization
  */
 const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
-  const state = getStore().getState()
+  const state = getStore().getState();
 
   const {
     gatsbyApi: { pluginOptions },
     remoteSchema,
-  } = state
+  } = state;
 
   const {
     fieldAliases,
     fieldBlacklist,
     ingestibles: { nonNodeRootFields },
-  } = remoteSchema
+  } = remoteSchema;
 
-  const typeDefs = []
+  const typeDefs = [];
 
-  const gatsbyNodeTypes = getGatsbyNodeTypeNames()
+  const gatsbyNodeTypes = getGatsbyNodeTypeNames();
 
   const typeBuilderApi = {
     typeDefs,
@@ -37,41 +37,41 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
     fieldAliases,
     fieldBlacklist,
     pluginOptions,
-  }
+  };
 
   // create Gatsby node types
-  remoteSchema.introspectionData.__schema.types.forEach(type => {
+  remoteSchema.introspectionData.__schema.types.forEach((type) => {
     if (
       fieldOfTypeWasFetched(type) &&
       !typeIsExcluded({ pluginOptions, typeName: type.name })
     ) {
-      let builtType
+      let builtType;
 
       switch (type.kind) {
-        case `UNION`:
-          builtType = buildType.unionType({ ...typeBuilderApi, type })
-          break
-        case `INTERFACE`:
-          builtType = buildType.interfaceType({ ...typeBuilderApi, type })
-          break
-        case `OBJECT`:
-          builtType = buildType.objectType({ ...typeBuilderApi, type })
-          break
-        case `ENUM`:
-          builtType = buildType.enumType({ ...typeBuilderApi, type })
-          break
-        case `SCALAR`:
+        case "UNION":
+          builtType = buildType.unionType({ ...typeBuilderApi, type });
+          break;
+        case "INTERFACE":
+          builtType = buildType.interfaceType({ ...typeBuilderApi, type });
+          break;
+        case "OBJECT":
+          builtType = buildType.objectType({ ...typeBuilderApi, type });
+          break;
+        case "ENUM":
+          builtType = buildType.enumType({ ...typeBuilderApi, type });
+          break;
+        case "SCALAR":
           /**
            * custom scalar types aren't supported.
            */
-          break
+          break;
       }
 
       if (builtType) {
-        typeDefs.push(builtType)
+        typeDefs.push(builtType);
       }
     }
-  })
+  });
 
   // Create non Gatsby node types by creating a single node
   // where the typename is the type prefix
@@ -80,38 +80,38 @@ const customizeSchema = async ({ actions, schema, store: gatsbyStore }) => {
   const wpType = buildType.objectType({
     ...typeBuilderApi,
     type: {
-      kind: `OBJECT`,
+      kind: "OBJECT",
       name: pluginOptions.schema.typePrefix,
-      description: `Non-node WPGraphQL root fields.`,
+      description: "Non-node WPGraphQL root fields.",
       fields: nonNodeRootFields,
-      interfaces: [`Node`],
+      interfaces: ["Node"],
     },
-  })
+  });
 
-  typeDefs.push(wpType)
+  typeDefs.push(wpType);
 
   typeDefs.push(
     addRemoteFilePolyfillInterface(
       schema.buildObjectType({
-        name: pluginOptions.schema.typePrefix + `MediaItem`,
+        name: pluginOptions.schema.typePrefix + "MediaItem",
         fields: {},
-        interfaces: [`Node`, `RemoteFile`],
+        interfaces: ["Node", "RemoteFile"],
       }),
       {
         schema,
         actions,
         store: gatsbyStore,
-      }
-    )
-  )
+      },
+    ),
+  );
 
-  diffBuiltTypeDefs(typeDefs)
-  actions.createTypes(typeDefs)
-}
+  diffBuiltTypeDefs(typeDefs);
+  actions.createTypes(typeDefs);
+};
 
-const createSchemaCustomization = async api => {
+const createSchemaCustomization = async (api) => {
   try {
-    await customizeSchema(api)
+    await customizeSchema(api);
   } catch (e) {
     api.reporter.panic({
       id: CODES.SourcePluginCodeError,
@@ -119,8 +119,8 @@ const createSchemaCustomization = async api => {
       context: {
         sourceMessage: formatLogMessage(e.message),
       },
-    })
+    });
   }
-}
+};
 
-export { createSchemaCustomization }
+export { createSchemaCustomization };

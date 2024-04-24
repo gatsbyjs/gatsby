@@ -1,34 +1,34 @@
 const mockFS = {
   existsSync: jest.fn(() => true),
-}
+};
 
-jest.mock(`fs`, () => mockFS)
-jest.mock(`fs-extra`, () => mockFS)
+jest.mock("fs", () => mockFS);
+jest.mock("fs-extra", () => mockFS);
 
-jest.mock(`path`, () => {
+jest.mock("path", () => {
   return {
     isAbsolute: jest.fn(() => true),
-  }
-})
+  };
+});
 
-jest.mock(`../create-file-node`, () => {
+jest.mock("../create-file-node", () => {
   return {
     createFileNode: jest.fn(() => Promise.resolve({})),
-  }
-})
+  };
+});
 
-jest.mock(`chokidar`, () => {
+jest.mock("chokidar", () => {
   return {
     watch: jest.fn(),
-  }
-})
+  };
+});
 
-const chokidar = require(`chokidar`)
-const { createFileNode } = require(`../create-file-node`)
+const chokidar = require("chokidar");
+const { createFileNode } = require("../create-file-node");
 
-const mitt = require(`mitt`)
+const mitt = require("mitt");
 
-const gatsbyNode = require(`../gatsby-node`)
+const gatsbyNode = require("../gatsby-node");
 
 const createApi = () => {
   return {
@@ -41,231 +41,231 @@ const createApi = () => {
     createNodeId: jest.fn(),
     getNode: jest.fn(() => {
       // return truthy
-      return {}
+      return {};
     }),
-  }
-}
+  };
+};
 
-const tick = () => new Promise(resolve => setTimeout(resolve, 0))
+const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
 
-describe(`tests`, () => {
-  let on
+describe("tests", () => {
+  let on;
 
   const emitChokidarEvent = async (eventType, ...args) => {
-    const listenerSet = on.get(eventType)
+    const listenerSet = on.get(eventType);
     if (!listenerSet) {
-      return
+      return;
     }
 
-    listenerSet.forEach(listener => {
-      listener(...args)
-    })
-    await tick()
-  }
+    listenerSet.forEach((listener) => {
+      listener(...args);
+    });
+    await tick();
+  };
 
   beforeEach(() => {
-    on = new Map()
+    on = new Map();
     chokidar.watch.mockImplementation(() => {
       const mock = {
         on: (eventType, listener) => {
           if (!on.has(eventType)) {
-            on.set(eventType, new Set())
+            on.set(eventType, new Set());
           }
-          const listenerSet = on.get(eventType)
-          listenerSet.add(listener)
+          const listenerSet = on.get(eventType);
+          listenerSet.add(listener);
         },
-      }
-      return mock
-    })
-    createFileNode.mockClear()
-  })
+      };
+      return mock;
+    });
+    createFileNode.mockClear();
+  });
 
-  describe(`handles chokidar events emitted before "ready"`, () => {
-    it(`queues node creation from added files`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+  describe('handles chokidar events emitted before "ready"', () => {
+    it("queues node creation from added files", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
-      await emitChokidarEvent(`add`, `test.md`)
+      await emitChokidarEvent("add", "test.md");
 
       // ready was not emitted, so no nodes should be created
-      expect(createFileNode).not.toBeCalled()
-      expect(api.actions.createNode).not.toBeCalled()
+      expect(createFileNode).not.toBeCalled();
+      expect(api.actions.createNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      expect(api.actions.createNode).toBeCalled()
-    })
+      expect(api.actions.createNode).toBeCalled();
+    });
 
-    it(`queues node creation from changed files`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+    it("queues node creation from changed files", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
-      await emitChokidarEvent(`change`, `test.md`)
+      await emitChokidarEvent("change", "test.md");
       // ready was not emitted, so no nodes should be created
-      expect(createFileNode).not.toBeCalled()
-      expect(api.actions.createNode).not.toBeCalled()
+      expect(createFileNode).not.toBeCalled();
+      expect(api.actions.createNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      expect(api.actions.createNode).toBeCalled()
-    })
+      expect(api.actions.createNode).toBeCalled();
+    });
 
-    it(`queues node creation from added directories`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+    it("queues node creation from added directories", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
-      await emitChokidarEvent(`addDir`, `test`)
+      await emitChokidarEvent("addDir", "test");
 
       // ready was not emitted, so no nodes should be created
-      expect(createFileNode).not.toBeCalled()
-      expect(api.actions.createNode).not.toBeCalled()
+      expect(createFileNode).not.toBeCalled();
+      expect(api.actions.createNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      expect(api.actions.createNode).toBeCalled()
-    })
+      expect(api.actions.createNode).toBeCalled();
+    });
 
-    it(`queues node deletion from deleted files`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+    it("queues node deletion from deleted files", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
-      await emitChokidarEvent(`unlink`, `test.md`)
+      await emitChokidarEvent("unlink", "test.md");
 
       // ready was not emitted, so no nodes should be deleted
-      expect(api.actions.deleteNode).not.toBeCalled()
+      expect(api.actions.deleteNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      expect(api.actions.deleteNode).toBeCalled()
-    })
+      expect(api.actions.deleteNode).toBeCalled();
+    });
 
-    it(`queues node deletion from deleted directories`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+    it("queues node deletion from deleted directories", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
-      await emitChokidarEvent(`unlinkDir`, `test`)
+      await emitChokidarEvent("unlinkDir", "test");
 
       // ready was not emitted, so no nodes should be deleted
-      expect(api.actions.deleteNode).not.toBeCalled()
+      expect(api.actions.deleteNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      expect(api.actions.deleteNode).toBeCalled()
-    })
-  })
+      expect(api.actions.deleteNode).toBeCalled();
+    });
+  });
 
-  describe(`handles chokidar events emitted after "ready"`, () => {
-    it(`creates nodes from added files`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+  describe('handles chokidar events emitted after "ready"', () => {
+    it("creates nodes from added files", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
       // ready was not emitted, so no nodes should be created
-      expect(createFileNode).not.toBeCalled()
-      expect(api.actions.createNode).not.toBeCalled()
+      expect(createFileNode).not.toBeCalled();
+      expect(api.actions.createNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      await emitChokidarEvent(`add`, `test.md`)
+      await emitChokidarEvent("add", "test.md");
 
-      expect(api.actions.createNode).toBeCalled()
-    })
+      expect(api.actions.createNode).toBeCalled();
+    });
 
-    it(`creates nodes from changed files`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+    it("creates nodes from changed files", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
       // ready was not emitted, so no nodes should be created
-      expect(createFileNode).not.toBeCalled()
-      expect(api.actions.createNode).not.toBeCalled()
+      expect(createFileNode).not.toBeCalled();
+      expect(api.actions.createNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      await emitChokidarEvent(`change`, `test.md`)
+      await emitChokidarEvent("change", "test.md");
 
-      expect(api.actions.createNode).toBeCalled()
-    })
+      expect(api.actions.createNode).toBeCalled();
+    });
 
-    it(`creates nodes from added directories`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+    it("creates nodes from added directories", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
       // ready was not emitted, so no nodes should be created
-      expect(createFileNode).not.toBeCalled()
-      expect(api.actions.createNode).not.toBeCalled()
+      expect(createFileNode).not.toBeCalled();
+      expect(api.actions.createNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      await emitChokidarEvent(`addDir`, `test`)
+      await emitChokidarEvent("addDir", "test");
 
-      expect(api.actions.createNode).toBeCalled()
-    })
+      expect(api.actions.createNode).toBeCalled();
+    });
 
-    it(`delete nodes from deleted files`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+    it("delete nodes from deleted files", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
       // ready was not emitted, so no nodes should be deleted
-      expect(api.actions.deleteNode).not.toBeCalled()
+      expect(api.actions.deleteNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      await emitChokidarEvent(`unlink`, `test.md`)
+      await emitChokidarEvent("unlink", "test.md");
 
-      expect(api.actions.deleteNode).toBeCalled()
-    })
+      expect(api.actions.deleteNode).toBeCalled();
+    });
 
-    it(`delete nodes from deleted directories`, async () => {
-      const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+    it("delete nodes from deleted directories", async () => {
+      const api = createApi();
+      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: "" });
       // allow microtasks execution
-      await tick()
+      await tick();
 
       // ready was not emitted, so no nodes should be deleted
-      expect(api.actions.deleteNode).not.toBeCalled()
+      expect(api.actions.deleteNode).not.toBeCalled();
 
-      await emitChokidarEvent(`ready`)
+      await emitChokidarEvent("ready");
 
-      await expect(sourceNodesPromise).resolves.toBeDefined()
+      await expect(sourceNodesPromise).resolves.toBeDefined();
 
-      await emitChokidarEvent(`unlinkDir`, `test`)
+      await emitChokidarEvent("unlinkDir", "test");
 
-      expect(api.actions.deleteNode).toBeCalled()
-    })
-  })
-})
+      expect(api.actions.deleteNode).toBeCalled();
+    });
+  });
+});

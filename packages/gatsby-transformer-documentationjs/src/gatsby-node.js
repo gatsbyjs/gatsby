@@ -1,49 +1,49 @@
-const documentation = require(`documentation`)
-const remark = require(`remark`)
-const _ = require(`lodash`)
-const Prism = require(`prismjs`)
+const documentation = require("documentation");
+const remark = require("remark");
+const _ = require("lodash");
+const Prism = require("prismjs");
 
-const stringifyMarkdownAST = (node = ``) => {
+const stringifyMarkdownAST = (node = "") => {
   if (_.isString(node)) {
-    return node
+    return node;
   } else {
-    return remark().stringify(node)
+    return remark().stringify(node);
   }
-}
+};
 
 const docId = (parentId, docsJson) => {
   const lineNumber = docsJson.loc
     ? docsJson.loc.start.line
-    : docsJson.lineNumber
+    : docsJson.lineNumber;
 
   return `documentationJS ${parentId} path #${JSON.stringify(
-    docsJson.path
-  )} line ${lineNumber}`
-}
+    docsJson.path,
+  )} line ${lineNumber}`;
+};
 
 const descriptionId = (parentId, name) =>
-  `${parentId}--DocumentationJSComponentDescription--${name}`
+  `${parentId}--DocumentationJSComponentDescription--${name}`;
 
 function prepareDescriptionNode(node, markdownStr, name, helpers) {
-  const { createNodeId, createContentDigest } = helpers
+  const { createNodeId, createContentDigest } = helpers;
 
   const descriptionNode = {
     id: createNodeId(descriptionId(node.id, name)),
     parent: node.id,
     children: [],
     internal: {
-      type: `DocumentationJSComponentDescription`,
-      mediaType: `text/markdown`,
+      type: "DocumentationJSComponentDescription",
+      mediaType: "text/markdown",
       content: markdownStr,
       contentDigest: createContentDigest(markdownStr),
     },
-  }
+  };
 
-  return descriptionNode
+  return descriptionNode;
 }
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createTypes } = actions;
   const typeDefs = /* GraphQL */ `
     type DocumentationJs implements Node
       @childOf(types: ["File", "DocumentationJs"], many: true) {
@@ -126,9 +126,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       result: JSON
       typeDef: DocumentationJs @link(from: "typeDef___NODE")
     }
-  `
-  createTypes(typeDefs)
-}
+  `;
+  createTypes(typeDefs);
+};
 
 exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
@@ -137,132 +137,132 @@ exports.createResolvers = ({ createResolvers }) => {
         // resolve `typeDef___NODE` recursively
         resolve: (source, _, context) => {
           if (!source.type) {
-            return null
+            return null;
           }
 
-          const fieldsToVisit = [`elements`, `expression`, `applications`]
+          const fieldsToVisit = ["elements", "expression", "applications"];
 
-          const resolve = obj => {
+          const resolve = (obj) => {
             if (!obj.typeDef___NODE) {
-              return obj
+              return obj;
             }
 
             return {
               ...obj,
               typeDef: context.nodeModel.getNodeById(
-                { id: obj.typeDef___NODE, type: `DocumentationJs` },
-                { path: context.path }
+                { id: obj.typeDef___NODE, type: "DocumentationJs" },
+                { path: context.path },
               ),
-            }
-          }
+            };
+          };
 
-          const visit = obj => {
+          const visit = (obj) => {
             if (!obj) {
-              return null
+              return null;
             }
 
-            const ret = { ...obj }
+            const ret = { ...obj };
 
-            fieldsToVisit.forEach(fieldName => {
-              const v = obj[fieldName]
+            fieldsToVisit.forEach((fieldName) => {
+              const v = obj[fieldName];
               if (!v) {
-                return
+                return;
               }
 
               if (Array.isArray(v)) {
-                ret[fieldName] = v.map(t => visit(resolve(t)))
+                ret[fieldName] = v.map((t) => visit(resolve(t)));
               } else {
-                ret[fieldName] = visit(resolve(v))
+                ret[fieldName] = visit(resolve(v));
               }
-            })
-            return ret
-          }
+            });
+            return ret;
+          };
 
-          return visit(resolve(source.type))
+          return visit(resolve(source.type));
         },
       },
     },
-  })
-}
+  });
+};
 
 function shouldOnCreateNode({ node }) {
   return (
-    node.internal.type === `File` &&
-    (node.internal.mediaType === `application/javascript` ||
-      node.extension === `jsx` ||
-      node.extension === `tsx` ||
-      node.extension === `ts`)
-  )
+    node.internal.type === "File" &&
+    (node.internal.mediaType === "application/javascript" ||
+      node.extension === "jsx" ||
+      node.extension === "tsx" ||
+      node.extension === "ts")
+  );
 }
 
-exports.shouldOnCreateNode = shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode;
 
 /**
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
  */
 exports.onCreateNode = async ({ node, actions, ...helpers }) => {
-  const { createNodeId, createContentDigest } = helpers
-  const { createNode, createParentChildLink } = actions
+  const { createNodeId, createContentDigest } = helpers;
+  const { createNode, createParentChildLink } = actions;
 
-  let documentationJson
+  let documentationJson;
   try {
     documentationJson = await documentation.build(node.absolutePath, {
       shallow: true,
-    })
+    });
   } catch (e) {
     // Ignore as there'll probably be other tooling already checking for errors
     // and an error here kills Gatsby.
   }
 
   if (documentationJson && documentationJson.length > 0) {
-    const handledDocs = new WeakMap()
-    const typeDefs = new Map()
+    const handledDocs = new WeakMap();
+    const typeDefs = new Map();
 
     const getNodeIDForType = (typeName, parent) => {
       if (typeDefs.has(typeName)) {
-        return typeDefs.get(typeName)
+        return typeDefs.get(typeName);
       }
 
       const index = documentationJson.findIndex(
-        docsJson =>
+        (docsJson) =>
           docsJson.name === typeName &&
-          [`interface`, `typedef`, `constant`].includes(docsJson.kind)
-      )
+          ["interface", "typedef", "constant"].includes(docsJson.kind),
+      );
 
-      const isCycle = parent === documentationJson[index]
+      const isCycle = parent === documentationJson[index];
       if (isCycle) {
         helpers.reporter.warn(
-          `Unexpected cycle detected creating DocumentationJS nodes for file:\n\n\t${node.absolutePath}\n\nFor type: ${typeName}`
-        )
+          `Unexpected cycle detected creating DocumentationJS nodes for file:\n\n\t${node.absolutePath}\n\nFor type: ${typeName}`,
+        );
       }
 
       if (index !== -1 && !isCycle) {
         return prepareNodeForDocs(documentationJson[index], {
           commentNumber: index,
-        }).node.id
+        }).node.id;
       }
 
-      return null
-    }
+      return null;
+    };
 
     const tryToAddTypeDef = (type, parent) => {
       if (type.applications) {
-        type.applications.forEach(t => tryToAddTypeDef(t, parent))
+        type.applications.forEach((t) => tryToAddTypeDef(t, parent));
       }
 
       if (type.expression) {
-        tryToAddTypeDef(type.expression, parent)
+        tryToAddTypeDef(type.expression, parent);
       }
 
       if (type.elements) {
-        type.elements.forEach(t => tryToAddTypeDef(t, parent))
+        type.elements.forEach((t) => tryToAddTypeDef(t, parent));
       }
 
-      if (type.type === `NameExpression` && type.name) {
-        type.typeDef___NODE = getNodeIDForType(type.name, parent)
+      if (type.type === "NameExpression" && type.name) {
+        type.typeDef___NODE = getNodeIDForType(type.name, parent);
       }
-    }
+    };
 
     /**
      * Prepare Gatsby node from JsDoc object.
@@ -278,11 +278,11 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
      */
     const prepareNodeForDocs = (
       docsJson,
-      { commentNumber = null, level = 0, parent = node.id } = {}
+      { commentNumber = null, level = 0, parent = node.id } = {},
     ) => {
       if (handledDocs.has(docsJson)) {
         // this was already handled
-        return handledDocs.get(docsJson)
+        return handledDocs.get(docsJson);
       }
 
       const docSkeletonNode = {
@@ -292,112 +292,112 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         parent,
         children: [],
         internal: {
-          type: `DocumentationJs`,
+          type: "DocumentationJs",
         },
-      }
+      };
 
-      const children = []
+      const children = [];
 
       let picked = _.pick(docsJson, [
-        `kind`,
-        `memberof`,
-        `name`,
-        `scope`,
-        `type`,
-        `default`,
-        `readonly`,
-        `access`,
-        `abstract`,
-        `generator`,
-        `async`,
-        `override`,
-        `hideconstructor`,
-        `alias`,
-        `copyright`,
-        `author`,
-        `license`,
-        `since`,
-        `lends`,
-        `examples`,
-        `tags`,
-      ])
+        "kind",
+        "memberof",
+        "name",
+        "scope",
+        "type",
+        "default",
+        "readonly",
+        "access",
+        "abstract",
+        "generator",
+        "async",
+        "override",
+        "hideconstructor",
+        "alias",
+        "copyright",
+        "author",
+        "license",
+        "since",
+        "lends",
+        "examples",
+        "tags",
+      ]);
 
-      picked.optional = false
+      picked.optional = false;
       if (docsJson.loc) {
         // loc is instance of SourceLocation class, and Gatsby doesn't support
         // class instances at this moment when inferring schema. Serializing
         // and deserializing converts class instance to plain object.
-        picked.docsLocation = JSON.parse(JSON.stringify(docsJson.loc))
+        picked.docsLocation = JSON.parse(JSON.stringify(docsJson.loc));
       }
       if (docsJson.context && docsJson.context.loc) {
-        picked.codeLocation = JSON.parse(JSON.stringify(docsJson.context.loc))
+        picked.codeLocation = JSON.parse(JSON.stringify(docsJson.context.loc));
       }
 
       if (picked.type) {
-        if (picked.type === `OptionalType` && docsJson.expression) {
-          picked = { ...picked, optional: true, ...docsJson.expression }
+        if (picked.type === "OptionalType" && docsJson.expression) {
+          picked = { ...picked, optional: true, ...docsJson.expression };
         }
-        if (picked.type.type === `OptionalType` && picked.type.expression) {
-          picked.optional = true
-          picked.type = picked.type.expression
+        if (picked.type.type === "OptionalType" && picked.type.expression) {
+          picked.optional = true;
+          picked.type = picked.type.expression;
         }
 
-        tryToAddTypeDef(picked.type, docsJson)
+        tryToAddTypeDef(picked.type, docsJson);
       }
 
-      const mdFields = [`description`, `deprecated`]
+      const mdFields = ["description", "deprecated"];
 
-      mdFields.forEach(fieldName => {
+      mdFields.forEach((fieldName) => {
         if (docsJson[fieldName]) {
           const childNode = prepareDescriptionNode(
             docSkeletonNode,
             stringifyMarkdownAST(docsJson[fieldName]),
             `comment.${fieldName}`,
-            helpers
-          )
+            helpers,
+          );
 
-          picked[`${fieldName}___NODE`] = childNode.id
+          picked[`${fieldName}___NODE`] = childNode.id;
           children.push({
             node: childNode,
-          })
+          });
         }
-      })
+      });
 
       const docsSubfields = [
-        `augments`,
-        `implements`,
-        `params`,
-        `properties`,
-        `returns`,
-        `throws`,
-        `todos`,
-        `yields`,
-      ]
-      docsSubfields.forEach(fieldName => {
+        "augments",
+        "implements",
+        "params",
+        "properties",
+        "returns",
+        "throws",
+        "todos",
+        "yields",
+      ];
+      docsSubfields.forEach((fieldName) => {
         if (docsJson[fieldName] && docsJson[fieldName].length > 0) {
           picked[`${fieldName}___NODE`] = docsJson[fieldName].map(
             (docObj, fieldIndex) => {
               // When documenting destructured parameters, the name
               // is parent.child where we just want the child.
-              if (docObj.name && docObj.name.split(`.`).length > 1) {
-                docObj.name = docObj.name.split(`.`).slice(-1).join(`.`)
+              if (docObj.name && docObj.name.split(".").length > 1) {
+                docObj.name = docObj.name.split(".").slice(-1).join(".");
               }
 
               const adjustedObj = {
                 ...docObj,
                 path: [...docsJson.path, { fieldName, fieldIndex }],
-              }
+              };
 
               const nodeHierarchy = prepareNodeForDocs(adjustedObj, {
                 level: level + 1,
                 parent: docSkeletonNode.id,
-              })
-              children.push(nodeHierarchy)
-              return nodeHierarchy.node.id
-            }
-          )
+              });
+              children.push(nodeHierarchy);
+              return nodeHierarchy.node.id;
+            },
+          );
         }
-      })
+      });
 
       if (_.isPlainObject(docsJson.members)) {
         /*
@@ -415,80 +415,80 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
           docsJson.members,
           (acc, membersOfType, key) => {
             if (membersOfType.length > 0) {
-              acc[`${key}___NODE`] = membersOfType.map(member => {
+              acc[`${key}___NODE`] = membersOfType.map((member) => {
                 const nodeHierarchy = prepareNodeForDocs(member, {
                   level: level + 1,
                   parent: docSkeletonNode.id,
-                })
-                children.push(nodeHierarchy)
-                return nodeHierarchy.node.id
-              })
+                });
+                children.push(nodeHierarchy);
+                return nodeHierarchy.node.id;
+              });
             }
-            return acc
+            return acc;
           },
-          {}
-        )
+          {},
+        );
       }
 
       if (docsJson.examples) {
-        picked.examples = docsJson.examples.map(example => {
+        picked.examples = docsJson.examples.map((example) => {
           // Extract value from <caption/> element
           const caption =
-            example?.caption?.children[0]?.children[0].value || null
+            example?.caption?.children[0]?.children[0].value || null;
           return {
             ...example,
             caption,
             raw: example.description,
             highlighted: Prism.highlight(
               example.description,
-              Prism.languages.javascript
+              Prism.languages.javascript,
             ),
-          }
-        })
+          };
+        });
       }
 
       const docNode = {
         ...docSkeletonNode,
         ...picked,
-      }
-      docNode.internal.contentDigest = createContentDigest(docNode)
+      };
+      docNode.internal.contentDigest = createContentDigest(docNode);
 
-      if (docNode.kind === `typedef`) {
-        typeDefs.set(docNode.name, docNode.id)
+      if (docNode.kind === "typedef") {
+        typeDefs.set(docNode.name, docNode.id);
       }
 
       const nodeHierarchy = {
         node: docNode,
         children,
-      }
-      handledDocs.set(docsJson, nodeHierarchy)
-      return nodeHierarchy
-    }
+      };
+      handledDocs.set(docsJson, nodeHierarchy);
+      return nodeHierarchy;
+    };
 
     const rootNodes = documentationJson.map((docJson, index) =>
-      prepareNodeForDocs(docJson, { commentNumber: index })
-    )
+      prepareNodeForDocs(docJson, { commentNumber: index }),
+    );
 
     const createChildrenNodesRecursively = ({ node: parent, children }) => {
       if (children) {
-        children.forEach(nodeHierarchy => {
-          createNode(nodeHierarchy.node)
+        children.forEach((nodeHierarchy) => {
+          createNode(nodeHierarchy.node);
           createParentChildLink({
             parent,
             child: nodeHierarchy.node,
-          })
-          createChildrenNodesRecursively(nodeHierarchy)
-        })
+          });
+          createChildrenNodesRecursively(nodeHierarchy);
+        });
       }
-    }
+    };
 
     createChildrenNodesRecursively({
       node,
       children: rootNodes,
-    })
+    });
 
-    return true
+    return true;
   } else {
-    return null
+    return null;
   }
-}
+};

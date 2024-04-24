@@ -6,8 +6,8 @@ const supportedExtensions = {
   tif: true,
   tiff: true,
   avif: true,
-}
+};
 
 module.exports = {
   supportedExtensions,
-}
+};

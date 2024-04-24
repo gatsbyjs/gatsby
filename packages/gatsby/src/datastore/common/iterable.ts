@@ -1,9 +1,9 @@
 declare module "lmdb" {
   // currently lmdb doesn't have typings for this export
-  export function clearKeptObjects(): void
+  export function clearKeptObjects(): void;
 }
 
-import { clearKeptObjects } from "lmdb"
+import { clearKeptObjects } from "lmdb";
 /**
  * Wrapper for any iterable providing chainable interface and convenience methods
  * similar to array.
@@ -14,54 +14,57 @@ import { clearKeptObjects } from "lmdb"
  * (fortunately lmdb can traverse stuff in sync manner very fast)
  */
 export class GatsbyIterable<T> {
+  length = 0;
   constructor(private source: Iterable<T> | (() => Iterable<T>)) {}
 
   *[Symbol.iterator](): Iterator<T> {
     const source =
-      typeof this.source === `function` ? this.source() : this.source
+      typeof this.source === "function" ? this.source() : this.source;
 
-    let i = 0
+    let i = 0;
     for (const val of source) {
-      yield val
+      yield val;
 
       // clearKeptObjects just make it possible for WeakRefs used in any way during current
       // sync execution tick to be garbage collected. It doesn't force GC, just remove
       // internal strong references in V8.
       // see https://github.com/kriszyp/weak-lru-cache/issues/4
       if (++i % 100 === 0) {
-        clearKeptObjects()
+        clearKeptObjects();
       }
+
+      this.length = i;
     }
   }
 
   concat<U>(other: Iterable<U>): GatsbyIterable<T | U> {
-    return new GatsbyIterable(() => concatSequence(this, other))
+    return new GatsbyIterable(() => concatSequence(this, other));
   }
 
   map<U>(fn: (entry: T, index: number) => U): GatsbyIterable<U> {
-    return new GatsbyIterable(() => mapSequence(this, fn))
+    return new GatsbyIterable(() => mapSequence(this, fn));
   }
 
   filter(predicate: (entry: T) => unknown): GatsbyIterable<T> {
-    return new GatsbyIterable(() => filterSequence(this, predicate))
+    return new GatsbyIterable(() => filterSequence(this, predicate));
   }
 
-  slice(start: number, end?: number): GatsbyIterable<T> {
-    if ((typeof end !== `undefined` && end < start) || start < 0)
+  slice(start: number, end?: number | undefined): GatsbyIterable<T> {
+    if ((typeof end !== "undefined" && end < start) || start < 0)
       throw new Error(
-        `Both arguments must not be negative and end must be greater than start`,
-      )
-    return new GatsbyIterable<T>(() => sliceSequence(this, start, end))
+        "Both arguments must not be negative and end must be greater than start",
+      );
+    return new GatsbyIterable<T>(() => sliceSequence(this, start, end));
   }
 
-  deduplicate(keyFn?: (entry: T) => unknown): GatsbyIterable<T> {
-    return new GatsbyIterable<T>(() => deduplicateSequence(this, keyFn))
+  deduplicate(keyFn?: ((entry: T) => unknown) | undefined): GatsbyIterable<T> {
+    return new GatsbyIterable<T>(() => deduplicateSequence(this, keyFn));
   }
 
   forEach(callback: (entry: T, index: number) => unknown): void {
-    let i = 0
+    let i = 0;
     for (const value of this) {
-      callback(value, i++)
+      callback(value, i++);
     }
   }
 
@@ -73,9 +76,9 @@ export class GatsbyIterable<T> {
    */
   mergeSorted<U = T>(
     other: Iterable<U>,
-    comparator?: (a: T | U, b: T | U) => number,
+    comparator?: ((a: T | U, b: T | U) => number) | undefined,
   ): GatsbyIterable<T | U> {
-    return new GatsbyIterable(() => mergeSorted(this, other, comparator))
+    return new GatsbyIterable(() => mergeSorted(this, other, comparator));
   }
 
   /**
@@ -85,9 +88,9 @@ export class GatsbyIterable<T> {
    */
   intersectSorted<U = T>(
     other: Iterable<U>,
-    comparator?: (a: T | U, b: T | U) => number,
+    comparator?: ((a: T | U, b: T | U) => number) | undefined,
   ): GatsbyIterable<T | U> {
-    return new GatsbyIterable(() => intersectSorted(this, other, comparator))
+    return new GatsbyIterable(() => intersectSorted(this, other, comparator));
   }
 
   /**
@@ -99,8 +102,10 @@ export class GatsbyIterable<T> {
    *
    * If comparator is not set, uses strict === comparison
    */
-  deduplicateSorted(comparator?: (a: T, b: T) => number): GatsbyIterable<T> {
-    return new GatsbyIterable<T>(() => deduplicateSorted(this, comparator))
+  deduplicateSorted(
+    comparator?: ((a: T, b: T) => number) | undefined,
+  ): GatsbyIterable<T> {
+    return new GatsbyIterable<T>(() => deduplicateSorted(this, comparator));
   }
 }
 
@@ -109,23 +114,23 @@ export class GatsbyIterable<T> {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isIterable(obj: unknown): obj is Iterable<any> {
-  if (typeof obj !== `object` || obj === null) {
-    return false
+  if (typeof obj !== "object" || obj === null) {
+    return false;
   }
-  return typeof obj[Symbol.iterator] === `function`
+  return typeof obj[Symbol.iterator] === "function";
 }
 
 export function isNonArrayIterable<T>(value: unknown): value is Iterable<T> {
-  return isIterable(value) && !Array.isArray(value)
+  return isIterable(value) && !Array.isArray(value);
 }
 
 function* mapSequence<T, U>(
   source: Iterable<T>,
   fn: (arg: T, index: number) => U,
 ): Generator<U> {
-  let i = 0
+  let i = 0;
   for (const value of source) {
-    yield fn(value, i++)
+    yield fn(value, i++);
   }
 }
 
@@ -134,12 +139,12 @@ function* sliceSequence<T>(
   start: number,
   end: number | undefined,
 ): Generator<T> {
-  let index = -1
+  let index = -1;
   for (const item of source) {
-    index++
-    if (index < start) continue
-    if (typeof end !== `undefined` && index >= end) break
-    yield item
+    index++;
+    if (index < start) continue;
+    if (typeof end !== "undefined" && index >= end) break;
+    yield item;
   }
 }
 
@@ -149,7 +154,7 @@ function* filterSequence<T>(
 ): Generator<T> {
   for (const value of source) {
     if (predicate(value)) {
-      yield value
+      yield value;
     }
   }
 }
@@ -159,25 +164,25 @@ function* concatSequence<T, U>(
   second: Iterable<U>,
 ): Generator<U | T> {
   for (const value of first) {
-    yield value
+    yield value;
   }
   for (const value of second) {
-    yield value
+    yield value;
   }
 }
 
 function* deduplicateSequence<T>(
   source: Iterable<T>,
-  keyFn?: (entry: T) => unknown,
+  keyFn?: ((entry: T) => unknown) | undefined,
 ): Generator<T> {
   // TODO: this can be potentially improved by using bloom filters?
-  const registered = new Set<unknown>()
+  const registered = new Set<unknown>();
 
   for (const current of source) {
-    const key = keyFn ? keyFn(current) : current
+    const key = keyFn ? keyFn(current) : current;
     if (!registered.has(key)) {
-      registered.add(key)
-      yield current
+      registered.add(key);
+      yield current;
     }
   }
 }
@@ -186,12 +191,12 @@ function* deduplicateSorted<T>(
   source: Iterable<T>,
   comparator: (a: T, b: T) => number = defaultComparator,
 ): Generator<T> {
-  let prev
+  let prev;
   for (const current of source) {
-    if (typeof prev === `undefined` || comparator(prev, current) !== 0) {
-      yield current
+    if (typeof prev === "undefined" || comparator(prev, current) !== 0) {
+      yield current;
     }
-    prev = current
+    prev = current;
   }
 }
 
@@ -201,33 +206,33 @@ function* mergeSorted<T, U = T>(
   secondSorted: Iterable<U>,
   comparator: (a: T | U, b: T | U) => number = defaultComparator,
 ): Generator<T | U> {
-  const iter1 = firstSorted[Symbol.iterator]()
-  const iter2 = secondSorted[Symbol.iterator]()
+  const iter1 = firstSorted[Symbol.iterator]();
+  const iter2 = secondSorted[Symbol.iterator]();
   try {
-    let a = iter1.next()
-    let b = iter2.next()
+    let a = iter1.next();
+    let b = iter2.next();
     while (!a.done && !b.done) {
       if (comparator(a.value, b.value) <= 0) {
-        yield a.value
-        a = iter1.next()
+        yield a.value;
+        a = iter1.next();
       } else {
-        yield b.value
-        b = iter2.next()
+        yield b.value;
+        b = iter2.next();
       }
     }
     while (!a.done) {
-      yield a.value
-      a = iter1.next()
+      yield a.value;
+      a = iter1.next();
     }
     while (!b.done) {
-      yield b.value
-      b = iter2.next()
+      yield b.value;
+      b = iter2.next();
     }
   } finally {
     // If generator is exited early, make sure to close iterators too
     // See https://raganwald.com/2017/07/22/closing-iterables-is-a-leaky-abstraction.html#more-about-closing-iterators-explicitly
-    if (typeof iter1.return === `function`) iter1.return()
-    if (typeof iter2.return === `function`) iter2.return()
+    if (typeof iter1.return === "function") iter1.return();
+    if (typeof iter2.return === "function") iter2.return();
   }
 }
 
@@ -236,35 +241,35 @@ function* intersectSorted<T, U = T>(
   secondSorted: Iterable<U>,
   comparator: (a: T | U, b: T | U) => number = defaultComparator,
 ): Generator<T> {
-  const iter1 = firstSorted[Symbol.iterator]()
-  const iter2 = secondSorted[Symbol.iterator]()
+  const iter1 = firstSorted[Symbol.iterator]();
+  const iter2 = secondSorted[Symbol.iterator]();
   try {
-    let a = iter1.next()
-    let b = iter2.next()
+    let a = iter1.next();
+    let b = iter2.next();
 
     while (!a.done && !b.done) {
-      const eq = comparator(a.value, b.value)
+      const eq = comparator(a.value, b.value);
 
       if (eq < 0) {
         // a < b
-        a = iter1.next()
+        a = iter1.next();
       } else if (eq > 0) {
         // a > b
-        b = iter2.next()
+        b = iter2.next();
       } else {
-        yield a.value
-        a = iter1.next()
+        yield a.value;
+        a = iter1.next();
       }
     }
   } finally {
-    if (typeof iter1.return === `function`) iter1.return()
-    if (typeof iter2.return === `function`) iter2.return()
+    if (typeof iter1.return === "function") iter1.return();
+    if (typeof iter2.return === "function") iter2.return();
   }
 }
 
 function defaultComparator<T, U = T>(a: T | U, b: T | U): number {
   if (a === b) {
-    return 0
+    return 0;
   }
-  return a > b ? 1 : -1
+  return a > b ? 1 : -1;
 }

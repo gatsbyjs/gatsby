@@ -1,22 +1,24 @@
 import {
   createDbQueriesFromObject,
-  DbQuery,
+  type DbQuery,
   getFilterStatement,
-} from "../../../common/query"
+} from "../../../common/query";
 import {
   getIndexRanges,
   BinaryInfinityPositive,
   BinaryInfinityNegative,
-} from "../filter-using-index"
-import { IIndexMetadata, undefinedSymbol } from "../create-index"
+  type IFilterContext,
+} from "../filter-using-index";
+import { type IIndexMetadata, undefinedSymbol } from "../create-index";
 
-const undefinedNextEdge = [undefinedSymbol, BinaryInfinityPositive]
+const undefinedNextEdge = [undefinedSymbol, BinaryInfinityPositive];
 
-describe(`getIndexRanges`, () => {
-  describe(`Ranges on a single field`, () => {
+describe("getIndexRanges", () => {
+  describe("Ranges on a single field", () => {
     // Each row is:
     // [filter, expected ranges, expected used predicates]
     // if expected used predicates not set - expecting the first from filter
+    // @ts-ignore
     test.each([
       [{ $eq: 1 }, [{ start: [1], end: [[1, BinaryInfinityPositive]] }]],
       [{ $eq: -1 }, [{ start: [-1], end: [[-1, BinaryInfinityPositive]] }]],
@@ -64,19 +66,19 @@ describe(`getIndexRanges`, () => {
             end: [[10, BinaryInfinityPositive]],
           },
         ],
-        [`$gt`, `$lte`],
+        ["$gt", "$lte"],
       ],
       [
         { $gt: 6, $lt: 10 },
         [{ start: [[6, BinaryInfinityPositive]], end: [10] }],
-        [`$gt`, `$lt`],
+        ["$gt", "$lt"],
       ],
       [
         { $gte: 6, $lte: 10 },
         [{ start: [6], end: [[10, BinaryInfinityPositive]] }],
-        [`$gte`, `$lte`],
+        ["$gte", "$lte"],
       ],
-      [{ $gte: 6, $lt: 10 }, [{ start: [6], end: [10] }], [`$gte`, `$lt`]],
+      [{ $gte: 6, $lt: 10 }, [{ start: [6], end: [10] }], ["$gte", "$lt"]],
       [
         // Returns empty result in lmdb
         { $lt: 5, $gt: 5 },
@@ -86,7 +88,7 @@ describe(`getIndexRanges`, () => {
             end: [5],
           },
         ],
-        [`$gt`, `$lt`],
+        ["$gt", "$lt"],
       ],
       [
         { $ne: 1 },
@@ -201,7 +203,7 @@ describe(`getIndexRanges`, () => {
             end: [[1, BinaryInfinityPositive]],
           },
         ],
-        [`$eq`],
+        ["$eq"],
       ],
       [
         { $in: [1, 2], $lte: 10, $gte: 6 },
@@ -215,137 +217,147 @@ describe(`getIndexRanges`, () => {
             end: [[2, BinaryInfinityPositive]],
           },
         ],
-        [`$in`],
+        ["$in"],
       ],
-    ])(`%o`, (filter, expectedRange, expectedUsed = []) => {
-      const dbQueries = createDbQueriesFromObject({ field: filter })
+    ])("%o", (filter, expectedRange, expectedUsed: Array<string> = []) => {
+      const dbQueries = createDbQueriesFromObject({ field: filter });
       const context = createContext({
-        indexMetadata: { keyFields: [[`field`, 1]] },
+        indexMetadata: { keyFields: [["field", 1]] },
         dbQueries,
-      })
-      const ranges = getIndexRanges(context)
-      expect(ranges).toEqual(expectedRange)
+      });
+      const ranges = getIndexRanges(context);
+      expect(ranges).toEqual(expectedRange);
 
       if (expectedUsed.length) {
-        const expectedDbQueries = dbQueries.find(q =>
-          expectedUsed.includes(getFilterStatement(q).comparator)
-        )
-        expect(context.usedQueries.size).toEqual(expectedUsed.length)
-        expect(context.usedQueries).toContain(expectedDbQueries)
+        const expectedDbQueries = dbQueries.find((q) =>
+          expectedUsed.includes(getFilterStatement(q).comparator),
+        );
+        expect(context.usedQueries.size).toEqual(expectedUsed.length);
+        expect(context.usedQueries).toContain(expectedDbQueries);
       } else {
-        expect(context.usedQueries.size).toEqual(1)
-        expect(context.usedQueries).toContain(dbQueries[0])
+        expect(context.usedQueries.size).toEqual(1);
+        expect(context.usedQueries).toContain(dbQueries[0]);
       }
-    })
+    });
 
-    it(`does not support $ne with multiKey indexes`, () => {
+    it("does not support $ne with multiKey indexes", () => {
       const context = createContext({
         indexMetadata: {
-          keyFields: [[`field`, 1]],
-          multiKeyFields: [`field`],
+          keyFields: [["field", 1]],
+          multiKeyFields: ["field"],
         },
         dbQueries: createDbQueriesFromObject({ field: { $ne: 1 } }),
-      })
-      const ranges = getIndexRanges(context)
-      expect(ranges).toEqual([])
-      expect(context.usedQueries.size).toEqual(0)
-    })
+      });
+      const ranges = getIndexRanges(context);
+      expect(ranges).toEqual([]);
+      expect(context.usedQueries.size).toEqual(0);
+    });
 
-    it(`does not support $nin with multiKey indexes`, () => {
-      const dbQueries = createDbQueriesFromObject({ field: { $nin: [1] } })
+    it("does not support $nin with multiKey indexes", () => {
+      const dbQueries = createDbQueriesFromObject({ field: { $nin: [1] } });
       const context = createContext({
         indexMetadata: {
-          keyFields: [[`field`, 1]],
-          multiKeyFields: [`field`],
+          keyFields: [["field", 1]],
+          multiKeyFields: ["field"],
         },
         dbQueries,
-      })
-      const ranges = getIndexRanges(context)
-      expect(ranges).toEqual([])
-      expect(context.usedQueries.size).toEqual(0)
-    })
-  })
+      });
+      const ranges = getIndexRanges(context);
+      expect(ranges).toEqual([]);
+      expect(context.usedQueries.size).toEqual(0);
+    });
+  });
 
-  describe(`Ranges on two fields`, () => {
+  describe("Ranges on two fields", () => {
     // Each row is:
     // [filters, expected ranges, expected used predicates]
     // if expected used predicates not set - expecting the first from each field filter
+    // @ts-ignore
     test.each([
       [
-        { foo: { $eq: 1 }, bar: { $eq: `bar` } },
+        { foo: { $eq: 1 }, bar: { $eq: "bar" } },
         [
           {
-            start: [1, `bar`],
-            end: [1, [`bar`, BinaryInfinityPositive]],
+            start: [1, "bar"],
+            end: [1, ["bar", BinaryInfinityPositive]],
           },
         ],
       ],
       [
-        { foo: { $eq: 1, $gt: 2 }, bar: { $in: [`bar`, `baz`], $lt: `foo` } },
+        { foo: { $eq: 1, $gt: 2 }, bar: { $in: ["bar", "baz"], $lt: "foo" } },
         [
           {
-            start: [1, `bar`],
-            end: [1, [`bar`, BinaryInfinityPositive]],
+            start: [1, "bar"],
+            end: [1, ["bar", BinaryInfinityPositive]],
           },
           {
-            start: [1, `baz`],
-            end: [1, [`baz`, BinaryInfinityPositive]],
+            start: [1, "baz"],
+            end: [1, ["baz", BinaryInfinityPositive]],
           },
         ],
-        { foo: [`$eq`], bar: [`$in`] },
+        { foo: ["$eq"], bar: ["$in"] },
       ],
     ])(
-      `%o`,
+      "%o",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (filters, expectedRange, expectedUsed: any = { foo: [], bar: [] }) => {
-        const dbQueries = createDbQueriesFromObject(filters)
+        const dbQueries = createDbQueriesFromObject(filters);
         const context = createContext({
           indexMetadata: {
             keyFields: [
-              [`foo`, 1],
-              [`bar`, 1],
+              ["foo", 1],
+              ["bar", 1],
             ],
           },
           dbQueries,
-        })
-        const ranges = getIndexRanges(context)
-        expect(ranges).toEqual(expectedRange)
+        });
+        const ranges = getIndexRanges(context);
+        expect(ranges).toEqual(expectedRange);
 
         if (expectedUsed.foo.length) {
-          const expectedDbQuery1 = dbQueries.find(q =>
-            expectedUsed.foo.includes(getFilterStatement(q).comparator)
-          )
-          const expectedDbQuery2 = dbQueries.find(q =>
-            expectedUsed.bar.includes(getFilterStatement(q).comparator)
-          )
+          const expectedDbQuery1 = dbQueries.find((q) =>
+            expectedUsed.foo.includes(getFilterStatement(q).comparator),
+          );
+          const expectedDbQuery2 = dbQueries.find((q) =>
+            expectedUsed.bar.includes(getFilterStatement(q).comparator),
+          );
           expect(context.usedQueries.size).toEqual(
-            expectedUsed.foo.length + expectedUsed.bar.length
-          )
-          expect(context.usedQueries).toContain(expectedDbQuery1)
-          expect(context.usedQueries).toContain(expectedDbQuery2)
+            expectedUsed.foo.length + expectedUsed.bar.length,
+          );
+          expect(context.usedQueries).toContain(expectedDbQuery1);
+          expect(context.usedQueries).toContain(expectedDbQuery2);
         } else {
-          expect(context.usedQueries.size).toEqual(2)
-          expect(context.usedQueries).toContain(dbQueries[0])
-          expect(context.usedQueries).toContain(dbQueries[1])
+          expect(context.usedQueries.size).toEqual(2);
+          expect(context.usedQueries).toContain(dbQueries[0]);
+          expect(context.usedQueries).toContain(dbQueries[1]);
         }
-      }
-    )
-  })
+      },
+    );
+  });
 
   function createContext({
     indexMetadata,
     dbQueries,
   }: {
-    indexMetadata: Partial<IIndexMetadata>
-    dbQueries: Array<DbQuery>
-  }): any {
+    indexMetadata: Partial<IIndexMetadata>;
+    dbQueries: Array<DbQuery>;
+  }): IFilterContext {
     return {
+      usedLimit: 0,
+      usedSkip: 0,
       indexMetadata: {
+        keyPrefix: "",
+        stats: {
+          keyCount: 0,
+          itemCount: 0,
+          maxKeysPerItem: 0,
+        },
         keyFields: [],
         multiKeyFields: [],
         ...indexMetadata,
       },
       dbQueries,
       usedQueries: new Set(),
-    }
+    };
   }
-})
+});

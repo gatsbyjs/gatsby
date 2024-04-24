@@ -1,5 +1,5 @@
-import { runApiSteps } from "./utils/run-steps"
-import * as steps from "./steps"
+import { runApiSteps } from "./utils/run-steps";
+import * as steps from "./steps";
 
 export const onPluginInit = runApiSteps(
   [
@@ -8,15 +8,15 @@ export const onPluginInit = runApiSteps(
     steps.setRequestHeaders,
     steps.hideAuthPluginOptions,
   ],
-  `onPluginInit`,
-)
+  "onPluginInit",
+);
 
 export const onPreBootstrap = runApiSteps(
   [steps.restoreAuthPluginOptions],
-  `onPreBootstrap`,
-)
+  "onPreBootstrap",
+);
 
-export const pluginOptionsSchema = steps.pluginOptionsSchema
+export const pluginOptionsSchema = steps.pluginOptionsSchema;
 
 export const createSchemaCustomization = runApiSteps(
   [
@@ -26,8 +26,8 @@ export const createSchemaCustomization = runApiSteps(
     steps.createSchemaCustomization,
     steps.addRemoteFileAllowedUrl,
   ],
-  `createSchemaCustomization`,
-)
+  "createSchemaCustomization",
+);
 
 export const sourceNodes = runApiSteps(
   [
@@ -36,26 +36,26 @@ export const sourceNodes = runApiSteps(
     steps.sourceNodes,
     steps.setImageNodeIdCache,
   ],
-  `sourceNodes`,
-)
+  "sourceNodes",
+);
 
 export const onPreExtractQueries = runApiSteps(
   [steps.onPreExtractQueriesInvokeLeftoverPreviewCallbacks],
-  `onPreExtractQueries`,
-)
+  "onPreExtractQueries",
+);
 
 export const onPostBuild = runApiSteps(
   [steps.setImageNodeIdCache, steps.logPostBuildWarnings],
-  `onPostBuild`,
-)
+  "onPostBuild",
+);
 
 export const onCreatePage = runApiSteps(
   [
     steps.onCreatepageSavePreviewNodeIdToPageDependency,
     steps.onCreatePageRespondToPreviewStatusQuery,
   ],
-  `onCreatePage`,
-)
+  "onCreatePage",
+);
 
 export const onCreateDevServer = runApiSteps(
   [
@@ -64,5 +64,5 @@ export const onCreateDevServer = runApiSteps(
     steps.logPostBuildWarnings,
     steps.startPollingForContentUpdates,
   ],
-  `onCreateDevServer`,
-)
+  "onCreateDevServer",
+);

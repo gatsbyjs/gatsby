@@ -1,34 +1,34 @@
-import type { CreateResolversArgs } from "gatsby"
-import { getGatsbyImageFieldConfig } from "gatsby-plugin-image/graphql-utils"
+import type { CreateResolversArgs } from "gatsby";
+import { getGatsbyImageFieldConfig } from "gatsby-plugin-image/graphql-utils";
 
-import { shopifyTypes } from "./shopify-types"
-import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data"
+import { shopifyTypes } from "./shopify-types";
+import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data";
 
 export function createResolvers(
   gatsbyApi: CreateResolversArgs,
   pluginOptions: IShopifyPluginOptions,
 ): void {
-  const { createResolvers, cache } = gatsbyApi
+  const { createResolvers, cache } = gatsbyApi;
   const {
     downloadImages,
     typePrefix,
     shopifyConnections: connections,
-  } = pluginOptions
+  } = pluginOptions;
 
   if (!downloadImages) {
     createResolvers({
       [`${typePrefix}ShopifyImage`]: {
         gatsbyImageData: {
           ...getGatsbyImageFieldConfig(makeResolveGatsbyImageData(cache)),
-          type: `JSON`, // Because gatsbyImageData will be undefined for GIFs it must be optional
+          type: "JSON", // Because gatsbyImageData will be undefined for GIFs it must be optional
         },
       },
-    })
+    });
   }
 
   // Attach the metafield resolver to all types with a metafields field
   for (const [type, value] of Object.entries(shopifyTypes)) {
-    if (value.coupledNodeFields?.includes(`metafields___NODE`)) {
+    if (value.coupledNodeFields?.includes("metafields___NODE")) {
       // Only include the resolver if the type is included in the build
       if (!value.optionalKey || connections.includes(value.optionalKey)) {
         createResolvers({
@@ -39,8 +39,8 @@ export function createResolvers(
                 args: { key: string; namespace: string },
                 context: {
                   nodeModel: {
-                    findOne: (object: unknown) => IShopifyNode | undefined
-                  }
+                    findOne: (object: unknown) => IShopifyNode | undefined;
+                  };
                 },
               ) =>
                 context.nodeModel.findOne({
@@ -55,7 +55,7 @@ export function createResolvers(
                 }),
             },
           },
-        })
+        });
       }
     }
   }

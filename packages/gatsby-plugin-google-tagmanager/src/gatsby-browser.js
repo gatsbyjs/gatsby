@@ -1,46 +1,46 @@
-const listOfMetricsSend = new Set()
+const listOfMetricsSend = new Set();
 
 function debounce(fn, timeout) {
-  let timer = null
+  let timer = null;
 
   return function (...args) {
     if (timer) {
-      clearTimeout(timer)
+      clearTimeout(timer);
     }
 
-    timer = setTimeout(fn, timeout, ...args)
-  }
+    timer = setTimeout(fn, timeout, ...args);
+  };
 }
 
-function sendWebVitals(dataLayerName = `dataLayer`) {
-  const win = window
+function sendWebVitals(dataLayerName = "dataLayer") {
+  const win = window;
 
   function sendData(data) {
     if (listOfMetricsSend.has(data.name)) {
-      return
+      return;
     }
-    listOfMetricsSend.add(data.name)
+    listOfMetricsSend.add(data.name);
 
-    sendToGTM(data, win[dataLayerName])
+    sendToGTM(data, win[dataLayerName]);
   }
 
-  return import(`web-vitals/base`).then(({ getLCP, getFID, getCLS }) => {
-    const debouncedCLS = debounce(sendData, 3000)
+  return import("web-vitals/base").then(({ getLCP, getFID, getCLS }) => {
+    const debouncedCLS = debounce(sendData, 3000);
     // we don't need to debounce FID - we send it when it happens
-    const debouncedFID = sendData
+    const debouncedFID = sendData;
     // LCP can occur multiple times so we debounce it
-    const debouncedLCP = debounce(sendData, 3000)
+    const debouncedLCP = debounce(sendData, 3000);
 
     // With the true flag, we measure all previous occurences too, in case we start listening to late.
-    getCLS(debouncedCLS, true)
-    getFID(debouncedFID, true)
-    getLCP(debouncedLCP, true)
-  })
+    getCLS(debouncedCLS, true);
+    getFID(debouncedFID, true);
+    getLCP(debouncedLCP, true);
+  });
 }
 
 function sendToGTM({ name, value, id }, dataLayer) {
   dataLayer.push({
-    event: `core-web-vitals`,
+    event: "core-web-vitals",
     webVitalsMeasurement: {
       name: name,
       // The `id` value will be unique to the current page load. When sending
@@ -51,36 +51,36 @@ function sendToGTM({ name, value, id }, dataLayer) {
       // Google Analytics metrics must be integers, so the value is rounded.
       // For CLS the value is first multiplied by 1000 for greater precision
       // (note: increase the multiplier for greater precision if needed).
-      value: Math.round(name === `CLS` ? value * 1000 : value),
+      value: Math.round(name === "CLS" ? value * 1000 : value),
     },
-  })
+  });
 }
 
 export function onRouteUpdate(_, pluginOptions) {
   if (
-    process.env.NODE_ENV === `production` ||
+    process.env.NODE_ENV === "production" ||
     pluginOptions.includeInDevelopment
   ) {
     // wrap inside a timeout to ensure the title has properly been changed
     setTimeout(() => {
       const data = pluginOptions.dataLayerName
         ? window[pluginOptions.dataLayerName]
-        : window.dataLayer
+        : window.dataLayer;
       const eventName = pluginOptions.routeChangeEventName
         ? pluginOptions.routeChangeEventName
-        : `gatsby-route-change`
+        : "gatsby-route-change";
 
-      data.push({ event: eventName })
-    }, 50)
+      data.push({ event: eventName });
+    }, 50);
   }
 }
 
 export function onInitialClientRender(_, pluginOptions) {
   // we only load the polyfill in production so we can't enable it in development
   if (
-    process.env.NODE_ENV === `production` &&
+    process.env.NODE_ENV === "production" &&
     pluginOptions.enableWebVitalsTracking
   ) {
-    sendWebVitals(pluginOptions.dataLayerName)
+    sendWebVitals(pluginOptions.dataLayerName);
   }
 }

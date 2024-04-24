@@ -1,25 +1,25 @@
-import { getConfigStore } from "gatsby-core-utils"
-import reporter from "gatsby-cli/lib/reporter"
-import chalk from "chalk"
-import telemetry from "gatsby-telemetry"
+import { getConfigStore } from "gatsby-core-utils";
+import reporter from "gatsby-cli/lib/reporter";
+import chalk from "chalk";
+import telemetry from "gatsby-telemetry";
 
-type CancelExperimentNoticeCallback = () => void
+type CancelExperimentNoticeCallback = () => void;
 
 export type CancelExperimentNoticeCallbackOrUndefined =
   | CancelExperimentNoticeCallback
-  | undefined
+  | undefined;
 
-const ONE_DAY = 24 * 60 * 60 * 1000
+const ONE_DAY = 24 * 60 * 60 * 1000;
 
 type INoticeObject = {
-  noticeText: string
-  umbrellaLink: string
-  experimentIdentifier: string
-}
+  noticeText: string;
+  umbrellaLink: string;
+  experimentIdentifier: string;
+};
 
-const noticesToShow: Array<INoticeObject> = []
+const noticesToShow: Array<INoticeObject> = [];
 function configStoreKey(experimentIdentifier): string {
-  return `lastExperimentNotice.${experimentIdentifier}`
+  return `lastExperimentNotice.${experimentIdentifier}`;
 }
 
 export function showExperimentNoticeAfterTimeout(
@@ -31,50 +31,50 @@ export function showExperimentNoticeAfterTimeout(
 ): CancelExperimentNoticeCallbackOrUndefined {
   const lastTimeWeShowedNotice = getConfigStore().get(
     configStoreKey(experimentIdentifier),
-  )
+  );
 
   if (lastTimeWeShowedNotice) {
     if (Date.now() - lastTimeWeShowedNotice < minimumIntervalBetweenNoticesMs) {
-      return undefined
+      return undefined;
     }
   }
 
   const noticeTimeout = setTimeout(() => {
-    noticesToShow.push({ noticeText, umbrellaLink, experimentIdentifier })
-  }, showNoticeAfterMs)
+    noticesToShow.push({ noticeText, umbrellaLink, experimentIdentifier });
+  }, showNoticeAfterMs);
 
   return function clearNoticeTimeout(): void {
-    clearTimeout(noticeTimeout)
-  }
+    clearTimeout(noticeTimeout);
+  };
 }
 
 export function createNoticeMessage(notices): string {
   let message = `\nHi from the Gatsby maintainers! Based on what we see in your site, these coming
 features may help you. All of these can be enabled within gatsby-config.js via
-flags (samples below)`
+flags (samples below)`;
 
   notices.forEach(
     (notice) =>
       (message += `
 
 ${chalk.bgBlue.bold(notice.experimentIdentifier)} (${notice.umbrellaLink}), ${notice.noticeText}\n`),
-  )
+  );
 
-  return message
+  return message;
 }
 
 export function showExperimentNotices(): void {
   if (noticesToShow.length > 0) {
-    telemetry.trackCli(`InviteToTryExperiment`)
+    telemetry.trackCli("InviteToTryExperiment");
     // Store that we're showing the invite.
     noticesToShow.forEach((notice) =>
       getConfigStore().set(
         configStoreKey(notice.experimentIdentifier),
         Date.now(),
       ),
-    )
+    );
 
-    const message = createNoticeMessage(noticesToShow)
-    reporter.info(message)
+    const message = createNoticeMessage(noticesToShow);
+    reporter.info(message);
   }
 }

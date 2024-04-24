@@ -1,38 +1,38 @@
-import { getStore } from "~/store"
-import { camelCase } from "lodash"
-import { findNamedTypeName } from "../create-schema-customization/helpers"
+import { getStore } from "~/store";
+import { camelCase } from "lodash";
+import { findNamedTypeName } from "../create-schema-customization/helpers";
 
-export const getTypeInfoBySingleName = singleName => {
-  const { typeMap } = getStore().getState().remoteSchema
+export const getTypeInfoBySingleName = (singleName) => {
+  const { typeMap } = getStore().getState().remoteSchema;
 
   const rootField = typeMap
-    .get(`RootQuery`)
-    .fields.find(field => field.name === singleName)
+    .get("RootQuery")
+    .fields.find((field) => field.name === singleName);
 
-  const typeName = rootField.type.name || findNamedTypeName(rootField.type)
+  const typeName = rootField.type.name || findNamedTypeName(rootField.type);
 
-  const type = typeMap.get(typeName)
+  const type = typeMap.get(typeName);
 
-  return type
-}
+  return type;
+};
 
-export const getQueryInfoBySingleFieldName = singleName => {
-  const { nodeQueries } = getStore().getState().remoteSchema
+export const getQueryInfoBySingleFieldName = (singleName) => {
+  const { nodeQueries } = getStore().getState().remoteSchema;
   const queryInfo = Object.values(nodeQueries).find(
-    q =>
+    (q) =>
       q.typeInfo.singularName === singleName ||
-      q.typeInfo.singularName === camelCase(singleName)
-  )
+      q.typeInfo.singularName === camelCase(singleName),
+  );
 
-  return queryInfo
-}
+  return queryInfo;
+};
 
-export const getQueryInfoByTypeName = typeName => {
-  const { nodeQueries } = getStore().getState().remoteSchema
+export const getQueryInfoByTypeName = (typeName) => {
+  const { nodeQueries } = getStore().getState().remoteSchema;
 
   const queryInfo = Object.values(nodeQueries).find(
-    q => q.typeInfo.nodesTypeName === typeName
-  )
+    (q) => q.typeInfo.nodesTypeName === typeName,
+  );
 
-  return queryInfo
-}
+  return queryInfo;
+};

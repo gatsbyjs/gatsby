@@ -4,4 +4,4 @@ export const fontWeights = {
   bold: 700,
   extraBold: 800,
   heading: 700,
-}
+};

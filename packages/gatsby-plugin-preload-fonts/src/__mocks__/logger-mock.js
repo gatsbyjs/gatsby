@@ -4,12 +4,12 @@ const logLevels = {
   warning: 2,
   error: 3,
   silent: 4,
-}
+};
 
 function noop() {}
 
-module.exports = (level = `info`) => {
-  const logLevel = logLevels[level]
+module.exports = (level = "info") => {
+  const logLevel = logLevels[level];
 
   return {
     setAdapter: jest.fn(),
@@ -23,5 +23,5 @@ module.exports = (level = `info`) => {
     fatal: jest.fn(),
     ask: jest.fn(),
     confirm: jest.fn(),
-  }
-}
+  };
+};

@@ -1,4 +1,4 @@
-import * as fs from "fs"
+import * as fs from "fs";
 
 /**
  * Check if the icon exists on the filesystem
@@ -7,12 +7,12 @@ import * as fs from "fs"
  */
 export function doesIconExist(srcIcon) {
   try {
-    return fs.statSync(srcIcon).isFile()
+    return fs.statSync(srcIcon).isFile();
   } catch (e) {
-    if (e.code !== `ENOENT`) {
-      throw e
+    if (e.code !== "ENOENT") {
+      throw e;
     }
 
-    return false
+    return false;
   }
 }

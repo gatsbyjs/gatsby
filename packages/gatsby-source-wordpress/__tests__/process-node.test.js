@@ -12,13 +12,13 @@ import {
 import { createStore, asyncLocalStorage } from "../dist/store"
 
 
-const store = { store: createStore(), key: `test` }
+const store = { store: createStore(), key: "test" }
 
 const withGlobalStore = fn => () => asyncLocalStorage.run(store, fn)
 
-const wpUrl = `wp.fakesite.com`
+const wpUrl = "wp.fakesite.com"
 
-test(`HTML image transformation regex matches images`, async () => {
+test("HTML image transformation regex matches images", async () => {
   const nodeString = `<img src=\\"https://${wpUrl}/wp-content/uploads/2020/01/©SDM-Yep-©Hi-000-Header.jpg\\" />
 
   <img src=\\"http://${wpUrl}/wp-content/uploads/2020/01/©SDM-Yep-©Hi-000-Header.jpg\\" />
@@ -37,7 +37,7 @@ test(`HTML image transformation regex matches images`, async () => {
   expect(imgTagMatches.length).toBe(3)
 })
 
-test(`HTML link transformation regex matches links`, withGlobalStore(async () => {
+test("HTML link transformation regex matches links", withGlobalStore(async () => {
   const nodeString = `<a href=\\"https://${wpUrl}/wp-content/uploads/2020/01/©SDM-Yep-©Hi-000-Header.jpg\\" />Not a transformable link</a>
 
   <a href=\\"https://other-site.com/hi\\" />Not a transformable link</a>
@@ -54,7 +54,7 @@ test(`HTML link transformation regex matches links`, withGlobalStore(async () =>
   expect(matches.length).toBe(2)
 }))
 
-test(`Search and replace node strings using regex matches`, withGlobalStore(async () => {
+test("Search and replace node strings using regex matches", withGlobalStore(async () => {
   const nodeString = `Some stuff in a random string
 
   A new line with some stuff!
@@ -63,11 +63,11 @@ test(`Search and replace node strings using regex matches`, withGlobalStore(asyn
 
   const result = searchAndReplaceNodeStrings({
     nodeString,
-    node: { __typename: `FakeTypeName`, id: `cG9zdDo0OQ==` },
+    node: { __typename: "FakeTypeName", id: "cG9zdDo0OQ==" },
     pluginOptions: {
       searchAndReplace: [
-        { search: /(S|s)ome stuff/gm, replace: `some other thing` },
-        { search: `https://old-site.com`, replace: `https://new-site.com` },
+        { search: /(S|s)ome stuff/gm, replace: "some other thing" },
+        { search: "https://old-site.com", replace: "https://new-site.com" },
       ]
     }
   })
@@ -79,25 +79,25 @@ test(`Search and replace node strings using regex matches`, withGlobalStore(asyn
   We need to test some <a href=\\"https://new-site.com/hi\\" />link</a> as well!`)
 }))
 
-jest.mock(`../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js`, () => {
+jest.mock("../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js", () => {
   return {
     __esModule: true,
-    ...jest.requireActual(`../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js`),
-    default: jest.fn(() => require(`./fixtures/media`).referencedMediaItems)
+    ...jest.requireActual("../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js"),
+    default: jest.fn(() => require("./fixtures/media").referencedMediaItems)
   }
 })
 
 
-test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, withGlobalStore(async () => {
+test("Gatsby Image service works in html fields via replaceNodeHtmlImages", withGlobalStore(async () => {
   const node = {
-    content: `\n<p>Welcome to WordPress. This is your first post. Edit or deleteit, then start writing!</p>\n\n\n\n<p></p>\n\n\n\n<figureclass="wp-block-image size-large"><img loading="lazy" width="1024" height="768" src="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg" alt=""class="wp-image-115" srcset="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg 1024w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-300x225.jpg 300w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-768x576.jpg 768w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1536x1152.jpg 1536w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-2048x1536.jpg 2048w"sizes="(max-width: 1024px) 100vw, 1024px" /></figure>\n<figure class="wp-block-image size-large"><img src="http://wpgatsby.local/wp-content/uploads/2022/04/gaussian2.svg" alt="" class="wp-image-11836"/></figure>`,
-    id: `cG9zdDox`,
-    modifiedGmt: `2022-02-18T23:18:00`,
-    __typename: `Post`
+    content: "\n<p>Welcome to WordPress. This is your first post. Edit or deleteit, then start writing!</p>\n\n\n\n<p></p>\n\n\n\n<figureclass=\"wp-block-image size-large\"><img loading=\"lazy\" width=\"1024\" height=\"768\" src=\"http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg\" alt=\"\"class=\"wp-image-115\" srcset=\"http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg 1024w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-300x225.jpg 300w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-768x576.jpg 768w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1536x1152.jpg 1536w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-2048x1536.jpg 2048w\"sizes=\"(max-width: 1024px) 100vw, 1024px\" /></figure>\n<figure class=\"wp-block-image size-large\"><img src=\"http://wpgatsby.local/wp-content/uploads/2022/04/gaussian2.svg\" alt=\"\" class=\"wp-image-11836\"/></figure>",
+    id: "cG9zdDox",
+    modifiedGmt: "2022-02-18T23:18:00",
+    __typename: "Post"
   }
 
-  const gatsbyImageUrlPart = `/_gatsby/image`
-  const gatsbyFileUrlPart = `/_gatsby/file`
+  const gatsbyImageUrlPart = "/_gatsby/image"
+  const gatsbyFileUrlPart = "/_gatsby/file"
   const nodeString = JSON.stringify(node)
 
   const updatedNodeString = await replaceNodeHtmlImages({
@@ -110,7 +110,7 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, with
         createJobV2: jest.fn(),
       },
     },
-    wpUrl: `http://wpgatsby.local/`,
+    wpUrl: "http://wpgatsby.local/",
     pluginOptions: {
       html: {
         useGatsbyImage: true,
@@ -139,7 +139,7 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, with
         createJobV2: jest.fn(),
       },
     },
-    wpUrl: `http://wpgatsby.local/`,
+    wpUrl: "http://wpgatsby.local/",
     pluginOptions: {
       html: {
         useGatsbyImage: false

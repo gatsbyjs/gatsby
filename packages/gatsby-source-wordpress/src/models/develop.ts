@@ -1,6 +1,6 @@
-import { createModel } from "@rematch/core"
-import { inPreviewMode } from "~/steps/preview"
-import { IRootModel } from "."
+import { createModel } from "@rematch/core";
+import { inPreviewMode } from "~/steps/preview";
+import { IRootModel } from ".";
 
 const developStore = createModel<IRootModel>()({
   state: {
@@ -10,22 +10,22 @@ const developStore = createModel<IRootModel>()({
   reducers: {
     pauseRefreshPolling(state) {
       if (!inPreviewMode()) {
-        state.refreshPollingIsPaused = true
+        state.refreshPollingIsPaused = true;
       }
 
-      return state
+      return state;
     },
     resumeRefreshPolling(state) {
       if (!inPreviewMode()) {
-        state.refreshPollingIsPaused = false
+        state.refreshPollingIsPaused = false;
       }
 
-      return state
+      return state;
     },
   },
   effects: () => {
-    return {}
+    return {};
   },
-})
+});
 
-export default developStore
+export default developStore;

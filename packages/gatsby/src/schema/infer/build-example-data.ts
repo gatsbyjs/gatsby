@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { groupBy } from "lodash"
+import { groupBy } from "lodash";
 import type {
   IValueDescriptor,
   ValueType,
   ITypeMetadata,
-} from "./inference-metadata"
+} from "./inference-metadata";
 import {
   type TypeConflictReporter,
   type ITypeConflictExample,
-} from "./type-conflict-reporter"
+} from "./type-conflict-reporter";
 
 // See gatsby/src/schema/infer/inference-metadata.ts for the ValueDescriptor structs (-> typeInfo)
 
@@ -22,50 +22,50 @@ export function getExampleObject({
       path: `${typeName}.${key}`,
       descriptor: fieldMap[key],
       typeConflictReporter,
-    })
+    });
     if (key && value !== null) {
-      acc[key] = value
+      acc[key] = value;
     }
-    return acc
-  }, {})
+    return acc;
+  }, {});
 }
 
 function buildExampleValue({
   descriptor,
   typeConflictReporter,
   isArrayItem = false,
-  path = ``,
+  path = "",
 }: {
-  descriptor: IValueDescriptor
-  typeConflictReporter?: TypeConflictReporter | undefined
-  path?: string | undefined
-  isArrayItem?: boolean | undefined
+  descriptor: IValueDescriptor;
+  typeConflictReporter?: TypeConflictReporter | undefined;
+  path?: string | undefined;
+  isArrayItem?: boolean | undefined;
 }): unknown | null {
-  const [type, conflicts = false] = resolveWinnerType(descriptor)
+  const [type, conflicts = false] = resolveWinnerType(descriptor);
 
   if (conflicts && typeConflictReporter) {
     typeConflictReporter.addConflict(
       path,
       prepareConflictExamples(descriptor, isArrayItem),
-    )
+    );
   }
 
-  const typeInfo = descriptor[type]
+  const typeInfo = descriptor[type];
 
   switch (type) {
-    case `null`:
-      return null
+    case "null":
+      return null;
 
-    case `date`:
-    case `string`: {
+    case "date":
+    case "string": {
       if (isMixOfDateAndString(descriptor)) {
-        return hasOnlyEmptyStrings(descriptor) ? `1978-09-26` : `String`
+        return hasOnlyEmptyStrings(descriptor) ? "1978-09-26" : "String";
       }
-      return typeInfo.example
+      return typeInfo.example;
     }
 
-    case `array`: {
-      const { item } = typeInfo
+    case "array": {
+      const { item } = typeInfo;
       const exampleItemValue = item
         ? buildExampleValue({
             descriptor: item,
@@ -73,69 +73,69 @@ function buildExampleValue({
             typeConflictReporter,
             path,
           })
-        : null
-      return exampleItemValue === null ? null : [exampleItemValue]
+        : null;
+      return exampleItemValue === null ? null : [exampleItemValue];
     }
 
-    case `relatedNode`:
-    case `relatedNodeList`: {
-      const { nodes = {} } = typeInfo
+    case "relatedNode":
+    case "relatedNodeList": {
+      const { nodes = {} } = typeInfo;
       return {
-        multiple: type === `relatedNodeList`,
-        linkedNodes: Object.keys(nodes).filter(key => nodes[key] > 0),
-      }
+        multiple: type === "relatedNodeList",
+        linkedNodes: Object.keys(nodes).filter((key) => nodes[key] > 0),
+      };
     }
 
-    case `object`: {
-      const { dprops } = typeInfo
-      let hasKeys = false
-      const result = {}
-      Object.keys(dprops).forEach(prop => {
+    case "object": {
+      const { dprops } = typeInfo;
+      let hasKeys = false;
+      const result = {};
+      Object.keys(dprops).forEach((prop) => {
         const value = buildExampleValue({
           descriptor: dprops[prop],
           typeConflictReporter,
           path: `${path}.${prop}`,
-        })
+        });
         if (value !== null) {
-          hasKeys = true
-          result[prop] = value
+          hasKeys = true;
+          result[prop] = value;
         }
-      })
-      return hasKeys ? result : null
+      });
+      return hasKeys ? result : null;
     }
 
     default:
-      return typeInfo.example
+      return typeInfo.example;
   }
 }
 
 function resolveWinnerType(
   descriptor: IValueDescriptor,
 ): [ValueType | "null", boolean?] {
-  const candidates = possibleTypes(descriptor)
+  const candidates = possibleTypes(descriptor);
   if (candidates.length === 1) {
-    return [candidates[0]]
+    return [candidates[0]];
   }
   if (candidates.length === 2 && isMixedNumber(descriptor)) {
-    return [`float`]
+    return ["float"];
   }
   if (candidates.length === 2 && isMixOfDateAndString(descriptor)) {
-    return [hasOnlyEmptyStrings(descriptor) ? `date` : `string`]
+    return [hasOnlyEmptyStrings(descriptor) ? "date" : "string"];
   }
   if (candidates.length > 1) {
-    return [`null`, true]
+    return ["null", true];
   }
-  return [`null`]
+  return ["null"];
 }
 
 function typeNameMapper(typeName: ValueType): string {
-  if (typeName === `relatedNode`) {
-    return `string`
+  if (typeName === "relatedNode") {
+    return "string";
   }
-  if (typeName === `relatedNodeList`) {
-    return `[string]`
+  if (typeName === "relatedNodeList") {
+    return "[string]";
   }
-  return [`float`, `int`].includes(typeName) ? `number` : typeName
+  return ["float", "int"].includes(typeName) ? "number" : typeName;
 }
 
 function prepareConflictExamples(
@@ -143,72 +143,72 @@ function prepareConflictExamples(
   isArrayItem: boolean,
 ): Array<ITypeConflictExample> {
   function reportedValueMapper(typeName: ValueType): unknown {
-    if (typeName === `relatedNode`) {
-      const { nodes } = descriptor.relatedNode ?? { nodes: {} }
-      return Object.keys(nodes).find(key => nodes[key] > 0)
+    if (typeName === "relatedNode") {
+      const { nodes } = descriptor.relatedNode ?? { nodes: {} };
+      return Object.keys(nodes).find((key) => nodes[key] > 0);
     }
-    if (typeName === `relatedNodeList`) {
-      const { nodes } = descriptor.relatedNodeList ?? { nodes: {} }
-      return Object.keys(nodes).filter(key => nodes[key] > 0)
+    if (typeName === "relatedNodeList") {
+      const { nodes } = descriptor.relatedNodeList ?? { nodes: {} };
+      return Object.keys(nodes).filter((key) => nodes[key] > 0);
     }
-    if (typeName === `object`) {
+    if (typeName === "object") {
       return getExampleObject({
         typeName,
         fieldMap: descriptor!.object!.dprops,
-      })
+      });
     }
-    if (typeName === `array`) {
+    if (typeName === "array") {
       const itemValue = buildExampleValue({
         descriptor: descriptor!.array!.item,
         isArrayItem: true,
-      })
-      return itemValue === null || itemValue === undefined ? [] : [itemValue]
+      });
+      return itemValue === null || itemValue === undefined ? [] : [itemValue];
     }
-    return descriptor[typeName]?.example
+    return descriptor[typeName]?.example;
   }
 
-  const conflictingTypes = possibleTypes(descriptor)
+  const conflictingTypes = possibleTypes(descriptor);
 
   if (isArrayItem) {
     // Differentiate conflict examples by node they were first seen in.
     // See Caveats section in the header of the ./inference-metadata.ts
     const groups = groupBy(
       conflictingTypes,
-      type => descriptor[type]?.first || ``,
-    )
-    return Object.keys(groups).map(nodeId => {
+      (type) => descriptor[type]?.first || "",
+    );
+    return Object.keys(groups).map((nodeId) => {
       return {
-        type: `[${groups[nodeId].map(typeNameMapper).join(`,`)}]`,
+        type: `[${groups[nodeId].map(typeNameMapper).join(",")}]`,
         value: groups[nodeId].map(reportedValueMapper),
-      }
-    })
+      };
+    });
   }
 
-  return conflictingTypes.map(type => {
+  return conflictingTypes.map((type) => {
     return {
       type: typeNameMapper(type),
       value: reportedValueMapper(type),
-    }
-  })
+    };
+  });
 }
 
 function isMixedNumber(descriptor: IValueDescriptor): boolean {
-  const { float, int } = descriptor
-  return Boolean(float?.total) && Boolean(int?.total)
+  const { float, int } = descriptor;
+  return Boolean(float?.total) && Boolean(int?.total);
 }
 
 function isMixOfDateAndString(descriptor: IValueDescriptor): boolean {
-  const { date, string } = descriptor
-  return Boolean(date?.total) && Boolean(string?.total)
+  const { date, string } = descriptor;
+  return Boolean(date?.total) && Boolean(string?.total);
 }
 
 function hasOnlyEmptyStrings(descriptor: IValueDescriptor): boolean {
-  const { string } = descriptor
-  return string !== undefined && string?.empty === string?.total
+  const { string } = descriptor;
+  return string !== undefined && string?.empty === string?.total;
 }
 
 function possibleTypes(descriptor: IValueDescriptor = {}): Array<ValueType> {
   return Object.keys(descriptor).filter(
-    type => descriptor[type].total > 0,
-  ) as Array<ValueType>
+    (type) => descriptor[type].total > 0,
+  ) as Array<ValueType>;
 }

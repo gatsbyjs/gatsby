@@ -5,35 +5,35 @@ const {
   GraphQLString,
   GraphQLNonNull,
   GraphQLJSON,
-} = require(`gatsby/graphql`)
-const { stripIndent, oneLine } = require(`common-tags`)
+} = require("gatsby/graphql");
+const { stripIndent, oneLine } = require("common-tags");
 
 const PropDefaultValue = () =>
   new GraphQLObjectType({
-    name: `PropDefaultValue`,
+    name: "PropDefaultValue",
     fields: () => {
       return {
         value: { type: GraphQLString },
         computed: { type: GraphQLBoolean },
-      }
+      };
     },
-  })
+  });
 
 const PropTypeValue = () =>
   new GraphQLObjectType({
-    name: `PropTypeValue`,
+    name: "PropTypeValue",
     fields: () => {
       return {
         name: { type: new GraphQLNonNull(GraphQLString) },
         value: { type: GraphQLJSON },
         raw: { type: GraphQLString },
-      }
+      };
     },
-  })
+  });
 
 const Method = () =>
   new GraphQLObjectType({
-    name: `ComponentMethod`,
+    name: "ComponentMethod",
     fields: () => {
       return {
         name: { type: new GraphQLNonNull(GraphQLString) },
@@ -54,20 +54,20 @@ const Method = () =>
         params: {
           type: new GraphQLList(
             new GraphQLObjectType({
-              name: `ComponentMethodParams`,
+              name: "ComponentMethodParams",
               fields: () => {
                 return {
                   name: { type: GraphQLString },
                   type: { type: GraphQLJSON },
-                }
+                };
               },
-            })
+            }),
           ),
         },
         returns: { type: new GraphQLList(GraphQLJSON) },
-      }
+      };
     },
-  })
+  });
 
 function extendComponents() {
   return {
@@ -87,9 +87,9 @@ function extendComponents() {
     },
     methods: {
       type: new GraphQLList(Method()),
-      description: `Component methods`,
+      description: "Component methods",
     },
-  }
+  };
 }
 
 function extendProp() {
@@ -112,11 +112,11 @@ function extendProp() {
         Describes whether or not the propType is required, i.e. not \`null\`
       `,
     },
-  }
+  };
 }
 
 export default ({ type }) => {
-  if (type.name === `ComponentProp`) return extendProp()
-  if (type.name === `ComponentMetadata`) return extendComponents()
-  return {}
-}
+  if (type.name === "ComponentProp") return extendProp();
+  if (type.name === "ComponentMetadata") return extendComponents();
+  return {};
+};

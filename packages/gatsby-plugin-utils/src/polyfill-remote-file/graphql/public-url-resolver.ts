@@ -1,15 +1,15 @@
-import { generateFileUrl } from "../utils/url-generator"
+import { generateFileUrl } from "../utils/url-generator";
 import {
   dispatchLocalFileServiceJob,
   shouldDispatchLocalFileServiceJob,
-} from "../jobs/dispatchers"
-import type { Actions, Store } from "gatsby"
-import type { IRemoteFileNode, IGraphQLFieldConfigDefinition } from "../types"
+} from "../jobs/dispatchers";
+import type { Actions, Store } from "gatsby";
+import type { IRemoteFileNode, IGraphQLFieldConfigDefinition } from "../types";
 
 export function publicUrlResolver(
   source: IRemoteFileNode,
   actions: Actions,
-  store?: Store
+  store?: Store,
 ): string {
   if (shouldDispatchLocalFileServiceJob()) {
     dispatchLocalFileServiceJob(
@@ -20,8 +20,8 @@ export function publicUrlResolver(
         contentDigest: source.internal.contentDigest,
       },
       actions,
-      store
-    )
+      store,
+    );
   }
 
   return generateFileUrl(
@@ -33,18 +33,18 @@ export function publicUrlResolver(
         contentDigest: source.internal.contentDigest,
       },
     },
-    store
-  )
+    store,
+  );
 }
 
 export function generatePublicUrlFieldConfig(
   actions: Actions,
-  store?: Store
+  store?: Store,
 ): IGraphQLFieldConfigDefinition<IRemoteFileNode, string> {
   return {
-    type: `String!`,
+    type: "String!",
     resolve(source): string {
-      return publicUrlResolver(source, actions, store)
+      return publicUrlResolver(source, actions, store);
     },
-  }
+  };
 }

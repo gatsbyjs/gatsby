@@ -1,6 +1,6 @@
-import { HttpError } from "./errors"
+import { HttpError } from "./errors";
 
-const MAX_BACKOFF_MILLISECONDS = 60000
+const MAX_BACKOFF_MILLISECONDS = 60000;
 
 // TODO Update logic for handling errors (500 specifically) and update the
 // "hacky" code in createRestClient
@@ -8,7 +8,7 @@ const MAX_BACKOFF_MILLISECONDS = 60000
 export function createGraphqlClient(
   options: IShopifyPluginOptions,
 ): IGraphQLClient {
-  const url = `https://${options.storeUrl}/admin/api/${options.apiVersion}/graphql.json`
+  const url = `https://${options.storeUrl}/admin/api/${options.apiVersion}/graphql.json`;
 
   async function graphqlFetch<T>(
     query: string,
@@ -16,36 +16,36 @@ export function createGraphqlClient(
     retries = 0,
   ): Promise<T> {
     const response = await fetch(url, {
-      method: `POST`,
+      method: "POST",
       headers: {
-        "Content-Type": `application/json`,
+        "Content-Type": "application/json",
         "X-Shopify-Access-Token": options.password,
       },
       body: JSON.stringify({
         query,
         variables,
       }),
-    })
+    });
 
     if (!response.ok) {
-      const waitTime = 2 ** (retries + 1) + 500
+      const waitTime = 2 ** (retries + 1) + 500;
       if (response.status >= 500 && waitTime < MAX_BACKOFF_MILLISECONDS) {
-        await new Promise((resolve) => setTimeout(resolve, waitTime))
-        return graphqlFetch(query, variables, retries + 1)
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+        return graphqlFetch(query, variables, retries + 1);
       }
 
-      throw new HttpError(response)
+      throw new HttpError(response);
     }
 
-    const json = await response.json()
-    return json.data as T
+    const json = await response.json();
+    return json.data as T;
   }
 
-  return { request: graphqlFetch }
+  return { request: graphqlFetch };
 }
 
 export function createRestClient(options: IShopifyPluginOptions): IRestClient {
-  const baseUrl = `https://${options.storeUrl}/admin/api/${options.apiVersion}`
+  const baseUrl = `https://${options.storeUrl}/admin/api/${options.apiVersion}`;
 
   async function shopifyFetch(
     path: string,
@@ -65,22 +65,22 @@ export function createRestClient(options: IShopifyPluginOptions): IRestClient {
      * absolute URLs so we account for both, but not in a very robust
      * fashion.
      */
-    const url = path.includes(options.storeUrl) ? path : `${baseUrl}${path}`
+    const url = path.includes(options.storeUrl) ? path : `${baseUrl}${path}`;
 
-    const resp = await globalThis.fetch(url, fetchOptions)
+    const resp = await globalThis.fetch(url, fetchOptions);
 
     if (!resp.ok && retries > 0 && resp.status === 429) {
       // rate limit
-      const retryAfter = parseFloat(resp.headers.get(`Retry-After`) || ``)
-      await new Promise((resolve) => setTimeout(resolve, retryAfter))
-      return shopifyFetch(path, fetchOptions, retries - 1)
+      const retryAfter = parseFloat(resp.headers.get("Retry-After") || "");
+      await new Promise((resolve) => setTimeout(resolve, retryAfter));
+      return shopifyFetch(path, fetchOptions, retries - 1);
     }
 
-    return resp
+    return resp;
   }
 
   return {
     // @ts-ignore
     request: async (path: string): Promise<Response> => shopifyFetch(path),
-  }
+  };
 }

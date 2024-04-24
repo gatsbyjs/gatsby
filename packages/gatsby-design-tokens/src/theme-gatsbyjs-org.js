@@ -1,18 +1,18 @@
-import hex2rgba from "hex2rgba"
+import hex2rgba from "hex2rgba";
 
 import {
   theme as defaultTheme,
   colors as colorsTokens,
   space as spaceTokens,
-} from "./theme"
+} from "./theme";
 
 // gatsby-theme-ui-theme-gatsbyjs-org
 // extends gatsby-theme-ui-theme-default
 
-const darkBackground = `#131217` // meh
-const darkBorder = colorsTokens.grey[90]
-const shadowDarkBase = `19,18,23`
-const shadowDarkFlares = `0,0,0`
+const darkBackground = "#131217"; // meh
+const darkBorder = colorsTokens.grey[90];
+const shadowDarkBase = "19,18,23";
+const shadowDarkFlares = "0,0,0";
 
 // colors
 // provides a "dark" mode along the initial color mode "light"
@@ -81,8 +81,8 @@ const c = {
   },
   sidebar: {
     itemHoverBackground: hex2rgba(colorsTokens.purple[20], 0.275),
-    itemBackgroundActive: `transparent`,
-    itemBorderColor: `transparent`, // `rgba(0,0,0,0.05)`,
+    itemBackgroundActive: "transparent",
+    itemBorderColor: "transparent", // `rgba(0,0,0,0.05)`,
     activeSectionBackground: hex2rgba(colorsTokens.purple[20], 0.15),
     itemBorderActive: colorsTokens.purple[10],
   },
@@ -115,7 +115,7 @@ const c = {
     primaryBg: colorsTokens.purple[60],
     primaryText: colorsTokens.white,
     primaryBorder: colorsTokens.purple[60],
-    secondaryBg: `transparent`,
+    secondaryBg: "transparent",
     secondaryText: colorsTokens.purple[50],
     secondaryBorder: colorsTokens.purple[40],
   },
@@ -155,7 +155,7 @@ const c = {
       },
       code: {
         // ui
-        bg: `#1b191f`, // another meh
+        bg: "#1b191f", // another meh
         bgInline: darkBorder,
         border: colorsTokens.grey[90],
         lineHighlightBackground: hex2rgba(colorsTokens.purple[90], 0.25),
@@ -167,10 +167,10 @@ const c = {
         add: colorsTokens.green[50],
         comment: colorsTokens.grey[30],
         cssString: colorsTokens.orange[50],
-        invisibles: `#e0d7d1`,
+        invisibles: "#e0d7d1",
         keyword: colorsTokens.magenta[30],
         punctuation: colorsTokens.whiteFade[70],
-        regex: `#d88489`,
+        regex: "#d88489",
         remove: colorsTokens.red[40],
         selector: colorsTokens.orange[30],
         tag: colorsTokens.teal[60],
@@ -191,7 +191,7 @@ const c = {
       },
       themedInput: {
         background: darkBorder,
-        backgroundFocus: `black`,
+        backgroundFocus: "black",
         focusBorder: colorsTokens.purple[60],
         focusBoxShadow: colorsTokens.purple[60],
         icon: colorsTokens.grey[50],
@@ -206,10 +206,10 @@ const c = {
         raised: `0px 1px 2px rgba(${shadowDarkBase}, 0.08), 0px 2px 4px rgba(${shadowDarkFlares}, 0.08)`,
       },
       sidebar: {
-        itemBackgroundActive: `transparent`,
+        itemBackgroundActive: "transparent",
         activeSectionBackground: hex2rgba(colorsTokens.purple[90], 0.2),
         itemBorderActive: colorsTokens.purple[80],
-        itemBorderColor: `transparent`,
+        itemBorderColor: "transparent",
         itemHoverBackground: hex2rgba(colorsTokens.purple[90], 0.2),
       },
       ui: {
@@ -238,7 +238,7 @@ const c = {
         suggestionHighlightColor: colorsTokens.purple[20],
       },
       button: {
-        secondaryBg: `transparent`,
+        secondaryBg: "transparent",
         secondaryText: colorsTokens.purple[40],
         secondaryBorder: colorsTokens.purple[40],
       },
@@ -248,31 +248,31 @@ const c = {
       },
     },
   },
-}
+};
 
 // sizes
 const s = {
   headerHeight: spaceTokens[11],
   bannerHeight: spaceTokens[8],
   logo: spaceTokens[6],
-  pluginsSidebarWidthDefault: `21rem`,
-  pluginsSidebarWidthLarge: `24rem`,
-  showcaseSidebarMaxWidth: `15rem`,
+  pluginsSidebarWidthDefault: "21rem",
+  pluginsSidebarWidthLarge: "24rem",
+  showcaseSidebarMaxWidth: "15rem",
   sidebarItemMinHeight: spaceTokens[8],
   sidebarUtilityHeight: spaceTokens[10],
   pageHeadingDesktopWidth: spaceTokens[10],
   mainContentWidth: {
-    default: `54rem`,
-    withSidebar: `42rem`,
+    default: "54rem",
+    withSidebar: "42rem",
   },
   sidebarWidth: {
-    default: `16.5rem`,
-    large: `18rem`,
-    mobile: `320px`,
+    default: "16.5rem",
+    large: "18rem",
+    mobile: "320px",
   },
-  tocWidth: `18rem`,
+  tocWidth: "18rem",
   avatar: spaceTokens[7],
-}
+};
 
 const zIndices = {
   widget: 2,
@@ -282,11 +282,11 @@ const zIndices = {
   sidebar: 10,
   floatingActionButton: 20,
   skipLink: 100,
-}
+};
 
 const newTheme = {
   ...defaultTheme,
-  initialColorMode: `light`,
+  initialColorMode: "light",
   useColorSchemeMediaQuery: true,
   colors: c,
   sizes: s,
@@ -295,7 +295,7 @@ const newTheme = {
     large: {
       fontSize: 4,
       px: 4,
-      height: `52px`,
+      height: "52px",
     },
     small: {
       fontSize: 2,
@@ -306,20 +306,20 @@ const newTheme = {
   links: {
     muted: {
       fontSize: 1,
-      lineHeight: `solid`,
+      lineHeight: "solid",
       py: 3,
       "&&": {
         border: 0,
-        color: `textMuted`,
-        display: `flex`,
-        fontWeight: `body`,
+        color: "textMuted",
+        display: "flex",
+        fontWeight: "body",
       },
       "&&:hover": {
-        color: `link.hoverColor`,
+        color: "link.hoverColor",
       },
     },
   },
-}
+};
 
 export {
   borders,
@@ -334,10 +334,10 @@ export {
   shadows,
   space,
   transition,
-} from "./theme"
+} from "./theme";
 
 // individual exports
 // colors extended with theme-ui required values
-export { c as colors, s as sizes, zIndices }
+export { c as colors, s as sizes, zIndices };
 
-export const theme = newTheme
+export const theme = newTheme;

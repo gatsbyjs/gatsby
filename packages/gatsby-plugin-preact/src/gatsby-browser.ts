@@ -1,9 +1,9 @@
-import type { GatsbyBrowser } from 'gatsby'
+import type { GatsbyBrowser } from "gatsby";
 
-export const onClientEntry: GatsbyBrowser['onClientEntry'] = () => {
-  if (process.env.NODE_ENV !== `production`) {
-    require(`preact/debug`)
+export const onClientEntry: GatsbyBrowser["onClientEntry"] = () => {
+  if (process.env.NODE_ENV !== "production") {
+    require("preact/debug");
 
-    require(`./fast-refresh/prefreshGlueCode`)()
+    require("./fast-refresh/prefreshGlueCode")();
   }
-}
+};

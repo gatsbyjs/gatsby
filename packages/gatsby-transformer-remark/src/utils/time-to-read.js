@@ -1,5 +1,5 @@
-const sanitizeHTML = require(`sanitize-html`)
-const _ = require(`lodash`)
+const sanitizeHTML = require("sanitize-html");
+const _ = require("lodash");
 
 // Unicode ranges for Han (Chinese) and Hiragana/Katakana (Japanese) characters
 const cjRanges = [
@@ -32,36 +32,36 @@ const cjRanges = [
   [65382, 65392],
   [65393, 65438],
   [110592, 110593],
-]
+];
 
 function isCjChar(char) {
-  const charCode = char.codePointAt(0)
-  return cjRanges.some(([from, to]) => charCode >= from && charCode < to)
+  const charCode = char.codePointAt(0);
+  return cjRanges.some(([from, to]) => charCode >= from && charCode < to);
 }
 
-export const timeToRead = html => {
-  let timeToRead = 0
-  const pureText = sanitizeHTML(html, { allowedTags: [] })
-  const avgWPM = 265
+export const timeToRead = (html) => {
+  let timeToRead = 0;
+  const pureText = sanitizeHTML(html, { allowedTags: [] });
+  const avgWPM = 265;
 
-  const latinChars = []
-  const cjChars = []
+  const latinChars = [];
+  const cjChars = [];
 
   for (const char of pureText) {
     if (isCjChar(char)) {
-      cjChars.push(char)
+      cjChars.push(char);
     } else {
-      latinChars.push(char)
+      latinChars.push(char);
     }
   }
 
   // Multiply non-latin character string length by 0.56, because
   // on average one word consists of 2 characters in both Chinese and Japanese
-  const wordCount = _.words(latinChars.join(``)).length + cjChars.length * 0.56
+  const wordCount = _.words(latinChars.join("")).length + cjChars.length * 0.56;
 
-  timeToRead = Math.round(wordCount / avgWPM)
+  timeToRead = Math.round(wordCount / avgWPM);
   if (timeToRead === 0) {
-    timeToRead = 1
+    timeToRead = 1;
   }
-  return timeToRead
-}
+  return timeToRead;
+};

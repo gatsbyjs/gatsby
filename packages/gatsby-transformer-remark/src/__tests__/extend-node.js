@@ -1,8 +1,8 @@
-const { graphql } = require(`gatsby/graphql`)
-const { onCreateNode } = require(`../gatsby-node`)
-const extendNodeType = require(`../extend-node-type`)
-const { createContentDigest } = require(`gatsby-core-utils`)
-const { typeDefs } = require(`../create-schema-customization`)
+const { graphql } = require("gatsby/graphql");
+const { onCreateNode } = require("../gatsby-node");
+const extendNodeType = require("../extend-node-type");
+const { createContentDigest } = require("gatsby-core-utils");
+const { typeDefs } = require("../create-schema-customization");
 
 /**
  * @see https://github.com/facebook/jest/issues/10529#issuecomment-904608475
@@ -10,34 +10,34 @@ const { typeDefs } = require(`../create-schema-customization`)
 function itAsyncDone(name, cb, timeout) {
   it(
     name,
-    done => {
-      let doneCalled = false
+    (done) => {
+      let doneCalled = false;
       const wrappedDone = (...args) => {
         if (doneCalled) {
-          return
+          return;
         }
 
-        doneCalled = true
-        done(...args)
-      }
+        doneCalled = true;
+        done(...args);
+      };
 
-      wrappedDone.fail = err => {
+      wrappedDone.fail = (err) => {
         if (doneCalled) {
-          return
+          return;
         }
 
-        doneCalled = true
+        doneCalled = true;
 
-        done(err)
-      }
+        done(err);
+      };
 
-      cb(wrappedDone).catch(wrappedDone)
+      cb(wrappedDone).catch(wrappedDone);
     },
-    timeout
-  )
+    timeout,
+  );
 }
 
-jest.mock(`gatsby/reporter`, () => {
+jest.mock("gatsby/reporter", () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -48,65 +48,65 @@ jest.mock(`gatsby/reporter`, () => {
         start: jest.fn(),
         setStatus: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
-  }
-})
+  };
+});
 
 // given a set of nodes and a query, return the result of the query
 async function queryResult(
   nodes,
   fragment,
-  { additionalParameters = {}, pluginOptions = {} }
+  { additionalParameters = {}, pluginOptions = {} },
 ) {
   const cache = {
     // GatsbyCache
     get: async () => null,
     set: async () => null,
-  }
+  };
   const extendNodeTypeFields = await extendNodeType(
     {
-      type: { name: `MarkdownRemark` },
+      type: { name: "MarkdownRemark" },
       cache,
       getCache: () => cache,
-      getNodesByType: type => [],
+      getNodesByType: (type) => [],
       ...additionalParameters,
     },
     {
       plugins: [],
       ...pluginOptions,
-    }
-  )
+    },
+  );
 
   const {
     createSchemaComposer,
-  } = require(`../../../gatsby/src/schema/schema-composer`)
+  } = require("../../../gatsby/src/schema/schema-composer");
 
   const {
     addInferredFields,
-  } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
+  } = require("../../../gatsby/src/schema/infer/add-inferred-fields");
   const {
     addNodes,
-  } = require(`../../../gatsby/src/schema/infer/inference-metadata`)
+  } = require("../../../gatsby/src/schema/infer/inference-metadata");
   const {
     getExampleObject,
-  } = require(`../../../gatsby/src/schema/infer/build-example-data`)
+  } = require("../../../gatsby/src/schema/infer/build-example-data");
 
-  const typeName = `MarkdownRemark`
-  const sc = createSchemaComposer()
-  const tc = sc.createObjectTC(typeName)
-  sc.addTypeDefs(typeDefs)
-  const inferenceMetadata = addNodes({ typeName }, nodes)
+  const typeName = "MarkdownRemark";
+  const sc = createSchemaComposer();
+  const tc = sc.createObjectTC(typeName);
+  sc.addTypeDefs(typeDefs);
+  const inferenceMetadata = addNodes({ typeName }, nodes);
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
     exampleValue: getExampleObject(inferenceMetadata),
-  })
-  tc.addFields(extendNodeTypeFields)
+  });
+  tc.addFields(extendNodeTypeFields);
   sc.Query.addFields({
     listNode: { type: [tc], resolve: () => nodes },
-  })
-  const schema = sc.buildSchema()
+  });
+  const schema = sc.buildSchema();
 
   const result = await graphql({
     schema,
@@ -116,8 +116,8 @@ async function queryResult(
       }
     }
   `,
-  })
-  return result
+  });
+  return result;
 }
 
 const bootstrapTest = (
@@ -125,46 +125,46 @@ const bootstrapTest = (
   content,
   query,
   test,
-  { additionalParameters = {}, pluginOptions = {} } = {}
+  { additionalParameters = {}, pluginOptions = {} } = {},
 ) => {
   const node = {
-    id: `whatever`,
+    id: "whatever",
     children: [],
     internal: {
-      contentDigest: `whatever`,
-      mediaType: `text/markdown`,
+      contentDigest: "whatever",
+      mediaType: "text/markdown",
     },
-  }
+  };
   // Make some fake functions its expecting.
-  const loadNodeContent = node => Promise.resolve(node.content)
+  const loadNodeContent = (node) => Promise.resolve(node.content);
 
-  itAsyncDone(label, async done => {
-    node.content = content
+  itAsyncDone(label, async (done) => {
+    node.content = content;
     async function createNode(markdownNode) {
       const result = await queryResult([markdownNode], query, {
         additionalParameters,
         pluginOptions,
-      })
+      });
 
       if (result.errors) {
-        done(result.errors)
+        done(result.errors);
       }
 
       try {
-        test(result.data.listNode[0])
-        done()
+        test(result.data.listNode[0]);
+        done();
       } catch (err) {
-        done(err)
+        done(err);
       }
     }
 
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createParentChildLink = jest.fn();
+    const actions = { createNode, createParentChildLink };
+    const createNodeId = jest.fn();
+    createNodeId.mockReturnValue("uuid-from-gatsby");
 
     // Used to verify that console.warn is called when field not found
-    jest.spyOn(global.console, `warn`)
+    jest.spyOn(global.console, "warn");
 
     await onCreateNode(
       {
@@ -174,14 +174,14 @@ const bootstrapTest = (
         createNodeId,
         createContentDigest,
       },
-      { ...additionalParameters, ...pluginOptions }
-    )
-  })
-}
+      { ...additionalParameters, ...pluginOptions },
+    );
+  });
+};
 
-describe(`Excerpt is generated correctly from schema`, () => {
+describe("Excerpt is generated correctly from schema", () => {
   bootstrapTest(
-    `correctly loads an excerpt`,
+    "correctly loads an excerpt",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -193,31 +193,31 @@ Where oh where is my little pony?`,
           title
       }
       `,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.excerpt).toBe("Where oh where is my little pony?");
       expect(node.excerptAst).toMatchObject({
         children: [
           {
             children: [
               {
-                type: `text`,
-                value: `Where oh where is my little pony?`,
+                type: "text",
+                value: "Where oh where is my little pony?",
               },
             ],
             properties: {},
-            tagName: `p`,
-            type: `element`,
+            tagName: "p",
+            type: "element",
           },
         ],
         data: { quirksMode: false },
-        type: `root`,
-      })
-    }
-  )
+        type: "root",
+      });
+    },
+  );
 
   bootstrapTest(
-    `correctly loads a default excerpt`,
+    "correctly loads a default excerpt",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -228,19 +228,19 @@ date: "2017-09-18T23:19:51.246Z"
           title
       }
       `,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt).toBe(``)
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.excerpt).toBe("");
       expect(node.excerptAst).toMatchObject({
         children: [],
         data: { quirksMode: false },
-        type: `root`,
-      })
-    }
-  )
+        type: "root",
+      });
+    },
+  );
 
   bootstrapTest(
-    `correctly uses excerpt separator`,
+    "correctly uses excerpt separator",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -257,33 +257,33 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           title
       }
       `,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.excerpt).toBe("Where oh where is my little pony?");
       expect(node.excerptAst).toMatchObject({
         children: [
           {
             children: [
               {
-                type: `text`,
-                value: `Where oh where is my little pony?`,
+                type: "text",
+                value: "Where oh where is my little pony?",
               },
             ],
             properties: {},
-            tagName: `p`,
-            type: `element`,
+            tagName: "p",
+            type: "element",
           },
           {
-            type: `text`,
-            value: `\n`,
+            type: "text",
+            value: "\n",
           },
         ],
         data: { quirksMode: false },
-        type: `root`,
-      })
+        type: "root",
+      });
     },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-  )
+    { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+  );
 
   const contentWithSeparator = `---
 title: "my little pony"
@@ -294,42 +294,42 @@ Where oh where **is** my little pony?
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-`
+`;
 
   bootstrapTest(
-    `given PLAIN correctly uses excerpt separator`,
+    "given PLAIN correctly uses excerpt separator",
     contentWithSeparator,
-    `excerpt(format: PLAIN)`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
+    "excerpt(format: PLAIN)",
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.excerpt).toBe("Where oh where is my little pony?");
     },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-  )
+    { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+  );
 
   bootstrapTest(
-    `given HTML correctly uses excerpt separator`,
+    "given HTML correctly uses excerpt separator",
     contentWithSeparator,
-    `excerpt(format: HTML)`,
-    node => {
-      expect(node).toMatchSnapshot()
+    "excerpt(format: HTML)",
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.excerpt).toBe(
-        `<p>Where oh where <strong>is</strong> my little pony?</p>\n`
-      )
+        "<p>Where oh where <strong>is</strong> my little pony?</p>\n",
+      );
     },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-  )
+    { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+  );
 
   bootstrapTest(
-    `given MARKDOWN correctly uses excerpt separator`,
+    "given MARKDOWN correctly uses excerpt separator",
     contentWithSeparator,
-    `excerpt(format: MARKDOWN)`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt).toBe(`Where oh where **is** my little pony?\n`)
+    "excerpt(format: MARKDOWN)",
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.excerpt).toBe("Where oh where **is** my little pony?\n");
     },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-  )
+    { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+  );
 
   const contentWithoutSeparator = `---
 title: "my little pony"
@@ -338,43 +338,43 @@ date: "2017-09-18T23:19:51.246Z"
 Where oh where **is** my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-`
+`;
 
   bootstrapTest(
-    `given MARKDOWN without excerpt separator, falls back to pruneLength`,
+    "given MARKDOWN without excerpt separator, falls back to pruneLength",
     contentWithoutSeparator,
-    `excerpt(pruneLength: 40, format: MARKDOWN)`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt.length).toBe(45)
+    "excerpt(pruneLength: 40, format: MARKDOWN)",
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.excerpt.length).toBe(45);
       expect(node.excerpt).toBe(
-        `Where oh where **is** my little pony? Lorem…\n`
-      )
+        "Where oh where **is** my little pony? Lorem…\n",
+      );
     },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-  )
+    { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+  );
 
   bootstrapTest(
-    `given MARKDOWN, pruning is done not counting markdown characters`,
+    "given MARKDOWN, pruning is done not counting markdown characters",
     contentWithoutSeparator,
-    `excerpt(pruneLength: 19, format: MARKDOWN)`,
-    node => {
-      expect(node).toMatchSnapshot()
+    "excerpt(pruneLength: 19, format: MARKDOWN)",
+    (node) => {
+      expect(node).toMatchSnapshot();
       // we want the pruning to preserve markdown chars and not count them in the length
-      expect(node.excerpt.length).toBe(23)
-      expect(node.excerpt).toBe(`Where oh where **is**…\n`)
-    }
-  )
+      expect(node.excerpt.length).toBe(23);
+      expect(node.excerpt).toBe("Where oh where **is**…\n");
+    },
+  );
   const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-  `
+  `;
 
   bootstrapTest(
-    `correctly prunes length to default value`,
+    "correctly prunes length to default value",
     content,
     `excerpt
       excerptAst
@@ -382,17 +382,17 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           title
       }
       `,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt.length).toBe(139)
-      expect(node.excerptAst.children.length).toBe(1)
-      expect(node.excerptAst.children[0].children.length).toBe(1)
-      expect(node.excerptAst.children[0].children[0].value.length).toBe(139)
-    }
-  )
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.excerpt.length).toBe(139);
+      expect(node.excerptAst.children.length).toBe(1);
+      expect(node.excerptAst.children[0].children.length).toBe(1);
+      expect(node.excerptAst.children[0].children[0].value.length).toBe(139);
+    },
+  );
 
   bootstrapTest(
-    `correctly prunes length to provided parameter`,
+    "correctly prunes length to provided parameter",
     content,
     `excerpt(pruneLength: 50)
       excerptAst(pruneLength: 50)
@@ -400,17 +400,17 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           title
       }
       `,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt.length).toBe(46)
-      expect(node.excerptAst.children.length).toBe(1)
-      expect(node.excerptAst.children[0].children.length).toBe(1)
-      expect(node.excerptAst.children[0].children[0].value.length).toBe(46)
-    }
-  )
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.excerpt.length).toBe(46);
+      expect(node.excerptAst.children.length).toBe(1);
+      expect(node.excerptAst.children[0].children.length).toBe(1);
+      expect(node.excerptAst.children[0].children[0].value.length).toBe(46);
+    },
+  );
 
   bootstrapTest(
-    `correctly prunes length to provided parameter with truncate`,
+    "correctly prunes length to provided parameter with truncate",
     content,
     `excerpt(pruneLength: 50, truncate: true)
       excerptAst(pruneLength: 50, truncate: true)
@@ -418,18 +418,18 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           title
       }
       `,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.excerpt.length).toBe(50)
-      expect(node.excerptAst.children.length).toBe(1)
-      expect(node.excerptAst.children[0].children.length).toBe(1)
-      expect(node.excerptAst.children[0].children[0].value.length).toBe(50)
-    }
-  )
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.excerpt.length).toBe(50);
+      expect(node.excerptAst.children.length).toBe(1);
+      expect(node.excerptAst.children[0].children.length).toBe(1);
+      expect(node.excerptAst.children[0].children[0].value.length).toBe(50);
+    },
+  );
 
-  describe(`when plugins options has a excerpt_separator defined`, () => {
+  describe("when plugins options has a excerpt_separator defined", () => {
     bootstrapTest(
-      `correctly prunes length to default value`,
+      "correctly prunes length to default value",
       content,
       `excerpt
         excerptAst
@@ -437,18 +437,18 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
             title
         }
         `,
-      node => {
-        expect(node).toMatchSnapshot()
-        expect(node.excerpt.length).toBe(139)
-        expect(node.excerptAst.children.length).toBe(1)
-        expect(node.excerptAst.children[0].children.length).toBe(1)
-        expect(node.excerptAst.children[0].children[0].value.length).toBe(139)
+      (node) => {
+        expect(node).toMatchSnapshot();
+        expect(node.excerpt.length).toBe(139);
+        expect(node.excerptAst.children.length).toBe(1);
+        expect(node.excerptAst.children[0].children.length).toBe(1);
+        expect(node.excerptAst.children[0].children[0].value.length).toBe(139);
       },
-      { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-    )
+      { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+    );
 
     bootstrapTest(
-      `correctly prunes length to provided parameter`,
+      "correctly prunes length to provided parameter",
       content,
       `excerpt(pruneLength: 50)
         excerptAst(pruneLength: 50)
@@ -456,18 +456,18 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
             title
         }
         `,
-      node => {
-        expect(node).toMatchSnapshot()
-        expect(node.excerpt.length).toBe(46)
-        expect(node.excerptAst.children.length).toBe(1)
-        expect(node.excerptAst.children[0].children.length).toBe(1)
-        expect(node.excerptAst.children[0].children[0].value.length).toBe(46)
+      (node) => {
+        expect(node).toMatchSnapshot();
+        expect(node.excerpt.length).toBe(46);
+        expect(node.excerptAst.children.length).toBe(1);
+        expect(node.excerptAst.children[0].children.length).toBe(1);
+        expect(node.excerptAst.children[0].children[0].value.length).toBe(46);
       },
-      { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-    )
+      { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+    );
 
     bootstrapTest(
-      `correctly prunes length to provided parameter with truncate`,
+      "correctly prunes length to provided parameter with truncate",
       content,
       `excerpt(pruneLength: 50, truncate: true)
         excerptAst(pruneLength: 50, truncate: true)
@@ -475,19 +475,19 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
             title
         }
         `,
-      node => {
-        expect(node).toMatchSnapshot()
-        expect(node.excerpt.length).toBe(50)
-        expect(node.excerptAst.children.length).toBe(1)
-        expect(node.excerptAst.children[0].children.length).toBe(1)
-        expect(node.excerptAst.children[0].children[0].value.length).toBe(50)
+      (node) => {
+        expect(node).toMatchSnapshot();
+        expect(node.excerpt.length).toBe(50);
+        expect(node.excerptAst.children.length).toBe(1);
+        expect(node.excerptAst.children[0].children.length).toBe(1);
+        expect(node.excerptAst.children[0].children[0].value.length).toBe(50);
       },
-      { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-    )
-  })
+      { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+    );
+  });
 
   bootstrapTest(
-    `given an html format, it correctly maps nested markdown to html`,
+    "given an html format, it correctly maps nested markdown to html",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -500,92 +500,92 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
           title
       }
       `,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.excerpt).toBe(
-        `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>`
-      )
+        '<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>',
+      );
       expect(node.excerptAst).toMatchObject({
         children: [
           {
             children: [
               {
-                type: `text`,
-                value: `Where oh `,
+                type: "text",
+                value: "Where oh ",
               },
               {
                 children: [
                   {
                     children: [
                       {
-                        type: `text`,
-                        value: `where`,
+                        type: "text",
+                        value: "where",
                       },
                     ],
                     properties: {},
-                    tagName: `em`,
-                    type: `element`,
+                    tagName: "em",
+                    type: "element",
                   },
                 ],
                 properties: {
-                  href: `nick.com`,
+                  href: "nick.com",
                 },
-                tagName: `a`,
-                type: `element`,
+                tagName: "a",
+                type: "element",
               },
               {
-                type: `text`,
-                value: ` `,
+                type: "text",
+                value: " ",
               },
               {
                 children: [
                   {
                     children: [
                       {
-                        type: `text`,
-                        value: `is`,
+                        type: "text",
+                        value: "is",
                       },
                     ],
                     properties: {},
-                    tagName: `em`,
-                    type: `element`,
+                    tagName: "em",
+                    type: "element",
                   },
                 ],
                 properties: {},
-                tagName: `strong`,
-                type: `element`,
+                tagName: "strong",
+                type: "element",
               },
               {
-                type: `text`,
-                value: ` `,
+                type: "text",
+                value: " ",
               },
               {
                 children: [],
                 properties: {
-                  alt: `that pony`,
-                  src: `pony.png`,
+                  alt: "that pony",
+                  src: "pony.png",
                 },
-                tagName: `img`,
-                type: `element`,
+                tagName: "img",
+                type: "element",
               },
               {
-                type: `text`,
-                value: `?`,
+                type: "text",
+                value: "?",
               },
             ],
             properties: {},
-            tagName: `p`,
-            type: `element`,
+            tagName: "p",
+            type: "element",
           },
         ],
         data: { quirksMode: false },
-        type: `root`,
-      })
-    }
-  )
+        type: "root",
+      });
+    },
+  );
 
   bootstrapTest(
-    `excerpt does have missing words and extra spaces`,
+    "excerpt does have missing words and extra spaces",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -597,29 +597,29 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
           title
       }
       `,
-    node => {
-      expect(node.excerpt).toBe(`Where oh where is that pony?`)
+    (node) => {
+      expect(node.excerpt).toBe("Where oh where is that pony?");
     },
-    {}
-  )
+    {},
+  );
 
   bootstrapTest(
-    `excerpt does not have leading or trailing spaces`,
+    "excerpt does not have leading or trailing spaces",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 
  My pony likes space on the left and right! `,
-    `excerpt`,
-    node => {
-      expect(node.excerpt).toBe(`My pony likes space on the left and right!`)
+    "excerpt",
+    (node) => {
+      expect(node.excerpt).toBe("My pony likes space on the left and right!");
     },
-    {}
-  )
+    {},
+  );
 
   bootstrapTest(
-    `excerpt has spaces between paragraphs`,
+    "excerpt has spaces between paragraphs",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -628,15 +628,15 @@ date: "2017-09-18T23:19:51.246Z"
 My pony is little.
 
 Little is my pony.`,
-    `excerpt`,
-    node => {
-      expect(node.excerpt).toBe(`My pony is little. Little is my pony.`)
+    "excerpt",
+    (node) => {
+      expect(node.excerpt).toBe("My pony is little. Little is my pony.");
     },
-    {}
-  )
+    {},
+  );
 
   bootstrapTest(
-    `excerpt has spaces between headings`,
+    "excerpt has spaces between headings",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -647,17 +647,17 @@ date: "2017-09-18T23:19:51.246Z"
 # What time is it?
 
 It's pony time.`,
-    `excerpt`,
-    node => {
+    "excerpt",
+    (node) => {
       expect(node.excerpt).toBe(
-        `Ponies: The Definitive Guide What time is it? It's pony time.`
-      )
+        "Ponies: The Definitive Guide What time is it? It's pony time.",
+      );
     },
-    {}
-  )
+    {},
+  );
 
   bootstrapTest(
-    `excerpt has spaces between table cells`,
+    "excerpt has spaces between table cells",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -666,32 +666,32 @@ date: "2017-09-18T23:19:51.246Z"
 | Pony           | Owner    |
 | -------------- | -------- |
 | My Little Pony | Me, Duh  |`,
-    `excerpt`,
-    node => {
-      expect(node.excerpt).toBe(`Pony Owner My Little Pony Me, Duh`)
+    "excerpt",
+    (node) => {
+      expect(node.excerpt).toBe("Pony Owner My Little Pony Me, Duh");
     },
-    {}
-  )
+    {},
+  );
 
   bootstrapTest(
-    `excerpt converts linebreaks into spaces`,
+    "excerpt converts linebreaks into spaces",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 
-If my pony ain't broke,${`  `}
+If my pony ain't broke,${"  "}
 don't fix it.`,
     // ^ Explicit syntax for trailing spaces to not get accidentally trimmed.
-    `excerpt`,
-    node => {
-      expect(node.excerpt).toBe(`If my pony ain't broke, don't fix it.`)
+    "excerpt",
+    (node) => {
+      expect(node.excerpt).toBe("If my pony ain't broke, don't fix it.");
     },
-    {}
-  )
+    {},
+  );
 
   bootstrapTest(
-    `excerpt does not have more than one space between elements`,
+    "excerpt does not have more than one space between elements",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -702,17 +702,17 @@ date: "2017-09-18T23:19:51.246Z"
 [some-link]: https://pony.my
 
 Pony express had nothing on my little pony.`,
-    `excerpt`,
-    node => {
+    "excerpt",
+    (node) => {
       expect(node.excerpt).toBe(
-        `Pony express Pony express had nothing on my little pony.`
-      )
+        "Pony express Pony express had nothing on my little pony.",
+      );
     },
-    {}
-  )
+    {},
+  );
 
   bootstrapTest(
-    `given raw html in the text body, this html is not escaped`,
+    "given raw html in the text body, this html is not escaped",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -725,49 +725,49 @@ Where is my <code>pony</code> named leo?`,
           title
       }
       `,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.excerpt).toBe(
-        `<p>Where is my <code>pony</code> named leo?</p>`
-      )
+        "<p>Where is my <code>pony</code> named leo?</p>",
+      );
       expect(node.excerptAst).toMatchObject({
         children: [
           {
             children: [
               {
-                type: `text`,
-                value: `Where is my `,
+                type: "text",
+                value: "Where is my ",
               },
               {
                 children: [
                   {
-                    type: `text`,
-                    value: `pony`,
+                    type: "text",
+                    value: "pony",
                   },
                 ],
                 properties: {},
-                tagName: `code`,
-                type: `element`,
+                tagName: "code",
+                type: "element",
               },
               {
-                type: `text`,
-                value: ` named leo?`,
+                type: "text",
+                value: " named leo?",
               },
             ],
             properties: {},
-            tagName: `p`,
-            type: `element`,
+            tagName: "p",
+            type: "element",
           },
         ],
         data: { quirksMode: false },
-        type: `root`,
-      })
+        type: "root",
+      });
     },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-  )
+    { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+  );
 
   bootstrapTest(
-    `given an html format, it prunes large excerpts`,
+    "given an html format, it prunes large excerpts",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -780,33 +780,33 @@ Where oh where is that pony? Is he in the stable or down by the stream?`,
           title
       }
       `,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.excerpt).toBe(
-        `<p>Where oh where is that pony? Is he in the stable…</p>`
-      )
+        "<p>Where oh where is that pony? Is he in the stable…</p>",
+      );
       expect(node.excerptAst).toMatchObject({
         children: [
           {
             children: [
               {
-                type: `text`,
-                value: `Where oh where is that pony? Is he in the stable…`,
+                type: "text",
+                value: "Where oh where is that pony? Is he in the stable…",
               },
             ],
             properties: {},
-            tagName: `p`,
-            type: `element`,
+            tagName: "p",
+            type: "element",
           },
         ],
         data: { quirksMode: false },
-        type: `root`,
-      })
-    }
-  )
+        type: "root",
+      });
+    },
+  );
 
   bootstrapTest(
-    `given an html format, it respects the excerpt_separator`,
+    "given an html format, it respects the excerpt_separator",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -823,55 +823,55 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
         title
     }
     `,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.excerpt).toBe(
-        `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>\n`
-      )
+        "<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>\n",
+      );
       expect(node.excerptAst).toMatchObject({
         children: [
           {
             children: [
               {
-                type: `text`,
-                value: `Where oh where is that `,
+                type: "text",
+                value: "Where oh where is that ",
               },
               {
                 children: [
                   {
-                    type: `text`,
-                    value: `pony`,
+                    type: "text",
+                    value: "pony",
                   },
                 ],
                 properties: {},
-                tagName: `em`,
-                type: `element`,
+                tagName: "em",
+                type: "element",
               },
               {
-                type: `text`,
-                value: `? Is he in the stable or by the stream?`,
+                type: "text",
+                value: "? Is he in the stable or by the stream?",
               },
             ],
             properties: {},
-            tagName: `p`,
-            type: `element`,
+            tagName: "p",
+            type: "element",
           },
           {
-            type: `text`,
-            value: `\n`,
+            type: "text",
+            value: "\n",
           },
         ],
         data: { quirksMode: false },
-        type: `root`,
-      })
+        type: "root",
+      });
     },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
-  )
-})
+    { pluginOptions: { excerpt_separator: "<!-- end -->" } },
+  );
+});
 
-describe(`Wordcount and timeToRead are generated correctly from schema`, () => {
+describe("Wordcount and timeToRead are generated correctly from schema", () => {
   bootstrapTest(
-    `correctly uses wordCount parameters`,
+    "correctly uses wordCount parameters",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -888,18 +888,18 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     frontmatter {
         title
     }`,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.wordCount).toEqual({
         paragraphs: 2,
         sentences: 19,
         words: 150,
-      })
-    }
-  )
+      });
+    },
+  );
 
   bootstrapTest(
-    `correctly generate timeToRead for CJK`,
+    "correctly generate timeToRead for CJK",
     `React 使创建交互式 UI 变得轻而易举。为你应用的每一个状态设计简洁的视图，当数据改变时 React 能有效地更新并正确地渲染组件。
 以声明式编写 UI，可以让你的代码更加可靠，且方便调试。
 创建拥有各自状态的组件，再由这些组件构成更加复杂的 UI。
@@ -907,21 +907,21 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
 宣言的な View React は、インタラクティブなユーザインターフェイスの作成にともなう苦痛を取り除きます。アプリケーションの各状態に対応するシンプルな View を設計するだけで、React はデータの変更を検知し、関連するコンポーネントだけを効率的に更新、描画します。 宣言的な View を用いてアプリケーションを構築することで、コードはより見通しが立ちやすく、デバッグのしやすいものになります。
 コンポーネントベース 自分自身の状態を管理するカプセル化されたコンポーネントをまず作成し、これらを組み合わせることで複雑なユーザインターフェイスを構築します。 コンポーネントのロジックは、Template ではなく JavaScript そのもので書くことができるので、様々なデータをアプリケーション内で簡単に取り回すことができ、かつ DOM に状態を持たせないようにすることができます。
 `,
-    `timeToRead`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.timeToRead).toEqual(1)
-    }
-  )
+    "timeToRead",
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.timeToRead).toEqual(1);
+    },
+  );
 
   const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
-`
+`;
 
   bootstrapTest(
-    `correctly uses a default value for wordCount`,
+    "correctly uses a default value for wordCount",
     content,
     `wordCount {
       words
@@ -931,33 +931,33 @@ date: "2017-09-18T23:19:51.246Z"
     frontmatter {
         title
     }`,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.wordCount).toEqual({
         paragraphs: null,
         sentences: null,
         words: null,
-      })
-    }
-  )
+      });
+    },
+  );
 
   bootstrapTest(
-    `correctly uses a default value for timeToRead`,
+    "correctly uses a default value for timeToRead",
     content,
     `timeToRead
     frontmatter {
         title
     }`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.timeToRead).toBe(1)
-    }
-  )
-})
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.timeToRead).toBe(1);
+    },
+  );
+});
 
-describe(`Table of contents is generated correctly from schema`, () => {
+describe("Table of contents is generated correctly from schema", () => {
   bootstrapTest(
-    `returns null on non existing table of contents field`,
+    "returns null on non existing table of contents field",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -974,14 +974,14 @@ some other text
     frontmatter {
         title
     }`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(console.warn).toBeCalled()
-    }
-  )
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(console.warn).toBeCalled();
+    },
+  );
 
   bootstrapTest(
-    `correctly generates table of contents`,
+    "correctly generates table of contents",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -1002,13 +1002,13 @@ final text
     frontmatter {
         title
     }`,
-    node => {
-      expect(node).toMatchSnapshot()
-    }
-  )
+    (node) => {
+      expect(node).toMatchSnapshot();
+    },
+  );
 
   bootstrapTest(
-    `correctly generates table of contents in relative path`,
+    "correctly generates table of contents in relative path",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -1029,13 +1029,13 @@ final text
     frontmatter {
         title
     }`,
-    node => {
-      expect(node).toMatchSnapshot()
-    }
-  )
+    (node) => {
+      expect(node).toMatchSnapshot();
+    },
+  );
 
   bootstrapTest(
-    `table of contents is generated with correct depth (graphql option)`,
+    "table of contents is generated with correct depth (graphql option)",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -1051,15 +1051,15 @@ some other text`,
     frontmatter {
         title
     }`,
-    node => {
+    (node) => {
       expect(node.tableOfContents).toBe(`<ul>
 <li><a href="/my%20little%20pony/#first-title">first title</a></li>
-</ul>`)
-    }
-  )
+</ul>`);
+    },
+  );
 
   bootstrapTest(
-    `table of contents is generated with correct depth (plugin option)`,
+    "table of contents is generated with correct depth (plugin option)",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -1075,10 +1075,10 @@ some other text`,
     frontmatter {
         title
     }`,
-    node => {
+    (node) => {
       expect(node.tableOfContents).toBe(`<ul>
 <li><a href="/my%20little%20pony/#first-title">first title</a></li>
-</ul>`)
+</ul>`);
     },
     {
       pluginOptions: {
@@ -1086,11 +1086,11 @@ some other text`,
           maxDepth: 1,
         },
       },
-    }
-  )
+    },
+  );
 
   bootstrapTest(
-    `table of contents is generated from given heading onwards`,
+    "table of contents is generated from given heading onwards",
     `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -1110,17 +1110,17 @@ final text`,
     frontmatter {
         title
     }`,
-    node => {
+    (node) => {
       expect(node.tableOfContents).toBe(`<ul>
 <li><a href="/my%20little%20pony/#third-title">third title</a></li>
-</ul>`)
-    }
-  )
-})
+</ul>`);
+    },
+  );
+});
 
-describe(`Table of contents properly handles headings containing inline code blocks`, () => {
+describe("Table of contents properly handles headings containing inline code blocks", () => {
   bootstrapTest(
-    `Inline code blocks within headings are translated to <code> tags in generated TOC`,
+    "Inline code blocks within headings are translated to <code> tags in generated TOC",
     `---
 title: "My Blog Post"
 date: "2019-12-09"
@@ -1140,11 +1140,11 @@ It's easier than you may imagine`,
     frontmatter {
         title
     }`,
-    node => expect(node).toMatchSnapshot()
-  )
+    (node) => expect(node).toMatchSnapshot(),
+  );
 
   bootstrapTest(
-    `<code> tags generated by \`gatsby-remark-prismjs\` are properly treated as unescaped HTML`,
+    "<code> tags generated by `gatsby-remark-prismjs` are properly treated as unescaped HTML",
     `---
 title: "My Blog Post"
 date: "2019-12-09"
@@ -1164,33 +1164,33 @@ It's easier than you may imagine`,
     frontmatter {
         title
     }`,
-    node => expect(node).toMatchSnapshot(),
+    (node) => expect(node).toMatchSnapshot(),
     {
       pluginOptions: {
         plugins: [
           {
-            resolve: `gatsby-remark-prismjs`,
+            resolve: "gatsby-remark-prismjs",
             options: {
-              classPrefix: `language-`,
+              classPrefix: "language-",
               inlineCodeMarker: null,
               showLineNumbers: false,
               noInlineHighlight: false,
             },
-            module: require(`gatsby-remark-prismjs`),
+            module: require("gatsby-remark-prismjs"),
           },
         ],
       },
-    }
-  )
-})
+    },
+  );
+});
 
-describe(`Relative links keep being relative`, () => {
-  const assetPrefix = ``
-  const basePath = `/prefix`
-  const pathPrefix = assetPrefix + basePath
+describe("Relative links keep being relative", () => {
+  const assetPrefix = "";
+  const basePath = "/prefix";
+  const pathPrefix = assetPrefix + basePath;
 
   bootstrapTest(
-    `relative links are not prefixed`,
+    "relative links are not prefixed",
     `
 This is [a link](path/to/page1).
 
@@ -1198,23 +1198,23 @@ This is [a reference]
 
 [a reference]: ./path/to/page2
 `,
-    `html`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.html).toMatch(`<a href="path/to/page1">`)
-      expect(node.html).toMatch(`<a href="./path/to/page2">`)
+    "html",
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.html).toMatch('<a href="path/to/page1">');
+      expect(node.html).toMatch('<a href="./path/to/page2">');
     },
-    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
-  )
-})
+    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } },
+  );
+});
 
-describe(`Links are correctly prefixed`, () => {
-  const assetPrefix = ``
-  const basePath = `/prefix`
-  const pathPrefix = assetPrefix + basePath
+describe("Links are correctly prefixed", () => {
+  const assetPrefix = "";
+  const basePath = "/prefix";
+  const pathPrefix = assetPrefix + basePath;
 
   bootstrapTest(
-    `correctly prefixes links`,
+    "correctly prefixes links",
     `
 This is [a link](/path/to/page1).
 
@@ -1222,23 +1222,23 @@ This is [a reference]
 
 [a reference]: /path/to/page2
 `,
-    `html`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
-      expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
+    "html",
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.html).toMatch('<a href="/prefix/path/to/page1">');
+      expect(node.html).toMatch('<a href="/prefix/path/to/page2">');
     },
-    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
-  )
-})
+    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } },
+  );
+});
 
-describe(`Links are correctly prefixed when assetPrefix is used`, () => {
-  const assetPrefix = `https://example.com/assets`
-  const basePath = `/prefix`
-  const pathPrefix = assetPrefix + basePath
+describe("Links are correctly prefixed when assetPrefix is used", () => {
+  const assetPrefix = "https://example.com/assets";
+  const basePath = "/prefix";
+  const pathPrefix = assetPrefix + basePath;
 
   bootstrapTest(
-    `correctly prefixes links`,
+    "correctly prefixes links",
     `
 This is [a link](/path/to/page1).
 
@@ -1246,40 +1246,40 @@ This is [a reference]
 
 [a reference]: /path/to/page2
 `,
-    `html`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
-      expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
+    "html",
+    (node) => {
+      expect(node).toMatchSnapshot();
+      expect(node.html).toMatch('<a href="/prefix/path/to/page1">');
+      expect(node.html).toMatch('<a href="/prefix/path/to/page2">');
     },
-    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
-  )
-})
+    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } },
+  );
+});
 
-describe(`Code block metas are correctly generated`, () => {
+describe("Code block metas are correctly generated", () => {
   bootstrapTest(
-    `code block with language and meta`,
+    "code block with language and meta",
     `
 \`\`\`js foo bar
 console.log('hello world')
 \`\`\`
 `,
-    `htmlAst`,
-    node => {
-      expect(node).toMatchSnapshot()
+    "htmlAst",
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.htmlAst.children[0].children[0].properties.className).toEqual(
-        [`language-js`]
-      )
+        ["language-js"],
+      );
       expect(node.htmlAst.children[0].children[0].properties.dataMeta).toEqual(
-        `foo bar`
-      )
-    }
-  )
-})
+        "foo bar",
+      );
+    },
+  );
+});
 
-describe(`Headings are generated correctly from schema`, () => {
+describe("Headings are generated correctly from schema", () => {
   bootstrapTest(
-    `returns value`,
+    "returns value",
     `
 # first title
 
@@ -1289,23 +1289,23 @@ describe(`Headings are generated correctly from schema`, () => {
       value
       depth
     }`,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.headings).toEqual([
         {
-          value: `first title`,
+          value: "first title",
           depth: 1,
         },
         {
-          value: `second title`,
+          value: "second title",
           depth: 2,
         },
-      ])
-    }
-  )
+      ]);
+    },
+  );
 
   bootstrapTest(
-    `returns null id if heading has no id`,
+    "returns null id if heading has no id",
     `
   # first title
 
@@ -1316,25 +1316,25 @@ describe(`Headings are generated correctly from schema`, () => {
         value
         depth
       }`,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.headings).toEqual([
         {
           id: null,
-          value: `first title`,
+          value: "first title",
           depth: 1,
         },
         {
           id: null,
-          value: `second title`,
+          value: "second title",
           depth: 2,
         },
-      ])
-    }
-  )
+      ]);
+    },
+  );
 
   bootstrapTest(
-    `returns id if heading has one`,
+    "returns id if heading has one",
     `
   # first title
 
@@ -1345,20 +1345,20 @@ describe(`Headings are generated correctly from schema`, () => {
         value
         depth
       }`,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.headings).toEqual([
         {
-          id: `first-title`,
-          value: `first title`,
+          id: "first-title",
+          value: "first title",
           depth: 1,
         },
         {
-          id: `second-title`,
-          value: `second title`,
+          id: "second-title",
+          value: "second title",
           depth: 2,
         },
-      ])
+      ]);
     },
     {
       pluginOptions: {
@@ -1367,17 +1367,17 @@ describe(`Headings are generated correctly from schema`, () => {
           // (this is what gatsby core internally turns plugin entries to + gatsby core always set empty object {}
           // if options were not provided and lot of plugins rely on this and are not checking for options existence)
           {
-            resolve: require.resolve(`gatsby-remark-autolink-headers/src`),
+            resolve: require.resolve("gatsby-remark-autolink-headers/src"),
             pluginOptions: {},
-            module: require(`gatsby-remark-autolink-headers/src`),
+            module: require("gatsby-remark-autolink-headers/src"),
           },
         ],
       },
-    }
-  )
+    },
+  );
 
   bootstrapTest(
-    `returns value with inlineCode`,
+    "returns value with inlineCode",
     `
 # first title
 
@@ -1387,23 +1387,23 @@ describe(`Headings are generated correctly from schema`, () => {
       value
       depth
     }`,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.headings).toEqual([
         {
-          value: `first title`,
+          value: "first title",
           depth: 1,
         },
         {
-          value: `second title`,
+          value: "second title",
           depth: 2,
         },
-      ])
-    }
-  )
+      ]);
+    },
+  );
 
   bootstrapTest(
-    `returns value with mixed text`,
+    "returns value with mixed text",
     `
 # An **important** heading with \`inline code\` and text
 `,
@@ -1411,14 +1411,14 @@ describe(`Headings are generated correctly from schema`, () => {
       value
       depth
     }`,
-    node => {
-      expect(node).toMatchSnapshot()
+    (node) => {
+      expect(node).toMatchSnapshot();
       expect(node.headings).toEqual([
         {
-          value: `An important heading with inline code and text`,
+          value: "An important heading with inline code and text",
           depth: 1,
         },
-      ])
-    }
-  )
-})
+      ]);
+    },
+  );
+});

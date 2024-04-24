@@ -1,29 +1,29 @@
-import { getGatsbyApi } from "~/utils/get-gatsby-api"
+import { getGatsbyApi } from "~/utils/get-gatsby-api";
 
-const deleteMenuNodeChildMenuItems = node => {
+const deleteMenuNodeChildMenuItems = (node) => {
   const {
     pluginOptions,
     helpers: { getNodesByType, actions },
-  } = getGatsbyApi()
+  } = getGatsbyApi();
 
   const allMenuItems = getNodesByType(
-    `${pluginOptions.schema.typePrefix}MenuItem`
-  )
+    `${pluginOptions.schema.typePrefix}MenuItem`,
+  );
 
   const allMenuItemsNodesWithThisMenuIdAsAParent = allMenuItems.filter(
-    menuItemNode => menuItemNode.menu.node.id === node.id
-  )
+    (menuItemNode) => menuItemNode.menu.node.id === node.id,
+  );
 
   for (const menuItemNode of allMenuItemsNodesWithThisMenuIdAsAParent) {
-    actions.deleteNode(menuItemNode)
+    actions.deleteNode(menuItemNode);
   }
-}
+};
 
-export const menuBeforeChangeNode = async api => {
-  if (api.remoteNode && api.actionType === `DELETE`) {
+export const menuBeforeChangeNode = async (api) => {
+  if (api.remoteNode && api.actionType === "DELETE") {
     // delete child menu items
-    return deleteMenuNodeChildMenuItems(api.remoteNode)
+    return deleteMenuNodeChildMenuItems(api.remoteNode);
   }
 
-  return null
-}
+  return null;
+};

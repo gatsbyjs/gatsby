@@ -3,7 +3,7 @@
  */
 
 function isPrimitive(val) {
-  return val != null && typeof val !== `object` && typeof val !== `function`
+  return val != null && typeof val !== "object" && typeof val !== "function";
 }
 
 /**
@@ -20,48 +20,48 @@ function isPrimitive(val) {
  */
 
 export default (prompt, options = {}) => {
-  prompt.cursorHide()
+  prompt.cursorHide();
 
-  let { input = ``, initial = ``, pos, showCursor = true, color } = options
-  const style = color || prompt.styles.placeholder
-  const inverse = prompt.styles.primary.inverse
-  let blinker = (str) => inverse(str)
-  let output = input
-  const char = ` `
-  let reverse = blinker(char)
+  let { input = "", initial = "", pos, showCursor = true, color } = options;
+  const style = color || prompt.styles.placeholder;
+  const inverse = prompt.styles.primary.inverse;
+  let blinker = (str) => inverse(str);
+  let output = input;
+  const char = " ";
+  let reverse = blinker(char);
 
   if (prompt.blink && prompt.blink.off === true) {
-    blinker = (str) => str
-    reverse = ``
+    blinker = (str) => str;
+    reverse = "";
   }
 
-  if (showCursor && pos === 0 && initial === `` && input === ``) {
-    return blinker(char)
+  if (showCursor && pos === 0 && initial === "" && input === "") {
+    return blinker(char);
   }
 
-  if (showCursor && pos === 0 && (input === initial || input === ``)) {
-    return blinker(initial[0]) + style(initial.slice(1))
+  if (showCursor && pos === 0 && (input === initial || input === "")) {
+    return blinker(initial[0]) + style(initial.slice(1));
   }
 
-  initial = isPrimitive(initial) ? `${initial}` : ``
-  input = isPrimitive(input) ? `${input}` : ``
+  initial = isPrimitive(initial) ? `${initial}` : "";
+  input = isPrimitive(input) ? `${input}` : "";
 
-  const placeholder = initial && initial.startsWith(input) && initial !== input
-  let cursor = placeholder ? blinker(initial[input.length]) : reverse
+  const placeholder = initial && initial.startsWith(input) && initial !== input;
+  let cursor = placeholder ? blinker(initial[input.length]) : reverse;
 
   if (pos !== input.length && showCursor === true) {
-    output = input.slice(0, pos) + blinker(input[pos]) + input.slice(pos + 1)
-    cursor = ``
+    output = input.slice(0, pos) + blinker(input[pos]) + input.slice(pos + 1);
+    cursor = "";
   }
 
   if (showCursor === false) {
-    cursor = ``
+    cursor = "";
   }
 
   if (placeholder) {
-    const raw = prompt.styles.unstyle(output + cursor)
-    return output + cursor + style(initial.slice(raw.length))
+    const raw = prompt.styles.unstyle(output + cursor);
+    return output + cursor + style(initial.slice(raw.length));
   }
 
-  return output + cursor
-}
+  return output + cursor;
+};

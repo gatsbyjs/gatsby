@@ -1,4 +1,4 @@
-import type { IRunQueryArgs } from "../../types"
+import type { IRunQueryArgs } from "../../types";
 import {
   createDbQueriesFromObject,
   DbComparator,
@@ -7,17 +7,17 @@ import {
   getFilterStatement,
   prepareQueryArgs,
   sortBySpecificity,
-} from "../../common/query"
-import { isDesc } from "./common"
+} from "../../common/query";
+import { isDesc } from "./common";
 
 type ISelectIndexArgs = {
-  filter: IRunQueryArgs["queryArgs"]["filter"]
-  sort: IRunQueryArgs["queryArgs"]["sort"]
-  maxFields?: number
-}
+  filter: IRunQueryArgs["queryArgs"]["filter"];
+  sort: IRunQueryArgs["queryArgs"]["sort"];
+  maxFields?: number | undefined;
+};
 
-type IndexField = [fieldName: string, orderDirection: number]
-type IndexFields = Array<IndexField>
+type IndexField = [fieldName: string, orderDirection: number];
+type IndexFields = Array<IndexField>;
 
 /**
  * Suggest index fields for this combination of filter and sort.
@@ -30,28 +30,31 @@ export function suggestIndex({
   sort,
   maxFields = 6,
 }: ISelectIndexArgs): Array<IndexField> {
-  const filterQueries = createDbQueriesFromObject(prepareQueryArgs(filter))
-  const filterQueriesThatCanUseIndex = getQueriesThatCanUseIndex(filterQueries)
-  const sortFields: Array<IndexField> = getSortFieldsThatCanUseIndex(sort)
+  const filterQueries = createDbQueriesFromObject(prepareQueryArgs(filter));
+  const filterQueriesThatCanUseIndex = getQueriesThatCanUseIndex(filterQueries);
+  const sortFields: Array<IndexField> = getSortFieldsThatCanUseIndex(sort);
 
   if (!sortFields.length && !filterQueriesThatCanUseIndex.length) {
-    return []
+    return [];
   }
   if (!filterQueriesThatCanUseIndex.length) {
-    return dedupeAndTrim(sortFields, maxFields)
+    return dedupeAndTrim(sortFields, maxFields);
   }
   if (!sortFields.length) {
-    return dedupeAndTrim(toIndexFields(filterQueriesThatCanUseIndex), maxFields)
+    return dedupeAndTrim(
+      toIndexFields(filterQueriesThatCanUseIndex),
+      maxFields,
+    );
   }
 
   // Combined index for filter+sort only makes sense when all prefix fields have `eq` predicate
   // Same as https://docs.mongodb.com/manual/tutorial/sort-results-with-indexes/#sort-and-non-prefix-subset-of-an-index
-  const sortDirection = sortFields[0][1]
-  const eqFilterQueries = getEqQueries(filterQueriesThatCanUseIndex)
-  const eqFilterFields = toIndexFields(eqFilterQueries, sortDirection)
+  const sortDirection = sortFields[0][1];
+  const eqFilterQueries = getEqQueries(filterQueriesThatCanUseIndex);
+  const eqFilterFields = toIndexFields(eqFilterQueries, sortDirection);
 
   // Index prefix should not contain eq filters overlapping with sort fields
-  const overlap = findOverlappingFields(eqFilterQueries, sortFields)
+  const overlap = findOverlappingFields(eqFilterQueries, sortFields);
 
   return dedupeAndTrim(
     [
@@ -63,7 +66,7 @@ export function suggestIndex({
       ...toIndexFields(filterQueriesThatCanUseIndex, sortDirection),
     ],
     maxFields,
-  )
+  );
 }
 
 const canUseIndex = new Set([
@@ -75,7 +78,7 @@ const canUseIndex = new Set([
   DbComparator.LT,
   DbComparator.NIN,
   DbComparator.NE,
-])
+]);
 
 /**
  * Returns queries that can potentially use index.
@@ -84,52 +87,52 @@ const canUseIndex = new Set([
 function getQueriesThatCanUseIndex(all: Array<DbQuery>): Array<DbQuery> {
   return sortBySpecificity(
     all.filter((q) => canUseIndex.has(getFilterStatement(q).comparator)),
-  )
+  );
 }
 
 function getSortFieldsThatCanUseIndex(
   querySortArg: IRunQueryArgs["queryArgs"]["sort"],
 ): Array<IndexField> {
-  const sort = querySortArg || { fields: [], order: [] }
-  const initialOrder = isDesc(sort?.order[0]) ? -1 : 1
+  const sort = querySortArg || { fields: [], order: [] };
+  const initialOrder = isDesc(sort?.order[0]) ? -1 : 1;
 
-  const sortFields: Array<IndexField> = []
+  const sortFields: Array<IndexField> = [];
   for (let i = 0; i < sort.fields.length; i++) {
-    const field = sort.fields[i]
-    const order = isDesc(sort.order[i]) ? -1 : 1
+    const field = sort.fields[i];
+    const order = isDesc(sort.order[i]) ? -1 : 1;
     if (order !== initialOrder) {
       // Mixed sort order is not supported by our indexes yet :/
       // See https://github.com/DoctorEvidence/lmdb-store/discussions/62#discussioncomment-898949
-      break
+      break;
     }
-    sortFields.push([field, order])
+    sortFields.push([field, order]);
   }
-  return sortFields
+  return sortFields;
 }
 
 function findOverlappingFields(
   filterQueries: Array<DbQuery>,
   sortFields: Array<IndexField>,
 ): Set<string> {
-  const overlap = new Set<string>()
+  const overlap = new Set<string>();
 
   for (const [fieldName] of sortFields) {
     const filterQuery = filterQueries.find(
       (q) => dbQueryToDottedField(q) === fieldName,
-    )
+    );
     if (!filterQuery) {
-      break
+      break;
     }
-    overlap.add(fieldName)
+    overlap.add(fieldName);
   }
-  return overlap
+  return overlap;
 }
 
 function getEqQueries(filterQueries: Array<DbQuery>): Array<DbQuery> {
   return filterQueries.filter(
     (filterQuery) =>
       getFilterStatement(filterQuery).comparator === DbComparator.EQ,
-  )
+  );
 }
 
 function toIndexFields(
@@ -138,9 +141,9 @@ function toIndexFields(
 ): IndexFields {
   return queries.map(
     (q): IndexField => [dbQueryToDottedField(q), sortDirection],
-  )
+  );
 }
 
 function dedupeAndTrim(fields: IndexFields, maxFields: number): IndexFields {
-  return [...new Map(fields)].slice(0, maxFields)
+  return [...new Map(fields)].slice(0, maxFields);
 }

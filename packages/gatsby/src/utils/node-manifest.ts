@@ -1,52 +1,52 @@
-import type { ErrorId } from "gatsby-cli/lib/structured-errors/error-map"
-import { getNode } from "./../datastore"
-import type { IGatsbyNode, IGatsbyPage, INodeManifest } from "./../redux/types"
-import reporter from "gatsby-cli/lib/reporter"
-import { store } from "../redux/"
-import { internalActions } from "../redux/actions"
-import path from "path"
-import fs from "fs-extra"
-import fastq from "fastq"
+import type { ErrorId } from "gatsby-cli/lib/structured-errors/error-map";
+import { getNode } from "./../datastore";
+import type { IGatsbyNode, IGatsbyPage, INodeManifest } from "./../redux/types";
+import reporter from "gatsby-cli/lib/reporter";
+import { store } from "../redux/";
+import { internalActions } from "../redux/actions";
+import path from "path";
+import fs from "fs-extra";
+import fastq from "fastq";
 
 type INodeManifestPage = {
-  path?: string | undefined
-}
+  path?: string | undefined;
+};
 
 /**
  * This it the output after processing calls to the public unstable_createNodeManifest action
  */
 type INodeManifestOut = {
-  page: INodeManifestPage
+  page: INodeManifestPage;
   node: {
-    id: string
-  }
-  foundPageBy: FoundPageBy
-}
+    id: string;
+  };
+  foundPageBy: FoundPageBy;
+};
 
 type FoundPageBy =
-  | `ownerNodeId`
-  | `filesystem-route-api`
+  | "ownerNodeId"
+  | "filesystem-route-api"
   // for these three we warn to use ownerNodeId instead
-  | `context.id`
-  | `context.slug`
-  | `queryTracking`
-  | `none`
+  | "context.id"
+  | "context.slug"
+  | "queryTracking"
+  | "none";
 
-type PreviouslyWrittenNodeManifests = Map<string, Promise<INodeManifestOut>>
+type PreviouslyWrittenNodeManifests = Map<string, Promise<INodeManifestOut>>;
 
 function getNodeManifestFileLimit(): number {
-  const defaultLimit = 10000
+  const defaultLimit = 10000;
 
   const overrideLimit =
     process.env.NODE_MANIFEST_FILE_LIMIT &&
-    Number(process.env.NODE_MANIFEST_FILE_LIMIT)
+    Number(process.env.NODE_MANIFEST_FILE_LIMIT);
 
-  return overrideLimit || defaultLimit
+  return overrideLimit || defaultLimit;
 }
 /**
  * This defines a limit to the number number of node manifest files that will be written to disk
  */
-const NODE_MANIFEST_FILE_LIMIT = getNodeManifestFileLimit()
+const NODE_MANIFEST_FILE_LIMIT = getNodeManifestFileLimit();
 
 /**
  * Finds a final built page by nodeId or by node.slug as a fallback.
@@ -63,38 +63,38 @@ async function findPageOwnedByNode({
   fullNode,
   slug,
 }: {
-  nodeId: string
-  fullNode: IGatsbyNode
-  slug?: string | undefined
+  nodeId: string;
+  fullNode: IGatsbyNode;
+  slug?: string | undefined;
 }): Promise<{
-  page: INodeManifestPage
-  foundPageBy: FoundPageBy
+  page: INodeManifestPage;
+  foundPageBy: FoundPageBy;
 }> {
-  const state = store.getState()
-  const { pages, staticQueryComponents } = state
-  const { byNode, byConnection, trackedComponents } = state.queries
+  const state = store.getState();
+  const { pages, staticQueryComponents } = state;
+  const { byNode, byConnection, trackedComponents } = state.queries;
 
-  const nodeType = fullNode?.internal?.type ?? ``
+  const nodeType = fullNode?.internal?.type ?? "";
 
   const firstPagePathWithNodeAsDataDependency =
     // the first page found in node id to page query path tracking
-    byNode?.get(nodeId)?.values()?.next()?.value
+    byNode?.get(nodeId)?.values()?.next()?.value;
 
   const firstPagePathWithNodeInGraphQLListField =
     // the first page that queries for a list of this node type.
     // we don't currently store a list of node ids for connection fields to queries
     // we just store the query id or page path mapped to the connected GraphQL typename.
-    byConnection?.get(nodeType)?.values()?.next()?.value
+    byConnection?.get(nodeType)?.values()?.next()?.value;
 
   let pagePath =
     firstPagePathWithNodeAsDataDependency ||
-    firstPagePathWithNodeInGraphQLListField
+    firstPagePathWithNodeInGraphQLListField;
 
   // for static queries, we can only find the first page using that static query
   // the reason we would find `sq--` here is because byConnection (above) can return a page path or a static query ID (which starts with `sq--`)
-  if (pagePath?.startsWith(`sq--`)) {
+  if (pagePath?.startsWith("sq--")) {
     const staticQueryComponentPath =
-      staticQueryComponents?.get(pagePath)?.componentPath
+      staticQueryComponents?.get(pagePath)?.componentPath;
 
     const firstPagePathUsingStaticQueryComponent: string | null =
       staticQueryComponentPath
@@ -102,16 +102,16 @@ async function findPageOwnedByNode({
             ?.get(staticQueryComponentPath)
             ?.pages?.values()
             ?.next()?.value
-        : null
+        : null;
 
-    pagePath = firstPagePathUsingStaticQueryComponent
+    pagePath = firstPagePathUsingStaticQueryComponent;
   }
 
-  let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
+  let foundPageBy: FoundPageBy = pagePath ? "queryTracking" : "none";
 
   if (pages) {
-    let ownerPagePath: string | undefined
-    let foundOwnerNodeId = false
+    let ownerPagePath: string | undefined;
+    let foundOwnerNodeId = false;
 
     // for each page this nodeId is queried in
     for (const pageObject of pages.values()) {
@@ -123,33 +123,33 @@ async function findPageOwnedByNode({
       // set on page.ownerNodeId.
       // We always want to prefer ownerPagePath over context.id/context.slug
       if (foundOwnerNodeId) {
-        break
+        break;
       }
 
-      const path = pageObject.path
+      const path = pageObject.path;
 
-      const fullPage: IGatsbyPage | undefined = pages.get(path)
+      const fullPage: IGatsbyPage | undefined = pages.get(path);
 
-      foundOwnerNodeId = fullPage?.ownerNodeId === nodeId
+      foundOwnerNodeId = fullPage?.ownerNodeId === nodeId;
 
-      const foundPageIdInContext = fullPage?.context?.id === nodeId
+      const foundPageIdInContext = fullPage?.context?.id === nodeId;
 
       // querying by node.slug in GraphQL queries is common enough that we can search for it as a fallback after ownerNodeId, filesystem routes, and context.id
-      const foundPageSlugInContext = slug && fullPage?.context?.slug === slug
+      const foundPageSlugInContext = slug && fullPage?.context?.slug === slug;
 
       if (foundOwnerNodeId) {
-        foundPageBy = `ownerNodeId`
+        foundPageBy = "ownerNodeId";
       } else if (foundPageIdInContext && fullPage) {
-        const pageCreatedByPluginName = getNode(fullPage.pluginCreatorId)?.name
+        const pageCreatedByPluginName = getNode(fullPage.pluginCreatorId)?.name;
 
         const pageCreatedByFilesystemPlugin =
-          pageCreatedByPluginName === `gatsby-plugin-page-creator`
+          pageCreatedByPluginName === "gatsby-plugin-page-creator";
 
         foundPageBy = pageCreatedByFilesystemPlugin
-          ? `filesystem-route-api`
-          : `context.id`
+          ? "filesystem-route-api"
+          : "context.id";
       } else if (foundPageSlugInContext && fullPage) {
-        foundPageBy = `context.slug`
+        foundPageBy = "context.slug";
       }
 
       if (
@@ -169,12 +169,12 @@ async function findPageOwnedByNode({
           foundPageSlugInContext)
       ) {
         // save this path to use in our manifest!
-        ownerPagePath = fullPage.path
+        ownerPagePath = fullPage.path;
       }
     }
 
     if (ownerPagePath) {
-      pagePath = ownerPagePath
+      pagePath = ownerPagePath;
     }
   }
 
@@ -183,19 +183,19 @@ async function findPageOwnedByNode({
       path: pagePath || null,
     },
     foundPageBy,
-  }
+  };
 }
 
 // these id's correspond to error id's in
 // packages/gatsby-cli/src/structured-errors/error-map.ts
 export const foundPageByToLogIds = {
-  none: `11801`,
-  [`context.id`]: `11802`,
-  [`context.slug`]: `11805`,
-  queryTracking: `11803`,
-  [`filesystem-route-api`]: `success`,
-  ownerNodeId: `success`,
-}
+  none: "11801",
+  ["context.id"]: "11802",
+  ["context.slug"]: "11805",
+  queryTracking: "11803",
+  ["filesystem-route-api"]: "success",
+  ownerNodeId: "success",
+};
 
 /**
  * Takes in some info about a node manifest and the page we did or didn't find for it, then warns and returns the warning string
@@ -206,19 +206,19 @@ export function warnAboutNodeManifestMappingProblems({
   foundPageBy,
   verbose,
 }: {
-  inputManifest: INodeManifest
-  pagePath?: string
-  foundPageBy: FoundPageBy
-  verbose: boolean
+  inputManifest: INodeManifest;
+  pagePath?: string | undefined;
+  foundPageBy: FoundPageBy;
+  verbose: boolean;
 }): { logId: string } {
-  let logId: ErrorId | `success`
+  let logId: ErrorId | "success";
 
   switch (foundPageBy) {
-    case `none`:
-    case `context.id`:
-    case `context.slug`:
-    case `queryTracking`: {
-      logId = foundPageByToLogIds[foundPageBy]
+    case "none":
+    case "context.id":
+    case "context.slug":
+    case "queryTracking": {
+      logId = foundPageByToLogIds[foundPageBy];
       if (verbose) {
         reporter.error({
           id: logId,
@@ -226,24 +226,24 @@ export function warnAboutNodeManifestMappingProblems({
             inputManifest,
             pagePath,
           },
-        })
+        });
       }
-      break
+      break;
     }
 
-    case `filesystem-route-api`:
-    case `ownerNodeId`:
-      logId = `success`
-      break
+    case "filesystem-route-api":
+    case "ownerNodeId":
+      logId = "success";
+      break;
 
     default: {
-      throw Error(`Node Manifest mapping is in an impossible state`)
+      throw Error("Node Manifest mapping is in an impossible state");
     }
   }
 
   return {
     logId,
-  }
+  };
 }
 
 /**
@@ -256,9 +256,9 @@ export async function processNodeManifest(
   verboseLogs: boolean,
   previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests,
 ): Promise<null | INodeManifestOut> {
-  const nodeId = inputManifest.node.id
-  const fullNode = getNode(nodeId)
-  const noNodeWarningId = `11804`
+  const nodeId = inputManifest.node.id;
+  const fullNode = getNode(nodeId);
+  const noNodeWarningId = "11804";
 
   if (!fullNode) {
     if (verboseLogs) {
@@ -268,12 +268,12 @@ export async function processNodeManifest(
           pluginName: inputManifest.pluginName,
           nodeId,
         },
-      })
+      });
     } else {
-      listOfUniqueErrorIds.add(noNodeWarningId)
+      listOfUniqueErrorIds.add(noNodeWarningId);
     }
 
-    return null
+    return null;
   }
 
   // map the node to a page that was created
@@ -282,24 +282,24 @@ export async function processNodeManifest(
     fullNode,
     // querying by node.slug in GraphQL queries is common enough that we can search for it as a fallback after ownerNodeId, filesystem routes, and context.id
     slug: fullNode?.slug as string,
-  })
+  });
 
   const nodeManifestMappingProblemsContext = {
     inputManifest,
     pagePath: nodeManifestPage.path,
     foundPageBy,
     verbose: verboseLogs,
-  }
+  };
 
   if (verboseLogs) {
-    warnAboutNodeManifestMappingProblems(nodeManifestMappingProblemsContext)
+    warnAboutNodeManifestMappingProblems(nodeManifestMappingProblemsContext);
   } else {
     const { logId } = warnAboutNodeManifestMappingProblems(
       nodeManifestMappingProblemsContext,
-    )
+    );
 
-    if (logId !== `success`) {
-      listOfUniqueErrorIds.add(logId)
+    if (logId !== "success") {
+      listOfUniqueErrorIds.add(logId);
     }
   }
 
@@ -307,11 +307,11 @@ export async function processNodeManifest(
     node: inputManifest.node,
     page: nodeManifestPage,
     foundPageBy,
-  }
+  };
 
-  const gatsbySiteDirectory = store.getState().program.directory
+  const gatsbySiteDirectory = store.getState().program.directory;
 
-  let fileNameBase = inputManifest.manifestId
+  let fileNameBase = inputManifest.manifestId;
 
   /**
    * Windows has a handful of special/reserved characters that are not valid in a file path
@@ -327,25 +327,25 @@ export async function processNodeManifest(
    * hard disk partition name) with "-" to ensure that local Windows development setups do not break when attempting
    * to write one of these manifests to disk.
    */
-  if (process.platform === `win32`) {
-    fileNameBase = fileNameBase.replace(/:|\/|\*|\?|"|<|>|\||\\/g, `-`)
+  if (process.platform === "win32") {
+    fileNameBase = fileNameBase.replace(/:|\/|\*|\?|"|<|>|\||\\/g, "-");
   }
 
   // write out the manifest file
   const manifestFilePath = path.join(
     gatsbySiteDirectory,
-    `public`,
-    `__node-manifests`,
+    "public",
+    "__node-manifests",
     inputManifest.pluginName,
     `${fileNameBase}.json`,
-  )
+  );
 
-  const manifestFileDir = path.dirname(manifestFilePath)
+  const manifestFileDir = path.dirname(manifestFilePath);
 
-  await fs.ensureDir(manifestFileDir)
+  await fs.ensureDir(manifestFileDir);
 
   const previouslyWrittenNodeManifest =
-    await previouslyWrittenNodeManifests.get(inputManifest.manifestId)
+    await previouslyWrittenNodeManifests.get(inputManifest.manifestId);
 
   // write a manifest if we don't currently have one written for this ID
   // or if we can replace the written one with a manifest that has found a page
@@ -353,40 +353,40 @@ export async function processNodeManifest(
   //       But we prefer to write a manifest that has a foundPageBy that is NOT "none"
   const shouldWriteManifest =
     !previouslyWrittenNodeManifest ||
-    (previouslyWrittenNodeManifest?.foundPageBy === `none` &&
-      finalManifest.foundPageBy !== `none`)
+    (previouslyWrittenNodeManifest?.foundPageBy === "none" &&
+      finalManifest.foundPageBy !== "none");
 
   if (shouldWriteManifest) {
-    const writePromise = fs.writeJSON(manifestFilePath, finalManifest)
+    const writePromise = fs.writeJSON(manifestFilePath, finalManifest);
 
     // This prevents two manifests from writing to the same file at the same time
     previouslyWrittenNodeManifests.set(
       inputManifest.manifestId,
       new Promise((resolve) => {
         writePromise.then(() => {
-          resolve(finalManifest)
-        })
+          resolve(finalManifest);
+        });
       }),
-    )
+    );
 
-    await writePromise
+    await writePromise;
   }
 
   if (shouldWriteManifest && verboseLogs) {
     reporter.info(
       `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase}`,
-    )
+    );
   } else if (verboseLogs) {
     reporter.info(
       `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase} but it was not written to disk because it was already written to disk previously.`,
-    )
+    );
   }
 
   if (nodeManifestPage.path) {
-    nodeManifestPagePathMap.set(nodeManifestPage.path, fileNameBase)
+    nodeManifestPagePathMap.set(nodeManifestPage.path, fileNameBase);
   }
 
-  return finalManifest
+  return finalManifest;
 }
 
 function nodeManifestSortComparerAscendingUpdatedAt(a, b): number {
@@ -396,18 +396,18 @@ function nodeManifestSortComparerAscendingUpdatedAt(a, b): number {
    * anything to sort
    */
   if (!a.updatedAtUTC && !b.updatedAtUTC) {
-    return 0
+    return 0;
   }
 
   if (!a.updatedAtUTC) {
-    return 1
+    return 1;
   }
 
   if (!b.updatedAtUTC) {
-    return -1
+    return -1;
   }
 
-  return Date.parse(a.updatedAtUTC) - Date.parse(b.updatedAtUTC)
+  return Date.parse(a.updatedAtUTC) - Date.parse(b.updatedAtUTC);
 }
 
 /**
@@ -420,24 +420,24 @@ export async function processNodeManifests(): Promise<Map<
   string
 > | null> {
   const verboseLogs =
-    process.env.gatsby_log_level === `verbose` ||
-    process.env.VERBOSE_NODE_MANIFEST === `true`
+    process.env.gatsby_log_level === "verbose" ||
+    process.env.VERBOSE_NODE_MANIFEST === "true";
 
-  const startTime = Date.now()
-  let { nodeManifests } = store.getState()
+  const startTime = Date.now();
+  let { nodeManifests } = store.getState();
 
-  const totalManifests = nodeManifests.length
+  const totalManifests = nodeManifests.length;
 
   if (totalManifests === 0) {
-    return null
+    return null;
   }
 
-  let totalProcessedManifests = 0
-  let totalFailedManifests = 0
-  const nodeManifestPagePathMap: Map<string, string> = new Map()
-  const listOfUniqueErrorIds: Set<string> = new Set()
+  let totalProcessedManifests = 0;
+  let totalFailedManifests = 0;
+  const nodeManifestPagePathMap: Map<string, string> = new Map();
+  const listOfUniqueErrorIds: Set<string> = new Set();
   const previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests =
-    new Map()
+    new Map();
 
   async function processNodeManifestTask(
     manifest: INodeManifest,
@@ -450,42 +450,42 @@ export async function processNodeManifests(): Promise<Map<
       nodeManifestPagePathMap,
       verboseLogs,
       previouslyWrittenNodeManifests,
-    )
+    );
 
     if (processedManifest) {
-      totalProcessedManifests++
+      totalProcessedManifests++;
     } else {
-      totalFailedManifests++
+      totalFailedManifests++;
     }
 
     // `setImmediate` below is a workaround against stack overflow
     // occurring when there are many manifests
-    setImmediate(() => cb(null, true))
-    return
+    setImmediate(() => cb(null, true));
+    return;
   }
 
-  const processNodeManifestQueue = fastq(processNodeManifestTask, 25)
+  const processNodeManifestQueue = fastq(processNodeManifestTask, 25);
 
   if (totalManifests > NODE_MANIFEST_FILE_LIMIT) {
-    nodeManifests = [...nodeManifests]
-    nodeManifests.sort(nodeManifestSortComparerAscendingUpdatedAt)
-    nodeManifests = nodeManifests.slice(0, NODE_MANIFEST_FILE_LIMIT)
+    nodeManifests = [...nodeManifests];
+    nodeManifests.sort(nodeManifestSortComparerAscendingUpdatedAt);
+    nodeManifests = nodeManifests.slice(0, NODE_MANIFEST_FILE_LIMIT);
   }
 
   for (const manifest of nodeManifests) {
-    processNodeManifestQueue.push(manifest, () => {})
+    processNodeManifestQueue.push(manifest, () => {});
   }
 
   if (!processNodeManifestQueue.idle()) {
     await new Promise((resolve) => {
-      processNodeManifestQueue.drain = resolve as () => unknown
-    })
+      processNodeManifestQueue.drain = resolve as () => unknown;
+    });
   }
 
   const pluralize = (length: number): string =>
-    length > 1 || length === 0 ? `s` : ``
+    length > 1 || length === 0 ? "s" : "";
 
-  const endTime = Date.now()
+  const endTime = Date.now();
 
   reporter.info(
     `Wrote out ${totalProcessedManifests} node page manifest file${pluralize(
@@ -495,20 +495,20 @@ export async function processNodeManifests(): Promise<Map<
         ? `. ${totalFailedManifests} manifest${pluralize(
             totalFailedManifests,
           )} couldn't be processed.`
-        : ``
+        : ""
     }`,
-  )
+  );
 
   reporter.info(
     (!verboseLogs && listOfUniqueErrorIds.size > 0
       ? `unstable_createNodeManifest produced warnings [${[
           ...listOfUniqueErrorIds,
-        ].join(`, `)}]. `
-      : ``) +
-      `To see full warning messages set process.env.VERBOSE_NODE_MANIFEST to "true".\nVisit https://gatsby.dev/nodemanifest for more info on Node Manifests.`,
-  )
+        ].join(", ")}]. `
+      : "") +
+      'To see full warning messages set process.env.VERBOSE_NODE_MANIFEST to "true".\nVisit https://gatsby.dev/nodemanifest for more info on Node Manifests.',
+  );
 
   // clean up all pending manifests from the store
-  store.dispatch(internalActions.deleteNodeManifests())
-  return nodeManifestPagePathMap
+  store.dispatch(internalActions.deleteNodeManifests());
+  return nodeManifestPagePathMap;
 }

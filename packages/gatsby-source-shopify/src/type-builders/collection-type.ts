@@ -73,5 +73,5 @@ export function collectionTypeBuilder(prefix: string): string {
       extend type ${prefix}Product {
         collections: [${prefix}Collection!]! @link(from: "collections___NODE", by: "id")
       }
-    `
+    `;
 }

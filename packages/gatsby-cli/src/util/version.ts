@@ -1,14 +1,14 @@
-import { setDefaultTags } from "gatsby-telemetry"
-import { getGatsbyVersion } from "gatsby-core-utils"
+import { setDefaultTags } from "gatsby-telemetry";
+import { getGatsbyVersion } from "gatsby-core-utils";
 
 export function getLocalGatsbyVersion(): string {
-  const version = getGatsbyVersion()
+  const version = getGatsbyVersion();
 
   try {
-    setDefaultTags({ installedGatsbyVersion: version })
+    setDefaultTags({ installedGatsbyVersion: version });
   } catch (e) {
     // ignore
   }
 
-  return version
+  return version;
 }

@@ -1,6 +1,13 @@
 module.exports = {
-  // arrowParens: "avoid",
-  semi: false,
+  semi: true,
+  trailingComma: "all",
+  tabWidth: 2,
+  singleQuote: false,
+  quoteProps: "as-needed",
+  jsxSingleQuote: false,
+  endOfLine: "lf",
+  bracketSpacing: true,
+  jsxSingleQuote: true,
   overrides: [
     {
       // This file uses semicolons. It's needed here because `documentation`
@@ -19,4 +26,4 @@ module.exports = {
       },
     },
   ],
-}
+};

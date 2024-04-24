@@ -1,24 +1,24 @@
-import type { IPluginInfo, PluginRef } from "./types"
-import { createPluginId } from "./utils/create-id"
-import { resolvePlugin } from "./resolve-plugin"
-import { isString, isEmpty, set, merge } from "lodash"
+import type { IPluginInfo, PluginRef } from "./types";
+import { createPluginId } from "./utils/create-id";
+import { resolvePlugin } from "./resolve-plugin";
+import { isString, isEmpty, set, merge } from "lodash";
 
 export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   // Respect the directory that the plugin was sourced from initially
-  rootDir = (!isString(plugin) && plugin.parentDir) || rootDir
+  rootDir = (!isString(plugin) && plugin.parentDir) || rootDir;
 
   if (isString(plugin)) {
-    const info = resolvePlugin(plugin, rootDir)
+    const info = resolvePlugin(plugin, rootDir);
 
     return {
       ...info,
       pluginOptions: {
         plugins: [],
       },
-    }
+    };
   }
 
-  plugin.options = plugin.options || {}
+  plugin.options = plugin.options || {};
 
   // Throw an error if there is an "option" key.
   if (
@@ -27,56 +27,56 @@ export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   ) {
     throw new Error(
       `Plugin "${plugin.resolve}" has an "option" key in the configuration. Did you mean "options"?`,
-    )
+    );
   }
 
   // Plugins can have plugins.
   if (plugin.subPluginPaths) {
     for (const subPluginPath of plugin.subPluginPaths) {
-      const segments = subPluginPath.split(`.`)
+      const segments = subPluginPath.split(".");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let roots: Array<any> = [plugin.options]
+      let roots: Array<any> = [plugin.options];
 
-      let pathToSwap = segments
+      let pathToSwap = segments;
 
       for (const segment of segments) {
-        if (segment === `[]`) {
-          pathToSwap = pathToSwap.slice(0, pathToSwap.length - 1)
-          roots = roots.flat()
+        if (segment === "[]") {
+          pathToSwap = pathToSwap.slice(0, pathToSwap.length - 1);
+          roots = roots.flat();
         } else {
-          roots = roots.map((root) => root[segment])
+          roots = roots.map((root) => root[segment]);
         }
       }
-      roots = roots.flat()
+      roots = roots.flat();
 
-      const processed: Array<IPluginInfo> = []
+      const processed: Array<IPluginInfo> = [];
 
       for (const root of roots) {
-        const result = processPlugin(root, rootDir)
-        processed.push(result)
+        const result = processPlugin(root, rootDir);
+        processed.push(result);
       }
 
-      set(plugin.options, pathToSwap, processed)
+      set(plugin.options, pathToSwap, processed);
     }
   }
 
   // Add some default values for tests as we don't actually
   // want to try to load anything during tests.
-  if (plugin.resolve === `___TEST___`) {
-    const name = `TEST`
+  if (plugin.resolve === "___TEST___") {
+    const name = "TEST";
 
     return {
       id: createPluginId(name, plugin),
       name,
-      version: `0.0.0-test`,
+      version: "0.0.0-test",
       pluginOptions: {
         plugins: [],
       },
-      resolve: `__TEST__`,
-    }
+      resolve: "__TEST__",
+    };
   }
 
-  const info = resolvePlugin(plugin, rootDir)
+  const info = resolvePlugin(plugin, rootDir);
 
   return {
     ...info,
@@ -87,5 +87,5 @@ export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
       : undefined,
     id: createPluginId(info.name, plugin),
     pluginOptions: merge({ plugins: [] }, plugin.options),
-  }
+  };
 }

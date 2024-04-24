@@ -1,7 +1,7 @@
-import type webpack from "webpack"
-import type { IGatsbyState } from "../../internal"
+import type webpack from "webpack";
+import type { IGatsbyState } from "../../internal";
 
-type ChunkGroup = webpack.Compilation["chunkGroups"][0]
+type ChunkGroup = webpack.Compilation["chunkGroups"][0];
 
 function getHashes(
   chunkGroup: ChunkGroup,
@@ -10,71 +10,71 @@ function getHashes(
   visitedChunkGroups: Set<ChunkGroup> = new Set(),
 ): Array<string> {
   if (visitedChunkGroups.has(chunkGroup)) {
-    return hashes
+    return hashes;
   }
-  visitedChunkGroups.add(chunkGroup)
+  visitedChunkGroups.add(chunkGroup);
 
   for (const chunk of chunkGroup.chunks) {
     if (!chunk.hash) {
       throw new Error(
-        `Invariant: [generating template hashes] Chunk doesn't have hash`,
-      )
+        "Invariant: [generating template hashes] Chunk doesn't have hash",
+      );
     }
-    hashes.push(chunk.hash)
+    hashes.push(chunk.hash);
   }
 
   for (const childChunkGroup of chunkGroup.childrenIterable) {
     const isNotImportedByAsyncRequires = childChunkGroup.origins.every(
-      (origin) => !origin.module.identifier().includes(`async-requires`),
-    )
+      (origin) => !origin.module.identifier().includes("async-requires"),
+    );
 
     if (isNotImportedByAsyncRequires) {
-      getHashes(childChunkGroup, compilation, hashes, visitedChunkGroups)
+      getHashes(childChunkGroup, compilation, hashes, visitedChunkGroups);
     }
   }
 
-  return hashes
+  return hashes;
 }
 
 export function getSSRChunkHashes({
   stats,
   components,
 }: {
-  stats: webpack.Stats
-  components: IGatsbyState["components"]
+  stats: webpack.Stats;
+  components: IGatsbyState["components"];
 }): {
-  templateHashes: Record<string, string>
-  renderPageHash: string
+  templateHashes: Record<string, string>;
+  renderPageHash: string;
 } {
-  const templateHashes: Record<string, string> = {}
-  const componentChunkNameToTemplatePath: Record<string, string> = {}
-  let renderPageHash = ``
+  const templateHashes: Record<string, string> = {};
+  const componentChunkNameToTemplatePath: Record<string, string> = {};
+  let renderPageHash = "";
 
   components.forEach((component) => {
     componentChunkNameToTemplatePath[component.componentChunkName] =
-      component.componentPath
-  })
+      component.componentPath;
+  });
 
   for (const chunkGroup of stats.compilation.chunkGroups) {
     if (chunkGroup.name) {
       const concenatedChunksByName = getHashes(
         chunkGroup,
         stats.compilation,
-      ).join(`--`)
+      ).join("--");
 
-      if (chunkGroup.name !== `render-page`) {
-        const templatePath = componentChunkNameToTemplatePath[chunkGroup.name]
+      if (chunkGroup.name !== "render-page") {
+        const templatePath = componentChunkNameToTemplatePath[chunkGroup.name];
         if (!templatePath) {
           // additional chunk group can be created by lazy imports
           // we handle them by handling children chunk groups on top level ones
-          continue
+          continue;
         }
-        templateHashes[templatePath] = concenatedChunksByName
+        templateHashes[templatePath] = concenatedChunksByName;
       } else {
-        renderPageHash = concenatedChunksByName
+        renderPageHash = concenatedChunksByName;
       }
     }
   }
 
-  return { templateHashes, renderPageHash }
+  return { templateHashes, renderPageHash };
 }

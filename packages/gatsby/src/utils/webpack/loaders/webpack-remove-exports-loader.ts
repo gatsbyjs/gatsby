@@ -1,17 +1,17 @@
 /* eslint-disable @babel/no-invalid-this */
 
-import type { LoaderDefinitionFunction } from "webpack"
-import { transform } from "@babel/core"
+import type { LoaderDefinitionFunction } from "webpack";
+import { transform } from "@babel/core";
 
 type IOptions = {
-  jsx?: boolean
-  remove?: Array<string>
-}
+  jsx?: boolean | undefined;
+  remove?: Array<string> | undefined;
+};
 
 const webpackRemoveExportsLoader: LoaderDefinitionFunction<IOptions> =
   function webpackRemoveExportsLoader(source, sourceMap): void {
-    const callback = this.async()
-    const options = this.getOptions()
+    const callback = this.async();
+    const options = this.getOptions();
 
     transform(
       source,
@@ -27,10 +27,10 @@ const webpackRemoveExportsLoader: LoaderDefinitionFunction<IOptions> =
         presets: options?.jsx
           ? [
               [
-                require.resolve(`babel-preset-gatsby/babel-preset-react`),
+                require.resolve("babel-preset-gatsby/babel-preset-react"),
                 {
                   useBuiltIns: true,
-                  pragma: `React.createElement`,
+                  pragma: "React.createElement",
                   // jsx is used only in develop, so for now this is fine
                   development: true,
                 },
@@ -39,7 +39,7 @@ const webpackRemoveExportsLoader: LoaderDefinitionFunction<IOptions> =
           : undefined,
         plugins: [
           [
-            require.resolve(`../../babel/babel-plugin-remove-api`),
+            require.resolve("../../babel/babel-plugin-remove-api"),
             {
               apis: options?.remove ?? [],
             },
@@ -48,14 +48,14 @@ const webpackRemoveExportsLoader: LoaderDefinitionFunction<IOptions> =
       },
       (err, result) => {
         if (err) {
-          callback(err)
+          callback(err);
         } else if (result && result.code) {
-          callback(null, result?.code, result?.map ?? undefined)
+          callback(null, result?.code, result?.map ?? undefined);
         } else {
-          callback(null, source, sourceMap)
+          callback(null, source, sourceMap);
         }
       },
-    )
-  }
+    );
+  };
 
-module.exports = webpackRemoveExportsLoader
+module.exports = webpackRemoveExportsLoader;

@@ -126,7 +126,7 @@ This is similar to the `generateImageSource` approach described above. The diffe
 
 ```js
 function urlBuilder({ baseUrl, width, height, format, options }) {
-  return `https://myexampleimagehost.com/${baseURL}?w=${width}&h=${height}&fmt=${format}&q=${options.quality}`
+  return `https://myexampleimagehost.com/${baseURL}?w=${width}&h=${height}&fmt=${format}&q=${options.quality}`;
 }
 ```
 
@@ -139,7 +139,7 @@ This is similar to the image resolver described above. However, because it execu
 The function should accept the props that will be passed into your component, and at a minimum it needs to take the props required by the `getImageData` helper function from `gatsby-plugin-image`. Here is an example for an image host:
 
 ```js
-import { getImageData } from "gatsby-plugin-image"
+import { getImageData } from "gatsby-plugin-image";
 
 export function getExampleImageData({ image, ...props }) {
   return getImageData({
@@ -151,7 +151,7 @@ export function getExampleImageData({ image, ...props }) {
     // If your host supports auto-format/content negotiation, pass this as the formats array
     formats: ["auto"],
     ...props,
-  })
+  });
 }
 ```
 
@@ -163,9 +163,9 @@ const image = {
   url: "kitten.jpg",
   width: 800,
   height: 600,
-}
-const imageData = getExampleImageData({ image, layout: "fixed", width: 400 })
-return <GatsbyImage image={imageData} alt="Kitten" />
+};
+const imageData = getExampleImageData({ image, layout: "fixed", width: 400 });
+return <GatsbyImage image={imageData} alt='Kitten' />;
 ```
 
 ### Create your wrapper component
@@ -181,7 +181,7 @@ interface ImageComponentProps
     // We omit "image" because that's the prop that we generate,
     Omit<GatsbyImageProps, "image"> {
   // Any other props can go here
-  myCustomProp?: string
+  myCustomProp?: string | undefined;
 }
 ```
 
@@ -192,9 +192,9 @@ For best results, you should pass in the dimensions of the source image, so make
 The component itself should wrap `<GatsbyImage>`, using your image data function to generate the object to pass to it.
 
 ```jsx
-import * as React from "react"
-import { GatsbyImage } from "gatsby-plugin-image"
-import { getExampleImageData } from "./my-image-data"
+import * as React from "react";
+import { GatsbyImage } from "gatsby-plugin-image";
+import { getExampleImageData } from "./my-image-data";
 
 export function ExampleImage({
   // Destructure the props that you are passing to the image data function
@@ -218,10 +218,10 @@ export function ExampleImage({
     sizes,
     aspectRatio,
     options,
-  })
+  });
 
   // Pass the image data and spread the rest of the props
-  return <GatsbyImage image={imageData} {...props} />
+  return <GatsbyImage image={imageData} {...props} />;
 }
 ```
 
@@ -233,28 +233,28 @@ const image = {
   url: "baseurl.jpg",
   width: 800,
   height: 600,
-}
+};
 
 return (
   <ExampleImage
     image={image}
-    layout="fixed"
+    layout='fixed'
     width={400}
-    backgroundColor="#660033"
-    alt="My image"
+    backgroundColor='#660033'
+    alt='My image'
   />
-)
+);
 ```
 
 A different component for an image CDN might not expect the user to know the dimensions of the source image, and might want to allow them to just pass a base URL:
 
 ```jsx
 <ExampleImage
-  image="https://example.com/nnnnn/bighero.jpg"
-  loading="eager"
-  layout="fullWidth"
+  image='https://example.com/nnnnn/bighero.jpg'
+  loading='eager'
+  layout='fullWidth'
   aspectRatio={16 / 9}
-  alt=""
+  alt=''
 />
 ```
 

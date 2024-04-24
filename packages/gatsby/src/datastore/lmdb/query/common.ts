@@ -1,11 +1,11 @@
-import { DbComparator, type IDbFilterStatement } from "../../common/query"
-import type { IGatsbyNode } from "../../../redux/types"
-import { getValueAt } from "../../../utils/get-value-at"
+import { DbComparator, type IDbFilterStatement } from "../../common/query";
+import type { IGatsbyNode } from "../../../redux/types";
+import { getValueAt } from "../../../utils/get-value-at";
 
 export function isDesc(
   sortOrder: "asc" | "desc" | "ASC" | "DESC" | boolean | void,
 ): boolean {
-  return sortOrder === `desc` || sortOrder === `DESC` || sortOrder === false
+  return sortOrder === "desc" || sortOrder === "DESC" || sortOrder === false;
 }
 
 /**
@@ -27,17 +27,17 @@ export function resolveFieldValue(
   nodeOrThunk: IGatsbyNode | (() => IGatsbyNode),
   resolvedNodeFields?: { [field: string]: unknown } | undefined,
 ): unknown {
-  let result
+  let result;
 
   if (resolvedNodeFields) {
-    result = getValueAt(resolvedNodeFields, dottedFieldPath)
+    result = getValueAt(resolvedNodeFields, dottedFieldPath);
   }
-  if (typeof result !== `undefined`) {
-    return result
+  if (typeof result !== "undefined") {
+    return result;
   }
-  const node = typeof nodeOrThunk === `function` ? nodeOrThunk() : nodeOrThunk
+  const node = typeof nodeOrThunk === "function" ? nodeOrThunk() : nodeOrThunk;
 
-  return getValueAt(node, dottedFieldPath)
+  return getValueAt(node, dottedFieldPath);
 }
 
 export function matchesFilter(
@@ -48,37 +48,39 @@ export function matchesFilter(
     case DbComparator.EQ:
       return filter.value === null
         ? filter.value == fieldValue
-        : filter.value === fieldValue
+        : filter.value === fieldValue;
     case DbComparator.IN: {
-      const arr = Array.isArray(filter.value) ? filter.value : [filter.value]
-      return arr.some((v) => (v === null ? v == fieldValue : v === fieldValue))
+      const arr = Array.isArray(filter.value) ? filter.value : [filter.value];
+      return arr.some((v) => (v === null ? v == fieldValue : v === fieldValue));
     }
     case DbComparator.GT:
-      return compareKey(fieldValue, filter.value) > 0
+      return compareKey(fieldValue, filter.value) > 0;
     case DbComparator.GTE:
-      return compareKey(fieldValue, filter.value) >= 0
+      return compareKey(fieldValue, filter.value) >= 0;
     case DbComparator.LT:
-      return compareKey(fieldValue, filter.value) < 0
+      return compareKey(fieldValue, filter.value) < 0;
     case DbComparator.LTE:
-      return compareKey(fieldValue, filter.value) <= 0
+      return compareKey(fieldValue, filter.value) <= 0;
     case DbComparator.NE:
     case DbComparator.NIN: {
-      const arr = Array.isArray(filter.value) ? filter.value : [filter.value]
-      return arr.every((v) => (v === null ? v != fieldValue : v !== fieldValue))
+      const arr = Array.isArray(filter.value) ? filter.value : [filter.value];
+      return arr.every((v) =>
+        v === null ? v != fieldValue : v !== fieldValue,
+      );
     }
     case DbComparator.REGEX: {
-      if (typeof fieldValue !== `undefined` && filter.value instanceof RegExp) {
-        return filter.value.test(String(fieldValue))
+      if (typeof fieldValue !== "undefined" && filter.value instanceof RegExp) {
+        return filter.value.test(String(fieldValue));
       }
-      return false
+      return false;
     }
   }
-  return false
+  return false;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function cartesianProduct(...arr: Array<Array<any>>): Array<any> {
-  return arr.reduce((a, b) => a.flatMap((d) => b.map((e) => [...d, e])), [[]])
+  return arr.reduce((a, b) => a.flatMap((d) => b.map((e) => [...d, e])), [[]]);
 }
 
 const typeOrder = {
@@ -87,7 +89,7 @@ const typeOrder = {
   boolean: 2,
   number: 3,
   string: 4,
-}
+};
 
 // Note: this is a copy of this function from lmdb-store:
 // https://github.com/DoctorEvidence/lmdb-store/blob/e1e53d6d2012ec22071a8fb7fa3b47f8886b22d2/index.js#L1259-L1300
@@ -95,44 +97,44 @@ const typeOrder = {
 // FIXME: replace with an import in v4
 export function compareKey(a: unknown, b: unknown): number {
   // compare with type consistency that matches ordered-binary
-  if (typeof a == `object`) {
+  if (typeof a == "object") {
     if (!a) {
-      return b == null ? 0 : -1
+      return b == null ? 0 : -1;
     }
-    if (a[`compare`]) {
+    if (a["compare"]) {
       if (b == null) {
-        return 1
-      } else if (typeof b === `object` && b !== null && b[`compare`]) {
-        return a[`compare`](b)
+        return 1;
+      } else if (typeof b === "object" && b !== null && b["compare"]) {
+        return a["compare"](b);
       } else {
-        return -1
+        return -1;
       }
     }
-    let arrayComparison
+    let arrayComparison;
     if (b instanceof Array) {
-      let i = 0
+      let i = 0;
       while (
         (arrayComparison = compareKey(a[i], b[i])) == 0 &&
-        i <= a[`length`]
+        i <= a["length"]
       ) {
-        i++
+        i++;
       }
-      return arrayComparison
+      return arrayComparison;
     }
-    arrayComparison = compareKey(a[0], b)
-    if (arrayComparison == 0 && a[`length`] > 1) return 1
-    return arrayComparison
+    arrayComparison = compareKey(a[0], b);
+    if (arrayComparison == 0 && a["length"] > 1) return 1;
+    return arrayComparison;
   } else if (typeof a == typeof b) {
-    if (typeof a === `symbol` && typeof b === `symbol`) {
-      a = Symbol.keyFor(a)
-      b = Symbol.keyFor(b)
+    if (typeof a === "symbol" && typeof b === "symbol") {
+      a = Symbol.keyFor(a);
+      b = Symbol.keyFor(b);
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (a as any) < (b as any) ? -1 : a === b ? 0 : 1
-  } else if (typeof b == `object`) {
-    if (b instanceof Array) return -compareKey(b, a)
-    return 1
+    return (a as any) < (b as any) ? -1 : a === b ? 0 : 1;
+  } else if (typeof b == "object") {
+    if (b instanceof Array) return -compareKey(b, a);
+    return 1;
   } else {
-    return typeOrder[typeof a] < typeOrder[typeof b] ? -1 : 1
+    return typeOrder[typeof a] < typeOrder[typeof b] ? -1 : 1;
   }
 }

@@ -1,12 +1,12 @@
-import type { MachineOptions } from "xstate"
+import type { MachineOptions } from "xstate";
 import {
   customizeSchema,
   createPages,
   buildSchema,
   sourceNodes,
   writeOutRedirects as writeOutRedirectsAndWatch,
-} from "../../services"
-import type { IDataLayerContext } from "./types"
+} from "../../services";
+import type { IDataLayerContext } from "./types";
 
 export const dataLayerServices: MachineOptions<
   IDataLayerContext,
@@ -18,4 +18,4 @@ export const dataLayerServices: MachineOptions<
   createPages,
   buildSchema,
   writeOutRedirectsAndWatch,
-}
+};

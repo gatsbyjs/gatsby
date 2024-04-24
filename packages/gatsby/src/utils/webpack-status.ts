@@ -1,18 +1,18 @@
-import { flush, isFlushEnqueued } from "./page-data"
+import { flush, isFlushEnqueued } from "./page-data";
 
-let isPendingStatus = false
+let isPendingStatus = false;
 
 export function isWebpackStatusPending(): boolean {
-  return isPendingStatus
+  return isPendingStatus;
 }
 
 export function markWebpackStatusAsPending(): void {
-  isPendingStatus = true
+  isPendingStatus = true;
 }
 
 export function markWebpackStatusAsDone(): void {
-  isPendingStatus = false
+  isPendingStatus = false;
   if (isFlushEnqueued()) {
-    flush()
+    flush();
   }
 }

@@ -1,76 +1,76 @@
-import type { Path } from "graphql/jsutils/Path"
+import type { Path } from "graphql/jsutils/Path";
 
-import report from "gatsby-cli/lib/reporter"
+import report from "gatsby-cli/lib/reporter";
 
-import { pathToArray } from "./utils"
+import { pathToArray } from "./utils";
 
-import type { IGraphQLSpanTracer } from "../schema/type-definitions"
-import type { IActivityArgs } from "gatsby-cli/lib/reporter/reporter"
-import type { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom"
+import type { IGraphQLSpanTracer } from "../schema/type-definitions";
+import type { IActivityArgs } from "gatsby-cli/lib/reporter/reporter";
+import type { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom";
 
 /**
  * Tracks and knows how to get a parent span for a particular
  *  point in query resolver for a particular query and path
  */
 export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
-  parentActivity: IPhantomReporter
-  activities: Map<string, IPhantomReporter>
+  parentActivity: IPhantomReporter;
+  activities: Map<string, IPhantomReporter>;
 
   constructor(name: string, activityArgs: IActivityArgs) {
     this.parentActivity = report.phantomActivity(
       name,
       activityArgs,
-    ) as IPhantomReporter
-    this.activities = new Map()
+    ) as IPhantomReporter;
+    this.activities = new Map();
   }
 
   getParentActivity(): IPhantomReporter {
-    return this.parentActivity
+    return this.parentActivity;
   }
 
   start(): void {
-    this.parentActivity.start()
+    this.parentActivity.start();
   }
 
   end(): void {
     this.activities.forEach((activity) => {
-      activity.end()
-    })
-    this.parentActivity.end()
+      activity.end();
+    });
+    this.parentActivity.end();
   }
 
   createResolverActivity(path: Path, name: string): IPhantomReporter {
-    let prev: Path | undefined = path.prev
-    while (typeof prev?.key === `number`) {
-      prev = prev.prev
+    let prev: Path | undefined = path.prev;
+    while (typeof prev?.key === "number") {
+      prev = prev.prev;
     }
-    const parentSpan = this.getActivity(prev).span
-    const activity = report.phantomActivity(`GraphQL Resolver`, {
+    const parentSpan = this.getActivity(prev).span;
+    const activity = report.phantomActivity("GraphQL Resolver", {
       parentSpan,
       tags: {
         field: name,
-        path: pathToArray(path).join(`.`),
+        path: pathToArray(path).join("."),
       },
-    })
-    this.setActivity(path, activity)
-    return activity
+    });
+    this.setActivity(path, activity);
+    return activity;
   }
 
   getActivity(gqlPath: Path | undefined): IPhantomReporter {
-    const path = pathToArray(gqlPath)
-    let activity
+    const path = pathToArray(gqlPath);
+    let activity;
     if (path.length > 0) {
-      activity = this.activities.get(path.join(`.`))
+      activity = this.activities.get(path.join("."));
       if (activity) {
-        return activity
+        return activity;
       }
     }
 
-    return this.parentActivity
+    return this.parentActivity;
   }
 
   setActivity(gqlPath: Path, activity: IPhantomReporter): void {
-    const path = pathToArray(gqlPath)
-    this.activities.set(path.join(`.`), activity)
+    const path = pathToArray(gqlPath);
+    this.activities.set(path.join("."), activity);
   }
 }

@@ -1,22 +1,22 @@
-const { graphql, parse, print } = require(`graphql`)
-const { store } = require(`../../redux`)
-const { actions } = require(`../../redux/actions`)
-const { build } = require(`..`)
-const withResolverContext = require(`../context`)
-const { tranformDocument } = require(`../../query/transform-document`)
+const { graphql, parse, print } = require("graphql");
+const { store } = require("../../redux");
+const { actions } = require("../../redux/actions");
+const { build } = require("..");
+const withResolverContext = require("../context");
+const { tranformDocument } = require("../../query/transform-document");
 
-jest.mock(`../../utils/api-runner-node`)
-const apiRunnerNode = require(`../../utils/api-runner-node`)
+jest.mock("../../utils/api-runner-node");
+const apiRunnerNode = require("../../utils/api-runner-node");
 
-const mockActualOrderBy = jest.requireActual(`lodash`).orderBy
-jest.mock(`lodash/orderBy`, () => jest.fn(mockActualOrderBy))
-const orderBySpy = require(`lodash/orderBy`)
+const mockActualOrderBy = jest.requireActual("lodash").orderBy;
+jest.mock("lodash/orderBy", () => jest.fn(mockActualOrderBy));
+const orderBySpy = require("lodash/orderBy");
 
-const getTestNodes = require(`./fixtures/queries`)
+const getTestNodes = require("./fixtures/queries");
 
-const { getDataStore, getNode } = require(`../../datastore`)
+const { getDataStore, getNode } = require("../../datastore");
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock("gatsby-cli/lib/reporter", () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -28,30 +28,30 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         start: jest.fn(),
         setStatus: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
         end: jest.fn(),
-      }
+      };
     },
-  }
-})
+  };
+});
 
 beforeEach(() => {
-  orderBySpy.mockClear()
-})
+  orderBySpy.mockClear();
+});
 
-describe(`Query schema`, () => {
-  let schema
-  let schemaComposer
+describe("Query schema", () => {
+  let schema;
+  let schemaComposer;
 
   const runQuery = (query, variables) => {
-    if (_CFLAGS_.GATSBY_MAJOR === `5`) {
-      const inputAst = typeof query === `string` ? parse(query) : query
-      const { ast } = tranformDocument(inputAst)
-      query = print(ast)
+    if (_CFLAGS_.GATSBY_MAJOR === "5") {
+      const inputAst = typeof query === "string" ? parse(query) : query;
+      const { ast } = tranformDocument(inputAst);
+      query = print(ast);
     }
 
     return graphql({
@@ -63,47 +63,47 @@ describe(`Query schema`, () => {
         schemaComposer,
       }),
       variableValues: variables,
-    })
-  }
+    });
+  };
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation(async (api, ...args) => {
-      if (api === `setFieldsOnGraphQLNodeType`) {
-        if (args[0].type.name === `Markdown`) {
+      if (api === "setFieldsOnGraphQLNodeType") {
+        if (args[0].type.name === "Markdown") {
           return [
             {
-              [`frontmatter.authorNames`]: {
-                type: `[String!]!`,
+              ["frontmatter.authorNames"]: {
+                type: "[String!]!",
                 async resolve(source, args, context, info) {
                   const { entries } = await context.nodeModel.findAll({
-                    type: `Author`,
+                    type: "Author",
                     query: { filter: { email: { in: source.authors } } },
-                  })
-                  return entries.map(author => author.name)
+                  });
+                  return entries.map((author) => author.name);
                 },
               },
-              [`frontmatter.anotherField`]: {
-                type: `Boolean`,
+              ["frontmatter.anotherField"]: {
+                type: "Boolean",
                 resolve() {
-                  return true
+                  return true;
                 },
               },
-              [`frontmatter.priceInCents`]: {
-                type: `Int`,
+              ["frontmatter.priceInCents"]: {
+                type: "Int",
                 resolve(source) {
-                  const parsedPrice = parseFloat(source.price)
+                  const parsedPrice = parseFloat(source.price);
                   if (isNaN(parsedPrice)) {
-                    return null
+                    return null;
                   }
 
-                  return Math.ceil(parsedPrice * 100)
+                  return Math.ceil(parsedPrice * 100);
                 },
               },
             },
-          ]
+          ];
         }
-        return []
-      } else if (api === `createResolvers`) {
+        return [];
+      } else if (api === "createResolvers") {
         return [
           args[0].createResolvers({
             Frontmatter: {
@@ -118,18 +118,18 @@ describe(`Query schema`, () => {
                   // resolver is called the second time.
                   if (
                     source.authors.some(
-                      author => author && typeof author === `object`
+                      (author) => author && typeof author === "object",
                     )
                   ) {
-                    return source.authors
+                    return source.authors;
                   }
                   const { entries } = await context.nodeModel.findAll({
-                    type: `Author`,
-                  })
-                  const authors = entries.filter(author =>
-                    source.authors.includes(author.email)
-                  )
-                  return Array.from(authors)
+                    type: "Author",
+                  });
+                  const authors = entries.filter((author) =>
+                    source.authors.includes(author.email),
+                  );
+                  return Array.from(authors);
                 },
               },
             },
@@ -137,7 +137,7 @@ describe(`Query schema`, () => {
               posts: {
                 async resolve(source, args, context, info) {
                   const { entries } = await context.nodeModel.findAll({
-                    type: `Markdown`,
+                    type: "Markdown",
                     query: {
                       filter: {
                         frontmatter: {
@@ -148,8 +148,8 @@ describe(`Query schema`, () => {
                         },
                       },
                     },
-                  })
-                  return entries
+                  });
+                  return entries;
                 },
               },
             },
@@ -157,53 +157,53 @@ describe(`Query schema`, () => {
           args[0].createResolvers({
             Query: {
               allAuthorNames: {
-                type: `[String!]!`,
+                type: "[String!]!",
                 async resolve(source, args, context, info) {
                   const { entries } = await context.nodeModel.findAll({
-                    type: `Author`,
-                  })
+                    type: "Author",
+                  });
 
-                  return Array.from(entries, author => author.name)
+                  return Array.from(entries, (author) => author.name);
                 },
               },
             },
           }),
-        ]
+        ];
       } else {
-        return []
+        return [];
       }
-    })
+    });
 
-    store.dispatch({ type: `DELETE_CACHE` })
-    getTestNodes().forEach(node =>
-      actions.createNode({ ...node }, { name: `test` })(store.dispatch)
-    )
+    store.dispatch({ type: "DELETE_CACHE" });
+    getTestNodes().forEach((node) =>
+      actions.createNode({ ...node }, { name: "test" })(store.dispatch),
+    );
 
     const typeDefs = [
-      `type Markdown implements Node { frontmatter: Frontmatter! }`,
-      `type Frontmatter { authors: [Author], fileRef: File @fileByRelativePath }`,
-      `type Author implements Node { posts: [Markdown] }`,
-    ]
-    typeDefs.forEach(def =>
-      store.dispatch({ type: `CREATE_TYPES`, payload: def })
-    )
+      "type Markdown implements Node { frontmatter: Frontmatter! }",
+      "type Frontmatter { authors: [Author], fileRef: File @fileByRelativePath }",
+      "type Author implements Node { posts: [Markdown] }",
+    ];
+    typeDefs.forEach((def) =>
+      store.dispatch({ type: "CREATE_TYPES", payload: def }),
+    );
 
     store.dispatch({
-      type: `SET_SITE_CONFIG`,
+      type: "SET_SITE_CONFIG",
       payload: {
         mapping: {
-          "Markdown.frontmatter.reviewerByEmail": `Author.email`,
+          "Markdown.frontmatter.reviewerByEmail": "Author.email",
         },
       },
-    })
+    });
 
-    await build({})
-    schema = store.getState().schema
-    schemaComposer = store.getState().schemaCustomization.composer
-  })
+    await build({});
+    schema = store.getState().schema;
+    schemaComposer = store.getState().schemaCustomization.composer;
+  });
 
-  describe(`on children fields`, () => {
-    it(`handles Node interface children field`, async () => {
+  describe("on children fields", () => {
+    it("handles Node interface children field", async () => {
       const query = `
         {
           allFile {
@@ -217,34 +217,34 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allFile: {
           edges: [
             {
               node: {
-                children: [{ frontmatter: { title: `Markdown File 1` } }],
+                children: [{ frontmatter: { title: "Markdown File 1" } }],
               },
             },
             {
               node: {
-                children: [{ frontmatter: { title: `Markdown File 2` } }],
+                children: [{ frontmatter: { title: "Markdown File 2" } }],
               },
             },
             {
               node: {
-                children: [{ name: `Author 2` }, { name: `Author 1` }],
+                children: [{ name: "Author 2" }, { name: "Author 1" }],
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
-    it(`handles convenience child fields`, async () => {
+    it("handles convenience child fields", async () => {
       const query = `
         {
           allFile {
@@ -256,24 +256,24 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allFile: {
           edges: [
             {
               node: {
-                childMarkdown: { frontmatter: { title: `Markdown File 1` } },
+                childMarkdown: { frontmatter: { title: "Markdown File 1" } },
                 childrenMarkdown: [
-                  { frontmatter: { title: `Markdown File 1` } },
+                  { frontmatter: { title: "Markdown File 1" } },
                 ],
               },
             },
             {
               node: {
-                childMarkdown: { frontmatter: { title: `Markdown File 2` } },
+                childMarkdown: { frontmatter: { title: "Markdown File 2" } },
                 childrenMarkdown: [
-                  { frontmatter: { title: `Markdown File 2` } },
+                  { frontmatter: { title: "Markdown File 2" } },
                 ],
               },
             },
@@ -285,12 +285,12 @@ describe(`Query schema`, () => {
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
-    it(`handles convenience children fields`, async () => {
+    it("handles convenience children fields", async () => {
       const query = `
         {
           allFile {
@@ -302,8 +302,8 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allFile: {
           edges: [
@@ -321,20 +321,20 @@ describe(`Query schema`, () => {
             },
             {
               node: {
-                childAuthor: { name: `Author 2` },
-                childrenAuthor: [{ name: `Author 2` }, { name: `Author 1` }],
+                childAuthor: { name: "Author 2" },
+                childrenAuthor: [{ name: "Author 2" }, { name: "Author 1" }],
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
     // NOTE: Also tests handling children fields being in both
     // input filter and selection set.
-    it(`handles query arguments on children fields`, async () => {
+    it("handles query arguments on children fields", async () => {
       const query = `
         {
           allFile(
@@ -355,27 +355,27 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allFile: {
           edges: [
             {
-              node: { name: `2.md`, children: [{ id: `md2` }] },
+              node: { name: "2.md", children: [{ id: "md2" }] },
             },
             {
-              node: { name: `1.md`, children: [{ id: `md1` }] },
+              node: { name: "1.md", children: [{ id: "md1" }] },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
-  })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
+  });
 
-  describe(`on fields added with createTypes`, () => {
-    it(`handles selection set`, async () => {
+  describe("on fields added with createTypes", () => {
+    it("handles selection set", async () => {
       const query = `
         {
           markdown {
@@ -411,19 +411,19 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         markdown: {
           frontmatter: {
             authors: [
               {
                 posts: [
-                  { frontmatter: { title: `Markdown File 1` } },
-                  { frontmatter: { title: `Markdown File 2` } },
+                  { frontmatter: { title: "Markdown File 1" } },
+                  { frontmatter: { title: "Markdown File 2" } },
                 ],
               },
-              { posts: [{ frontmatter: { title: `Markdown File 1` } }] },
+              { posts: [{ frontmatter: { title: "Markdown File 1" } }] },
             ],
           },
         },
@@ -432,56 +432,56 @@ describe(`Query schema`, () => {
             {
               node: {
                 frontmatter: {
-                  authorNames: [`Author 1`, `Author 2`],
+                  authorNames: ["Author 1", "Author 2"],
                   authors: [
                     {
-                      email: `author1@example.com`,
-                      name: `Author 1`,
+                      email: "author1@example.com",
+                      name: "Author 1",
                       posts: [
-                        { frontmatter: { title: `Markdown File 1` } },
-                        { frontmatter: { title: `Markdown File 2` } },
+                        { frontmatter: { title: "Markdown File 1" } },
+                        { frontmatter: { title: "Markdown File 2" } },
                       ],
                     },
                     {
-                      email: `author2@example.com`,
-                      name: `Author 2`,
-                      posts: [{ frontmatter: { title: `Markdown File 1` } }],
+                      email: "author2@example.com",
+                      name: "Author 2",
+                      posts: [{ frontmatter: { title: "Markdown File 1" } }],
                     },
                   ],
-                  date: `01-01-2019`,
+                  date: "01-01-2019",
                   published: null,
-                  title: `Markdown File 1`,
+                  title: "Markdown File 1",
                 },
               },
             },
             {
               node: {
                 frontmatter: {
-                  authorNames: [`Author 1`],
+                  authorNames: ["Author 1"],
                   authors: [
                     {
-                      email: `author1@example.com`,
-                      name: `Author 1`,
+                      email: "author1@example.com",
+                      name: "Author 1",
                       posts: [
-                        { frontmatter: { title: `Markdown File 1` } },
-                        { frontmatter: { title: `Markdown File 2` } },
+                        { frontmatter: { title: "Markdown File 1" } },
+                        { frontmatter: { title: "Markdown File 2" } },
                       ],
                     },
                   ],
                   date: null,
                   published: false,
-                  title: `Markdown File 2`,
+                  title: "Markdown File 2",
                 },
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
-    it(`handles query arguments`, async () => {
+    it("handles query arguments", async () => {
       const query = `
         {
           author(
@@ -533,46 +533,46 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         author: {
-          name: `Author 1`,
+          name: "Author 1",
           posts: [
-            { frontmatter: { title: `Markdown File 1` } },
-            { frontmatter: { title: `Markdown File 2` } },
+            { frontmatter: { title: "Markdown File 1" } },
+            { frontmatter: { title: "Markdown File 2" } },
           ],
         },
         allMarkdown: {
           edges: [
             {
               node: {
-                id: `md2`,
-                frontmatter: { authors: [{ name: `Author 1` }] },
+                id: "md2",
+                frontmatter: { authors: [{ name: "Author 1" }] },
               },
             },
             {
               node: {
-                id: `md1`,
+                id: "md1",
                 frontmatter: {
                   authors: expect.arrayContaining([
-                    { name: `Author 1` },
-                    { name: `Author 2` },
+                    { name: "Author 1" },
+                    { name: "Author 2" },
                   ]),
                 },
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
-  })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
+  });
 
-  describe(`on pagination fields`, () => {
-    describe(`edges { node }`, () => {
-      it(`paginates results`, async () => {
+  describe("on pagination fields", () => {
+    describe("edges { node }", () => {
+      it("paginates results", async () => {
         const query = `
           {
             pages: allMarkdown {
@@ -616,8 +616,8 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
         const expected = {
           findsort: {
             totalCount: 2,
@@ -625,8 +625,8 @@ describe(`Query schema`, () => {
               {
                 node: {
                   frontmatter: {
-                    authors: [{ name: `Author 1` }],
-                    title: `Markdown File 2`,
+                    authors: [{ name: "Author 1" }],
+                    title: "Markdown File 2",
                   },
                 },
               },
@@ -634,10 +634,10 @@ describe(`Query schema`, () => {
                 node: {
                   frontmatter: {
                     authors: expect.arrayContaining([
-                      { name: `Author 1` },
-                      { name: `Author 2` },
+                      { name: "Author 1" },
+                      { name: "Author 2" },
                     ]),
-                    title: `Markdown File 1`,
+                    title: "Markdown File 1",
                   },
                 },
               },
@@ -650,30 +650,30 @@ describe(`Query schema`, () => {
                 node: {
                   frontmatter: {
                     authors: expect.arrayContaining([
-                      { name: `Author 1` },
-                      { name: `Author 2` },
+                      { name: "Author 1" },
+                      { name: "Author 2" },
                     ]),
-                    title: `Markdown File 1`,
+                    title: "Markdown File 1",
                   },
                 },
               },
               {
                 node: {
                   frontmatter: {
-                    authors: [{ name: `Author 1` }],
-                    title: `Markdown File 2`,
+                    authors: [{ name: "Author 1" }],
+                    title: "Markdown File 2",
                   },
                 },
               },
             ],
           },
-          skiplimit: { totalCount: 2, edges: [{ node: { id: `md2` } }] },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
+          skiplimit: { totalCount: 2, edges: [{ node: { id: "md2" } }] },
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
 
-      it(`paginates null result`, async () => {
+      it("paginates null result", async () => {
         const query = `
           {
             allMarkdown(
@@ -688,9 +688,9 @@ describe(`Query schema`, () => {
               nodes { id }
             }
           }
-        `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
+        `;
+        const results = await runQuery(query);
+        expect(results.errors).toBeUndefined();
         expect(results.data).toMatchInlineSnapshot(`
           Object {
             "allMarkdown": Object {
@@ -699,10 +699,10 @@ describe(`Query schema`, () => {
               "totalCount": 0,
             },
           }
-        `)
-      })
+        `);
+      });
 
-      it(`adds nodes field as a convenience shortcut`, async () => {
+      it("adds nodes field as a convenience shortcut", async () => {
         const query = `
           {
             allMarkdown(
@@ -713,21 +713,21 @@ describe(`Query schema`, () => {
               nodes { id }
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
         const expected = {
           allMarkdown: {
             totalCount: 2,
-            nodes: [{ id: `md2` }],
+            nodes: [{ id: "md2" }],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
-    })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
+    });
 
-    describe(`group field`, () => {
-      it(`groups query results`, async () => {
+    describe("group field", () => {
+      it("groups query results", async () => {
         const query = `
           {
             allMarkdown {
@@ -744,31 +744,31 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
         const expected = {
           allMarkdown: {
             group: [
               {
-                fieldValue: `Markdown File 1`,
+                fieldValue: "Markdown File 1",
                 edges: [
                   {
                     node: {
                       frontmatter: {
-                        title: `Markdown File 1`,
-                        date: `2019-01-01`,
+                        title: "Markdown File 1",
+                        date: "2019-01-01",
                       },
                     },
                   },
                 ],
               },
               {
-                fieldValue: `Markdown File 2`,
+                fieldValue: "Markdown File 2",
                 edges: [
                   {
                     node: {
                       frontmatter: {
-                        title: `Markdown File 2`,
+                        title: "Markdown File 2",
                         date: null,
                       },
                     },
@@ -777,12 +777,12 @@ describe(`Query schema`, () => {
               },
             ],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
 
-      it(`groups query results by scalar field with resolver`, async () => {
+      it("groups query results by scalar field with resolver", async () => {
         const query = `
           {
             allMarkdown {
@@ -799,19 +799,19 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
         const expected = {
           allMarkdown: {
             group: [
               {
-                fieldValue: `2019-01-01T00:00:00.000Z`,
+                fieldValue: "2019-01-01T00:00:00.000Z",
                 edges: [
                   {
                     node: {
                       frontmatter: {
-                        title: `Markdown File 1`,
-                        date: `2019/01/01`,
+                        title: "Markdown File 1",
+                        date: "2019/01/01",
                       },
                     },
                   },
@@ -819,12 +819,12 @@ describe(`Query schema`, () => {
               },
             ],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
 
-      it(`groups query results by foreign key field`, async () => {
+      it("groups query results by foreign key field", async () => {
         const query = `
           {
             allMarkdown {
@@ -841,26 +841,26 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
         const expected = {
           allMarkdown: {
             group: [
               {
-                fieldValue: `Author 1`,
+                fieldValue: "Author 1",
                 edges: [
                   {
                     node: {
                       frontmatter: {
-                        title: `Markdown File 1`,
-                        date: `2019-01-01`,
+                        title: "Markdown File 1",
+                        date: "2019-01-01",
                       },
                     },
                   },
                   {
                     node: {
                       frontmatter: {
-                        title: `Markdown File 2`,
+                        title: "Markdown File 2",
                         date: null,
                       },
                     },
@@ -868,13 +868,13 @@ describe(`Query schema`, () => {
                 ],
               },
               {
-                fieldValue: `Author 2`,
+                fieldValue: "Author 2",
                 edges: [
                   {
                     node: {
                       frontmatter: {
-                        title: `Markdown File 1`,
-                        date: `2019-01-01`,
+                        title: "Markdown File 1",
+                        date: "2019-01-01",
                       },
                     },
                   },
@@ -882,12 +882,12 @@ describe(`Query schema`, () => {
               },
             ],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
 
-      it(`recursively groups query results`, async () => {
+      it("recursively groups query results", async () => {
         const query = `
           {
             allMarkdown {
@@ -907,35 +907,35 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
         const expected = {
           allMarkdown: {
             group: [
               {
-                fieldValue: `Markdown File 1`,
+                fieldValue: "Markdown File 1",
                 group: [
                   {
-                    fieldValue: `Author 1`,
+                    fieldValue: "Author 1",
                     edges: [
                       {
                         node: {
                           frontmatter: {
-                            title: `Markdown File 1`,
-                            date: `2019-01-01`,
+                            title: "Markdown File 1",
+                            date: "2019-01-01",
                           },
                         },
                       },
                     ],
                   },
                   {
-                    fieldValue: `Author 2`,
+                    fieldValue: "Author 2",
                     edges: [
                       {
                         node: {
                           frontmatter: {
-                            title: `Markdown File 1`,
-                            date: `2019-01-01`,
+                            title: "Markdown File 1",
+                            date: "2019-01-01",
                           },
                         },
                       },
@@ -944,15 +944,15 @@ describe(`Query schema`, () => {
                 ],
               },
               {
-                fieldValue: `Markdown File 2`,
+                fieldValue: "Markdown File 2",
                 group: [
                   {
-                    fieldValue: `Author 1`,
+                    fieldValue: "Author 1",
                     edges: [
                       {
                         node: {
                           frontmatter: {
-                            title: `Markdown File 2`,
+                            title: "Markdown File 2",
                             date: null,
                           },
                         },
@@ -963,12 +963,12 @@ describe(`Query schema`, () => {
               },
             ],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
 
-      it(`handles groups added in fragment`, async () => {
+      it("handles groups added in fragment", async () => {
         const query = `
           fragment GroupTest on MarkdownConnection {
             group(field: frontmatter___authors___name) {
@@ -989,9 +989,9 @@ describe(`Query schema`, () => {
               ...GroupTest
             }
           }
-        `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
+        `;
+        const results = await runQuery(query);
+        expect(results.errors).toBeUndefined();
         expect(results.data).toMatchInlineSnapshot(`
           Object {
             "allMarkdown": Object {
@@ -1033,10 +1033,10 @@ describe(`Query schema`, () => {
               ],
             },
           }
-        `)
-      })
+        `);
+      });
 
-      it(`handles groups added in inline fragment`, async () => {
+      it("handles groups added in inline fragment", async () => {
         const query = `
           {
             allMarkdown {
@@ -1055,9 +1055,9 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
+        `;
+        const results = await runQuery(query);
+        expect(results.errors).toBeUndefined();
         expect(results.data).toMatchInlineSnapshot(`
           Object {
             "allMarkdown": Object {
@@ -1099,10 +1099,10 @@ describe(`Query schema`, () => {
               ],
             },
           }
-        `)
-      })
+        `);
+      });
 
-      it(`handles groups added in nested fragment`, async () => {
+      it("handles groups added in nested fragment", async () => {
         const query = `
           fragment GroupTest on MarkdownConnection {
             group(field: frontmatter___authors___name) {
@@ -1127,9 +1127,9 @@ describe(`Query schema`, () => {
               ...GroupTestWrapper
             }
           }
-        `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
+        `;
+        const results = await runQuery(query);
+        expect(results.errors).toBeUndefined();
         expect(results.data).toMatchInlineSnapshot(`
           Object {
             "allMarkdown": Object {
@@ -1171,10 +1171,10 @@ describe(`Query schema`, () => {
               ],
             },
           }
-        `)
-      })
+        `);
+      });
 
-      it(`groups null result`, async () => {
+      it("groups null result", async () => {
         const query = `
           {
             allMarkdown(
@@ -1190,19 +1190,19 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
+        `;
+        const results = await runQuery(query);
+        expect(results.errors).toBeUndefined();
         expect(results.data).toMatchInlineSnapshot(`
           Object {
             "allMarkdown": Object {
               "group": Array [],
             },
           }
-        `)
-      })
+        `);
+      });
 
-      it(`groups using reserved keywords`, async () => {
+      it("groups using reserved keywords", async () => {
         const query = `
           {
             allMarkdown {
@@ -1212,9 +1212,9 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
+        `;
+        const results = await runQuery(query);
+        expect(results.errors).toBeUndefined();
         expect(results.data).toMatchInlineSnapshot(`
           Object {
             "allMarkdown": Object {
@@ -1226,43 +1226,43 @@ describe(`Query schema`, () => {
               ],
             },
           }
-        `)
-      })
+        `);
+      });
 
-      it(`works correctly if GC happen mid running`, async () => {
+      it("works correctly if GC happen mid running", async () => {
         // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-        const v8 = require(`v8`)
-        const vm = require(`vm`)
-        v8.setFlagsFromString(`--expose_gc`)
-        const gc = vm.runInNewContext(`gc`)
+        const v8 = require("v8");
+        const vm = require("vm");
+        v8.setFlagsFromString("--expose_gc");
+        const gc = vm.runInNewContext("gc");
 
-        const { clearKeptObjects } = require(`lmdb`)
+        const { clearKeptObjects } = require("lmdb");
 
         orderBySpy.mockImplementationOnce((...args) => {
           // eslint thinks that WeakRef is not defined for some reason :shrug:
           // eslint-disable-next-line no-undef
-          const weakNode = new WeakRef(getNode(`md1`))
+          const weakNode = new WeakRef(getNode("md1"));
 
           // spy is keeping nodes in memory due to `.calls` array
-          apiRunnerNode.mockClear()
+          apiRunnerNode.mockClear();
           // very implementation specific case:
           // We don't hold full nodes strongly in gatsby anymore so they can be potentially
           // GCed mid execution of query. For this test we force all weakly held nodes to be
           // dropped
-          clearKeptObjects()
-          gc()
+          clearKeptObjects();
+          gc();
 
           // now we shouldn't have that node in memory
           if (weakNode.deref()) {
             throw new Error(
-              `Test setup is broken, something is keeping a node in memory`
-            )
+              "Test setup is broken, something is keeping a node in memory",
+            );
           }
 
-          return mockActualOrderBy(...args)
-        })
+          return mockActualOrderBy(...args);
+        });
 
-        expect(orderBySpy).not.toBeCalled()
+        expect(orderBySpy).not.toBeCalled();
 
         // sort added only to hit code path using `orderBy`,
         // which we use to force GC to simulate node "randomly"
@@ -1284,30 +1284,30 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
 
         // make sure we released all nodes from memory in middle of the run
-        expect(orderBySpy).toBeCalled()
+        expect(orderBySpy).toBeCalled();
 
         const expected = {
           allMarkdown: {
             group: [
               {
-                fieldValue: `Author 1`,
+                fieldValue: "Author 1",
                 edges: [
                   {
                     node: {
                       frontmatter: {
-                        title: `Markdown File 1`,
-                        date: `2019-01-01`,
+                        title: "Markdown File 1",
+                        date: "2019-01-01",
                       },
                     },
                   },
                   {
                     node: {
                       frontmatter: {
-                        title: `Markdown File 2`,
+                        title: "Markdown File 2",
                         date: null,
                       },
                     },
@@ -1315,13 +1315,13 @@ describe(`Query schema`, () => {
                 ],
               },
               {
-                fieldValue: `Author 2`,
+                fieldValue: "Author 2",
                 edges: [
                   {
                     node: {
                       frontmatter: {
-                        title: `Markdown File 1`,
-                        date: `2019-01-01`,
+                        title: "Markdown File 1",
+                        date: "2019-01-01",
                       },
                     },
                   },
@@ -1329,59 +1329,59 @@ describe(`Query schema`, () => {
               },
             ],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
-    })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
+    });
 
-    describe(`distinct field`, () => {
-      it(`returns distinct values`, async () => {
+    describe("distinct field", () => {
+      it("returns distinct values", async () => {
         const query = `
           {
             allMarkdown {
               distinct(field: frontmatter___title)
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
         const expected = {
           allMarkdown: {
-            distinct: [`Markdown File 1`, `Markdown File 2`],
+            distinct: ["Markdown File 1", "Markdown File 2"],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
 
-      it(`returns distinct values on foreign-key field`, async () => {
+      it("returns distinct values on foreign-key field", async () => {
         const query = `
           {
             allMarkdown {
               distinct(field: frontmatter___authors___name)
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
         const expected = {
           allMarkdown: {
-            distinct: [`Author 1`, `Author 2`],
+            distinct: ["Author 1", "Author 2"],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
 
-      it(`returns distinct values on scalar field with resolver`, async () => {
+      it("returns distinct values on scalar field with resolver", async () => {
         const query = `
           {
             allMarkdown {
               distinct(field: frontmatter___date)
             }
           }
-        `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
+        `;
+        const results = await runQuery(query);
+        expect(results.errors).toBeUndefined();
         expect(results.data).toMatchInlineSnapshot(`
           Object {
             "allMarkdown": Object {
@@ -1390,10 +1390,10 @@ describe(`Query schema`, () => {
               ],
             },
           }
-        `)
-      })
+        `);
+      });
 
-      it(`handles null result`, async () => {
+      it("handles null result", async () => {
         const query = `
           {
             allMarkdown(
@@ -1404,52 +1404,52 @@ describe(`Query schema`, () => {
               distinct(field: frontmatter___title)
             }
           }
-        `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
+        `;
+        const results = await runQuery(query);
+        expect(results.errors).toBeUndefined();
         expect(results.data).toMatchInlineSnapshot(`
           Object {
             "allMarkdown": Object {
               "distinct": Array [],
             },
           }
-        `)
-      })
+        `);
+      });
 
-      it(`works correctly if GC happen mid running`, async () => {
+      it("works correctly if GC happen mid running", async () => {
         // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-        const v8 = require(`v8`)
-        const vm = require(`vm`)
-        v8.setFlagsFromString(`--expose_gc`)
-        const gc = vm.runInNewContext(`gc`)
+        const v8 = require("v8");
+        const vm = require("vm");
+        v8.setFlagsFromString("--expose_gc");
+        const gc = vm.runInNewContext("gc");
 
-        const { clearKeptObjects } = require(`lmdb`)
+        const { clearKeptObjects } = require("lmdb");
 
         orderBySpy.mockImplementationOnce((...args) => {
           // eslint thinks that WeakRef is not defined for some reason :shrug:
           // eslint-disable-next-line no-undef
-          const weakNode = new WeakRef(getNode(`md1`))
+          const weakNode = new WeakRef(getNode("md1"));
 
           // spy is keeping nodes in memory due to `.calls` array
-          apiRunnerNode.mockClear()
+          apiRunnerNode.mockClear();
           // very implementation specific case:
           // We don't hold full nodes strongly in gatsby anymore so they can be potentially
           // GCed mid execution of query. For this test we force all weakly held nodes to be
           // dropped
-          clearKeptObjects()
-          gc()
+          clearKeptObjects();
+          gc();
 
           // now we shouldn't have that node in memory
           if (weakNode.deref()) {
             throw new Error(
-              `Test setup is broken, something is keeping a node in memory`
-            )
+              "Test setup is broken, something is keeping a node in memory",
+            );
           }
 
-          return mockActualOrderBy(...args)
-        })
+          return mockActualOrderBy(...args);
+        });
 
-        expect(orderBySpy).not.toBeCalled()
+        expect(orderBySpy).not.toBeCalled();
 
         // sort added only to hit code path using `orderBy`,
         // which we use to force GC to simulate node "randomly"
@@ -1461,97 +1461,97 @@ describe(`Query schema`, () => {
               distinct(field: frontmatter___authors___name)
             }
           }
-        `
-        const results = await runQuery(query)
+        `;
+        const results = await runQuery(query);
 
         // make sure we released all nodes from memory in middle of the run
-        expect(orderBySpy).toBeCalled()
+        expect(orderBySpy).toBeCalled();
 
         const expected = {
           allMarkdown: {
-            distinct: [`Author 1`, `Author 2`],
+            distinct: ["Author 1", "Author 2"],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
-    })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
+    });
 
-    describe(`aggregation fields`, () => {
-      describe(`max`, () => {
-        it(`calculates max value of numeric field`, async () => {
+    describe("aggregation fields", () => {
+      describe("max", () => {
+        it("calculates max value of numeric field", async () => {
           const query = `
             {
               allMarkdown {
                 max(field: frontmatter___views)
               }
             }
-          `
-          const results = await runQuery(query)
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.max).toEqual(200)
-        })
+          `;
+          const results = await runQuery(query);
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.max).toEqual(200);
+        });
 
-        it(`calculates max value of numeric string field`, async () => {
+        it("calculates max value of numeric string field", async () => {
           const query = `
             {
               allMarkdown {
                 max(field: frontmatter___price)
               }
             }
-          `
-          const results = await runQuery(query)
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.max).toEqual(3.99)
-        })
+          `;
+          const results = await runQuery(query);
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.max).toEqual(3.99);
+        });
 
-        it(`returns null for max of non-numeric fields`, async () => {
+        it("returns null for max of non-numeric fields", async () => {
           const query = `
             {
               allMarkdown {
                 max(field: frontmatter___title)
               }
             }
-          `
-          const results = await runQuery(query)
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.max).toBeNull()
-        })
+          `;
+          const results = await runQuery(query);
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.max).toBeNull();
+        });
 
-        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
+        it("works correctly on fields with resolver if GC happen mid running", async () => {
           // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-          const v8 = require(`v8`)
-          const vm = require(`vm`)
-          v8.setFlagsFromString(`--expose_gc`)
-          const gc = vm.runInNewContext(`gc`)
+          const v8 = require("v8");
+          const vm = require("vm");
+          v8.setFlagsFromString("--expose_gc");
+          const gc = vm.runInNewContext("gc");
 
-          const { clearKeptObjects } = require(`lmdb`)
+          const { clearKeptObjects } = require("lmdb");
 
           orderBySpy.mockImplementationOnce((...args) => {
             // eslint thinks that WeakRef is not defined for some reason :shrug:
             // eslint-disable-next-line no-undef
-            const weakNode = new WeakRef(getNode(`md1`))
+            const weakNode = new WeakRef(getNode("md1"));
 
             // spy is keeping nodes in memory due to `.calls` array
-            apiRunnerNode.mockClear()
+            apiRunnerNode.mockClear();
             // very implementation specific case:
             // We don't hold full nodes strongly in gatsby anymore so they can be potentially
             // GCed mid execution of query. For this test we force all weakly held nodes to be
             // dropped
-            clearKeptObjects()
-            gc()
+            clearKeptObjects();
+            gc();
 
             // now we shouldn't have that node in memory
             if (weakNode.deref()) {
               throw new Error(
-                `Test setup is broken, something is keeping a node in memory`
-              )
+                "Test setup is broken, something is keeping a node in memory",
+              );
             }
 
-            return mockActualOrderBy(...args)
-          })
+            return mockActualOrderBy(...args);
+          });
 
-          expect(orderBySpy).not.toBeCalled()
+          expect(orderBySpy).not.toBeCalled();
 
           // sort added only to hit code path using `orderBy`,
           // which we use to force GC to simulate node "randomly"
@@ -1563,91 +1563,91 @@ describe(`Query schema`, () => {
               max(field: frontmatter___priceInCents)
             }
           }
-        `
-          const results = await runQuery(query)
+        `;
+          const results = await runQuery(query);
 
           // make sure we released all nodes from memory in middle of the run
-          expect(orderBySpy).toBeCalled()
+          expect(orderBySpy).toBeCalled();
 
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.max).toEqual(399)
-        })
-      })
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.max).toEqual(399);
+        });
+      });
 
-      describe(`min`, () => {
-        it(`calculates min value of numeric field`, async () => {
+      describe("min", () => {
+        it("calculates min value of numeric field", async () => {
           const query = `
             {
               allMarkdown {
                 min(field: frontmatter___views)
               }
             }
-          `
-          const results = await runQuery(query)
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.min).toEqual(100)
-        })
+          `;
+          const results = await runQuery(query);
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.min).toEqual(100);
+        });
 
-        it(`calculates min value of numeric string field`, async () => {
+        it("calculates min value of numeric string field", async () => {
           const query = `
             {
               allMarkdown {
                 min(field: frontmatter___price)
               }
             }
-          `
-          const results = await runQuery(query)
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.min).toEqual(1.99)
-        })
+          `;
+          const results = await runQuery(query);
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.min).toEqual(1.99);
+        });
 
-        it(`returns null for min of non-numeric fields`, async () => {
+        it("returns null for min of non-numeric fields", async () => {
           const query = `
             {
               allMarkdown {
                 min(field: frontmatter___title)
               }
             }
-          `
-          const results = await runQuery(query)
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.min).toBeNull()
-        })
+          `;
+          const results = await runQuery(query);
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.min).toBeNull();
+        });
 
-        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
+        it("works correctly on fields with resolver if GC happen mid running", async () => {
           // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-          const v8 = require(`v8`)
-          const vm = require(`vm`)
-          v8.setFlagsFromString(`--expose_gc`)
-          const gc = vm.runInNewContext(`gc`)
+          const v8 = require("v8");
+          const vm = require("vm");
+          v8.setFlagsFromString("--expose_gc");
+          const gc = vm.runInNewContext("gc");
 
-          const { clearKeptObjects } = require(`lmdb`)
+          const { clearKeptObjects } = require("lmdb");
 
           orderBySpy.mockImplementationOnce((...args) => {
             // eslint thinks that WeakRef is not defined for some reason :shrug:
             // eslint-disable-next-line no-undef
-            const weakNode = new WeakRef(getNode(`md1`))
+            const weakNode = new WeakRef(getNode("md1"));
 
             // spy is keeping nodes in memory due to `.calls` array
-            apiRunnerNode.mockClear()
+            apiRunnerNode.mockClear();
             // very implementation specific case:
             // We don't hold full nodes strongly in gatsby anymore so they can be potentially
             // GCed mid execution of query. For this test we force all weakly held nodes to be
             // dropped
-            clearKeptObjects()
-            gc()
+            clearKeptObjects();
+            gc();
 
             // now we shouldn't have that node in memory
             if (weakNode.deref()) {
               throw new Error(
-                `Test setup is broken, something is keeping a node in memory`
-              )
+                "Test setup is broken, something is keeping a node in memory",
+              );
             }
 
-            return mockActualOrderBy(...args)
-          })
+            return mockActualOrderBy(...args);
+          });
 
-          expect(orderBySpy).not.toBeCalled()
+          expect(orderBySpy).not.toBeCalled();
 
           // sort added only to hit code path using `orderBy`,
           // which we use to force GC to simulate node "randomly"
@@ -1659,90 +1659,90 @@ describe(`Query schema`, () => {
               min(field: frontmatter___priceInCents)
             }
           }
-        `
-          const results = await runQuery(query)
+        `;
+          const results = await runQuery(query);
 
           // make sure we released all nodes from memory in middle of the run
-          expect(orderBySpy).toBeCalled()
+          expect(orderBySpy).toBeCalled();
 
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.min).toEqual(199)
-        })
-      })
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.min).toEqual(199);
+        });
+      });
 
-      describe(`sum`, () => {
-        it(`calculates sum of numeric field`, async () => {
+      describe("sum", () => {
+        it("calculates sum of numeric field", async () => {
           const query = `
             {
               allMarkdown {
                 sum(field: frontmatter___views)
               }
             }
-          `
-          const results = await runQuery(query)
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.sum).toEqual(300)
-        })
+          `;
+          const results = await runQuery(query);
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.sum).toEqual(300);
+        });
 
-        it(`calculates sum of numeric string field`, async () => {
+        it("calculates sum of numeric string field", async () => {
           const query = `
             {
               allMarkdown {
                 sum(field: frontmatter___price)
               }
             }
-          `
-          const results = await runQuery(query)
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.sum).toEqual(5.98)
-        })
-        it(`returns null for sum of non-numeric fields`, async () => {
+          `;
+          const results = await runQuery(query);
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.sum).toEqual(5.98);
+        });
+        it("returns null for sum of non-numeric fields", async () => {
           const query = `
             {
               allMarkdown {
                 sum(field: frontmatter___title)
               }
             }
-          `
-          const results = await runQuery(query)
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.sum).toBeNull()
-        })
+          `;
+          const results = await runQuery(query);
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.sum).toBeNull();
+        });
 
-        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
+        it("works correctly on fields with resolver if GC happen mid running", async () => {
           // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-          const v8 = require(`v8`)
-          const vm = require(`vm`)
-          v8.setFlagsFromString(`--expose_gc`)
-          const gc = vm.runInNewContext(`gc`)
+          const v8 = require("v8");
+          const vm = require("vm");
+          v8.setFlagsFromString("--expose_gc");
+          const gc = vm.runInNewContext("gc");
 
-          const { clearKeptObjects } = require(`lmdb`)
+          const { clearKeptObjects } = require("lmdb");
 
           orderBySpy.mockImplementationOnce((...args) => {
             // eslint thinks that WeakRef is not defined for some reason :shrug:
             // eslint-disable-next-line no-undef
-            const weakNode = new WeakRef(getNode(`md1`))
+            const weakNode = new WeakRef(getNode("md1"));
 
             // spy is keeping nodes in memory due to `.calls` array
-            apiRunnerNode.mockClear()
+            apiRunnerNode.mockClear();
             // very implementation specific case:
             // We don't hold full nodes strongly in gatsby anymore so they can be potentially
             // GCed mid execution of query. For this test we force all weakly held nodes to be
             // dropped
-            clearKeptObjects()
-            gc()
+            clearKeptObjects();
+            gc();
 
             // now we shouldn't have that node in memory
             if (weakNode.deref()) {
               throw new Error(
-                `Test setup is broken, something is keeping a node in memory`
-              )
+                "Test setup is broken, something is keeping a node in memory",
+              );
             }
 
-            return mockActualOrderBy(...args)
-          })
+            return mockActualOrderBy(...args);
+          });
 
-          expect(orderBySpy).not.toBeCalled()
+          expect(orderBySpy).not.toBeCalled();
 
           // sort added only to hit code path using `orderBy`,
           // which we use to force GC to simulate node "randomly"
@@ -1754,18 +1754,18 @@ describe(`Query schema`, () => {
               sum(field: frontmatter___priceInCents)
             }
           }
-        `
-          const results = await runQuery(query)
+        `;
+          const results = await runQuery(query);
 
           // make sure we released all nodes from memory in middle of the run
-          expect(orderBySpy).toBeCalled()
+          expect(orderBySpy).toBeCalled();
 
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.sum).toEqual(199 + 399)
-        })
-      })
+          expect(results.errors).toBeUndefined();
+          expect(results.data.allMarkdown.sum).toEqual(199 + 399);
+        });
+      });
 
-      it(`calculates aggregation in recursively grouped query results`, async () => {
+      it("calculates aggregation in recursively grouped query results", async () => {
         const query = `
         {
           allMarkdown {
@@ -1778,44 +1778,44 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-        const results = await runQuery(query)
+      `;
+        const results = await runQuery(query);
         const expected = {
           allMarkdown: {
             group: [
               {
-                fieldValue: `Author 1`,
+                fieldValue: "Author 1",
                 group: [
                   {
-                    fieldValue: `Markdown File 1`,
+                    fieldValue: "Markdown File 1",
                     max: 1.99,
                   },
                   {
-                    fieldValue: `Markdown File 2`,
+                    fieldValue: "Markdown File 2",
                     max: 3.99,
                   },
                 ],
               },
               {
-                fieldValue: `Author 2`,
+                fieldValue: "Author 2",
                 group: [
                   {
-                    fieldValue: `Markdown File 1`,
+                    fieldValue: "Markdown File 1",
                     max: 1.99,
                   },
                 ],
               },
             ],
           },
-        }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
-    })
-  })
+        };
+        expect(results.errors).toBeUndefined();
+        expect(results.data).toEqual(expected);
+      });
+    });
+  });
 
-  describe(`on fields added by setFieldsOnGraphQLNodeType API`, () => {
-    it(`returns correct results`, async () => {
+  describe("on fields added by setFieldsOnGraphQLNodeType API", () => {
+    it("returns correct results", async () => {
       const query = `
         {
           allMarkdown {
@@ -1829,8 +1829,8 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allMarkdown: {
           edges: [
@@ -1838,7 +1838,7 @@ describe(`Query schema`, () => {
               node: {
                 frontmatter: {
                   anotherField: true,
-                  authorNames: [`Author 1`, `Author 2`],
+                  authorNames: ["Author 1", "Author 2"],
                 },
               },
             },
@@ -1846,40 +1846,40 @@ describe(`Query schema`, () => {
               node: {
                 frontmatter: {
                   anotherField: true,
-                  authorNames: [`Author 1`],
+                  authorNames: ["Author 1"],
                 },
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
-  })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
+  });
 
-  describe(`on fields added to the root Query type`, () => {
-    it(`returns correct results`, async () => {
+  describe("on fields added to the root Query type", () => {
+    it("returns correct results", async () => {
       const query = `
       {
         allAuthorNames
       }
-    `
-      const results = await runQuery(query)
+    `;
+      const results = await runQuery(query);
       const expected = {
-        allAuthorNames: [`Author 1`, `Author 2`],
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
-  })
+        allAuthorNames: ["Author 1", "Author 2"],
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
+  });
 
-  describe(`on fields added from third-party schema`, () => {
-    it.todo(`returns correct results`)
-  })
+  describe("on fields added from third-party schema", () => {
+    it.todo("returns correct results");
+  });
 
-  describe(`on foreign-key fields`, () => {
-    it(`with the ___NODE convention`, async () => {
+  describe("on foreign-key fields", () => {
+    it("with the ___NODE convention", async () => {
       const query = `
         {
           allMarkdown {
@@ -1892,9 +1892,9 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
-      expect(results.errors).toBeUndefined()
+      `;
+      const results = await runQuery(query);
+      expect(results.errors).toBeUndefined();
       expect(results.data).toMatchInlineSnapshot(`
         Object {
           "allMarkdown": Object {
@@ -1914,10 +1914,10 @@ describe(`Query schema`, () => {
             ],
           },
         }
-      `)
-    })
+      `);
+    });
 
-    it(`with defined field mappings`, async () => {
+    it("with defined field mappings", async () => {
       const query = `
           {
             allMarkdown {
@@ -1930,9 +1930,9 @@ describe(`Query schema`, () => {
               }
             }
           }
-        `
-      const results = await runQuery(query)
-      expect(results.errors).toBeUndefined()
+        `;
+      const results = await runQuery(query);
+      expect(results.errors).toBeUndefined();
       expect(results.data).toMatchInlineSnapshot(`
         Object {
           "allMarkdown": Object {
@@ -1952,12 +1952,12 @@ describe(`Query schema`, () => {
             ],
           },
         }
-      `)
-    })
-  })
+      `);
+    });
+  });
 
-  describe(`with sorted results`, () => {
-    it(`default sort on one field`, async () => {
+  describe("with sorted results", () => {
+    it("default sort on one field", async () => {
       const query = `
         {
           allMarkdown(sort: { fields: [frontmatter___title]}) {
@@ -1968,29 +1968,29 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allMarkdown: {
           nodes: [
             {
               frontmatter: {
-                title: `Markdown File 1`,
+                title: "Markdown File 1",
               },
             },
             {
               frontmatter: {
-                title: `Markdown File 2`,
+                title: "Markdown File 2",
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
-    it(`DESC sort on one field`, async () => {
+    it("DESC sort on one field", async () => {
       const query = `
         {
           allMarkdown(sort: { fields: [frontmatter___title], order: DESC}) {
@@ -2001,29 +2001,29 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allMarkdown: {
           nodes: [
             {
               frontmatter: {
-                title: `Markdown File 2`,
+                title: "Markdown File 2",
               },
             },
             {
               frontmatter: {
-                title: `Markdown File 1`,
+                title: "Markdown File 1",
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
-    it(`sort on parent field`, async () => {
+    it("sort on parent field", async () => {
       const query = `
         {
           allFirstChild(sort: { fields: [parent___internal___type], order: [DESC]}) {
@@ -2037,35 +2037,35 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allFirstChild: {
           nodes: [
             {
               parent: {
                 internal: {
-                  type: `SecondParent`,
+                  type: "SecondParent",
                 },
               },
-              name: `Child 2`,
+              name: "Child 2",
             },
             {
               parent: {
                 internal: {
-                  type: `FirstParent`,
+                  type: "FirstParent",
                 },
               },
-              name: `Child 1`,
+              name: "Child 1",
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
-    it(`sort on children field`, async () => {
+    it("sort on children field", async () => {
       const query = `
         {
           allFirstParent(sort: { fields: [children___internal___type], order: [ASC]}) {
@@ -2079,8 +2079,8 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allFirstParent: {
           nodes: [
@@ -2088,30 +2088,30 @@ describe(`Query schema`, () => {
               children: [
                 {
                   internal: {
-                    type: `Child`,
+                    type: "Child",
                   },
                 },
               ],
-              name: `Parent 3`,
+              name: "Parent 3",
             },
             {
               children: [
                 {
                   internal: {
-                    type: `FirstChild`,
+                    type: "FirstChild",
                   },
                 },
               ],
-              name: `Parent 1`,
+              name: "Parent 1",
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
-    it(`sort on resolved field`, async () => {
+    it("sort on resolved field", async () => {
       const query = `
         {
           allMarkdown(sort: { fields: [frontmatter___authors___name], order: [DESC]}) {
@@ -2125,42 +2125,42 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allMarkdown: {
           nodes: [
             {
               frontmatter: {
-                title: `Markdown File 1`,
+                title: "Markdown File 1",
                 authors: [
                   {
-                    name: `Author 1`,
+                    name: "Author 1",
                   },
                   {
-                    name: `Author 2`,
+                    name: "Author 2",
                   },
                 ],
               },
             },
             {
               frontmatter: {
-                title: `Markdown File 2`,
+                title: "Markdown File 2",
                 authors: [
                   {
-                    name: `Author 1`,
+                    name: "Author 1",
                   },
                 ],
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
-    it(`sort on ___NODE field`, async () => {
+    it("sort on ___NODE field", async () => {
       const query = `
         {
           allMarkdown(sort: { fields: [frontmatter___reviewer___name], order: [DESC]}) {
@@ -2174,39 +2174,39 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allMarkdown: {
           nodes: [
             {
               frontmatter: {
-                title: `Markdown File 2`,
+                title: "Markdown File 2",
                 reviewer: null,
               },
             },
             {
               frontmatter: {
-                title: `Markdown File 1`,
+                title: "Markdown File 1",
                 reviewer: {
-                  name: `Author 2`,
+                  name: "Author 2",
                 },
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
-  })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
+  });
 
-  describe(`with regex filter`, () => {
+  describe("with regex filter", () => {
     /**
      * double-escape character escape sequences when written inline (test only)
      * (see also the test src/utils/__tests__/prepare-regex.ts)
      */
-    it(`escape sequences work when correctly escaped`, async () => {
+    it("escape sequences work when correctly escaped", async () => {
       const query = `
         {
           allMarkdown(filter: { frontmatter: { authors: { elemMatch: { email: { regex: "/^\\\\w{6}\\\\d@\\\\w{7}\\\\.COM$/i" } } } } }) {
@@ -2219,8 +2219,8 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
       const expected = {
         allMarkdown: {
           nodes: [
@@ -2228,10 +2228,10 @@ describe(`Query schema`, () => {
               frontmatter: {
                 authors: [
                   {
-                    email: `author1@example.com`,
+                    email: "author1@example.com",
                   },
                   {
-                    email: `author2@example.com`,
+                    email: "author2@example.com",
                   },
                 ],
               },
@@ -2240,33 +2240,33 @@ describe(`Query schema`, () => {
               frontmatter: {
                 authors: [
                   {
-                    email: `author1@example.com`,
+                    email: "author1@example.com",
                   },
                 ],
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
 
     /**
      * queries are read from file and parsed with babel
      */
-    it(`escape sequences work when correctly escaped`, async () => {
-      const fs = require(`fs`)
-      const path = require(`path`)
-      const babel = require(`@babel/parser`)
+    it("escape sequences work when correctly escaped", async () => {
+      const fs = require("fs");
+      const path = require("path");
+      const babel = require("@babel/parser");
       const fileContent = fs.readFileSync(
-        path.join(__dirname, `./fixtures/regex-query.js`),
-        `utf-8`
-      )
-      const ast = babel.parse(fileContent)
-      const query = ast.program.body[0].expression.right.quasis[0].value.raw
+        path.join(__dirname, "./fixtures/regex-query.js"),
+        "utf-8",
+      );
+      const ast = babel.parse(fileContent);
+      const query = ast.program.body[0].expression.right.quasis[0].value.raw;
 
-      const results = await runQuery(query)
+      const results = await runQuery(query);
       const expected = {
         allMarkdown: {
           nodes: [
@@ -2274,10 +2274,10 @@ describe(`Query schema`, () => {
               frontmatter: {
                 authors: [
                   {
-                    email: `author1@example.com`,
+                    email: "author1@example.com",
                   },
                   {
-                    email: `author2@example.com`,
+                    email: "author2@example.com",
                   },
                 ],
               },
@@ -2286,20 +2286,20 @@ describe(`Query schema`, () => {
               frontmatter: {
                 authors: [
                   {
-                    email: `author1@example.com`,
+                    email: "author1@example.com",
                   },
                 ],
               },
             },
           ],
         },
-      }
-      expect(results.errors).toBeUndefined()
-      expect(results.data).toEqual(expected)
-    })
-  })
+      };
+      expect(results.errors).toBeUndefined();
+      expect(results.data).toEqual(expected);
+    });
+  });
 
-  describe(`with skip/limit`, () => {
+  describe("with skip/limit", () => {
     const query = `
         query ($limit: Int!, $skip: Int!) {
           allFile(limit: $limit, skip: $skip) {
@@ -2315,9 +2315,9 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-    it(`return correct pagination info for the first page`, async () => {
-      const results = await runQuery(query, { limit: 1, skip: 0 })
+      `;
+    it("return correct pagination info for the first page", async () => {
+      const results = await runQuery(query, { limit: 1, skip: 0 });
       expect(results).toMatchInlineSnapshot(`
         Object {
           "data": Object {
@@ -2335,11 +2335,11 @@ describe(`Query schema`, () => {
             },
           },
         }
-      `)
-    })
+      `);
+    });
 
-    it(`return correct pagination info for the page in the middle`, async () => {
-      const results = await runQuery(query, { limit: 1, skip: 1 })
+    it("return correct pagination info for the page in the middle", async () => {
+      const results = await runQuery(query, { limit: 1, skip: 1 });
       expect(results).toMatchInlineSnapshot(`
         Object {
           "data": Object {
@@ -2357,11 +2357,11 @@ describe(`Query schema`, () => {
             },
           },
         }
-      `)
-    })
+      `);
+    });
 
-    it(`return correct pagination info for the last page`, async () => {
-      const results = await runQuery(query, { limit: 1, skip: 2 })
+    it("return correct pagination info for the last page", async () => {
+      const results = await runQuery(query, { limit: 1, skip: 2 });
       expect(results).toMatchInlineSnapshot(`
         Object {
           "data": Object {
@@ -2379,23 +2379,23 @@ describe(`Query schema`, () => {
             },
           },
         }
-      `)
-    })
-  })
+      `);
+    });
+  });
 
-  describe(`id.eq fast path`, () => {
-    let datastoreRunQuerySpy
+  describe("id.eq fast path", () => {
+    let datastoreRunQuerySpy;
     beforeAll(() => {
-      datastoreRunQuerySpy = jest.spyOn(getDataStore(), `runQuery`)
-    })
+      datastoreRunQuerySpy = jest.spyOn(getDataStore(), "runQuery");
+    });
 
     beforeEach(() => {
-      datastoreRunQuerySpy.mockClear()
-    })
+      datastoreRunQuerySpy.mockClear();
+    });
 
     afterAll(() => {
-      datastoreRunQuerySpy.mockRestore()
-    })
+      datastoreRunQuerySpy.mockRestore();
+    });
 
     const queryEqId = `
       query($id: String!) {
@@ -2405,10 +2405,10 @@ describe(`Query schema`, () => {
           }
         }
       }
-    `
+    `;
 
-    it(`skips running datastore runQuery (there is node that satisfies filters)`, async () => {
-      const results = await runQuery(queryEqId, { id: `md2` })
+    it("skips running datastore runQuery (there is node that satisfies filters)", async () => {
+      const results = await runQuery(queryEqId, { id: "md2" });
       expect(results).toMatchInlineSnapshot(`
         Object {
           "data": Object {
@@ -2419,35 +2419,37 @@ describe(`Query schema`, () => {
             },
           },
         }
-      `)
-      expect(datastoreRunQuerySpy).toBeCalledTimes(0)
-    })
+      `);
+      expect(datastoreRunQuerySpy).toBeCalledTimes(0);
+    });
 
-    it(`skips running datastore runQuery (there is no node that satisfies filters)`, async () => {
-      const results = await runQuery(queryEqId, { id: `that-should-not-exist` })
+    it("skips running datastore runQuery (there is no node that satisfies filters)", async () => {
+      const results = await runQuery(queryEqId, {
+        id: "that-should-not-exist",
+      });
       expect(results).toMatchInlineSnapshot(`
         Object {
           "data": Object {
             "markdown": null,
           },
         }
-      `)
-      expect(datastoreRunQuerySpy).toBeCalledTimes(0)
-    })
+      `);
+      expect(datastoreRunQuerySpy).toBeCalledTimes(0);
+    });
 
-    it(`respect node type`, async () => {
-      const id = `file2`
+    it("respect node type", async () => {
+      const id = "file2";
 
       {
-        const results = await runQuery(queryEqId, { id })
+        const results = await runQuery(queryEqId, { id });
         expect(results).toMatchInlineSnapshot(`
           Object {
             "data": Object {
               "markdown": null,
             },
           }
-        `)
-        expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+        `);
+        expect(datastoreRunQuerySpy).toBeCalledTimes(0);
       }
 
       {
@@ -2462,8 +2464,8 @@ describe(`Query schema`, () => {
           `,
           {
             id,
-          }
-        )
+          },
+        );
         expect(results).toMatchInlineSnapshot(`
           Object {
             "data": Object {
@@ -2472,12 +2474,12 @@ describe(`Query schema`, () => {
               },
             },
           }
-        `)
-        expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+        `);
+        expect(datastoreRunQuerySpy).toBeCalledTimes(0);
       }
-    })
+    });
 
-    it(`@fileByRelativePath works`, async () => {
+    it("@fileByRelativePath works", async () => {
       const query = `
         {
           markdown(id: { eq: "md1"}) {
@@ -2493,24 +2495,24 @@ describe(`Query schema`, () => {
             }
           }
         }
-      `
-      const results = await runQuery(query)
+      `;
+      const results = await runQuery(query);
 
-      expect(results?.errors).toBeUndefined()
+      expect(results?.errors).toBeUndefined();
       expect(results?.data?.markdown?.frontmatter?.title).toEqual(
-        `Markdown File 1`
-      )
+        "Markdown File 1",
+      );
 
       // main assertion - markdown.frontmatter.fileRef is a file referenced by local path
       // we want to make sure it finds node correctly (and doesn't crash)
       expect(
         results?.data?.markdown?.frontmatter?.fileRef?.childMarkdown
-          ?.frontmatter?.title
-      ).toEqual(`Markdown File 2`)
-    })
+          ?.frontmatter?.title,
+      ).toEqual("Markdown File 2");
+    });
 
-    describe(`doesn't try to use fast path if there are more or different filters than just id.eq`, () => {
-      it(`using single filter different than id.eq`, async () => {
+    describe("doesn't try to use fast path if there are more or different filters than just id.eq", () => {
+      it("using single filter different than id.eq", async () => {
         const results = await runQuery(
           `
             query($title: String!) {
@@ -2521,8 +2523,8 @@ describe(`Query schema`, () => {
               }
             }
           `,
-          { title: `Markdown File 2` }
-        )
+          { title: "Markdown File 2" },
+        );
         expect(results).toMatchInlineSnapshot(`
           Object {
             "data": Object {
@@ -2533,12 +2535,12 @@ describe(`Query schema`, () => {
               },
             },
           }
-        `)
-        expect(datastoreRunQuerySpy).toBeCalledTimes(1)
-      })
-    })
+        `);
+        expect(datastoreRunQuerySpy).toBeCalledTimes(1);
+      });
+    });
 
-    it(`using multiple filters `, async () => {
+    it("using multiple filters ", async () => {
       const results = await runQuery(
         `
           query($id: String!, $title: String!) {
@@ -2549,8 +2551,8 @@ describe(`Query schema`, () => {
             }
           }
         `,
-        { title: `Markdown File 2`, id: `md2` }
-      )
+        { title: "Markdown File 2", id: "md2" },
+      );
       expect(results).toMatchInlineSnapshot(`
         Object {
           "data": Object {
@@ -2561,8 +2563,8 @@ describe(`Query schema`, () => {
             },
           },
         }
-      `)
-      expect(datastoreRunQuerySpy).toBeCalledTimes(1)
-    })
-  })
-})
+      `);
+      expect(datastoreRunQuerySpy).toBeCalledTimes(1);
+    });
+  });
+});

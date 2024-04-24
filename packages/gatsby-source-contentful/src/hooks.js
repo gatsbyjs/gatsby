@@ -1,8 +1,8 @@
 // @ts-check
-import { getImageData } from "gatsby-plugin-image"
-import { useMemo } from "react"
+import { getImageData } from "gatsby-plugin-image";
+import { useMemo } from "react";
 
-import { createUrl } from "./image-helpers"
+import { createUrl } from "./image-helpers";
 
 export function useContentfulImage({ image, ...props }) {
   return useMemo(() => {
@@ -12,8 +12,8 @@ export function useContentfulImage({ image, ...props }) {
       sourceHeight: image.height,
       urlBuilder: ({ baseUrl, width, height, options, format }) =>
         createUrl(baseUrl, { ...options, height, width, toFormat: format }),
-      pluginName: `gatsby-source-contentful`,
+      pluginName: "gatsby-source-contentful",
       ...props,
-    })
-  }, [image.url, image.width, image.height, props])
+    });
+  }, [image.url, image.width, image.height, props]);
 }

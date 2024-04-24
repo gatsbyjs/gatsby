@@ -2,7 +2,7 @@ import {
   GraphQLEnumType,
   isSpecifiedScalarType,
   GraphQLScalarType,
-} from "graphql"
+} from "graphql";
 import {
   InputTypeComposer,
   GraphQLJSON,
@@ -11,45 +11,47 @@ import {
   InterfaceTypeComposer,
   UnionTypeComposer,
   ScalarTypeComposer,
-} from "graphql-compose"
-import { GraphQLDate } from "./date"
-import { convertToNestedInputType, type IVisitContext } from "./utils"
+} from "graphql-compose";
+import { GraphQLDate } from "./date";
+import { convertToNestedInputType, type IVisitContext } from "./utils";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Context = any
+type Context = any;
 
 export const SEARCHABLE_ENUM = {
-  SEARCHABLE: `SEARCHABLE`,
-  NOT_SEARCHABLE: `NON_SEARCHABLE`,
-  DEPRECATED_SEARCHABLE: `DERPECATED_SEARCHABLE`,
-} as const
+  SEARCHABLE: "SEARCHABLE",
+  NOT_SEARCHABLE: "NON_SEARCHABLE",
+  DEPRECATED_SEARCHABLE: "DERPECATED_SEARCHABLE",
+} as const;
 
 function getQueryOperatorListInput({
   schemaComposer,
   inputTypeComposer,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  schemaComposer: SchemaComposer<any>
-  inputTypeComposer: InputTypeComposer
+  schemaComposer: SchemaComposer<any>;
+  inputTypeComposer: InputTypeComposer;
 }): InputTypeComposer {
-  const typeName = inputTypeComposer.getTypeName().replace(/Input/, `ListInput`)
+  const typeName = inputTypeComposer
+    .getTypeName()
+    .replace(/Input/, "ListInput");
   return schemaComposer.getOrCreateITC(typeName, (itc) => {
     itc.addFields({
       elemMatch: inputTypeComposer,
-    })
-  })
+    });
+  });
 }
 
-const EQ = `eq`
-const NE = `ne`
-const GT = `gt`
-const GTE = `gte`
-const LT = `lt`
-const LTE = `lte`
-const IN = `in`
-const NIN = `nin`
-const REGEX = `regex`
-const GLOB = `glob`
+const EQ = "eq";
+const NE = "ne";
+const GT = "gt";
+const GTE = "gte";
+const LT = "lt";
+const LTE = "lte";
+const IN = "in";
+const NIN = "nin";
+const REGEX = "regex";
+const GLOB = "glob";
 
 const ALLOWED_OPERATORS = {
   Boolean: [EQ, NE, IN, NIN],
@@ -61,90 +63,91 @@ const ALLOWED_OPERATORS = {
   String: [EQ, NE, IN, NIN, REGEX, GLOB],
   Enum: [EQ, NE, IN, NIN],
   CustomScalar: [EQ, NE, IN, NIN],
-}
+};
 
-type TypeName = keyof typeof ALLOWED_OPERATORS
+type TypeName = keyof typeof ALLOWED_OPERATORS;
 
-const ARRAY_OPERATORS = [IN, NIN]
+const ARRAY_OPERATORS = [IN, NIN];
 
 const getOperatorFields = (
   fieldType: string,
   operators: Array<string>,
 ): Record<string, string | Array<string>> => {
-  const result = {}
+  const result = {};
   operators.forEach((op) => {
     if (ARRAY_OPERATORS.includes(op)) {
-      result[op] = [fieldType]
+      result[op] = [fieldType];
     } else {
-      result[op] = fieldType
+      result[op] = fieldType;
     }
-  })
-  return result
-}
+  });
+  return result;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isBuiltInScalarType(type: any): type is GraphQLScalarType {
   return (
     isSpecifiedScalarType(type) || type === GraphQLDate || type === GraphQLJSON
-  )
+  );
 }
 
 function getQueryOperatorInput({
   schemaComposer,
   type,
 }: {
-  schemaComposer: SchemaComposer<Context>
+  schemaComposer: SchemaComposer<Context>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  type: any
+  type: any;
 }): InputTypeComposer {
-  let typeName: TypeName
+  let typeName: TypeName;
   if (type instanceof GraphQLEnumType) {
-    typeName = `Enum`
+    typeName = "Enum";
   } else if (isBuiltInScalarType(type)) {
-    typeName = type.name as Exclude<TypeName, "Enum" | "CustomScalar">
+    typeName = type.name as Exclude<TypeName, "Enum" | "CustomScalar">;
   } else {
-    typeName = `CustomScalar`
+    typeName = "CustomScalar";
   }
-  const operators = ALLOWED_OPERATORS[typeName]
+  const operators = ALLOWED_OPERATORS[typeName];
   return schemaComposer.getOrCreateITC(
-    type.name + `QueryOperatorInput`,
+    type.name + "QueryOperatorInput",
     (itc) => itc.addFields(getOperatorFields(type, operators)),
-  )
+  );
 }
 
 export function getFilterInput({
   schemaComposer,
   typeComposer,
 }: {
-  schemaComposer: SchemaComposer<Context>
-  typeComposer: ObjectTypeComposer<Context> | InterfaceTypeComposer<Context>
+  schemaComposer: SchemaComposer<Context>;
+  typeComposer: ObjectTypeComposer<Context> | InterfaceTypeComposer<Context>;
 }): InputTypeComposer {
   return convertToNestedInputType({
     schemaComposer,
     typeComposer,
-    postfix: `FilterInput`,
+    postfix: "FilterInput",
     onEnter: ({ fieldName, typeComposer }): IVisitContext => {
       const searchable =
         typeComposer instanceof UnionTypeComposer ||
         typeComposer instanceof ScalarTypeComposer
           ? undefined
-          : typeComposer.getFieldExtension(fieldName, `searchable`)
+          : typeComposer.getFieldExtension(fieldName, "searchable");
 
       if (searchable === SEARCHABLE_ENUM.NOT_SEARCHABLE) {
         // stop traversing
-        return null
+        return null;
       } else if (searchable === SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE) {
         // mark this and all nested fields as deprecated
         return {
-          deprecationReason: `Filtering on fields that need arguments to resolve is deprecated.`,
-        }
+          deprecationReason:
+            "Filtering on fields that need arguments to resolve is deprecated.",
+        };
       }
 
       // continue
-      return undefined
+      return undefined;
     },
     leafInputComposer: getQueryOperatorInput,
     // elemMatch operator
     listInputComposer: getQueryOperatorListInput,
-  })
+  });
 }

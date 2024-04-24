@@ -1,19 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import Joi from "joi"
+import Joi from "joi";
 import {
   Type,
   Level,
   ErrorCategory,
   type IStructuredError,
   type ILocationPosition,
-} from "./types"
+} from "./types";
 
 export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object()
   .keys({
     line: Joi.number(),
     column: Joi.number(),
   })
-  .unknown()
+  .unknown();
 
 export const errorSchema: Joi.ObjectSchema<IStructuredError> =
   Joi.object().keys({
@@ -46,4 +46,4 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> =
     group: Joi.string(),
     panicOnBuild: Joi.boolean(),
     pluginName: Joi.string(),
-  })
+  });

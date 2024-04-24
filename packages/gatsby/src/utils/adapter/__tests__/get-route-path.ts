@@ -1,39 +1,39 @@
-import type { IGatsbyFunction, IGatsbyPage } from "../../../redux/types"
+import type { IGatsbyFunction, IGatsbyPage } from "../../../redux/types";
 import {
   getRoutePathFromPage,
   getRoutePathFromFunction,
-} from "../get-route-path"
+} from "../get-route-path";
 
-describe(`getRoutePathFromPage`, () => {
-  it(`returns the page path if no matchPath is defined`, () => {
+describe("getRoutePathFromPage", () => {
+  it("returns the page path if no matchPath is defined", () => {
     const page = {
-      path: `/`,
-    } as IGatsbyPage
+      path: "/",
+    } as IGatsbyPage;
 
-    expect(getRoutePathFromPage(page)).toEqual(`/`)
-  })
-  it(`replaces the named part of a wildcard matchPath with a wildcard`, () => {
+    expect(getRoutePathFromPage(page)).toEqual("/");
+  });
+  it("replaces the named part of a wildcard matchPath with a wildcard", () => {
     const page = {
-      matchPath: `/foo/*bar`,
-    } as IGatsbyPage
+      matchPath: "/foo/*bar",
+    } as IGatsbyPage;
 
-    expect(getRoutePathFromPage(page)).toEqual(`/foo/*`)
-  })
-})
+    expect(getRoutePathFromPage(page)).toEqual("/foo/*");
+  });
+});
 
-describe(`getRoutePathFromFunction`, () => {
-  it(`returns the functionRoute if no matchPath is defined`, () => {
+describe("getRoutePathFromFunction", () => {
+  it("returns the functionRoute if no matchPath is defined", () => {
     const functionInfo = {
-      functionRoute: `/`,
-    } as IGatsbyFunction
+      functionRoute: "/",
+    } as IGatsbyFunction;
 
-    expect(getRoutePathFromFunction(functionInfo)).toEqual(`/`)
-  })
-  it(`replaces the named part of a wildcard matchPath with a wildcard`, () => {
+    expect(getRoutePathFromFunction(functionInfo)).toEqual("/");
+  });
+  it("replaces the named part of a wildcard matchPath with a wildcard", () => {
     const functionInfo = {
-      matchPath: `/foo/*bar`,
-    } as IGatsbyFunction
+      matchPath: "/foo/*bar",
+    } as IGatsbyFunction;
 
-    expect(getRoutePathFromFunction(functionInfo)).toEqual(`/foo/*`)
-  })
-})
+    expect(getRoutePathFromFunction(functionInfo)).toEqual("/foo/*");
+  });
+});

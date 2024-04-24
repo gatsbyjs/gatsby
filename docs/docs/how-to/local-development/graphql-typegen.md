@@ -121,8 +121,7 @@ import * as React from "react"
 import { graphql } from "gatsby"
 
 // highlight-next-line
-const Info = ({ buildTime }: { buildTime?: any }) => {
-  return (
+const Info = ({ buildTime }: { buildTime?: any | undefined
     <p>
       Build time: {buildTime}
     </p>
@@ -153,7 +152,7 @@ query IndexPage {
 This way a `SiteInformationFragment` TypeScript type will be created that you can use in the `Info` component:
 
 ```tsx:title=src/components/info.tsx
-const Info = ({ buildTime }: { buildTime?: Queries.SiteInformationFragment["buildTime"] }) => {}
+const Info = ({ buildTime }: { buildTime?: Queries.SiteInformationFragment["buildTime"] | undefined }) => {}
 ```
 
 ### Tips

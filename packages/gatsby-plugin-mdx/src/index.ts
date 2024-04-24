@@ -1,1 +1,1 @@
-export * from "./compile-mdx"
+export * from "./compile-mdx";

@@ -1,6 +1,6 @@
-import { createModel } from "@rematch/core"
-import { stripImageSizesFromUrl } from "~/steps/source-nodes/fetch-nodes/fetch-referenced-media-items"
-import type { IRootModel } from "."
+import { createModel } from "@rematch/core";
+import { stripImageSizesFromUrl } from "~/steps/source-nodes/fetch-nodes/fetch-referenced-media-items";
+import type { IRootModel } from ".";
 
 const imageNodes = createModel<IRootModel>()({
   state: {
@@ -12,28 +12,28 @@ const imageNodes = createModel<IRootModel>()({
       state = {
         ...state,
         ...payload,
-      }
+      };
 
-      return state
+      return state;
     },
 
     pushNodeMeta(state, { id, sourceUrl, modifiedGmt }) {
-      const nodeUrl = stripImageSizesFromUrl(sourceUrl)
+      const nodeUrl = stripImageSizesFromUrl(sourceUrl);
       // don't overwrite the lookup table in case we have multiple
       // sized urls for the same image
       if (!state.nodeMetaByUrl[nodeUrl]) {
         state.nodeMetaByUrl[nodeUrl] = {
           id,
           modifiedGmt,
-        }
+        };
       }
 
-      return state
+      return state;
     },
   },
   effects: () => {
-    return {}
+    return {};
   },
-})
+});
 
-export default imageNodes
+export default imageNodes;

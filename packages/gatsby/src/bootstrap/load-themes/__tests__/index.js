@@ -1,8 +1,8 @@
-const { loadThemes } = require(`..`)
-const path = require(`path`)
+const { loadThemes } = require("..");
+const path = require("path");
 
-describe(`loadThemes`, () => {
-  test(`resolves themes and plugins from location of gatsby-config`, async () => {
+describe("loadThemes", () => {
+  test("resolves themes and plugins from location of gatsby-config", async () => {
     /*
       Fixture used in this test is structured like this:
 
@@ -25,9 +25,9 @@ describe(`loadThemes`, () => {
     */
 
     const configFilePath = require.resolve(
-      `./fixtures/resolve-from-config-location/gatsby-config`,
-    )
-    const config = require(configFilePath)
+      "./fixtures/resolve-from-config-location/gatsby-config",
+    );
+    const config = require(configFilePath);
 
     const {
       config: { plugins },
@@ -36,60 +36,60 @@ describe(`loadThemes`, () => {
       useLegacyThemes: false,
       configFilePath,
       rootDir: path.dirname(configFilePath),
-    })
+    });
 
     // implicit assertion - above doesn't throw `Couldn't find the "x" plugin`
 
-    expect(plugins.length).toEqual(3)
+    expect(plugins.length).toEqual(3);
 
     // all nested plugins / themes are found
     expect(plugins).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          resolve: `gatsby-theme-child`,
+          resolve: "gatsby-theme-child",
         }),
         expect.objectContaining({
-          resolve: `gatsby-theme-parent`,
+          resolve: "gatsby-theme-parent",
         }),
         expect.objectContaining({
-          resolve: `gatsby-plugin-added-by-parent-theme`,
+          resolve: "gatsby-plugin-added-by-parent-theme",
         }),
       ]),
-    )
+    );
 
-    expect(themes.length).toEqual(3)
+    expect(themes.length).toEqual(3);
 
     expect(themes).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          themeName: `gatsby-theme-child`,
+          themeName: "gatsby-theme-child",
           // `gatsby-theme-child` is resolved to first level node_modules
           themeDir: path.dirname(
             require.resolve(
-              `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child`,
+              "./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child",
             ),
           ),
         }),
         expect.objectContaining({
-          themeName: `gatsby-theme-parent`,
+          themeName: "gatsby-theme-parent",
           // `gatsby-theme-child` is resolved to second level node_modules
           themeDir: path.dirname(
             require.resolve(
-              `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent`,
+              "./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent",
             ),
           ),
         }),
 
         expect.objectContaining({
-          themeName: `gatsby-plugin-added-by-parent-theme`,
+          themeName: "gatsby-plugin-added-by-parent-theme",
           // `gatsby-theme-child` is resolved to third level node_modules
           themeDir: path.dirname(
             require.resolve(
-              `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent/node_modules/gatsby-plugin-added-by-parent-theme`,
+              "./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent/node_modules/gatsby-plugin-added-by-parent-theme",
             ),
           ),
         }),
       ]),
-    )
-  })
-})
+    );
+  });
+});

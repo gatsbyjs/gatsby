@@ -12,7 +12,7 @@ import {
   radii,
   transition,
   shadows,
-} from "./index"
+} from "./index";
 
 // gatsby-theme-ui-theme-default
 // provides a theme-ui theme using gatsby-design-tokens
@@ -44,7 +44,7 @@ const c = {
   // _heading_ and _textMuted_ resolves that
   heading: colorsTokens.text.header, // text.header
   textMuted: colorsTokens.text.secondary, // text.secondary
-}
+};
 
 export const theme = {
   borders,
@@ -60,7 +60,7 @@ export const theme = {
   shadows,
   space,
   transition,
-}
+};
 
 export {
   c as colors,
@@ -76,4 +76,4 @@ export {
   shadows,
   space,
   transition,
-}
+};

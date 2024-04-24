@@ -1,21 +1,21 @@
-import * as React from "react"
-import { oneLine } from "common-tags"
-import cssNanoMacro from "../macros/cssnano.macro"
-import terserMacro from "../macros/terser.macro"
-import { RenderBodyArgs } from "gatsby"
+import * as React from "react";
+import { oneLine } from "common-tags";
+import cssNanoMacro from "../macros/cssnano.macro";
+import terserMacro from "../macros/terser.macro";
+import { RenderBodyArgs } from "gatsby";
 
 const generateHtml = (
-  str: string
+  str: string,
 ): React.DOMAttributes<Element>["dangerouslySetInnerHTML"] => {
   return {
     __html: oneLine(str),
-  }
-}
+  };
+};
 
 export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
   setHeadComponents([
     <style
-      key="gatsby-image-style"
+      key='gatsby-image-style'
       dangerouslySetInnerHTML={generateHtml(cssNanoMacro`
   .gatsby-image-wrapper {
     position: relative;
@@ -50,9 +50,9 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     `)}
     />,
     <noscript
-      key="gatsby-image-style-noscript"
+      key='gatsby-image-style-noscript'
       dangerouslySetInnerHTML={generateHtml(
-        `<style>` +
+        "<style>" +
           cssNanoMacro`
   .gatsby-image-wrapper noscript [data-main-image] {
     opacity: 1 !important;
@@ -61,12 +61,12 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     opacity: 0 !important;
   }
   ` +
-          `</style>`
+          "</style>",
       )}
     />,
     <script
-      key="gatsby-image-style-script"
-      type="module"
+      key='gatsby-image-style-script'
+      type='module'
       dangerouslySetInnerHTML={generateHtml(terserMacro`
   const hasNativeLazyLoadSupport = typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
   if (hasNativeLazyLoadSupport) {
@@ -111,5 +111,5 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
   }
     `)}
     />,
-  ])
+  ]);
 }

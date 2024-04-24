@@ -1,21 +1,21 @@
-import resolve from "./resolve"
+import resolve from "./resolve";
 
 exports.onCreateWebpackConfig = (
   { actions, stage, loaders },
-  { cssLoaderOptions = {}, postCssPlugins, loaderOptions, lessOptions }
+  { cssLoaderOptions = {}, postCssPlugins, loaderOptions, lessOptions },
 ) => {
-  const isSSR = [`develop-html`, `build-html`].includes(stage)
-  const { setWebpackConfig } = actions
+  const isSSR = ["develop-html", "build-html"].includes(stage);
+  const { setWebpackConfig } = actions;
 
   const lessLoader = {
-    loader: resolve(`less-loader`),
+    loader: resolve("less-loader"),
     options: {
       lessOptions: {
         ...lessOptions,
       },
       ...loaderOptions,
     },
-  }
+  };
 
   const lessRule = {
     test: /\.less$/,
@@ -31,7 +31,7 @@ exports.onCreateWebpackConfig = (
           loaders.postcss({ plugins: postCssPlugins }),
           lessLoader,
         ],
-  }
+  };
   const lessRuleModules = {
     test: /\.module\.less$/,
     use: [
@@ -49,17 +49,17 @@ exports.onCreateWebpackConfig = (
       loaders.postcss({ plugins: postCssPlugins }),
       lessLoader,
     ].filter(Boolean),
-  }
+  };
 
   const configRules = [
     {
       oneOf: [lessRuleModules, lessRule],
     },
-  ]
+  ];
 
   setWebpackConfig({
     module: {
       rules: configRules,
     },
-  })
-}
+  });
+};

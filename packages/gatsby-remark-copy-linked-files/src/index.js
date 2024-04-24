@@ -1,38 +1,39 @@
 /* eslint-disable @babel/no-invalid-this */
-const visit = require(`unist-util-visit`)
-const isRelativeUrl = require(`is-relative-url`)
-const fsExtra = require(`fs-extra`)
-const path = require(`path`)
-const _ = require(`lodash`)
-const cheerio = require(`cheerio`)
-const imageSize = require(`probe-image-size`)
+const visit = require("unist-util-visit");
+const isRelativeUrl = require("is-relative-url");
+const fsExtra = require("fs-extra");
+const path = require("path");
+const _ = require("lodash");
+const cheerio = require("cheerio");
+const imageSize = require("probe-image-size");
 
-const DEPLOY_DIR = `public`
+const DEPLOY_DIR = "public";
 
-const invalidDestinationDirMessage = dir =>
-  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
+const invalidDestinationDirMessage = (dir) =>
+  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`;
 
 // dest must be a child
-const destinationIsValid = dest => !path.relative(`./`, dest).startsWith(`..`)
+const destinationIsValid = (dest) =>
+  !path.relative("./", dest).startsWith("..");
 
-const validateDestinationDir = dir => {
-  if (typeof dir === `undefined`) {
-    return true
-  } else if (typeof dir === `string`) {
+const validateDestinationDir = (dir) => {
+  if (typeof dir === "undefined") {
+    return true;
+  } else if (typeof dir === "string") {
     // need to pass dummy data for validation to work
-    return destinationIsValid(`${dir}/n/h/a`)
+    return destinationIsValid(`${dir}/n/h/a`);
   } else if (_.isFunction(dir)) {
     // need to pass dummy data for validation to work
     return destinationIsValid(
-      `${dir({ name: `n`, hash: `h`, absolutePath: `a` })}`
-    )
+      `${dir({ name: "n", hash: "h", absolutePath: "a" })}`,
+    );
   } else {
-    return false
+    return false;
   }
-}
+};
 
-const defaultDestination = linkNode =>
-  `${linkNode.internal.contentDigest}/${linkNode.name}.${linkNode.extension}`
+const defaultDestination = (linkNode) =>
+  `${linkNode.internal.contentDigest}/${linkNode.name}.${linkNode.extension}`;
 
 const getDestination = (linkNode, dir) => {
   if (_.isFunction(dir)) {
@@ -40,192 +41,192 @@ const getDestination = (linkNode, dir) => {
       name: linkNode.name,
       hash: linkNode.internal.contentDigest,
       absolutePath: linkNode.absolutePath,
-    })}.${linkNode.extension}`
+    })}.${linkNode.extension}`;
   } else if (_.isString(dir)) {
-    return `${dir}/${defaultDestination(linkNode)}`
+    return `${dir}/${defaultDestination(linkNode)}`;
   } else {
-    return defaultDestination(linkNode)
+    return defaultDestination(linkNode);
   }
-}
+};
 
 const newPath = (linkNode, options) => {
-  const { destinationDir } = options
-  const destination = getDestination(linkNode, destinationDir)
-  const paths = [process.cwd(), DEPLOY_DIR, destination]
-  return path.posix.join(...paths)
-}
+  const { destinationDir } = options;
+  const destination = getDestination(linkNode, destinationDir);
+  const paths = [process.cwd(), DEPLOY_DIR, destination];
+  return path.posix.join(...paths);
+};
 
 const newLinkURL = (linkNode, options, pathPrefix) => {
-  const { destinationDir } = options
-  const destination = getDestination(linkNode, destinationDir)
-  const startsWithSlash = destination.startsWith(`/`)
-  return `${pathPrefix ? pathPrefix : ``}${
-    startsWithSlash ? `` : `/`
-  }${destination}`
-}
+  const { destinationDir } = options;
+  const destination = getDestination(linkNode, destinationDir);
+  const startsWithSlash = destination.startsWith("/");
+  return `${pathPrefix ? pathPrefix : ""}${
+    startsWithSlash ? "" : "/"
+  }${destination}`;
+};
 
 function toArray(buf) {
-  const arr = new Array(buf.length)
+  const arr = new Array(buf.length);
 
   for (let i = 0; i < buf.length; i++) {
-    arr[i] = buf[i]
+    arr[i] = buf[i];
   }
 
-  return arr
+  return arr;
 }
 
 module.exports = (
   { files, markdownNode, markdownAST, pathPrefix, getNode },
-  pluginOptions = {}
+  pluginOptions = {},
 ) => {
   const defaults = {
-    ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
-  }
-  const { destinationDir } = pluginOptions
+    ignoreFileExtensions: ["png", "jpg", "jpeg", "bmp", "tiff"],
+  };
+  const { destinationDir } = pluginOptions;
   if (!validateDestinationDir(destinationDir))
-    return Promise.reject(invalidDestinationDirMessage(destinationDir))
+    return Promise.reject(invalidDestinationDirMessage(destinationDir));
 
-  const options = _.defaults({}, pluginOptions, defaults)
+  const options = _.defaults({}, pluginOptions, defaults);
 
-  const filesToCopy = new Map()
+  const filesToCopy = new Map();
   // Copy linked files to the destination directory and modify the AST to point
   // to new location of the files.
-  const visitor = link => {
+  const visitor = (link) => {
     if (isRelativeUrl(link.url) && getNode(markdownNode.parent).dir) {
       const linkPath = path.posix.join(
         getNode(markdownNode.parent).dir,
-        link.url
-      )
-      const linkNode = _.find(files, file => {
+        link.url,
+      );
+      const linkNode = _.find(files, (file) => {
         if (file && file.absolutePath) {
-          return file.absolutePath === linkPath
+          return file.absolutePath === linkPath;
         }
-        return null
-      })
+        return null;
+      });
       if (linkNode && linkNode.absolutePath) {
-        const newFilePath = newPath(linkNode, options)
+        const newFilePath = newPath(linkNode, options);
 
         // Prevent unneeded copying
-        if (linkPath === newFilePath) return
+        if (linkPath === newFilePath) return;
 
-        const linkURL = newLinkURL(linkNode, options, pathPrefix)
-        link.url = linkURL
-        filesToCopy.set(linkPath, newFilePath)
+        const linkURL = newLinkURL(linkNode, options, pathPrefix);
+        link.url = linkURL;
+        filesToCopy.set(linkPath, newFilePath);
       }
     }
-  }
+  };
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
   const generateImagesAndUpdateNode = function (image, node) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
-      image.attr(`src`)
-    )
-    const imageNode = _.find(files, file => {
+      image.attr("src"),
+    );
+    const imageNode = _.find(files, (file) => {
       if (file && file.absolutePath) {
-        return file.absolutePath === imagePath
+        return file.absolutePath === imagePath;
       }
-      return null
-    })
+      return null;
+    });
     if (!imageNode || !imageNode.absolutePath) {
-      return
+      return;
     }
 
-    const initialImageSrc = image.attr(`src`)
+    const initialImageSrc = image.attr("src");
     // The link object will be modified to the new location so we'll
     // use that data to update our ref
-    const link = { url: image.attr(`src`) }
-    visitor(link)
+    const link = { url: image.attr("src") };
+    visitor(link);
     node.value = node.value.replace(
-      new RegExp(image.attr(`src`), `g`),
-      link.url
-    )
+      new RegExp(image.attr("src"), "g"),
+      link.url,
+    );
 
-    let dimensions
+    let dimensions;
 
-    if (!image.attr(`width`) || !image.attr(`height`)) {
+    if (!image.attr("width") || !image.attr("height")) {
       dimensions = imageSize.sync(
-        toArray(fsExtra.readFileSync(imageNode.absolutePath))
-      )
+        toArray(fsExtra.readFileSync(imageNode.absolutePath)),
+      );
     }
 
     // Generate default alt tag
-    const srcSplit = initialImageSrc.split(`/`)
-    const fileName = srcSplit[srcSplit.length - 1]
-    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
-    const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+    const srcSplit = initialImageSrc.split("/");
+    const fileName = srcSplit[srcSplit.length - 1];
+    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, "");
+    const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, " ");
 
-    image.attr(`alt`, image.attr(`alt`) ? image.attr(`alt`) : defaultAlt)
+    image.attr("alt", image.attr("alt") ? image.attr("alt") : defaultAlt);
     image.attr(
-      `width`,
-      image.attr(`width`) ? image.attr(`width`) : dimensions.width
-    )
+      "width",
+      image.attr("width") ? image.attr("width") : dimensions.width,
+    );
     image.attr(
-      `height`,
-      image.attr(`height`) ? image.attr(`height`) : dimensions.height
-    )
-  }
+      "height",
+      image.attr("height") ? image.attr("height") : dimensions.height,
+    );
+  };
 
-  visit(markdownAST, `link`, link => {
-    const ext = link.url.split(`.`).pop()
+  visit(markdownAST, "link", (link) => {
+    const ext = link.url.split(".").pop();
     if (options.ignoreFileExtensions.includes(ext)) {
-      return
+      return;
     }
 
-    visitor(link)
-  })
+    visitor(link);
+  });
 
-  visit(markdownAST, `definition`, definition => {
-    const ext = definition.url.split(`.`).pop()
+  visit(markdownAST, "definition", (definition) => {
+    const ext = definition.url.split(".").pop();
     if (options.ignoreFileExtensions.includes(ext)) {
-      return
+      return;
     }
 
-    visitor(definition)
-  })
+    visitor(definition);
+  });
 
   // This will only work for markdown img tags
-  visit(markdownAST, `image`, image => {
-    const ext = image.url.split(`.`).pop()
+  visit(markdownAST, "image", (image) => {
+    const ext = image.url.split(".").pop();
     if (options.ignoreFileExtensions.includes(ext)) {
-      return
+      return;
     }
 
     // Just make sure the parent node has dir
     if (markdownNode.parent && !getNode(markdownNode.parent).dir) {
-      return
+      return;
     }
 
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
-      image.url
-    )
-    const imageNode = _.find(files, file => {
+      image.url,
+    );
+    const imageNode = _.find(files, (file) => {
       if (file && file.absolutePath) {
-        return file.absolutePath === imagePath
+        return file.absolutePath === imagePath;
       }
-      return false
-    })
+      return false;
+    });
 
     if (imageNode) {
-      visitor(image)
+      visitor(image);
     }
-  })
+  });
 
   // For each HTML Node
-  visit(markdownAST, [`html`, `jsx`], node => {
-    const $ = cheerio.load(node.value)
+  visit(markdownAST, ["html", "jsx"], (node) => {
+    const $ = cheerio.load(node.value);
 
     function processUrl({ url, isRequired }) {
       try {
-        const ext = url.split(`.`).pop()
+        const ext = url.split(".").pop();
         if (!options.ignoreFileExtensions.includes(ext) || isRequired) {
           // The link object will be modified to the new location so we'll
           // use that data to update our ref
-          const link = { url }
-          visitor(link)
-          node.value = node.value.replace(new RegExp(url, `g`), link.url)
+          const link = { url };
+          visitor(link);
+          node.value = node.value.replace(new RegExp(url, "g"), link.url);
         }
       } catch (err) {
         // Ignore
@@ -238,74 +239,74 @@ module.exports = (
         selection
           // extract the elements that have the attribute
           .map(function () {
-            const element = $(this)
-            const url = $(this).attr(attribute)
+            const element = $(this);
+            const url = $(this).attr(attribute);
             if (url && isRelativeUrl(url)) {
-              return { url, element }
+              return { url, element };
             }
-            return undefined
+            return undefined;
           })
           // cheerio object -> array
           .toArray()
           // filter out empty or undefined values
           .filter(Boolean)
-      )
+      );
     }
 
     // Handle Images
-    extractUrlAttributeAndElement($(`img[src]`), `src`).forEach(
+    extractUrlAttributeAndElement($("img[src]"), "src").forEach(
       ({ url, element }) => {
         try {
-          const ext = url.split(`.`).pop()
+          const ext = url.split(".").pop();
           if (!options.ignoreFileExtensions.includes(ext)) {
-            generateImagesAndUpdateNode(element, node)
+            generateImagesAndUpdateNode(element, node);
           }
         } catch (err) {
           // Ignore
         }
-      }
-    )
+      },
+    );
 
     // Handle video tags.
     extractUrlAttributeAndElement(
-      $(`video source[src], video[src]`),
-      `src`
-    ).forEach(processUrl)
+      $("video source[src], video[src]"),
+      "src",
+    ).forEach(processUrl);
 
     // Handle video poster.
-    extractUrlAttributeAndElement($(`video[poster]`), `poster`).forEach(
-      extractedUrlAttributeAndElement =>
-        processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
-    )
+    extractUrlAttributeAndElement($("video[poster]"), "poster").forEach(
+      (extractedUrlAttributeAndElement) =>
+        processUrl({ ...extractedUrlAttributeAndElement, isRequired: true }),
+    );
 
     // Handle audio tags.
     extractUrlAttributeAndElement(
-      $(`audio source[src], audio[src]`),
-      `src`
-    ).forEach(processUrl)
+      $("audio source[src], audio[src]"),
+      "src",
+    ).forEach(processUrl);
 
     // Handle flash embed tags.
-    extractUrlAttributeAndElement($(`object param[value]`), `value`).forEach(
-      processUrl
-    )
+    extractUrlAttributeAndElement($("object param[value]"), "value").forEach(
+      processUrl,
+    );
 
     // Handle a tags.
-    extractUrlAttributeAndElement($(`a[href]`), `href`).forEach(processUrl)
+    extractUrlAttributeAndElement($("a[href]"), "href").forEach(processUrl);
 
-    return
-  })
+    return;
+  });
 
   return Promise.all(
     Array.from(filesToCopy, async ([linkPath, newFilePath]) => {
       // Don't copy anything if the file already exists at the location.
       if (!fsExtra.existsSync(newFilePath)) {
         try {
-          await fsExtra.ensureDir(path.dirname(newFilePath))
-          await fsExtra.copy(linkPath, newFilePath)
+          await fsExtra.ensureDir(path.dirname(newFilePath));
+          await fsExtra.copy(linkPath, newFilePath);
         } catch (err) {
-          console.error(`error copying file`, err)
+          console.error("error copying file", err);
         }
       }
-    })
-  )
-}
+    }),
+  );
+};

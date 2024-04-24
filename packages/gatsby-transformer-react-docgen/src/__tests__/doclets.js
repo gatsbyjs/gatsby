@@ -1,287 +1,287 @@
-import { applyPropDoclets } from "../doclets"
+import { applyPropDoclets } from "../doclets";
 
-describe(`transformer-react-doc-gen: Doclets`, () => {
-  describe(`tsType`, () => {
-    describe(`doclets: []`, () => {
-      const doclets = []
-      describe(`tsType: { name: string }`, () => {
+describe("transformer-react-doc-gen: Doclets", () => {
+  describe("tsType", () => {
+    describe("doclets: []", () => {
+      const doclets = [];
+      describe("tsType: { name: string }", () => {
         const tsType = {
-          name: `string`,
-        }
+          name: "string",
+        };
 
-        it(`should replace the undefined type with the tsType (string) definition`, () => {
+        it("should replace the undefined type with the tsType (string) definition", () => {
           expect(applyPropDoclets({ doclets, tsType })).toHaveProperty(
-            `type`,
+            "type",
             expect.objectContaining({
               ...tsType,
-            })
-          )
-        })
-      })
+            }),
+          );
+        });
+      });
 
-      describe(`tsType: { name: union, raw: "number | any", elements: [[Object], [Object]] }`, () => {
+      describe('tsType: { name: union, raw: "number | any", elements: [[Object], [Object]] }', () => {
         const tsType = {
-          name: `union`,
-          raw: `number | any`,
+          name: "union",
+          raw: "number | any",
           elements: [[Object], [Object]],
-        }
+        };
 
-        it(`should replace the undefined type with the ts Union Type`, () => {
+        it("should replace the undefined type with the ts Union Type", () => {
           expect(applyPropDoclets({ doclets, tsType })).toHaveProperty(
-            `type`,
+            "type",
             expect.objectContaining({
-              name: `union`,
+              name: "union",
               value: [
                 {
-                  name: `number`,
+                  name: "number",
                 },
                 {
-                  name: `any`,
+                  name: "any",
                 },
               ],
-            })
-          )
-        })
-      })
+            }),
+          );
+        });
+      });
 
-      describe(`tsType: { name: ReactComponent, raw: "React.Component<Props>", elements: [ [Object] ] }`, () => {
+      describe('tsType: { name: ReactComponent, raw: "React.Component<Props>", elements: [ [Object] ] }', () => {
         const tsType = {
-          name: `ReactComponent`,
-          raw: `React.Component<Props>`,
+          name: "ReactComponent",
+          raw: "React.Component<Props>",
           elements: [[Object]],
-        }
+        };
 
-        it(`should replace the undefined type with the ts Raw Type React.Component<Props>`, () => {
+        it("should replace the undefined type with the ts Raw Type React.Component<Props>", () => {
           expect(applyPropDoclets({ doclets, tsType })).toHaveProperty(
-            `type`,
+            "type",
             expect.objectContaining({
-              name: `React.Component<Props>`,
-            })
-          )
-        })
-      })
-    })
+              name: "React.Component<Props>",
+            }),
+          );
+        });
+      });
+    });
 
     // Doclets differenz from ts type
-    describe(`doclets: [{ tag: "type", value: "{number}" }]`, () => {
-      const doclets = [{ tag: `type`, value: `{number}` }]
-      describe(`tsType: { name: string }`, () => {
+    describe('doclets: [{ tag: "type", value: "{number}" }]', () => {
+      const doclets = [{ tag: "type", value: "{number}" }];
+      describe("tsType: { name: string }", () => {
         const tsType = {
-          name: `string`,
-        }
+          name: "string",
+        };
 
-        it(`doclet says number, typescript says string, doclet should win as default behavior`, () => {
-          expect(applyPropDoclets({ doclets, tsType })).toHaveProperty(`type`, {
-            name: `number`,
-          })
-        })
-      })
-    })
-  })
+        it("doclet says number, typescript says string, doclet should win as default behavior", () => {
+          expect(applyPropDoclets({ doclets, tsType })).toHaveProperty("type", {
+            name: "number",
+          });
+        });
+      });
+    });
+  });
 
-  describe(`doclets`, () => {
-    describe(`type`, () => {
-      describe(`[ { tag: "type", value: "{string}" } ]`, () => {
-        const doclets = [{ tag: `type`, value: `{string}` }]
+  describe("doclets", () => {
+    describe("type", () => {
+      describe('[ { tag: "type", value: "{string}" } ]', () => {
+        const doclets = [{ tag: "type", value: "{string}" }];
 
-        it(`should set { name: "string" } as type`, () => {
+        it('should set { name: "string" } as type', () => {
           expect(applyPropDoclets({ doclets })).toHaveProperty(
-            `type`,
+            "type",
             expect.objectContaining({
-              name: `string`,
-            })
-          )
-        })
-      })
+              name: "string",
+            }),
+          );
+        });
+      });
 
-      describe(`[ { tag: "type", value: "{React.Component<Props>}" } ]`, () => {
-        const doclets = [{ tag: `type`, value: `{React.Component<Props>}` }]
+      describe('[ { tag: "type", value: "{React.Component<Props>}" } ]', () => {
+        const doclets = [{ tag: "type", value: "{React.Component<Props>}" }];
 
-        it(`should set { name: "React.Component<Props>" } as type`, () => {
-          expect(applyPropDoclets({ doclets })).toHaveProperty(`type`, {
-            name: `React.Component<Props>`,
-          })
-        })
-      })
+        it('should set { name: "React.Component<Props>" } as type', () => {
+          expect(applyPropDoclets({ doclets })).toHaveProperty("type", {
+            name: "React.Component<Props>",
+          });
+        });
+      });
 
-      describe(`[ { tag: "type", value: "{(number | any)}" } ]`, () => {
-        const doclets = [{ tag: `type`, value: `{(number | any)}` }]
+      describe('[ { tag: "type", value: "{(number | any)}" } ]', () => {
+        const doclets = [{ tag: "type", value: "{(number | any)}" }];
 
-        it(`should set { name: "number | any" } as type`, () => {
+        it('should set { name: "number | any" } as type', () => {
           expect(applyPropDoclets({ doclets })).toHaveProperty(
-            `type`,
+            "type",
             expect.objectContaining({
-              name: `union`,
+              name: "union",
               value: [
                 {
-                  name: `number`,
+                  name: "number",
                 },
                 {
-                  name: `any`,
+                  name: "any",
                 },
               ],
-            })
-          )
-        })
-      })
-    })
-  })
+            }),
+          );
+        });
+      });
+    });
+  });
 
-  describe(`flowType`, () => {
-    describe(`doclets: []`, () => {
-      const doclets = []
-      describe(`flowType: { name: string }`, () => {
+  describe("flowType", () => {
+    describe("doclets: []", () => {
+      const doclets = [];
+      describe("flowType: { name: string }", () => {
         const flowType = {
-          name: `string`,
-        }
+          name: "string",
+        };
 
-        it(`should replace the undefined type with the flowType (string) definition`, () => {
+        it("should replace the undefined type with the flowType (string) definition", () => {
           expect(applyPropDoclets({ doclets, flowType })).toHaveProperty(
-            `type`,
+            "type",
             expect.objectContaining({
               ...flowType,
-            })
-          )
-        })
-      })
+            }),
+          );
+        });
+      });
 
-      describe(`flowType: { name: union, raw: "number | any", elements: [[Object], [Object]] }`, () => {
+      describe('flowType: { name: union, raw: "number | any", elements: [[Object], [Object]] }', () => {
         const flowType = {
-          name: `union`,
-          raw: `number | any`,
+          name: "union",
+          raw: "number | any",
           elements: [[Object], [Object]],
-        }
+        };
 
-        it(`should replace the undefined type with the ts Union Type`, () => {
+        it("should replace the undefined type with the ts Union Type", () => {
           expect(applyPropDoclets({ doclets, flowType })).toHaveProperty(
-            `type`,
+            "type",
             expect.objectContaining({
-              name: `union`,
+              name: "union",
               value: [
                 {
-                  name: `number`,
+                  name: "number",
                 },
                 {
-                  name: `any`,
+                  name: "any",
                 },
               ],
-            })
-          )
-        })
-      })
+            }),
+          );
+        });
+      });
 
-      describe(`flowType: { name: ReactComponent, raw: "React.Component<Props>", elements: [ [Object] ] }`, () => {
+      describe('flowType: { name: ReactComponent, raw: "React.Component<Props>", elements: [ [Object] ] }', () => {
         const flowType = {
-          name: `ReactComponent`,
-          raw: `React.Component<Props>`,
+          name: "ReactComponent",
+          raw: "React.Component<Props>",
           elements: [[Object]],
-        }
+        };
 
-        it(`should replace the undefined type with the ts Raw Type React.Component<Props>`, () => {
+        it("should replace the undefined type with the ts Raw Type React.Component<Props>", () => {
           expect(applyPropDoclets({ doclets, flowType })).toHaveProperty(
-            `type`,
+            "type",
             expect.objectContaining({
-              name: `React.Component<Props>`,
-            })
-          )
-        })
-      })
-    })
+              name: "React.Component<Props>",
+            }),
+          );
+        });
+      });
+    });
 
-    describe(`doclets: [{ tag: "type", value: "{number}" }]`, () => {
-      const doclets = [{ tag: `type`, value: `{number}` }]
-      describe(`flowType: { name: string }`, () => {
+    describe('doclets: [{ tag: "type", value: "{number}" }]', () => {
+      const doclets = [{ tag: "type", value: "{number}" }];
+      describe("flowType: { name: string }", () => {
         const flowType = {
-          name: `string`,
-        }
+          name: "string",
+        };
 
-        it(`doclet says number, typescript says string, doclet should win as default behauvior`, () => {
+        it("doclet says number, typescript says string, doclet should win as default behauvior", () => {
           expect(applyPropDoclets({ doclets, flowType })).toHaveProperty(
-            `type`,
+            "type",
             {
-              name: `number`,
-            }
-          )
-        })
-      })
-    })
-  })
+              name: "number",
+            },
+          );
+        });
+      });
+    });
+  });
 
-  describe(`no types set `, () => {
-    it(`should return an object with the propety "name" equal to "propertyName"`, () => {
-      const doclets = [{ tag: `type`, value: `propertyName` }]
-      const type = undefined
+  describe("no types set ", () => {
+    it('should return an object with the propety "name" equal to "propertyName"', () => {
+      const doclets = [{ tag: "type", value: "propertyName" }];
+      const type = undefined;
 
       expect(applyPropDoclets({ doclets, type })).toHaveProperty(
-        `type`,
+        "type",
         expect.objectContaining({
-          name: `propertyName`,
-        })
-      )
-    })
-  })
+          name: "propertyName",
+        }),
+      );
+    });
+  });
 
-  it(`should apply @required`, () => {
-    const doclets = [{ tag: `required`, value: true }]
+  it("should apply @required", () => {
+    const doclets = [{ tag: "required", value: true }];
     expect(applyPropDoclets({ doclets })).toEqual({
       doclets,
       required: true,
-    })
-  })
+    });
+  });
 
-  it(`should apply @required`, () => {
+  it("should apply @required", () => {
     const doclets = [
       {
-        tag: `defaultValue`,
-        value: `() => {}`,
+        tag: "defaultValue",
+        value: "() => {}",
       },
-    ]
+    ];
 
     expect(applyPropDoclets({ doclets })).toEqual({
       doclets,
       defaultValue: {
-        value: `() => {}`,
+        value: "() => {}",
         computed: false,
       },
-    })
-  })
+    });
+  });
 
-  it(`should handle inline enum types`, () => {
+  it("should handle inline enum types", () => {
     const doclets = [
       {
-        tag: `type`,
-        value: `{(true|'foo'|40|"bar")}`,
+        tag: "type",
+        value: "{(true|'foo'|40|\"bar\")}",
       },
-    ]
+    ];
 
     expect(applyPropDoclets({ doclets, type: {} })).toEqual({
       doclets,
       type: {
-        name: `enum`,
+        name: "enum",
         value: [
-          { value: `true`, computed: false },
-          { value: `'foo'`, computed: false },
-          { value: `40`, computed: false },
-          { value: `"bar"`, computed: false },
+          { value: "true", computed: false },
+          { value: "'foo'", computed: false },
+          { value: "40", computed: false },
+          { value: '"bar"', computed: false },
         ],
       },
-    })
-  })
+    });
+  });
 
-  it(`should create a union type for none-literals`, () => {
+  it("should create a union type for none-literals", () => {
     const doclets = [
       {
-        tag: `type`,
-        value: `{(string|func|bool)}`,
+        tag: "type",
+        value: "{(string|func|bool)}",
       },
-    ]
+    ];
 
     expect(applyPropDoclets({ doclets, type: {} })).toEqual({
       doclets,
       type: {
-        name: `union`,
-        value: [{ name: `string` }, { name: `func` }, { name: `bool` }],
+        name: "union",
+        value: [{ name: "string" }, { name: "func" }, { name: "bool" }],
       },
-    })
-  })
-})
+    });
+  });
+});
