@@ -2,12 +2,10 @@ import { transform as babelTransform } from "@babel/core";
 import plugin from "../";
 
 function matchesSnapshot(query): void {
-  // @ts-ignore - code exists
   const { code: codeWithoutFileName } = babelTransform(query, {
     presets: ["@babel/preset-react"],
     plugins: [plugin],
   });
-  // @ts-ignore - code exists
   const { code: codeWithFileName } = babelTransform(query, {
     presets: ["@babel/preset-react"],
     plugins: [plugin],
@@ -19,7 +17,6 @@ function matchesSnapshot(query): void {
 }
 
 function transform(query): string | null | undefined {
-  // @ts-ignore - code exists
   const { code } = babelTransform(query, {
     presets: ["@babel/preset-react"],
     plugins: [plugin],
@@ -501,8 +498,8 @@ describe("babel-plugin-remove-graphql-queries", () => {
   });
 
   it("validates that config export is async", () => {
-    const run = (): any =>
-      transform(
+    const run = (): string | null | undefined => {
+      return transform(
         `
   import * as React from 'react'
   import { graphql } from "gatsby"
@@ -524,6 +521,7 @@ describe("babel-plugin-remove-graphql-queries", () => {
   }
   `,
       );
+    };
     expect(run).toThrowErrorMatchingInlineSnapshot(
       '"unknown file: BabelPluginRemoveGraphQLQueries: the \\"config\\" export must be async when using it with graphql"',
     );

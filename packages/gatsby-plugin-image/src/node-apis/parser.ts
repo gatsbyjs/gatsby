@@ -1,6 +1,5 @@
 import traverse from "@babel/traverse";
 import type { NodePath } from "@babel/core";
-// @ts-ignore
 import type { JSXAttribute } from "@babel/types";
 import { parse, type ParserOptions } from "@babel/parser";
 import babel from "@babel/core";

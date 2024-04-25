@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import React from "react";
+import React, { type CSSProperties } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { LayoutWrapper } from "./layout-wrapper";
 import { Placeholder } from "./placeholder";
@@ -128,7 +127,7 @@ export function swapPlaceholderImage(
   element: HTMLElement,
   cacheKey: string,
   imageCache: Set<string>,
-  style: React.CSSProperties,
+  style: CSSProperties,
   onStartLoad: GatsbyImageProps["onStartLoad"],
   onLoad: GatsbyImageProps["onLoad"],
   onError: GatsbyImageProps["onError"],

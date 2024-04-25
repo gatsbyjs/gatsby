@@ -6,7 +6,7 @@ import pDefer, { type DeferredPromise } from "p-defer";
 import _ from "lodash";
 import { createContentDigest, slash, uuid } from "gatsby-core-utils";
 import reporter from "gatsby-cli/lib/reporter";
-import { IPhantomReporter } from "gatsby-cli";
+
 import {
   type JobInput,
   type InternalJob,
@@ -18,6 +18,7 @@ import {
   WorkerError,
 } from "./types";
 import { importGatsbyPlugin } from "../import-gatsby-plugin";
+import type { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom";
 
 type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted;
 

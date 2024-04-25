@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import React, {
   memo,
   type JSX,
@@ -10,7 +9,6 @@ import { getWrapperProps, getMainProps, getPlaceholderProps } from "./hooks";
 import { Placeholder } from "./placeholder";
 import { MainImage, MainImageProps } from "./main-image";
 import { LayoutWrapper } from "./layout-wrapper";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import PropTypes from "prop-types";
 import type {
   GatsbyImageProps,

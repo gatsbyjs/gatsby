@@ -3,7 +3,7 @@
  * these logs
  */
 import * as reporterActionsForTypes from "./redux/actions";
-import { ActivityStatuses, ActivityTypes } from "./constants";
+import { ActivityTypes } from "./constants";
 import { Span } from "opentracing";
 import { reporter as gatsbyReporter } from "./reporter";
 import type { IStructuredError } from "../structured-errors/types";
@@ -72,7 +72,7 @@ export function createTimerReporter({
 
       reporterActions.endActivity({
         id,
-        status: ActivityStatuses.Failed,
+        status: "FAILED",
       });
 
       return reporter.panic(errorMeta, error, pluginName);
@@ -83,7 +83,7 @@ export function createTimerReporter({
 
       reporterActions.endActivity({
         id,
-        status: ActivityStatuses.Success,
+        status: "SUCCESS",
       });
     },
 

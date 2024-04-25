@@ -15,14 +15,14 @@ You'll replicate (mostly) the [ESLint config Gatsby ships with](https://github.c
 ```shell
 
 # First install the necessary ESLint dependencies
-npm install --save-dev eslint-config-react-app
+
 ```
 
 Now that your packages have been installed, create a new file at the root of the site named `.eslintrc.js` using the command below.
 
 ```shell
 # Create a config file for ESLint
-touch .eslintrc.js
+
 ```
 
 ### Configuring ESLint
@@ -30,12 +30,7 @@ touch .eslintrc.js
 Copy the snippet below to the newly created `.eslintrc.js` file. Then add additional presets, plugins, and rules as desired.
 
 ```js:title=.eslintrc.js
-module.exports = {
-  globals: {
-    __PATH_PREFIX__: true,
-  },
-  extends: `react-app`,
-}
+
 ```
 
 **Note:** When there is no ESLint file Gatsby implicitly adds a barebones ESLint loader. This loader pipes ESLint feedback into the terminal window where you are running or building Gatsby and also to the console in your browser developer tools. This gives you consolidated, immediate feedback on newly-saved files. When you include a custom `.eslintrc` file, Gatsby gives you control over the ESLint configuration. This means that it will override the built-in `eslint-loader` only leaving the required rules activated (`no-anonymous-exports-page-templates` & `limited-exports-page-templates`). For the non-required config you'll need to activate each rule on your own. One way to do this is to use the Community plugin [`gatsby-plugin-eslint`](/plugins/gatsby-plugin-eslint/). This also means that the default [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.ts) (the `eslintConfig` export) will be entirely overwritten. If you would still like to take advantage of those rules, you'll need to copy them to your local file.

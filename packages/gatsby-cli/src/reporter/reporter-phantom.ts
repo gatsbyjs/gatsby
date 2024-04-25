@@ -1,5 +1,5 @@
 import * as reporterActionsForTypes from "./redux/actions";
-import { ActivityStatuses, ActivityTypes } from "./constants";
+import { ActivityTypes } from "./constants";
 import { Span } from "opentracing";
 
 type ICreatePhantomReporterArguments = {
@@ -35,7 +35,7 @@ export const createPhantomReporter = ({
 
       reporterActions.endActivity({
         id,
-        status: ActivityStatuses.Success,
+        status: "SUCCESS",
       });
     },
 

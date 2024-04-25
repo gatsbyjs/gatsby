@@ -49,10 +49,7 @@ export function eslintConfig(
         __TRAILING_SLASH__: true,
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
       },
-      extends: [
-        require.resolve("eslint-config-react-app"),
-        eslintRequirePreset,
-      ],
+      extends: [eslintRequirePreset],
       parser: require.resolve("@babel/eslint-parser"),
       parserOptions: {
         ecmaVersion: 2020,

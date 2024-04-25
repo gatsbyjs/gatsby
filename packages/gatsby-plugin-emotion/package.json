@@ -15,13 +15,13 @@
     "@total-typescript/ts-reset": "^0.5.1",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "^3.14.0-next.2",
+    "babel-preset-gatsby-package": "workspace:*",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.24.4",
     "@emotion/react": "^11.11.4",
-    "gatsby": "^5.14.0-next.2",
+    "gatsby": "^5.13.4",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

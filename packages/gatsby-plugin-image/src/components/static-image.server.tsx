@@ -1,11 +1,13 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import React, { type ComponentType, type ReactElement } from "react";
+import React, {
+  type FunctionComponent,
+  type ComponentType,
+  type ReactElement,
+} from "react";
 import {
   altValidator,
   GatsbyImage as GatsbyImageServer,
 } from "./gatsby-image.server";
 import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import PropTypes from "prop-types";
 import { ISharpGatsbyImageArgs } from "../image-utils";
 
@@ -23,7 +25,7 @@ type IPrivateProps = {
 
 export function _getStaticImage(
   GatsbyImage: ComponentType<GatsbyImageProps>,
-): React.FC<IStaticImageProps & IPrivateProps> | null {
+): FunctionComponent<IStaticImageProps & IPrivateProps> | null {
   return function StaticImage({
     src,
     __imageData: imageData,

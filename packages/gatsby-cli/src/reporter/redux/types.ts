@@ -1,4 +1,4 @@
-import { Actions, ActivityStatuses, ActivityTypes } from "../constants";
+import { Actions, type ActivityStatuses, ActivityTypes } from "../constants";
 import {
   type IStructuredError,
   ErrorCategory,
@@ -9,6 +9,7 @@ export type IGatsbyCLIState = {
   activities: {
     [id: string]: IActivity;
   };
+  messages: Array<string>;
   status: ActivityStatuses | "";
 };
 
@@ -89,7 +90,7 @@ export type ICancelActivity = {
   type: Actions.CancelActivity;
   payload: {
     id: string;
-    status: ActivityStatuses.Cancelled;
+    status: "CANCELLED";
     duration: number;
     type: ActivityTypes;
   };

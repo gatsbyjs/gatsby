@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import React, { type JSX, type ComponentType, memo } from "react";
 import { Picture, type PictureProps } from "./picture";
 

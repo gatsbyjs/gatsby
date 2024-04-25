@@ -1,9 +1,5 @@
 import { NodePath, PluginObj, Visitor } from "@babel/core";
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as BabelTypes from "@babel/types";
-// @ts-ignore
-import { Program } from "@babel/types";
 
 // matches any hook-like (the default)
 const isHook = /^use[A-Z]/;
@@ -25,7 +21,7 @@ export default function ({
   types: t,
 }: {
   types: typeof BabelTypes;
-}): PluginObj<Program> {
+}): PluginObj<BabelTypes.Program> {
   const visitor: Visitor = {
     CallExpression(path, state: IState): void {
       const onlyBuiltIns = state.opts?.onlyBuiltIns || false;
@@ -83,7 +79,7 @@ export default function ({
     visitor: {
       // this is a workaround to run before preset-env destroys destructured assignments
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      Program<Program>(path: NodePath<Program>, state: any): void {
+      Program(path: NodePath<BabelTypes.Program>, state: any): void {
         path.traverse(visitor, state);
       },
     },

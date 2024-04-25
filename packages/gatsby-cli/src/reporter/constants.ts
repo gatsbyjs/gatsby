@@ -28,14 +28,22 @@ export enum ActivityLogLevels {
   Interrupted = "ACTIVITY_INTERRUPTED",
 }
 
-export enum ActivityStatuses {
-  InProgress = "IN_PROGRESS",
-  NotStarted = "NOT_STARTED",
-  Interrupted = "INTERRUPTED",
-  Failed = "FAILED",
-  Success = "SUCCESS",
-  Cancelled = "CANCELLED",
-}
+// export enum ActivityStatuses {
+//   InProgress = "IN_PROGRESS",
+//   NotStarted = "NOT_STARTED",
+//   Interrupted = "INTERRUPTED",
+//   Failed = "FAILED",
+//   Success = "SUCCESS",
+//   Cancelled = "CANCELLED",
+// }
+
+export type ActivityStatuses =
+  | "IN_PROGRESS"
+  | "NOT_STARTED"
+  | "INTERRUPTED"
+  | "FAILED"
+  | "SUCCESS"
+  | "CANCELLED";
 
 export enum ActivityTypes {
   Spinner = "spinner",

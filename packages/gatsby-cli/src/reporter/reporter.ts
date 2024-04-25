@@ -1,10 +1,11 @@
 import { stripIndent } from "common-tags";
 import chalk from "chalk";
+// @ts-ignore
 import { trackError } from "gatsby-telemetry";
 import { globalTracer, Span, SpanContext } from "opentracing";
 
 import * as reduxReporterActions from "./redux/actions";
-import { LogLevels, ActivityStatuses } from "./constants";
+import { LogLevels, type ActivityStatuses } from "./constants";
 import { getErrorFormatter } from "./errors";
 import constructError from "../structured-errors/construct-error";
 import type {
@@ -35,6 +36,7 @@ import {
   registerAdditionalDiagnosticOutputHandler,
   type AdditionalDiagnosticsOutputHandler,
 } from "./redux/diagnostics";
+// @ts-ignore
 import { isTruthy } from "gatsby-core-utils/is-truthy";
 
 const errorFormatter = getErrorFormatter();
@@ -252,7 +254,7 @@ class Reporter {
 
   completeActivity = (
     id: string,
-    status: ActivityStatuses = ActivityStatuses.Success,
+    status: ActivityStatuses = "SUCCESS",
   ): void => {
     reporterActions.endActivity({ id, status });
   };

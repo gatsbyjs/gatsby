@@ -55,7 +55,7 @@ function preset(_context, options = {}) {
       shippedProposals: true,
       modules: esm ? false : "commonjs",
       bugfixes: esm
-    }, browser ? browserConfig : nodeConfig)], [r("@babel/preset-react")], r("@babel/preset-flow")],
+    }, browser ? browserConfig : nodeConfig)], [r("@babel/preset-react")]],
     plugins: [
     // r(`@babel/plugin-proposal-nullish-coalescing-operator`),
     // r(`@babel/plugin-proposal-optional-chaining`),

@@ -3,8 +3,7 @@ import _ from "lodash";
 import path from "path";
 import * as semver from "semver";
 import * as stringSimilarity from "string-similarity";
-// @ts-ignore
-import { version as gatsbyVersion } from "gatsby/package.json";
+import { version as gatsbyVersion } from "../../../package.json";
 import reporter from "gatsby-cli/lib/reporter";
 import { validateOptionsSchema, Joi } from "gatsby-plugin-utils";
 

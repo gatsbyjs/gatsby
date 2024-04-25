@@ -19,13 +19,17 @@ jest.mock(
 describe("GatsbyImage server", () => {
   beforeEach(() => {
     console.warn = jest.fn();
+    // @ts-ignore
     global.SERVER = true;
+    // @ts-ignore
     global.GATSBY___IMAGE = true;
   });
 
   afterEach(() => {
     jest.clearAllMocks();
+    // @ts-ignore
     global.SERVER = false;
+    // @ts-ignore
     global.GATSBY___IMAGE = false;
   });
 

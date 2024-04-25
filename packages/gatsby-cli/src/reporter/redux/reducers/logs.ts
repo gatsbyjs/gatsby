@@ -4,6 +4,7 @@ import { Actions } from "../../constants";
 export const reducer = (
   state: IGatsbyCLIState = {
     activities: {},
+    messages: [],
     status: "",
   },
   action: ActionsUnion | ISetLogs,

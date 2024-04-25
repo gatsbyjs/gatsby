@@ -71,7 +71,6 @@ function preset(_context, options = {}) {
         ),
       ],
       [r("@babel/preset-react")],
-      r("@babel/preset-flow"),
     ],
     plugins: [
       // r(`@babel/plugin-proposal-nullish-coalescing-operator`),

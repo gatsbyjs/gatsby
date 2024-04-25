@@ -1,5 +1,4 @@
 import type { ActionsUnion, IActivity } from "./types";
-import { ActivityStatuses } from "../constants";
 import { calcElapsedTime } from "../../util/calc-elapsed-time";
 import { isActivityInProgress } from "./utils";
 import type { Reporter } from "../reporter";
@@ -158,7 +157,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
           displayedStuckStatusDiagnosticWarning = false;
         }
 
-        if (currentStatus === ActivityStatuses.InProgress) {
+        if (currentStatus === "IN_PROGRESS") {
           stuckStatusDiagnosticTimer = setTimeout(
             function logStuckStatusDiagnostic() {
               displayingStuckStatusDiagnosticWarning = true;
@@ -193,7 +192,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
           stuckStatusWatchdogTimer = null;
         }
 
-        if (currentStatus === ActivityStatuses.InProgress) {
+        if (currentStatus === "IN_PROGRESS") {
           stuckStatusWatchdogTimer = setTimeout(
             function fatalStuckStatusHandler() {
               reporter.panic({

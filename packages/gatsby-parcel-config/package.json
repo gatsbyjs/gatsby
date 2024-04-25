@@ -15,7 +15,7 @@
     "parcel": "2.x"
   },
   "dependencies": {
-    "@gatsbyjs/parcel-namer-relative-to-cwd": "2.14.0-next.2",
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "workspace:*",
     "@parcel/bundler-default": "2.12.0",
     "@parcel/compressor-raw": "2.12.0",
     "@parcel/namer-default": "2.12.0",

@@ -30,10 +30,10 @@
     "chokidar": "^3.6.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "^4.14.0-next.2",
-    "gatsby-page-utils": "^3.14.0-next.2",
-    "gatsby-plugin-utils": "^4.14.0-next.2",
-    "gatsby-telemetry": "^4.14.0-next.2",
+    "gatsby-core-utils": "workspace:*",
+    "gatsby-page-utils": "workspace:*",
+    "gatsby-plugin-utils": "workspace:*",
+    "gatsby-telemetry": "workspace:*",
     "globby": "^14.0.1",
     "lodash": "^4.17.21"
   },
@@ -41,11 +41,11 @@
     "@total-typescript/ts-reset": "^0.5.1",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "^3.14.0-next.2",
+    "babel-preset-gatsby-package": "workspace:*",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "gatsby": "^5.14.0-next.2",
+    "gatsby": "^5.13.4",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

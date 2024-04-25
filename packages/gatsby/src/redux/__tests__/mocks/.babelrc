@@ -20,8 +20,7 @@
         "useBuiltIns": true,
         "pragma": "React.createElement"
       }
-    ],
-    "@babel/preset-flow"
+    ]
   ],
   "plugins": [
     [

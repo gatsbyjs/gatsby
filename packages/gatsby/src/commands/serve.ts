@@ -136,6 +136,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   // eslint-disable-next-line new-cap
   const router = express.Router();
 
+  // @ts-ignore
   app.use(telemetry.expressMiddleware("SERVE"));
 
   router.use(compression());

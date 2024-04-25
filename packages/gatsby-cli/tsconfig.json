@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "include": ["src"],
   "compilerOptions": {
+    "jsx": "react-jsx",
     "moduleResolution": "Bundler",
     "skipLibCheck": true,
     "resolveJsonModule": true

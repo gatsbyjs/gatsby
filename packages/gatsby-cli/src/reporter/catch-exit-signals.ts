@@ -5,7 +5,6 @@
 import signalExit from "signal-exit";
 import { getStore } from "./redux";
 import { createPendingActivity } from "./redux/actions";
-import { ActivityStatuses } from "./constants";
 import { reporter } from "./reporter";
 
 function interruptActivities(): void {
@@ -13,10 +12,10 @@ function interruptActivities(): void {
   Object.keys(activities).forEach((activityId) => {
     const activity = activities[activityId];
     if (
-      activity.status === ActivityStatuses.InProgress ||
-      activity.status === ActivityStatuses.NotStarted
+      activity.status === "IN_PROGRESS" ||
+      activity.status === "NOT_STARTED"
     ) {
-      reporter.completeActivity(activityId, ActivityStatuses.Interrupted);
+      reporter.completeActivity(activityId, "INTERRUPTED");
     }
   });
 }
@@ -27,7 +26,7 @@ export function prematureEnd(): void {
   // if none of activity did explicitly fail
   createPendingActivity({
     id: "panic",
-    status: ActivityStatuses.Failed,
+    status: "FAILED",
   });
 
   interruptActivities();

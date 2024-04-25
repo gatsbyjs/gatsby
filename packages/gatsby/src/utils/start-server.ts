@@ -160,6 +160,7 @@ export async function startServer(
    * Set up the express app.
    **/
   app.use(compression());
+  // @ts-ignore
   app.use(telemetry.expressMiddleware("DEVELOP"));
   app.use(
     webpackHotMiddleware(compiler, {

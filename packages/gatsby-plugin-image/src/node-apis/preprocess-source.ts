@@ -8,7 +8,6 @@ import { writeImages } from "./image-processing";
 import { getCacheDir } from "./node-utils";
 import { stripIndents } from "common-tags";
 import type { NodePath } from "@babel/traverse";
-// @ts-ignore
 import type { JSXAttribute } from "@babel/types";
 const extensions: Array<string> = [".js", ".jsx", ".tsx"];
 

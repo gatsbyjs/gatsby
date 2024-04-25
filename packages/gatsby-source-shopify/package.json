@@ -24,23 +24,23 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
-    "gatsby-core-utils": "^4.14.0-next.2",
-    "gatsby-plugin-utils": "^4.14.0-next.2",
-    "gatsby-source-filesystem": "^5.14.0-next.2",
+    "gatsby-core-utils": "workspace:*",
+    "gatsby-plugin-utils": "workspace:*",
+    "gatsby-source-filesystem": "workspace:*",
     "sharp": "^0.33.3",
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "^3.14.0-next.2",
+    "gatsby-plugin-image": "workspace:*",
     "msw": "^2.2.14",
     "tsc-watch": "^6.2.0",
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "gatsby": "^5.14.0-next.2",
-    "gatsby-plugin-image": "^3.14.0-next.2",
+    "gatsby": "^5.13.4",
+    "gatsby-plugin-image": "^3.13.1",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

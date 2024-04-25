@@ -5,7 +5,7 @@ import type {
 } from "@babel/core";
 import { hashOptions, evaluateImageAttributes } from "./babel-helpers";
 import fs from "fs-extra";
-import path from "path";
+import path from "node:path";
 import { slash } from "gatsby-core-utils";
 
 import { stripIndent } from "common-tags";
@@ -73,7 +73,7 @@ export default function attrs({
           } catch (e) {
             // TODO add info about minimum Gatsby version once this is merged
             const msg = stripIndent`
-            Could not read image data file "${filename}". 
+            Could not read image data file "${filename}".
             This may mean that the images in "${this.filename}" were not processed.
             Please ensure that your gatsby version is at least 2.24.78.`;
             error += msg;

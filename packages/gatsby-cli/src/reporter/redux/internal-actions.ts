@@ -1,4 +1,6 @@
+// @ts-ignore
 import { uuid } from "gatsby-core-utils";
+// @ts-ignore
 import { trackCli } from "gatsby-telemetry";
 import signalExit from "signal-exit";
 import type { Dispatch } from "redux";
@@ -7,7 +9,7 @@ import { getStore } from "./";
 import {
   Actions,
   ActivityLogLevels,
-  ActivityStatuses,
+  type ActivityStatuses,
   ActivityTypes,
 } from "../constants";
 import type {
@@ -36,9 +38,9 @@ import {
 import type { IRenderPageArgs } from "../types";
 
 const ActivityStatusToLogLevel = {
-  [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
-  [ActivityStatuses.Failed]: ActivityLogLevels.Failed,
-  [ActivityStatuses.Success]: ActivityLogLevels.Success,
+  ["INTERRUPTED"]: ActivityLogLevels.Interrupted,
+  ["FAILED"]: ActivityLogLevels.Failed,
+  ["SUCCESS"]: ActivityLogLevels.Success,
 };
 
 let weShouldExit = false;
@@ -67,7 +69,7 @@ export const setStatus =
 
     if (
       status !== currentStatus &&
-      (status === ActivityStatuses.InProgress || force || weShouldExit)
+      (status === "IN_PROGRESS" || force || weShouldExit)
     ) {
       dispatch({
         type: Actions.SetStatus,
@@ -155,7 +157,7 @@ export function createLog({
 type ActionsToEmit = Array<IPendingActivity | ReturnType<typeof setStatus>>;
 export function createPendingActivity({
   id,
-  status = ActivityStatuses.NotStarted,
+  status = "NOT_STARTED",
 }: {
   id: string;
   status?: ActivityStatuses | undefined;
@@ -182,7 +184,7 @@ export function startActivity({
   id,
   text,
   type,
-  status = ActivityStatuses.InProgress,
+  status = "IN_PROGRESS",
   current,
   total,
 }: {
@@ -239,19 +241,19 @@ export function endActivity({
       type: Actions.CancelActivity,
       payload: {
         id,
-        status: ActivityStatuses.Cancelled,
+        status: "CANCELLED",
         type: activity.type,
         duration: durationS,
       },
     });
-  } else if (activity.status === ActivityStatuses.InProgress) {
+  } else if (activity.status === "IN_PROGRESS") {
     trackCli("ACTIVITY_DURATION", {
       name: activity.text,
       duration: Math.round(durationMS),
     });
 
     if (activity.errored) {
-      status = ActivityStatuses.Failed;
+      status = "FAILED";
     }
     actionsToEmit.push({
       type: Actions.EndActivity,
@@ -272,8 +274,7 @@ export function endActivity({
           duration: durationS,
           statusText:
             activity.statusText ||
-            (status === ActivityStatuses.Success &&
-            activity.type === ActivityTypes.Progress
+            (status === "SUCCESS" && activity.type === ActivityTypes.Progress
               ? `${activity.current}/${activity.total} ${(
                   (activity.total || 0) / durationS
                 ).toFixed(2)}/s`

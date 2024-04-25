@@ -54,6 +54,7 @@ export type IGatsbyImageData = {
   layout: Layout;
   width: number;
   height: number;
+  sizes?: string | undefined;
   backgroundColor?: string | undefined;
   images: Pick<MainImageProps, "sources" | "fallback">;
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback"> | undefined;

@@ -1,4 +1,4 @@
-import { ActivityStatuses, ActivityTypes } from "../../constants";
+import { ActivityTypes } from "../../constants";
 import { ISetStatus } from "../types";
 
 jest.useFakeTimers();
@@ -28,14 +28,14 @@ describe("integration", () => {
       text: "activity-1",
       type: ActivityTypes.Spinner,
     });
-    endActivity({ id: "activity-1", status: ActivityStatuses.Success });
+    endActivity({ id: "activity-1", status: "SUCCESS" });
     startActivity({
       id: "activity-2",
       text: "activity-2",
       type: ActivityTypes.Spinner,
     });
     createPendingActivity({ id: "pending-activity" });
-    endActivity({ id: "activity-2", status: ActivityStatuses.Success });
+    endActivity({ id: "activity-2", status: "SUCCESS" });
 
     jest.runOnlyPendingTimers();
 
@@ -50,7 +50,7 @@ describe("integration", () => {
       timestamp: expect.any(String),
     });
 
-    endActivity({ id: "pending-activity", status: ActivityStatuses.Cancelled });
+    endActivity({ id: "pending-activity", status: "CANCELLED" });
     jest.runOnlyPendingTimers();
 
     dispatchedSetStatusActions = getDispatchedSetStatusActions();

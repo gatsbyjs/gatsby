@@ -1,8 +1,9 @@
-import { Dispatch, CombinedState } from "redux";
+import type { Dispatch } from "redux";
 
-import { ActivityStatuses } from "../../constants";
+import type { ActivityStatuses } from "../../constants";
 import { ISetStatus, IGatsbyCLIState } from "../types";
 import { GatsbyCLIStore } from "../";
+import { IRenderPageArgs } from "../../types";
 
 jest.useFakeTimers();
 
@@ -28,9 +29,18 @@ describe("setStatus action creator", () => {
       return {
         getStore: (): Partial<GatsbyCLIStore> => {
           return {
-            getState: (): CombinedState<{ logs: IGatsbyCLIState }> => {
+            getState: (): {
+              logs: IGatsbyCLIState;
+              pageTree: IRenderPageArgs;
+            } => {
               return {
                 logs: { status: mockStatus, messages: [], activities: {} },
+                pageTree: {
+                  pages: new Map(),
+                  components: new Map(),
+                  functions: [],
+                  root: "/",
+                },
               };
             },
           };
@@ -51,16 +61,16 @@ describe("setStatus action creator", () => {
   });
 
   it("debounces SUCCESS in case activities don't overlap", () => {
-    setStatusWithDispatch(ActivityStatuses.InProgress);
-    setStatusWithDispatch(ActivityStatuses.Success);
-    setStatusWithDispatch(ActivityStatuses.InProgress);
-    setStatusWithDispatch(ActivityStatuses.Success);
+    setStatusWithDispatch("IN_PROGRESS");
+    setStatusWithDispatch("SUCCESS");
+    setStatusWithDispatch("IN_PROGRESS");
+    setStatusWithDispatch("SUCCESS");
 
     // we should only emit initial IN_PROGRESS event
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenNthCalledWith(1, {
       type: "SET_STATUS",
-      payload: ActivityStatuses.InProgress,
+      payload: "IN_PROGRESS",
     });
 
     jest.runOnlyPendingTimers();
@@ -68,21 +78,21 @@ describe("setStatus action creator", () => {
     expect(dispatch).toHaveBeenCalledTimes(2);
     expect(dispatch).toHaveBeenNthCalledWith(2, {
       type: "SET_STATUS",
-      payload: ActivityStatuses.Success,
+      payload: "SUCCESS",
     });
   });
 
   it("debounces FAILED in case activities don't overlap", () => {
-    setStatusWithDispatch(ActivityStatuses.InProgress);
-    setStatusWithDispatch(ActivityStatuses.Success);
-    setStatusWithDispatch(ActivityStatuses.InProgress);
-    setStatusWithDispatch(ActivityStatuses.Failed);
+    setStatusWithDispatch("IN_PROGRESS");
+    setStatusWithDispatch("SUCCESS");
+    setStatusWithDispatch("IN_PROGRESS");
+    setStatusWithDispatch("FAILED");
 
     // we should only emit initial IN_PROGRESS event
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenNthCalledWith(1, {
       type: "SET_STATUS",
-      payload: ActivityStatuses.InProgress,
+      payload: "IN_PROGRESS",
     });
 
     jest.runOnlyPendingTimers();
@@ -90,19 +100,19 @@ describe("setStatus action creator", () => {
     expect(dispatch).toHaveBeenCalledTimes(2);
     expect(dispatch).toHaveBeenNthCalledWith(2, {
       type: "SET_STATUS",
-      payload: ActivityStatuses.Failed,
+      payload: "FAILED",
     });
   });
 
   it("doesn't wrongly emit SUCCESS when we are still in progress ", () => {
-    setStatusWithDispatch(ActivityStatuses.InProgress);
-    setStatusWithDispatch(ActivityStatuses.Success);
-    setStatusWithDispatch(ActivityStatuses.InProgress);
+    setStatusWithDispatch("IN_PROGRESS");
+    setStatusWithDispatch("SUCCESS");
+    setStatusWithDispatch("IN_PROGRESS");
 
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenNthCalledWith(1, {
       type: "SET_STATUS",
-      payload: ActivityStatuses.InProgress,
+      payload: "IN_PROGRESS",
     });
 
     jest.runOnlyPendingTimers();

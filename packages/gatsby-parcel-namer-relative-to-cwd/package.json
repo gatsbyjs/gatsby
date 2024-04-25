@@ -20,13 +20,13 @@
     "@babel/runtime": "^7.24.4",
     "@parcel/namer-default": "2.12.0",
     "@parcel/plugin": "2.12.0",
-    "gatsby-core-utils": "^4.14.0-next.2"
+    "gatsby-core-utils": "workspace:*"
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "^3.14.0-next.2",
+    "babel-preset-gatsby-package": "workspace:*",
     "cross-env": "^7.0.3"
   },
   "scripts": {

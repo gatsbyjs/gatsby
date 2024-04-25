@@ -1,13 +1,13 @@
-import { dirname } from "node:path"
-import { fileURLToPath } from "node:url"
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 // @ts-ignore
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config({
   path: `.env.${process.env.NODE_ENV}`,
-})
+});
 
 module.exports = {
   siteMetadata: {
@@ -32,4 +32,4 @@ module.exports = {
       },
     },
   ],
-}
+};

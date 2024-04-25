@@ -37,6 +37,7 @@ export function dispatch(action: ActionsUnion | Thunk): void {
   }
 
   if (Array.isArray(action)) {
+    // @ts-ignore
     action.forEach((item) => dispatch(item));
     return;
   } else if (typeof action === "function") {

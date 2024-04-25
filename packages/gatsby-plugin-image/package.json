@@ -41,11 +41,27 @@
   ],
   "types": "dist/src/index.d.ts",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#readme",
+  "dependencies": {
+    "@babel/code-frame": "^7.24.2",
+    "@babel/parser": "^7.24.2",
+    "@babel/runtime": "^7.24.4",
+    "@babel/traverse": "^7.24.1",
+    "babel-jsx-utils": "^1.1.0",
+    "babel-plugin-remove-graphql-queries": "workspace:*",
+    "camelcase": "^8.0.0",
+    "chokidar": "^3.6.0",
+    "common-tags": "^1.8.2",
+    "fs-extra": "^11.2.0",
+    "gatsby-core-utils": "workspace:*",
+    "gatsby-plugin-utils": "workspace:*",
+    "objectFitPolyfill": "^2.3.5",
+    "prop-types": "^15.8.1"
+  },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
-    "@testing-library/react": "^15.0.2",
+    "@testing-library/react": "^15.0.4",
     "@types/babel__core": "^7.20.5",
     "@types/babel__traverse": "^7.20.5",
     "@types/fs-extra": "^11.0.4",
@@ -66,14 +82,14 @@
     "postcss": "^8.4.38",
     "prepend-directive": "^1.1.0",
     "semver": "^7.6.0",
-    "terser": "^5.30.3",
+    "terser": "^5.30.4",
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
     "@babel/core": "^7.24.4",
-    "gatsby": "^5.14.0-next.2",
-    "gatsby-plugin-sharp": "^5.14.0-next.2",
-    "gatsby-source-filesystem": "^5.14.0-next.2",
+    "gatsby": "^5.13.4",
+    "gatsby-plugin-sharp": "^5.13.1",
+    "gatsby-source-filesystem": "^5.13.1",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },
@@ -84,22 +100,6 @@
     "gatsby-source-filesystem": {
       "optional": true
     }
-  },
-  "dependencies": {
-    "@babel/code-frame": "^7.24.2",
-    "@babel/parser": "^7.24.2",
-    "@babel/runtime": "^7.24.4",
-    "@babel/traverse": "^7.24.1",
-    "babel-jsx-utils": "^1.1.0",
-    "babel-plugin-remove-graphql-queries": "^5.14.0-next.2",
-    "camelcase": "^8.0.0",
-    "chokidar": "^3.6.0",
-    "common-tags": "^1.8.2",
-    "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "^4.14.0-next.2",
-    "gatsby-plugin-utils": "^4.14.0-next.2",
-    "objectFitPolyfill": "^2.3.5",
-    "prop-types": "^15.8.1"
   },
   "repository": {
     "type": "git",

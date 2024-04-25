@@ -21,7 +21,7 @@
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "gatsby-core-utils": "^4.14.0-next.2",
+    "gatsby-core-utils": "workspace:*",
     "gatsby-legacy-polyfills": "^3.14.0-next.1"
   },
   "peerDependencies": {
@@ -38,7 +38,7 @@
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
     "@babel/cli": "^7.24.1",
-    "babel-preset-gatsby-package": "^3.14.0-next.2",
+    "babel-preset-gatsby-package": "workspace:*",
     "cross-env": "^7.0.3",
     "slash": "^5.1.0"
   },

@@ -1,11 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import React, {
   memo,
   type JSX,
   type ComponentType,
   type ImgHTMLAttributes,
 } from "react";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as PropTypes from "prop-types";
 import { Picture, SourceProps } from "./picture";
 

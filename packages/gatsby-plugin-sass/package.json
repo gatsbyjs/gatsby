@@ -15,9 +15,9 @@
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "autoprefixer": "^10.4.19",
-    "babel-preset-gatsby-package": "^3.14.0-next.2",
+    "babel-preset-gatsby-package": "workspace:*",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^4.14.0-next.2"
+    "gatsby-plugin-utils": "workspace:*"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass#readme",
   "keywords": [
@@ -29,7 +29,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.14.0-next.2",
+    "gatsby": "^5.13.4",
     "sass": "^1.75.0",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"

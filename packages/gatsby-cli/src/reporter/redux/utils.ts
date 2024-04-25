@@ -1,16 +1,13 @@
 import { getStore } from "./index";
 import convertHrtime from "convert-hrtime";
-import { Actions, ActivityTypes, ActivityStatuses } from "../constants";
+import { Actions, ActivityTypes, type ActivityStatuses } from "../constants";
 import type { ActionsUnion, IActivity } from "./types";
 import signalExit from "signal-exit";
 
 export function isActivityInProgress(
   activityStatus: ActivityStatuses,
 ): boolean {
-  return (
-    activityStatus === ActivityStatuses.InProgress ||
-    activityStatus === ActivityStatuses.NotStarted
-  );
+  return activityStatus === "IN_PROGRESS" || activityStatus === "NOT_STARTED";
 }
 
 export function getGlobalStatus(
@@ -30,22 +27,22 @@ export function getGlobalStatus(
         activityId === id ? status : logs.activities[activityId].status;
 
       if (isActivityInProgress(activityStatus)) {
-        return ActivityStatuses.InProgress;
+        return "IN_PROGRESS";
       } else if (
-        activityStatus === ActivityStatuses.Failed &&
-        generatedStatus !== ActivityStatuses.InProgress
+        activityStatus === "FAILED" &&
+        generatedStatus !== "IN_PROGRESS"
       ) {
-        return ActivityStatuses.Failed;
+        return "FAILED";
       } else if (
-        activityStatus === ActivityStatuses.Interrupted &&
-        generatedStatus !== ActivityStatuses.InProgress
+        activityStatus === "INTERRUPTED" &&
+        generatedStatus !== "IN_PROGRESS"
       ) {
-        return ActivityStatuses.Interrupted;
+        return "INTERRUPTED";
       }
       return generatedStatus;
     },
-    ActivityStatuses.Success,
-  );
+    "SUCCESS" as ActivityStatuses,
+  ) as ActivityStatuses;
 }
 
 export function getActivity(id: string): IActivity | null {

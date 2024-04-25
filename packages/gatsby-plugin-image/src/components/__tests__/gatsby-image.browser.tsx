@@ -37,7 +37,9 @@ describe("GatsbyImage browser", () => {
   beforeEach(() => {
     console.warn = jest.fn();
     console.error = jest.fn();
+    // @ts-ignore
     global.SERVER = true;
+    // @ts-ignore
     global.GATSBY___IMAGE = true;
 
     GatsbyImage = require("../gatsby-image.browser").GatsbyImage;
@@ -82,12 +84,15 @@ describe("GatsbyImage browser", () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+    // @ts-ignore
     global.SERVER = undefined;
+    // @ts-ignore
     global.GATSBY___IMAGE = undefined;
     process.env.NODE_ENV = "test";
   });
 
   it("shows a suggestion to switch to the new gatsby-image API when available", async () => {
+    // @ts-ignore
     global.GATSBY___IMAGE = undefined;
     process.env.NODE_ENV = "development";
 
@@ -119,6 +124,7 @@ describe("GatsbyImage browser", () => {
   });
 
   it("cleans up the DOM when unmounting", async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (hooks as any).hasNativeLazyLoadSupport = (): boolean => false;
 
     const { container, unmount } = render(
@@ -136,6 +142,7 @@ describe("GatsbyImage browser", () => {
     // In this scenario,
     // hasSSRHtml is true and resolved through "beforeHydrationContent" and hydrate: true
     // hydrated.current is false and not resolved yet
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (hooks as any).hasNativeLazyLoadSupport = (): boolean => true;
 
     const { container } = render(
@@ -163,6 +170,7 @@ describe("GatsbyImage browser", () => {
 
     // In this scenario,
     // hasSSRHtml is true and resolved through "beforeHydrationContent" and hydrate: true
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (hooks as any).hasNativeLazyLoadSupport = (): boolean => true;
 
     const { container } = render(

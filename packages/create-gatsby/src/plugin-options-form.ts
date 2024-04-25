@@ -1,6 +1,5 @@
 import { stripIndent } from "common-tags";
 import terminalLink from "terminal-link";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Joi from "joi";
 import pluginSchemas from "./plugin-schemas.json"; // with { type: "json" };
 import cmses from "./questions/cmses.json"; // with { type: "json" };
@@ -40,7 +39,7 @@ function getName(key: string): string | undefined {
   for (const types of plugins) {
     if (key in types) {
       // @ts-ignore
-      return types[key as keyof typeof types].message;
+      return types[key].message;
     }
   }
   return key;

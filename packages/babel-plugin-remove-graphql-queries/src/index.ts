@@ -5,7 +5,6 @@ import nodePath from "path";
 import { NodePath, PluginObj } from "@babel/core";
 import { slash } from "gatsby-core-utils/path";
 import { murmurhash } from "gatsby-core-utils/murmurhash";
-// @ts-ignore
 import { Binding } from "@babel/traverse";
 import {
   type CallExpression,

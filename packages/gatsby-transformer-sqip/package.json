@@ -9,8 +9,8 @@
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "^4.14.0-next.2",
-    "gatsby-plugin-sharp": "^5.14.0-next.2",
+    "gatsby-core-utils": "workspace:*",
+    "gatsby-plugin-sharp": "workspace:*",
     "md5-file": "^5.0.0",
     "mini-svg-data-uri": "^1.4.4",
     "p-queue": "^8.0.1",
@@ -19,14 +19,14 @@
   "devDependencies": {
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "^3.14.0-next.2",
+    "babel-preset-gatsby-package": "workspace:*",
     "cross-env": "^7.0.3",
     "debug": "^4.3.4"
   },
   "peerDependencies": {
-    "gatsby": "^5.14.0-next.2",
-    "gatsby-source-contentful": "^8.14.0-next.2",
-    "gatsby-transformer-sharp": "^5.14.0-next.2",
+    "gatsby": "^5.13.4",
+    "gatsby-source-contentful": "^8.13.1",
+    "gatsby-transformer-sharp": "^5.13.1",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

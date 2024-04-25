@@ -1,16 +1,16 @@
-import * as React from "react";
+import React, { type DOMAttributes } from "react";
 import { oneLine } from "common-tags";
 import cssNanoMacro from "../macros/cssnano.macro";
 import terserMacro from "../macros/terser.macro";
 import { RenderBodyArgs } from "gatsby";
 
-const generateHtml = (
+function generateHtml(
   str: string,
-): React.DOMAttributes<Element>["dangerouslySetInnerHTML"] => {
+): DOMAttributes<Element>["dangerouslySetInnerHTML"] {
   return {
     __html: oneLine(str),
   };
-};
+}
 
 export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
   setHeadComponents([

@@ -1,5 +1,4 @@
 import { murmurhash } from "gatsby-core-utils/murmurhash";
-// @ts-ignore
 import type { JSXOpeningElement, JSXAttribute } from "@babel/types";
 import { NodePath } from "@babel/core";
 import { getAttributeValues } from "babel-jsx-utils";

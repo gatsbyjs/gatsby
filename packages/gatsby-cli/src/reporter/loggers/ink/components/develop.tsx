@@ -9,20 +9,20 @@ import {
 import { Box, Text, useStdout } from "ink";
 
 import { StoreStateContext } from "../context";
-import { ActivityStatuses } from "../../../constants";
+import type { ActivityStatuses } from "../../../constants";
 import { createLabel } from "./utils";
 
 function getLabel(
   level: ActivityStatuses | string,
 ): ReturnType<typeof createLabel> {
   switch (level) {
-    case ActivityStatuses.InProgress:
+    case "IN_PROGRESS":
       return createLabel("In Progress", "white");
-    case ActivityStatuses.Interrupted:
+    case "INTERRUPTED":
       return createLabel("Interrupted", "gray");
-    case ActivityStatuses.Failed:
+    case "FAILED":
       return createLabel("Failed", "red");
-    case ActivityStatuses.Success:
+    case "SUCCESS":
       return createLabel("Success", "green");
 
     default:
