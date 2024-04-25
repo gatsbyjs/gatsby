@@ -87,7 +87,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.24.4",
-    "gatsby": "^5.13.4",
+    "gatsby": "workspace:*",
     "gatsby-plugin-sharp": "^5.13.1",
     "gatsby-source-filesystem": "^5.13.1",
     "react": "^18.2.0 || ^0.0.0",

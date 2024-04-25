@@ -283,14 +283,11 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     createTypes(typeDefs);
   };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export const shouldOnCreateNode: GatsbyNode["shouldOnCreateNode"] = (
-  { node }: { node: FileSystemNode },
-  pluginOptions,
-) => {
-  const { extensions } = defaultOptions(pluginOptions);
-  return node.internal.type === "File" && extensions.includes(node.ext);
-};
+export const shouldOnCreateNode: GatsbyNode<FileSystemNode>["shouldOnCreateNode"] =
+  ({ node }, pluginOptions) => {
+    const { extensions } = defaultOptions(pluginOptions);
+    return node.internal.type === "File" && extensions.includes(node.ext);
+  };
 
 /**
  * Create Mdx nodes from MDX files.

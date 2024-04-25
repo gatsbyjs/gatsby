@@ -25,7 +25,7 @@
   "main": "index.js",
   "peerDependencies": {
     "babel-plugin-styled-components": "^2.1.4",
-    "gatsby": "^5.13.4",
+    "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0",
     "styled-components": "^6.1.8"

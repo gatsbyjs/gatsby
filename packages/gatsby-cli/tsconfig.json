@@ -5,7 +5,8 @@
     "jsx": "react-jsx",
     "moduleResolution": "Bundler",
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "declaration": false
   },
   "exclude": ["**/__tests__/**/*"]
 }

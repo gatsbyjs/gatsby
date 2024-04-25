@@ -77,7 +77,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^5.13.4",
+    "gatsby": "workspace:*",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-sharp": "^5.13.1",
     "gatsby-transformer-sharp": "^5.13.1",

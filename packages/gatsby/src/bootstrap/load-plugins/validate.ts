@@ -350,7 +350,6 @@ async function validatePluginsOptions(
 
         const { value, warning } = await validateOptionsSchema(
           optionsSchema,
-          // @ts-ignore
           (plugin.options as IPluginInfoOptions) ?? {},
         );
 

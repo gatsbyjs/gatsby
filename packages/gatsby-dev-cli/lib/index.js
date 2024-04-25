@@ -3007,7 +3007,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  "build:rollup": "rollup -c",
 			  build: "npm-run-all --npm-path pnpm -p build:babel build:rollup",
 			  prepare: "cross-env NODE_ENV=production pnpm run build && pnpm run typegen",
-			  typegen: "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+			  typegen: "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
 			  "watch:babel": "pnpm run build:babel -- --watch",
 			  "watch:rollup": "pnpm run build:rollup -- -w",
 			  watch: "npm-run-all --npm-path pnpm -p watch:babel watch:rollup"

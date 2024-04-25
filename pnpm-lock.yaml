@@ -214,8 +214,8 @@ importers:
         specifier: ^7.24.0
         version: 7.24.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -1057,8 +1057,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -1357,8 +1357,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       got:
         specifier: ^14.2.1
         version: 14.2.1
@@ -1436,8 +1436,8 @@ importers:
         specifier: ^13.8.0
         version: 13.8.1
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -1881,8 +1881,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -1912,8 +1912,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -1946,8 +1946,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -1986,8 +1986,8 @@ importers:
         specifier: ^2.7.0
         version: 2.7.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2017,8 +2017,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2060,8 +2060,8 @@ importers:
         specifier: ^11.11.4
         version: 11.11.4(@types/react@18.2.79)(react@18.2.0)
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2091,8 +2091,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2128,8 +2128,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-plugin-utils:
         specifier: workspace:*
         version: link:../gatsby-plugin-utils
@@ -2168,8 +2168,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2202,8 +2202,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -2257,8 +2257,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       minimatch:
         specifier: ^9.0.4
         version: 9.0.4
@@ -2297,8 +2297,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       minimatch:
         specifier: ^9.0.4
         version: 9.0.4
@@ -2334,8 +2334,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2398,20 +2398,20 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
       gatsby-plugin-sharp:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+        version: 5.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       gatsby-plugin-utils:
         specifier: workspace:*
         version: link:../gatsby-plugin-utils
       gatsby-source-filesystem:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
+        version: 5.13.1(gatsby@packages+gatsby)
       objectFitPolyfill:
         specifier: ^2.3.5
         version: 2.3.5
@@ -2510,8 +2510,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2541,8 +2541,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2572,8 +2572,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       less-loader:
         specifier: ^12.2.0
         version: 12.2.0(less@4.2.0)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
@@ -2609,8 +2609,8 @@ importers:
         specifier: ^3.3.5
         version: 3.3.5
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       lodash-webpack-plugin:
         specifier: ^0.11.6
         version: 0.11.6(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
@@ -2643,8 +2643,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -2707,8 +2707,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -2717,7 +2717,7 @@ importers:
         version: link:../gatsby-plugin-utils
       gatsby-source-filesystem:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
+        version: 5.13.1(gatsby@packages+gatsby)
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -2798,8 +2798,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2816,8 +2816,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -2850,8 +2850,8 @@ importers:
         specifier: ^1.0.0-rc.12
         version: 1.0.0-rc.12
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -2920,8 +2920,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -2969,8 +2969,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -3015,8 +3015,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(@prefresh/babel-plugin@0.5.1)(preact@10.20.2)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       preact-render-to-string:
         specifier: ^6.4.2
         version: 6.4.2(preact@10.20.2)
@@ -3064,8 +3064,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -3113,8 +3113,8 @@ importers:
         specifier: ^5.2.6
         version: 5.2.6(@babel/core@7.24.4)
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3141,8 +3141,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3172,8 +3172,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3245,8 +3245,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -3297,8 +3297,8 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       minimatch:
         specifier: ^9.0.4
         version: 9.0.4
@@ -3337,8 +3337,8 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@babel/core@7.24.4)(styled-components@6.1.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3368,8 +3368,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3399,8 +3399,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3433,8 +3433,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3467,8 +3467,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3498,8 +3498,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3538,8 +3538,8 @@ importers:
         specifier: workspace:*
         version: link:../babel-plugin-remove-graphql-queries
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3563,8 +3563,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
     devDependencies:
       '@babel/cli':
         specifier: ^7.24.1
@@ -3606,8 +3606,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -3713,8 +3713,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -3756,8 +3756,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       lz-string:
         specifier: ^1.5.0
         version: 1.5.0
@@ -3808,8 +3808,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       is-relative-url:
         specifier: ^4.0.0
         version: 4.0.0
@@ -3857,8 +3857,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3891,11 +3891,11 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-remark-prismjs:
         specifier: ^7.13.1
-        version: 7.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(prismjs@1.29.0)
+        version: 7.13.1(gatsby@packages+gatsby)(prismjs@1.29.0)
       normalize-path:
         specifier: ^3.0.0
         version: 3.0.0
@@ -3937,8 +3937,8 @@ importers:
         specifier: ^1.0.0-rc.12
         version: 1.0.0-rc.12
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3989,14 +3989,14 @@ importers:
         specifier: ^1.0.0-rc.12
         version: 1.0.0-rc.12
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
       gatsby-plugin-sharp:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+        version: 5.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       is-relative-url:
         specifier: ^4.0.0
         version: 4.0.0
@@ -4056,8 +4056,8 @@ importers:
         specifier: ^1.0.0-rc.12
         version: 1.0.0-rc.12
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       is-relative-url:
         specifier: ^4.0.0
         version: 4.0.0
@@ -4099,8 +4099,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -4145,8 +4145,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       parse-numeric-range:
         specifier: ^1.3.0
         version: 1.3.0
@@ -4194,8 +4194,8 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4237,8 +4237,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -4343,7 +4343,7 @@ importers:
         version: 17.1.1
       '@vercel/fetch-retry':
         specifier: ^5.1.3
-        version: 5.1.3(node-fetch@2.7.0(encoding@0.1.13))
+        version: 5.1.3(node-fetch@3.3.2)
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -4363,17 +4363,17 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
       gatsby-plugin-image:
         specifier: ^3.13.1
-        version: 3.13.1(@babel/core@7.24.4)(gatsby-plugin-sharp@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1))(gatsby-source-filesystem@packages+gatsby-source-filesystem)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 3.13.1(@babel/core@7.24.4)(gatsby-plugin-sharp@5.13.1(gatsby@packages+gatsby)(graphql@16.8.1))(gatsby-source-filesystem@packages+gatsby-source-filesystem)(gatsby@packages+gatsby)(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       gatsby-plugin-sharp:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+        version: 5.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       gatsby-plugin-utils:
         specifier: workspace:*
         version: link:../gatsby-plugin-utils
@@ -4445,8 +4445,8 @@ importers:
         specifier: ^1.17.1
         version: 1.17.1
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-plugin-utils:
         specifier: workspace:*
         version: link:../gatsby-plugin-utils
@@ -4506,8 +4506,8 @@ importers:
         specifier: ^6.6.6
         version: 6.6.6
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -4543,8 +4543,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -4601,8 +4601,8 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -4635,8 +4635,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4675,8 +4675,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       json-stringify-safe:
         specifier: ^5.0.1
         version: 5.0.1
@@ -4709,8 +4709,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -4737,8 +4737,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       lodash.camelcase:
         specifier: ^4.3.0
         version: 4.3.0
@@ -4780,8 +4780,8 @@ importers:
         specifier: ^4.23.3
         version: 4.23.3
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       got:
         specifier: ^14.2.1
         version: 14.2.1
@@ -4811,8 +4811,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -4863,8 +4863,8 @@ importers:
         specifier: ^3.7.2
         version: 3.7.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       query-string:
         specifier: ^9.0.0
         version: 9.0.0
@@ -4898,10 +4898,10 @@ importers:
         version: 17.1.1
       '@rematch/core':
         specifier: ^2.2.0
-        version: 2.2.0(redux@4.2.1)
+        version: 2.2.0(redux@5.0.1)
       '@rematch/immer':
         specifier: ^2.1.3
-        version: 2.1.3(@rematch/core@2.2.0(redux@4.2.1))(immer@10.0.4)(redux@4.2.1)
+        version: 2.1.3(@rematch/core@2.2.0(redux@5.0.1))(immer@10.0.4)(redux@5.0.1)
       async-retry:
         specifier: ^1.3.3
         version: 1.3.3
@@ -4954,8 +4954,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-cli:
         specifier: workspace:*
         version: link:../gatsby-cli
@@ -4967,7 +4967,7 @@ importers:
         version: link:../gatsby-plugin-catch-links
       gatsby-plugin-sharp:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+        version: 5.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       gatsby-plugin-utils:
         specifier: workspace:*
         version: link:../gatsby-plugin-utils
@@ -4976,7 +4976,7 @@ importers:
         version: link:../gatsby-source-filesystem
       gatsby-transformer-sharp:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby-plugin-sharp@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1))(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+        version: 5.13.1(gatsby-plugin-sharp@5.13.1(gatsby@packages+gatsby)(graphql@16.8.1))(gatsby@packages+gatsby)(graphql@16.8.1)
       glob:
         specifier: ^10.3.12
         version: 10.3.12
@@ -5145,8 +5145,8 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4(chokidar@3.6.0)
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -5179,8 +5179,8 @@ importers:
         specifier: ^2.0.10
         version: 2.0.10
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -5213,8 +5213,8 @@ importers:
         specifier: ^14.0.3
         version: 14.0.3
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       prismjs:
         specifier: ^1.29.0
         version: 1.29.0
@@ -5244,8 +5244,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -5278,8 +5278,8 @@ importers:
         specifier: ^3.7.2
         version: 3.7.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       hjson:
         specifier: ^3.2.2
         version: 3.2.2
@@ -5318,11 +5318,11 @@ importers:
         specifier: ^3.7.2
         version: 3.7.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-source-filesystem:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
+        version: 5.13.1(gatsby@packages+gatsby)
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -5358,8 +5358,8 @@ importers:
         specifier: ^3.7.2
         version: 3.7.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -5389,8 +5389,8 @@ importers:
         specifier: ^3.7.2
         version: 3.7.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -5420,8 +5420,8 @@ importers:
         specifier: ^3.7.2
         version: 3.7.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       pdf2json:
         specifier: ^3.0.5
         version: 3.0.5
@@ -5463,8 +5463,8 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -5497,8 +5497,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -5594,8 +5594,8 @@ importers:
         specifier: ^1.17.1
         version: 1.17.1
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -5631,11 +5631,11 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-plugin-sharp:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+        version: 5.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       gatsby-plugin-utils:
         specifier: workspace:*
         version: link:../gatsby-plugin-utils
@@ -5677,8 +5677,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -5687,10 +5687,10 @@ importers:
         version: link:../gatsby-plugin-sharp
       gatsby-source-contentful:
         specifier: ^8.13.1
-        version: 8.13.1(debug@4.3.4)(encoding@0.1.13)(gatsby-plugin-image@3.14.0-next.2(@babel/core@7.24.4)(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby-source-filesystem@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)))(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sharp@0.33.3)
+        version: 8.13.1(debug@4.3.4)(encoding@0.1.13)(gatsby-plugin-image@3.14.0-next.2(@babel/core@7.24.4)(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby-source-filesystem@5.13.1(gatsby@packages+gatsby))(gatsby@packages+gatsby)(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby@packages+gatsby)(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sharp@0.33.3)
       gatsby-transformer-sharp:
         specifier: ^5.13.1
-        version: 5.13.1(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+        version: 5.13.1(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby@packages+gatsby)(graphql@16.8.1)
       md5-file:
         specifier: ^5.0.0
         version: 5.0.0
@@ -5732,8 +5732,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5769,8 +5769,8 @@ importers:
         specifier: ^3.7.2
         version: 3.7.2
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5803,8 +5803,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       gatsby:
-        specifier: ^5.13.4
-        version: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+        specifier: workspace:*
+        version: link:../gatsby
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -6896,10 +6896,6 @@ packages:
 
   '@floating-ui/utils@0.2.1':
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
-
-  '@gatsbyjs/parcel-namer-relative-to-cwd@2.13.1':
-    resolution: {integrity: sha512-ze0u/CAt6fKV2yQlExkBARi8oqA559lX6/GFWwdtD9S1J4h8Bje70Odl/bcIECvT/w9mWCCQEVtKLvqkraDopw==}
-    engines: {node: '>=18.0.0', parcel: 2.x}
 
   '@gatsbyjs/parcel-namer-relative-to-cwd@2.14.0-next.2':
     resolution: {integrity: sha512-hb+9fQdBKFsW9ATDGJ5nlDfg64chb61acrBxuqmp+dntDGS4NVsBiRkuP1G4vPl0h5rgSm1+W5X752Q3tuByIQ==}
@@ -10402,9 +10398,6 @@ packages:
     peerDependencies:
       axios: '*'
 
-  axios@0.21.4:
-    resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
-
   axios@1.6.8:
     resolution: {integrity: sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==}
 
@@ -10560,13 +10553,6 @@ packages:
     resolution: {integrity: sha512-9ywCsCvo1ojrw0b+XYk7aFvTH6D9064t0RIL1rtMf3nsa02Xw41MS7sZw216Im35xj/UY0PDBQsa1brUDDF1Ow==}
     peerDependencies:
       '@babel/core': ^7.0.0
-
-  babel-preset-gatsby@3.13.2:
-    resolution: {integrity: sha512-1zZ3Fpt9jD63inJXWUF2hA6U2cBAMYFDSC5hKqnSSVbNUzKlHUcY0Vbx8azBSaHg27TVp9BitR10zvq5AHP/OQ==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@babel/core': ^7.11.6
-      core-js: ^3.0.0
 
   babel-preset-gatsby@3.14.0-next.2:
     resolution: {integrity: sha512-8PBzsskrLagJRYOur+Ij0oKN0xXeHsu6Ta5At05zevAmchcNsXHwaAjH+x1VFcrLxBZtNekGog7Jpb9Z00024w==}
@@ -11524,10 +11510,6 @@ packages:
   crc-32@1.2.2:
     resolution: {integrity: sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==}
     engines: {node: '>=0.8'}
-    hasBin: true
-
-  create-gatsby@3.13.1:
-    resolution: {integrity: sha512-CCg8Vz/iQs1cgMEzyRlVGMvNs8ivE/2w+TL6yS56FVe1JjOou8nKYHzxnWxRmBUtC7rTfjxVaTESIotuYBsltQ==}
     hasBin: true
 
   create-gatsby@3.14.0-next.2:
@@ -13194,11 +13176,6 @@ packages:
   gather-stream@1.0.0:
     resolution: {integrity: sha512-NspYMi3rN3EKmMdejUXbtluDYrcRlTEBBFhWzVRZVsOx94OPxlXp0AzyPKyLiT7iaurcoTE/KcHsHP/PowNEaA==}
 
-  gatsby-cli@5.13.3:
-    resolution: {integrity: sha512-JQTeivvZWuhxE1HRey2sRhwUmkCrs5478fiLR0XRFGin4X1ggCmrQx/DBkJP1TgktdPfNU8t987+slSnO2XzMA==}
-    engines: {node: '>=18.0.0'}
-    hasBin: true
-
   gatsby-cli@5.14.0-next.2:
     resolution: {integrity: sha512-FUIH26bkbefQdtAb6WbUlA08y+tYTGQBYWPpLTpYPj1jG8I9ZNcMfA/8Pc0ASUV8mCt5HxPaah7z7CjneTGvdQ==}
     engines: {node: '>=18.0.0'}
@@ -13212,27 +13189,12 @@ packages:
     resolution: {integrity: sha512-GUBz6z348T6/Z4PReD5gNcXm0LhoO2xcASE0VvXxrhO/1GlqhDHfqIarAWEM8y4mvhL2HeTXs/7yWghx4Eu/UQ==}
     engines: {node: '>=18.0.0'}
 
-  gatsby-graphiql-explorer@3.13.1:
-    resolution: {integrity: sha512-WR6jv18OhKLwK/hGZ6ZGUd82GFtM6gHz+sOpgsJJx/+uqRjZwqcrH2LSrWRSWUCk7FoZY1rJuBSD1QkOODV01A==}
-    engines: {node: '>=14.15.0'}
-
   gatsby-graphiql-explorer@3.14.0-next.2:
     resolution: {integrity: sha512-yMgFDxZKUrI1YPSNriK48OYFTKXix4z6peWDgT4oy0olwRL+QLqozD3vDP6Gy83DYRv1WCfZPaH1huxzwnwWDw==}
     engines: {node: '>=14.15.0'}
 
-  gatsby-legacy-polyfills@3.13.1:
-    resolution: {integrity: sha512-NjR3B/rq6dsJuaMmeHlGExdVXJfDqVWERXi9ROfIBt7O3Fwzy5WYgoPeVikVZE06DmeZWlBzuNcGSfc8lilB5g==}
-
   gatsby-legacy-polyfills@3.14.0-next.1:
     resolution: {integrity: sha512-7MB2YTFoIzxtmqoEeMGM3U232J7VywVbxBZWjryUg4VvwxSyTt+vCXWkgfypjthL9z/ynWhJONGsAxSkqQpArw==}
-
-  gatsby-link@5.13.1:
-    resolution: {integrity: sha512-naQxvgX/rd4Pj5ICL2DcqT30TAENk6wHttcLioxIqW9/UhwAXGkM9QsOJOyUmwbrp37UIKU3K92Ks/cMbRxwXA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@gatsbyjs/reach-router': ^2.0.0
-      react: ^18.0.0 || ^0.0.0
-      react-dom: ^18.0.0 || ^0.0.0
 
   gatsby-link@5.14.0-next.2:
     resolution: {integrity: sha512-3N/e+7uwfEjIZHagr9ZYYtPeEJu74fNHo46Ozjj70irjDrztC6p35nZuW/ujlrYLvcP9yJaC+zF8phniUW0WOA==}
@@ -13242,19 +13204,9 @@ packages:
       react: ^18.0.0 || ^0.0.0
       react-dom: ^18.0.0 || ^0.0.0
 
-  gatsby-page-utils@3.13.1:
-    resolution: {integrity: sha512-+/V+ZKPn1Lv3KfeTBV/XUVljwTFQq5kg3T0esu9ygXEz3EVXjG5VjL/IX57awiDm9sLsEALqRuuYLoHpfNHg0A==}
-    engines: {node: '>=18.0.0'}
-
   gatsby-page-utils@3.14.0-next.2:
     resolution: {integrity: sha512-tv8ZXQb/VFUDlmdUcMCwz5ILGbU2DEDGKcBBWHdOjYRF852/7ELvXm8Ifxopaj/PHIxTXCZneHkK5KxAfemNXA==}
     engines: {node: '>=18.0.0'}
-
-  gatsby-parcel-config@1.13.1:
-    resolution: {integrity: sha512-zEiDKnq1UQvDDireYQN2TmDsxDf9n2SHYXASHyUTipwsMlNMEi0nLav1vHRQAfzbjw4tabk9Z5kcknkJ6nLqOA==}
-    engines: {parcel: 2.x}
-    peerDependencies:
-      '@parcel/core': ^2.0.0
 
   gatsby-parcel-config@1.14.0-next.2:
     resolution: {integrity: sha512-IzaP6oW9oRnuZJ/lxiCo9WllwEyuC/XnhQY17Q3mHgKC5zZ196hUIoJUrrIiiTGaoV1vrO5S3rIPwbD1OFlfNw==}
@@ -13292,12 +13244,6 @@ packages:
       gatsby-source-filesystem:
         optional: true
 
-  gatsby-plugin-page-creator@5.13.1:
-    resolution: {integrity: sha512-WBTQc0cFqaojS1Oh7MjBRSnLCOWWWl3L5t5LEsXwV+4L9OL6D5fLTz7K5xC34OVgfAIryuEKE/M2ZIEk3onVnw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      gatsby: ^5.0.0-next
-
   gatsby-plugin-page-creator@5.14.0-next.2:
     resolution: {integrity: sha512-q+JPGV3j+AxBdbYiC2PrH3XDaAMminx5/Wk5XQi++HpjzU7gFVfoJvIZv2atZoUYY6Yt1bhs4w7yQA7Rs/DPFg==}
     engines: {node: '>=18.0.0'}
@@ -13306,12 +13252,6 @@ packages:
 
   gatsby-plugin-sharp@5.13.1:
     resolution: {integrity: sha512-PA1LxLjZ7nKjgGykfbIxNQqrfqqfNsMN6+7wZNy5HK4Vhqjw1zDyImJEBEn6v08L2T3tlLMgR0or/OE7yo7F9A==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      gatsby: ^5.0.0-next
-
-  gatsby-plugin-typescript@5.13.1:
-    resolution: {integrity: sha512-FsTihoFKWTjzyIaUTndqktL39qMTAb0KyHj9kP+LxTY2FySqHIvFoYc1ycS5q52J76AoWUiGStJuuQLMNq66FQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       gatsby: ^5.0.0-next
@@ -13336,14 +13276,6 @@ packages:
       gatsby: ^5.0.0-next
       graphql: ^16.8.1
 
-  gatsby-react-router-scroll@6.13.1:
-    resolution: {integrity: sha512-srBpg/ZHW4miwH/4OWOcspHqr8ZmKLE4DBNvckt0KO4giJerWiGoLj6qePwLFRWZPfV7txJr2kuUzACxarpL5g==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@gatsbyjs/reach-router': ^2.0.0
-      react: ^18.0.0 || ^0.0.0
-      react-dom: ^18.0.0 || ^0.0.0
-
   gatsby-react-router-scroll@6.14.0-next.2:
     resolution: {integrity: sha512-ha7V3PQRVejlYF6VhQTIiVJvTVLA3+sNpkH0C9leFg6Tihg/0ian4T2EJhINGXqGj0NegAykg6XOKzGdSa1rHw==}
     engines: {node: '>=18.0.0'}
@@ -13358,14 +13290,6 @@ packages:
     peerDependencies:
       gatsby: ^5.0.0-next
       prismjs: ^1.15.0
-
-  gatsby-script@2.13.0:
-    resolution: {integrity: sha512-TGNQGerf1NMJrgJkWxWrW6FFMAuC0L76WlyZgGXmhckPW/x7V1SxZrm0a2Q99kRHyoC59RYl2gTQWHaIwV+ZjA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@gatsbyjs/reach-router': ^2.0.0
-      react: ^18.0.0 || ^0.0.0
-      react-dom: ^18.0.0 || ^0.0.0
 
   gatsby-script@2.14.0-next.1:
     resolution: {integrity: sha512-L7Oumo+B14O3XrELToTgBRoLt0hFEjFnYR55IA08AJ8YsRcEyo7czM1saxRyuDhcgB9hZGulnx6q8jw70eFA7Q==}
@@ -13398,10 +13322,6 @@ packages:
     peerDependencies:
       gatsby: ^5.0.0-next
 
-  gatsby-telemetry@4.13.1:
-    resolution: {integrity: sha512-NstKs3N8LK9rwEli6SXO+ClNmewFbVzqS2yo6XZzQSXbymH6+Kkk+eqQivKhrD8PbQLLrdXkk1p47n91zc85XQ==}
-    engines: {node: '>=18.0.0'}
-
   gatsby-telemetry@4.14.0-next.2:
     resolution: {integrity: sha512-TS6hDomN4rwDoGBzTiXLh1MeJv2QfZ7cmFQmRo+ghFTZjwtOE+XsrklITKmsNynVSDUWRsjP+OasLllBrzL6Gw==}
     engines: {node: '>=18.0.0'}
@@ -13413,21 +13333,9 @@ packages:
       gatsby: ^5.0.0-next
       gatsby-plugin-sharp: ^5.0.0-next
 
-  gatsby-worker@2.13.1:
-    resolution: {integrity: sha512-CEm+5M2+3PzPcqTaJ0xjNuorQ3d1PfnKG1yqRRPfw8LFdPiycGhZAug/jqx0iTyVWXFHakEmddlykGFEbq54/Q==}
-    engines: {node: '>=18.0.0'}
-
   gatsby-worker@2.14.0-next.2:
     resolution: {integrity: sha512-4UPIck58Fva1ZHu8b2WLDnmKDi1wDvtvKJoSBxWEyfS16K2MZZQkGtZyN//HiBY9kjytu3/CPnsH5bhsY2wbMA==}
     engines: {node: '>=18.0.0'}
-
-  gatsby@5.13.4:
-    resolution: {integrity: sha512-ZV5LL4ipWO2HZSWHWdU2qwS++9tr+fxxF+ScbSwzukrrCTHjTq8+DkpfOMiY498lmTUZ5LvRvT0WQmuVx/gXVQ==}
-    engines: {node: '>=18.0.0'}
-    hasBin: true
-    peerDependencies:
-      react: ^18.0.0 || ^0.0.0
-      react-dom: ^18.0.0 || ^0.0.0
 
   gatsby@5.14.0-next.4:
     resolution: {integrity: sha512-nXJ2iwzZQIySyNIXvlgOL8sV8zU8D/yK2E9Xyq/WMNm10MXh2dDVJOLOVFtqoHG/1zU5VC31CUINHIIG2/uJKg==}
@@ -22394,15 +22302,6 @@ snapshots:
 
   '@floating-ui/utils@0.2.1': {}
 
-  '@gatsbyjs/parcel-namer-relative-to-cwd@2.13.1(@parcel/core@2.8.3)':
-    dependencies:
-      '@babel/runtime': 7.24.4
-      '@parcel/namer-default': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/plugin': 2.8.3(@parcel/core@2.8.3)
-      gatsby-core-utils: 4.13.1
-    transitivePeerDependencies:
-      - '@parcel/core'
-
   '@gatsbyjs/parcel-namer-relative-to-cwd@2.14.0-next.2(@parcel/core@2.8.3)':
     dependencies:
       '@babel/runtime': 7.24.4
@@ -24875,15 +24774,15 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
       react-lifecycles-compat: 3.0.4
 
-  '@rematch/core@2.2.0(redux@4.2.1)':
+  '@rematch/core@2.2.0(redux@5.0.1)':
     dependencies:
-      redux: 4.2.1
+      redux: 5.0.1
 
-  '@rematch/immer@2.1.3(@rematch/core@2.2.0(redux@4.2.1))(immer@10.0.4)(redux@4.2.1)':
+  '@rematch/immer@2.1.3(@rematch/core@2.2.0(redux@5.0.1))(immer@10.0.4)(redux@5.0.1)':
     dependencies:
-      '@rematch/core': 2.2.0(redux@4.2.1)
+      '@rematch/core': 2.2.0(redux@5.0.1)
       immer: 10.0.4
-      redux: 4.2.1
+      redux: 5.0.1
 
   '@repeaterjs/repeater@3.0.5': {}
 
@@ -25821,25 +25720,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
-    dependencies:
-      '@eslint-community/regexpp': 4.10.0
-      '@typescript-eslint/parser': 5.62.0(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/scope-manager': 5.62.0
-      '@typescript-eslint/type-utils': 5.62.0(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/utils': 5.62.0(eslint@8.57.0)(typescript@5.4.5)
-      debug: 4.3.4(supports-color@8.1.1)
-      eslint: 8.57.0
-      graphemer: 1.4.0
-      ignore: 5.3.1
-      natural-compare-lite: 1.4.0
-      semver: 7.6.0
-      tsutils: 3.21.0(typescript@5.4.5)
-    optionalDependencies:
-      typescript: 5.4.5
-    transitivePeerDependencies:
-      - supports-color
-
   '@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.1(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
       '@eslint-community/regexpp': 4.10.0
@@ -25867,18 +25747,6 @@ snapshots:
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.4.5)
       debug: 4.3.4(supports-color@8.1.1)
       eslint: 7.32.0
-    optionalDependencies:
-      typescript: 5.4.5
-    transitivePeerDependencies:
-      - supports-color
-
-  '@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5)':
-    dependencies:
-      '@typescript-eslint/scope-manager': 5.62.0
-      '@typescript-eslint/types': 5.62.0
-      '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.4.5)
-      debug: 4.3.4(supports-color@8.1.1)
-      eslint: 8.57.0
     optionalDependencies:
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -25913,18 +25781,6 @@ snapshots:
       '@typescript-eslint/utils': 5.62.0(eslint@7.32.0)(typescript@5.4.5)
       debug: 4.3.4(supports-color@8.1.1)
       eslint: 7.32.0
-      tsutils: 3.21.0(typescript@5.4.5)
-    optionalDependencies:
-      typescript: 5.4.5
-    transitivePeerDependencies:
-      - supports-color
-
-  '@typescript-eslint/type-utils@5.62.0(eslint@8.57.0)(typescript@5.4.5)':
-    dependencies:
-      '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.4.5)
-      '@typescript-eslint/utils': 5.62.0(eslint@8.57.0)(typescript@5.4.5)
-      debug: 4.3.4(supports-color@8.1.1)
-      eslint: 8.57.0
       tsutils: 3.21.0(typescript@5.4.5)
     optionalDependencies:
       typescript: 5.4.5
@@ -25991,21 +25847,6 @@ snapshots:
       - supports-color
       - typescript
 
-  '@typescript-eslint/utils@5.62.0(eslint@8.57.0)(typescript@5.4.5)':
-    dependencies:
-      '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
-      '@types/json-schema': 7.0.15
-      '@types/semver': 7.5.8
-      '@typescript-eslint/scope-manager': 5.62.0
-      '@typescript-eslint/types': 5.62.0
-      '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.4.5)
-      eslint: 8.57.0
-      eslint-scope: 5.1.1
-      semver: 7.6.0
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-
   '@typescript-eslint/utils@7.7.1(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
@@ -26037,6 +25878,14 @@ snapshots:
       async-retry: 1.3.3
       debug: 4.3.4(supports-color@8.1.1)
       node-fetch: 2.7.0(encoding@0.1.13)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@vercel/fetch-retry@5.1.3(node-fetch@3.3.2)':
+    dependencies:
+      async-retry: 1.3.3
+      debug: 4.3.4(supports-color@8.1.1)
+      node-fetch: 3.3.2
     transitivePeerDependencies:
       - supports-color
 
@@ -26818,12 +26667,6 @@ snapshots:
     dependencies:
       axios: 1.6.8(debug@4.3.4)
 
-  axios@0.21.4(debug@4.3.4):
-    dependencies:
-      follow-redirects: 1.15.6(debug@4.3.4)
-    transitivePeerDependencies:
-      - debug
-
   axios@1.6.8(debug@4.3.4):
     dependencies:
       follow-redirects: 1.15.6(debug@4.3.4)
@@ -26849,18 +26692,6 @@ snapshots:
       '@babel/traverse': 7.24.1
       '@babel/types': 7.24.0
       eslint: 7.32.0
-      eslint-visitor-keys: 1.3.0
-      resolve: 1.22.8
-    transitivePeerDependencies:
-      - supports-color
-
-  babel-eslint@10.1.0(eslint@8.57.0):
-    dependencies:
-      '@babel/code-frame': 7.24.2
-      '@babel/parser': 7.24.4
-      '@babel/traverse': 7.24.1
-      '@babel/types': 7.24.0
-      eslint: 8.57.0
       eslint-visitor-keys: 1.3.0
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -27007,29 +26838,13 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
 
-  babel-plugin-remove-graphql-queries@5.13.1(@babel/core@7.24.4)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)):
+  babel-plugin-remove-graphql-queries@5.13.1(@babel/core@7.24.4)(gatsby@packages+gatsby):
     dependencies:
       '@babel/core': 7.24.4
       '@babel/runtime': 7.24.4
       '@babel/types': 7.24.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby: link:packages/gatsby
       gatsby-core-utils: 4.13.1
-
-  babel-plugin-remove-graphql-queries@5.13.1(@babel/core@7.24.4)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)):
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/runtime': 7.24.4
-      '@babel/types': 7.24.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
-      gatsby-core-utils: 4.13.1
-
-  babel-plugin-remove-graphql-queries@5.14.0-next.2(@babel/core@7.24.4)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)):
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/runtime': 7.24.4
-      '@babel/types': 7.24.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
-      gatsby-core-utils: 4.14.0-next.2
 
   babel-plugin-remove-graphql-queries@5.14.0-next.2(@babel/core@7.24.4)(gatsby@5.14.0-next.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)):
     dependencies:
@@ -27037,6 +26852,14 @@ snapshots:
       '@babel/runtime': 7.24.4
       '@babel/types': 7.24.0
       gatsby: 5.14.0-next.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby-core-utils: 4.14.0-next.2
+
+  babel-plugin-remove-graphql-queries@5.14.0-next.2(@babel/core@7.24.4)(gatsby@packages+gatsby):
+    dependencies:
+      '@babel/core': 7.24.4
+      '@babel/runtime': 7.24.4
+      '@babel/types': 7.24.0
+      gatsby: link:packages/gatsby
       gatsby-core-utils: 4.14.0-next.2
 
   babel-plugin-replace-ts-export-assignment@0.0.2: {}
@@ -27116,28 +26939,6 @@ snapshots:
       '@babel/plugin-transform-spread': 7.24.1(@babel/core@7.24.4)
       '@babel/plugin-transform-template-literals': 7.24.1(@babel/core@7.24.4)
       babel-plugin-syntax-trailing-function-commas: 7.0.0-beta.0
-
-  babel-preset-gatsby@3.13.2(@babel/core@7.24.4)(core-js@3.37.0):
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/plugin-proposal-class-properties': 7.18.6(@babel/core@7.24.4)
-      '@babel/plugin-proposal-nullish-coalescing-operator': 7.18.6(@babel/core@7.24.4)
-      '@babel/plugin-proposal-optional-chaining': 7.21.0(@babel/core@7.24.4)
-      '@babel/plugin-syntax-dynamic-import': 7.8.3(@babel/core@7.24.4)
-      '@babel/plugin-transform-classes': 7.24.1(@babel/core@7.24.4)
-      '@babel/plugin-transform-runtime': 7.24.3(@babel/core@7.24.4)
-      '@babel/plugin-transform-spread': 7.24.1(@babel/core@7.24.4)
-      '@babel/preset-env': 7.24.4(@babel/core@7.24.4)
-      '@babel/preset-react': 7.24.1(@babel/core@7.24.4)
-      '@babel/runtime': 7.24.4
-      babel-plugin-dynamic-import-node: 2.3.3
-      babel-plugin-macros: 3.1.0
-      babel-plugin-transform-react-remove-prop-types: 0.4.24
-      core-js: 3.37.0
-      gatsby-core-utils: 4.13.1
-      gatsby-legacy-polyfills: 3.13.1
-    transitivePeerDependencies:
-      - supports-color
 
   babel-preset-gatsby@3.14.0-next.2(@babel/core@7.24.4)(core-js@3.37.0):
     dependencies:
@@ -28269,10 +28070,6 @@ snapshots:
       p-map: 5.5.0
 
   crc-32@1.2.2: {}
-
-  create-gatsby@3.13.1:
-    dependencies:
-      '@babel/runtime': 7.24.4
 
   create-gatsby@3.14.0-next.2:
     dependencies:
@@ -29457,21 +29254,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  eslint-config-react-app@6.0.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(eslint@7.32.0)(typescript@5.4.5))(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(babel-eslint@10.1.0(eslint@8.57.0))(eslint-plugin-flowtype@5.10.0(eslint@7.32.0))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(eslint@7.32.0))(eslint-plugin-jsx-a11y@6.8.0(eslint@7.32.0))(eslint-plugin-react-hooks@4.6.0(eslint@7.32.0))(eslint-plugin-react@7.34.1(eslint@7.32.0))(eslint@7.32.0)(typescript@5.4.5):
-    dependencies:
-      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/parser': 5.62.0(eslint@8.57.0)(typescript@5.4.5)
-      babel-eslint: 10.1.0(eslint@8.57.0)
-      confusing-browser-globals: 1.0.11
-      eslint: 7.32.0
-      eslint-plugin-flowtype: 5.10.0(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
-      eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-react: 7.34.1(eslint@8.57.0)
-      eslint-plugin-react-hooks: 4.6.0(eslint@8.57.0)
-    optionalDependencies:
-      typescript: 5.4.5
-
   eslint-import-resolver-node@0.3.9:
     dependencies:
       debug: 3.2.7(supports-color@8.1.1)
@@ -29486,16 +29268,6 @@ snapshots:
     optionalDependencies:
       '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@5.4.5)
       eslint: 7.32.0
-      eslint-import-resolver-node: 0.3.9
-    transitivePeerDependencies:
-      - supports-color
-
-  eslint-module-utils@2.8.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0):
-    dependencies:
-      debug: 3.2.7(supports-color@8.1.1)
-    optionalDependencies:
-      '@typescript-eslint/parser': 5.62.0(eslint@8.57.0)(typescript@5.4.5)
-      eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
     transitivePeerDependencies:
       - supports-color
@@ -29524,12 +29296,6 @@ snapshots:
       lodash: 4.17.21
       string-natural-compare: 3.0.1
 
-  eslint-plugin-flowtype@5.10.0(eslint@8.57.0):
-    dependencies:
-      eslint: 8.57.0
-      lodash: 4.17.21
-      string-natural-compare: 3.0.1
-
   eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(eslint@7.32.0):
     dependencies:
       array-includes: 3.1.8
@@ -29552,33 +29318,6 @@ snapshots:
       tsconfig-paths: 3.15.0
     optionalDependencies:
       '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@5.4.5)
-    transitivePeerDependencies:
-      - eslint-import-resolver-typescript
-      - eslint-import-resolver-webpack
-      - supports-color
-
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0):
-    dependencies:
-      array-includes: 3.1.8
-      array.prototype.findlastindex: 1.2.5
-      array.prototype.flat: 1.3.2
-      array.prototype.flatmap: 1.3.2
-      debug: 3.2.7(supports-color@8.1.1)
-      doctrine: 2.1.0
-      eslint: 8.57.0
-      eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0)
-      hasown: 2.0.2
-      is-core-module: 2.13.1
-      is-glob: 4.0.3
-      minimatch: 3.1.2
-      object.fromentries: 2.0.8
-      object.groupby: 1.0.3
-      object.values: 1.2.0
-      semver: 6.3.1
-      tsconfig-paths: 3.15.0
-    optionalDependencies:
-      '@typescript-eslint/parser': 5.62.0(eslint@8.57.0)(typescript@5.4.5)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -30597,53 +30336,6 @@ snapshots:
 
   gather-stream@1.0.0: {}
 
-  gatsby-cli@5.13.3(encoding@0.1.13):
-    dependencies:
-      '@babel/code-frame': 7.24.2
-      '@babel/core': 7.24.4
-      '@babel/generator': 7.24.4
-      '@babel/helper-plugin-utils': 7.24.0
-      '@babel/preset-typescript': 7.24.1(@babel/core@7.24.4)
-      '@babel/runtime': 7.24.4
-      '@babel/template': 7.24.0
-      '@babel/types': 7.24.0
-      '@jridgewell/trace-mapping': 0.3.25
-      '@types/common-tags': 1.8.4
-      better-opn: 2.1.1
-      boxen: 5.1.2
-      chalk: 4.1.2
-      clipboardy: 4.0.0
-      common-tags: 1.8.2
-      convert-hrtime: 3.0.0
-      create-gatsby: 3.13.1
-      envinfo: 7.12.0
-      execa: 5.1.1
-      fs-exists-cached: 1.0.0
-      fs-extra: 11.2.0
-      gatsby-core-utils: 4.13.1
-      gatsby-telemetry: 4.13.1(encoding@0.1.13)
-      hosted-git-info: 3.0.8
-      is-valid-path: 0.1.1
-      joi: 17.13.0
-      lodash: 4.17.21
-      node-fetch: 2.7.0(encoding@0.1.13)
-      opentracing: 0.14.7
-      pretty-error: 2.1.2
-      progress: 2.0.3
-      prompts: 2.4.2
-      redux: 4.2.1
-      resolve-cwd: 3.0.0
-      semver: 7.6.0
-      signal-exit: 3.0.7
-      stack-trace: 0.0.10
-      strip-ansi: 6.0.1
-      yargs: 15.4.1
-      yoga-layout-prebuilt: 1.10.0
-      yurnalist: 2.1.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
   gatsby-cli@5.14.0-next.2(encoding@0.1.13):
     dependencies:
       '@babel/code-frame': 7.24.2
@@ -30729,28 +30421,12 @@ snapshots:
       tmp: 0.2.3
       xdg-basedir: 4.0.0
 
-  gatsby-graphiql-explorer@3.13.1: {}
-
   gatsby-graphiql-explorer@3.14.0-next.2: {}
-
-  gatsby-legacy-polyfills@3.13.1:
-    dependencies:
-      '@babel/runtime': 7.24.4
-      core-js-compat: 3.31.0
 
   gatsby-legacy-polyfills@3.14.0-next.1:
     dependencies:
       '@babel/runtime': 7.24.4
       core-js-compat: 3.31.0
-
-  gatsby-link@5.13.1(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
-    dependencies:
-      '@gatsbyjs/reach-router': 2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@types/reach__router': 1.3.15
-      gatsby-page-utils: 3.13.1
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
 
   gatsby-link@5.14.0-next.2(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -30760,17 +30436,6 @@ snapshots:
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-
-  gatsby-page-utils@3.13.1:
-    dependencies:
-      '@babel/runtime': 7.24.4
-      bluebird: 3.7.2
-      chokidar: 3.6.0
-      fs-exists-cached: 1.0.0
-      gatsby-core-utils: 4.13.1
-      glob: 7.2.3
-      lodash: 4.17.21
-      micromatch: 4.0.5
 
   gatsby-page-utils@3.14.0-next.2:
     dependencies:
@@ -30782,22 +30447,6 @@ snapshots:
       glob: 7.2.3
       lodash: 4.17.21
       micromatch: 4.0.5
-
-  gatsby-parcel-config@1.13.1(@parcel/core@2.8.3):
-    dependencies:
-      '@gatsbyjs/parcel-namer-relative-to-cwd': 2.13.1(@parcel/core@2.8.3)
-      '@parcel/bundler-default': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/compressor-raw': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/core': 2.8.3
-      '@parcel/namer-default': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/optimizer-terser': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/packager-js': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/packager-raw': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/reporter-dev-server': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/resolver-default': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/runtime-js': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/transformer-js': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/transformer-json': 2.8.3(@parcel/core@2.8.3)
 
   gatsby-parcel-config@1.14.0-next.2(@parcel/core@2.8.3):
     dependencies:
@@ -30815,7 +30464,7 @@ snapshots:
       '@parcel/transformer-js': 2.8.3(@parcel/core@2.8.3)
       '@parcel/transformer-json': 2.8.3(@parcel/core@2.8.3)
 
-  gatsby-plugin-image@3.13.1(@babel/core@7.24.4)(gatsby-plugin-sharp@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1))(gatsby-source-filesystem@packages+gatsby-source-filesystem)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  gatsby-plugin-image@3.13.1(@babel/core@7.24.4)(gatsby-plugin-sharp@5.13.1(gatsby@packages+gatsby)(graphql@16.8.1))(gatsby-source-filesystem@packages+gatsby-source-filesystem)(gatsby@packages+gatsby)(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/code-frame': 7.24.2
       '@babel/core': 7.24.4
@@ -30823,26 +30472,26 @@ snapshots:
       '@babel/runtime': 7.24.4
       '@babel/traverse': 7.24.1
       babel-jsx-utils: 1.1.0
-      babel-plugin-remove-graphql-queries: 5.13.1(@babel/core@7.24.4)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
+      babel-plugin-remove-graphql-queries: 5.13.1(@babel/core@7.24.4)(gatsby@packages+gatsby)
       camelcase: 6.3.0
       chokidar: 3.6.0
       common-tags: 1.8.2
       fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby: link:packages/gatsby
       gatsby-core-utils: 4.13.1
-      gatsby-plugin-utils: 4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+      gatsby-plugin-utils: 4.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       objectFitPolyfill: 2.3.5
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     optionalDependencies:
-      gatsby-plugin-sharp: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+      gatsby-plugin-sharp: 5.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       gatsby-source-filesystem: link:packages/gatsby-source-filesystem
     transitivePeerDependencies:
       - graphql
       - supports-color
 
-  gatsby-plugin-image@3.14.0-next.2(@babel/core@7.24.4)(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby-source-filesystem@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)))(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  gatsby-plugin-image@3.14.0-next.2(@babel/core@7.24.4)(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby-source-filesystem@5.13.1(gatsby@packages+gatsby))(gatsby@packages+gatsby)(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/code-frame': 7.24.2
       '@babel/core': 7.24.4
@@ -30850,62 +30499,22 @@ snapshots:
       '@babel/runtime': 7.24.4
       '@babel/traverse': 7.24.1
       babel-jsx-utils: 1.1.0
-      babel-plugin-remove-graphql-queries: 5.14.0-next.2(@babel/core@7.24.4)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
+      babel-plugin-remove-graphql-queries: 5.14.0-next.2(@babel/core@7.24.4)(gatsby@packages+gatsby)
       camelcase: 6.3.0
       chokidar: 3.6.0
       common-tags: 1.8.2
       fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby: link:packages/gatsby
       gatsby-core-utils: 4.14.0-next.2
-      gatsby-plugin-utils: 4.14.0-next.2(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+      gatsby-plugin-utils: 4.14.0-next.2(gatsby@packages+gatsby)(graphql@16.8.1)
       objectFitPolyfill: 2.3.5
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     optionalDependencies:
       gatsby-plugin-sharp: link:packages/gatsby-plugin-sharp
-      gatsby-source-filesystem: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
+      gatsby-source-filesystem: 5.13.1(gatsby@packages+gatsby)
     transitivePeerDependencies:
-      - graphql
-      - supports-color
-
-  gatsby-plugin-page-creator@5.13.1(encoding@0.1.13)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1):
-    dependencies:
-      '@babel/runtime': 7.24.4
-      '@babel/traverse': 7.24.1
-      '@sindresorhus/slugify': 1.1.2
-      chokidar: 3.6.0
-      fs-exists-cached: 1.0.0
-      fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
-      gatsby-core-utils: 4.13.1
-      gatsby-page-utils: 3.13.1
-      gatsby-plugin-utils: 4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
-      gatsby-telemetry: 4.13.1(encoding@0.1.13)
-      globby: 11.1.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - encoding
-      - graphql
-      - supports-color
-
-  gatsby-plugin-page-creator@5.13.1(encoding@0.1.13)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1):
-    dependencies:
-      '@babel/runtime': 7.24.4
-      '@babel/traverse': 7.24.1
-      '@sindresorhus/slugify': 1.1.2
-      chokidar: 3.6.0
-      fs-exists-cached: 1.0.0
-      fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
-      gatsby-core-utils: 4.13.1
-      gatsby-page-utils: 3.13.1
-      gatsby-plugin-utils: 4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
-      gatsby-telemetry: 4.13.1(encoding@0.1.13)
-      globby: 11.1.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - encoding
       - graphql
       - supports-color
 
@@ -30929,7 +30538,7 @@ snapshots:
       - graphql
       - supports-color
 
-  gatsby-plugin-sharp@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1):
+  gatsby-plugin-sharp@5.13.1(gatsby@packages+gatsby)(graphql@16.8.1):
     dependencies:
       '@babel/runtime': 7.24.4
       async: 3.2.5
@@ -30937,41 +30546,15 @@ snapshots:
       debug: 4.3.4(supports-color@8.1.1)
       filenamify: 4.3.0
       fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby: link:packages/gatsby
       gatsby-core-utils: 4.13.1
-      gatsby-plugin-utils: 4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+      gatsby-plugin-utils: 4.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       lodash: 4.17.21
       probe-image-size: 7.2.3
       semver: 7.6.0
       sharp: 0.32.6
     transitivePeerDependencies:
       - graphql
-      - supports-color
-
-  gatsby-plugin-typescript@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)):
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/plugin-proposal-nullish-coalescing-operator': 7.18.6(@babel/core@7.24.4)
-      '@babel/plugin-proposal-numeric-separator': 7.18.6(@babel/core@7.24.4)
-      '@babel/plugin-proposal-optional-chaining': 7.21.0(@babel/core@7.24.4)
-      '@babel/preset-typescript': 7.24.1(@babel/core@7.24.4)
-      '@babel/runtime': 7.24.4
-      babel-plugin-remove-graphql-queries: 5.13.1(@babel/core@7.24.4)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
-    transitivePeerDependencies:
-      - supports-color
-
-  gatsby-plugin-typescript@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)):
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/plugin-proposal-nullish-coalescing-operator': 7.18.6(@babel/core@7.24.4)
-      '@babel/plugin-proposal-numeric-separator': 7.18.6(@babel/core@7.24.4)
-      '@babel/plugin-proposal-optional-chaining': 7.21.0(@babel/core@7.24.4)
-      '@babel/preset-typescript': 7.24.1(@babel/core@7.24.4)
-      '@babel/runtime': 7.24.4
-      babel-plugin-remove-graphql-queries: 5.13.1(@babel/core@7.24.4)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
-    transitivePeerDependencies:
       - supports-color
 
   gatsby-plugin-typescript@5.14.0-next.2(gatsby@5.14.0-next.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)):
@@ -30987,42 +30570,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  gatsby-plugin-utils@4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1):
+  gatsby-plugin-utils@4.13.1(gatsby@packages+gatsby)(graphql@16.8.1):
     dependencies:
       '@babel/runtime': 7.24.4
       fastq: 1.17.1
       fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby: link:packages/gatsby
       gatsby-core-utils: 4.13.1
       gatsby-sharp: 1.13.0
-      graphql: 16.8.1
-      graphql-compose: 9.0.10(graphql@16.8.1)
-      import-from: 4.0.0
-      joi: 17.13.0
-      mime: 3.0.0
-
-  gatsby-plugin-utils@4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1):
-    dependencies:
-      '@babel/runtime': 7.24.4
-      fastq: 1.17.1
-      fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
-      gatsby-core-utils: 4.13.1
-      gatsby-sharp: 1.13.0
-      graphql: 16.8.1
-      graphql-compose: 9.0.10(graphql@16.8.1)
-      import-from: 4.0.0
-      joi: 17.13.0
-      mime: 3.0.0
-
-  gatsby-plugin-utils@4.14.0-next.2(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1):
-    dependencies:
-      '@babel/runtime': 7.24.4
-      fastq: 1.17.1
-      fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
-      gatsby-core-utils: 4.14.0-next.2
-      gatsby-sharp: 1.14.0-next.0
       graphql: 16.8.1
       graphql-compose: 9.0.10(graphql@16.8.1)
       import-from: 4.0.0
@@ -31043,13 +30598,19 @@ snapshots:
       joi: 17.13.0
       mime: 3.0.0
 
-  gatsby-react-router-scroll@6.13.1(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  gatsby-plugin-utils@4.14.0-next.2(gatsby@packages+gatsby)(graphql@16.8.1):
     dependencies:
       '@babel/runtime': 7.24.4
-      '@gatsbyjs/reach-router': 2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      fastq: 1.17.1
+      fs-extra: 11.2.0
+      gatsby: link:packages/gatsby
+      gatsby-core-utils: 4.14.0-next.2
+      gatsby-sharp: 1.14.0-next.0
+      graphql: 16.8.1
+      graphql-compose: 9.0.10(graphql@16.8.1)
+      import-from: 4.0.0
+      joi: 17.13.0
+      mime: 3.0.0
 
   gatsby-react-router-scroll@6.14.0-next.2(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -31059,19 +30620,13 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  gatsby-remark-prismjs@7.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(prismjs@1.29.0):
+  gatsby-remark-prismjs@7.13.1(gatsby@packages+gatsby)(prismjs@1.29.0):
     dependencies:
       '@babel/runtime': 7.24.4
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby: link:packages/gatsby
       parse-numeric-range: 1.3.0
       prismjs: 1.29.0
       unist-util-visit: 2.0.3
-
-  gatsby-script@2.13.0(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
-    dependencies:
-      '@gatsbyjs/reach-router': 2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
 
   gatsby-script@2.14.0-next.1(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -31087,8 +30642,8 @@ snapshots:
     dependencies:
       sharp: 0.32.6
 
-  ? gatsby-source-contentful@8.13.1(debug@4.3.4)(encoding@0.1.13)(gatsby-plugin-image@3.14.0-next.2(@babel/core@7.24.4)(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby-source-filesystem@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)))(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sharp@0.33.3)
-  : dependencies:
+  gatsby-source-contentful@8.13.1(debug@4.3.4)(encoding@0.1.13)(gatsby-plugin-image@3.14.0-next.2(@babel/core@7.24.4)(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby-source-filesystem@5.13.1(gatsby@packages+gatsby))(gatsby@packages+gatsby)(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby@packages+gatsby)(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sharp@0.33.3):
+    dependencies:
       '@babel/runtime': 7.24.4
       '@contentful/rich-text-react-renderer': 15.19.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@contentful/rich-text-types': 15.15.1
@@ -31098,12 +30653,12 @@ snapshots:
       common-tags: 1.8.2
       contentful: 9.3.6(debug@4.3.4)
       fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby: link:packages/gatsby
       gatsby-core-utils: 4.13.1
-      gatsby-plugin-image: 3.14.0-next.2(@babel/core@7.24.4)(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby-source-filesystem@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)))(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      gatsby-plugin-image: 3.14.0-next.2(@babel/core@7.24.4)(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby-source-filesystem@5.13.1(gatsby@packages+gatsby))(gatsby@packages+gatsby)(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       gatsby-plugin-sharp: link:packages/gatsby-plugin-sharp
-      gatsby-plugin-utils: 4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
-      gatsby-source-filesystem: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
+      gatsby-plugin-utils: 4.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
+      gatsby-source-filesystem: 5.13.1(gatsby@packages+gatsby)
       is-online: 9.0.1
       json-stringify-safe: 5.0.1
       lodash: 4.17.21
@@ -31119,35 +30674,18 @@ snapshots:
       - react-dom
       - supports-color
 
-  gatsby-source-filesystem@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)):
+  gatsby-source-filesystem@5.13.1(gatsby@packages+gatsby):
     dependencies:
       '@babel/runtime': 7.24.4
       chokidar: 3.6.0
       file-type: 16.5.4
       fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby: link:packages/gatsby
       gatsby-core-utils: 4.13.1
       mime: 3.0.0
       pretty-bytes: 5.6.0
       valid-url: 1.0.9
       xstate: 4.38.3
-
-  gatsby-telemetry@4.13.1(encoding@0.1.13):
-    dependencies:
-      '@babel/code-frame': 7.24.2
-      '@babel/runtime': 7.24.4
-      '@turist/fetch': 7.2.0(node-fetch@2.7.0(encoding@0.1.13))
-      '@turist/time': 0.0.2
-      boxen: 5.1.2
-      configstore: 5.0.1
-      fs-extra: 11.2.0
-      gatsby-core-utils: 4.13.1
-      git-up: 7.0.0
-      is-docker: 2.2.1
-      lodash: 4.17.21
-      node-fetch: 2.7.0(encoding@0.1.13)
-    transitivePeerDependencies:
-      - encoding
 
   gatsby-telemetry@4.14.0-next.2(encoding@0.1.13):
     dependencies:
@@ -31166,15 +30704,15 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  gatsby-transformer-sharp@5.13.1(gatsby-plugin-sharp@5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1))(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1):
+  gatsby-transformer-sharp@5.13.1(gatsby-plugin-sharp@5.13.1(gatsby@packages+gatsby)(graphql@16.8.1))(gatsby@packages+gatsby)(graphql@16.8.1):
     dependencies:
       '@babel/runtime': 7.24.4
       bluebird: 3.7.2
       common-tags: 1.8.2
       fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
-      gatsby-plugin-sharp: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
-      gatsby-plugin-utils: 4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+      gatsby: link:packages/gatsby
+      gatsby-plugin-sharp: 5.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
+      gatsby-plugin-utils: 4.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       probe-image-size: 7.2.3
       semver: 7.6.0
       sharp: 0.32.6
@@ -31182,29 +30720,20 @@ snapshots:
       - graphql
       - supports-color
 
-  gatsby-transformer-sharp@5.13.1(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1):
+  gatsby-transformer-sharp@5.13.1(gatsby-plugin-sharp@packages+gatsby-plugin-sharp)(gatsby@packages+gatsby)(graphql@16.8.1):
     dependencies:
       '@babel/runtime': 7.24.4
       bluebird: 3.7.2
       common-tags: 1.8.2
       fs-extra: 11.2.0
-      gatsby: 5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)
+      gatsby: link:packages/gatsby
       gatsby-plugin-sharp: link:packages/gatsby-plugin-sharp
-      gatsby-plugin-utils: 4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
+      gatsby-plugin-utils: 4.13.1(gatsby@packages+gatsby)(graphql@16.8.1)
       probe-image-size: 7.2.3
       semver: 7.6.0
       sharp: 0.32.6
     transitivePeerDependencies:
       - graphql
-      - supports-color
-
-  gatsby-worker@2.13.1:
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/runtime': 7.24.4
-      fs-extra: 11.2.0
-      signal-exit: 3.0.7
-    transitivePeerDependencies:
       - supports-color
 
   gatsby-worker@2.14.0-next.2:
@@ -31215,402 +30744,6 @@ snapshots:
       signal-exit: 3.0.7
     transitivePeerDependencies:
       - supports-color
-
-  gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16):
-    dependencies:
-      '@babel/code-frame': 7.24.2
-      '@babel/core': 7.24.4
-      '@babel/eslint-parser': 7.24.1(@babel/core@7.24.4)(eslint@7.32.0)
-      '@babel/helper-plugin-utils': 7.24.0
-      '@babel/parser': 7.24.4
-      '@babel/runtime': 7.24.4
-      '@babel/traverse': 7.24.1
-      '@babel/types': 7.24.0
-      '@builder.io/partytown': 0.7.6
-      '@gatsbyjs/reach-router': 2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@gatsbyjs/webpack-hot-middleware': 2.25.3
-      '@graphql-codegen/add': 3.2.3(graphql@16.8.1)
-      '@graphql-codegen/core': 2.6.8(graphql@16.8.1)
-      '@graphql-codegen/plugin-helpers': 2.7.2(graphql@16.8.1)
-      '@graphql-codegen/typescript': 2.8.8(encoding@0.1.13)(graphql@16.8.1)
-      '@graphql-codegen/typescript-operations': 2.5.13(encoding@0.1.13)(graphql@16.8.1)
-      '@graphql-tools/code-file-loader': 7.3.23(@babel/core@7.24.4)(graphql@16.8.1)
-      '@graphql-tools/load': 7.8.14(graphql@16.8.1)
-      '@jridgewell/trace-mapping': 0.3.25
-      '@nodelib/fs.walk': 1.2.8
-      '@parcel/cache': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/core': 2.8.3
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.11(react-refresh@0.14.0)(type-fest@4.17.0)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      '@sigmacomputing/babel-plugin-lodash': 3.3.5
-      '@types/http-proxy': 1.17.14
-      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(eslint@7.32.0)(typescript@5.4.5)
-      '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@5.4.5)
-      '@vercel/webpack-asset-relocator-loader': 1.7.3
-      acorn-loose: 8.4.0
-      acorn-walk: 8.3.2
-      address: 1.2.2
-      anser: 2.1.1
-      autoprefixer: 10.4.19(postcss@8.4.38)
-      axios: 0.21.4(debug@4.3.4)
-      babel-jsx-utils: 1.1.0
-      babel-loader: 8.3.0(@babel/core@7.24.4)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      babel-plugin-add-module-exports: 1.0.4
-      babel-plugin-dynamic-import-node: 2.3.3
-      babel-plugin-remove-graphql-queries: 5.13.1(@babel/core@7.24.4)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
-      babel-preset-gatsby: 3.13.2(@babel/core@7.24.4)(core-js@3.37.0)
-      better-opn: 2.1.1
-      bluebird: 3.7.2
-      body-parser: 1.20.1
-      browserslist: 4.23.0
-      cache-manager: 2.11.1
-      chalk: 4.1.2
-      chokidar: 3.6.0
-      common-tags: 1.8.2
-      compression: 1.7.4
-      cookie: 0.5.0
-      core-js: 3.37.0
-      cors: 2.8.5
-      css-loader: 5.2.7(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      css-minimizer-webpack-plugin: 2.0.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      css.escape: 1.5.1
-      date-fns: 2.30.0
-      debug: 4.3.4(supports-color@8.1.1)
-      deepmerge: 4.3.1
-      detect-port: 1.5.1
-      devcert: 1.2.2
-      dotenv: 8.6.0
-      enhanced-resolve: 5.16.0
-      error-stack-parser: 2.1.4
-      eslint: 7.32.0
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(eslint@7.32.0)(typescript@5.4.5))(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(babel-eslint@10.1.0(eslint@7.32.0))(eslint-plugin-flowtype@5.10.0(eslint@7.32.0))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(eslint@7.32.0))(eslint-plugin-jsx-a11y@6.8.0(eslint@7.32.0))(eslint-plugin-react-hooks@4.6.0(eslint@7.32.0))(eslint-plugin-react@7.34.1(eslint@7.32.0))(eslint@7.32.0)(typescript@5.4.5)
-      eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
-      eslint-plugin-react: 7.34.1(eslint@7.32.0)
-      eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
-      eslint-webpack-plugin: 2.7.0(eslint@7.32.0)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      event-source-polyfill: 1.0.31
-      execa: 5.1.1
-      express: 4.19.2
-      express-http-proxy: 1.6.3
-      fastest-levenshtein: 1.0.16
-      fastq: 1.17.1
-      file-loader: 6.2.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      find-cache-dir: 3.3.2
-      fs-exists-cached: 1.0.0
-      fs-extra: 11.2.0
-      gatsby-cli: 5.13.3(encoding@0.1.13)
-      gatsby-core-utils: 4.13.1
-      gatsby-graphiql-explorer: 3.13.1
-      gatsby-legacy-polyfills: 3.13.1
-      gatsby-link: 5.13.1(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      gatsby-page-utils: 3.13.1
-      gatsby-parcel-config: 1.13.1(@parcel/core@2.8.3)
-      gatsby-plugin-page-creator: 5.13.1(encoding@0.1.13)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
-      gatsby-plugin-typescript: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
-      gatsby-plugin-utils: 4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
-      gatsby-react-router-scroll: 6.13.1(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      gatsby-script: 2.13.0(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      gatsby-telemetry: 4.13.1(encoding@0.1.13)
-      gatsby-worker: 2.13.1
-      glob: 7.2.3
-      globby: 11.1.0
-      got: 11.8.6
-      graphql: 16.8.1
-      graphql-compose: 9.0.10(graphql@16.8.1)
-      graphql-http: 1.22.1(graphql@16.8.1)
-      graphql-tag: 2.12.6(graphql@16.8.1)
-      hasha: 5.2.2
-      invariant: 2.2.4
-      is-relative: 1.0.0
-      is-relative-url: 3.0.0
-      joi: 17.13.0
-      json-loader: 0.5.7
-      latest-version: 7.0.0
-      linkfs: 2.1.0
-      lmdb: 2.5.3
-      lodash: 4.17.21
-      meant: 1.0.3
-      memoizee: 0.4.15
-      micromatch: 4.0.5
-      mime: 3.0.0
-      mini-css-extract-plugin: 1.6.2(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      mitt: 1.2.0
-      moment: 2.30.1
-      multer: 1.4.5-lts.1
-      node-fetch: 2.7.0(encoding@0.1.13)
-      node-html-parser: 5.4.2
-      normalize-path: 3.0.0
-      null-loader: 4.0.1(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      opentracing: 0.14.7
-      p-defer: 3.0.0
-      parseurl: 1.3.3
-      path-to-regexp: 0.1.7
-      physical-cpu-count: 2.0.0
-      platform: 1.3.6
-      postcss: 8.4.38
-      postcss-flexbugs-fixes: 5.0.2(postcss@8.4.38)
-      postcss-loader: 5.3.0(postcss@8.4.38)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      prompts: 2.4.2
-      prop-types: 15.8.1
-      query-string: 6.14.1
-      raw-loader: 4.0.2(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      react: 18.2.0
-      react-dev-utils: 12.0.1(eslint@7.32.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      react-dom: 18.2.0(react@18.2.0)
-      react-refresh: 0.14.0
-      react-server-dom-webpack: 0.0.0-experimental-c8b778b7f-20220825(react@18.2.0)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      redux: 4.2.1
-      redux-thunk: 2.4.2(redux@4.2.1)
-      resolve-from: 5.0.0
-      semver: 7.6.0
-      shallow-compare: 1.2.2
-      signal-exit: 3.0.7
-      slugify: 1.6.6
-      socket.io: 4.7.1
-      socket.io-client: 4.7.1
-      stack-trace: 0.0.10
-      string-similarity: 1.2.2
-      strip-ansi: 6.0.1
-      style-loader: 2.0.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      style-to-object: 0.4.4
-      terser-webpack-plugin: 5.3.10(@swc/core@1.5.0(@swc/helpers@0.5.11))(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      tmp: 0.2.3
-      true-case-path: 2.2.1
-      type-of: 2.0.1
-      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11))))(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      uuid: 8.3.2
-      webpack: 5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11))
-      webpack-dev-middleware: 4.3.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      webpack-merge: 5.10.0
-      webpack-stats-plugin: 1.1.3
-      webpack-virtual-modules: 0.5.0
-      xstate: 4.38.3
-      yaml-loader: 0.8.1
-    optionalDependencies:
-      gatsby-sharp: 1.13.0
-    transitivePeerDependencies:
-      - '@swc/core'
-      - '@types/webpack'
-      - babel-eslint
-      - bufferutil
-      - clean-css
-      - csso
-      - encoding
-      - esbuild
-      - eslint-import-resolver-typescript
-      - eslint-import-resolver-webpack
-      - eslint-plugin-jest
-      - eslint-plugin-testing-library
-      - sockjs-client
-      - supports-color
-      - type-fest
-      - typescript
-      - uglify-js
-      - utf-8-validate
-      - vue-template-compiler
-      - webpack-cli
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
-
-  gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16):
-    dependencies:
-      '@babel/code-frame': 7.24.2
-      '@babel/core': 7.24.4
-      '@babel/eslint-parser': 7.24.1(@babel/core@7.24.4)(eslint@7.32.0)
-      '@babel/helper-plugin-utils': 7.24.0
-      '@babel/parser': 7.24.4
-      '@babel/runtime': 7.24.4
-      '@babel/traverse': 7.24.1
-      '@babel/types': 7.24.0
-      '@builder.io/partytown': 0.7.6
-      '@gatsbyjs/reach-router': 2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@gatsbyjs/webpack-hot-middleware': 2.25.3
-      '@graphql-codegen/add': 3.2.3(graphql@16.8.1)
-      '@graphql-codegen/core': 2.6.8(graphql@16.8.1)
-      '@graphql-codegen/plugin-helpers': 2.7.2(graphql@16.8.1)
-      '@graphql-codegen/typescript': 2.8.8(encoding@0.1.13)(graphql@16.8.1)
-      '@graphql-codegen/typescript-operations': 2.5.13(encoding@0.1.13)(graphql@16.8.1)
-      '@graphql-tools/code-file-loader': 7.3.23(@babel/core@7.24.4)(graphql@16.8.1)
-      '@graphql-tools/load': 7.8.14(graphql@16.8.1)
-      '@jridgewell/trace-mapping': 0.3.25
-      '@nodelib/fs.walk': 1.2.8
-      '@parcel/cache': 2.8.3(@parcel/core@2.8.3)
-      '@parcel/core': 2.8.3
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.11(react-refresh@0.14.0)(type-fest@4.17.0)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      '@sigmacomputing/babel-plugin-lodash': 3.3.5
-      '@types/http-proxy': 1.17.14
-      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/parser': 5.62.0(eslint@8.57.0)(typescript@5.4.5)
-      '@vercel/webpack-asset-relocator-loader': 1.7.3
-      acorn-loose: 8.4.0
-      acorn-walk: 8.3.2
-      address: 1.2.2
-      anser: 2.1.1
-      autoprefixer: 10.4.19(postcss@8.4.38)
-      axios: 0.21.4(debug@4.3.4)
-      babel-jsx-utils: 1.1.0
-      babel-loader: 8.3.0(@babel/core@7.24.4)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      babel-plugin-add-module-exports: 1.0.4
-      babel-plugin-dynamic-import-node: 2.3.3
-      babel-plugin-remove-graphql-queries: 5.13.1(@babel/core@7.24.4)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
-      babel-preset-gatsby: 3.13.2(@babel/core@7.24.4)(core-js@3.37.0)
-      better-opn: 2.1.1
-      bluebird: 3.7.2
-      body-parser: 1.20.1
-      browserslist: 4.23.0
-      cache-manager: 2.11.1
-      chalk: 4.1.2
-      chokidar: 3.6.0
-      common-tags: 1.8.2
-      compression: 1.7.4
-      cookie: 0.5.0
-      core-js: 3.37.0
-      cors: 2.8.5
-      css-loader: 5.2.7(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      css-minimizer-webpack-plugin: 2.0.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      css.escape: 1.5.1
-      date-fns: 2.30.0
-      debug: 4.3.4(supports-color@8.1.1)
-      deepmerge: 4.3.1
-      detect-port: 1.5.1
-      devcert: 1.2.2
-      dotenv: 8.6.0
-      enhanced-resolve: 5.16.0
-      error-stack-parser: 2.1.4
-      eslint: 7.32.0
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(eslint@7.32.0)(typescript@5.4.5))(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(babel-eslint@10.1.0(eslint@8.57.0))(eslint-plugin-flowtype@5.10.0(eslint@7.32.0))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.4.5))(eslint@7.32.0))(eslint-plugin-jsx-a11y@6.8.0(eslint@7.32.0))(eslint-plugin-react-hooks@4.6.0(eslint@7.32.0))(eslint-plugin-react@7.34.1(eslint@7.32.0))(eslint@7.32.0)(typescript@5.4.5)
-      eslint-plugin-flowtype: 5.10.0(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
-      eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-react: 7.34.1(eslint@8.57.0)
-      eslint-plugin-react-hooks: 4.6.0(eslint@8.57.0)
-      eslint-webpack-plugin: 2.7.0(eslint@7.32.0)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      event-source-polyfill: 1.0.31
-      execa: 5.1.1
-      express: 4.19.2
-      express-http-proxy: 1.6.3
-      fastest-levenshtein: 1.0.16
-      fastq: 1.17.1
-      file-loader: 6.2.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      find-cache-dir: 3.3.2
-      fs-exists-cached: 1.0.0
-      fs-extra: 11.2.0
-      gatsby-cli: 5.13.3(encoding@0.1.13)
-      gatsby-core-utils: 4.13.1
-      gatsby-graphiql-explorer: 3.13.1
-      gatsby-legacy-polyfills: 3.13.1
-      gatsby-link: 5.13.1(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      gatsby-page-utils: 3.13.1
-      gatsby-parcel-config: 1.13.1(@parcel/core@2.8.3)
-      gatsby-plugin-page-creator: 5.13.1(encoding@0.1.13)(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
-      gatsby-plugin-typescript: 5.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))
-      gatsby-plugin-utils: 4.13.1(gatsby@5.13.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@8.57.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16))(graphql@16.8.1)
-      gatsby-react-router-scroll: 6.13.1(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      gatsby-script: 2.13.0(@gatsbyjs/reach-router@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      gatsby-telemetry: 4.13.1(encoding@0.1.13)
-      gatsby-worker: 2.13.1
-      glob: 7.2.3
-      globby: 11.1.0
-      got: 11.8.6
-      graphql: 16.8.1
-      graphql-compose: 9.0.10(graphql@16.8.1)
-      graphql-http: 1.22.1(graphql@16.8.1)
-      graphql-tag: 2.12.6(graphql@16.8.1)
-      hasha: 5.2.2
-      invariant: 2.2.4
-      is-relative: 1.0.0
-      is-relative-url: 3.0.0
-      joi: 17.13.0
-      json-loader: 0.5.7
-      latest-version: 7.0.0
-      linkfs: 2.1.0
-      lmdb: 2.5.3
-      lodash: 4.17.21
-      meant: 1.0.3
-      memoizee: 0.4.15
-      micromatch: 4.0.5
-      mime: 3.0.0
-      mini-css-extract-plugin: 1.6.2(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      mitt: 1.2.0
-      moment: 2.30.1
-      multer: 1.4.5-lts.1
-      node-fetch: 2.7.0(encoding@0.1.13)
-      node-html-parser: 5.4.2
-      normalize-path: 3.0.0
-      null-loader: 4.0.1(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      opentracing: 0.14.7
-      p-defer: 3.0.0
-      parseurl: 1.3.3
-      path-to-regexp: 0.1.7
-      physical-cpu-count: 2.0.0
-      platform: 1.3.6
-      postcss: 8.4.38
-      postcss-flexbugs-fixes: 5.0.2(postcss@8.4.38)
-      postcss-loader: 5.3.0(postcss@8.4.38)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      prompts: 2.4.2
-      prop-types: 15.8.1
-      query-string: 6.14.1
-      raw-loader: 4.0.2(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      react: 18.2.0
-      react-dev-utils: 12.0.1(eslint@7.32.0)(typescript@5.4.5)(vue-template-compiler@2.7.16)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      react-dom: 18.2.0(react@18.2.0)
-      react-refresh: 0.14.0
-      react-server-dom-webpack: 0.0.0-experimental-c8b778b7f-20220825(react@18.2.0)(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      redux: 4.2.1
-      redux-thunk: 2.4.2(redux@4.2.1)
-      resolve-from: 5.0.0
-      semver: 7.6.0
-      shallow-compare: 1.2.2
-      signal-exit: 3.0.7
-      slugify: 1.6.6
-      socket.io: 4.7.1
-      socket.io-client: 4.7.1
-      stack-trace: 0.0.10
-      string-similarity: 1.2.2
-      strip-ansi: 6.0.1
-      style-loader: 2.0.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      style-to-object: 0.4.4
-      terser-webpack-plugin: 5.3.10(@swc/core@1.5.0(@swc/helpers@0.5.11))(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      tmp: 0.2.3
-      true-case-path: 2.2.1
-      type-of: 2.0.1
-      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11))))(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      uuid: 8.3.2
-      webpack: 5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11))
-      webpack-dev-middleware: 4.3.0(webpack@5.91.0(@swc/core@1.5.0(@swc/helpers@0.5.11)))
-      webpack-merge: 5.10.0
-      webpack-stats-plugin: 1.1.3
-      webpack-virtual-modules: 0.5.0
-      xstate: 4.38.3
-      yaml-loader: 0.8.1
-    optionalDependencies:
-      gatsby-sharp: 1.13.0
-    transitivePeerDependencies:
-      - '@swc/core'
-      - '@types/webpack'
-      - babel-eslint
-      - bufferutil
-      - clean-css
-      - csso
-      - encoding
-      - esbuild
-      - eslint-import-resolver-typescript
-      - eslint-import-resolver-webpack
-      - eslint-plugin-jest
-      - eslint-plugin-testing-library
-      - sockjs-client
-      - supports-color
-      - type-fest
-      - typescript
-      - uglify-js
-      - utf-8-validate
-      - vue-template-compiler
-      - webpack-cli
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
 
   gatsby@5.14.0-next.4(@swc/core@1.5.0(@swc/helpers@0.5.11))(babel-eslint@10.1.0(eslint@7.32.0))(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(type-fest@4.17.0)(typescript@5.4.5)(vue-template-compiler@2.7.16):
     dependencies:

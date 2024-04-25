@@ -49,7 +49,7 @@ export type IFlattenedPlugin = {
 } & IPluginInfo;
 
 export type IPluginRefObject = {
-  resolve: string;
+  resolve?: string | undefined;
   options?: IPluginRefOptions | undefined;
   parentDir?: string | undefined;
   subPluginPaths?: Array<string> | undefined;

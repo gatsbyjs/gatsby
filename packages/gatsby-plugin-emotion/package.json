@@ -21,7 +21,7 @@
   "peerDependencies": {
     "@babel/core": "^7.24.4",
     "@emotion/react": "^11.11.4",
-    "gatsby": "^5.13.4",
+    "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

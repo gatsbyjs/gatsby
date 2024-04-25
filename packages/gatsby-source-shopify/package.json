@@ -39,7 +39,7 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "gatsby": "^5.13.4",
+    "gatsby": "workspace:*",
     "gatsby-plugin-image": "^3.13.1",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"

@@ -97,7 +97,6 @@ module.exports = async function build(
 
   report.verbose(`Running build in "${process.env.NODE_ENV}" environment`);
 
-  // @ts-ignore
   await updateInternalSiteMetadata({
     name: program.sitePackageJson.name,
     sitePath: program.directory,
@@ -120,7 +119,6 @@ module.exports = async function build(
 
   telemetry.trackCli("BUILD_START");
   signalExit.onExit((exitCode) => {
-    // @ts-ignore
     telemetry.trackCli("BUILD_END", {
       exitCode: exitCode as number | undefined,
     });
