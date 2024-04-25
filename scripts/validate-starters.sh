@@ -26,7 +26,7 @@ for folder in $GLOB; do
   echo "Validating $folder"
   echo ""
 
-  pnpm ci --legacy-peer-deps || exit 1
+  pnpm install --frozen-lockfile || exit 1
 
   # check both npm and yarn, sometimes yarn registry lags behind
   rm -rf node_modules &&
