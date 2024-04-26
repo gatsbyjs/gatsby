@@ -6,12 +6,12 @@ interface ApiError {
   error: any;
 }
 
-export const logApiError = ({ action, opts, error }: ApiError) => {
+export function logApiError({ action, opts, error }: ApiError): void {
   const msg = `Could not run ${action} with options ${JSON.stringify(
     opts,
   )}\n Error was ${error}\nSet env var DEBUG=octokit:rest* for extended logging info.`;
   console.warn(msg);
-};
+}
 
 const questionWords: Set<string> = new Set([
   "how",
@@ -34,14 +34,15 @@ const documentationWords: Set<string> = new Set([
   "tutorial",
 ]);
 
-const endsWith = (character: string, sentence: string): boolean =>
-  sentence.slice(-1) === character;
+function endsWith(character: string, sentence: string): boolean {
+  return sentence.slice(-1) === character;
+}
 
-const matchKeyword = (
+function matchKeyword(
   keywords: Set<string>,
   sentence: string,
   firstOnly: boolean = false,
-): boolean => {
+): boolean {
   /*
    * We need to turn the title into a parseable array of words. To do this, we:
    * 1. Remove any character that’s not a letter or space
@@ -55,9 +56,9 @@ const matchKeyword = (
 
   // Check if any of the words matches our set of keywords.
   return words.some((word: string) => keywords.has(word.toLowerCase()));
-};
+}
 
-export const labeler = async () => {
+export async function labeler() {
   const gh = danger.github as any;
   const repo = gh.repository;
   const issue = gh.issue;
@@ -88,7 +89,7 @@ export const labeler = async () => {
       logApiError({ action: `issues.addLabel`, opts, error });
     }
   }
-};
+}
 
 export default async () => {
   await labeler();

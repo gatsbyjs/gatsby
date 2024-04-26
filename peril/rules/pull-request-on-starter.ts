@@ -1,4 +1,4 @@
-import { danger, markdown } from "danger"
+import { danger, markdown } from "danger";
 
 // TODO: Improve comment
 export const comment = (username: string) => `
@@ -15,31 +15,32 @@ Please checkout our contribution docs & recreate your PR against the starter dir
 https://www.gatsbyjs.com/contributing/how-to-open-a-pull-request/
 
 Thanks again!
-`
+`;
 
-export const closePullRequestAndComment = async () => {
-  const gh = danger.github
-  const api = gh.api
+export async function closePullRequestAndComment() {
+  const gh = danger.github;
+  const api = gh.api;
 
   // Details about the repo.
-  const owner = gh.thisPR.owner
-  const repo = gh.thisPR.repo
-  const number = gh.thisPR.number
+  const owner = gh.thisPR.owner;
+  const repo = gh.thisPR.repo;
+  const pull_number = gh.thisPR.number;
 
   // Details about the collaborator.
-  const username = gh.pr.user.login
+  const username = gh.pr.user.login;
 
   // Leave a comment redirecting the collaborator to the monorepo
-  markdown(comment(username))
+  markdown(comment(username));
   // Close this pull request
-  await api.pullRequests.update({
+  //
+  await api.pulls.update({
     owner,
     repo,
-    number,
+    pull_number,
     state: "closed",
-  })
+  });
 }
 
 export default async () => {
-  await closePullRequestAndComment()
-}
+  await closePullRequestAndComment();
+};

@@ -7,7 +7,7 @@ Please fill in this field with more information to help the \
 maintainers resolve your issue.\
 `;
 
-export const emptybody = () => {
+export function emptybody(): void {
   const {
     user: { login: username },
     body,
@@ -16,8 +16,8 @@ export const emptybody = () => {
   if (body.trim().length === 0) {
     markdown(getMessage(username));
   }
-};
+}
 
-export default async () => {
+export default async (): Promise<void> => {
   emptybody();
 };

@@ -6,16 +6,16 @@ interface ApiError {
   error: any;
 }
 
-export const logApiError = ({ action, opts, error }: ApiError) => {
+export function logApiError({ action, opts, error }: ApiError): void {
   const msg = `Could not run ${action} with options ${JSON.stringify(
     opts,
   )}\n Error was ${error}\nSet env var DEBUG=octokit:rest* for extended logging info.`;
   console.warn(msg);
-};
+}
 
 const triageNeededLabel = "status: triage needed";
 
-export const applyStatusTriageNeededLabel = async () => {
+export async function applyStatusTriageNeededLabel(): Promise<void> {
   const gh = danger.github as any;
 
   // both PRs and issues have `number` and `labels`
@@ -52,8 +52,8 @@ export const applyStatusTriageNeededLabel = async () => {
   } catch (e) {
     console.log(e);
   }
-};
+}
 
-export default async () => {
+export default async (): Promise<void> => {
   await applyStatusTriageNeededLabel();
 };
