@@ -1,5 +1,4 @@
 const { build } = require(`../..`)
-import { GraphQLObjectType, GraphQLSchema } from "graphql"
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 const { dispatch } = store
@@ -46,8 +45,8 @@ describe(`authorization extension`, () => {
       }
     `)
     )
-    const { schema }: { schema: GraphQLSchema } = await buildSchema()
-    const authType = schema.getType(`Auth`) as GraphQLObjectType
+    const { schema } = await buildSchema()
+    const authType = schema.getType(`Auth`)
     const authTypeFields = authType.getFields()
 
     const authTypeDirective = authType.astNode?.directives?.find(
@@ -61,21 +60,21 @@ describe(`authorization extension`, () => {
     const authFieldDirectiveValue = authFieldDirective?.arguments?.[0].value
 
     expect(authFieldDirectiveValue).toMatchObject({
-      kind: "ListValue",
+      kind: `ListValue`,
       values: [
         {
-          kind: "StringValue",
-          value: "USER",
+          kind: `StringValue`,
+          value: `USER`,
         },
       ],
     })
 
     expect(authTypeDirectiveValue).toMatchObject({
-      kind: "ListValue",
+      kind: `ListValue`,
       values: [
         {
-          kind: "StringValue",
-          value: "ADMIN",
+          kind: `StringValue`,
+          value: `ADMIN`,
         },
       ],
     })
