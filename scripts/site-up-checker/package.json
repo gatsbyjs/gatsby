@@ -18,6 +18,7 @@
     "webhook-discord": "^2.0.6"
   },
   "devDependencies": {
+    "@types/lodash": "4.17.0",
     "@types/bluebird": "3.5.42"
   }
 }

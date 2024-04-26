@@ -237,6 +237,7 @@ module.exports = async function build(
     );
 
     closeHTMLBundleCompilation = close;
+    // @ts-ignore
     if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
       const { renderPageHash, templateHashes } = getSSRChunkHashes({
         stats,
@@ -258,6 +259,7 @@ module.exports = async function build(
   if (
     (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
       process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
+    // @ts-ignore
     _CFLAGS_.GATSBY_MAJOR === "5"
   ) {
     const buildPartialHydrationBundleActivityProgress = report.activityTimer(
@@ -360,6 +362,7 @@ module.exports = async function build(
     await mergeWorkerState(workerPool, buildSpan);
   }
 
+  // @ts-ignore
   if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
     await runSliceQueries({
       queryIds,
@@ -401,6 +404,7 @@ module.exports = async function build(
     components: store.getState().components,
   });
 
+  // @ts-ignore
   if (!(_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES)) {
     if (process.send && shouldGenerateEngines()) {
       await waitMaterializePageMode;
@@ -439,6 +443,7 @@ module.exports = async function build(
       rewriteActivityTimer.end();
     }
 
+    // @ts-ignore
     if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
       Object.entries(templateCompilationHashes).forEach(
         ([templatePath, templateHash]) => {
@@ -479,6 +484,7 @@ module.exports = async function build(
   await flushPendingPageDataWrites(buildSpan);
   markWebpackStatusAsDone();
 
+  // @ts-ignore
   if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
     if (shouldGenerateEngines()) {
       const state = store.getState();

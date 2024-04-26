@@ -16,6 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "types": ["node", "jest", "fs-extra", "semver"],
     // "incremental": true, // for some reason incremental breaks gatsby build
     "pretty": true,
     "exactOptionalPropertyTypes": true,

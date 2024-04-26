@@ -3,10 +3,10 @@ import { webpackConfig } from "../utils/webpack.config";
 import { build } from "../utils/webpack/bundle";
 import type { IProgram } from "./types";
 
-export const buildProductionBundle = async (
+export async function buildProductionBundle(
   program: IProgram,
   parentSpan: Span,
-): Promise<ReturnType<typeof build>> => {
+): Promise<ReturnType<typeof build>> {
   const { directory } = program;
 
   const compilerConfig = await webpackConfig(
@@ -18,4 +18,4 @@ export const buildProductionBundle = async (
   );
 
   return build(compilerConfig);
-};
+}

@@ -201,6 +201,7 @@ export function maybeConvertSortInputObjectToSortPath(
     return args;
   }
 
+  // @ts-ignore
   if (_CFLAGS_.GATSBY_MAJOR === "5") {
     // check if it's already in expected format
     if (

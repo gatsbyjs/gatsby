@@ -6,23 +6,6 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.24.4",
-    "cheerio": "^1.0.0-rc.12",
-    "unist-util-visit": "^5.0.0",
-    "@viz-js/viz": "^3.4.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3",
-    "hast-util-to-html": "^9.0.1",
-    "mdast-util-to-hast": "^13.1.0",
-    "remark": "^15.0.1",
-    "rimraf": "^5.0.5",
-    "unist-util-find": "3.0.0"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz#readme",
   "keywords": [
     "gatsby",
@@ -36,6 +19,24 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "dependencies": {
+    "@babel/runtime": "^7.24.4",
+    "cheerio": "^1.0.0-rc.12",
+    "unist-util-visit": "^5.0.0",
+    "@viz-js/viz": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "babel-preset-gatsby-package": "workspace:*",
+    "cross-env": "^7.0.3",
+    "hast-util-to-html": "^9.0.1",
+    "mdast-util-to-hast": "^13.1.0",
+    "remark": "^15.0.1",
+    "unist-util-find": "3.0.0"
+  },
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",

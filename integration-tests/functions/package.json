@@ -21,7 +21,6 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "0.5.1",
-    "@jest/types": "29.6.3",
     "@types/jest": "29.5.12",
     "babel-jest": "29.7.0",
     "babel-preset-gatsby-package": "next",

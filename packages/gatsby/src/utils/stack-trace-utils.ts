@@ -1,5 +1,5 @@
 import stackTrace, { type StackFrame } from "stack-trace";
-import url from "url";
+import url from "node:url";
 import { codeFrameColumns } from "@babel/code-frame";
 import {
   TraceMap,
@@ -24,7 +24,7 @@ function getDirName(arg: unknown): string {
   return "-cant-resolve-";
 }
 
-const gatsbyLocation = getDirName(require.resolve("gatsby/package.json"));
+const gatsbyLocation = getDirName(require.resolve("../../package.json"));
 const reduxThunkLocation = getDirName(
   require.resolve("redux-thunk/package.json"),
 );

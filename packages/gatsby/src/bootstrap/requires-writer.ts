@@ -233,6 +233,7 @@ const preferDefault = m => (m && m.default) || m
 
   if (
     process.env.gatsby_executing_command === "develop" ||
+    // @ts-ignore
     (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_PARTIAL_HYDRATION)
   ) {
     asyncRequires = `exports.components = {\n${components

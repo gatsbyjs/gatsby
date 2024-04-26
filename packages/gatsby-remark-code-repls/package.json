@@ -6,21 +6,6 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.24.4",
-    "lz-string": "^1.5.0",
-    "normalize-path": "^3.0.0",
-    "npm-package-arg": "^11.0.2",
-    "recursive-readdir": "^2.2.3",
-    "unist-util-map": "^4.0.0",
-    "urijs": "^1.19.11"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-code-repls#readme",
   "keywords": [
     "babel",
@@ -32,6 +17,24 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "dependencies": {
+    "@babel/runtime": "^7.24.4",
+    "lz-string": "^1.5.0",
+    "normalize-path": "^3.0.0",
+    "npm-package-arg": "^11.0.2",
+    "recursive-readdir": "^2.2.3",
+    "unist-util-map": "^4.0.0",
+    "urijs": "^1.19.11"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/normalize-path": "3.0.2",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "babel-preset-gatsby-package": "workspace:*",
+    "cross-env": "^7.0.3"
+  },
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",

@@ -44,6 +44,7 @@ export function constructParcel(siteRoot: string, cache: Cache): Parcel {
         includeNodeModules: false,
         sourceMap: process.env.NODE_ENV === "development",
         engines: {
+          // @ts-ignore
           node: _CFLAGS_.GATSBY_MAJOR === "5" ? ">= 18.0.0" : ">= 14.15.0",
         },
         distDir: `${siteRoot}/${COMPILED_CACHE_DIR}`,

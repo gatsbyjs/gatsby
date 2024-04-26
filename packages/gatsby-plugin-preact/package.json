@@ -6,21 +6,6 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.24.4",
-    "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
-    "@prefresh/babel-plugin": "^0.5.1",
-    "@prefresh/webpack": "^4.0.0"
-  },
-  "devDependencies": {
-    "@total-typescript/ts-reset": "^0.5.1",
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
-    "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3",
-    "preact": "^10.20.2"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preact#readme",
   "keywords": [
     "gatsby",
@@ -29,6 +14,23 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "dependencies": {
+    "@babel/runtime": "^7.24.4",
+    "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
+    "@prefresh/babel-plugin": "^0.5.1",
+    "@prefresh/webpack": "^4.0.0"
+  },
+  "devDependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
+    "babel-preset-gatsby-package": "workspace:*",
+    "cross-env": "^7.0.3",
+    "preact": "^10.20.2"
+  },
   "peerDependencies": {
     "gatsby": "workspace:*",
     "preact": "^10.20.2",

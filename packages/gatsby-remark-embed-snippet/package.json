@@ -6,18 +6,6 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.24.4",
-    "normalize-path": "^3.0.0",
-    "parse-numeric-range": "^1.3.0",
-    "unist-util-map": "^4.0.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet#readme",
   "keywords": [
     "gatsby",
@@ -25,6 +13,21 @@
     "prism",
     "remark"
   ],
+  "dependencies": {
+    "@babel/runtime": "^7.24.4",
+    "normalize-path": "^3.0.0",
+    "parse-numeric-range": "^1.3.0",
+    "unist-util-map": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/normalize-path": "3.0.2",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "babel-preset-gatsby-package": "workspace:*",
+    "cross-env": "^7.0.3"
+  },
   "peerDependencies": {
     "gatsby": "workspace:*",
     "gatsby-remark-prismjs": "workspace:*",

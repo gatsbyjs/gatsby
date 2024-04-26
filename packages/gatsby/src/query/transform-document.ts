@@ -143,6 +143,7 @@ export function tranformDocument(ast: graphql.DocumentNode): {
   hasChanged: boolean;
   error?: Error;
 } {
+  // @ts-ignore
   if (_CFLAGS_.GATSBY_MAJOR === "5") {
     try {
       return processGraphQLQuery(ast);

@@ -9,6 +9,13 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "license": "MIT",
+  "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "common-tags": "^1.8.2",
@@ -16,7 +23,8 @@
     "sitemap": "^7.1.1"
   },
   "devDependencies": {
-    "@jest/types": "29.6.3",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
     "@types/jest": "29.5.12",
     "jest": "29.7.0",
     "@types/common-tags": "1.8.4",
@@ -26,13 +34,6 @@
     "cross-env": "^7.0.3",
     "gatsby-plugin-utils": "workspace:*"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap#readme",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin"
-  ],
-  "license": "MIT",
-  "main": "index.js",
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",

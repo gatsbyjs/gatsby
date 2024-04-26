@@ -15,7 +15,6 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "0.5.1",
-    "@jest/types": "29.6.3",
     "@types/jest": "29.5.12",
     "cheerio": "1.0.0-rc.12",
     "cross-env": "7.0.3",

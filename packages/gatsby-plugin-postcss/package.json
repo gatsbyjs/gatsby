@@ -6,17 +6,6 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.24.4",
-    "postcss-loader": "^8.1.1"
-  },
-  "devDependencies": {
-    "@total-typescript/ts-reset": "^0.5.1",
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss#readme",
   "keywords": [
     "gatsby",
@@ -25,6 +14,19 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "dependencies": {
+    "@babel/runtime": "^7.24.4",
+    "postcss-loader": "^8.1.1"
+  },
+  "devDependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "babel-preset-gatsby-package": "workspace:*",
+    "cross-env": "^7.0.3"
+  },
   "peerDependencies": {
     "gatsby": "workspace:*",
     "postcss": "^8.4.38",

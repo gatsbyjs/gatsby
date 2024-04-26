@@ -6,22 +6,6 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/code-frame": "^7.24.2",
-    "@babel/runtime": "^7.24.4",
-    "@babel/types": "^7.24.0",
-    "ast-types": "^0.14.2",
-    "common-tags": "^1.8.2",
-    "react-docgen": "^7.0.3"
-  },
-  "devDependencies": {
-    "@types/common-tags": "1.8.4",
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3",
-    "lodash": "^4.17.21"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen#readme",
   "keywords": [
     "gatsby",
@@ -31,6 +15,25 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "dependencies": {
+    "@babel/code-frame": "^7.24.2",
+    "@babel/runtime": "^7.24.4",
+    "@babel/types": "^7.24.0",
+    "ast-types": "^0.14.2",
+    "common-tags": "^1.8.2",
+    "react-docgen": "^7.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/lodash": "4.17.0",
+    "@types/common-tags": "1.8.4",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "babel-preset-gatsby-package": "workspace:*",
+    "cross-env": "^7.0.3",
+    "lodash": "^4.17.21"
+  },
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",

@@ -472,6 +472,7 @@ export const actions = {
     plugin: IGatsbyPlugin,
     traceId?: string | undefined,
   ): ICreateSliceAction => {
+    // @ts-ignore
     if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
       let name = `The plugin "${plugin.name}"`;
       if (plugin.name === "default-site-plugin") {

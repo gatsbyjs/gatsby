@@ -6,6 +6,13 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin"
+  ],
+  "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "@opentelemetry/semantic-conventions": "^1.23.0",
@@ -24,6 +31,9 @@
     "url-join": "^5.0.0"
   },
   "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/lodash": "4.17.0",
     "@types/bluebird": "3.5.42",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
@@ -31,16 +41,6 @@
     "babel-preset-gatsby-package": "workspace:*",
     "cross-env": "^7.0.3"
   },
-  "engines": {
-    "node": ">=20.12.2"
-  },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "gatsby-source-plugin"
-  ],
-  "license": "MIT",
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
@@ -57,5 +57,8 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "test": "npx jest ./src/__tests__ --runInBand",
     "test:watch": "npx jest --watch ./src/__tests__ --runInBand"
+  },
+  "engines": {
+    "node": ">=20.12.2"
   }
 }

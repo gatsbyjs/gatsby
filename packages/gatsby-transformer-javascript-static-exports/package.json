@@ -6,19 +6,6 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/parser": "^7.24.4",
-    "@babel/runtime": "^7.24.4",
-    "@babel/traverse": "^7.24.1",
-    "bluebird": "^3.7.2"
-  },
-  "devDependencies": {
-    "@types/bluebird": "3.5.42",
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-static-exports#readme",
   "keywords": [
     "gatsby",
@@ -26,6 +13,21 @@
     "js"
   ],
   "license": "MIT",
+  "dependencies": {
+    "@babel/parser": "^7.24.4",
+    "@babel/runtime": "^7.24.4",
+    "@babel/traverse": "^7.24.1",
+    "bluebird": "^3.7.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/bluebird": "3.5.42",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "babel-preset-gatsby-package": "workspace:*",
+    "cross-env": "^7.0.3"
+  },
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",

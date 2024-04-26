@@ -402,6 +402,7 @@ export async function renderHTML({
     }
 
     const sliceData: Record<string, ISliceData> = {};
+    // @ts-ignore
     if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
       let readSliceDataActivity: MaybePhantomActivity;
       try {

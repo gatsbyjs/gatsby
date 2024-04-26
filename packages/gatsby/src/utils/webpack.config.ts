@@ -71,6 +71,7 @@ export async function webpackConfig(
   const isPartialHydrationEnabled =
     (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
       process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
+    // @ts-ignore
     _CFLAGS_.GATSBY_MAJOR === "5";
 
   function processEnv(
@@ -491,6 +492,7 @@ export async function webpackConfig(
     ]
 
     // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    // @ts-ignore
     if (_CFLAGS_.GATSBY_MAJOR !== "5") {
       configRules.push({
         test: require.resolve("@gatsbyjs/reach-router/es/index"),
@@ -566,6 +568,7 @@ export async function webpackConfig(
 
     // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
     // Removes it from the client payload as it's not used there
+    // @ts-ignore
     if (_CFLAGS_.GATSBY_MAJOR !== "5") {
       configRules.push({
         test: /react-server-dom-webpack/,
@@ -637,6 +640,7 @@ export async function webpackConfig(
       stage === "build-html" || stage === "develop-html" ? "node" : "web";
     if (target === "web") {
       // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+      // @ts-ignore
       if (_CFLAGS_.GATSBY_MAJOR !== "5") {
         resolve.alias["@reach/router"] = path.join(
           getPackageRoot({ pkg: "@gatsbyjs/reach-router" }),

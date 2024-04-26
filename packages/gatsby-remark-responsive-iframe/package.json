@@ -6,6 +6,14 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "remark"
+  ],
+  "license": "MIT",
+  "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "cheerio": "^1.0.0-rc.12",
@@ -14,6 +22,9 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/lodash": "4.17.0",
     "@types/common-tags": "1.8.4",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
@@ -23,14 +34,6 @@
     "remark-mdx": "^3.0.1",
     "unist-util-find": "3.0.0"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe#readme",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "remark"
-  ],
-  "license": "MIT",
-  "main": "index.js",
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",

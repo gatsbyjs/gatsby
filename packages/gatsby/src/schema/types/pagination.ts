@@ -94,6 +94,7 @@ function getFieldSelectorTC<TContext = any>({
   schemaComposer: SchemaComposer<TContext>;
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer;
 }): AnyTypeComposer<TContext> {
+  // @ts-ignore
   if (_CFLAGS_.GATSBY_MAJOR === "5") {
     return convertToNestedInputType({
       schemaComposer,

@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "0.5.1",
-    "@jest/types": "29.6.3",
     "@types/jest": "29.5.12",
     "babel-plugin-dynamic-import-node-sync": "2.0.1",
     "cpy": "11.0.1",

@@ -10,11 +10,11 @@
     "@slack/web-api": "^5.7.0",
     "actions-toolkit": "^2.2.0",
     "array-to-sentence": "^2.0.0",
-    "date-fns": "^2.9.0",
+    "date-fns": "^3.6.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@jest/types": "29.6.3",
+    "@types/lodash": "4.17.0",
     "@types/jest": "29.5.12",
     "jest": "^27.2.1"
   }

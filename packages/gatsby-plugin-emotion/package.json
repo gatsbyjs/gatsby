@@ -7,24 +7,6 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.24.4",
-    "@emotion/babel-preset-css-prop": "^11.11.0"
-  },
-  "devDependencies": {
-    "@total-typescript/ts-reset": "^0.5.1",
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3"
-  },
-  "peerDependencies": {
-    "@babel/core": "^7.24.4",
-    "@emotion/react": "^11.11.4",
-    "gatsby": "workspace:*",
-    "react": "^18.2.0 || ^0.0.0",
-    "react-dom": "^18.2.0 || ^0.0.0"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
   "keywords": [
     "gatsby",
@@ -38,6 +20,26 @@
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-plugin-emotion"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.24.4",
+    "@emotion/babel-preset-css-prop": "^11.11.0"
+  },
+  "devDependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "babel-preset-gatsby-package": "workspace:*",
+    "cross-env": "^7.0.3"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.24.4",
+    "@emotion/react": "^11.11.4",
+    "gatsby": "workspace:*",
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",

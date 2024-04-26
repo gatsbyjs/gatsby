@@ -150,11 +150,13 @@ const activeFlags: Array<IFlag> = [
       };
 
       return (
+        // @ts-ignore
         _CFLAGS_.GATSBY_MAJOR === "5" &&
         (satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint))
       );
     },
     requires:
+      // @ts-ignore
       Number(_CFLAGS_.GATSBY_MAJOR) < 5
         ? "Partial hydration is only available in Gatsby V5. Please upgrade Gatsby."
         : "Partial hydration requires React 18+ to work.",

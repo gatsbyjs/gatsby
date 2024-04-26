@@ -15,7 +15,6 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "0.5.1",
-    "@jest/types": "29.6.3",
     "@types/jest": "29.5.12",
     "cross-env": "7.0.3",
     "execa": "8.0.1",

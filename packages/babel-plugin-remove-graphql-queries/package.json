@@ -16,6 +16,8 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "@babel/traverse": "7.24.1",

@@ -459,6 +459,7 @@ async function renderHTMLQueue(
           payload: pageSegment,
         });
 
+        // @ts-ignore
         if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
           store.dispatch({
             type: "SET_SLICES_PROPS",
@@ -632,6 +633,7 @@ export async function buildHTML({
   if (
     (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
       process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
+    // @ts-ignore
     _CFLAGS_.GATSBY_MAJOR === "5"
   ) {
     await renderPartialHydrationQueue(workerPool, activity, pagePaths, program);
@@ -708,6 +710,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   if (
     (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
       process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
+    // @ts-ignore
     _CFLAGS_.GATSBY_MAJOR === "5"
   ) {
     if (toRegenerate.length > 0) {
@@ -741,6 +744,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     }
   }
 
+  // @ts-ignore
   if (_CFLAGS_.GATSBY_MAJOR !== "5" && !program.keepPageRenderer) {
     try {
       await deleteRenderer(rendererPath);
@@ -749,6 +753,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     }
   }
 
+  // @ts-ignore
   if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
     await buildSlices({
       program,

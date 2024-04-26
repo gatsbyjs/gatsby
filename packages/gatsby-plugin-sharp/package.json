@@ -6,6 +6,15 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "image",
+    "sharp"
+  ],
+  "license": "MIT",
+  "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "async": "^3.2.5",
@@ -21,6 +30,10 @@
     "sharp": "^0.33.3"
   },
   "devDependencies": {
+    "@types/semver": "7.5.8",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/lodash": "4.17.0",
     "@types/bluebird": "3.5.42",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
@@ -28,15 +41,6 @@
     "cross-env": "^7.0.3",
     "gatsby-plugin-image": "workspace:*"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp#readme",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "image",
-    "sharp"
-  ],
-  "license": "MIT",
-  "main": "index.js",
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",

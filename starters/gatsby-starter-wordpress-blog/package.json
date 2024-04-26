@@ -23,6 +23,9 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/lodash": "4.17.0",
     "prettier": "3.2.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-wordpress-blog#readme",

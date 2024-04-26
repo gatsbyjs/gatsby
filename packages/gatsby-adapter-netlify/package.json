@@ -34,7 +34,7 @@
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "@netlify/cache-utils": "^5.1.5",
-    "@netlify/config": "^20.12.2",
+    "@netlify/config": "^20.12.3",
     "@netlify/functions": "^2.6.0",
     "cookie": "^0.6.0",
     "fastq": "^1.17.1",
@@ -44,6 +44,8 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "@netlify/edge-functions": "^2.5.1",

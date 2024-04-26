@@ -164,6 +164,7 @@ export function htmlReducer(
     }
 
     case "SET_WEBPACK_COMPILATION_HASH": {
+      // @ts-ignore
       if (!(_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES)) {
         if (state.browserCompilationHash !== action.payload) {
           state.browserCompilationHash = action.payload;
@@ -277,6 +278,7 @@ export function htmlReducer(
         }
       }
 
+      // @ts-ignore
       if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
         // mark slices as dirty
         for (const sliceName of action.payload.slices) {
@@ -296,6 +298,7 @@ export function htmlReducer(
         }
       }
 
+      // @ts-ignore
       if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
         // loop through slice names and mark their slice props as dirty
         for (const sliceNameInfo of state.slicesProps.bySliceName.values()) {

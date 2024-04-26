@@ -196,6 +196,7 @@ export async function createPageSSRBundle({
         GATSBY_SLICES: JSON.stringify(slicesStateObject),
         GATSBY_SLICES_BY_TEMPLATE: JSON.stringify(slicesByTemplateStateObject),
         GATSBY_SLICES_SCRIPT: JSON.stringify(
+          // @ts-ignore
           _CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES
             ? fs.readFileSync(
                 path.join(

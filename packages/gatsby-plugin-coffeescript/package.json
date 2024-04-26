@@ -10,19 +10,6 @@
   "contributors": [
     "Noah Lange <noahrlange@gmail.com>"
   ],
-  "dependencies": {
-    "@babel/runtime": "^7.24.4",
-    "coffee-loader": "^5.0.0",
-    "coffee-react-transform": "^5.0.0",
-    "coffeescript": "^2.7.0"
-  },
-  "devDependencies": {
-    "@total-typescript/ts-reset": "^0.5.1",
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
-    "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3"
-  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-coffeescript#readme",
   "keywords": [
     "coffeescript",
@@ -31,6 +18,21 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "dependencies": {
+    "@babel/runtime": "^7.24.4",
+    "coffee-loader": "^5.0.0",
+    "coffee-react-transform": "^5.0.0",
+    "coffeescript": "^2.7.0"
+  },
+  "devDependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "babel-preset-gatsby-package": "workspace:*",
+    "cross-env": "^7.0.3"
+  },
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",

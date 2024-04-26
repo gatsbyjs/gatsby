@@ -7,6 +7,14 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "bundledDependencies": [],
+  "deprecated": false,
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-lever#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin"
+  ],
+  "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "bluebird": "^3.7.2",
@@ -15,21 +23,16 @@
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21"
   },
-  "deprecated": false,
   "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/lodash": "4.17.0",
     "@types/bluebird": "3.5.42",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "workspace:*",
     "cross-env": "^7.0.3"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-lever#readme",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "gatsby-source-plugin"
-  ],
-  "license": "MIT",
   "peerDependencies": {
     "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",

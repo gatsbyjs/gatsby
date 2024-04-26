@@ -6,6 +6,13 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin"
+  ],
+  "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "@contentful/rich-text-react-renderer": "^15.19.6",
@@ -28,6 +35,10 @@
     "contentful-resolve-response": "^1.8.1"
   },
   "devDependencies": {
+    "@types/semver": "7.5.8",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/lodash": "4.17.0",
     "@types/common-tags": "1.8.4",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
@@ -36,13 +47,6 @@
     "cross-env": "^7.0.3",
     "nock": "^13.5.4"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful#readme",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "gatsby-source-plugin"
-  ],
-  "license": "MIT",
   "peerDependencies": {
     "gatsby": "workspace:*",
     "gatsby-plugin-image": "workspace:*",

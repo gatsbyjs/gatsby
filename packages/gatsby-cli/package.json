@@ -56,8 +56,11 @@
     "yurnalist": "^2.1.0"
   },
   "devDependencies": {
+    "@types/semver": "7.5.8",
+    "@types/react": "^18.3.0",
     "@total-typescript/ts-reset": "^0.5.1",
     "@babel/cli": "^7.24.1",
+    "@types/lodash": "4.17.0",
     "@sigmacomputing/babel-plugin-lodash": "^3.3.5",
     "@types/hosted-git-info": "^3.0.5",
     "@types/yargs": "^17.0.32",
