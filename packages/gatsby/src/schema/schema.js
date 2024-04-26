@@ -485,6 +485,8 @@ const convertDirectivesToExtensions = (typeComposer, directives) => {
           extensions[`nodeInterface`] = true
         }
         break
+      case `authorization`:
+        extensions[`authorization`] = args
       default:
     }
   })
