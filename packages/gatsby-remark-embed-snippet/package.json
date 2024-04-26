@@ -27,7 +27,7 @@
   ],
   "peerDependencies": {
     "gatsby": "workspace:*",
-    "gatsby-remark-prismjs": "^7.13.1",
+    "gatsby-remark-prismjs": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

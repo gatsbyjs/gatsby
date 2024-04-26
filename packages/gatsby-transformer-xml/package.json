@@ -13,6 +13,7 @@
     "xml-parser": "^1.2.1"
   },
   "devDependencies": {
+    "@types/bluebird": "3.5.42",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "workspace:*",

@@ -51,6 +51,7 @@
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "@types/cache-manager": "^4.0.6",
+    "@types/better-queue": "3.8.6",
     "@types/semver": "^7.5.8",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
@@ -78,9 +79,9 @@
   "license": "MIT",
   "peerDependencies": {
     "gatsby": "workspace:*",
-    "gatsby-plugin-image": "^3.13.1",
-    "gatsby-plugin-sharp": "^5.13.1",
-    "gatsby-transformer-sharp": "^5.13.1",
+    "gatsby-plugin-image": "workspace:*",
+    "gatsby-plugin-sharp": "workspace:*",
+    "gatsby-transformer-sharp": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

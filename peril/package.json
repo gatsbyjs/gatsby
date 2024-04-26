@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "@octokit/rest": "^20.1.0",
-    "jest": "^29.7.0"
+    "@jest/types": "29.6.3",
+    "@types/jest": "29.5.12",
+    "jest": "29.7.0"
   },
   "scripts": {
     "test": "jest"

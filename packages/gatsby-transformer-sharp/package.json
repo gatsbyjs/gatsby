@@ -17,6 +17,8 @@
     "sharp": "^0.33.3"
   },
   "devDependencies": {
+    "@types/common-tags": "1.8.4",
+    "@types/bluebird": "3.5.42",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "workspace:*",
@@ -32,7 +34,7 @@
   "license": "MIT",
   "peerDependencies": {
     "gatsby": "workspace:*",
-    "gatsby-plugin-sharp": "^5.13.1",
+    "gatsby-plugin-sharp": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

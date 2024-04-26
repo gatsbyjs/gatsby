@@ -14,6 +14,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "@types/common-tags": "1.8.4",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "workspace:*",

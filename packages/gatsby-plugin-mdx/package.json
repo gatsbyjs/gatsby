@@ -34,6 +34,9 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
+    "@jest/types": "29.6.3",
+    "@types/jest": "29.5.12",
+    "jest": "29.7.0",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "@types/estree": "^1.0.5",
@@ -49,7 +52,7 @@
   "peerDependencies": {
     "@mdx-js/react": "^3.0.1",
     "gatsby": "workspace:*",
-    "gatsby-source-filesystem": "^5.13.1",
+    "gatsby-source-filesystem": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

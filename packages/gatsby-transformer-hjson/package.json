@@ -12,6 +12,7 @@
     "hjson": "^3.2.2"
   },
   "devDependencies": {
+    "@types/bluebird": "3.5.42",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "workspace:*",

@@ -40,7 +40,7 @@
   },
   "peerDependencies": {
     "gatsby": "workspace:*",
-    "gatsby-plugin-image": "^3.13.1",
+    "gatsby-plugin-image": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

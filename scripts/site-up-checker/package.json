@@ -16,5 +16,8 @@
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
     "webhook-discord": "^2.0.6"
+  },
+  "devDependencies": {
+    "@types/bluebird": "3.5.42"
   }
 }

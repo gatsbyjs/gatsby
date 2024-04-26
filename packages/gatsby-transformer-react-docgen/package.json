@@ -15,6 +15,7 @@
     "react-docgen": "^7.0.3"
   },
   "devDependencies": {
+    "@types/common-tags": "1.8.4",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "workspace:*",

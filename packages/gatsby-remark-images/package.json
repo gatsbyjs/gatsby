@@ -40,7 +40,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "workspace:*",
-    "gatsby-plugin-sharp": "^5.13.1",
+    "gatsby-plugin-sharp": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

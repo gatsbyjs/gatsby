@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
+    "@types/bluebird": "3.5.42",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "@types/micromatch": "^4.0.7",

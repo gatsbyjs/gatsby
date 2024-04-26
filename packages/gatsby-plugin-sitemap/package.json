@@ -16,6 +16,10 @@
     "sitemap": "^7.1.1"
   },
   "devDependencies": {
+    "@jest/types": "29.6.3",
+    "@types/jest": "29.5.12",
+    "jest": "29.7.0",
+    "@types/common-tags": "1.8.4",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "workspace:*",

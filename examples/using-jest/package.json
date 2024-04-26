@@ -26,6 +26,8 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@jest/types": "29.6.3",
+    "@types/jest": "29.5.12",
     "@total-typescript/ts-reset": "0.5.1",
     "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "15.0.2",

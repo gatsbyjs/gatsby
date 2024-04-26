@@ -18,6 +18,8 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@jest/types": "29.6.3",
+    "@types/jest": "29.5.12",
     "@total-typescript/ts-reset": "0.5.1",
     "fs-extra": "11.2.0",
     "gatsby-core-utils": "4.13.1",

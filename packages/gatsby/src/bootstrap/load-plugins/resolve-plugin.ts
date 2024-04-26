@@ -36,6 +36,13 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
       fs.readFileSync(`${localPluginPath}/package.json`, "utf-8"),
     ) as PackageJson;
     const name = packageJSON.name || pluginName;
+
+    if (typeof name === "undefined" || typeof pluginName === "undefined") {
+      throw new Error(
+        "The plugin has no name. Please add a name to your plugin's package.json.",
+      );
+    }
+
     warnOnIncompatiblePeerDependency(name, packageJSON);
 
     return {
@@ -44,6 +51,7 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
       id: createPluginId(name),
       version:
         packageJSON?.version || createFileContentHash(localPluginPath, "**"),
+
       ...getResolvedFieldsForPlugin(rootDir, name),
     };
   }
@@ -63,6 +71,7 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
     const resolvedPath = slash(
       path.dirname(
         requireSource.resolve(
+          // @ts-ignore strange ts behavior
           path.isAbsolute(pluginName)
             ? pluginName
             : `${pluginName}/package.json`,
