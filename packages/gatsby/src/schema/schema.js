@@ -487,6 +487,7 @@ const convertDirectivesToExtensions = (typeComposer, directives) => {
         break
       case `authorization`:
         extensions[`authorization`] = args
+        break
       default:
     }
   })
