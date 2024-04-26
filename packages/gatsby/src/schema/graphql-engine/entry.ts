@@ -21,7 +21,7 @@ import {
   gatsbyNodes,
   gatsbyWorkers,
   flattenedPlugins,
-  // @ts-ignore
+  // @ts-ignore Cannot find module '.cache/query-engine-plugins' or its corresponding type declarations.ts(2307)
 } from ".cache/query-engine-plugins";
 import { initTracer } from "../../utils/tracer";
 

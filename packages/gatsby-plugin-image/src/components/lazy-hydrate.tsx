@@ -20,7 +20,7 @@ type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
 async function applyPolyfill(element: HTMLImageElement): Promise<void> {
   if (!("objectFitPolyfill" in window)) {
     await import(
-      // @ts-ignore typescript can't find the module for some reason ¯\_(ツ)_/¯
+      // @ts-ignore File 'gatsby/node_modules/.pnpm/objectFitPolyfill@2.3.5_6qfcwrtawxdzmmw4xfo3wvlbeq/node_modules/objectFitPolyfill/global.d.ts' is not a module.ts(2306)
       /* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ "objectFitPolyfill"
     );
   }

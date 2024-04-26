@@ -7,9 +7,11 @@ import webpack, {
   javascript,
   Compilation,
   AsyncDependenciesBlock,
+  WebpackError,
 } from "webpack";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import type Reporter from "gatsby-cli/lib/reporter";
+import type { Directive, ModuleDeclaration, Program, Statement } from "estree";
 
 type IModuleExport = {
   id: string;
@@ -67,9 +69,9 @@ export class PartialHydrationPlugin {
         };
       });
 
-      // @ts-ignore
+      // @ts-ignore Property 'modules' does not exist on type 'NormalModule'.ts(2339)
       if (normalModule.modules) {
-        // @ts-ignore
+        // @ts-ignore Property 'modules' does not exist on type 'NormalModule'.ts(2339)
         normalModule.modules.forEach((mod) => {
           if (mod.buildInfo.rsc) {
             const normalizedModuleKey = createNormalizedModuleKey(
@@ -150,9 +152,9 @@ export class PartialHydrationPlugin {
             newClientModules.add(mod);
           }
 
-          // @ts-ignore
+          // @ts-ignore Property 'modules' does not exist on type 'Module'.ts(2339)
           if (mod.modules) {
-            // @ts-ignore
+            // @ts-ignore Property 'modules' does not exist on type 'Module'.ts(2339)
             for (const subMod of mod.modules) {
               if (subMod.buildInfo.rsc) {
                 mapOriginalModuleToPotentiallyConcatanetedModule.set(
@@ -316,16 +318,15 @@ export class PartialHydrationPlugin {
     compilation: Compilation,
     context: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    entry: any /* Dependency */,
-    options: {
-      name: string;
-    } /* EntryOptions */,
+    entry: webpack.Dependency /* Dependency */,
+    options: webpack.EntryOptions /* EntryOptions */,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> /* Promise<module> */ {
     return new Promise((resolve, reject) => {
-      // @ts-ignore
       try {
-        const oldEntry = compilation.entries.get(options.name);
+        const oldEntry = options.name
+          ? compilation.entries.get(options.name)
+          : "";
         if (!oldEntry) {
           resolve(null);
           return;
@@ -338,15 +339,19 @@ export class PartialHydrationPlugin {
             context,
             dependency: entry,
           },
-          // @ts-ignore
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (err: Error | undefined, module: any) => {
+          (
+            err: WebpackError | null | undefined,
+            module: webpack.Module | undefined,
+          ) => {
             if (err) {
               compilation.hooks.failedEntry.call(entry, options, err);
               return reject(err);
             }
 
-            compilation.hooks.succeedEntry.call(entry, options, module);
+            if (module) {
+              compilation.hooks.succeedEntry.call(entry, options, module);
+            }
             return resolve(module);
           },
         );
@@ -380,23 +385,31 @@ export class PartialHydrationPlugin {
       }
     });
 
-    compiler.hooks.finishMake.tapPromise(this.name, async (compilation) => {
-      if (compilation.compiler.parentCompilation) {
-        // child compilation happen for css modules for example, we only care about the main compilation
-        return;
-      }
-      await this.addClientModuleEntries(compilation);
-    });
+    compiler.hooks.finishMake.tapPromise(
+      this.name,
+      async (compilation: webpack.Compilation): Promise<void> => {
+        if (compilation.compiler.parentCompilation) {
+          // child compilation happen for css modules for example, we only care about the main compilation
+          return;
+        }
+        await this.addClientModuleEntries(compilation);
+      },
+    );
 
     compiler.hooks.thisCompilation.tap(
       this.name,
-      (compilation, { normalModuleFactory }) => {
+      (compilation: webpack.Compilation, { normalModuleFactory }): void => {
         const parserCallback = (parser: javascript.JavascriptParser): void => {
-          parser.hooks.program.tap(this.name, (ast) => {
+          parser.hooks.program.tap(this.name, (ast: Program): void => {
             const hasClientExportDirective = ast.body.find(
-              (statement) =>
-                statement.type === "ExpressionStatement" &&
-                (statement as IDirective).directive === "use client",
+              (
+                statement: ModuleDeclaration | Statement | Directive,
+              ): boolean => {
+                return (
+                  statement.type === "ExpressionStatement" &&
+                  (statement as IDirective).directive === "use client"
+                );
+              },
             );
 
             const module = parser.state.module;
@@ -467,7 +480,7 @@ export class PartialHydrationPlugin {
               if (!group.getModulePostOrderIndex(cssModule)) {
                 group.setModulePostOrderIndex(
                   cssModule,
-                  // @ts-ignore
+                  // @ts-ignore Property '_modulePostOrderIndices' does not exist on type 'ChunkGroup'. Did you mean 'setModulePostOrderIndex'?ts(2551)
                   group._modulePostOrderIndices.size + 1,
                 );
               }

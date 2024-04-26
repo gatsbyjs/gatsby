@@ -4939,7 +4939,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  stdio: "inherit"
 			};
 			function setDefaultSpawnStdio(stdio) {
-			  // @ts-ignore
+			  // @ts-ignore Cannot assign to 'stdio' because it is a read-only property.ts(2540)
 			  defaultSpawnArgs.stdio = stdio;
 			}
 			async function promisifiedSpawn([cmd, args = [], spawnArgs = {}]) {
@@ -5103,7 +5103,6 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			    }]);
 			    let workspacesLayout;
 			    try {
-			      // @ts-ignore
 			      workspacesLayout = JSON.parse(JSON.parse(stdout).data);
 			    } catch (e) {
 			      /*
@@ -5162,7 +5161,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			      const {
 			        location
 			      } = workspacesLayout[workspaceName];
-			      const pkgJsonPath = path$1.join(yarnWorkspaceRoot, location, "package.json");
+			      const pkgJsonPath = path.join(yarnWorkspaceRoot, location, "package.json");
 			      if (!fs.existsSync(pkgJsonPath)) {
 			        return;
 			      }
@@ -6007,7 +6006,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 			    let packageName;
 
-			    // @ts-ignore
+			    // @ts-ignore Type 'unknown' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
 			    for (const [_packageName, packagePath] of packagePathMatchingEntries) {
 			      const relativeToThisPackage = path$1.relative(packagePath, filePath);
 			      if (!relativeToThisPackage.startsWith("..")) {

@@ -136,7 +136,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   // eslint-disable-next-line new-cap
   const router = express.Router();
 
-  // @ts-ignore
+  // @ts-ignore  Argument of type '(req: Request, _res: Response, next: any) => void' is not assignable to parameter of type 'PathParams'.ts(2769)
   app.use(telemetry.expressMiddleware("SERVE"));
 
   router.use(compression());

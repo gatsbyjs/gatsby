@@ -105,7 +105,7 @@ export function constructPageDataString(
     `"result":${result},` +
     `"staticQueryHashes":${JSON.stringify(staticQueryHashes)}`;
 
-  // @ts-ignore
+  // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
   if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
     const formattedSlices = traverseSlicesUsedByTemplates(
       pagePath,

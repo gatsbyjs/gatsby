@@ -167,7 +167,7 @@ export function createDistinctResolver(
       if (Array.isArray(value)) {
         value.forEach((subValue) =>
           values.add(
-            // @ts-ignore
+            // @ts-ignore Argument of type 'unknown' is not assignable to parameter of type 'string'.ts(2345)
             subValue instanceof Date ? subValue.toISOString() : subValue,
           ),
         );

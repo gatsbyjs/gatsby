@@ -8,7 +8,6 @@ import findWorkspaceRoot from "find-yarn-workspace-root";
 
 import { publishPackagesLocallyAndInstall } from "./local-npm-registry/index";
 import { checkDepsChanges } from "./utils/check-deps-changes";
-// @ts-ignore
 import { getDependantPackages } from "./utils/get-dependant-packages";
 import {
   setDefaultSpawnStdio,
@@ -260,7 +259,7 @@ export async function watch(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let packageName: any;
 
-      // @ts-ignore
+      // @ts-ignore Type 'unknown' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
       for (const [_packageName, packagePath] of packagePathMatchingEntries) {
         const relativeToThisPackage = path.relative(packagePath, filePath);
         if (!relativeToThisPackage.startsWith("..")) {

@@ -7,7 +7,6 @@ export async function customizeSchema({
   deferNodeMutation,
   refresh, // webhookBody,//coming soon
 }: Partial<IDataLayerContext>): Promise<void> {
-  // @ts-ignore
   const activity = reporter.activityTimer("createSchemaCustomization", {
     parentSpan,
   });

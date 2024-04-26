@@ -1,6 +1,5 @@
 import { stripIndent } from "common-tags";
 import chalk from "chalk";
-// @ts-ignore
 import { trackError } from "gatsby-telemetry";
 import { globalTracer, Span, SpanContext } from "opentracing";
 
@@ -36,7 +35,6 @@ import {
   registerAdditionalDiagnosticOutputHandler,
   type AdditionalDiagnosticsOutputHandler,
 } from "./redux/diagnostics";
-// @ts-ignore
 import { isTruthy } from "gatsby-core-utils/is-truthy";
 
 const errorFormatter = getErrorFormatter();
@@ -123,7 +121,6 @@ class Reporter {
     pluginName?: string | undefined,
   ): never => {
     const reporterError = this.error(errorMeta, error, pluginName);
-    // @ts-ignore
     trackError("GENERAL_PANIC", { error: reporterError });
     prematureEnd();
     return process.exit(1);
@@ -135,7 +132,6 @@ class Reporter {
     pluginName?: string | undefined,
   ): IStructuredError | Array<IStructuredError> => {
     const reporterError = this.error(errorMeta, error, pluginName);
-    // @ts-ignore
     trackError("BUILD_PANIC", { error: reporterError });
     if (process.env.gatsby_executing_command === "build") {
       prematureEnd();
@@ -209,7 +205,6 @@ class Reporter {
 
     if (structuredError) {
       reporterActions.createLog(structuredError);
-      // @ts-ignore
       trackError("GENERIC_ERROR", { error: structuredError });
     }
 
@@ -384,7 +379,7 @@ class Reporter {
       if (isLogIntentMessage(msg)) {
         reduxReporterActions[msg.payload.name].call(
           reduxReporterActions,
-          // @ts-ignore Next line (`...msg.payload.args`) cause "A spread argument
+          // @ts-ignore A spread argument must either have a tuple type or be passed to a rest parameter.ts(2556)
           // must either have a tuple type or be passed to a rest parameter"
           ...msg.payload.args,
         );

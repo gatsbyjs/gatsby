@@ -1,6 +1,6 @@
-// @ts-ignore
+// @ts-ignore '"file-type"' has no exported member named 'fileTypeFromFile'. Did you mean 'fileTypeFromBlob'?ts(2724)
 import { fileTypeFromFile } from "file-type";
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 import Queue from "fastq";
 import { createContentDigest } from "./create-content-digest";

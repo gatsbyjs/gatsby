@@ -171,8 +171,6 @@ function setupFsWrapper(): string {
     const dbPath = path.join(TEMP_CACHE_DIR, "data", "datastore");
 
     // Gatsby uses this instead of fs if present
-    // eslint-disable-next-line no-underscore-dangle
-    // @ts-ignore __promisify__ stuff
     global._fsWrapper = lfs;
 
     if (!cdnDatastore) {

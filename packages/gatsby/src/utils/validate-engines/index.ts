@@ -25,7 +25,6 @@ export async function validateEnginesWithActivity(
 
   const validateEnginesActivity = reporter.activityTimer(
     "Validating Rendering Engines",
-    // @ts-ignore
     {
       parentSpan: buildSpan,
     },

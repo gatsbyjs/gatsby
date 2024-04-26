@@ -1,14 +1,17 @@
-import NProgress from "accessible-nprogress";
-import { GatsbyBrowser } from "gatsby";
+import NProgress, { type Settings } from "accessible-nprogress";
+import type { GatsbyBrowser, PluginOptions } from "gatsby";
 
-const defaultOptions = { color: "#29d" };
+const defaultOptions: Settings & { color: string } = { color: "#29d" };
 
 export const onClientEntry: GatsbyBrowser["onClientEntry"] = (
   _gatsbyApi,
   pluginOptions = { plugins: [] },
 ) => {
   // Merge default options with user defined options in `gatsby-config.js`
-  const options = { ...defaultOptions, ...pluginOptions };
+  const options: Settings & { color: string } & PluginOptions = {
+    ...defaultOptions,
+    ...pluginOptions,
+  };
 
   // Inject styles.
   const styles = `
@@ -85,14 +88,13 @@ export const onClientEntry: GatsbyBrowser["onClientEntry"] = (
   node.innerHTML = styles;
   document.head.appendChild(node);
 
-  // @ts-ignore
   NProgress.configure(options);
 };
 
-export const onRouteUpdateDelayed = () => {
+export const onRouteUpdateDelayed = (): void => {
   NProgress.start();
 };
 
-export const onRouteUpdate = () => {
+export const onRouteUpdate = (): void => {
   NProgress.done();
 };

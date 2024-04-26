@@ -1,6 +1,5 @@
 import { IPreviewData } from "./../steps/preview/index";
 import type { NodePluginArgs, Reporter } from "gatsby";
-// @ts-ignore
 import type { Application } from "express";
 
 export type GatsbyNodeApiHelpers = NodePluginArgs & {

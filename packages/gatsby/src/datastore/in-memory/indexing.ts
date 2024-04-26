@@ -441,7 +441,7 @@ function addNodeToFilterCache({
         return markNodeForValue(
           filterCache,
           node,
-          // @ts-ignore
+          // @ts-ignore Argument of type 'unknown' is not assignable to parameter of type 'FilterValueNullable'.ts(2345)
           v,
           indexFields,
           resolvedFields,

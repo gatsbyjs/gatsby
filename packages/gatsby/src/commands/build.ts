@@ -140,7 +140,6 @@ module.exports = async function build(
       parentSpan: buildSpan,
     });
 
-  // @ts-ignore
   await apiRunnerNode("onPreBuild", {
     graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
@@ -237,7 +236,7 @@ module.exports = async function build(
     );
 
     closeHTMLBundleCompilation = close;
-    // @ts-ignore
+    // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
     if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
       const { renderPageHash, templateHashes } = getSSRChunkHashes({
         stats,
@@ -259,7 +258,7 @@ module.exports = async function build(
   if (
     (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
       process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
-    // @ts-ignore
+    // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
     _CFLAGS_.GATSBY_MAJOR === "5"
   ) {
     const buildPartialHydrationBundleActivityProgress = report.activityTimer(
@@ -362,7 +361,7 @@ module.exports = async function build(
     await mergeWorkerState(workerPool, buildSpan);
   }
 
-  // @ts-ignore
+  // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
   if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
     await runSliceQueries({
       queryIds,
@@ -404,7 +403,7 @@ module.exports = async function build(
     components: store.getState().components,
   });
 
-  // @ts-ignore
+  // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
   if (!(_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES)) {
     if (process.send && shouldGenerateEngines()) {
       await waitMaterializePageMode;
@@ -443,7 +442,7 @@ module.exports = async function build(
       rewriteActivityTimer.end();
     }
 
-    // @ts-ignore
+    // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
     if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
       Object.entries(templateCompilationHashes).forEach(
         ([templatePath, templateHash]) => {
@@ -484,7 +483,7 @@ module.exports = async function build(
   await flushPendingPageDataWrites(buildSpan);
   markWebpackStatusAsDone();
 
-  // @ts-ignore
+  // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
   if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
     if (shouldGenerateEngines()) {
       const state = store.getState();
@@ -626,7 +625,6 @@ module.exports = async function build(
   reporter._renderPageTree({
     components: state.components,
     functions: state.functions,
-    // @ts-ignore
     pages: state.pages,
     root: state.program.directory,
   });

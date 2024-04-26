@@ -1371,6 +1371,8 @@ export interface NodePluginArgs {
 
 interface ActionPlugin {
   name: string;
+  version?: string | undefined;
+  resolve?: string | undefined;
 }
 
 interface CreateNodeFieldArgs {

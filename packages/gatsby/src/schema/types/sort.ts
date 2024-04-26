@@ -229,6 +229,5 @@ export function getSortInputNestedObjects({
     leafInputComposer: getSortOrderEnum({ schemaComposer }),
   });
 
-  // @ts-ignore TODO: correct types
   return itc.List;
 }

@@ -293,7 +293,10 @@ export type GatsbyNodeAPI =
   | "onPreExtractQueries"
   | "onPreInit"
   | "resolvableExtensions"
-  | "preprocessSource";
+  | "preprocessSource"
+  | "onPreBuild"
+  | "setFieldsOnGraphQLNodeType"
+  | "onCreateDevServer";
 
 export type FlattenedPlugin = {
   resolve: SystemPath;

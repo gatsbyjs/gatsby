@@ -396,7 +396,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
   },
 };
 
-// @ts-ignore
 export const developMachine = createMachine(developConfig, {
   services: developServices,
   actions: buildActions,

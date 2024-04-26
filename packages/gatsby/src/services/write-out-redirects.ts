@@ -9,7 +9,6 @@ export async function writeOutRedirects({
   parentSpan,
 }: Partial<IQueryRunningContext>): Promise<void> {
   // Write out redirects.
-  // @ts-ignore
   const activity = reporter.activityTimer("write out redirect data", {
     parentSpan,
   });

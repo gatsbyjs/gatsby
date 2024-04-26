@@ -27,7 +27,6 @@ export async function runPageQueries({
     "run page queries",
     pageQueryIds.length,
     0,
-    // @ts-ignore
     {
       id: "page-query-running",
       parentSpan,

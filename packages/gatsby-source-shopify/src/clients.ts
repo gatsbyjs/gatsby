@@ -80,7 +80,8 @@ export function createRestClient(options: IShopifyPluginOptions): IRestClient {
   }
 
   return {
-    // @ts-ignore
-    request: async (path: string): Promise<Response> => shopifyFetch(path),
+    request: async (path: string): Promise<Response> => {
+      return shopifyFetch(path);
+    },
   };
 }

@@ -127,8 +127,15 @@ export function countUsingIndexOnly(args: IFilterArgs): number {
       end: [getValueEdgeAfter(keyPrefix)],
       snapshot: false,
     };
-    // @ts-ignore
-    return args.databases.indexes.getKeysCount(range);
+
+    return (
+      args.databases?.indexes.getKeysCount({
+        ...range,
+        limit: range.limit ?? 1,
+        offset: range.offset ?? 0,
+        snapshot: range.snapshot ?? false,
+      }) ?? 0
+    );
   }
   let count = 0;
   for (let { start, end } of ranges) {
@@ -137,8 +144,13 @@ export function countUsingIndexOnly(args: IFilterArgs): number {
     // Assuming ranges are not overlapping
     const range: ILmdbStoreRangeOptions = { start, end, snapshot: false };
 
-    // @ts-ignore
-    count += args.databases?.indexes.getKeysCount(range) ?? 0;
+    count +=
+      args.databases?.indexes.getKeysCount({
+        ...range,
+        limit: range.limit ?? 1,
+        offset: range.offset ?? 0,
+        snapshot: range.snapshot ?? false,
+      }) ?? 0;
   }
   return count;
 }
@@ -260,8 +272,13 @@ function* traverseRanges(
   ranges: Array<ILmdbStoreRangeOptions>,
 ): Generator<IIndexEntry> {
   for (const range of ranges) {
-    // @ts-ignore
-    yield* context.databases?.indexes.getRange(range);
+    // @ts-ignore ype 'RangeIterable<{ key: any[]; value: string; version?: number; }> | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
+    yield* context.databases?.indexes.getRange({
+      ...range,
+      limit: range.limit ?? 1,
+      offset: range.offset ?? 0,
+      snapshot: range.snapshot ?? false,
+    });
   }
 }
 

@@ -165,7 +165,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     return next();
   });
 
-  // @ts-ignore
   const machine = developMachine.withContext({
     program,
     parentSpan,

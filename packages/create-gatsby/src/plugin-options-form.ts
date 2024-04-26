@@ -38,7 +38,8 @@ function getName(key: string): string | undefined {
   const plugins = [cmses, styles]; // "features" doesn't map to names
   for (const types of plugins) {
     if (key in types) {
-      // @ts-ignore
+      // @ts-ignore Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ "gatsby-source-contentful": { message: string; plugins: string[]; }; "gatsby-source-datocms": { message: string; plugins: string[]; }; "gatsby-plugin-netlify-cms": { message: string; dependencies: string[]; }; "gatsby-source-sanity": { ...; }; "gatsby-source-shopify": { ...; }; "gatsby-source-wordpress": { ...; };...'.
+      // No index signature with a parameter of type 'string' was found on type '{ "gatsby-source-contentful": { message: string; plugins: string[]; }; "gatsby-source-datocms": { message: string; plugins: string[]; }; "gatsby-plugin-netlify-cms": { message: string; dependencies: string[]; }; "gatsby-source-sanity": { ...; }; "gatsby-source-shopify": { ...; }; "gatsby-source-wordpress": { ...; };...'.ts(7053)
       return types[key].message;
     }
   }

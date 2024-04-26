@@ -60,7 +60,6 @@ const queue = Queue<
 
   const httpHeaders = getRequestHeadersForUrl(url, store);
 
-  // @ts-ignore
   const filePath = await fetchRemoteFile({
     url,
     cacheKey: contentDigest,

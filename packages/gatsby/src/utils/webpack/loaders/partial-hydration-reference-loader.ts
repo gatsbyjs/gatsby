@@ -72,7 +72,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
             }
 
             if (id.type === "ObjectPattern") {
-              // @ts-ignore Wrong type
+              // @ts-ignore Property 'value' does not exist on type 'RestElement | AssignmentProperty'.ts(2339)
               for (const { value } of id.properties) {
                 if (value.type === "Identifier" && value.name) {
                   references.push(

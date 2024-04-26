@@ -72,6 +72,8 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
       path.dirname(
         requireSource.resolve(
           // @ts-ignore strange ts behavior
+          // Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          // Type 'undefined' is not assignable to type 'string'.ts(2345)
           path.isAbsolute(pluginName)
             ? pluginName
             : `${pluginName}/package.json`,

@@ -63,7 +63,8 @@ export class ForceCssHMRForEdgeCases {
 
               if (
                 !this.originalBlankCssHash &&
-                // @ts-ignore - exists on NormalModule but not Module
+                // @ts-ignore Property 'rawRequest' does not exist on type 'Module'.ts(2339)
+                // exists on NormalModule but not Module
                 module.rawRequest === "./blank.css"
               ) {
                 this.blankCssKey = key;
@@ -71,7 +72,8 @@ export class ForceCssHMRForEdgeCases {
                   records.chunkModuleHashes[this.blankCssKey];
               }
 
-              // @ts-ignore - exists on NormalModule but not Module
+              // @ts-ignore Property 'rawRequest' does not exist on type 'Module'.ts(2339)
+              // exists on NormalModule but not Module
               const isUsingMiniCssExtract = module.loaders?.find((loader) =>
                 loader?.loader?.includes("mini-css-extract-plugin"),
               );

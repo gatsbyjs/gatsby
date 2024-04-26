@@ -8,7 +8,6 @@ export async function postBootstrap({
   parentSpan,
   deferNodeMutation,
 }: Partial<IDataLayerContext>): Promise<void> {
-  // @ts-ignore
   const activity = reporter.activityTimer("onPostBootstrap", {
     parentSpan,
   });

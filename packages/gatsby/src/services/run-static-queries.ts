@@ -25,7 +25,6 @@ export async function runStaticQueries({
     "run static queries",
     staticQueryIds.length,
     0,
-    // @ts-ignore
     {
       id: "static-query-running",
       parentSpan,

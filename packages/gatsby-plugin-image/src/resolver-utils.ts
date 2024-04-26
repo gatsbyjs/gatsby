@@ -77,7 +77,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
 > {
   return {
     type: hasFeature("graphql-typegen") ? "GatsbyImageData!" : "JSON!",
-    // @ts-ignore
+    // @ts-ignore Type '{ layout: { type: string; description: string; }; width: { type: string; description: string; }; height: { type: string; description: string; }; aspectRatio: { type: string; description: string; }; sizes: { ...; }; outputPixelDensities: { ...; }; breakpoints: { ...; }; backgroundColor: { ...; }; }' is not assignable to type 'ObjectTypeComposerArgumentConfigMapDefinition<IGatsbyImageResolverArgs & TArgs>'.ts(2322)
     args: {
       layout: {
         type: ImageLayoutType.name,
@@ -171,7 +171,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
 > {
   return {
     type: hasFeature("graphql-typegen") ? "GatsbyImageData!" : "JSON!",
-    // @ts-ignore
+    // @ts-ignore Type '{ layout: { type: string; description: string; }; width: { type: string; description: string; }; height: { type: string; description: string; }; aspectRatio: { type: string; description: string; }; placeholder: { ...; }; ... 4 more ...; backgroundColor: { ...; }; }' is not assignable to type 'ObjectTypeComposerArgumentConfigMapDefinition<IGatsbyImageFieldArgs & TArgs>'.ts(2322)
     args: {
       layout: {
         type: ImageLayoutType.name,

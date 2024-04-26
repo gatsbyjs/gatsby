@@ -231,7 +231,8 @@ const limitedExports: Rule.RuleModule = {
           if (queryVariableName) {
             return undefined;
           }
-          // @ts-ignore
+
+          // @ts-ignore Property 'id' does not exist on type 'Node'. Property 'id' does not exist on type 'VariableDeclaration & NodeParentExtension'.ts(2339)
           queryVariableName = node.parent?.id?.name;
         }
 

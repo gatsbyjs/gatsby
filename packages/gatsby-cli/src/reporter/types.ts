@@ -70,7 +70,7 @@ type IGatsbyPageComponent = {
   isSlice: boolean;
 };
 type IGatsbyPage = {
-  mode: PageMode;
+  mode?: PageMode | undefined;
 };
 type IGatsbyFunction = {
   functionRoute: string;

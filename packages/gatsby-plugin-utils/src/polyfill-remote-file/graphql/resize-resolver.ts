@@ -15,7 +15,6 @@ import type {
   ImageFit,
   ImageFormat,
   ImageCropFocus,
-  WidthOrHeight,
 } from "../types";
 import type { getRemoteFileEnums } from "./get-remote-file-enums";
 
@@ -39,7 +38,10 @@ const allowedFormats: Array<ImageFormat> = [
 
 export async function resizeResolver(
   source: IRemoteFileNode,
-  args: Partial<IResizeArgs> & WidthOrHeight,
+  args: Partial<IResizeArgs> & {
+    width: number | undefined;
+    height: number | undefined;
+  },
   actions: Actions,
   store?: Store,
 ): Promise<{
@@ -76,7 +78,10 @@ export async function resizeResolver(
   const [format] = formats;
   const { width, height } = calculateImageDimensions(
     source,
-    args as IResizeArgs & WidthOrHeight,
+    args as IResizeArgs & {
+      width: number | undefined;
+      height: number | undefined;
+    },
   );
 
   if (shouldDispatchLocalImageServiceJob()) {
@@ -123,7 +128,7 @@ export function generateResizeFieldConfig(
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode,
   ReturnType<typeof resizeResolver>,
-  IResizeArgs & WidthOrHeight
+  IResizeArgs & { width: number | undefined; height: number | undefined }
 > {
   return {
     type: "RemoteFileResize",

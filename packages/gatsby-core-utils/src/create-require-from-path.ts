@@ -24,5 +24,5 @@ const fallback = (filename: string): NodeRequire => {
 
 // Polyfill Node's `Module.createRequireFromPath` if not present (added in Node v10.12.0)
 export const createRequireFromPath =
-  // @ts-ignore
+  // @ts-ignore Property 'createRequireFromPath' does not exist on type 'typeof Module'.ts(2339)
   Module.createRequire || Module.createRequireFromPath || fallback;

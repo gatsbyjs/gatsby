@@ -146,7 +146,7 @@ export async function writeTypeScriptTypes(
     });
 
   const codegenOptions: Omit<Types.GenerateOptions, "plugins" | "pluginMap"> = {
-    // @ts-ignore - Incorrect types
+    // @ts-ignore Type 'undefined' is not assignable to type 'DocumentNode'.ts(2322)
     schema: undefined,
     schemaAst: stabilizeSchema(schema),
     documents: documents.concat(gatsbyNodeDocuments),

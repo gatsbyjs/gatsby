@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file";
 import { hasFeature } from "../has-feature";
@@ -32,7 +32,6 @@ export function addImageRoutes(app: Application, store?: Store): Application {
 
     const url = req.query[ImageCDNUrlKeys.URL] as string;
 
-    // @ts-ignore
     const filePath = await fetchRemoteFile({
       directory: outputDir,
       url,

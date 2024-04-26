@@ -115,7 +115,10 @@ async function deleteStaleNodes(
     const staleNodes = getStaleNodes(state, nodes);
 
     for (const node of staleNodes) {
-      // @ts-ignore
+      // @ts-ignore No overload matches this call.
+      // The last overload gave the following error.
+      // Argument of type '{ type: string; plugin: IPlugin | undefined; payload: any; isRecursiveChildrenDelete: boolean; } | { type: string; plugin: IPlugin | undefined; payload: any; isRecursiveChildrenDelete: boolean; }[]' is not assignable to parameter of type '(ActionsUnion | ThunkAction<any, IGatsbyState, any, ActionsUnion>)[]'.
+      // Type '{ type: string; plugin: IPlugin | undefined; payload: any; isRecursiveChildrenDelete: boolean; }' is missing the following properties from type '(ActionsUnion | ThunkAction<any, IGatsbyState, any, ActionsUnion>)[]': length, pop, push, concat, and 35 more.ts(2769)
       store.dispatch(actions.deleteNode(node));
       cleanupStaleNodesActivity.tick();
 

@@ -73,18 +73,15 @@ export type ImageCropFocus =
   | "edges"
   | "faces";
 
-export type WidthOrHeight =
-  | { width: number; height: number }
-  | { width: number; height?: never | undefined }
-  | { width?: never | undefined; height: number };
-
 export type CalculateImageSizesArgs = {
   fit: ImageFit;
   layout: ImageLayout;
   outputPixelDensities: Array<number>;
   breakpoints?: Array<number> | undefined;
   aspectRatio?: number | undefined;
-} & WidthOrHeight;
+  width: number | undefined;
+  height: number | undefined;
+};
 
 export function isImage(node: {
   mimeType: IRemoteFileNode["mimeType"];
@@ -100,10 +97,12 @@ export function isImage(node: {
   );
 }
 
-export type ImageCdnTransformArgs = WidthOrHeight & {
+export type ImageCdnTransformArgs = {
   format: string;
   cropFocus?: ImageCropFocus | Array<ImageCropFocus> | undefined;
   quality: number;
+  width: number | undefined;
+  height: number | undefined;
 };
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

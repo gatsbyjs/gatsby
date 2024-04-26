@@ -14,7 +14,7 @@ export type Runner = (
   query: string | Source,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   context: Record<string, any>,
-) => Promise<ExecutionResult>;
+) => Promise<ExecutionResult | undefined>;
 
 export function createGraphQLRunner(
   store: Store<IGatsbyState>,
@@ -93,7 +93,6 @@ export function createGraphQLRunner(
 
           if (structuredErrors.length) {
             // panic on build exits the process
-            // @ts-ignore
             reporter.panicOnBuild(structuredErrors);
           }
         }

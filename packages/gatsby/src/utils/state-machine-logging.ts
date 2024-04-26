@@ -37,7 +37,8 @@ export function logTransitions<T = DefaultContext>(
       // actor. We don't need to worry about detaching the listener
       // because xstate handles that for us when the actor is stopped.
 
-      // @ts-ignore - TODO: Fix it
+      // @ts-ignore Argument of type 'ActorRef<any, any>' is not assignable to parameter of type 'Actor<any, AnyEventObject> | Interpreter<any, any, EventObject, { value: any; context: any; }, TypegenDisabled>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      // Type 'ActorRef<any, any>' is missing the following properties from type 'Interpreter<any, any, EventObject, { value: any; context: any; }, TypegenDisabled>': machine, clock, options, scheduler, and 51 more.ts(2379)
       if (isInterpreter(child) && !listeners.has(child)) {
         let sublast = child.state;
         child.onTransition((substate) => {

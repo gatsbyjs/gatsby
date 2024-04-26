@@ -8,8 +8,7 @@ import {
   getConfigPath,
   getConfigStore,
 } from "gatsby-core-utils";
-import { transform, TransformOptions } from "@babel/core";
-// eslint-disable-next-line @typescript-eslint/naming-convention
+import { transform, type TransformOptions } from "@babel/core";
 import BabelPluginAddPluginsToGatsbyConfig from "./plugin-babel-utils";
 
 function addPluginToConfig(
@@ -145,21 +144,17 @@ let installs: Array<{
 }> = [];
 
 async function executeInstalls(root: string): Promise<void> {
-  // @ts-ignore - fix me
   const types = _.groupBy(installs, (c) => c.resource.dependencyType);
 
   // Grab the key of the first install & delete off installs these packages
   // then run intall
   // when done, check again & call executeInstalls again.
-  // @ts-ignore - fix me
   const depType = installs[0].resource.dependencyType;
   const packagesToInstall = types[depType];
   installs = installs.filter(
-    // @ts-ignore - fix me
     (i) => !packagesToInstall.some((p) => i.resource.name === p.resource.name),
   );
 
-  // @ts-ignore - fix me
   const pkgs = packagesToInstall.map((p) => p.resource);
   const packageNames = getPackageNames(pkgs);
 
@@ -177,7 +172,6 @@ async function executeInstalls(root: string): Promise<void> {
   } catch (e) {
     // A package failed so call the rejects
     return packagesToInstall.forEach((p) => {
-      // @ts-ignore - fix me
       p.outsideReject(
         JSON.stringify({
           message: e.shortMessage,
@@ -188,7 +182,6 @@ async function executeInstalls(root: string): Promise<void> {
   }
   release();
 
-  // @ts-ignore - fix me
   packagesToInstall.forEach((p) => p.outsideResolve());
 
   // Run again if there's still more installs.

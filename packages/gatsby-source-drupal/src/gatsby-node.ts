@@ -508,7 +508,8 @@ ${JSON.stringify(webhookBody, null, 4)}`,
     ]);
     allData = await Promise.all(
       _.map(res.body.links, async (url, type) => {
-        const dataArray = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const dataArray: Array<any> = [];
         if (disallowedLinkTypes.includes(type)) return;
         if (!url) return;
         if (!type) return;
@@ -601,7 +602,6 @@ ${JSON.stringify(webhookBody, null, 4)}`,
           }
 
           if (d.body.data) {
-            // @ts-ignore
             dataArray.push(...(d.body.data || []));
           }
 
@@ -610,7 +610,6 @@ ${JSON.stringify(webhookBody, null, 4)}`,
           // in the JSON API response.
           // See https://www.drupal.org/docs/8/modules/jsonapi/includes
           if (d.body.included) {
-            // @ts-ignore
             dataArray.push(...(d.body.included || []));
           }
 
@@ -859,7 +858,8 @@ exports.onCreateDevServer = (
         "The ___updatePreview callback is now deprecated and will be removed in the future. Please use the __refresh callback instead.",
       );
       if (!_.isEmpty(req.body)) {
-        const requestBody = JSON.parse(JSON.parse(req.body));
+        const requestBody = JSON.parse(JSON.parse(req.body) as string);
+        // @ts-ignore Property 'secret' does not exist on type 'unknown'.ts(2339)
         const { secret, action, id } = requestBody;
         if (pluginOptions.secret && pluginOptions.secret !== secret) {
           return reporter.warn(
@@ -870,7 +870,10 @@ exports.onCreateDevServer = (
           actions.deleteNode(getNode(createNodeId(id)));
           return reporter.log(`Deleted node: ${id}`);
         }
-        const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const nodeToUpdate = (JSON.parse(JSON.parse(req.body) as string) as any)
+          .data;
+
         return await handleWebhookUpdate(
           {
             nodeToUpdate,
@@ -892,8 +895,8 @@ exports.onCreateDevServer = (
   );
 };
 
-exports.pluginOptionsSchema = ({ Joi }) =>
-  Joi.object({
+exports.pluginOptionsSchema = ({ Joi }) => {
+  return Joi.object({
     baseUrl: Joi.string()
       .required()
       .description("The URL to root of your Drupal instance"),
@@ -947,6 +950,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       'The machine name of the Gatsby Image CDN placeholder style in Drupal. The default is "placeholder".',
     ),
   });
+};
 
 exports.onCreateDevServer = async ({ app, store }) => {
   // this makes the gatsby develop image CDN emulator work on earlier versions of Gatsby.

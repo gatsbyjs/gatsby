@@ -1,9 +1,9 @@
-import { performance } from "perf_hooks";
+import { performance } from "node:perf_hooks";
 
 import { sync as glob } from "fast-glob";
 import { uuid } from "gatsby-core-utils";
-import { execSync } from "child_process";
-import fs from "fs";
+import { execSync } from "node:child_process";
+import fs from "node:fs";
 
 const bootstrapTime = performance.now();
 
@@ -39,7 +39,7 @@ function execToInt(cmd: string): number {
   // `parseInt` can return `NaN` for unexpected args
   // `Number` can return undefined for unexpected args
   // `0 | x` (bitwise or) will always return 0 for unexpected args, or 32bit int
-  // @ts-ignore
+  // @ts-ignore The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.ts(2362)
   return execToStr(cmd) | 0;
 }
 
@@ -241,7 +241,7 @@ class BenchMeta {
 
     return {
       time: this.localTime,
-      // @ts-ignore
+      // @ts-ignore Property 'gatsbyTelemetrySessionId' does not exist on type 'Process'.ts(2339)
       sessionId: process.gatsbyTelemetrySessionId ?? uuid.v4(),
       cwd: process.cwd() ?? "",
       timestamps: this.timestamps,
@@ -328,10 +328,9 @@ class BenchMeta {
     this.flushing = globalThis
       .fetch(`${BENCHMARK_REPORTING_URL}`, {
         method: "POST",
-        // @ts-ignore
         headers: {
           "content-type": "application/json",
-          "x-benchmark-secret": process.env.BENCHMARK_REPORTING_SECRET,
+          "x-benchmark-secret": process.env.BENCHMARK_REPORTING_SECRET ?? "",
         },
         body: json,
       })

@@ -25,7 +25,7 @@ export default class GatsbyCache {
   // cache interface (gatsby-plugin-sharp use it to clear no longer needed data)
   public cache?: MultiCache;
 
-  // @ts-ignore - set & get types are missing from fsStore?
+  // @ts-ignore Type 'typeof import("gatsby/packages/gatsby/src/cache/cache-fs")' is missing the following properties from type 'Store': get, setts(2739)
   constructor({ name = "db", store = fsStore }: ICacheProperties = {}) {
     this.name = name;
     this.store = store;

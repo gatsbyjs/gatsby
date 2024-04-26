@@ -49,7 +49,8 @@ const gatsbyLayoutLoader: LoaderDefinition = async function gatsbyLayoutLoader(
   this.addDependency(path.resolve(mdxPath));
 
   const acorn = await cachedImport<typeof import("acorn")>("acorn");
-  // @ts-ignore - We typecast below
+  // @ts-ignore Property 'default' does not exist on type 'unknown'.ts(2339)
+  // We typecast below
   const { default: jsx } = await cachedImport("acorn-jsx");
   const { generate } = await cachedImport<typeof import("astring")>("astring");
   const { buildJsx } = await cachedImport<

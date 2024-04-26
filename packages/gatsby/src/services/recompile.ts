@@ -2,7 +2,6 @@
 import type { IBuildContext } from "./types";
 import fs from "fs-extra";
 import type { Stats } from "webpack";
-// @ts-ignore
 import reporter from "gatsby-cli/lib/reporter";
 import { emitter } from "../redux";
 import { buildRenderer } from "../commands/build-html";

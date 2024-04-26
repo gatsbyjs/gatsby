@@ -133,7 +133,7 @@ export const enhanceMdxOptions: EnhanceMdxOptions =
       options.mdxOptions.remarkRehypeOptions = {};
     }
 
-    // @ts-ignore
+    // @ts-ignore Cannot assign to 'passThrough' because it is a read-only property.ts(2540)
     options.mdxOptions.remarkRehypeOptions.passThrough = passThrough;
 
     // Extract metadata generated from by rehype-infer-* and similar plugins

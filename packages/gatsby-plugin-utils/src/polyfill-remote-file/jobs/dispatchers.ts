@@ -74,7 +74,6 @@ export function dispatchLocalFileServiceJob(
     },
     {
       name: "gatsby",
-      // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
       resolve: __dirname,
     },
@@ -134,7 +133,6 @@ export function dispatchLocalImageServiceJob(
     },
     {
       name: "gatsby",
-      // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
       resolve: __dirname,
     },

@@ -51,7 +51,6 @@ export async function testPluginOptionsSchema(
     }
 
     const { warning } = await validateOptionsSchema(
-      // @ts-ignore
       pluginSchema,
       pluginOptions,
     );

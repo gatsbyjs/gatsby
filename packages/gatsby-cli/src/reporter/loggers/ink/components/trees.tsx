@@ -211,7 +211,9 @@ function _Trees(): JSX.Element {
       pages.forEach((pagePath) => {
         const gatsbyPage = state.pageTree!.pages.get(pagePath);
 
-        pagesByMode[gatsbyPage!.mode].add(pagePath);
+        if (typeof gatsbyPage?.mode !== "undefined") {
+          pagesByMode[gatsbyPage.mode].add(pagePath);
+        }
       });
       componentWithPages.set(layoutComponent, pagesByMode);
     }

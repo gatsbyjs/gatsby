@@ -71,10 +71,9 @@ export function getErrorFormatter(): PrettyError {
     // `tapable`, // webpack
   );
 
-  // @ts-ignore the type defs in prettyError are wrong
-  prettyError.skip((traceLine) => {
-    if (traceLine && traceLine.file === "asyncToGenerator.js") return true;
-    return false;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  prettyError.skip((traceLine: any): boolean => {
+    return traceLine && traceLine.file === "asyncToGenerator.js";
   });
 
   prettyError.appendStyle({

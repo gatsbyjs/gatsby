@@ -109,7 +109,7 @@ export class GatsbyWebpackStatsExtractor {
           newChunkMapJson,
         );
 
-        // @ts-ignore
+        // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
         if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
           // Add chunk mapping metadata to scripts slice
           const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify(newChunkMapJson)};`;

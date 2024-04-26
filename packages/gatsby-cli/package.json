@@ -56,6 +56,10 @@
     "yurnalist": "^2.1.0"
   },
   "devDependencies": {
+    "@types/babel__generator": "^7.6.8",
+    "@types/babel__template": "^7.4.4",
+    "@types/babel__helper-plugin-utils": "^7.10.3",
+    "@types/babel__core": "7.20.5",
     "@types/semver": "7.5.8",
     "@types/react": "^18.3.0",
     "@total-typescript/ts-reset": "^0.5.1",

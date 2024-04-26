@@ -110,7 +110,7 @@ function processGraphQLQuery(query: string | graphql.DocumentNode): {
             return;
           }
 
-          // @ts-ignore node.value apparently is read-only ...
+          // @ts-ignore Cannot assign to 'value' because it is a read-only property.ts(2540)
           node.value =
             newObjects.length > 1
               ? {
@@ -124,7 +124,7 @@ function processGraphQLQuery(query: string | graphql.DocumentNode): {
             return;
           }
 
-          // @ts-ignore read-only ...
+          // @ts-ignore Cannot assign to 'value' because it is a read-only property.ts(2540)
           node.value = pathSegmentsToAst(node.value.value, "SELECT");
           hasChanged = true;
         }
@@ -143,7 +143,7 @@ export function tranformDocument(ast: graphql.DocumentNode): {
   hasChanged: boolean;
   error?: Error;
 } {
-  // @ts-ignore
+  // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
   if (_CFLAGS_.GATSBY_MAJOR === "5") {
     try {
       return processGraphQLQuery(ast);

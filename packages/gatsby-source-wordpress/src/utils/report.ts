@@ -1,4 +1,3 @@
-// @ts-ignore
 import type { IErrorMapEntry } from "gatsby-cli/lib/structured-errors/error-map";
 
 export const CODES = {

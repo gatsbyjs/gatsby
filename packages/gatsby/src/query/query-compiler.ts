@@ -60,7 +60,6 @@ export default async function compile({
 > {
   const { program, schema, flattenedPlugins } = store.getState();
 
-  // @ts-ignore
   const activity = report.activityTimer("extract queries from components", {
     parentSpan,
     id: "query-extraction",
@@ -264,8 +263,7 @@ function extractOperations(
       addError(
         ...errors.map((error) => {
           const location = {
-            // @ts-ignore
-            start: locInGraphQlToLocInFile(templateLoc, error.locations[0]),
+            start: locInGraphQlToLocInFile(templateLoc, error.locations?.[0]),
           };
           return errorParser({
             message: error.message,
@@ -362,10 +360,10 @@ function processDefinitions({
   const fragmentsUsedByFragment = new Map();
 
   const fragmentNames = Array.from(definitionsByName.entries())
-    // @ts-ignore
+    // @ts-ignore Types of parameters '__0' and 'value' are incompatible. Type 'unknown' is not assignable to type '[any, any]'.ts(2769)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     .filter(([_, def]): any => def.isFragment)
-    // @ts-ignore
+    // @ts-ignore Types of parameters '__0' and 'value' are incompatible. Type 'unknown' is not assignable to type '[any, any]'.ts(2345)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .map(([name, _]) => {
       return name;
@@ -427,8 +425,7 @@ function processDefinitions({
         );
         const location = locInGraphQlToLocInFile(
           originalDefinition.templateLoc,
-          // @ts-ignore
-          error.locations[0],
+          error.locations?.[0],
         );
         addError(
           errorParser({
@@ -487,7 +484,7 @@ function processDefinitions({
     };
 
     if (query.isStaticQuery) {
-      // @ts-ignore
+      // @ts-ignore Property 'id' does not exist on type '{ name: any; text: string; originalText: any; path: any; isHook: any; isStaticQuery: any; isConfigQuery: any; templatePath: any; hash: string; }'.ts(2339)
       query.id =
         "sq--" +
         _.kebabCase(

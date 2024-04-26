@@ -34,7 +34,6 @@ export class CLI extends Component<ICLIProps, ICLIState> {
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
     trackBuildError("INK", {
-      // @ts-ignore
       error: {
         error: {
           stack: info.componentStack,

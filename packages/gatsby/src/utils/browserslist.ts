@@ -18,7 +18,7 @@ export function getBrowsersList(directory: string): Array<string> {
   const fallbackV1 = [">1%", "last 2 versions", "IE >= 9"];
   let fallbackOthers = [">0.25%", "not dead"];
 
-  // @ts-ignore
+  // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
   if (_CFLAGS_.GATSBY_MAJOR === "5") {
     fallbackOthers = fallbackOthers.map(
       (fallback) => fallback + " and supports es6-module",

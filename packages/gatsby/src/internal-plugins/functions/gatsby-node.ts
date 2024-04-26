@@ -231,7 +231,7 @@ async function createWebpackConfig({
   // functions directory can override the plugin's implementations.
   // @ts-ignore - Seems like a TS bug: https://github.com/microsoft/TypeScript/issues/28010#issuecomment-713484584
   const knownFunctions = _.unionBy(
-    // @ts-ignore
+    // @ts-ignore A spread argument must either have a tuple type or be passed to a rest parameter.ts(2556)
     ...allFunctions,
     (func) => func.functionRoute,
   );

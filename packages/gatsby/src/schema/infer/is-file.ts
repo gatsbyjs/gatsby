@@ -90,7 +90,6 @@ function getFilePath(
   }
 
   const normalizedPath = slash(relativePath);
-  // @ts-ignore
   const node = getNodesByType(typeName).find((node: IGatsbyNode): boolean => {
     return getFirstValueAt(node, selector) === normalizedPath;
   });
@@ -103,7 +102,7 @@ export function isFile(fieldPath: string, relativePath: string): boolean {
   if (!filePath) {
     return false;
   }
-  // @ts-ignore
+
   const filePathExists = getNodesByType("File").some(
     (node: IGatsbyNode): boolean => {
       return node.absolutePath === filePath;

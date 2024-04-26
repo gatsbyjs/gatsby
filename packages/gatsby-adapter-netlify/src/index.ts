@@ -146,7 +146,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions | undefined> = (
         );
         excludeDatastoreFromEngineFunction = false;
       }
-      // @ts-ignore
+
       return {
         excludeDatastoreFromEngineFunction,
         deployURL: deployURL ?? "",

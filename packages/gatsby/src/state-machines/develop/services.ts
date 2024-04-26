@@ -15,8 +15,11 @@ import { queryRunningMachine } from "../query-running";
 import { waitingMachine } from "../waiting";
 import type { MachineOptions } from "xstate";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const developServices: MachineOptions<IBuildContext, any>["services"] = {
+export const developServices: Exclude<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  MachineOptions<IBuildContext, any>["services"],
+  undefined
+> = {
   initializeData: initializeDataMachine,
   reloadData: reloadDataMachine,
   recreatePages: recreatePagesMachine,

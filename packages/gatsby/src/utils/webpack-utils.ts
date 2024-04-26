@@ -858,7 +858,12 @@ export function createWebpackUtils(
       ],
       ...eslintConfig(config.jsxRuntime === "automatic"),
     };
-    // @ts-ignore
+
+    // @ts-ignore Argument of type '{ cwd?: string | undefined; errorOnUnmatchedPattern?: boolean | undefined; extensions: string[] | undefined; globInputPaths?: boolean | undefined; ignore?: boolean | undefined; ignorePath?: string | undefined; ... 14 more ...; exclude: string[]; }' is not assignable to parameter of type 'Options'.
+    // Type '{ cwd?: string | undefined; errorOnUnmatchedPattern?: boolean | undefined; extensions: string[] | undefined; globInputPaths?: boolean | undefined; ignore?: boolean | undefined; ignorePath?: string | undefined; ... 14 more ...; exclude: string[]; }' is not assignable to type 'PluginOptions'.
+    // Types of property 'fix' are incompatible.
+    // Type 'boolean | ((message: LintMessage) => boolean) | undefined' is not assignable to type 'boolean | undefined'.
+    // Type '(message: LintMessage) => boolean' is not assignable to type 'boolean | undefined'.ts(2345)
     return new ESLintPlugin(options);
   };
 
@@ -872,7 +877,11 @@ export function createWebpackUtils(
       ],
       ...eslintRequiredConfig,
     };
-    // @ts-ignore
+
+    // @ts-ignore Argument of type '{ cwd?: string | undefined; errorOnUnmatchedPattern?: boolean | undefined; extensions: string[] | undefined; globInputPaths?: boolean | undefined; ignore?: boolean | undefined; ignorePath?: string | undefined; ... 14 more ...; exclude: string[]; }' is not assignable to parameter of type 'Options'.
+    // Type '{ cwd?: string | undefined; errorOnUnmatchedPattern?: boolean | undefined; extensions: string[] | undefined; globInputPaths?: boolean | undefined; ignore?: boolean | undefined; ignorePath?: string | undefined; ... 14 more ...; exclude: string[]; }' is not assignable to type 'PluginOptions'.
+    // Types of property 'fix' are incompatible.
+    // Type 'boolean | ((message: LintMessage) => boolean) | undefined' is not assignable to type 'boolean | undefined'.ts(2345)
     return new ESLintPlugin(options);
   };
 

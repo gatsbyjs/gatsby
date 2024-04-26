@@ -1,4 +1,4 @@
-import type { ImageFormat, ImageFit, WidthOrHeight } from "../types";
+import type { ImageFormat, ImageFit } from "../types";
 
 export function validateAndNormalizeFormats(
   formats: Array<ImageFormat>,
@@ -30,7 +30,12 @@ export function calculateImageDimensions(
     width: requestedWidth,
     height: requestedHeight,
     aspectRatio: requestedAspectRatio,
-  }: { fit: ImageFit; aspectRatio: number } & WidthOrHeight,
+  }: {
+    fit: ImageFit;
+    aspectRatio: number;
+    width: number | undefined;
+    height: number | undefined;
+  },
 ): { width: number; height: number; aspectRatio: number } {
   // Calculate the eventual width/height of the image.
   let imageAspectRatio;

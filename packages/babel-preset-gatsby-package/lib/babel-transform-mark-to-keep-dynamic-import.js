@@ -42,7 +42,7 @@ module.exports = function keepDynamicImports(_unused, opts) {
           // do early return ( https://github.com/babel/babel/blob/3526b79c87863052f1c61ec0c49c0fc287ba32e6/packages/babel-plugin-transform-modules-commonjs/src/index.ts#L174 )
           // on top of that `BabelFile` doesn't expose delete for the metadata,
           // so we reach into internal `_map` to delete it
-          // @ts-ignore
+          // @ts-ignore Property '_map' does not exist on type 'BabelFile'.ts(2339)
           this.file._map.delete("@babel/plugin-proposal-dynamic-import");
         }
       }

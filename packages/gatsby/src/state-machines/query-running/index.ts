@@ -137,7 +137,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   },
 };
 
-// @ts-ignore
 export const queryRunningMachine = createMachine(queryStates, {
   actions: queryActions,
   services: queryRunningServices,

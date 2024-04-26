@@ -237,7 +237,7 @@ export async function sourceNodes(
   reporter.verbose("Building Contentful reference map");
 
   const entryList = buildEntryList({ contentTypeItems, currentSyncData });
-  // @ts-ignore
+  // @ts-ignore Property 'assets' does not exist on type 'SyncCollection<EntrySkeletonType, ChainModifiers, string> | undefined'.ts(2339)
   const { assets } = currentSyncData;
 
   // Create map of resolvable ids so we can check links against them while creating
@@ -275,7 +275,7 @@ export async function sourceNodes(
     });
   });
 
-  // @ts-ignore
+  // @ts-ignore Property 'deletedEntries' does not exist on type 'SyncCollection<EntrySkeletonType, ChainModifiers, string> | undefined'.ts(2339)
   const { deletedEntries, deletedAssets } = currentSyncData;
   const deletedEntryGatsbyReferenceIds = new Set();
 
@@ -399,7 +399,7 @@ export async function sourceNodes(
   }
 
   // allow node to gc if it needs to
-  // @ts-ignore
+  // @ts-ignore Type 'undefined' is not assignable to type 'Set<any>'.ts(2322)
   newOrUpdatedEntries = undefined;
   await untilNextEventLoopTick();
 
@@ -490,7 +490,7 @@ export async function sourceNodes(
   }
 
   // allow node to gc if it needs to
-  // @ts-ignore
+  // @ts-ignore Type 'undefined' is not assignable to type 'Set<any>'.ts(2322)
   existingNodesThatNeedReverseLinksUpdateInDatastore = undefined;
   await untilNextEventLoopTick();
 

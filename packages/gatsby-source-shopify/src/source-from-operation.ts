@@ -16,7 +16,7 @@ export function makeSourceFromOperation(
   cancelOperationInProgress: () => Promise<void>,
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
-  lastBuildTime?: Date,
+  lastBuildTime?: Date | undefined,
 ): (op: IShopifyBulkOperation) => Promise<void> {
   return async function sourceFromOperation(
     op: IShopifyBulkOperation,
@@ -68,7 +68,11 @@ export function makeSourceFromOperation(
       const { body: jsonLines } = await fetch(resp.node.url);
 
       const rl = createInterface({
-        // @ts-ignore
+        // @ts-ignore No overload matches this call.
+        // Overload 1 of 2, '(input: ReadableStream, output?: WritableStream, completer?: Completer | AsyncCompleter, terminal?: boolean): Interface', gave the following error.
+        // Object literal may only specify known properties, and 'input' does not exist in type 'ReadableStream'.
+        // Overload 2 of 2, '(options: ReadLineOptions): Interface', gave the following error.
+        // Type 'ReadableStream<Uint8Array>' is missing the following properties from type 'ReadableStream': readable, read, setEncoding, pause, and 22 more.ts(2769)
         input: jsonLines,
         crlfDelay: Infinity,
       });

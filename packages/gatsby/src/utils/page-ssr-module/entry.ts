@@ -181,7 +181,8 @@ export async function getData({
               const queryRunningError = new Error(
                 e.message + "\n\n" + codeFrame,
               );
-              // @ts-ignore
+              // @ts-ignore Type 'string | undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+              // Type 'undefined' is not assignable to type 'string'.ts(2412)
               queryRunningError.stack = e.stack;
               throw queryRunningError;
             } else {
@@ -402,7 +403,7 @@ export async function renderHTML({
     }
 
     const sliceData: Record<string, ISliceData> = {};
-    // @ts-ignore
+    // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
     if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
       let readSliceDataActivity: MaybePhantomActivity;
       try {

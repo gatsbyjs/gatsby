@@ -298,7 +298,7 @@ export class WorkerPool<
             const Ctor = typeof NativeCtor === "function" ? NativeCtor : Error;
 
             error = new Ctor(msg[3]);
-            // @ts-ignore type doesn't exist on Error, but that's what jest-worker does for errors :shrug:
+            // @ts-ignore Property 'type' does not exist on type 'Error'.ts(2339)
             error.type = msg[2];
             error.stack = msg[4] ?? "";
 

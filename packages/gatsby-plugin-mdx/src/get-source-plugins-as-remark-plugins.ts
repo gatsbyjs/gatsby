@@ -35,7 +35,12 @@ export async function getSourcePluginsAsRemarkPlugins({
   const userPlugins = userPluginsFiltered.map((plugin) => {
     const requiredPlugin = plugin.module;
     const wrappedGatsbyPlugin: Pluggable = function wrappedGatsbyPlugin() {
-      // @ts-ignore
+      // @ts-ignore rgument of type 'Processor<undefined, undefined, undefined, undefined, undefined>' is not assignable to parameter of type 'string'.ts(2345)
+      // No overload matches this call.
+      // Overload 1 of 4, '(dataset: Data): Processor<undefined, undefined, undefined, undefined, undefined>', gave the following error.
+      // Type '"mdxNodeId"' has no properties in common with type 'Data'.
+      // Overload 2 of 4, '(key: "settings"): Settings | undefined', gave the following error.
+      // Argument of type '"mdxNodeId"' is not assignable to parameter of type '"settings"'.ts(2769)
       // eslint-disable-next-line @babel/no-invalid-this
       const mdxNode = getNode(this.data("mdxNodeId"));
 

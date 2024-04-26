@@ -1,7 +1,7 @@
 import mod from "module";
 import * as path from "node:path";
 
-// @ts-ignore TS doesn't like accessing `_load`
+// @ts-ignore Property '_load' does not exist on type 'typeof Module'.ts(2339)
 const originalModuleLoad = mod._load;
 
 class EngineValidationError extends Error {
@@ -29,7 +29,7 @@ class EngineValidationError extends Error {
 
 export async function validate(directory: string): Promise<void> {
   // intercept module loading and validate no unexpected imports are happening
-  // @ts-ignore TS doesn't like accessing `_load`
+  // @ts-ignore Property '_load' does not exist on type 'typeof Module'.ts(2339)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mod._load = (request: string, parent: mod, isMain: boolean): any => {
     // Allow all node builtins

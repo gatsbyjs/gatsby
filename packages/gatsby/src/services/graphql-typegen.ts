@@ -22,7 +22,6 @@ export async function graphQLTypegen({
 
   const activity = reporter.activityTimer(
     "Generating GraphQL and TypeScript types",
-    // @ts-ignore
     {
       parentSpan,
     },

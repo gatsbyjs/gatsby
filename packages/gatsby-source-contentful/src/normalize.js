@@ -178,15 +178,15 @@ export function buildForeignReferenceMap({
           if (Array.isArray(entryItemFieldValue)) {
             if (
               entryItemFieldValue[0] &&
-              // @ts-ignore
+              // @ts-ignore Property 'sys' does not exist on type '{}'.ts(2339)
               entryItemFieldValue[0].sys &&
-              // @ts-ignore
+              // @ts-ignore Property 'sys' does not exist on type '{}'.ts(2339)
               entryItemFieldValue[0].sys.type &&
-              // @ts-ignore
+              // @ts-ignore Property 'sys' does not exist on type '{}'.ts(2339)
               entryItemFieldValue[0].sys.id
             ) {
               entryItemFieldValue.forEach((v) => {
-                // @ts-ignore
+                // @ts-ignore v' is of type 'unknown'.ts(18046)
                 const key = `${v.sys.id}___${v.sys.linkType || v.sys.type}`;
                 // Don't create link to an unresolvable field.
                 if (!resolvable.has(key)) {
@@ -531,7 +531,7 @@ export async function createNodesForContentType({
         if (entryItemFields[entryItemFieldKey]) {
           const entryItemFieldValue = entryItemFields[entryItemFieldKey];
           if (Array.isArray(entryItemFieldValue)) {
-            // @ts-ignore
+            // @ts-ignore Property 'sys' does not exist on type '{}'.ts(2339)
             if (entryItemFieldValue[0]?.sys?.type === "Link") {
               // Check if there are any values in entryItemFieldValue to prevent
               // creating an empty node field in case when original key field value
@@ -539,16 +539,16 @@ export async function createNodesForContentType({
               const resolvableEntryItemFieldValue = entryItemFieldValue
                 .filter(function (v) {
                   return resolvable.has(
-                    // @ts-ignore
+                    // @ts-ignore 'v' is of type 'unknown'.ts(18046)
                     `${v.sys.id}___${v.sys.linkType || v.sys.type}`,
                   );
                 })
                 .map(function (v) {
                   return mId(
                     space.sys.id,
-                    // @ts-ignore
+                    // @ts-ignore 'v' is of type 'unknown'.ts(18046)
                     v.sys.id,
-                    // @ts-ignore
+                    // @ts-ignore 'v' is of type 'unknown'.ts(18046)
                     v.sys.linkType || v.sys.type,
                   );
                 });

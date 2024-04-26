@@ -18,6 +18,5 @@ export function runWithEngineContext<T>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fn: (...args: Array<any>) => T,
 ): T {
-  // @ts-ignore typings are incorrect, run() returns the result of fn()
   return getAsyncLocalStorage().run(context, fn);
 }

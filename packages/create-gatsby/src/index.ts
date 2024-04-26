@@ -192,16 +192,19 @@ ${center(colors.blueBright.bold.underline("Welcome to Gatsby!"))}
         cmses[answers.cms].message,
       )}`,
     );
-    // @ts-ignore
+    // @ts-ignore Property 'plugins' does not exist on type '{ message: string; plugins: string[]; } | { message: string; plugins: string[]; } | { message: string; dependencies: string[]; } | { message: string; plugins: string[]; } | { message: string; plugins: string[]; } | { ...; }'.
+    // Property 'plugins' does not exist on type '{ message: string; dependencies: string[]; }'.ts(2339)
     const extraPlugins = cmses[answers.cms].plugins || [];
     plugins.push(answers.cms, ...extraPlugins);
     packages.push(
       answers.cms,
-      // @ts-ignore
+      // @ts-ignore Property 'dependencies' does not exist on type '{ message: string; plugins: string[]; } | { message: string; plugins: string[]; } | { message: string; dependencies: string[]; } | { message: string; plugins: string[]; } | { message: string; plugins: string[]; } | { ...; }'.
+      // Property 'dependencies' does not exist on type '{ message: string; plugins: string[]; }'.ts(2339)
       ...(cmses[answers.cms].dependencies || []),
       ...extraPlugins,
     );
-    // @ts-ignore
+    // @ts-ignore Property 'options' does not exist on type '{ message: string; plugins: string[]; } | { message: string; plugins: string[]; } | { message: string; dependencies: string[]; } | { message: string; plugins: string[]; } | { message: string; plugins: string[]; } | { ...; }'.
+    // Property 'options' does not exist on type '{ message: string; plugins: string[]; }'.ts(2339)
     pluginConfig = { ...pluginConfig, ...cmses[answers.cms].options };
   }
 
@@ -212,10 +215,12 @@ ${center(colors.blueBright.bold.underline("Welcome to Gatsby!"))}
         styles[answers.styling].message,
       )} for styling your site`,
     );
-    // @ts-ignore
+    // @ts-ignore Property 'plugins' does not exist on type '{ message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { ...; } | { ...; }'.
+    // Property 'plugins' does not exist on type '{ message: string; dependencies: string[]; }'.ts(2339)
     const extraPlugins = styles[answers.styling].plugins || [];
     // If the key is not a valid Gatsby plugin, don't add it to the plugins array
-    // @ts-ignore
+    // @ts-ignore Property 'isGatsbyPlugin' does not exist on type '{ message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { ...; } | { ...; }'.
+    // Property 'isGatsbyPlugin' does not exist on type '{ message: string; dependencies: string[]; }'.ts(2339)
     if (styles[answers.styling]?.isGatsbyPlugin === false) {
       plugins.push(...extraPlugins);
     } else {
@@ -226,7 +231,8 @@ ${center(colors.blueBright.bold.underline("Welcome to Gatsby!"))}
       ...(styles[answers.styling].dependencies || []),
       ...extraPlugins,
     );
-    // @ts-ignore
+    // @ts-ignore Property 'options' does not exist on type '{ message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { ...; } | { ...; }'.
+    // Property 'options' does not exist on type '{ message: string; dependencies: string[]; }'.ts(2339)
     pluginConfig = { ...pluginConfig, ...styles[answers.styling].options };
   }
 
@@ -239,12 +245,14 @@ ${center(colors.blueBright.bold.underline("Welcome to Gatsby!"))}
     );
     plugins.push(...answers.features);
     const featureDependencies = answers.features?.map((featureKey) => {
-      // @ts-ignore
+      // @ts-ignore Property 'plugins' does not exist on type '{ message: string; } | { message: string; plugins: string[]; options: { "gatsby-source-filesystem:images": { name: string; path: string; }; }; } | { message: string; } | { message: string; options: { "gatsby-plugin-manifest": { ...; }; }; } | { ...; } | { ...; }'.
+      // Property 'plugins' does not exist on type '{ message: string; }'.ts(2339)
       const extraPlugins = features[featureKey].plugins || [];
       plugins.push(...extraPlugins);
       return [
         // Spread in extra dependencies
-        // @ts-ignore
+        // @ts-ignore Property 'dependencies' does not exist on type '{ message: string; } | { message: string; plugins: string[]; options: { "gatsby-source-filesystem:images": { name: string; path: string; }; }; } | { message: string; } | { message: string; options: { "gatsby-plugin-manifest": { ...; }; }; } | { ...; } | { ...; }'.
+        // Property 'dependencies' does not exist on type '{ message: string; }'.ts(2339)
         ...(features[featureKey].dependencies || []),
         // Spread in plugins
         ...extraPlugins,
@@ -258,7 +266,8 @@ ${center(colors.blueBright.bold.underline("Welcome to Gatsby!"))}
     packages.push(...answers.features, ...flattenedDependencies);
     // Merge plugin options
     pluginConfig = answers.features.reduce((prev, key) => {
-      // @ts-ignore
+      // @ts-ignore Property 'options' does not exist on type '{ message: string; } | { message: string; plugins: string[]; options: { "gatsby-source-filesystem:images": { name: string; path: string; }; }; } | { message: string; } | { message: string; options: { "gatsby-plugin-manifest": { ...; }; }; } | { ...; } | { ...; }'.
+      // Property 'options' does not exist on type '{ message: string; }'.ts(2339)
       return { ...prev, ...features[key].options };
     }, pluginConfig);
   }
@@ -326,10 +335,12 @@ ${colors.bold("Thanks! Here's what we'll now do:")}
     await installPlugins(plugins, pluginConfig, fullPath, []);
   }
 
-  // @ts-ignore
+  // @ts-ignore Property 'files' does not exist on type '{ message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { ...; } | { ...; }'.
+  // Property 'files' does not exist on type '{ message: string; dependencies: string[]; }'.ts(2339)
   if (answers.styling && styles[answers.styling]?.files) {
     reporter.info(`${maybeUseEmoji("🎨 ")}Adding necessary styling files...`);
-    // @ts-ignore
+    // @ts-ignore Property 'files' does not exist on type '{ message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { message: string; dependencies: string[]; } | { ...; } | { ...; }'.
+    // Property 'files' does not exist on type '{ message: string; dependencies: string[]; }'.ts(2339)
     await writeFiles(answers.project, styles[answers.styling].files);
   }
 

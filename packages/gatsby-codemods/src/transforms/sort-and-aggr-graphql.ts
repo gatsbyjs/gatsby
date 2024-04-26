@@ -277,7 +277,7 @@ export function processGraphQLQuery(query: string | graphql.DocumentNode): {
             return;
           }
 
-          // @ts-ignore node.value apparently is read-only ...
+          // @ts-ignore Cannot assign to 'value' because it is a read-only property.ts(2540)
           node.value =
             newObjects.length > 1
               ? {
@@ -291,7 +291,7 @@ export function processGraphQLQuery(query: string | graphql.DocumentNode): {
             return;
           }
 
-          // @ts-ignore read-only ...
+          // @ts-ignore Cannot assign to 'value' because it is a read-only property.ts(2540)
           node.value = pathSegmentsToAst(node.value.value, "SELECT");
           hasChanged = true;
         }

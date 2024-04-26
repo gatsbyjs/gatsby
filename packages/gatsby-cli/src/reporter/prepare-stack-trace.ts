@@ -156,7 +156,7 @@ function getPosition({
 // This is copied almost verbatim from the V8 source code at
 // https://code.google.com/p/v8/source/browse/trunk/src/messages.js.
 function CallSiteToString(): string {
-  // @ts-ignore
+  // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.ts(2683)
   const _this = this; // eslint-disable-line @typescript-eslint/no-this-alias
   const self = _this as
     | NodeJS.CallSite

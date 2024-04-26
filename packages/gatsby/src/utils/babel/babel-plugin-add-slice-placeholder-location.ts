@@ -26,7 +26,7 @@ export default function addSlicePlaceholderLocation(
           return;
         }
 
-        // @ts-ignore
+        // @ts-ignore Property 'file' does not exist on type '{ JSXOpeningElement(nodePath: any): void; }'.ts(2339)
         if (this.file.opts.filename) {
           const __renderedByLocationProperties: Array<ObjectProperty> = [
             t.objectProperty(
@@ -34,7 +34,7 @@ export default function addSlicePlaceholderLocation(
               t.stringLiteral(
                 relative(
                   store.getState().program.directory,
-                  // @ts-ignore
+                  // @ts-ignore Property 'file' does not exist on type '{ JSXOpeningElement(nodePath: any): void; }'.ts(2339)
                   this.file.opts.filename,
                 ),
               ),

@@ -52,11 +52,8 @@ function getObjectFromNode(nodeValue: any): any {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getValueFromNode(node: any): any {
   if (t.isTemplateLiteral(node)) {
-    // @ts-ignore - fix me
     delete node.leadingComments;
-    // @ts-ignore - fix me
     delete node.trailingComments;
-    // @ts-ignore - fix me
     const literalContents = generate(node).code;
     return unwrapTemplateLiteral(literalContents);
   }
@@ -99,14 +96,15 @@ function getOptionsForPlugin(node: any): any {
 
   // When a plugin is added conditionally with && {}
   if (t.isLogicalExpression(node)) {
-    // @ts-ignore - fix me
+    // @ts-ignore Property 'properties' does not exist on type 'Expression'.
+    // Property 'properties' does not exist on type 'ArrayExpression'.ts(2339)
     options = node.right.properties.find(
       (property) => property.key.name === "options",
     );
   } else {
-    // @ts-ignore - fix me
     options = node.properties.find(
-      // @ts-ignore
+      // @ts-ignore Property 'key' does not exist on type 'ObjectMethod | ObjectProperty | SpreadElement'.
+      // Property 'key' does not exist on type 'SpreadElement'.ts(2339)
       (property) => property.key.name === "options",
     );
   }
@@ -121,17 +119,23 @@ function getOptionsForPlugin(node: any): any {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getKeyForPlugin(node: any): any {
   if (t.isObjectExpression(node)) {
-    // @ts-ignore - fix me
-    const key = node.properties.find((p) => p.key.name === "__key");
+    const key = node.properties.find((p) => {
+      // @ts-ignore Property 'key' does not exist on type 'ObjectMethod | ObjectProperty | SpreadElement'.
+      // Property 'key' does not exist on type 'SpreadElement'.ts(2339)
+      return p.key.name === "__key";
+    });
 
-    // @ts-ignore - fix me
+    // @ts-ignore Property 'value' does not exist on type 'ObjectMethod | ObjectProperty | SpreadElement'.
+    // Property 'value' does not exist on type 'ObjectMethod'.ts(2339)
     return key ? getValueFromNode(key.value) : null;
   }
 
   // When a plugin is added conditionally with && {}
   if (t.isLogicalExpression(node)) {
-    // @ts-ignore - fix me
-    const key = node.right.properties.find((p) => p.key.name === "__key");
+    // @ts-ignore Property 'properties' does not exist on type 'Expression'. Property 'properties' does not exist on type 'ArrayExpression'.ts(2339)
+    const key = node.right.properties.find((p) => {
+      return p.key.name === "__key";
+    });
 
     return key ? getValueFromNode(key.value) : null;
   }
@@ -146,17 +150,23 @@ function getNameForPlugin(node: any): any {
   }
 
   if (t.isObjectExpression(node)) {
-    // @ts-ignore - fix me
-    const resolve = node.properties.find((p) => p.key.name === "resolve");
+    const resolve = node.properties.find((p) => {
+      // @ts-ignore Property 'key' does not exist on type 'ObjectMethod | ObjectProperty | SpreadElement'.
+      // Property 'key' does not exist on type 'SpreadElement'.ts(2339)
+      return p.key.name === "resolve";
+    });
 
-    // @ts-ignore - fix me
+    // @ts-ignore Property 'value' does not exist on type 'ObjectMethod | ObjectProperty | SpreadElement'.
+    // Property 'value' does not exist on type 'ObjectMethod'.ts(2339)
     return resolve ? getValueFromNode(resolve.value) : null;
   }
 
   // When a plugin is added conditionally with && {}
   if (t.isLogicalExpression(node)) {
-    // @ts-ignore - fix me
-    const resolve = node.right.properties.find((p) => p.key.name === "resolve");
+    // @ts-ignore Property 'properties' does not exist on type 'Expression'. Property 'properties' does not exist on type 'ArrayExpression'.ts(2339)
+    const resolve = node.right.properties.find((p) => {
+      return p.key.name === "resolve";
+    });
 
     return resolve ? getValueFromNode(resolve.value) : null;
   }
@@ -197,7 +207,8 @@ function buildPluginNode({ name, options, key }): any {
     { placeholderPattern: false },
   )();
 
-  // @ts-ignore - fix me
+  // @ts-ignore Property 'declarations' does not exist on type 'Statement | Statement[]'.
+  // Property 'declarations' does not exist on type 'BlockStatement'.ts(2339)
   return pluginWithOptions.declarations[0].init;
 }
 
@@ -206,6 +217,13 @@ function addPluginsToConfig({
   pluginOrThemeName,
   options,
   key,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pluginNodes: any;
+  pluginOrThemeName: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  options: any;
+  key: string;
 }): void {
   if (t.isCallExpression(pluginNodes.value)) {
     const plugins = pluginNodes.value.callee.object.elements.map(getPlugin);

@@ -13,7 +13,6 @@ export async function buildSchema({
     return;
   }
 
-  // @ts-ignore
   const activity = reporter.activityTimer("building schema", {
     parentSpan,
   });

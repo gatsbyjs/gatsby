@@ -821,11 +821,11 @@ function _createNode(
 
       const possiblyCodeFrame = getNonGatsbyCodeFrame();
       if (possiblyCodeFrame) {
-        // @ts-ignore
+        // @ts-ignore Property 'codeFrame' does not exist on type '{ validationErrorMessage: string; node: IGatsbyNode; }'.ts(2339)
         errorObj.context.codeFrame = possiblyCodeFrame.codeFrame;
-        // @ts-ignore
+        // @ts-ignore Property 'filePath' does not exist on type '{ id: string; context: { validationErrorMessage: string; node: IGatsbyNode; }; }'.ts(2339)
         errorObj.filePath = possiblyCodeFrame.fileName;
-        // @ts-ignore
+        // @ts-ignore Property 'location' does not exist on type '{ id: string; context: { validationErrorMessage: string; node: IGatsbyNode; }; }'.ts(2339)
         errorObj.location = {
           start: {
             line: possiblyCodeFrame.line,
@@ -1143,20 +1143,20 @@ function setWebpackConfig(
   config: Record<string, unknown>,
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
-  // @ts-ignore
+  // @ts-ignore Property 'fs' does not exist on type '{}'.ts(2339)
   if (config.node?.fs === "empty") {
     report.warn(
       `[deprecated${
         plugin ? " " + plugin.name : ""
       }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`,
     );
-    // @ts-ignore
+    // @ts-ignore Property 'fs' does not exist on type '{}'.ts(2339)
     delete config.node.fs;
-    // @ts-ignore
+
     config.resolve = config.resolve || {};
-    // @ts-ignore
+    // @ts-ignore 'config.resolve' is of type 'unknown'.ts(18046)
     config.resolve.fallback = config.resolve.fallback || {};
-    // @ts-ignore
+    // @ts-ignore 'config.resolve' is of type 'unknown'.ts(18046)
     config.resolve.fallback.fs = false;
   }
 
@@ -1180,7 +1180,7 @@ function replaceWebpackConfig(
   config: Record<string, unknown>,
   plugin: IPlugin | null | undefined = null,
 ): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
-  // @ts-ignore
+  // @ts-ignore Property 'fs' does not exist on type '{}'.ts(2339)
   if (config.node?.fs === "empty") {
     report.warn(
       `[deprecated${
@@ -1188,12 +1188,12 @@ function replaceWebpackConfig(
       }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`,
     );
 
-    // @ts-ignore
+    // @ts-ignore Property 'fs' does not exist on type '{}'.ts(2339)
     delete config.node.fs;
     config.resolve = config.resolve ?? {};
-    // @ts-ignore
+    // @ts-ignore 'config.resolve' is of type 'unknown'.ts(18046)
     config.resolve.fallback = config.resolve.fallback ?? {};
-    // @ts-ignore
+    // @ts-ignore 'config.resolve' is of type 'unknown'.ts(18046)
     config.resolve.fallback.fs = false;
   }
 

@@ -90,7 +90,14 @@ const remarkInferTocMeta: Plugin<[IRemarkTocOptions]> = (
 
   return (tree: Node, file): void => {
     const generatedToC = toc(tree as TableCell, { maxDepth });
-    // @ts-ignore
+    // @ts-ignore Type 'VFile' is not assignable to type 'IMdxVFile'.
+    // Type 'VFile' is not assignable to type '{ data: IMdxVFileData; }'.
+    // Types of property 'data' are incompatible.
+    // Type 'Data' is not assignable to type 'IMdxVFileData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    // Type 'Data' is not assignable to type '{ meta?: IMdxVFileDataMeta | undefined; }'.
+    //  Types of property 'meta' are incompatible.
+    // Type 'DataMapMeta' is not assignable to type 'IMdxVFileDataMeta'.
+    // Index signature for type 'string' is missing in type 'DataMapMeta'.ts(2322)
     const mdxFile: IMdxVFile = file;
     if (!mdxFile.data.meta) {
       mdxFile.data.meta = {};

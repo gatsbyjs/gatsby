@@ -41,7 +41,6 @@ function getNameFromPath(path: NodePath): string | number | boolean | null {
             ? name
             : `${name}.${getNameFromPath(path) || ""}`;
         },
-        // @ts-ignore
         getNameFromPath(path.get("object")),
       );
     default:

@@ -32,6 +32,7 @@ import errorParser from "./api-runner-error-parser";
 import { wrapNode, wrapNodes } from "./detect-node-mutations";
 import { reportOnce } from "./report-once";
 import type {
+  FlattenedPlugin,
   GatsbyNodeAPI,
   IGatsbyNode,
   IGatsbyState,
@@ -44,7 +45,41 @@ import {
   publicActions,
   restrictedActionsAvailableInAPI,
 } from "../redux/actions";
-import type { GatsbyIterable } from "../datastore/common/iterable";
+import type { IActivityArgs, Reporter } from "gatsby-cli/lib/reporter/reporter";
+import type { ErrorMeta } from "gatsby-cli/lib/reporter/types";
+import type { IStructuredError } from "gatsby-cli/lib/structured-errors/types";
+import type { IProgressReporter } from "gatsby-cli/lib/reporter/reporter-progress";
+import type { ITimerReporter } from "gatsby-cli/lib/reporter/reporter-timer";
+import type express from "express";
+
+type ApiRunInstance = {
+  api: GatsbyNodeAPI;
+  args: {
+    pluginName?: string | undefined;
+    parentSpan?: Span | SpanContext | undefined;
+    traceId?: string | undefined;
+    traceTags?: Record<string, string> | undefined;
+    waitForCascadingActions?: boolean | undefined;
+    type?:
+      | {
+          name?: string | undefined;
+        }
+      | undefined;
+    page?:
+      | {
+          path?: string | undefined;
+        }
+      | undefined;
+    filename?: string | undefined;
+    node?: IGatsbyNode | undefined;
+  };
+  pluginSource: string | undefined;
+  resolve: (thenableOrResult?: unknown) => void;
+  span: Span;
+  startTime: string;
+  traceId: string | undefined;
+  id?: string | undefined;
+};
 
 const bindActionCreators = memoize(origBindActionCreators);
 
@@ -86,8 +121,7 @@ const nodeMutationsWrappers = {
   getNode(id: string): IGatsbyNode | undefined {
     return wrapNode(getNode(id));
   },
-  getNodes(): GatsbyIterable<IGatsbyNode> | undefined {
-    // @ts-ignore
+  getNodes(): Array<IGatsbyNode> | undefined {
     return wrapNodes(getNodes());
   },
   getNodesByType(type: string): Array<IGatsbyNode> {
@@ -164,6 +198,10 @@ function initAPICallTracing(
     spanArgs: opentracing.SpanOptions = {},
   ): opentracing.Span => {
     // @ts-ignore - TODO: Remove this once we have a proper typing for opentracing
+    // Type '{ childOf: opentracing.Span | opentracing.SpanContext | undefined; }' is not assignable to type 'SpanOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    // Types of property 'childOf' are incompatible.
+    // Type 'Span | SpanContext | undefined' is not assignable to type 'Span | SpanContext'.
+    // Type 'undefined' is not assignable to type 'Span | SpanContext'.ts(2375)
     const defaultSpanArgs: opentracing.SpanOptions = { childOf: parentSpan };
 
     return tracer.startSpan(spanName, _.merge(defaultSpanArgs, spanArgs));
@@ -259,7 +297,42 @@ function extendLocalReporterToCatchPluginErrors({
   pluginName,
   runningActivities,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}): any {
+}: {
+  reporter: Reporter;
+  pluginName: string | undefined;
+  runningActivities: Set<{ end: () => void }>;
+}): Reporter & {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setErrorMap: any;
+  error: (
+    errorMeta: ErrorMeta | Array<ErrorMeta>,
+    error?: Error | Array<Error> | undefined,
+    pluginName?: string | undefined,
+  ) => IStructuredError | Array<IStructuredError>;
+  panic: (
+    errorMeta: ErrorMeta,
+    error?: Error | Array<Error> | undefined,
+    pluginName?: string | undefined,
+  ) => never;
+  panicOnBuild: (
+    errorMeta: ErrorMeta,
+    error?: Error | Array<Error> | undefined,
+    pluginName?: string | undefined,
+  ) => IStructuredError | Array<IStructuredError>;
+  // If you change arguments here, update reporter.ts as well
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  activityTimer: (text: any, activityArgs?: IActivityArgs | undefined) => any;
+  // If you change arguments here, update reporter.ts as well
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createProgress: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    text: any,
+    total?: number | undefined,
+    start?: number | undefined,
+    activityArgs?: IActivityArgs | undefined,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) => any;
+} {
   let setErrorMap;
 
   let error = reporter.error;
@@ -280,33 +353,47 @@ function extendLocalReporterToCatchPluginErrors({
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    panic = (errorMeta, error): any => {
-      reporter.panic(errorMeta, error, pluginName);
+    panic = (
+      errorMeta: ErrorMeta,
+      error?: Error | Array<Error> | undefined,
+    ): never => {
+      return reporter.panic(errorMeta, error, pluginName);
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    panicOnBuild = (errorMeta, error): any => {
-      reporter.panicOnBuild(errorMeta, error, pluginName);
+    panicOnBuild = (
+      errorMeta: ErrorMeta,
+      error?: Error | Array<Error> | undefined,
+    ): IStructuredError | Array<IStructuredError> => {
+      return reporter.panicOnBuild(errorMeta, error, pluginName);
     };
   }
 
-  return {
-    ...reporter,
+  return Object.assign({}, reporter, {
     setErrorMap,
     error,
     panic,
     panicOnBuild,
     // If you change arguments here, update reporter.ts as well
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    activityTimer: (text, activityArgs = {}): any => {
-      let args = [text, activityArgs];
+    activityTimer: (
+      text: string,
+      activityArgs: IActivityArgs | undefined = {},
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ): ITimerReporter => {
+      let args: [
+        text: string,
+        activityArg: IActivityArgs,
+        pluginName?: string | undefined,
+      ] = [text, activityArgs];
 
       if (pluginName && setErrorMap) {
+        // @ts-ignore weird ts issue, code is vslid
+        // Type '[text: string, activityArg: IActivityArgs, pluginName: string | undefined, string]' is not assignable to type '[text: string, activityArg: IActivityArgs, pluginName?: string | undefined]'.
+        // Source has 4 element(s) but target allows only 3.ts(2322)
         args = [...args, pluginName];
       }
 
-      // eslint-disable-next-line prefer-spread
-      const activity = reporter.activityTimer.apply(reporter, args);
+      const activity = reporter.activityTimer(...args);
 
       const originalStart = activity.start;
       const originalEnd = activity.end;
@@ -325,10 +412,31 @@ function extendLocalReporterToCatchPluginErrors({
     },
     // If you change arguments here, update reporter.ts as well
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    createProgress: (text, total = 0, start = 0, activityArgs = {}): any => {
-      let args = [text, total, start, activityArgs];
+    createProgress: (
+      text: string,
+      total: number | undefined = 0,
+      start: number | undefined = 0,
+      activityArgs: IActivityArgs | undefined = {},
+    ): IProgressReporter => {
+      let args:
+        | [
+            text: string,
+            total: number | undefined,
+            start: number | undefined,
+            activityArgs: IActivityArgs,
+          ]
+        | [
+            text: string,
+            total: number | undefined,
+            start: number | undefined,
+            activityArgs: IActivityArgs,
+            pluginName?: string | undefined,
+          ] = [text, total, start, activityArgs];
 
       if (pluginName && setErrorMap) {
+        // @ts-ignore weird ts issue, code is vslid
+        // Type '[text: string, total: number | undefined, start: number | undefined, activityArgs: IActivityArgs | undefined, pluginName: string | undefined, string]' is not assignable to type '[text: string, total?: number | undefined, start?: number | undefined, activityArgs?: IActivityArgs | undefined, pluginName?: string | undefined]'.
+        // Source has 6 element(s) but target allows only 5.ts(2322)
         args = [...args, pluginName];
       }
 
@@ -356,7 +464,7 @@ function extendLocalReporterToCatchPluginErrors({
 
       return activity;
     },
-  };
+  });
 }
 
 function getUninitializedCache(plugin: string): {
@@ -498,7 +606,7 @@ async function runAPI(plugin, api, args, activity): globalThis.Promise<any> {
 
     const localReporter = getLocalReporter({ activity, reporter });
 
-    const runningActivities = new Set();
+    const runningActivities = new Set<{ end: () => void }>();
 
     const extendedLocalReporter = extendLocalReporterToCatchPluginErrors({
       reporter: localReporter,
@@ -508,7 +616,6 @@ async function runAPI(plugin, api, args, activity): globalThis.Promise<any> {
 
     function endInProgressActivitiesCreatedByThisRun(): void {
       runningActivities.forEach((activity) => {
-        // @ts-ignore
         return activity.end();
       });
     }
@@ -599,11 +706,12 @@ async function runAPI(plugin, api, args, activity): globalThis.Promise<any> {
 
 const apisRunningById = new Map();
 const apisRunningByTraceId = new Map();
-let waitingForCasacadeToFinish = [];
+let waitingForCasacadeToFinish: Array<ApiRunInstance> = [];
 
 export function apiRunnerNode(
   api: GatsbyNodeAPI,
   args: {
+    app?: express.Express | undefined;
     graphql?: Runner | undefined;
     getConfig?: (() => webpack.Configuration) | undefined;
     pluginName?: string | undefined;
@@ -641,7 +749,6 @@ export function apiRunnerNode(
   // `onCreatePage` is the only example right now. In these cases, we should
   // avoid calling the originating plugin again.
   let implementingPlugins = plugins.filter((plugin) => {
-    // @ts-ignore
     return plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource;
   });
 
@@ -666,34 +773,7 @@ export function apiRunnerNode(
       apiSpan.setTag(key, value);
     });
 
-    const apiRunInstance: {
-      api: GatsbyNodeAPI;
-      args: {
-        pluginName?: string | undefined;
-        parentSpan?: Span | SpanContext | undefined;
-        traceId?: string | undefined;
-        traceTags?: Record<string, string> | undefined;
-        waitForCascadingActions?: boolean | undefined;
-        type?:
-          | {
-              name?: string | undefined;
-            }
-          | undefined;
-        page?:
-          | {
-              path?: string | undefined;
-            }
-          | undefined;
-        filename?: string | undefined;
-        node?: IGatsbyNode | undefined;
-      };
-      pluginSource: string | undefined;
-      resolve: (thenableOrResult?: unknown) => void;
-      span: Span;
-      startTime: string;
-      traceId: string | undefined;
-      id?: string | undefined;
-    } = {
+    const apiRunInstance: ApiRunInstance = {
       api,
       args,
       pluginSource,
@@ -708,13 +788,10 @@ export function apiRunnerNode(
     // have special ways of generating IDs for those to avoid stringifying
     // large objects.
     let id: string | undefined;
-
-    // @ts-ignore
     if (api === "setFieldsOnGraphQLNodeType") {
       id = `${api}${apiRunInstance.startTime}${args.type?.name ?? ""}${traceId}`;
     } else if (api === "onCreateNode") {
       id = `${api}${apiRunInstance.startTime}${args.node?.internal.contentDigest ?? ""}${traceId}`;
-      // @ts-ignore
     } else if (api === "preprocessSource") {
       id = `${api}${apiRunInstance.startTime}${args.filename ?? ""}${traceId}`;
     } else if (api === "onCreatePage") {
@@ -729,7 +806,6 @@ export function apiRunnerNode(
     apiRunInstance.id = id;
 
     if (waitForCascadingActions) {
-      // @ts-ignore
       waitingForCasacadeToFinish.push(apiRunInstance);
     }
 
@@ -784,7 +860,7 @@ export function apiRunnerNode(
 
     runPromise(
       implementingPlugins,
-      (plugin) => {
+      (plugin: FlattenedPlugin) => {
         if (stopQueuedApiRuns) {
           return null;
         }
@@ -821,14 +897,16 @@ export function apiRunnerNode(
 
             const file = stackTrace
               .parse(err)
-              // @ts-ignore
+              // @ts-ignore Property 'fileName' does not exist on type 'StackFrame'.ts(2339)
               .find((file) => /gatsby-node/.test(file.fileName));
 
             let codeFrame = "";
             const structuredError = errorParser({ err });
 
             if (file) {
-              // @ts-ignore
+              // @ts-ignore Property 'fileName' does not exist on type 'StackFrame'.ts(2339)
+              // Property 'lineNumber' does not exist on type 'StackFrame'.ts(2339)
+              // Property 'columnNumber' does not exist on type 'StackFrame'.ts(2339)
               const { fileName, lineNumber: line, columnNumber: column } = file;
               const trimmedFileName = fileName.match(/^(async )?(.*)/)[2];
 
@@ -888,14 +966,14 @@ export function apiRunnerNode(
       }
 
       // Filter empty results
-      // @ts-ignore
+      // @ts-ignore Property 'results' does not exist on type 'ApiRunInstance'.ts(2339)
       apiRunInstance.results = results.filter((result) => !_.isEmpty(result));
 
       // Filter out empty responses and return if the
       // api caller isn't waiting for cascading actions to finish.
       if (!waitForCascadingActions) {
         apiSpan.finish();
-        // @ts-ignore
+        // @ts-ignore Property 'results' does not exist on type 'ApiRunInstance'.ts(2339)
         resolve(apiRunInstance.results);
       }
 
@@ -903,12 +981,11 @@ export function apiRunnerNode(
       waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
         (instance) => {
           // If none of its trace IDs are running, it's done.
-          // @ts-ignore
           const apisByTraceIdCount = apisRunningByTraceId.get(instance.traceId);
+
           if (apisByTraceIdCount === 0) {
-            // @ts-ignore
             instance.span.finish();
-            // @ts-ignore
+            // @ts-ignore Property 'results' does not exist on type 'ApiRunInstance'.ts(2339)
             instance.resolve(instance.results);
             return false;
           } else {

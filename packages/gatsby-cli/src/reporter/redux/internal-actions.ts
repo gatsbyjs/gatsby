@@ -1,10 +1,7 @@
-// @ts-ignore
 import { uuid } from "gatsby-core-utils";
-// @ts-ignore
 import { trackCli } from "gatsby-telemetry";
 import signalExit from "signal-exit";
 import type { Dispatch } from "redux";
-
 import { getStore } from "./";
 import {
   Actions,
@@ -57,9 +54,11 @@ let pendingStatus: ActivityStatuses | "" = "";
 // where technically we are "done" (all activities are done).
 // We don't want to emit multiple SET_STATUS events that would toggle between
 // IN_PROGRESS and SUCCESS/FAILED in short succession in those cases.
-export const setStatus =
-  (status: ActivityStatuses | "", force: boolean = false) =>
-  (dispatch: Dispatch<ISetStatus>): void => {
+export function setStatus(
+  status: ActivityStatuses | "",
+  force: boolean = false,
+) {
+  return (dispatch: Dispatch<ISetStatus>): void => {
     const currentStatus = getStore().getState().logs.status;
 
     if (cancelDelayedSetStatus) {
@@ -88,6 +87,7 @@ export const setStatus =
       }
     }
   };
+}
 
 export function createLog({
   level,

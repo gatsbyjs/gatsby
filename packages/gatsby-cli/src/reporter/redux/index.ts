@@ -37,7 +37,6 @@ export function dispatch(action: ActionsUnion | Thunk): void {
   }
 
   if (Array.isArray(action)) {
-    // @ts-ignore
     action.forEach((item) => dispatch(item));
     return;
   } else if (typeof action === "function") {
@@ -47,7 +46,8 @@ export function dispatch(action: ActionsUnion | Thunk): void {
 
   action = {
     ...action,
-    // @ts-ignore this is a typescript no-no..
+    // @ts-ignore Conversion of type '{ timestamp: string; type: Actions.RenderPageTree; payload: IRenderPageArgs; } | { timestamp: string; type: Actions.Log; payload: ILog; } | { timestamp: string; type: Actions.ActivityErrored; payload: { ...; }; } | ... 6 more ... | { ...; }' to type 'ActionsUnion' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+    // Object literal may only specify known properties, and 'timestamp' does not exist in type 'ISetLogs'.ts(2352)
     // And i'm pretty sure this timestamp isn't used anywhere.
     // but for now, the structured logs integration tests expect it
     // so it's easier to leave it and then explore as a follow up

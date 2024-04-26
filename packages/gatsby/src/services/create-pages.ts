@@ -6,6 +6,9 @@ import type { IGatsbyPage } from "../redux/types";
 import { actions } from "../redux/actions";
 import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages";
 import { getDataStore } from "../datastore";
+import type { Runner } from "../bootstrap/create-graphql-runner";
+import type { ExecutionResult } from "graphql";
+import type { ObjMap } from "graphql-compose";
 
 const isInitialCreatePages = true;
 let createPagesCount = 0;
@@ -21,7 +24,6 @@ export async function createPages({
 }> {
   assertStore(store);
 
-  // @ts-ignore
   const activity = reporter.activityTimer("createPages", {
     parentSpan,
   });
@@ -32,10 +34,16 @@ export async function createPages({
   // Wrap the GraphQL function so we can measure how long it takes to run.
   const originalGraphQL = gatsbyNodeGraphQLFunction;
   // eslint-disable-next-line
-  async function wrappedGraphQL() {
+  const wrappedGraphQL: Runner = async function wrappedGraphQL(
+    ...rest
+  ): Promise<ExecutionResult<ObjMap<unknown>, ObjMap<unknown>> | undefined> {
     const start = Date.now();
+
     // @ts-ignore not sure how to type the following
-    const returnValue = await originalGraphQL.apply(this, arguments); // eslint-disable-line
+    // 1. 'this' implicitly has type 'any' because it does not have a type annotation.ts(2683)
+    // 2. Argument of type 'IArguments' is not assignable to parameter of type '[query: string | Source, context: Record<string, any>]'.ts(2345)
+    // eslint-disable-next-line @babel/no-invalid-this
+    const returnValue = await originalGraphQL?.apply(this, rest);
     const end = Date.now();
     const totalMS = end - start;
     if (totalMS > 10000) {
@@ -46,7 +54,7 @@ export async function createPages({
       );
     }
     return returnValue;
-  }
+  };
 
   createPagesCount += 1;
   const traceId = isInitialCreatePages
@@ -66,7 +74,6 @@ export async function createPages({
   activity.end();
 
   if (shouldRunCreatePagesStatefully) {
-    // @ts-ignore
     const activity = reporter.activityTimer("createPagesStatefully", {
       parentSpan,
     });
@@ -116,7 +123,6 @@ export async function createPages({
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? "" : "s"}`,
   );
 
-  // @ts-ignore
   const tim = reporter.activityTimer("Checking for changed pages", {
     parentSpan,
   });

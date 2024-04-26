@@ -175,14 +175,16 @@ type ILocOfGraphQLDocInSrcFile = {
 
 export function locInGraphQlToLocInFile(
   locationOfGraphQLDocInSourceFile: ILocOfGraphQLDocInSrcFile,
-  graphqlLocation: SourceLocation,
+  graphqlLocation?: SourceLocation | undefined,
 ): SourceLocation {
   return {
-    line:
-      graphqlLocation.line + locationOfGraphQLDocInSourceFile.start.line - 1,
-    column:
-      (graphqlLocation.line === 1
-        ? locationOfGraphQLDocInSourceFile.start.column
-        : 0) + graphqlLocation.column,
+    line: graphqlLocation
+      ? graphqlLocation.line + locationOfGraphQLDocInSourceFile.start.line - 1
+      : 0,
+    column: graphqlLocation
+      ? (graphqlLocation.line === 1
+          ? locationOfGraphQLDocInSourceFile.start.column
+          : 0) + graphqlLocation.column
+      : 0,
   };
 }

@@ -444,7 +444,6 @@ function calculateImageSizes(
       });
     }
     case "constrained": {
-      // @ts-ignore - only width or height can be undefined but it doesn't let me type this correctly
       return calculateResponsiveImageSizes({
         sourceMetadata,
         width,
@@ -456,7 +455,6 @@ function calculateImageSizes(
       });
     }
     case "fullWidth": {
-      // @ts-ignore - only width or height can be undefined but it doesn't let me type this correctly
       return calculateResponsiveImageSizes({
         sourceMetadata,
         width,

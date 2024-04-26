@@ -8,7 +8,7 @@ export const eslintRequiredConfig: ESLint.Options = {
   rulePaths: [eslintRulePaths],
   useEslintrc: false,
   allowInlineConfig: false,
-  // @ts-ignore
+  // @ts-ignore Object literal may only specify known properties, and 'emitWarning' does not exist in type 'Options'.ts(2353)
   emitWarning: true,
   baseConfig: {
     parser: require.resolve("@babel/eslint-parser"),

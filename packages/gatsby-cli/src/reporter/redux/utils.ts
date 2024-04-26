@@ -54,7 +54,7 @@ export function getActivity(id: string): IActivity | null {
  */
 export function getElapsedTimeMS(activity: IActivity): number {
   const elapsed = process.hrtime(activity.startTime);
-  // @ts-ignore
+  // @ts-ignore Argument of type '[number, number]' is not assignable to parameter of type 'bigint'.ts(2345)
   return convertHrtime(elapsed).milliseconds;
 }
 

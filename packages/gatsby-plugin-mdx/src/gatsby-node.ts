@@ -368,7 +368,14 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
 };
 
 export const onPluginInit: GatsbyNode["onPluginInit"] = ({ reporter }) => {
-  // @ts-ignore - We only expose this type from gatsby-cli and we don't want to import from there
+  // @ts-ignore Argument of type '{ [x: string]: { text: (context: {    absolutePath: string;    errorMeta: any;}) => string; level: string; type: string; category: string; } | { text: (context: {    resourcePath: string;    mdxPath?: string | undefined;}) => string; level: string; type: string; category?: never; } | { text: (context: {    resourceP...' is not assignable to parameter of type 'Record<string, IErrorMapEntryPublicApi>'.
+  // 'string' index signatures are incompatible.
+  // Type '{ text: (context: { absolutePath: string; errorMeta: any; }) => string; level: string; type: string; category: string; } | { text: (context: { resourcePath: string; mdxPath?: string | undefined; }) => string; level: string; type: string; category?: never; } | { ...; }' is not assignable to type 'IErrorMapEntryPublicApi'.
+  // Type '{ text: (context: {    absolutePath: string;    errorMeta: any;}) => string; level: string; type: string; category: string; }' is not assignable to type 'IErrorMapEntryPublicApi'.
+  // Type '{ text: (context: {    absolutePath: string;    errorMeta: any;}) => string; level: string; type: string; category: string; }' is not assignable to type '{ level?: "ERROR" | "WARNING" | "INFO" | "DEBUG" | undefined; type?: "PLUGIN" | "HTML.COMPILATION" | "HTML.GENERATION" | "HTML.GENERATION.DEV_SSR" | "HTML.GENERATION.SSG" | "RSC.COMPILATION" | ... 33 more ... | undefined; }'.
+  // Types of property 'level' are incompatible.
+  // Type 'string' is not assignable to type '"ERROR" | "WARNING" | "INFO" | "DEBUG" | undefined'.ts(2345)
+  // We only expose this type from gatsby-cli and we don't want to import from there
   reporter.setErrorMap(ERROR_MAP);
 };
 

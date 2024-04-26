@@ -1295,6 +1295,18 @@ importers:
       '@total-typescript/ts-reset':
         specifier: ^0.5.1
         version: 0.5.1
+      '@types/babel__core':
+        specifier: 7.20.5
+        version: 7.20.5
+      '@types/babel__generator':
+        specifier: ^7.6.8
+        version: 7.6.8
+      '@types/babel__helper-plugin-utils':
+        specifier: ^7.10.3
+        version: 7.10.3
+      '@types/babel__template':
+        specifier: ^7.4.4
+        version: 7.4.4
       '@types/hosted-git-info':
         specifier: ^3.0.5
         version: 3.0.5
@@ -9689,6 +9701,9 @@ packages:
 
   '@types/babel__generator@7.6.8':
     resolution: {integrity: sha512-ASsj+tpEDsEiFr1arWrlN6V3mdfjRMZt6LtK/Vp/kreFLnr5QH5+DhvD5nINYZXzwJvXeGq+05iUXcAzVrqWtw==}
+
+  '@types/babel__helper-plugin-utils@7.10.3':
+    resolution: {integrity: sha512-FcLBBPXInqKfULB2nvOBskQPcnSMZ0s1Y2q76u9H1NPPWaLcTeq38xBeKfF/RBUECK333qeaqRdYoPSwW7rTNQ==}
 
   '@types/babel__template@7.4.4':
     resolution: {integrity: sha512-h/NUaSyG5EyxBIp8YRxo4RMe2/qQgvyowRwVMzhYhBCONbW8PUsg4lkFMrhgZhUe5z3L3MiLDuvyJ/CaPa2A8A==}
@@ -24557,6 +24572,10 @@ snapshots:
   '@types/babel__generator@7.6.8':
     dependencies:
       '@babel/types': 7.24.0
+
+  '@types/babel__helper-plugin-utils@7.10.3':
+    dependencies:
+      '@types/babel__core': 7.20.5
 
   '@types/babel__template@7.4.4':
     dependencies:

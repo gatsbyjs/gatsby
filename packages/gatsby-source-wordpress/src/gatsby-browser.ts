@@ -1,7 +1,6 @@
 import type { GatsbyBrowser } from "gatsby";
 import type { GatsbyImageProps } from "gatsby-plugin-image";
 import { createElement } from "react";
-// @ts-ignore
 import { createRoot } from "react-dom/client";
 
 let hydrateRef: number | NodeJS.Timeout;
@@ -39,14 +38,14 @@ function hydrateImages(): void {
     inlineWPimages.forEach((image) => {
       // usually this is the right element to hydrate on
       const grandParentIsGatsbyImage =
-        // @ts-ignore-next-line classList is on HTMLElement
+        // @ts-ignore Property 'classList' does not exist on type 'ParentNode'.ts(2339)
         image?.parentNode?.parentNode?.classList?.contains(
           "gatsby-image-wrapper",
         );
 
       // but sometimes this is the right element
       const parentIsGatsbyImage =
-        // @ts-ignore-next-line classList is on HTMLElement
+        // @ts-ignore Property 'classList' does not exist on type 'ParentNode'.ts(2339)
         image?.parentNode?.classList?.contains("gatsby-image-wrapper");
 
       if (!grandParentIsGatsbyImage && !parentIsGatsbyImage) {
@@ -71,7 +70,8 @@ function hydrateImages(): void {
             hydrationData.innerHTML,
           );
 
-          // @ts-ignore - TODO: Fix me
+          // @ts-ignore Argument of type 'ParentNode' is not assignable to parameter of type 'Container'.
+          // Property 'getElementById' is missing in type 'ParentNode' but required in type 'DocumentFragment'.ts(2345)
           const root = createRoot(gatsbyImageHydrationElement);
           root.render(createElement(mod.GatsbyImage, imageProps));
         }

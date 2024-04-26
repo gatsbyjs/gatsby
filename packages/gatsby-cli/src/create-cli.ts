@@ -635,7 +635,7 @@ export function createCli(argv: Array<string>):
             }
 
             if (value) {
-              // @ts-ignore
+              // @ts-ignore Argument of type '{}' is not assignable to parameter of type 'PackageManager'.ts(2345)
               setPackageManager(value);
               trackCli("SET_PACKAGE_MANAGER", { name: `${value}` });
               return;

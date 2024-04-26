@@ -47,7 +47,7 @@ export async function transformImage({
 
   const ext = path.extname(filename);
   const basename = path.basename(filename, ext);
-  // @ts-ignore
+
   const filePath = await fetchRemoteFile({
     directory: cache.directory,
     url,

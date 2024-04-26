@@ -94,7 +94,7 @@ function getFieldSelectorTC<TContext = any>({
   schemaComposer: SchemaComposer<TContext>;
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer;
 }): AnyTypeComposer<TContext> {
-  // @ts-ignore
+  // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
   if (_CFLAGS_.GATSBY_MAJOR === "5") {
     return convertToNestedInputType({
       schemaComposer,

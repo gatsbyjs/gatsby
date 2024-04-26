@@ -87,7 +87,6 @@ function panicQueryJobError(
     return structuredError;
   });
 
-  // @ts-ignore
   report.panicOnBuild(structuredErrors);
 }
 

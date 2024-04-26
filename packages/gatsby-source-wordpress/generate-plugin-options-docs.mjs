@@ -1,17 +1,12 @@
-import prettier from "prettier"
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import Joi from "@hapi/joi"
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import Handlebars from "handlebars"
-import fs from "fs-extra"
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash"
-// @ts-ignore
-import toc from "markdown-toc"
-import prettierConfig from "../../.prettierrc.js"
+import prettier from "prettier";
+import Joi from "@hapi/joi";
+import Handlebars from "handlebars";
+import fs from "fs-extra";
+import _ from "lodash";
+import toc from "markdown-toc";
+import prettierConfig from "../../.prettierrc.js";
 
-import { pluginOptionsSchema } from "./src/steps/declare-plugin-options-schema.mjs"
+import { pluginOptionsSchema } from "./src/steps/declare-plugin-options-schema.mjs";
 
 /**
  * This script generates ./docs/plugin-options.md from the plugin options schema.
@@ -19,7 +14,7 @@ import { pluginOptionsSchema } from "./src/steps/declare-plugin-options-schema.m
  */
 
 // :( poor children
-const excludeParentsChildren = [`RootQuery`]
+const excludeParentsChildren = ["RootQuery"];
 /**
  * Takes the keys from a Joi schema and recursively
  * turns the nested keys into structured markdown documentation
@@ -35,7 +30,7 @@ const excludeParentsChildren = [`RootQuery`]
  */
 function joiKeysToMD({
   keys,
-  mdString = ``,
+  mdString = "",
   level = 1,
   parent = null,
   parentMetas = [],
@@ -44,121 +39,104 @@ function joiKeysToMD({
     !keys ||
     (parentMetas.length && parentMetas.find((meta) => meta.portableOptions))
   ) {
-    return mdString
+    return mdString;
   }
 
   Object.entries(keys).forEach(([key, value]) => {
-    // @ts-ignore
-    const isRequired = value.flags && value.flags.presence === `required`
+    const isRequired = value.flags && value.flags.presence === "required";
 
-    const title = `${parent ? `${parent}.` : ``}${key}${
-      isRequired ? ` (**required**)` : ``
-    }`
+    const title = `${parent ? `${parent}.` : ""}${key}${
+      isRequired ? " (**required**)" : ""
+    }`;
 
-    mdString += `${`#`.repeat(level + 1)} ${title}`
+    mdString += `${"#".repeat(level + 1)} ${title}`;
 
-    // @ts-ignore
     if (value.description) {
-      mdString += `\n\n`
-      // @ts-ignore
-      const description = value.description.trim()
-      mdString += description.endsWith(`.`) ? description : `${description}.`
+      mdString += "\n\n";
+      const description = value.description.trim();
+      mdString += description.endsWith(".") ? description : `${description}.`;
     }
 
-    // @ts-ignore
     if (value.type) {
       const { trueType } =
-        // @ts-ignore
-        (value.meta && value.meta.find((meta) => `trueType` in meta)) || {}
+        (value.meta && value.meta.find((meta) => "trueType" in meta)) || {};
 
-      mdString += `\n\n`
-      // @ts-ignore
+      mdString += "\n\n";
       mdString += `**Field type**: \`${(trueType || value.type)
-        .split(`|`)
+        .split("|")
         .map((typename) => _.startCase(typename))
-        .join(` | `)}\``
+        .join(" | ")}\``;
     }
 
     if (
-      // @ts-ignore
-      (value.flags && `default` in value.flags) ||
-      // @ts-ignore
-      (value.meta && value.meta.find((meta) => `default` in meta))
+      (value.flags && "default" in value.flags) ||
+      (value.meta && value.meta.find((meta) => "default" in meta))
     ) {
       const defaultValue =
-        // @ts-ignore
-        ((value.meta && value.meta.find((meta) => `default` in meta)) || {}) // @ts-ignore
-          .default || value.flags.default
+        ((value.meta && value.meta.find((meta) => "default" in meta)) || {})
+          .default || value.flags.default;
 
-      let printedValue
+      let printedValue;
 
-      if (typeof defaultValue === `string`) {
-        printedValue = defaultValue
+      if (typeof defaultValue === "string") {
+        printedValue = defaultValue;
       } else if (Array.isArray(defaultValue)) {
-        printedValue = `[${defaultValue.join(`, `)}]`
+        printedValue = `[${defaultValue.join(", ")}]`;
       } else if (
-        [`boolean`, `function`, `number`].includes(typeof defaultValue)
+        ["boolean", "function", "number"].includes(typeof defaultValue)
       ) {
-        printedValue = defaultValue.toString()
+        printedValue = defaultValue.toString();
       } else if (defaultValue === null) {
-        printedValue = `null`
+        printedValue = "null";
       }
 
-      if (typeof printedValue === `string`) {
-        mdString += `\n\n`
+      if (typeof printedValue === "string") {
+        mdString += "\n\n";
         mdString += `**Default value**: ${
-          printedValue.includes(`\n`)
+          printedValue.includes("\n")
             ? `\n\`\`\`js\n${printedValue}\n\`\`\``
             : `\`${printedValue}\``
-        }`
+        }`;
       }
     }
 
-    // @ts-ignore
     if (value.meta) {
-      // @ts-ignore
-      const examples = value.meta.filter((meta) => `example` in meta)
+      const examples = value.meta.filter((meta) => "example" in meta);
       examples.forEach(({ example }) => {
-        mdString += `\n\n\`\`\`js\n` + example + `\n\`\`\`\n`
-      })
+        mdString += "\n\n```js\n" + example + "\n```\n";
+      });
     }
 
-    mdString += `\n\n`
+    mdString += "\n\n";
 
-    const excludeChildren = excludeParentsChildren.includes(key)
+    const excludeChildren = excludeParentsChildren.includes(key);
 
-    // @ts-ignore
     if (!excludeChildren && value.children) {
       mdString = joiKeysToMD({
-        // @ts-ignore
         keys: value.children,
         mdString,
         level: level + 1,
         parent: title,
-        // @ts-ignore
         parentMetas: value.meta,
-      })
+      });
     }
 
-    // @ts-ignore
     if (!excludeChildren && value.items && value.items.length) {
-      // @ts-ignore
       value.items.forEach((item) => {
         if (item.children) {
           mdString = joiKeysToMD({
             keys: item.children,
             mdString,
             level: level + 1,
-            parent: title + `[]`,
-            // @ts-ignore
+            parent: title + "[]",
             parentMetas: value.meta,
-          })
+          });
         }
-      })
+      });
     }
-  })
+  });
 
-  return mdString
+  return mdString;
 }
 
 /**
@@ -183,38 +161,38 @@ async function generateMdStringFromSchemaDescription(description) {
 - :medal_sports: [Usage with popular WPGraphQL extensions](./usage-with-popular-wp-graphql-extensions.md)
 - :hammer_and_wrench: [Debugging and troubleshooting](./debugging-and-troubleshooting.md)
 - :national_park: [Community and Support](./community-and-support.md)
-- :point_left: [Back to README.md](../README.md)`)
+- :point_left: [Back to README.md](../README.md)`);
 
   const docs = joiKeysToMD({
     keys: description.children,
-  })
-  const tableOfContents = toc(docs).content
+  });
+  const tableOfContents = toc(docs).content;
 
   const mdContents = template({
     tableOfContents,
     docs,
-  })
+  });
 
   const mdStringFormatted = prettier.format(mdContents, {
-    parser: `markdown`,
+    parser: "markdown",
     ...prettierConfig,
-  })
+  });
 
-  return mdStringFormatted
+  return mdStringFormatted;
 }
 
 export async function getPluginOptionsMdString() {
-  const description = (await pluginOptionsSchema({ Joi })).describe()
-  const mdString = await generateMdStringFromSchemaDescription(description)
-  return mdString
+  const description = (await pluginOptionsSchema({ Joi })).describe();
+  const mdString = await generateMdStringFromSchemaDescription(description);
+  return mdString;
 }
 
 async function writePluginOptionsMdFile() {
-  console.info(`writing out plugin options schema docs to plugin-options.md`)
-  const mdString = await getPluginOptionsMdString()
-  await fs.writeFile(`./docs/plugin-options.md`, mdString)
+  console.info("writing out plugin options schema docs to plugin-options.md");
+  const mdString = await getPluginOptionsMdString();
+  await fs.writeFile("./docs/plugin-options.md", mdString);
 }
 
-if (process.env.NODE_ENV !== `test`) {
-  writePluginOptionsMdFile()
+if (process.env.NODE_ENV !== "test") {
+  writePluginOptionsMdFile();
 }

@@ -1,6 +1,4 @@
-// @ts-ignore
 import { SourceNodesArgs } from "gatsby";
-
 import { eventsApi } from "./events";
 import { shopifyTypes } from "./shopify-types";
 import { createNodeId, parseShopifyId } from "./helpers";

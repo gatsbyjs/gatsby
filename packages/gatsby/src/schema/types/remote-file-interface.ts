@@ -42,7 +42,9 @@ export function getOrCreateRemoteFileInterface(
 
     const boundActions = bindActionCreators(actions, store.dispatch);
 
-    // @ts-ignore - types are messed up by schema composer maybe new version helps here
+    // @ts-ignore Argument of type 'Record<string, unknown>' is not assignable to parameter of type 'ObjectTypeComposerFieldConfigMapDefinition<any, any>'.
+    // 'string' index signatures are incompatible.
+    // Type 'unknown' is not assignable to type 'ObjectTypeComposerFieldConfigDefinition<any, any, any>'.ts(2345)
     tc.addFields(getRemoteFileFields(enums, boundActions, store));
   });
 }

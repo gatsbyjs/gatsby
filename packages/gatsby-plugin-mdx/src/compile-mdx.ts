@@ -25,11 +25,11 @@ export async function compileMDX(
 
     // Pass required custom data into the processor
     processor.data(
-      // @ts-ignore
+      // @ts-ignore Argument of type '"mdxNodeId"' is not assignable to parameter of type '"settings"'.ts(2345)
       "mdxNodeId",
       await cache.get(createFileToMdxCacheKey(absolutePath)),
     );
-    // @ts-ignore
+    // @ts-ignore Argument of type '"mdxMetadata"' is not assignable to parameter of type '"settings"'.ts(2345)
     processor.data("mdxMetadata", {});
 
     const result = await processor.process(
@@ -38,12 +38,20 @@ export async function compileMDX(
     );
 
     // Clone metadata so ensure it won't be overridden by later processings
-    // @ts-ignore
+    // @ts-ignore No overload matches this call.
+    // Overload 1 of 4, '(dataset: Data): Processor<Root, Program, Program, Program, string>', gave the following error.
+    // Type '"mdxMetadata"' has no properties in common with type 'Data'.
+    // Overload 2 of 4, '(key: "settings"): Settings | undefined', gave the following error.
+    // Argument of type '"mdxMetadata"' is not assignable to parameter of type '"settings"'.ts(2769)
     const clonedMetadata = Object.assign({}, processor.data("mdxMetadata"));
     const processedMDX = result.toString();
 
-    // @ts-ignore
-    return { processedMDX, metadata: clonedMetadata };
+    return {
+      processedMDX,
+      // @ts-ignore Type 'Processor<Root, Program, Program, Program, string>' is not assignable to type 'IMdxMetadata'.
+      // Index signature for type 'string' is missing in type 'Processor<Root, Program, Program, Program, string>'.ts(2322)
+      metadata: clonedMetadata,
+    };
   } catch (error) {
     reporter.panicOnBuild({
       id: ERROR_CODES.MdxCompilation,

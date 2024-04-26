@@ -11,11 +11,14 @@ import {
 } from "../../services";
 import type { IQueryRunningContext } from "./types";
 
-export const queryRunningServices: MachineOptions<
-  IQueryRunningContext,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  any
->["services"] = {
+export const queryRunningServices: Exclude<
+  MachineOptions<
+    IQueryRunningContext,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any
+  >["services"],
+  undefined
+> = {
   extractQueries,
   writeOutRequires,
   calculateDirtyQueries,

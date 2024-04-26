@@ -179,7 +179,6 @@ export async function initialize({
   activity.end();
 
   // Load gatsby config
-  // @ts-ignore
   activity = reporter.activityTimer("load gatsby config", {
     parentSpan,
   });
@@ -199,7 +198,6 @@ export async function initialize({
   }
 
   // Load plugins
-  // @ts-ignore
   activity = reporter.activityTimer("load plugins", {
     parentSpan,
   });
@@ -240,7 +238,6 @@ export async function initialize({
   }
 
   // run stale jobs
-  // @ts-ignore we'll need to fix redux typings https://redux.js.org/usage/usage-with-typescript
   store.dispatch(removeStaleJobs(store.getState().jobsV2));
 
   // Multiple occurrences of the same name-version-pair can occur,
@@ -261,7 +258,6 @@ export async function initialize({
   startPluginRunner();
 
   // onPreInit
-  // @ts-ignore
   activity = reporter.activityTimer("onPreInit", {
     parentSpan,
   });
@@ -292,7 +288,6 @@ export async function initialize({
   ) {
     activity = reporter.activityTimer(
       "delete html and css files from previous builds",
-      // @ts-ignore
       {
         parentSpan,
       },
@@ -318,7 +313,6 @@ export async function initialize({
   if (workerCacheDirExists) {
     activity = reporter.activityTimer(
       "delete worker cache from previous builds",
-      // @ts-ignore
       {
         parentSpan,
       },
@@ -330,7 +324,6 @@ export async function initialize({
     activity.end();
   }
 
-  // @ts-ignore
   activity = reporter.activityTimer("initialize cache", {
     parentSpan,
   });
@@ -512,7 +505,6 @@ export async function initialize({
 
   activity.end();
 
-  // @ts-ignore
   activity = reporter.activityTimer("copy gatsby files", {
     parentSpan,
   });
@@ -632,7 +624,6 @@ export async function initialize({
    */
 
   // onPreBootstrap
-  // @ts-ignore
   activity = reporter.activityTimer("onPreBootstrap", {
     parentSpan,
   });

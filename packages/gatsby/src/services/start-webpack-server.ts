@@ -1,5 +1,4 @@
 import openurl from "better-opn";
-// @ts-ignore
 import report from "gatsby-cli/lib/reporter";
 import chalk from "chalk";
 import type { Compiler } from "webpack";

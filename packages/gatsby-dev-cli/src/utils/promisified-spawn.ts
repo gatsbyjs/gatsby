@@ -18,7 +18,7 @@ export function setDefaultSpawnStdio(
     | ReadonlyArray<StdioOption>
     | undefined,
 ): void {
-  // @ts-ignore
+  // @ts-ignore Cannot assign to 'stdio' because it is a read-only property.ts(2540)
   defaultSpawnArgs.stdio = stdio;
 }
 

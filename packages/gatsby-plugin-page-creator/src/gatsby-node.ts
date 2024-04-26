@@ -1,8 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
 import glob from "globby";
 import systemPath from "path";
 import { sync as existsSync } from "fs-exists-cached";
-import {
+import type {
   CreatePagesArgs,
   ParentSpanPluginArgs,
   SetFieldsOnGraphQLNodeTypeArgs,
@@ -16,7 +17,7 @@ import {
   watchDirectory,
   applyTrailingSlashOption,
 } from "gatsby-page-utils";
-import { Options as ISlugifyOptions } from "@sindresorhus/slugify";
+import type { Options as ISlugifyOptions } from "@sindresorhus/slugify";
 import { createPage } from "./create-page-wrapper";
 import { collectionExtractQueryString } from "./collection-extract-query-string";
 import { derivePath } from "./derive-path";
@@ -26,7 +27,7 @@ import { createPagesFromChangedNodes } from "./create-pages-from-changed-nodes";
 import type { IOptions } from "./types";
 import {
   getPluginInstance,
-  ICreateAPageFromNodeArgs,
+  type ICreateAPageFromNodeArgs,
 } from "./tracked-nodes-state";
 import { findCollectionPageFiles } from "./path-utils";
 import { getCollectionRouteParams } from "./get-collection-route-params";
@@ -102,7 +103,7 @@ Please pick a path to an existing directory.`,
     const pagesGlob = `**/*.{${exts}}`;
 
     // Get initial list of files.
-    const files = await glob(pagesGlob, { cwd: pagesPath });
+    const files = await glob.globby(pagesGlob, { cwd: pagesPath });
     files.forEach((file) => {
       createPage(
         file,
@@ -145,6 +146,7 @@ Please pick a path to an existing directory.`,
         return [];
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const nodes = Object.values(Object.values(data)[0])[0] as any as Array<
         Record<string, Record<string, unknown>>
       >;
@@ -374,9 +376,8 @@ export function setFieldsOnGraphQLNodeType(
             // fully understand the use-cases. So this is a simple fix for this
             // one common-use, and we'll iterate as we understand.
             const sourceCopy = { ...source };
-            // @ts-ignore
+
             if (typeof source.parent === "string") {
-              // @ts-ignore
               sourceCopy.parent = getNode(source.parent);
             }
 
@@ -440,7 +441,8 @@ export async function onPluginInit(
         if (!queryString) return;
         const ast = parse(queryString);
         knownCollections.set(
-          // @ts-ignore
+          // @ts-ignore Property 'selectionSet' does not exist on type 'DefinitionNode'.
+          // Property 'selectionSet' does not exist on type 'SchemaDefinitionNode'.ts(2339)
           ast.definitions[0].selectionSet.selections[0].name.value,
           relativePath,
         );

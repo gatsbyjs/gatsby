@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import * as path from "path";
-import * as fs from "fs-extra";
+import path from "path";
+import fs from "fs-extra";
 import execa, { type Options as ExecaOptions } from "execa";
 import webpack, { Module, NormalModule, Compilation } from "webpack";
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule";
-// @ts-ignore
-import { dependencies } from "gatsby/package.json";
+import { dependencies } from "../../../package.json";
 import { printQueryEnginePlugins } from "./print-plugins";
 import mod from "module";
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging";

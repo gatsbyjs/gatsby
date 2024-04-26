@@ -6,7 +6,6 @@ import type { IQueryRunningContext } from "../state-machines/query-running/types
 export async function extractQueries({
   parentSpan,
 }: Partial<IQueryRunningContext>): Promise<void> {
-  // @ts-ignore
   const activity = reporter.activityTimer("onPreExtractQueries", {
     parentSpan,
   });

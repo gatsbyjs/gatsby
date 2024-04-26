@@ -7,9 +7,11 @@ function _ConnectedCLI(): JSX.Element {
   const state = useContext(StoreStateContext);
 
   const showStatusBar =
-    // @ts-ignore - program exists on state but we should refactor this
+    // @ts-ignore Property 'program' does not exist on type 'IStoreStateContext'.ts(2339)
+    // program exists on state but we should refactor this
     state.program?._?.[0] === "develop" &&
-    // @ts-ignore - program exists on state but we should refactor this
+    // @ts-ignore Property 'program' does not exist on type 'IStoreStateContext'.ts(2339)
+    // program exists on state but we should refactor this
     state.program?.status === "BOOTSTRAP_FINISHED";
 
   const showTrees = !!state.pageTree;

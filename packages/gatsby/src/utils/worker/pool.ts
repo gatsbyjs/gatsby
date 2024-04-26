@@ -58,7 +58,6 @@ export async function runQueriesInWorkersQueue(
     "run queries in workers",
     queryIds.staticQueryIds.length + queryIds.pageQueryIds.length,
     0,
-    // @ts-ignore
     { parentSpan: opts?.parentSpan },
   );
   activity.start();
@@ -117,7 +116,6 @@ export async function mergeWorkerState(
   pool: GatsbyWorkerPool,
   parentSpan?: Span | undefined,
 ): Promise<void> {
-  // @ts-ignore
   const activity = reporter.activityTimer("Merge worker state", { parentSpan });
   activity.start();
 

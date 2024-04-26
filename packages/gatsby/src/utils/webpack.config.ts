@@ -71,7 +71,7 @@ export async function webpackConfig(
   const isPartialHydrationEnabled =
     (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
       process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
-    // @ts-ignore
+    // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
     _CFLAGS_.GATSBY_MAJOR === "5";
 
   function processEnv(
@@ -492,7 +492,7 @@ export async function webpackConfig(
     ]
 
     // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
-    // @ts-ignore
+    // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
     if (_CFLAGS_.GATSBY_MAJOR !== "5") {
       configRules.push({
         test: require.resolve("@gatsbyjs/reach-router/es/index"),
@@ -568,7 +568,7 @@ export async function webpackConfig(
 
     // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
     // Removes it from the client payload as it's not used there
-    // @ts-ignore
+    // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
     if (_CFLAGS_.GATSBY_MAJOR !== "5") {
       configRules.push({
         test: /react-server-dom-webpack/,
@@ -640,7 +640,7 @@ export async function webpackConfig(
       stage === "build-html" || stage === "develop-html" ? "node" : "web";
     if (target === "web") {
       // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
-      // @ts-ignore
+      // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
       if (_CFLAGS_.GATSBY_MAJOR !== "5") {
         resolve.alias["@reach/router"] = path.join(
           getPackageRoot({ pkg: "@gatsbyjs/reach-router" }),
@@ -653,7 +653,7 @@ export async function webpackConfig(
       );
     }
 
-    // @ts-ignore
+    // @ts-ignore Property 'profile' does not exist on type 'IStateProgram'.ts(2339)
     if (stage === "build-javascript" && program.profile) {
       resolve.alias["react-dom$"] = "react-dom/profiling";
       resolve.alias["scheduler/tracing"] = "scheduler/tracing-profiling";
@@ -711,10 +711,10 @@ export async function webpackConfig(
   };
 
   if (suppliedStage === "build-html" || suppliedStage === "develop-html") {
-    // @ts-ignore
+    // @ts-ignore Property 'target' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
     config.target = "node14.15";
   } else {
-    // @ts-ignore
+    // @ts-ignore Property 'target' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
     config.target = ["web", "es5"];
   }
 
@@ -723,7 +723,7 @@ export async function webpackConfig(
   }
 
   if (suppliedStage === "develop") {
-    // @ts-ignore
+    // @ts-ignore Property 'optimization' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
     config.optimization = {
       splitChunks: {
         chunks: "all",
@@ -756,7 +756,7 @@ export async function webpackConfig(
   }
 
   if (suppliedStage === "build-html" || suppliedStage === "develop-html") {
-    // @ts-ignore
+    // @ts-ignore Property 'optimization' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
     config.optimization = {
       // TODO fix our partial hydration manifest
       mangleExports: !isPartialHydrationEnabled,
@@ -764,7 +764,7 @@ export async function webpackConfig(
     };
 
     if (suppliedStage === "build-html") {
-      // @ts-ignore
+      // @ts-ignore Property 'optimization' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
       config.optimization.splitChunks = {
         chunks: "async",
         minSize: 20000,
@@ -787,7 +787,7 @@ export async function webpackConfig(
         },
       };
     } else {
-      // @ts-ignore
+      // @ts-ignore Property 'optimization' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
       config.optimization.splitChunks = {
         cacheGroups: {
           default: false,
@@ -905,7 +905,7 @@ export async function webpackConfig(
       minSize: 20_000,
     };
 
-    // @ts-ignore
+    // @ts-ignore Property 'optimization' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
     config.optimization = {
       runtimeChunk: {
         name: "webpack-runtime",
@@ -915,10 +915,10 @@ export async function webpackConfig(
       splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?
-        // @ts-ignore
+        // @ts-ignore Property 'noUglify' does not exist on type 'IProgram'.ts(2339)
         !program.noUglify &&
           plugins.minifyJs(
-            // @ts-ignore
+            // @ts-ignore Property 'profile' does not exist on type 'IProgram'.ts(2339)
             program.profile
               ? {
                   terserOptions: {
@@ -944,13 +944,13 @@ export async function webpackConfig(
 
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets
-    // @ts-ignore
+    // @ts-ignore Property 'externalsPresets' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
     config.externalsPresets = {
       // use it only when not tracking builtins (tracking builtins provide their own fallbacks)
       node: !shouldTrackBuiltins,
     };
 
-    // @ts-ignore
+    // @ts-ignore Property 'externals' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
     config.externals = [];
 
     if (shouldMarkPackagesAsExternal) {
@@ -974,7 +974,7 @@ export async function webpackConfig(
         return false;
       }
 
-      // @ts-ignore
+      // @ts-ignore Property 'externals' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
       config.externals.push(function (
         { context, getResolve, request },
         callback,
@@ -1047,14 +1047,14 @@ export async function webpackConfig(
           {},
         );
 
-        // @ts-ignore
+        // @ts-ignore Property 'externals' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
         config.externals.unshift(builtinsExternalsDictionary);
       }
     }
   }
 
   if (suppliedStage === "develop") {
-    // @ts-ignore
+    // @ts-ignore Property 'externals' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
     config.externals = {
       "socket.io-client": "io",
     };
@@ -1079,7 +1079,7 @@ export async function webpackConfig(
       )
       .map(async (plugin) => {
         return (
-          // @ts-ignore
+          // @ts-ignore Property 'resolvedCompiledGatsbyNode' does not exist on type 'FlattenedPlugin'.ts(2339)
           plugin.resolvedCompiledGatsbyNode ??
           (await resolveJSFilepath({
             rootDir: plugin.resolve,
@@ -1098,7 +1098,7 @@ export async function webpackConfig(
       },
     };
 
-    // @ts-ignore
+    // @ts-ignore Property 'cache' does not exist on type '{ name: Stage; context: string; entry: { commons: string[]; polyfill?: undefined; "render-page"?: undefined; app?: undefined; } | { polyfill: string; commons: string[]; "render-page"?: undefined; app?: undefined; } | { ...; } | { ...; } | { ...; }; ... 7 more ...; resolve: { ...; }; }'.ts(2339)
     config.cache = cacheConfig;
   }
 
@@ -1122,30 +1122,31 @@ export async function webpackConfig(
     // wether HMR code gets injected. We need to make sure all custom loaders
     // (like .ts or .mdx) that use our babel-loader will be taken into account
     // when deciding which modules get fast-refresh HMR addition.
-    const fastRefreshIncludes = [];
+    const fastRefreshIncludes: Array<string> = [];
     const babelLoaderLoc = require.resolve("./babel-loader");
     const rules = getConfig().module?.rules ?? [];
 
     for (const rule of rules) {
-      // @ts-ignore
+      // @ts-ignore Property 'use' does not exist on type 'false | "" | 0 | RuleSetRule | "..."'. Property 'use' does not exist on type 'false'.ts(2339)
+      // Property 'loader' does not exist on type 'false | "" | 0 | RuleSetRule | "..."'. Property 'loader' does not exist on type 'false'.ts(2339)
       if (!rule?.use && !rule?.loader) {
         continue;
       }
 
-      // @ts-ignore
+      // @ts-ignore Property 'use' does not exist on type 'false | "" | 0 | RuleSetRule | "..."'. Property 'use' does not exist on type 'false'.ts(2339)
       let use = rule.use;
 
       if (typeof use === "function") {
-        // @ts-ignore
+        // @ts-ignore Property 'use' does not exist on type 'false | "" | 0 | RuleSetRule | "..."'. Property 'use' does not exist on type 'false'.ts(2339)
         use = rule.use({});
       }
 
       const ruleLoaders = Array.isArray(use)
         ? use.map((useEntry) => {
-            // @ts-ignore
+            // @ts-ignore 'useEntry' is of type 'unknown'.ts(18046)
             return typeof useEntry === "string" ? useEntry : useEntry.loader;
           })
-        : // @ts-ignore
+        : // @ts-ignore Property 'loader' does not exist on type 'false | "" | 0 | RuleSetRule | "..."'. Property 'loader' does not exist on type 'false'.ts(2339)
           [use?.loader ?? rule.loader];
 
       const hasBabelLoader = ruleLoaders.some(
@@ -1153,7 +1154,7 @@ export async function webpackConfig(
       );
 
       if (hasBabelLoader) {
-        // @ts-ignore
+        // @ts-ignore Property 'test' does not exist on type 'false | "" | 0 | RuleSetRule | "..."'. Property 'test' does not exist on type 'false'.ts(2339)
         fastRefreshIncludes.push(rule.test);
       }
     }
@@ -1169,7 +1170,7 @@ export async function webpackConfig(
       }
 
       return fastRefreshIncludes.some((re) => {
-        // @ts-ignore
+        // @ts-ignore Property 'test' does not exist on type 'string'.ts(2339)
         return re.test(modulePath);
       });
     };

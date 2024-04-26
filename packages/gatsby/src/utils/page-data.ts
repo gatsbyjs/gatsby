@@ -252,7 +252,6 @@ export async function flush(parentSpan?: Span | undefined): Promise<void> {
       "Writing page-data.json and slice-data.json files to public directory",
       pagePaths.size + sliceNames.size,
       0,
-      // @ts-ignore
       { id: "write-page-data-public-directory", parentSpan },
     );
     writePageDataActivity.start();

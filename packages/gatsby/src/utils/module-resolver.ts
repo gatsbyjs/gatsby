@@ -23,6 +23,7 @@ export const resolveModule: ModuleResolver = (modulePath) => {
     // ignore
   }
 
-  // @ts-ignore - See https://github.com/microsoft/TypeScript/issues/9568
+  // @ts-ignore Variable 'resolve' is used before being assigned.ts(2454)
+  // - See https://github.com/microsoft/TypeScript/issues/9568
   return resolve({}, modulePath, modulePath);
 };

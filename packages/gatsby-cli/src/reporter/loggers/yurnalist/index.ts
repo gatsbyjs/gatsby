@@ -105,8 +105,10 @@ function generatePageTreeToConsole(
     } else {
       pages.forEach((pagePath) => {
         const gatsbyPage = state.pages.get(pagePath);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        pagesByMode[gatsbyPage!.mode].add(pagePath);
+
+        if (typeof gatsbyPage?.mode !== "undefined") {
+          pagesByMode[gatsbyPage.mode].add(pagePath);
+        }
       });
 
       componentWithPages.set(relativePath, pagesByMode);
@@ -187,7 +189,6 @@ function generatePageTreeToConsole(
           top: 0,
           bottom: 0,
         },
-        // @ts-ignore - bad type in boxen
         borderStyle: "round",
       },
     ),

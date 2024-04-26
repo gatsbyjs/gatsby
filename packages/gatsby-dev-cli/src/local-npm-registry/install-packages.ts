@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 
 import { promisifiedSpawn } from "../utils/promisified-spawn";
@@ -39,7 +39,6 @@ export async function installPackages({
 
     let workspacesLayout;
     try {
-      // @ts-ignore
       workspacesLayout = JSON.parse(JSON.parse(stdout).data);
     } catch (e) {
       /*

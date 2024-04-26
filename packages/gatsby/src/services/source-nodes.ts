@@ -17,7 +17,6 @@ export async function sourceNodes({
 }> {
   assertStore(store);
 
-  // @ts-ignore
   const activity = reporter.activityTimer("source and transform nodes", {
     parentSpan,
   });
@@ -32,7 +31,6 @@ export async function sourceNodes({
 
   reporter.verbose("Checking for deleted pages");
 
-  // @ts-ignore
   const tim = reporter.activityTimer("Checking for changed pages", {
     parentSpan,
   });

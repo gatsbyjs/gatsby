@@ -328,7 +328,9 @@ function isFullyFiltered(
   return dbQueries.length === usedQueries.size;
 }
 
-function createNodeSortComparator(sortFields: SortFields): (a, b) => number {
+function createNodeSortComparator(
+  sortFields: SortFields,
+): (a: IGatsbyNode, b: IGatsbyNode) => number {
   const resolvedNodesCache = store.getState().resolvedNodesCache;
 
   return function nodeComparator(a: IGatsbyNode, b: IGatsbyNode): number {
@@ -363,11 +365,13 @@ function createNodeSortComparator(sortFields: SortFields): (a, b) => number {
   };
 }
 
-export function compareByKeySuffix(prefixLength: number) {
+export function compareByKeySuffix(
+  prefixLength: number,
+): (a: IIndexEntry, b: IIndexEntry) => number {
   return function (a: IIndexEntry, b: IIndexEntry): number {
     const aSuffix = a.key.slice(prefixLength);
     const bSuffix = b.key.slice(prefixLength);
-    // @ts-ignore
+
     return compareKey(aSuffix, bSuffix);
   };
 }

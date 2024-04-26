@@ -172,11 +172,14 @@ export function healOptions(
   quality: number;
 } & ITransformArgs {
   const options = defaults({}, args, { quality }, defaultArgs, generalArgs);
-  // @ts-ignore - parseInt as safeguard, expects string tho
+  // @ts-ignore Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+  // parseInt as safeguard, expects string tho
   options.quality = parseInt(options.quality, 10);
-  // @ts-ignore - parseInt as safeguard, expects string tho
+  // @ts-ignore Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+  // parseInt as safeguard, expects string tho
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10);
-  // @ts-ignore - parseInt as safeguard, expects string tho
+  // @ts-ignore Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+  // parseInt as safeguard, expects string tho
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10);
   options.toFormat = options.toFormat.toLowerCase();
   options.toFormatBase64 = options.toFormatBase64?.toLowerCase();
@@ -201,11 +204,13 @@ export function healOptions(
     options.width = 400;
   }
   if (options.width !== undefined) {
-    // @ts-ignore - parseInt as safeguard, expects string tho
+    // @ts-ignore Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+    // parseInt as safeguard, expects string tho
     options.width = parseInt(options.width, 10);
   }
   if (options.height !== undefined) {
-    // @ts-ignore - parseInt as safeguard, expects string tho
+    // @ts-ignore Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+    // parseInt as safeguard, expects string tho
     options.height = parseInt(options.height, 10);
   }
 
@@ -213,10 +218,12 @@ export function healOptions(
   if (options.maxWidth === undefined && options.maxHeight === undefined) {
     options.maxWidth = 800;
   } else if (options.maxWidth !== undefined) {
-    // @ts-ignore - parseInt as safeguard, expects string tho
+    // @ts-ignore Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+    // parseInt as safeguard, expects string tho
     options.maxWidth = parseInt(options.maxWidth, 10);
   } else if (options.maxHeight !== undefined) {
-    // @ts-ignore - parseInt as safeguard, expects string tho
+    // @ts-ignore Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+    // parseInt as safeguard, expects string tho
     options.maxHeight = parseInt(options.maxHeight, 10);
   }
 

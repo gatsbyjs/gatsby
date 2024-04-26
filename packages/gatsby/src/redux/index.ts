@@ -120,13 +120,12 @@ export type GatsbyReduxStore = Store<IGatsbyState> & {
 };
 
 export function configureStore(initialState: IGatsbyState): GatsbyReduxStore {
-  // @ts-ignore
   const store = createStore(
-    // @ts-ignore
+    // @ts-ignore TODO: upgrade redux to redux toolkit
     combineReducers<IGatsbyState>(reducers),
-    // @ts-ignore
+    // @ts-ignore TODO: upgrade redux to redux toolkit
     initialState,
-    // @ts-ignore
+    // @ts-ignore TODO: upgrade redux to redux toolkit
     applyMiddleware(thunk, multi),
   );
 
@@ -134,7 +133,7 @@ export function configureStore(initialState: IGatsbyState): GatsbyReduxStore {
     type: "INIT",
   });
 
-  // @ts-ignore
+  // @ts-ignore TODO: upgrade redux to redux toolkit
   return store;
 }
 
@@ -149,7 +148,7 @@ export function replaceReducer(
   customReducers: Partial<ReducersMapObject<IGatsbyState>>,
 ): void {
   store.replaceReducer(
-    // @ts-ignore
+    // @ts-ignore TODO: upgrade redux to redux toolkit
     combineReducers<IGatsbyState>({ ...reducers, ...customReducers }),
   );
 }

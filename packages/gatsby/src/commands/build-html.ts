@@ -297,22 +297,28 @@ export async function buildPartialHydrationRenderer(
   );
 
   for (const rule of config.module?.rules ?? []) {
-    // @ts-ignore
+    // @ts-ignore Property 'test' does not exist on type 'false | "" | 0 | RuleSetRule | "..."'.
+    // Property 'test' does not exist on type 'false'.ts(2339)
     if ("./test.js".match(rule?.test)) {
-      // @ts-ignore
+      // @ts-ignore Property 'use' does not exist on type 'RuleSetRule | "..."'.
+      // Property 'use' does not exist on type '"..."'.ts(2339)
       if (rule && !rule.use) {
-        // @ts-ignore
+        // @ts-ignore Property 'use' does not exist on type 'RuleSetRule | "..."'.
+        // Property 'use' does not exist on type '"..."'.ts(2339)
         rule.use = [];
       }
 
-      // @ts-ignore
+      // @ts-ignore Property 'use' does not exist on type 'RuleSetRule | "..."'.
+      // Property 'use' does not exist on type '"..."'.ts(2339)
       if (!Array.isArray(rule?.use)) {
-        // @ts-ignore
+        // @ts-ignore Property 'use' does not exist on type 'RuleSetRule | "..."'.
+        // Property 'use' does not exist on type '"..."'.ts(2339)
         rule.use = [rule.use];
       }
 
-      // @ts-ignore
-      rule.use.push({
+      // @ts-ignore Property 'use' does not exist on type 'false | "" | 0 | RuleSetRule | "..."'.
+      // Property 'use' does not exist on type 'false'.ts(2339)
+      rule?.use.push({
         loader: require.resolve(
           "../utils/webpack/loaders/partial-hydration-reference-loader",
         ),
@@ -323,7 +329,8 @@ export async function buildPartialHydrationRenderer(
   // TODO add caching
   config.cache = false;
 
-  // @ts-ignore
+  config.output = config.output ?? {};
+
   config.output.path = path.join(
     program.directory,
     ".cache",
@@ -334,7 +341,11 @@ export async function buildPartialHydrationRenderer(
   // Instead of failing it'll be ignored
   try {
     // TODO collect javascript aliases to match the partial hydration bundle
-    // @ts-ignore
+
+    config.resolve = config.resolve ?? {};
+
+    config.resolve.alias = config.resolve.alias ?? {};
+
     config.resolve.alias["gatsby-plugin-image"] = require.resolve(
       "gatsby-plugin-image/dist/gatsby-image.browser.modern",
     );
@@ -459,7 +470,7 @@ async function renderHTMLQueue(
           payload: pageSegment,
         });
 
-        // @ts-ignore
+        // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
         if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
           store.dispatch({
             type: "SET_SLICES_PROPS",
@@ -488,6 +499,7 @@ async function renderHTMLQueue(
         e.context.unsafeBuiltinsUsageByPagePath,
       )) {
         // @ts-ignore TS doesn't know arrayOfUsages is Iterable
+        // 'arrayOfUsages' is of type 'unknown'.ts(18046)
         for (const unsafeUsageStack of arrayOfUsages) {
           uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack);
         }
@@ -633,7 +645,7 @@ export async function buildHTML({
   if (
     (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
       process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
-    // @ts-ignore
+    // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
     _CFLAGS_.GATSBY_MAJOR === "5"
   ) {
     await renderPartialHydrationQueue(workerPool, activity, pagePaths, program);
@@ -668,7 +680,6 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       "Building static HTML for pages",
       toRegenerate.length,
       0,
-      // @ts-ignore
       {
         parentSpan,
       },
@@ -710,7 +721,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   if (
     (process.env.GATSBY_PARTIAL_HYDRATION === "true" ||
       process.env.GATSBY_PARTIAL_HYDRATION === "1") &&
-    // @ts-ignore
+    // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
     _CFLAGS_.GATSBY_MAJOR === "5"
   ) {
     if (toRegenerate.length > 0) {
@@ -718,7 +729,6 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
         "Building partial HTML for pages",
         toRegenerate.length,
         0,
-        // @ts-ignore
         {
           parentSpan,
         },
@@ -744,7 +754,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     }
   }
 
-  // @ts-ignore
+  // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
   if (_CFLAGS_.GATSBY_MAJOR !== "5" && !program.keepPageRenderer) {
     try {
       await deleteRenderer(rendererPath);
@@ -753,7 +763,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     }
   }
 
-  // @ts-ignore
+  // @ts-ignore Cannot find name '_CFLAGS_'.ts(2304)
   if (_CFLAGS_.GATSBY_MAJOR === "5" && process.env.GATSBY_SLICES) {
     await buildSlices({
       program,
@@ -811,7 +821,6 @@ export async function buildSlices({
   if (slicesProps.length > 0) {
     const buildHTMLActivityProgress = reporter.activityTimer(
       `Building slices HTML (${slicesProps.length})`,
-      // @ts-ignore
       {
         parentSpan,
       },
@@ -880,7 +889,6 @@ export async function stitchSlicesIntoPagesHTML({
   publicDir: string;
   parentSpan?: Span | undefined;
 }): Promise<void> {
-  // @ts-ignore
   const stitchSlicesActivity = reporter.activityTimer("stitching slices", {
     parentSpan,
   });

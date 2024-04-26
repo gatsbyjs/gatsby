@@ -56,9 +56,11 @@ function addRemoteFilePolyfillInterface<
 ): T {
   // When the image-cdn is part of Gatsby we will only add the RemoteFile interface if necessary
   if (hasFeature("image-cdn")) {
-    // @ts-ignore - wrong typing by typecomposer
+    // @ts-ignore Property 'config' does not exist on type 'T'.ts(2339)
+    // wrong typing by typecomposer
     if (!type.config.interfaces.includes("RemoteFile")) {
-      // @ts-ignore - wrong typing by typecomposer
+      // @ts-ignore Property 'config' does not exist on type 'T'.ts(2339)
+      // wrong typing by typecomposer
       type.config.interfaces.push("RemoteFile");
     }
 
@@ -110,22 +112,28 @@ function addRemoteFilePolyfillInterface<
 
     actions.createTypes(types, {
       name: "gatsby",
-      // @ts-ignore - version is allowed
+      // @ts-ignore Object literal may only specify known properties, and 'version' does not exist in type 'ActionPlugin'.ts(2353)
+      // version is allowed
       version: getGatsbyVersion(),
       resolve: path.join(__dirname, "../"),
     });
   }
 
-  // @ts-ignore - wrong typing by typecomposer
+  // @ts-ignore Property 'config' does not exist on type 'T'.ts(2339)
+  // wrong typing by typecomposer
   type.config.interfaces = type.config.interfaces || [];
-  // @ts-ignore - wrong typing by typecomposer
+  // @ts-ignore Property 'config' does not exist on type 'T'.ts(2339)
+  // wrong typing by typecomposer
   if (!type.config.interfaces.includes("RemoteFile")) {
-    // @ts-ignore - wrong typing by typecomposer
+    // @ts-ignore Property 'config' does not exist on type 'T'.ts(2339)
+    // wrong typing by typecomposer
     type.config.interfaces.push("RemoteFile");
   }
-  // @ts-ignore - wrong typing by typecomposer
+  // @ts-ignore Property 'config' does not exist on type 'T'.ts(2339)
+  // wrong typing by typecomposer
   type.config.fields = {
-    // @ts-ignore - wrong typing by typecomposer
+    // @ts-ignore Property 'config' does not exist on type 'T'.ts(2339)
+    // wrong typing by typecomposer
     ...type.config.fields,
     ...getRemoteFileFields(enums, actions, store),
   };

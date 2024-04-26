@@ -7,7 +7,7 @@ export function renderRichText({ raw, references }, options = {}) {
 
   // If no references are given, there is no need to resolve them
   if (!references || !references.length) {
-    // @ts-ignore
+    // @ts-ignore Argument of type 'unknown' is not assignable to parameter of type 'Document'.ts(2345)
     return documentToReactComponents(richText, options);
   }
 

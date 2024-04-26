@@ -38,6 +38,7 @@ module.exports = function wrapCallback<T>(
     }
 
     // @ts-ignore - unsure if fixing this introduces problems
+    // this' implicitly has type 'any' because it does not have a type annotation.ts(2683)
     const promise = fn.apply(this, args); // eslint-disable-line @babel/no-invalid-this
 
     if (typeof cb === "function") {

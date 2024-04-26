@@ -181,9 +181,9 @@ export async function generateImageData({
     reporter.warn(
       "Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.",
     );
-    // @ts-ignore
+
     args.width = metadata.width;
-    // @ts-ignore
+
     args.height = undefined;
   }
 
@@ -305,7 +305,7 @@ export async function generateImageData({
   if (!images?.length) {
     return undefined;
   }
-  // @ts-ignore
+
   const imageProps: Pick<
     IGatsbyImageData,
     "backgroundColor" | "layout" | "placeholder" | "images"

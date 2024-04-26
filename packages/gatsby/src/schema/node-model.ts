@@ -448,7 +448,6 @@ export class LocalNodeModel {
       Object.keys(query.filter.id).length === 1
     ) {
       if (tracer) {
-        // @ts-ignore
         runQueryActivity = reporter.phantomActivity("runQuerySimpleIdEq", {
           parentSpan: tracer.getParentActivity()?.span,
         });
@@ -475,7 +474,6 @@ export class LocalNodeModel {
     let materializationActivity;
 
     if (tracer) {
-      // @ts-ignore
       materializationActivity = reporter.phantomActivity("Materialization", {
         parentSpan: tracer.getParentActivity().span,
       });
@@ -508,7 +506,6 @@ export class LocalNodeModel {
     }
 
     if (tracer) {
-      // @ts-ignore
       runQueryActivity = reporter.phantomActivity("runQuery", {
         parentSpan: tracer.getParentActivity().span,
       });
@@ -623,7 +620,9 @@ export class LocalNodeModel {
     }
     this.trackPageDependencies(result.entries, pageDependencies);
     return {
-      // @ts-ignore for some reason GatsbyIterable passed to wrapNodes, expecting an Array
+      // @ts-ignore Argument of type 'GatsbyIterable<IGatsbyNode>' is not assignable to parameter of type 'IGatsbyNode[]'.
+      // Type 'GatsbyIterable<IGatsbyNode>' is missing the following properties from type 'IGatsbyNode[]':
+      // pop, push, join, reverse, and 28 more.
       entries: wrapNodes(result.entries),
       totalCount: result.totalCount,
     };
@@ -865,7 +864,7 @@ export class LocalNodeModel {
     pageDependencies: PageDependencies | undefined = {},
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): any {
-    // @ts-ignore
+    // @ts-ignore Property 'track' does not exist on type 'PageDependencies'.ts(2339)
     const { path, connectionType, track = true } = pageDependencies;
     if (path && track) {
       if (connectionType) {
@@ -1014,7 +1013,7 @@ function getFields(schema, type, node): any {
     return type.getFields();
   }
 
-  // @ts-ignore
+  // @ts-ignore Expected 4 arguments, but got 1.ts(2554)
   const concreteType = type.resolveType?.(node);
 
   return schema.getType(concreteType).getFields();

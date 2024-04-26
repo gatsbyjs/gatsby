@@ -25,7 +25,6 @@ export async function runSliceQueries({
     "run slice queries",
     sliceQueryIds.length,
     0,
-    // @ts-ignore
     {
       id: "slice-query-running",
       parentSpan,

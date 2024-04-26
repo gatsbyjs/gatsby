@@ -84,7 +84,7 @@ export class WorkerError extends Error {
       Error.captureStackTrace(this, WorkerError);
     } else {
       // inherit stack from original error so actual stack trace persist
-      // @ts-ignore
+      // @ts-ignore Type 'string | undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target. Type 'undefined' is not assignable to type 'string'.ts(2412)
       this.stack = error.stack;
     }
   }

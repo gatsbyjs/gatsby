@@ -61,7 +61,7 @@ export const noAnonymousExports: Rule.RuleModule = {
 
     return {
       ExportDefaultDeclaration: (node: Node): void => {
-        // @ts-ignore
+        // @ts-ignore Property 'declaration' does not exist on type 'Node'. Property 'declaration' does not exist on type 'CatchClause'.ts(2339)
         const type = node.declaration.type as ExportDefaultDeclaration["type"];
         const def = defs[type];
 

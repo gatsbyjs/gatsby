@@ -160,7 +160,9 @@ export async function startServer(
    * Set up the express app.
    **/
   app.use(compression());
-  // @ts-ignore
+  // @ts-ignore No overload matches this call.
+  // The last overload gave the following error.
+  // Argument of type '(req: Request, _res: Response, next: any) => void' is not assignable to parameter of type 'PathParams'.ts(2769)
   app.use(telemetry.expressMiddleware("DEVELOP"));
   app.use(
     webpackHotMiddleware(compiler, {
@@ -659,7 +661,6 @@ export async function startServer(
     }, cors());
   }
 
-  // @ts-ignore
   await apiRunnerNode("onCreateDevServer", { app, deferNodeMutation: true });
 
   // In case nothing before handled hot-update - send 404.
