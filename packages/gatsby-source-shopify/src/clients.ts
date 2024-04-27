@@ -38,7 +38,8 @@ export function createGraphqlClient(
     }
 
     const json = await response.json();
-    return json.data as T;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (json as any).data as T;
   }
 
   return { request: graphqlFetch };

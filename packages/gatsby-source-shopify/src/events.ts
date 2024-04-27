@@ -16,7 +16,8 @@ export function eventsApi(options: IShopifyPluginOptions): {
         `/events.json?limit=250&verb=destroy&created_at_min=${date.toISOString()}`,
       );
 
-      const { events } = await resp.json();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result: { events: Array<IEvent> } = (await resp.json()) as any;
 
       let gatherPaginatedEvents = true;
 
@@ -42,15 +43,18 @@ export function eventsApi(options: IShopifyPluginOptions): {
 
         if (nextPage) {
           resp = await restClient.request(nextPage.url);
-          const { events: nextEvents } = await resp.json();
-          events.push(...nextEvents);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const result: { events: Array<IEvent> } = (await resp.json()) as any;
+          const { events: nextEvents } = result;
+
+          result.events.push(...nextEvents);
         } else {
           gatherPaginatedEvents = false;
           break;
         }
       }
 
-      return events;
+      return result.events;
     },
   };
 }

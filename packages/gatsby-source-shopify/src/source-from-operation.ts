@@ -80,7 +80,7 @@ export function makeSourceFromOperation(
       const results: BulkResults = [];
 
       for await (const line of rl) {
-        results.push(JSON.parse(line));
+        results.push(JSON.parse(line) as IBulkResult);
       }
 
       const nodeCount = await processBulkResults(
