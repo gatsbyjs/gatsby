@@ -4,8 +4,7 @@ import React, {
   type ComponentType,
   type ImgHTMLAttributes,
 } from "react";
-import * as PropTypes from "prop-types";
-import { Picture, SourceProps } from "./picture";
+import { Picture, type SourceProps } from "./picture";
 
 export type PlaceholderProps = ImgHTMLAttributes<HTMLImageElement> & {
   fallback?: string | undefined;
@@ -17,6 +16,7 @@ function _Placeholder({ fallback, ...props }: PlaceholderProps): JSX.Element {
     return (
       <Picture
         {...props}
+        src={props.src ?? ""}
         fallback={{
           src: fallback,
         }}
@@ -33,16 +33,3 @@ export const Placeholder: ComponentType<PlaceholderProps> =
   memo<PlaceholderProps>(_Placeholder);
 
 Placeholder.displayName = "Placeholder";
-Placeholder.propTypes = {
-  fallback: PropTypes.string,
-  sources: Picture.propTypes?.sources,
-  alt: function (props, propName, componentName): Error | null {
-    if (!props[propName]) {
-      return null;
-    }
-
-    return new Error(
-      `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Validation failed.`,
-    );
-  },
-};

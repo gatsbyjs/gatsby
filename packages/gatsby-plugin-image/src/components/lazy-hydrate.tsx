@@ -30,7 +30,7 @@ async function applyPolyfill(element: HTMLImageElement): Promise<void> {
 
 function toggleLoaded(
   mainImage: HTMLElement,
-  placeholderImage: HTMLElement,
+  placeholderImage?: HTMLElement | null,
 ): void {
   mainImage.style.opacity = "1";
 
@@ -50,12 +50,12 @@ function startLoading(
   const mainImage = element.querySelector(
     "[data-main-image]",
   ) as HTMLImageElement;
-  const placeholderImage = element.querySelector<HTMLElement>(
-    "[data-placeholder-image]",
-  );
+  const placeholderImage: HTMLElement | null =
+    element.querySelector<HTMLElement>("[data-placeholder-image]");
   const isCached = imageCache.has(cacheKey);
 
   function onImageLoaded(e): void {
+    // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.ts(2683)
     // eslint-disable-next-line @babel/no-invalid-this
     this.removeEventListener("load", onImageLoaded);
 
@@ -68,6 +68,7 @@ function startLoading(
       img
         .decode()
         .then(() => {
+          // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.ts(2683)
           // eslint-disable-next-line @babel/no-invalid-this
           toggleLoaded(this, placeholderImage);
           onLoad?.({
@@ -75,11 +76,13 @@ function startLoading(
           });
         })
         .catch((e) => {
+          // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.ts(2683)
           // eslint-disable-next-line @babel/no-invalid-this
           toggleLoaded(this, placeholderImage);
           onError?.(e);
         });
     } else {
+      // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.ts(2683)
       // eslint-disable-next-line @babel/no-invalid-this
       toggleLoaded(this, placeholderImage);
       onLoad?.({
@@ -93,7 +96,7 @@ function startLoading(
   onStartLoad?.({
     wasCached: isCached,
   });
-  Array.from(mainImage.parentElement.children).forEach((child) => {
+  Array.from(mainImage.parentElement?.children ?? []).forEach((child) => {
     const src = child.getAttribute("data-src");
     const srcSet = child.getAttribute("data-srcset");
     if (src) {
@@ -199,6 +202,14 @@ export function renderImageToString({
     backgroundColor,
     ...imgStyle,
   };
+
+  if (!width || !height || !layout) {
+    throw new Error(
+      `[gatsby-plugin-image] Missing width, height or layout for image ${JSON.stringify(
+        image,
+      )}`,
+    );
+  }
 
   return renderToStaticMarkup(
     <LayoutWrapper layout={layout} width={width} height={height}>

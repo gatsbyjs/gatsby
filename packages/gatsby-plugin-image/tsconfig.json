@@ -1,15 +1,13 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "declaration": true,
     "declarationMap": true,
-    "jsx": "preserve",
     "target": "ESNext",
     "outDir": "./dist",
     "declarationDir": "./dist",
     "lib": ["ESNext", "dom"],
-    "esModuleInterop": true,
-    "skipLibCheck": true,
     "module": "ESNext",
     "moduleResolution": "node"
   },

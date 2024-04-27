@@ -22,7 +22,7 @@
     "conventional-commits-parser": "5.0.0",
     "cross-env": "7.0.3",
     "danger": "12.1.0",
-    "dateformat": "4.6.3",
+    "dateformat": "5.0.3",
     "dotenv": "16.4.5",
     "date-fns": "3.6.0",
     "eslint": "8.57.0",

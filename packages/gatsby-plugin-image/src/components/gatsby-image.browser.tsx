@@ -18,7 +18,6 @@ import {
   hasNativeLazyLoadSupport,
 } from "./hooks";
 import { getSizer } from "./layout-wrapper";
-import { propTypes } from "./gatsby-image.server";
 
 import { renderImageToString } from "./lazy-hydrate";
 import type { PlaceholderProps } from "./placeholder";
@@ -51,9 +50,9 @@ export type GatsbyImageProps = {
 >;
 
 export type IGatsbyImageData = {
-  layout: Layout;
-  width: number;
-  height: number;
+  layout?: Layout | undefined;
+  width?: number | undefined;
+  height?: number | undefined;
   sizes?: string | undefined;
   backgroundColor?: string | undefined;
   images: Pick<MainImageProps, "sources" | "fallback">;
@@ -107,9 +106,8 @@ function _GatsbyImageHydrator({
 
     // The plugin image component is a bit special where if it's server-side rendered, we add extra script tags to support lazy-loading without
     // In this case we stop hydration but fire the correct events.
-    const ssrImage = root.current.querySelector(
-      "[data-gatsby-image-ssr]",
-    ) as HTMLImageElement;
+    const ssrImage: HTMLImageElement | null | undefined =
+      root.current?.querySelector("[data-gatsby-image-ssr]");
 
     if (ssrImage && hasNativeLazyLoadSupport()) {
       if (ssrImage.complete) {
@@ -198,7 +196,7 @@ function _GatsbyImageHydrator({
 
   // useLayoutEffect is ran before React commits to the DOM. This allows us to make sure our HTML is using our cached image version
   useLayoutEffect(() => {
-    if (imageCache.has(cacheKey) && renderImage) {
+    if (imageCache.has(cacheKey) && renderImage && root.current) {
       root.current.innerHTML = renderImage({
         isLoading: imageCache.has(cacheKey),
         isLoaded: imageCache.has(cacheKey),
@@ -236,7 +234,7 @@ function _GatsbyImageHydrator({
 const GatsbyImageHydrator: ComponentType<GatsbyImageProps> =
   memo<GatsbyImageProps>(_GatsbyImageHydrator);
 
-function _GatsbyImage(props: GatsbyImageProps): JSX.Element {
+function _GatsbyImage(props: GatsbyImageProps): JSX.Element | null {
   if (!props.image) {
     if (process.env.NODE_ENV === "development") {
       console.warn("[gatsby-plugin-image] Missing image prop");
@@ -257,5 +255,4 @@ function _GatsbyImage(props: GatsbyImageProps): JSX.Element {
 export const GatsbyImage: ComponentType<GatsbyImageProps> =
   memo<GatsbyImageProps>(_GatsbyImage);
 
-GatsbyImage.propTypes = propTypes;
 GatsbyImage.displayName = "GatsbyImage";

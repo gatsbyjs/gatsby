@@ -3,19 +3,19 @@ import React, {
   type JSX,
   createElement,
   type ComponentType,
-  type WeakValidationMap,
 } from "react";
 import { getWrapperProps, getMainProps, getPlaceholderProps } from "./hooks";
 import { Placeholder } from "./placeholder";
-import { MainImage, MainImageProps } from "./main-image";
+import { MainImage, type MainImageProps } from "./main-image";
 import { LayoutWrapper } from "./layout-wrapper";
-import PropTypes from "prop-types";
 import type {
   GatsbyImageProps,
   IGatsbyImageData,
 } from "./gatsby-image.browser";
 
-const removeNewLines = (str: string): string => str.replace(/\n/g, "");
+function removeNewLines(str: string): string {
+  return str.replace(/\n/g, "");
+}
 
 function _GatsbyImage({
   as = "div",
@@ -30,7 +30,7 @@ function _GatsbyImage({
   objectFit,
   objectPosition,
   ...props
-}: GatsbyImageProps): JSX.Element {
+}: GatsbyImageProps): JSX.Element | null {
   if (!image) {
     console.warn("[gatsby-plugin-image] Missing image prop");
     return null;
@@ -55,6 +55,14 @@ function _GatsbyImage({
     placeholder,
     backgroundColor: placeholderBackgroundColor,
   } = image;
+
+  if (!width || !height || !layout) {
+    throw new Error(
+      `[gatsby-plugin-image] Missing width, height or layout for image ${JSON.stringify(
+        image,
+      )}`,
+    );
+  }
 
   const {
     style: wStyle,
@@ -131,23 +139,3 @@ function _GatsbyImage({
 
 export const GatsbyImage: ComponentType<GatsbyImageProps> =
   memo<GatsbyImageProps>(_GatsbyImage);
-
-export const altValidator: PropTypes.Validator<string> = (
-  props: GatsbyImageProps,
-  propName,
-  componentName,
-  ...rest
-): Error | undefined => {
-  if (!props.alt && props.alt !== "") {
-    return new Error(
-      `The "alt" prop is required in ${componentName}. If the image is purely presentational then pass an empty string: e.g. alt="". Learn more: https://a11y-style-guide.com/style-guide/section-media.html`,
-    );
-  }
-
-  return PropTypes.string(props, propName, componentName, ...rest);
-};
-
-export const propTypes = {
-  image: PropTypes.object.isRequired,
-  alt: altValidator,
-} as WeakValidationMap<GatsbyImageProps>;

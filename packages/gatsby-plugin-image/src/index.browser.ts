@@ -1,8 +1,8 @@
 import "./global";
 export {
   GatsbyImage,
-  GatsbyImageProps,
-  IGatsbyImageData,
+  type GatsbyImageProps,
+  type IGatsbyImageData,
 } from "./components/gatsby-image.browser";
 export { Placeholder } from "./components/placeholder";
 export { MainImage } from "./components/main-image";
@@ -13,16 +13,16 @@ export {
   getSrcSet,
   getImageData,
   withArtDirection,
-  IArtDirectedImage,
-  IGetImageDataArgs,
-  IUrlBuilderArgs,
+  type IArtDirectedImage,
+  type IGetImageDataArgs,
+  type IUrlBuilderArgs,
 } from "./components/hooks";
 export {
   generateImageData,
   getLowResolutionImageURL,
-  IGatsbyImageHelperArgs,
-  IImage,
-  ImageFormat,
-  Layout,
-  Fit,
+  type IGatsbyImageHelperArgs,
+  type IImage,
+  type ImageFormat,
+  type Layout,
+  type Fit,
 } from "./image-utils";

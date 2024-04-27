@@ -88,9 +88,9 @@ export function getSrcSet(node: ImageDataLike): string | undefined {
 }
 
 export function getWrapperProps(
-  width: number,
-  height: number,
-  layout: Layout,
+  width?: number | undefined,
+  height?: number | undefined,
+  layout?: Layout | undefined,
 ): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> & {
   "data-gatsby-image-wrapper": string;
 } {
@@ -124,10 +124,10 @@ export function getWrapperProps(
 
 export type IUrlBuilderArgs<OptionsType> = {
   width: number;
-  height: number;
+  height?: number | undefined;
   baseUrl: string;
-  format: ImageFormat;
-  options: OptionsType;
+  format?: ImageFormat | undefined;
+  options?: OptionsType | undefined;
 };
 export type IGetImageDataArgs<OptionsType = Record<string, unknown>> = {
   baseUrl: string;
@@ -386,13 +386,13 @@ export function withArtDirection(
       );
     }
 
-    output.images.sources.push(
-      ...image.images.sources.map((source) => {
+    output.images.sources?.push(
+      ...(image.images.sources?.map((source) => {
         return { ...source, media };
-      }),
+      }) ?? []),
       {
         media,
-        srcSet: image.images.fallback.srcSet,
+        srcSet: image.images.fallback?.srcSet ?? "",
       },
     );
 
@@ -400,14 +400,17 @@ export function withArtDirection(
       return;
     }
 
-    output.placeholder.sources.push({
+    output.placeholder.sources?.push({
       media,
-      srcSet: image.placeholder.fallback,
+      srcSet: image.placeholder?.fallback ?? "",
     });
   });
-  output.images.sources.push(...images.sources);
+
+  output.images.sources?.push(...(images.sources ?? []));
+
   if (placeholder?.sources) {
-    output.placeholder?.sources.push(...placeholder.sources);
+    output.placeholder?.sources?.push(...placeholder.sources);
   }
+
   return output;
 }

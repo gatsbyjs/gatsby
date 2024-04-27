@@ -23,7 +23,7 @@
     "@babel/core": "^7.24.4",
     "babel-plugin-dev-expression": "^0.2.3",
     "babel-preset-gatsby-package": "workspace:*",
-    "@testing-library/react": "^15.0.4",
+    "@testing-library/react": "^15.0.5",
     "cross-env": "^7.0.3",
     "history": "^5.3.0"
   },

@@ -69,22 +69,22 @@ export type IImageSizeArgs = {
   breakpoints?: Array<number> | undefined;
   fit?: Fit | undefined;
   reporter?: IReporter | undefined;
-  sourceMetadata: { width: number; height: number };
+  sourceMetadata: { width?: number | undefined; height?: number | undefined };
 };
 
 export type IImageSizes = {
   sizes: Array<number>;
-  presentationWidth: number;
-  presentationHeight: number;
+  presentationWidth?: number | undefined;
+  presentationHeight?: number | undefined;
   aspectRatio: number;
-  unscaledWidth: number;
+  unscaledWidth?: number | undefined;
 };
 
 export type IImage = {
   src: string;
-  width: number;
-  height: number;
-  format: ImageFormat;
+  width?: number | undefined;
+  height?: number | undefined;
+  format?: ImageFormat | undefined;
 };
 
 export type IGatsbyImageHelperArgs = {
@@ -106,7 +106,11 @@ export type IGatsbyImageHelperArgs = {
   sizes?: string | undefined;
   reporter?: IReporter | undefined;
   sourceMetadata?:
-    | { width: number; height: number; format: ImageFormat }
+    | {
+        width?: number | undefined;
+        height?: number | undefined;
+        format?: ImageFormat | undefined;
+      }
     | undefined;
   fit?: Fit | undefined;
   options?: Record<string, unknown> | undefined;
@@ -123,7 +127,10 @@ function sortNumeric(a: number, b: number): number {
   return a - b;
 }
 
-export function getSizes(width: number, layout: Layout): string | undefined {
+export function getSizes(
+  width: number | undefined = 0,
+  layout?: Layout | undefined,
+): string | undefined {
   switch (layout) {
     // If screen is wider than the max size, image width is the max size,
     // otherwise it's the width of the screen
@@ -180,20 +187,21 @@ export function setDefaultDimensions(
   if (width && height) {
     return { ...args, formats, layout, aspectRatio: width / height };
   }
-  if (sourceMetadata.width && sourceMetadata.height && !aspectRatio) {
+  if (sourceMetadata?.width && sourceMetadata.height && !aspectRatio) {
     aspectRatio = sourceMetadata.width / sourceMetadata.height;
   }
 
   if (layout === "fullWidth") {
     width =
-      width || sourceMetadata.width || breakpoints[breakpoints.length - 1];
+      width || sourceMetadata?.width || breakpoints?.[breakpoints.length - 1];
     height =
-      height || Math.round(width / (aspectRatio || DEFAULT_ASPECT_RATIO));
+      height ||
+      Math.round((width ?? 0) / (aspectRatio || DEFAULT_ASPECT_RATIO));
   } else {
     if (!width) {
       if (height && aspectRatio) {
         width = height * aspectRatio;
-      } else if (sourceMetadata.width) {
+      } else if (sourceMetadata?.width) {
         width = sourceMetadata.width;
       } else if (height) {
         width = Math.round(height / DEFAULT_ASPECT_RATIO);
@@ -205,7 +213,7 @@ export function setDefaultDimensions(
     if (aspectRatio && !height) {
       height = Math.round(width / aspectRatio);
     } else if (!aspectRatio) {
-      aspectRatio = width / height;
+      aspectRatio = width / (height ?? 1);
     }
   }
   return { ...args, width, height, aspectRatio, layout, formats };
@@ -224,8 +232,8 @@ export function getLowResolutionImageURL(
   return generateImageSource(
     filename,
     width,
-    Math.round(width / aspectRatio),
-    args.sourceMetadata.format || "jpg",
+    Math.round(width / (aspectRatio ?? 1)),
+    args.sourceMetadata?.format ?? "jpg",
     args.fit,
     args.options,
   )?.src;
@@ -265,17 +273,20 @@ export function generateImageData(
   if (!sourceMetadata || (!sourceMetadata.width && !sourceMetadata.height)) {
     // No metadata means we let the CDN handle max size etc, aspect ratio etc
     sourceMetadata = {
-      width,
-      height,
-      format: sourceMetadata?.format || formatFromFilename(filename) || "auto",
+      width: width ?? 0,
+      height: height ?? 0,
+      format: sourceMetadata?.format ?? formatFromFilename(filename) ?? "auto",
     };
   } else if (!sourceMetadata.format) {
-    sourceMetadata.format = formatFromFilename(filename);
+    sourceMetadata.format = formatFromFilename(filename) ?? "auto";
   }
 
   const formats = new Set<ImageFormat>(args.formats);
 
-  if (formats.size === 0 || formats.has("auto") || formats.has("")) {
+  if (
+    sourceMetadata.format &&
+    (formats.size === 0 || formats.has("auto") || formats.has(""))
+  ) {
     formats.delete("auto");
     formats.delete("");
     formats.add(sourceMetadata.format);
@@ -305,7 +316,7 @@ export function generateImageData(
 
   formats.forEach((format) => {
     const images = imageSizes.sizes
-      .map((size) => {
+      .map((size: number) => {
         const imageSrc = generateImageSource(
           filename,
           size,
@@ -418,10 +429,10 @@ export function calculateImageSizes(args: IImageSizeArgs): IImageSizes {
       `No valid layout was provided for the image at ${filename}. Valid image layouts are fixed, fullWidth, and constrained. Found ${layout}`,
     );
     return {
-      sizes: [imgDimensions.width],
+      sizes: imgDimensions.width ? [imgDimensions.width] : [],
       presentationWidth: imgDimensions.width,
       presentationHeight: imgDimensions.height,
-      aspectRatio: imgDimensions.width / imgDimensions.height,
+      aspectRatio: (imgDimensions.width ?? 0) / (imgDimensions.height ?? 1),
       unscaledWidth: imgDimensions.width,
     };
   }
@@ -435,7 +446,7 @@ export function fixedImageSizes({
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   reporter = { warn },
 }: IImageSizeArgs): IImageSizes {
-  let aspectRatio = imgDimensions.width / imgDimensions.height;
+  let aspectRatio = (imgDimensions.width ?? 0) / (imgDimensions.height ?? 1);
   // Sort, dedupe and ensure there's a 1
   const densities = dedupeAndSortDensities(outputPixelDensities);
 
@@ -463,12 +474,14 @@ export function fixedImageSizes({
 
   const originalWidth = width; // will use this for presentationWidth, don't want to lose it
   const isTopSizeOverriden =
-    imgDimensions.width < width || imgDimensions.height < (height as number);
+    (imgDimensions.width ?? 0) < width ||
+    (imgDimensions.height ?? 0) < (height ?? 0);
 
   // If the image is smaller than requested, warn the user that it's being processed as such
   // print out this message with the necessary information before we overwrite it for sizing
   if (isTopSizeOverriden) {
-    const fixedDimension = imgDimensions.width < width ? "width" : "height";
+    const fixedDimension =
+      (imgDimensions.width ?? 0) < width ? "width" : "height";
     reporter.warn(`
 The requested ${fixedDimension} "${
       fixedDimension === "width" ? width : height
@@ -478,17 +491,17 @@ The requested ${fixedDimension} "${
 
     if (fixedDimension === "width") {
       width = imgDimensions.width;
-      height = Math.round(width / aspectRatio);
+      height = Math.round((width ?? 0) / aspectRatio);
     } else {
       height = imgDimensions.height;
-      width = height * aspectRatio;
+      width = (height ?? 0) * aspectRatio;
     }
   }
 
   const sizes = densities
     .filter((size) => size >= 1) // remove smaller densities because fixed images don't need them
     .map((density) => Math.round(density * (width as number)))
-    .filter((size) => size <= imgDimensions.width);
+    .filter((size) => size <= (imgDimensions.width ?? 0));
 
   return {
     sizes,
@@ -509,7 +522,7 @@ export function responsiveImageSizes({
   layout,
 }: IImageSizeArgs): IImageSizes {
   let sizes;
-  let aspectRatio = imgDimensions.width / imgDimensions.height;
+  let aspectRatio = (imgDimensions.width ?? 0) / (imgDimensions.height ?? 1);
   // Sort, dedupe and ensure there's a 1
   const densities = dedupeAndSortDensities(outputPixelDensities);
 
@@ -526,12 +539,12 @@ export function responsiveImageSizes({
   }
 
   // Case 1: width of height were passed in, make sure it isn't larger than the actual image
-  width = width && Math.min(width, imgDimensions.width);
-  height = height && Math.min(height, imgDimensions.height);
+  width = width && Math.min(width, imgDimensions.width ?? 0);
+  height = height && Math.min(height, imgDimensions.height ?? 0);
 
   // Case 2: neither width or height were passed in, use default size
   if (!width && !height) {
-    width = Math.min(DEFAULT_FLUID_WIDTH, imgDimensions.width);
+    width = Math.min(DEFAULT_FLUID_WIDTH, imgDimensions.width ?? 0);
     height = width / aspectRatio;
   }
 
@@ -543,16 +556,17 @@ export function responsiveImageSizes({
 
   const originalWidth = width;
   const isTopSizeOverriden =
-    imgDimensions.width < width || imgDimensions.height < (height as number);
+    (imgDimensions.width ?? 0) < width ||
+    (imgDimensions.height ?? 0) < (height ?? 0);
   if (isTopSizeOverriden) {
-    width = imgDimensions.width;
+    width = imgDimensions.width ?? 0;
     height = imgDimensions.height;
   }
 
   width = Math.round(width);
 
-  if (breakpoints?.length > 0) {
-    sizes = breakpoints.filter((size) => size <= imgDimensions.width);
+  if (typeof breakpoints?.length === "number" && breakpoints.length > 0) {
+    sizes = breakpoints.filter((size) => size <= (imgDimensions.width ?? 0));
 
     // If a larger breakpoint has been filtered-out, add the actual image width instead
     if (
@@ -563,7 +577,7 @@ export function responsiveImageSizes({
     }
   } else {
     sizes = densities.map((density) => Math.round(density * (width as number)));
-    sizes = sizes.filter((size) => size <= imgDimensions.width);
+    sizes = sizes.filter((size) => size <= (imgDimensions.width ?? 0));
   }
 
   // ensure that the size passed in is included in the final output

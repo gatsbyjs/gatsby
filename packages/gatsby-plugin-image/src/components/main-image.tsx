@@ -18,4 +18,3 @@ export const MainImage: ComponentType<MainImageProps> =
   memo<MainImageProps>(_MainImage);
 
 MainImage.displayName = "MainImage";
-MainImage.propTypes = Picture.propTypes;

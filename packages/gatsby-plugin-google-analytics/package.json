@@ -16,7 +16,7 @@
     "@total-typescript/ts-reset": "^0.5.1",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
-    "@testing-library/react": "^15.0.4",
+    "@testing-library/react": "^15.0.5",
     "babel-preset-gatsby-package": "workspace:*",
     "cross-env": "^7.0.3"
   },

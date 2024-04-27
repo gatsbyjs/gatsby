@@ -65,7 +65,7 @@
     "prettier": "^3.2.5",
     "gatsby-plugin-image": "workspace:*",
     "identity-obj-proxy": "^3.0.0",
-    "react-test-renderer": "^18.3.0",
+    "react-test-renderer": "^18.3.1",
     "rimraf": "^5.0.5",
     "tree-kill": "^1.2.2"
   },

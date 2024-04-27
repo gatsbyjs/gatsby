@@ -18,18 +18,29 @@ export type SourceProps = IResponsiveImageProps &
       }
   );
 
-type FallbackProps = { src: string } & Partial<IResponsiveImageProps>;
-
-type ImageProps = ImgHTMLAttributes<HTMLImageElement> & {
+type FallbackProps = {
   src: string;
-  alt: string;
-  shouldLoad: boolean;
+  srcSet?: string | undefined;
+  sizes?: string | undefined;
 };
 
-export type PictureProps = ImgHTMLAttributes<HTMLImageElement> & {
+type ImageProps = {
+  src: string;
+  alt: string;
+  sizes?: string | undefined;
+  srcSet?: string | undefined;
+  shouldLoad?: boolean | undefined;
+} & Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "sizes" | "srcSet">;
+
+export type PictureProps = Omit<
+  ImgHTMLAttributes<HTMLImageElement>,
+  "src" | "srcSet"
+> & {
   fallback?: FallbackProps | undefined;
   sources?: Array<SourceProps> | undefined;
   alt: string;
+  src: string;
+  srcSet?: string | undefined;
   shouldLoad?: boolean | undefined;
 };
 
@@ -37,7 +48,7 @@ function Image({
   src,
   srcSet,
   loading,
-  alt = "",
+  alt,
   shouldLoad,
   ...props
 }: ImageProps): JSX.Element {
@@ -96,28 +107,3 @@ Image.propTypes = {
 };
 
 Picture.displayName = "Picture";
-Picture.propTypes = {
-  alt: PropTypes.string.isRequired,
-  shouldLoad: PropTypes.bool,
-  fallback: PropTypes.exact({
-    src: PropTypes.string.isRequired,
-    srcSet: PropTypes.string,
-    sizes: PropTypes.string,
-  }),
-  sources: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.exact({
-        media: PropTypes.string.isRequired,
-        type: PropTypes.string,
-        sizes: PropTypes.string,
-        srcSet: PropTypes.string.isRequired,
-      }),
-      PropTypes.exact({
-        media: PropTypes.string,
-        type: PropTypes.string.isRequired,
-        sizes: PropTypes.string,
-        srcSet: PropTypes.string.isRequired,
-      }),
-    ]),
-  ),
-};

@@ -1,6 +1,7 @@
+import "@total-typescript/ts-reset";
 import "./global";
 export { GatsbyImage } from "./components/gatsby-image.server";
-export {
+export type {
   GatsbyImageProps,
   IGatsbyImageData,
 } from "./components/gatsby-image.browser";
@@ -13,18 +14,18 @@ export {
   getSrcSet,
   getImageData,
   withArtDirection,
-  IArtDirectedImage,
-  IGetImageDataArgs,
-  IUrlBuilderArgs,
-  ImageDataLike,
+  type IArtDirectedImage,
+  type IGetImageDataArgs,
+  type IUrlBuilderArgs,
+  type ImageDataLike,
 } from "./components/hooks";
 export {
   generateImageData,
   getLowResolutionImageURL,
-  IGatsbyImageHelperArgs,
-  ISharpGatsbyImageArgs,
-  IImage,
-  ImageFormat,
-  Layout,
-  Fit,
+  type IGatsbyImageHelperArgs,
+  type ISharpGatsbyImageArgs,
+  type IImage,
+  type ImageFormat,
+  type Layout,
+  type Fit,
 } from "./image-utils";
