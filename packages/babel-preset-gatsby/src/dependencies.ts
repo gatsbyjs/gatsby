@@ -1,7 +1,7 @@
 // This file is heavily based on create-react-app's implementation
 // @see https://github.com/facebook/create-react-app/blob/master/packages/babel-preset-react-app/dependencies.js
 
-import * as path from "node:path";
+import path from "node:path";
 import { loadCachedConfig } from "./index";
 import { CORE_JS_POLYFILL_EXCLUDE_LIST as polyfillsToExclude } from "gatsby-legacy-polyfills/dist/exclude";
 

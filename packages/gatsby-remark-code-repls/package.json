@@ -27,7 +27,7 @@
     "urijs": "^1.19.11"
   },
   "devDependencies": {
-    "@types/react": "^18.3.0",
+    "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "@types/normalize-path": "3.0.2",
     "@babel/cli": "^7.24.1",

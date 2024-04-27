@@ -22,7 +22,6 @@ import type { Store } from "redux";
 import type { IGatsbyState } from "../redux/types";
 import type { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types";
 import type { IGraphQLTelemetryRecord } from "../schema/type-definitions";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import GraphQLSpanTracer from "./graphql-span-tracer";
 import { tranformDocument } from "./transform-document";
 

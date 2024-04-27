@@ -1052,11 +1052,10 @@ describe("Type conflicts", () => {
   });
 
   it("reports on mixed ___NODE fields", () => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const nodes: Array<IGatsbyNode> = [
-      // @ts-ignore
+      // @ts-ignore Type '{ related___NODE: string; }' is missing the following properties from type 'IGatsbyNode': id, parent, children, internalts(2739)
       { related___NODE: "foo" },
-      // @ts-ignore
+      // @ts-ignore Type '{ related___NODE: string[]; }' is missing the following properties from type 'IGatsbyNode': id, parent, children, internalts(2739)
       { related___NODE: ["bar"] },
     ];
 
@@ -1069,7 +1068,7 @@ describe("Type conflicts", () => {
   });
 
   it("reports on numbers represented as strings", () => {
-    // @ts-ignore
+    // @ts-ignore Type '{ numeric: number; }' is missing the following properties from type 'IGatsbyNode': id, parent, children, internalts(2739)
     const nodes: Array<IGatsbyNode> = [{ numeric: 1 }, { numeric: "2" }];
 
     const conflicts = getExampleValueConflicts({

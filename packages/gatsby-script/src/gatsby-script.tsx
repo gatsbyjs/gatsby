@@ -9,7 +9,6 @@ import { Location, useLocation } from "@gatsbyjs/reach-router";
 
 export type ScriptStrategy = "post-hydrate" | "idle" | "off-main-thread";
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export type ScriptProps = Omit<
   ScriptHTMLAttributes<HTMLScriptElement>,
   "onLoad" | "onError"

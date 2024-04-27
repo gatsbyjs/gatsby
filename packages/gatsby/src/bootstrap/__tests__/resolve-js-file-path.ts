@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import reporter from "gatsby-cli/lib/reporter";
 import { resolveJSFilepath } from "../resolve-js-file-path";
 

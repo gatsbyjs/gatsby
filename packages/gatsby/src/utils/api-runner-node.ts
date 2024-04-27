@@ -1,6 +1,6 @@
-import Promise from "bluebird";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
+import Promise from "bluebird";
 import chalk from "chalk";
 import { bindActionCreators as origBindActionCreators } from "redux";
 import memoize from "memoizee";

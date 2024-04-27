@@ -1,6 +1,5 @@
 import { memo, type ComponentType, type JSX } from "react";
 import { Box, Text } from "ink";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import InkSpinner from "ink-spinner";
 
 type ISpinnerProps = {

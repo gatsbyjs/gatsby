@@ -1,12 +1,10 @@
 #!/usr/bin/env node
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import Configstore from "configstore";
-import pkg from "../package.json";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
-import path from "path";
-import os from "os";
+import Configstore from "configstore";
+import pkg from "../package.json";
+import path from "node:path";
+import os from "node:os";
 import { watch } from "./watch";
 import { getVersionInfo } from "./utils/version";
 import argv from "yargs";

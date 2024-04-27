@@ -1,4 +1,4 @@
-import * as path from "path";
+import path from "node:path";
 import preset from "../index";
 import * as pathSerializer from "../utils/path-serializer";
 

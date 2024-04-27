@@ -152,9 +152,9 @@ export async function getServerData(
 If you’re using an anonymous function, you can also use the shorthand `GetServerData` type like this:
 
 ```tsx
-export const getServerData: GetServerData<ServerDataProps> = async props => {
+export const getServerData: GetServerData<ServerDataProps> = async (props) => {
   // your function body
-}
+};
 ```
 
 ### `gatsby-config.ts`
@@ -284,9 +284,9 @@ export const query = graphql`
 If you’re using an anonymous function, you can also use the shorthand `HeadFC` type like this:
 
 ```tsx
-export const Head: HeadFC<DataProps> = props => {
+export const Head: HeadFC<DataProps> = (props) => {
   // your return value
-}
+};
 ```
 
 ### Gatsby Slice API
@@ -296,24 +296,24 @@ export const Head: HeadFC<DataProps> = props => {
 You can use `SliceComponentProps` to type your Slice component from the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice/). `SliceComponentProps` can receive three [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) (`DataType`, `SliceContextType`, and `AdditionalSerializableProps`). This way you can type the `data` and `pageContext` prop that gets passed to your Slice component.
 
 ```tsx
-import * as React from "react"
-import { SliceComponentProps, graphql } from "gatsby"
+import * as React from "react";
+import { SliceComponentProps, graphql } from "gatsby";
 
 type DataType = {
   site: {
     siteMetadata: {
-      title: string
-    }
-  }
-}
+      title: string;
+    };
+  };
+};
 
 type SliceContextType = {
-  locale: string
-}
+  locale: string;
+};
 
 type AdditionalSerializableProps = {
-  theme: "light" | "dark"
-}
+  theme: "light" | "dark";
+};
 
 const Navigation = ({
   data,
@@ -327,9 +327,9 @@ const Navigation = ({
   <nav className={`theme---${theme}`}>
     Menu for {sliceContext.locale} at {data.site.siteMetadata.title}
   </nav>
-)
+);
 
-export default Navigation
+export default Navigation;
 
 export const query = graphql`
   {
@@ -339,7 +339,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ### Local Plugins
@@ -427,7 +427,7 @@ Parcel is used for the compilation and it currently has [limitations on TypeScri
 You can't use `require.resolve` in your files. You'll need to replace these instances with a `path.resolve` call. Example diff for a `gatsby-node` file:
 
 ```diff
-+ import path from "path"
++ import path from "node:path"
 
 + const template = path.resolve(`./src/templates/template.tsx`)
 - const template = require.resolve(`./src/templates/template.tsx`)

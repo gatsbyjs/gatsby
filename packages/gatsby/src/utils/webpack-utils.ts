@@ -4,17 +4,12 @@ import { GraphQLSchema } from "graphql";
 import type { Plugin as PostCSSPlugin } from "postcss";
 import autoprefixer from "autoprefixer";
 import flexbugs from "postcss-flexbugs-fixes";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import TerserPlugin from "terser-webpack-plugin";
 import type { MinifyOptions as TerserOptions } from "terser";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import { getBrowsersList } from "./browserslist";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import ESLintPlugin from "eslint-webpack-plugin";
 import { cpuCoreCount } from "gatsby-core-utils";
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor";

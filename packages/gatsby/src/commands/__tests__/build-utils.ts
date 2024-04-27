@@ -66,7 +66,6 @@ describe("calcDirtyHtmlFiles", () => {
           path: pagePath,
           matchPath: undefined,
           pluginCreatorId: "foo",
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           pluginCreator___NODE: "foo",
           updatedAt: 1,
           mode: "SSG",

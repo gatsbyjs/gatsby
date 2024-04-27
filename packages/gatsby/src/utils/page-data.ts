@@ -9,7 +9,6 @@ import { isWebpackStatusPending } from "./webpack-status";
 import { store } from "../redux";
 import type { IGatsbySlice, IGatsbyState } from "../redux/types";
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import type GatsbyCacheLmdb from "./cache-lmdb";
 import {
   constructPageDataString,

@@ -1,9 +1,9 @@
-import fs from "fs-extra";
-import glob, { type GlobOptions } from "glob";
-import path from "path";
-import webpack from "webpack";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
+import fs from "fs-extra";
+import glob, { type GlobOptions } from "glob";
+import path from "node:path";
+import webpack from "webpack";
 import { getMatchPath, urlResolve } from "gatsby-core-utils";
 
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages";

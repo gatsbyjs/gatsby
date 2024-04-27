@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
-import path from "path";
+import path from "node:path";
 import * as semver from "semver";
 import * as stringSimilarity from "string-similarity";
 import { version as gatsbyVersion } from "../../../package.json";

@@ -18,7 +18,6 @@ import { StaticQueryMapper } from "./webpack/plugins/static-query-mapper";
 import { ForceCssHMRForEdgeCases } from "./webpack/plugins/force-css-hmr-for-edge-cases";
 import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging";
 import { hasES6ModuleSupport } from "./browserslist";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Module from "module";
 import { shouldGenerateEngines } from "./engines-helpers";
 import { ROUTES_DIRECTORY } from "../constants";

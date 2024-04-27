@@ -1,9 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash";
 import path from "node:path";
 import hasha from "hasha";
 import fs from "fs-extra";
 import pDefer, { type DeferredPromise } from "p-defer";
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash";
 import { createContentDigest, slash, uuid } from "gatsby-core-utils";
 import reporter from "gatsby-cli/lib/reporter";
 

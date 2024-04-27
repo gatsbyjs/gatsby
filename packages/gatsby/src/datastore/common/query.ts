@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import * as _ from "lodash";
+import _ from "lodash";
 import { prepareRegex } from "../../utils/prepare-regex";
 import { makeRe } from "micromatch";
 

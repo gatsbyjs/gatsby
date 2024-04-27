@@ -29,7 +29,6 @@ const imageCache = new Set<string>();
 let renderImageToStringPromise;
 let renderImage: typeof renderImageToString | undefined;
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export type GatsbyImageProps = {
   alt: string;
   as?: ElementType | undefined;

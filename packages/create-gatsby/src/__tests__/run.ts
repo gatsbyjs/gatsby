@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import { reporter } from "../utils/reporter";
 import { initStarter } from "../init-starter";
 import { setSiteMetadata } from "../utils/site-metadata";

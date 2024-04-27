@@ -31,7 +31,7 @@
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
-    "@types/react": "^18.3.0",
+    "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "cross-env": "^7.0.3",
     "gatsby-plugin-image": "workspace:*",

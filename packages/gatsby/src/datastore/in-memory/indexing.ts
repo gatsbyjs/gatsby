@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash";
 import type { IGatsbyNode } from "../../redux/types";
 import {
   type IDbQueryElemMatch,
@@ -6,8 +8,6 @@ import {
   objectToDottedField,
 } from "../common/query";
 import { getDataStore, getNode } from "../";
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash";
 import { getValueAt } from "../../utils/get-value-at";
 import { getResolvedFields } from "../../schema/utils";
 

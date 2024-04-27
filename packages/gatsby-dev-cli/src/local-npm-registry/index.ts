@@ -1,8 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash";
 import start from "verdaccio";
 
 import fs from "fs-extra";
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash";
 
 let VerdaccioInitPromise: Promise<unknown> | null = null;
 

@@ -1,6 +1,5 @@
 import path from "node:path";
 import crypto from "node:crypto";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Url from "node:url";
 
 /**

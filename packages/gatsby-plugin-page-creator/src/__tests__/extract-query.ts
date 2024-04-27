@@ -1,11 +1,12 @@
 import { generateQueryFromString, reverseLookupParams } from "../extract-query";
-import path from "path";
+import path from "node:path";
 
 // windows and mac have different seperators, all code is written with unix-like
 // file systems, but the underlying code uses `path.sep`. So when running tests
 // on windows, they would fail without us swapping the seperators.
-const compatiblePath = (filepath: string): string =>
-  filepath.replace(/\//g, path.sep);
+function compatiblePath(filepath: string): string {
+  return filepath.replace(/\//g, path.sep);
+}
 
 describe("extract query", () => {
   describe("root query string", () => {
@@ -264,7 +265,6 @@ describe("reverseLookupParams", () => {
         compatiblePath("/{Model.fields__name}.js"),
       ),
     ).toEqual({
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       fields__name: "foo",
     });
     expect(
@@ -273,7 +273,6 @@ describe("reverseLookupParams", () => {
         compatiblePath("/{_model.fields__name}.js"),
       ),
     ).toEqual({
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       fields__name: "foo",
     });
   });
@@ -286,7 +285,6 @@ describe("reverseLookupParams", () => {
         compatiblePath("/{Model.parent__(File)__relativePath}.js"),
       ),
     ).toEqual({
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       parent__relativePath: "foo",
     });
     expect(
@@ -296,7 +294,6 @@ describe("reverseLookupParams", () => {
         compatiblePath("/{model123.parent__(File)__relativePath}.js"),
       ),
     ).toEqual({
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       parent__relativePath: "foo",
     });
   });

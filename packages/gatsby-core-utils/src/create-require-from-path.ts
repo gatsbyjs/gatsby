@@ -1,6 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Module from "module";
-import path from "path";
+import path from "node:path";
 
 /**
  * We need to use private Module methods in this polyfill

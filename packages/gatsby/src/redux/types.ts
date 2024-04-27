@@ -52,7 +52,6 @@ export type IGatsbyPage = {
   isCreatedByStatefulCreatePages: boolean;
   context: Record<string, unknown>;
   updatedAt: number;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   pluginCreator___NODE: Identifier;
   pluginCreatorId: Identifier;
   componentPath: SystemPath;

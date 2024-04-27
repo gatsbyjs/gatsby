@@ -1,5 +1,4 @@
 import url from "node:url";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Range from "semver/classes/range";
 
 import type { NodePluginArgs } from "gatsby";
@@ -194,7 +193,9 @@ async function blankGetRequest({
   return fetch(url)
     .then((response) => response.json())
     .then((json) => {
+      // @ts-ignore Property 'errors' does not exist on type 'unknown'.ts(2339)
       if (json?.errors?.length) {
+        // @ts-ignore Property 'errors' does not exist on type 'unknown'.ts(2339)
         const firstError = json.errors[0];
 
         if (

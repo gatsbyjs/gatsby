@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Resolver from "enhanced-resolve/lib/Resolver";
 import mod from "module";
 

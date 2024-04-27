@@ -15,7 +15,8 @@ export async function getConfigFile(
   configName: string,
   distance: number = 3,
 ): Promise<{
-  configModule: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  configModule: any;
   configFilePath: string;
 }> {
   const compiledResult = await attemptImportCompiled(siteDirectory, configName);
@@ -37,7 +38,8 @@ async function attemptImport(
   siteDirectory: string,
   configPath: string,
 ): Promise<{
-  configModule: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  configModule: any;
   configFilePath: string;
 }> {
   const configFilePath = await resolveJSFilepath({
@@ -60,10 +62,17 @@ async function attemptImportCompiled(
   siteDirectory: string,
   configName: string,
 ): Promise<{
-  configModule: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  configModule: any;
   configFilePath: string;
 }> {
-  let compiledResult;
+  let compiledResult:
+    | {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        configModule: any;
+        configFilePath: string;
+      }
+    | undefined;
 
   try {
     const compiledConfigPath = path.join(
@@ -90,7 +99,8 @@ async function attemptImportUncompiled(
   configName: string,
   distance: number,
 ): Promise<{
-  configModule: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  configModule: any;
   configFilePath: string;
 }> {
   let uncompiledResult;

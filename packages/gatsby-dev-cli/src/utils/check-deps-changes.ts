@@ -1,6 +1,6 @@
-import fs from "fs-extra";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
+import fs from "fs-extra";
 import { getMonorepoPackageJsonPath } from "./get-monorepo-package-json-path";
 import got from "got";
 import type { PackageJson } from "../../../gatsby";

@@ -1,5 +1,4 @@
 import { store } from "../";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Batcher from "../../utils/batcher";
 import {
   createPageDependency as internalCreatePageDependency,

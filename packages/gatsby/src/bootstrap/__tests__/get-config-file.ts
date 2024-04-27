@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import { getConfigFile } from "../get-config-file";
 import reporter from "gatsby-cli/lib/reporter";
 
@@ -88,9 +88,11 @@ describe("getConfigFile with cjs files", () => {
 
     expect(reporterPanicMock).toBeCalledWith({
       id: "11902",
+      // @ts-ignore Property 'toBeObject' does not exist on type 'Expect'.ts(2339)
       error: expect.toBeObject(),
       context: {
         configName: "gatsby-config",
+        // @ts-ignore Property 'toBeString' does not exist on type 'Expect'.ts(2339)
         message: expect.toBeString(),
       },
     });
@@ -101,9 +103,11 @@ describe("getConfigFile with cjs files", () => {
 
     expect(reporterPanicMock).toBeCalledWith({
       id: "10123",
+      // @ts-ignore Property 'toBeObject' does not exist on type 'Expect'.ts(2339)
       error: expect.toBeObject(),
       context: {
         configName: "gatsby-config",
+        // @ts-ignore Property 'toBeString' does not exist on type 'Expect'.ts(2339)
         message: expect.toBeString(),
       },
     });
@@ -114,6 +118,7 @@ describe("getConfigFile with cjs files", () => {
 
     expect(reporterPanicMock).toBeCalledWith({
       id: "10124",
+      // @ts-ignore Property 'toBeObject' does not exist on type 'Expect'.ts(2339)
       error: expect.toBeObject(),
       context: {
         configName: "gatsby-config",
@@ -154,9 +159,11 @@ describe("getConfigFile with esm files", () => {
 
     expect(reporterPanicMock).toBeCalledWith({
       id: "10123",
+      // @ts-ignore Property 'toBeObject' does not exist on type 'Expect'.ts(2339)
       error: expect.toBeObject(),
       context: {
         configName: "gatsby-config",
+        // @ts-ignore Property 'toBeString' does not exist on type 'Expect'.ts(2339)
         message: expect.toBeString(),
       },
     });
@@ -167,6 +174,7 @@ describe("getConfigFile with esm files", () => {
 
     expect(reporterPanicMock).toBeCalledWith({
       id: "10124",
+      // @ts-ignore Property 'toBeObject' does not exist on type 'Expect'.ts(2339)
       error: expect.toBeObject(),
       context: {
         configName: "gatsby-config",
@@ -199,6 +207,7 @@ describe("getConfigFile with ts/tsx files", () => {
 
     expect(reporterPanicMock).toBeCalledWith({
       id: "10127",
+      // @ts-ignore Property 'toBeObject' does not exist on type 'Expect'.ts(2339)
       error: expect.toBeObject(),
       context: {
         configName: "gatsby-config",
@@ -211,6 +220,7 @@ describe("getConfigFile with ts/tsx files", () => {
 
     expect(reporterPanicMock).toBeCalledWith({
       id: "10124",
+      // @ts-ignore Property 'toBeObject' does not exist on type 'Expect'.ts(2339)
       error: expect.toBeObject(),
       context: {
         configName: "gatsby-config",

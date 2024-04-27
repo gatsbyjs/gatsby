@@ -1,7 +1,7 @@
-import * as fs from "fs-extra";
-import { execa } from "execa";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
+import fs from "fs-extra";
+import { execa } from "execa";
 import {
   readConfigFile,
   lock,

@@ -1,6 +1,5 @@
 import zipkin from "zipkin";
 import { HttpLogger } from "zipkin-transport-http";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import ZipkinTracer from "zipkin-javascript-opentracing";
 import { ZipkinBatchRecorder, ZipkinHttpLogger } from "./zipkin-types";
 

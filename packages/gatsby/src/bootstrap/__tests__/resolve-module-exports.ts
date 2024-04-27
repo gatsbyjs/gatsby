@@ -12,7 +12,7 @@ jest.mock("gatsby-cli/lib/reporter", () => {
 });
 
 import * as fs from "fs-extra";
-import path from "path";
+import path from "node:path";
 import reporter from "gatsby-cli/lib/reporter";
 import { resolveModuleExports } from "../resolve-module-exports";
 
@@ -163,7 +163,7 @@ describe("Resolve module exports", () => {
       reporter.panic.mock.calls.map((c) =>
         // Remove console colors + trim whitespace
         // eslint-disable-next-line
-        c[0].replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim()
+        c[0].replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim(),
       ),
     ).toMatchSnapshot();
   });

@@ -1,9 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash";
 import fs from "fs-extra";
 import { print, visit, getLocation } from "graphql";
 import { codeFrameColumns } from "@babel/code-frame";
 import { distance as levenshtein } from "fastest-levenshtein";
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash";
 import report from "gatsby-cli/lib/reporter";
 import { locInGraphQlToLocInFile } from "./error-parser";
 import { getCodeFrame } from "./graphql-errors-codeframe";

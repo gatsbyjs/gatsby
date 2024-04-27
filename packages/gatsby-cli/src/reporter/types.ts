@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as ActionCreators from "./redux/actions";
 // TODO: This needs to be implemented when redux/acitons is converted to TS
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,7 +1,5 @@
 import { Span } from "opentracing";
 import { apiRunnerNode } from "./api-runner-node";
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Promise from "bluebird";
 
 type SourceNodesApiRunnerConfig = {

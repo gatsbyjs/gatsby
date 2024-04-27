@@ -1,7 +1,6 @@
 import { collectedScriptsByPage } from "gatsby-script";
 import { getForwards } from "./utils/get-forwards";
 import { partytownSnippet } from "@builder.io/partytown/integration";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import React from "react";
 import type { GatsbySSR } from "../../..";
 

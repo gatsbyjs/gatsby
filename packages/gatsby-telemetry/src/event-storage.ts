@@ -1,5 +1,4 @@
-import path from "path";
-// eslint-disable-next-line @typescript-eslint/naming-convention
+import path from "node:path";
 import Configstore from "configstore";
 import createFetch from "@turist/fetch";
 import { Store } from "./store";

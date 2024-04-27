@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash";
 import * as fs from "fs-extra";
 import {
   EnumTypeComposer,
@@ -26,8 +28,6 @@ import {
 } from "graphql";
 import { printBlockString } from "graphql/language/blockString";
 import { internalExtensionNames } from "./extensions";
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash";
 import { internalTypeNames } from "./types/built-in-types";
 
 export type ISchemaPrintConfig = {

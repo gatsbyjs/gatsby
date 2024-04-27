@@ -1,6 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import Resolver from "enhanced-resolve/lib/Resolver";
-import path from "path";
+import type {
+  ResolveContext,
+  ResolveRequest,
+  Resolver,
+} from "enhanced-resolve";
+import path from "node:path";
 
 // Core-js uses es6, es7 & web prefixes, which we'll convert to core-js 3
 const coreJs2FileRegex = /\/modules\/(es6|es7|web)\.|\/es6\/|\/es7\//;
@@ -20,10 +23,10 @@ const replaceMap = [
   ["regexp.split", "string.split"],
 ];
 
-type IRequest = {
-  request?: string | undefined;
-  path: string;
-};
+// type IRequest = {
+//   request?: string | undefined;
+//   path: string;
+// };
 
 /**
  * Babel-preset is set to corejs@3 which will add automatic polyfills. If a project has core-js@2 installed in their root or a package got compiled with core-js@2
@@ -47,9 +50,12 @@ export class CoreJSResolver {
     const coreJsModulePath = this._coreJSNodeModulesPath;
 
     function resolve(
-      request: IRequest,
-      resolveContext: unknown,
-      callback: (err?: Error | null, result?: unknown) => void,
+      request: ResolveRequest,
+      resolveContext: ResolveContext,
+      callback: (
+        err?: Error | null,
+        result?: ResolveRequest | null | undefined,
+      ) => void,
     ): void {
       const innerRequest = request.request || request.path;
 

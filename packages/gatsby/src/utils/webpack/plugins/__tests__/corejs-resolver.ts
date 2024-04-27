@@ -1,5 +1,6 @@
 import { slash } from "gatsby-core-utils";
 import { CoreJSResolver } from "../corejs-resolver";
+import { Resolver } from "webpack";
 
 function executeResolve(
   resolver: CoreJSResolver,
@@ -7,10 +8,16 @@ function executeResolve(
   doResolveMock: unknown,
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    const webpackResolver = {
+    const webpackResolver: Resolver = {
+      // @ts-ignore Type 'unknown' is not assignable to type '(hook: AsyncSeriesBailHook<[ResolveRequest, ResolveContext], ResolveRequest | null, UnsetAdditionalOptions>, request: ResolveRequest, message: string | null, resolveContext: ResolveContext, callback: (err?: Error | ... 1 more ... | undefined, result?: ResolveRequest | undefined) => void) => void'.ts(2322)
       doResolve: doResolveMock,
-      ensureHook: (hook: string): string => hook,
-      getHook: (): Record<string, unknown> => {
+      // @ts-ignore Type 'string | AsyncSeriesBailHook<[ResolveRequest, ResolveContext], ResolveRequest | null, UnsetAdditionalOptions>' is not assignable to type 'AsyncSeriesBailHook<[ResolveRequest, ResolveContext], ResolveRequest | null, UnsetAdditionalOptions>'.
+      // Type 'string' is not assignable to type 'AsyncSeriesBailHook<[ResolveRequest, ResolveContext], ResolveRequest | null, UnsetAdditionalOptions>'.ts(2322)
+
+      ensureHook: (hook) => hook,
+      // @ts-ignore Type '() => { tapAsync: (_name: string, fn: (...args: Array<unknown>) => void) => void; }' is not assignable to type '(name: string | AsyncSeriesBailHook<[ResolveRequest, ResolveContext], ResolveRequest | null, UnsetAdditionalOptions>) => AsyncSeriesBailHook<...>'.
+      // Type '{ tapAsync: (_name: string, fn: (...args: unknown[]) => void) => void; }' is missing the following properties from type 'AsyncSeriesBailHook<[ResolveRequest, ResolveContext], ResolveRequest | null, UnsetAdditionalOptions>': tapPromise, name, taps, intercept, and 5 more.ts(2322)
+      getHook: () => {
         return {
           tapAsync: (
             _name: string,

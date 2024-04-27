@@ -66,7 +66,6 @@ function pagePlaceholders(key): any {
     componentChunkName: `component--${key}`,
     isCreatedByStatefulCreatePages: true,
     updatedAt: 1,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     pluginCreator___NODE: key,
     pluginCreatorId: key,
     ownerNodeId: key,
@@ -136,7 +135,7 @@ describe("worker (queries)", () => {
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} });
     await getDataStore().ready();
 
-    await build({ parentSpan: {} });
+    await build({ parentSpan: undefined });
 
     pageQueryIds.forEach((page) => {
       store.dispatch({

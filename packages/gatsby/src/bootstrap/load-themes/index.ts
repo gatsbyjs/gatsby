@@ -1,5 +1,5 @@
 import { createRequireFromPath } from "gatsby-core-utils";
-import * as path from "node:path";
+import path from "node:path";
 import {
   type PluginEntry,
   mergeGatsbyConfig,
@@ -8,7 +8,6 @@ import {
 } from "../../utils/merge-gatsby-config";
 import { mapSeries } from "bluebird";
 import { flattenDeep, isEqual, isFunction, uniqWith } from "lodash";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import DebugCtor from "debug";
 import { preferDefault } from "../prefer-default";
 import { getConfigFile } from "../get-config-file";

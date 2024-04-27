@@ -8,7 +8,6 @@ import {
 } from "../../constants";
 
 import { createReporter } from "yurnalist";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import ProgressBar from "progress";
 import chalk from "chalk";
 import boxen from "boxen";

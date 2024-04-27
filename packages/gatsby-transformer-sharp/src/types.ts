@@ -8,7 +8,6 @@ import {
   GraphQLNonNull,
   type GraphQLInputFieldConfigMap,
 } from "gatsby/graphql";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import type Sharp from "sharp";
 
 const sharp: typeof Sharp = require("./safe-sharp");

@@ -35,7 +35,6 @@ import { actions } from "../redux/actions";
 import { websocketManager } from "../utils/websocket-manager";
 import { getPathToLayoutComponent } from "gatsby-core-utils";
 import { tranformDocument } from "./transform-document";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import { default as FileParser } from "./file-parser";
 import {
   graphqlError,

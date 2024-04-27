@@ -1,15 +1,13 @@
-System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'find-yarn-workspace-root', 'verdaccio', 'node:path', 'node:os', 'signal-exit', 'execa', 'got', 'yargs'], (function () {
+System.register(['configstore', 'node:path', 'node:os', 'chokidar', 'del', 'fs-extra', 'find-yarn-workspace-root', 'verdaccio', 'path', 'signal-exit', 'execa', 'got', 'yargs'], (function () {
 	'use strict';
-	var Configstore, dirname, join, path$1, os$1, chokidar, del, readFileSync, outputFileSync, removeSync, fs, findWorkspaceRoot, start, path, os, signalExit, execa, got, argv;
+	var Configstore, path, os, chokidar, del, readFileSync, outputFileSync, removeSync, fs, findWorkspaceRoot, start, dirname, join, signalExit, execa, got, argv;
 	return {
 		setters: [function (module) {
 			Configstore = module.default;
 		}, function (module) {
-			dirname = module.dirname;
-			join = module.join;
-			path$1 = module.default;
+			path = module.default;
 		}, function (module) {
-			os$1 = module.default;
+			os = module.default;
 		}, function (module) {
 			chokidar = module.default;
 		}, function (module) {
@@ -24,9 +22,8 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 		}, function (module) {
 			start = module.default;
 		}, function (module) {
-			path = module.default;
-		}, function (module) {
-			os = module.default;
+			dirname = module.dirname;
+			join = module.join;
 		}, function (module) {
 			signalExit = module.default;
 		}, function (module) {
@@ -2998,7 +2995,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			var homepage = "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli#readme";
 			var keywords = ["gatsby"];
 			var license = "MIT";
-			var main = "lib/index.js";
+			var main = "dist/index.js";
 			var repository = {
 			  type: "git",
 			  url: "https://github.com/gatsbyjs/gatsby.git",
@@ -5210,8 +5207,6 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  }
 			}
 
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-
 			let VerdaccioInitPromise = null;
 			function startVerdaccio() {
 			  if (VerdaccioInitPromise) {
@@ -5982,7 +5977,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, "i")));
 			  const watchers = _uniq(allPackagesToWatch
 			  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-			  .map(p => path$1.join(packageNameToPath.get(p))).filter(p => fs.existsSync(p)));
+			  .map(p => path.join(packageNameToPath.get(p))).filter(p => fs.existsSync(p)));
 			  let allCopies = [];
 			  const packagesToPublish = new Set();
 			  let isInitialScan = true;
@@ -6008,7 +6003,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 
 			    // @ts-ignore Type 'unknown' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
 			    for (const [_packageName, packagePath] of packagePathMatchingEntries) {
-			      const relativeToThisPackage = path$1.relative(packagePath, filePath);
+			      const relativeToThisPackage = path.relative(packagePath, filePath);
 			      if (!relativeToThisPackage.startsWith("..")) {
 			        packageName = _packageName;
 			        break;
@@ -6024,8 +6019,8 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			    if (_includes(filePath, "dist/gatsby-cli.js")) {
 			      return;
 			    }
-			    const relativePackageFile = path$1.relative(prefix, filePath);
-			    const newPath = path$1.join(`./node_modules/${packageName}`, relativePackageFile);
+			    const relativePackageFile = path.relative(prefix, filePath);
+			    const newPath = path.join(`./node_modules/${packageName}`, relativePackageFile);
 			    if (relativePackageFile === "package.json") {
 			      // package.json files will change during publish to adjust version of package (and dependencies), so ignore
 			      // changes during this process
@@ -6092,7 +6087,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 
 			    // If this is from "cache-dir" also copy it into the site's .cache
 			    if (_includes(filePath, "cache-dir")) {
-			      const newCachePath = path$1.join(".cache/", path$1.relative(path$1.join(prefix, "cache-dir"), filePath));
+			      const newCachePath = path.join(".cache/", path.relative(path.join(prefix, "cache-dir"), filePath));
 			      localCopies.push(copyPath(filePath, newCachePath, quiet, packageName));
 			    }
 			    allCopies = allCopies.concat(localCopies);
@@ -6139,6 +6134,7 @@ System.register(['configstore', 'path', 'os', 'chokidar', 'del', 'fs-extra', 'fi
 			  return `Gatsby Dev CLI version: ${version}`;
 			}
 
+			// eslint-disable-next-line @typescript-eslint/naming-convention
 			// eslint-disable-next-line @babel/no-unused-expressions
 			argv.usage("Usage: gatsby-dev [options]").alias("q", "quiet").nargs("q", 0).describe("q", "Do not output copy file information").alias("s", "scan-once").nargs("s", 0).describe("s", "Scan once. Do not start file watch").alias("p", "set-path-to-repo").nargs("p", 1).describe("p", `Set path to Gatsby repository.
 You typically only need to configure this once.`).nargs("force-install", 0).describe("force-install", "Disables copying files into node_modules and forces usage of local npm repository.").nargs("external-registry", 0).describe("external-registry", "Run 'pnpm add' commands without the --registry flag.").alias("C", "copy-all").nargs("C", 0).describe("C", "Copy all contents in packages/ instead of just gatsby packages").array("packages").describe("packages", "Explicitly specify packages to copy").help("h").alias("h", "help").nargs("v", 0).alias("v", "version").describe("v", "Print the currently installed version of Gatsby Dev CLI").choices("package-manager", ["pnpm", "npm"]).default("package-manager", "pnpm").describe("package-manager", "Package manager to use for installing dependencies.").argv;
@@ -6150,9 +6146,9 @@ You typically only need to configure this once.`).nargs("force-install", 0).desc
 			let pathToRepo = argv.setPathToRepo;
 			if (pathToRepo) {
 			  if (pathToRepo.includes("~")) {
-			    pathToRepo = path$1.join(os$1.homedir(), pathToRepo.split("~").pop());
+			    pathToRepo = path.join(os.homedir(), pathToRepo.split("~").pop());
 			  }
-			  conf.set("gatsby-location", path$1.resolve(pathToRepo));
+			  conf.set("gatsby-location", path.resolve(pathToRepo));
 			  process.exit();
 			}
 			const havePackageJsonFile = fs.existsSync("package.json");
@@ -6173,19 +6169,19 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
 
 			// get list of packages from monorepo
 			const packageNameToPath = new Map();
-			const monoRepoPackages = fs.readdirSync(path$1.join(gatsbyLocation, "packages")).map(dirName => {
+			const monoRepoPackages = fs.readdirSync(path.join(gatsbyLocation, "packages")).map(dirName => {
 			  try {
-			    const filePath = path$1.join(gatsbyLocation, "packages", dirName, "package.json");
+			    const filePath = path.join(gatsbyLocation, "packages", dirName, "package.json");
 			    const file = fs.readFileSync(filePath).toString();
 			    const localPkg = JSON.parse(file);
 			    if (localPkg?.name) {
-			      packageNameToPath.set(localPkg.name, path$1.join(gatsbyLocation, "packages", dirName));
+			      packageNameToPath.set(localPkg.name, path.join(gatsbyLocation, "packages", dirName));
 			      return localPkg.name;
 			    }
 			  } catch (error) {
 			    // fallback to generic one
 			  }
-			  packageNameToPath.set(dirName, path$1.join(gatsbyLocation, "packages", dirName));
+			  packageNameToPath.set(dirName, path.join(gatsbyLocation, "packages", dirName));
 			  return dirName;
 			});
 			const file = fs.readFileSync("package.json").toString();

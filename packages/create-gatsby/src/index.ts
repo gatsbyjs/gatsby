@@ -7,7 +7,7 @@ import { initStarter, getPackageManager, gitSetup } from "./init-starter";
 import { writeFiles, type IFile } from "./write-files";
 import { installPlugins } from "./install-plugins";
 import colors from "ansi-colors";
-import path from "path";
+import path from "node:path";
 import { plugin } from "./components/plugin";
 import { makePluginConfigQuestions } from "./plugin-options-form";
 import { center, wrap } from "./components/utils";

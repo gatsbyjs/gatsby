@@ -37,7 +37,6 @@ type ICreatePageAction = {
       id: string;
     };
     updatedAt: number;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     pluginCreator___NODE: string;
     pluginCreatorId: string;
     componentPath: string;

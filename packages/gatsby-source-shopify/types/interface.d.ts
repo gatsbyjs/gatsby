@@ -117,7 +117,6 @@ interface IShopifyBulkOperation {
 interface IImageData {
   id: string;
   originalSrc: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   localFile___NODE: string | undefined;
 }
 

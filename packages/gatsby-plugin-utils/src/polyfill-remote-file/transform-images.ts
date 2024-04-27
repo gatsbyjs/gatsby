@@ -23,7 +23,6 @@ const queue = new Map<
   { transforms: Array<IResizeArgs>; promise: Promise<string> }
 >();
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export async function transformImage({
   outputDir,
   args: { url, filename, contentDigest, httpHeaders, ...args },

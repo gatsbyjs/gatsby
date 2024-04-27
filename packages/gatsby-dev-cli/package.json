@@ -49,7 +49,7 @@
     "gatsby"
   ],
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",

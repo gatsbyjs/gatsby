@@ -1,6 +1,6 @@
-import path from "node:path";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
+import path from "node:path";
 import Babel, {
   type ConfigItem,
   type PluginItem,

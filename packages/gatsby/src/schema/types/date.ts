@@ -5,7 +5,6 @@ import moment, {
 } from "moment";
 import { GraphQLScalarType, Kind, type GraphQLFieldConfig } from "graphql";
 import { oneLine } from "common-tags";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import GatsbyCacheLmdb from "../../utils/cache-lmdb";
 
 export type IFormatDateArgs = {

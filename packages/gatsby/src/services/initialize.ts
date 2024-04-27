@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
 import { slash, isCI } from "gatsby-core-utils";
-import * as fs from "fs-extra";
+import fs from "fs-extra";
 import { releaseAllMutexes } from "gatsby-core-utils/mutex";
 import { md5, md5File } from "gatsby-core-utils";
 import path from "node:path";
@@ -11,7 +11,6 @@ import glob from "globby";
 import { apiRunnerNode } from "../utils/api-runner-node";
 import { getBrowsersList } from "../utils/browserslist";
 import type { Store, AnyAction } from "redux";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as WorkerPool from "../utils/worker/pool";
 import { startPluginRunner } from "../redux/plugin-runner";
 import { store, emitter } from "../redux";

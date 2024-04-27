@@ -13,7 +13,6 @@ import errorParser from "./error-parser";
 import { GraphQLRunner } from "./graphql-runner";
 import type { IExecutionResult, PageContext } from "./types";
 import { pageDataExists, savePageQueryResult } from "../utils/page-data";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import GatsbyCacheLmdb from "../utils/cache-lmdb";
 
 let resultHashCache: GatsbyCacheLmdb | undefined;

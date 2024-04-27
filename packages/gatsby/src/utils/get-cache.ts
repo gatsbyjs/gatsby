@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import GatsbyCache from "./cache";
 
 const caches = new Map<string, GatsbyCache>();

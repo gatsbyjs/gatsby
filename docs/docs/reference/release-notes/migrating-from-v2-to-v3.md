@@ -832,9 +832,9 @@ When running community Gatsby plugins, you might see `[DEP_WEBPACK]` messages po
 Gatsby v3 introduces incremental builds for HTML generation. For this feature to work correctly, Gatsby needs to track all inputs used to generate HTML file. Arbitrary code execution in `gatsby-ssr.js` files allow usage of `fs` module, which is marked as unsafe and results in disabling of this feature. To migrate, you can use `import` instead of `fs`:
 
 ```diff:title=gatsby-ssr.js
-import * as React from "react"
--import * as fs from "fs"
--import * as path from "path"
+import React from "react"
+-import fs from "node:fs"
+-import path from "node:path"
 +import stylesToInline from "!!raw-loader!/some-auto-generated.css"
 
 export function onRenderBody({ setHeadComponents }) {
@@ -905,7 +905,7 @@ module.exports = {
   moduleNameMapper: {
     "^@reach/router(.*)": "<rootDir>/node_modules/@gatsbyjs/reach-router$1",
   },
-}
+};
 ```
 
 Configuring using `package.json`:

@@ -1,6 +1,5 @@
 import babelLoader from "babel-loader";
 import type { Compiler } from "webpack";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import Babel, { type ConfigItem } from "@babel/core";
 import {
   prepareOptions,

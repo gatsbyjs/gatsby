@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import VirtualModulesPlugin from "webpack-virtual-modules";
-import * as path from "path";
-import * as fs from "fs-extra";
+import path from "node:path";
+import fs from "fs-extra";
 import type { Compiler } from "webpack";
 /*
  * This module allows creating virtual (in memory only) modules / files

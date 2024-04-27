@@ -1,9 +1,9 @@
-import chokidar from "chokidar";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
+import chokidar from "chokidar";
 import del from "del";
 import fs from "fs-extra";
-import path from "path";
+import path from "node:path";
 import findWorkspaceRoot from "find-yarn-workspace-root";
 
 import { publishPackagesLocallyAndInstall } from "./local-npm-registry/index";

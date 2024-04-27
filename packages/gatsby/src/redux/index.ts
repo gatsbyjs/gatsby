@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash";
 import {
   applyMiddleware,
   combineReducers,
@@ -6,8 +8,6 @@ import {
   type ReducersMapObject,
   type Store,
 } from "redux";
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import _ from "lodash";
 import telemetry from "gatsby-telemetry";
 
 import { mett } from "../utils/mett";

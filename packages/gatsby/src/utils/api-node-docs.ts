@@ -161,7 +161,6 @@ export const onCreateNode = true;
  * @example
  * exports.shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const shouldOnCreateNode = true;
 
 /**

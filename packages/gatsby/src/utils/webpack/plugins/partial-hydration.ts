@@ -1,4 +1,4 @@
-import * as path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 import { createNormalizedModuleKey } from "../utils/create-normalized-module-key";
 import webpack, {
@@ -9,7 +9,6 @@ import webpack, {
   AsyncDependenciesBlock,
   WebpackError,
 } from "webpack";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import type Reporter from "gatsby-cli/lib/reporter";
 import type { Directive, ModuleDeclaration, Program, Statement } from "estree";
 

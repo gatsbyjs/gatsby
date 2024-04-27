@@ -1,6 +1,6 @@
-import slugify from "slugify";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
+import slugify from "slugify";
 import { lexicographicSortSchema } from "graphql";
 import type { GraphQLSchema } from "graphql";
 import type { IDefinitionMeta } from "../../redux/types";

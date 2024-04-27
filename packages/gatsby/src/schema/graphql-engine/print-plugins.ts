@@ -1,8 +1,7 @@
-/* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-import fs from "fs-extra";
-import path from "node:path";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
+import fs from "fs-extra";
+import path from "node:path";
 import { slash } from "gatsby-core-utils";
 import { store } from "../../redux";
 import type { IGatsbyState } from "../../redux/types";
@@ -129,7 +128,8 @@ export const flattenedPlugins =
               value.module &&
               value.modulePath
             ) {
-              const { module, modulePath, ...subPlugin } = value;
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { module: __, modulePath, ...subPlugin } = value;
               return {
                 ...subPlugin,
                 module: `_SKIP_START_${subPluginModuleToImportNameMapping.get(

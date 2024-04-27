@@ -1,7 +1,7 @@
-import reporter from "gatsby-cli/lib/reporter";
-import chalk from "chalk";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from "lodash";
+import reporter from "gatsby-cli/lib/reporter";
+import chalk from "chalk";
 import { stripIndent } from "common-tags";
 import report from "gatsby-cli/lib/reporter";
 import { platform } from "node:os";
