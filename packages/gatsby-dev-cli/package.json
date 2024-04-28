@@ -33,7 +33,7 @@
     "@types/lodash": "4.17.0",
     "babel-preset-gatsby-package": "workspace:*",
     "rimraf": "^5.0.5",
-    "rollup": "^4.16.4",
+    "rollup": "^4.17.0",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-internal": "^1.0.4",
     "@rollup/plugin-babel": "^6.0.4",

@@ -21,7 +21,7 @@
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
-    "remark-custom-blocks": "^2.6.0"
+    "remark-custom-blocks": "^2.6.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.1",
