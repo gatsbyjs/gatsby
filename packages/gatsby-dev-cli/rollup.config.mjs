@@ -1,48 +1,48 @@
-import resolve from "@rollup/plugin-node-resolve"
-import babel from "@rollup/plugin-babel"
-import commonjs from "@rollup/plugin-commonjs"
-import json from "@rollup/plugin-json"
-import replace from "@rollup/plugin-replace"
-import autoExternal from "rollup-plugin-auto-external"
+import resolve from "@rollup/plugin-node-resolve";
+import babel from "@rollup/plugin-babel";
+import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
+import replace from "@rollup/plugin-replace";
+import autoExternal from "rollup-plugin-auto-external";
 // import internal from "rollup-plugin-internal"
 
-import path from "path"
+import path from "node:path";
 
 // Rollup hoists Ink's dynamic require of react-devtools-core which causes
 // a window not found error so we exclude Ink's devtools file for now.
 function excludeDevTools() {
-  const re = /ink/
+  const re = /ink/;
 
   return {
-    name: `ignoreDevTools`,
+    name: "ignoreDevTools",
 
     load(id) {
       if (id.match(re)) {
-        if (path.parse(id).name === `devtools`) {
-          return { code: `` }
+        if (path.parse(id).name === "devtools") {
+          return { code: "" };
         }
 
-        return undefined
+        return undefined;
       }
 
-      return undefined
+      return undefined;
     },
-  }
+  };
 }
 
-const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
+const extensions = [".mjs", ".js", ".json", ".node", ".ts", ".tsx"];
 
 export default {
-  input: `src/index.ts`,
+  input: "src/index.ts",
   output: {
-    dir: `lib`,
-    format: `system`,
+    dir: "dist",
+    format: "system",
   },
   cache: false,
   plugins: [
     replace({
       values: {
-        "process.env.NODE_ENV": JSON.stringify(`production`),
+        "process.env.NODE_ENV": JSON.stringify("production"),
       },
       preventAssignment: true,
     }),
@@ -50,29 +50,29 @@ export default {
     json(),
     babel({
       extensions,
-      babelHelpers: `bundled`,
+      babelHelpers: "bundled",
       skipPreflightCheck: true,
-      exclude: `node_modules/**`,
+      exclude: "node_modules/**",
       babelrc: false,
       presets: [
         [
-          `@babel/env`,
+          "@babel/env",
           {
             modules: false,
             shippedProposals: true,
-            targets: { node: `20.12.2` },
+            targets: { node: "20.12.2" },
           },
         ],
-        `@babel/preset-react`,
+        "@babel/preset-react",
       ],
       plugins: [
-        `@babel/plugin-transform-runtime`,
-        `@sigmacomputing/babel-plugin-lodash`,
+        "@babel/plugin-transform-runtime",
+        "@sigmacomputing/babel-plugin-lodash",
       ],
       overrides: [
         {
-          test: [`**/*.ts`, `**/*.tsx`],
-          plugins: [[`@babel/plugin-transform-typescript`, { isTSX: true }]],
+          test: ["**/*.ts", "**/*.tsx"],
+          plugins: [["@babel/plugin-transform-typescript", { isTSX: true }]],
         },
       ],
     }),
@@ -92,4 +92,4 @@ export default {
     // in multiple store copies
     // `../../redux`,
   ],
-}
+};
