@@ -1,6 +1,6 @@
 import { testPluginOptionsSchema } from "gatsby-plugin-utils";
 import { pluginOptionsSchema } from "../../gatsby-node";
-import { doMergeDefaults, PluginOptionsDefaults } from "../plugin-options";
+import { doMergeDefaults, type PluginOptionsDefaults } from "../plugin-options";
 
 const defaults: PluginOptionsDefaults = {
   formats: ["auto", "webp"],

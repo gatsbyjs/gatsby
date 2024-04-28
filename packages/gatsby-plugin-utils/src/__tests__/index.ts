@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { validateOptionsSchema, Joi } from "../";
-import type { PluginOptionsSchemaArgs } from "../../../gatsby";
+import type { PluginOptions, PluginOptionsSchemaArgs } from "../../../gatsby";
 import { testPluginOptionsSchema } from "../test-plugin-options-schema";
 
 it("validates a basic schema", async () => {
@@ -8,7 +8,8 @@ it("validates a basic schema", async () => {
     str: Joi.string(),
   });
 
-  const validOptions = {
+  const validOptions: PluginOptions = {
+    // @ts-ignore
     str: "is a string",
   };
 
@@ -17,6 +18,7 @@ it("validates a basic schema", async () => {
 
   const invalid = () =>
     validateOptionsSchema(pluginSchema, {
+      // @ts-ignore
       str: 43,
     });
 
@@ -70,6 +72,7 @@ it("throws an warning on unknown values", async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (_args: PluginOptionsSchemaArgs) => schema,
     {
+      // @ts-ignore
       str: "bla",
       notInSchema: true,
     },
@@ -85,7 +88,8 @@ it("populates default values", async () => {
     default: Joi.string().default("default"),
   });
 
-  const validOptions = {
+  const validOptions: PluginOptions = {
+    // @ts-ignore
     str: "is a string",
   };
 

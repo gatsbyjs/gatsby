@@ -4,7 +4,7 @@
 // The only change @mxstbr made was to add support for our custom
 // .dotenv extension to AnySchema.
 
-import type { IPluginInfoOptions } from "../types";
+import type { PluginOptions } from "gatsby";
 
 type Types =
   | "any"
@@ -1174,7 +1174,7 @@ interface AnySchema extends SchemaInternals {
    * Validates a value using the schema and options.
    */
   validateAsync: (
-    value: IPluginInfoOptions,
+    value: PluginOptions,
     options?: AsyncValidationOptions | undefined,
   ) => Promise<any>;
 

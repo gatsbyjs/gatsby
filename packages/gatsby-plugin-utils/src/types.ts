@@ -6,6 +6,8 @@
  * See gatsbyjs/gatsby#27578
  */
 
+import type { PluginOptions } from "gatsby";
+
 export type IRawSiteConfig = {
   plugins?: Array<PluginRef> | undefined;
 };
@@ -32,18 +34,18 @@ export type IPluginInfo = {
   version: string;
 
   /** Options passed to the plugin */
-  pluginOptions?: IPluginInfoOptions | undefined;
+  pluginOptions?: PluginOptions | undefined;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   module?: any | undefined;
   modulePath?: string | undefined;
 };
 
-export type IPluginInfoOptions = {
-  plugins?: Array<IPluginInfo> | undefined;
-  path?: string | undefined;
-  [option: string]: unknown;
-};
+// export type IPluginInfoOptions = {
+//   plugins?: Array<IPluginInfo> | undefined;
+//   path?: string | undefined;
+//   [option: string]: unknown;
+// };
 
 export type IFlattenedPlugin = IPluginInfo & {
   skipSSR?: boolean | undefined;
@@ -54,7 +56,7 @@ export type IFlattenedPlugin = IPluginInfo & {
 
 export type IPluginRefObject = {
   resolve: string;
-  options?: IPluginRefOptions | undefined;
+  options?: PluginOptions | undefined;
   parentDir?: string | undefined;
   subPluginPaths?: Array<string> | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,8 +66,8 @@ export type IPluginRefObject = {
 
 export type PluginRef = string | IPluginRefObject;
 
-export type IPluginRefOptions = {
-  plugins?: Array<PluginRef> | undefined;
-  path?: string | undefined;
-  [option: string]: unknown;
-};
+// export type IPluginRefOptions = {
+//   plugins?: Array<PluginRef> | undefined;
+//   path?: string | undefined;
+//   [option: string]: unknown;
+// };

@@ -2,6 +2,7 @@ import type { IPluginInfo, PluginRef } from "./types";
 import { createPluginId } from "./utils/create-id";
 import { resolvePlugin } from "./resolve-plugin";
 import { isString, isEmpty, set, merge } from "lodash";
+import type { PluginOptions } from "../../..";
 
 export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   // Respect the directory that the plugin was sourced from initially
@@ -86,6 +87,9 @@ export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
       ? Array.from(plugin.subPluginPaths)
       : undefined,
     id: createPluginId(info.name, plugin),
-    pluginOptions: merge({ plugins: [] }, plugin.options),
+    pluginOptions: merge<PluginOptions, PluginOptions>(
+      { plugins: [] },
+      plugin.options,
+    ),
   };
 }

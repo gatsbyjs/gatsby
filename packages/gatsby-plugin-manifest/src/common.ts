@@ -1,6 +1,6 @@
-import sysPath from "path";
+import sysPath from "node:path";
 
-exports.favicons = [
+export const favicons = [
   {
     src: "favicon-32x32.png",
     sizes: "32x32",
@@ -9,7 +9,7 @@ exports.favicons = [
 ];
 
 // default icons for generating icons
-exports.defaultIcons = [
+export const defaultIcons = [
   {
     src: "icons/icon-48x48.png",
     sizes: "48x48",
@@ -56,16 +56,20 @@ exports.defaultIcons = [
  * @param {string} path The generic path to an icon
  * @param {string} digest The digest of the icon provided in the plugin's options.
  */
-exports.addDigestToPath = function (path, digest, method) {
+export function addDigestToPath(
+  path: string,
+  digest?: string | null | undefined,
+  method?: boolean | "none" | "name" | "query" | undefined,
+): string {
   if (method === "name") {
     const parsedPath = sysPath.parse(path);
 
-    return `${parsedPath.dir}/${parsedPath.name}-${digest}${parsedPath.ext}`;
+    return `${parsedPath.dir}/${parsedPath.name}-${digest ?? ""}${parsedPath.ext}`;
   }
 
   if (method === "query") {
-    return `${path}?v=${digest}`;
+    return `${path}?v=${digest ?? ""}`;
   }
 
   return path;
-};
+}

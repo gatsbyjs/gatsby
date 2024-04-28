@@ -1,12 +1,16 @@
 import * as React from "react";
-import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby";
+import {
+  withPrefix as fallbackWithPrefix,
+  withAssetPrefix,
+  type GatsbySSR,
+} from "gatsby";
 import { defaultIcons, addDigestToPath, favicons } from "./common.js";
-import getManifestForPathname from "./get-manifest-pathname";
+import getManifestForPathname from "./get-manifest-pathname.js";
 
 // TODO: remove for v3
 const withPrefix = withAssetPrefix || fallbackWithPrefix;
 
-exports.onRenderBody = (
+export const onRenderBody: GatsbySSR["onRenderBody"] = function onRenderBody(
   { setHeadComponents, pathname = "/" },
   {
     localize,
@@ -20,9 +24,9 @@ exports.onRenderBody = (
     theme_color: themeColor,
     crossOrigin = "anonymous",
   },
-) => {
+): boolean {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
-  const headComponents = [];
+  const headComponents: Array<React.JSX.Element> = [];
 
   const srcIconExists = !!icon;
   const icons = pluginIcons || defaultIcons;

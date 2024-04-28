@@ -14,7 +14,7 @@ import {
   UnionTypeComposerAsObjectDefinition as ComposeUnionTypeConfig,
 } from "graphql-compose";
 import { GraphQLOutputType } from "graphql";
-import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils";
+import { PluginOptionsSchemaJoi } from "gatsby-plugin-utils";
 import { IncomingMessage, ServerResponse } from "http";
 
 export type AvailableFeatures =
@@ -775,7 +775,7 @@ export interface GatsbyNode<
    * Currently experimental and not enabled by default.
    */
   pluginOptionsSchema?:
-    | ((args: PluginOptionsSchemaArgs) => ObjectSchema)
+    | ((args: PluginOptionsSchemaArgs) => ObjectSchema<any>)
     | undefined;
 }
 
@@ -1004,9 +1004,51 @@ export interface GatsbySSR<
     | undefined;
 }
 
+export type Localize = {
+  start_url?: string | undefined;
+  lang?: string | undefined;
+  icon?: string | undefined;
+  icons?:
+    | Array<{
+        src: string;
+        sizes: string;
+        type: string;
+      }>
+    | undefined;
+};
+
 export interface PluginOptions {
+  jsxPragma?: string | undefined;
+  isTSX?: boolean | undefined;
+  allExtensions?: boolean | undefined;
+  pathCheck?: boolean | undefined;
+  path?: string | undefined;
+  name?: string | undefined;
+  short_name?: string | undefined;
+  background_color?: string | undefined;
+  display?: "fullscreen" | "standalone" | "minimal-ui" | undefined;
+  theme_color?: string | undefined;
+  start_url?: string | undefined;
+  icons?:
+    | Array<{
+        src: string;
+        sizes: string;
+        type: string;
+        purpose?: "all" | "maskable" | undefined;
+      }>
+    | undefined;
+  crossOrigin?: CrossOrigin | undefined;
+  icon_options?: IconOptions | undefined;
+  lang?: string | undefined;
+  cache_busting_mode?: "none" | "query" | "name" | boolean | undefined;
+  include_favicon?: boolean | undefined;
+  legacy?: boolean | undefined;
+  theme_color_in_head?: boolean | undefined;
+  cacheDigest?: string | null | undefined;
+  icon?: string | undefined;
+  localize?: Array<Localize> | undefined;
   base64Width?: number | undefined;
-  plugins?: string[];
+  plugins?: IPluginInfo[] | undefined;
   defaultQuality?: number | undefined;
   defaults?: PluginOptionsDefaults | undefined;
   forceBase64Format?: keyof sharp.FormatEnum | "" | undefined;
@@ -1982,7 +2024,7 @@ export interface SliceInput<TContext = Record<string, unknown>> {
 
 export interface IPluginRefObject {
   resolve: string;
-  options?: IPluginRefOptions | undefined;
+  options?: PluginOptions | undefined;
   parentDir?: string | undefined;
   /** @private Internal key used by create-gatsby during plugin installation. Not necessary to define and can be removed. */
   __key?: string | undefined;
@@ -1990,11 +2032,11 @@ export interface IPluginRefObject {
 
 export type PluginRef = string | IPluginRefObject;
 
-export interface IPluginRefOptions {
-  plugins?: PluginRef[] | undefined;
-  path?: string | undefined;
-  [option: string]: unknown;
-}
+// export interface IPluginRefOptions {
+//   plugins?: PluginRef[] | undefined;
+//   path?: string | undefined;
+//   [option: string]: unknown;
+// }
 
 export interface PluginOptionsSchemaArgs {
   Joi: PluginOptionsSchemaJoi;

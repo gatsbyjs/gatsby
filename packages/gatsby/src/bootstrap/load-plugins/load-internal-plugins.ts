@@ -3,12 +3,7 @@ import { uniqWith, isEqual } from "lodash";
 import path from "node:path";
 import reporter from "gatsby-cli/lib/reporter";
 import { store } from "../../redux";
-import type {
-  IPluginInfo,
-  IPluginRefObject,
-  IPluginRefOptions,
-  ISiteConfig,
-} from "./types";
+import type { IPluginInfo, IPluginRefObject, ISiteConfig } from "./types";
 import { processPlugin } from "./process-plugin";
 import { createPluginId } from "./utils/create-id";
 import { createFileContentHash } from "./utils/create-hash";
@@ -20,6 +15,7 @@ import {
   GATSBY_PLUGIN_PREVIEW_NAME,
 } from "./utils/handle-gatsby-cloud";
 import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-files";
+import type { PluginOptions } from "../../..";
 
 const TYPESCRIPT_PLUGIN_NAME = "gatsby-plugin-typescript";
 
@@ -132,7 +128,7 @@ export function loadInternalPlugins(
   const program = store.getState().program;
 
   // default options for gatsby-plugin-page-creator
-  let pageCreatorOptions: IPluginRefOptions | undefined = {
+  let pageCreatorOptions: PluginOptions | undefined = {
     path: slash(path.join(program.directory, "src/pages")),
     pathCheck: false,
   };

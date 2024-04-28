@@ -2,8 +2,10 @@
  * @jest-environment jsdom
  */
 
+import type { PluginOptions } from "gatsby";
+
 describe("gatsby-plugin-manifest", () => {
-  const pluginOptions = {
+  const pluginOptions: PluginOptions = {
     name: "My Website",
     start_url: "/",
     localize: [
@@ -27,7 +29,7 @@ describe("gatsby-plugin-manifest", () => {
     delete global.__MANIFEST_PLUGIN_HAS_LOCALISATION__;
   });
 
-  test("has manifest in head", () => {
+  it("has manifest in head", () => {
     const location = {
       pathname: "/",
     };
@@ -42,7 +44,7 @@ describe("gatsby-plugin-manifest", () => {
     `);
   });
 
-  test("changes href of manifest if navigating to a localized app", () => {
+  it("changes href of manifest if navigating to a localized app", () => {
     const location = {
       pathname: "/es/",
     };
@@ -59,7 +61,7 @@ describe("gatsby-plugin-manifest", () => {
     `);
   });
 
-  test("keeps default manifest if not navigating to a localized app", () => {
+  it("keeps default manifest if not navigating to a localized app", () => {
     const location = {
       pathname: "/random-path/",
     };
@@ -76,7 +78,7 @@ describe("gatsby-plugin-manifest", () => {
     `);
   });
 
-  test("use correct localized manifest when path prefix is used", () => {
+  it("use correct localized manifest when path prefix is used", () => {
     global.__PATH_PREFIX__ = "/test";
 
     const location = {

@@ -1,4 +1,4 @@
-import url from "url";
+import url from "node:url";
 
 import type { Headers } from "got";
 import type { Store } from "gatsby";
@@ -7,7 +7,7 @@ let loggedWarning = false;
 
 export function getRequestHeadersForUrl(
   passedUrl: string,
-  store?: Store,
+  store?: Store | undefined,
 ): Headers | undefined {
   const storeIsMissing = !store || !("getState" in store);
 

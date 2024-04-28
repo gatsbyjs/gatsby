@@ -1,6 +1,6 @@
-import crypto from "crypto";
-import { Store } from "gatsby";
-import url from "url";
+import crypto from "node:crypto";
+import type { Store } from "gatsby";
+import url from "node:url";
 
 import {
   generateFileUrl,

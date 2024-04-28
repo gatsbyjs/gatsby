@@ -1,6 +1,10 @@
+import { ObjectSchema } from "gatsby-plugin-utils";
 import type { PluginOptionsSchemaArgs } from "gatsby";
 
-export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): unknown {
+export function pluginOptionsSchema({
+  Joi,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}: PluginOptionsSchemaArgs): ObjectSchema<any> {
   return Joi.object({
     storeUrl: Joi.string()
       .pattern(/^[a-z0-9-]+\.myshopify\.com$/)

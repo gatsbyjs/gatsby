@@ -5,23 +5,41 @@ jest.mock("fs", () => {
   };
 });
 
-const { onPreInit } = require("../gatsby-node");
-const { onRenderBody: ssrOnRenderBody } = require("../gatsby-ssr");
+import type { ReactNode } from "react";
+import type { PluginOptions, RenderBodyArgs } from "gatsby";
+import { onPreInit } from "../gatsby-node";
+import { onRenderBody as ssrOnRenderBody } from "../gatsby-ssr";
 
-const onRenderBody = (args, pluginOptions) => {
-  onPreInit({}, pluginOptions);
-  return ssrOnRenderBody(args, pluginOptions);
-};
+function onRenderBody(
+  args: RenderBodyArgs,
+  pluginOptions: PluginOptions,
+): void {
+  // @ts-ignore
+  onPreInit?.({}, pluginOptions, () => {});
+  return ssrOnRenderBody?.(args, pluginOptions);
+}
 
-let headComponents;
-const setHeadComponents = (args) =>
-  (headComponents = headComponents.concat(args));
+let headComponents: Array<ReactNode>;
+
+function setHeadComponents(args: Array<ReactNode>): void {
+  headComponents = headComponents.concat(args);
+}
 
 const defaultIcon = "pretend/this/exists.svg";
 
-const ssrArgs = {
+const ssrArgs: RenderBodyArgs = {
   setHeadComponents,
   pathname: "/",
+  loadPageDataSync: () => {
+    return {
+      result: {},
+    };
+  },
+  setHtmlAttributes: () => {},
+  setBodyAttributes: () => {},
+  setPreBodyComponents: () => {},
+  setPostBodyComponents: () => {},
+  setBodyProps: () => {},
 };
 
 describe("gatsby-plugin-manifest", () => {
@@ -41,12 +59,13 @@ describe("gatsby-plugin-manifest", () => {
     });
 
     headComponents
-      .filter(
-        (component) =>
-          component.type === "link" && component.props.rel !== "manifest",
-      )
+      .filter((component) => {
+        // @ts-ignore
+        return component?.type === "link" && component.props.rel !== "manifest";
+      })
       .forEach((component) => {
-        expect(component.props.href).toEqual(
+        // @ts-ignore
+        expect(component?.props.href).toEqual(
           expect.stringMatching(new RegExp(`^${global.__PATH_PREFIX__}`)),
         );
       });
@@ -61,11 +80,12 @@ describe("gatsby-plugin-manifest", () => {
       theme_color: "#000000",
     });
 
-    const component = headComponents.find(
-      (component) =>
-        component.type === "link" && component.props.rel === "manifest",
-    );
+    const component = headComponents.find((component) => {
+      // @ts-ignore
+      return component.type === "link" && component.props.rel === "manifest";
+    });
 
+    // @ts-ignore
     expect(component.props.href).toEqual(
       expect.stringMatching(new RegExp(`^${global.__BASE_PATH__}`)),
     );

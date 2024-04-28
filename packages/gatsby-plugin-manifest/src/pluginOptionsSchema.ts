@@ -1,4 +1,10 @@
-export default function pluginOptionSchema({ Joi }) {
+import type { PluginOptionsSchemaArgs } from "gatsby";
+import type { ObjectSchema } from "gatsby-plugin-utils";
+
+export default function pluginOptionSchema({
+  Joi,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}: PluginOptionsSchemaArgs): ObjectSchema<any> {
   /* Descriptions copied from or based on documentation at https://developer.mozilla.org/en-US/docs/Web/Manifest
    *
    * Currently based on https://www.w3.org/TR/2020/WD-appmanifest-20201019/

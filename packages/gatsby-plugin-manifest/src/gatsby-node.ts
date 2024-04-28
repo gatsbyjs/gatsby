@@ -1,14 +1,25 @@
-import * as fs from "fs";
-import * as path from "path";
-// TODO(v5): use gatsby/sharp
-import getSharpInstance from "./safe-sharp";
+import "@total-typescript/ts-reset";
+import type {
+  CreateWebpackConfigArgs,
+  GatsbyNode,
+  PluginCallback,
+  PluginOptions,
+  Reporter,
+} from "gatsby";
+import fs from "node:fs";
+import path from "node:path";
+
+import sharp from "sharp";
 import { createContentDigest, slash } from "gatsby-core-utils";
 import { defaultIcons, addDigestToPath, favicons } from "./common";
 import { doesIconExist } from "./node-helpers";
 
 import pluginOptionsSchema from "./pluginOptionsSchema";
 
-async function generateIcon(icon, srcIcon) {
+async function generateIcon(
+  icon: { sizes: string; src: string },
+  srcIcon?: string | undefined,
+): Promise<sharp.OutputInfo> {
   const imgPath = path.join("public", icon.src);
 
   // console.log(`generating icon: `, icon.src)
@@ -24,7 +35,6 @@ async function generateIcon(icon, srcIcon) {
   // Sharp accept density from 1 to 2400
   const density = Math.min(2400, Math.max(1, size));
 
-  const sharp = await getSharpInstance();
   return sharp(srcIcon, { density })
     .resize({
       width: size,
@@ -35,10 +45,30 @@ async function generateIcon(icon, srcIcon) {
     .toFile(imgPath);
 }
 
-async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
-  const cacheKey = createContentDigest(`${icon.src}${srcIcon}${srcIconDigest}`);
+async function checkCache(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: Map<string, any>,
+  icon: {
+    src: string;
+    sizes: string;
+    type: string;
+  },
+  srcIcon: string | undefined,
+  srcIconDigest: string,
+  callback: (
+    icon: {
+      src: string;
+      sizes: string;
+      type: string;
+    },
+    srcIcon?: string | undefined,
+  ) => Promise<sharp.OutputInfo>,
+): Promise<void> {
+  const cacheKey = createContentDigest(
+    `${icon?.src ?? ""}${srcIcon}${srcIconDigest}`,
+  );
 
-  const created = cache.get(cacheKey, srcIcon);
+  const created = cache.get(cacheKey);
   if (!created) {
     cache.set(cacheKey, true);
 
@@ -51,13 +81,13 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   }
 }
 
-exports.pluginOptionsSchema = pluginOptionsSchema;
+export { pluginOptionsSchema };
 
 /**
  * Setup pluginOption defaults
  * TODO: Remove once pluginOptionsSchema is stable
  */
-exports.onPreInit = (_, pluginOptions) => {
+export const onPreInit: GatsbyNode["onPreInit"] = (_, pluginOptions) => {
   pluginOptions.cache_busting_mode =
     pluginOptions.cache_busting_mode ?? "query";
   pluginOptions.include_favicon = pluginOptions.include_favicon ?? true;
@@ -72,50 +102,61 @@ exports.onPreInit = (_, pluginOptions) => {
   }
 };
 
-exports.onPostBootstrap = async (
-  { reporter, parentSpan, basePath },
-  { localize, ...manifest },
-) => {
-  const activity = reporter.activityTimer("Build manifest and related icons", {
-    parentSpan,
-  });
+export const onPostBootstrap: GatsbyNode["onPostBootstrap"] =
+  async function onPostBootstrap(
+    { reporter, parentSpan, basePath },
+    { localize, ...manifest },
+    callback: PluginCallback<void>,
+  ) {
+    const activity = reporter.activityTimer(
+      "Build manifest and related icons",
+      {
+        parentSpan,
+      },
+    );
 
-  activity.start();
+    activity.start();
 
-  const cache = new Map();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cache = new Map<string, any>();
 
-  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath });
+    await makeManifest({ cache, reporter, pluginOptions: manifest, basePath });
 
-  if (Array.isArray(localize)) {
-    const locales = [...localize];
-    await Promise.all(
-      locales.map((locale) => {
-        let cacheModeOverride = {};
+    if (Array.isArray(localize)) {
+      await Promise.all(
+        localize.map((locale) => {
+          let cacheModeOverride = {};
 
-        /* localization requires unique filenames for output files if a different src Icon is defined.
+          /* localization requires unique filenames for output files if a different src Icon is defined.
            otherwise one language would override anothers icons in automatic mode.
         */
-        if (locale.hasOwnProperty("icon") && !locale.hasOwnProperty("icons")) {
-          // console.debug(`OVERRIDING CACHE BUSTING`, locale)
-          cacheModeOverride = { cache_busting_mode: "name" };
-        }
+          if (
+            Object.prototype.hasOwnProperty.call(locale, "icon") &&
+            !Object.prototype.hasOwnProperty.call(locale, "icons")
+          ) {
+            // console.debug(`OVERRIDING CACHE BUSTING`, locale)
+            cacheModeOverride = { cache_busting_mode: "name" };
+          }
 
-        return makeManifest({
-          cache,
-          reporter,
-          pluginOptions: {
-            ...manifest,
-            ...locale,
-            ...cacheModeOverride,
-          },
-          shouldLocalize: true,
-          basePath,
-        });
-      }),
-    );
-  }
-  activity.end();
-};
+          return makeManifest({
+            cache,
+            reporter,
+            pluginOptions: {
+              ...manifest,
+              ...locale,
+              ...cacheModeOverride,
+            },
+            shouldLocalize: true,
+            basePath,
+          });
+        }),
+      );
+    }
+
+    callback(null, undefined);
+
+    activity.end();
+  };
 
 /**
  * The complete Triforce, or one or more components of the Triforce.
@@ -131,13 +172,20 @@ exports.onPostBootstrap = async (
  * Build manifest
  * @param {makeManifestArgs}
  */
-const makeManifest = async ({
+async function makeManifest({
   cache,
   reporter,
   pluginOptions,
   shouldLocalize = false,
   basePath = "",
-}) => {
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: Map<string, any>;
+  reporter: Reporter;
+  pluginOptions: PluginOptions;
+  shouldLocalize?: boolean | undefined;
+  basePath?: string | undefined;
+}): Promise<void> {
   const { icon, ...manifest } = pluginOptions;
   const suffix =
     shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : "";
@@ -192,7 +240,6 @@ const makeManifest = async ({
       );
     }
 
-    const sharp = await getSharpInstance();
     const sharpIcon = sharp(icon);
 
     const metadata = await sharpIcon.metadata();
@@ -216,7 +263,19 @@ const makeManifest = async ({
      * Given an array of icon configs, generate the various output sizes from
      * the source icon image.
      */
-    async function processIconSet(iconSet) {
+    async function processIconSet(
+      iconSet: Array<{
+        src: string;
+        sizes: string;
+        type: string;
+      }>,
+    ): Promise<
+      Array<{
+        src: string;
+        sizes: string;
+        type: string;
+      }>
+    > {
       // if cacheBusting is being done via url query icons must be generated before cache busting runs
       if (cacheMode === "query") {
         for (const dstIcon of iconSet) {
@@ -272,15 +331,19 @@ const makeManifest = async ({
     path.join("public", `manifest${suffix}.webmanifest`),
     JSON.stringify(manifest),
   );
-};
+}
 
-exports.onCreateWebpackConfig = ({ actions, plugins }, pluginOptions) => {
-  actions.setWebpackConfig({
-    plugins: [
-      plugins.define({
-        __MANIFEST_PLUGIN_HAS_LOCALISATION__:
-          pluginOptions.localize && pluginOptions.localize.length,
-      }),
-    ],
-  });
-};
+export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
+  function onCreateWebpackConfig(
+    { actions, plugins }: CreateWebpackConfigArgs,
+    pluginOptions: PluginOptions,
+  ): void {
+    actions.setWebpackConfig({
+      plugins: [
+        plugins.define({
+          __MANIFEST_PLUGIN_HAS_LOCALISATION__:
+            pluginOptions.localize && pluginOptions.localize.length,
+        }),
+      ],
+    });
+  };

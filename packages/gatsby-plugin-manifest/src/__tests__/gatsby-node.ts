@@ -19,13 +19,17 @@ jest.mock("sharp", () => {
   const sharp = jest.fn(
     () =>
       new (class {
-        resize() {
+        resize(): this {
           return this;
         }
-        toFile() {
+        toFile(): Promise<void> {
           return Promise.resolve();
         }
-        metadata() {
+        metadata(): {
+          width: number;
+          height: number;
+          format: string;
+        } {
           return {
             width: 128,
             height: 128,
@@ -35,7 +39,9 @@ jest.mock("sharp", () => {
       })(),
   );
 
+  // @ts-ignore
   sharp.simd = jest.fn();
+  // @ts-ignore
   sharp.concurrency = jest.fn();
 
   return sharp;
@@ -50,10 +56,12 @@ jest.mock("gatsby-core-utils", () => {
   };
 });
 
-const fs = require("fs");
-const path = require("path");
-const sharp = require("sharp");
-const reporter = {
+import fs from "node:fs";
+import path from "node:path";
+import sharp from "sharp";
+
+// @ts-ignore
+const reporter: Reporter = {
   activityTimer: jest.fn().mockImplementation(function () {
     return {
       start: jest.fn(),
@@ -61,14 +69,16 @@ const reporter = {
     };
   }),
 };
-const { onPostBootstrap, pluginOptionsSchema } = require("../gatsby-node");
-const { testPluginOptionsSchema } = require("gatsby-plugin-utils");
+import { onPostBootstrap, pluginOptionsSchema } from "../gatsby-node";
+import { testPluginOptionsSchema } from "gatsby-plugin-utils";
+import type { ParentSpanPluginArgs, PluginOptions, Reporter } from "gatsby";
 
-const apiArgs = {
+// @ts-ignore
+const apiArgs: ParentSpanPluginArgs = {
   reporter,
 };
 
-const manifestOptions = {
+const manifestOptions: PluginOptions = {
   name: "GatsbyJS",
   short_name: "GatsbyJS",
   start_url: "/",
@@ -99,22 +109,33 @@ const manifestOptions = {
 // generated.
 describe("Test plugin manifest options", () => {
   beforeEach(() => {
+    // @ts-ignore
     fs.writeFileSync.mockReset();
+    // @ts-ignore
     fs.mkdirSync.mockReset();
+    // @ts-ignore
     fs.existsSync.mockReset();
+    // @ts-ignore
     fs.copyFileSync.mockReset();
+    // @ts-ignore
     sharp.mockClear();
   });
 
   it("correctly works with default parameters", async () => {
-    await onPostBootstrap(apiArgs, {
-      name: "GatsbyJS",
-      short_name: "GatsbyJS",
-      start_url: "/",
-      background_color: "#f7f0eb",
-      theme_color: "#a2466c",
-      display: "standalone",
-    });
+    await onPostBootstrap?.(
+      apiArgs,
+      {
+        name: "GatsbyJS",
+        short_name: "GatsbyJS",
+        start_url: "/",
+        background_color: "#f7f0eb",
+        theme_color: "#a2466c",
+        display: "standalone",
+      },
+      () => {},
+    );
+
+    // @ts-ignore
     const contents = fs.writeFileSync.mock.calls[0][1];
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       path.join("public", "manifest.webmanifest"),
@@ -125,11 +146,12 @@ describe("Test plugin manifest options", () => {
   });
 
   it("correctly works with multiple icon paths", async () => {
+    // @ts-ignore
     fs.existsSync.mockReturnValue(false);
 
     const size = 48;
 
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       icons: [
         {
           src: "icons/icon-48x48.png",
@@ -144,10 +166,14 @@ describe("Test plugin manifest options", () => {
       ],
     };
 
-    await onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    });
+    await onPostBootstrap?.(
+      apiArgs,
+      {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      },
+      () => {},
+    );
 
     const firstIconPath = path.join(
       "public",
@@ -170,12 +196,13 @@ describe("Test plugin manifest options", () => {
   });
 
   it("invokes sharp if icon argument specified", async () => {
+    // @ts-ignore
     fs.statSync.mockReturnValueOnce({ isFile: () => true });
 
     const icon = "pretend/this/exists.png";
     const size = 48;
 
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       icon: icon,
       icons: [
         {
@@ -186,10 +213,14 @@ describe("Test plugin manifest options", () => {
       ],
     };
 
-    await onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    });
+    await onPostBootstrap?.(
+      apiArgs,
+      {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      },
+      () => {},
+    );
 
     // One call to sharp to check the source icon is square
     // + another for the favicon (enabled by default)
@@ -201,12 +232,13 @@ describe("Test plugin manifest options", () => {
   });
 
   it('skips favicon generation if "include_favicon" option is set to false', async () => {
+    // @ts-ignore
     fs.statSync.mockReturnValueOnce({ isFile: () => true });
 
     const icon = "pretend/this/exists.png";
     const size = 48;
 
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       icon: icon,
       icons: [
         {
@@ -218,10 +250,14 @@ describe("Test plugin manifest options", () => {
       include_favicon: false,
     };
 
-    await onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    });
+    await onPostBootstrap?.(
+      apiArgs,
+      {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      },
+      () => {},
+    );
 
     // Only two sharp calls here: one to check the source icon size,
     // and another to generate the single icon in the config.
@@ -233,17 +269,22 @@ describe("Test plugin manifest options", () => {
   });
 
   it("fails on non existing icon", async () => {
+    // @ts-ignore
     fs.statSync.mockReturnValueOnce({ isFile: () => false });
 
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       icon: "non/existing/path",
     };
 
     await expect(
-      onPostBootstrap(apiArgs, {
-        ...manifestOptions,
-        ...pluginSpecificOptions,
-      }),
+      onPostBootstrap?.(
+        apiArgs,
+        {
+          ...manifestOptions,
+          ...pluginSpecificOptions,
+        },
+        () => {},
+      ),
     ).rejects.toThrow(
       "icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.",
     );
@@ -252,7 +293,7 @@ describe("Test plugin manifest options", () => {
   });
 
   it("doesn't write extra properties to manifest", async () => {
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       icon: undefined,
       legacy: true,
       plugins: [],
@@ -262,10 +303,14 @@ describe("Test plugin manifest options", () => {
       crossOrigin: "anonymous",
       icon_options: {},
     };
-    await onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    });
+    await onPostBootstrap?.(
+      apiArgs,
+      {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      },
+      () => {},
+    );
 
     expect(sharp).toHaveBeenCalledTimes(0);
     expect(fs.writeFileSync).toHaveBeenCalledWith(
@@ -275,17 +320,22 @@ describe("Test plugin manifest options", () => {
   });
 
   it("does file name based cache busting", async () => {
+    // @ts-ignore
     fs.statSync.mockReturnValueOnce({ isFile: () => true });
 
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       icon: "images/gatsby-logo.png",
       legacy: true,
       cache_busting_mode: "name",
     };
-    await onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    });
+    await onPostBootstrap?.(
+      apiArgs,
+      {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      },
+      () => {},
+    );
 
     // Two icons in the config, plus a favicon, plus one call to check the
     // source icon size => 4 total calls to sharp.
@@ -296,17 +346,22 @@ describe("Test plugin manifest options", () => {
   });
 
   it("does not do cache cache busting", async () => {
+    // @ts-ignore
     fs.statSync.mockReturnValueOnce({ isFile: () => true });
 
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       icon: "images/gatsby-logo.png",
       legacy: true,
       cache_busting_mode: "none",
     };
-    await onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    });
+    await onPostBootstrap?.(
+      apiArgs,
+      {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      },
+      () => {},
+    );
 
     // Two icons in the config, plus a favicon, plus one call to check the
     // source icon size => 4 total calls to sharp.
@@ -318,29 +373,37 @@ describe("Test plugin manifest options", () => {
   });
 
   it("icon options iterator adds options and the icon array take precedence", async () => {
+    // @ts-ignore
     fs.statSync.mockReturnValueOnce({ isFile: () => true });
 
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       icon: "images/gatsby-logo.png",
       icon_options: {
         purpose: "maskable",
       },
     };
-    await onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    });
+    await onPostBootstrap?.(
+      apiArgs,
+      {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      },
+      () => {},
+    );
 
     // Two icons in the config, plus a favicon, plus one call to check the
     // source icon size => 4 total calls to sharp.
     expect(sharp).toHaveBeenCalledTimes(4);
+    // @ts-ignore
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1]);
-    expect(content.icons[0].purpose).toEqual("all");
-    expect(content.icons[1].purpose).toEqual("maskable");
+    // @ts-ignore
+    expect(content?.icons[0].purpose).toEqual("all");
+    // @ts-ignore
+    expect(content?.icons[1].purpose).toEqual("maskable");
   });
 
   it("correctly works with pathPrefix", async () => {
-    await onPostBootstrap(
+    await onPostBootstrap?.(
       { ...apiArgs, basePath: "/blog" },
       {
         name: "GatsbyJS",
@@ -350,7 +413,10 @@ describe("Test plugin manifest options", () => {
         theme_color: "#a2466c",
         display: "standalone",
       },
+      () => {},
     );
+
+    // @ts-ignore
     const contents = fs.writeFileSync.mock.calls[0][1];
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       path.join("public", "manifest.webmanifest"),
@@ -361,8 +427,9 @@ describe("Test plugin manifest options", () => {
   });
 
   it("generates all language versions", async () => {
+    // @ts-ignore
     fs.statSync.mockReturnValueOnce({ isFile: () => true });
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       ...manifestOptions,
       localize: [
         {
@@ -378,29 +445,31 @@ describe("Test plugin manifest options", () => {
       ],
     };
     const { localize, ...manifest } = pluginSpecificOptions;
-    const expectedResults = localize.concat(manifest).map((x) => {
+
+    const expectedResults = localize?.concat(manifest).map((x) => {
       return { ...manifest, ...x };
     });
 
-    await onPostBootstrap(apiArgs, pluginSpecificOptions);
+    await onPostBootstrap?.(apiArgs, pluginSpecificOptions, () => {});
 
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[0]),
+      JSON.stringify(expectedResults?.[0]),
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[1]),
+      JSON.stringify(expectedResults?.[1]),
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[2]),
+      JSON.stringify(expectedResults?.[2]),
     );
   });
 
   it("generates all language versions with pathPrefix", async () => {
+    // @ts-ignore
     fs.statSync.mockReturnValueOnce({ isFile: () => true });
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       ...manifestOptions,
       localize: [
         {
@@ -417,12 +486,13 @@ describe("Test plugin manifest options", () => {
     };
 
     const { localize, ...manifest } = pluginSpecificOptions;
-    const expectedResults = [manifest].concat(localize).map((x) => {
+
+    const expectedResults = [manifest].concat(localize ?? []).map((x) => {
       return {
         ...manifest,
         ...x,
-        start_url: path.posix.join("/blog", x.start_url),
-        icons: manifest.icons.map((icon) => {
+        start_url: path.posix.join("/blog", x.start_url ?? ""),
+        icons: manifest.icons?.map((icon) => {
           return {
             ...icon,
             src: path.posix.join("/blog", icon.src),
@@ -431,9 +501,10 @@ describe("Test plugin manifest options", () => {
       };
     });
 
-    await onPostBootstrap(
+    await onPostBootstrap?.(
       { ...apiArgs, basePath: "/blog" },
       pluginSpecificOptions,
+      () => {},
     );
 
     expect(fs.writeFileSync).toHaveBeenCalledWith(
@@ -451,8 +522,9 @@ describe("Test plugin manifest options", () => {
   });
 
   it("merges default and language options", async () => {
+    // @ts-ignore
     fs.statSync.mockReturnValueOnce({ isFile: () => true });
-    const pluginSpecificOptions = {
+    const pluginSpecificOptions: PluginOptions = {
       ...manifestOptions,
       localize: [
         {
@@ -467,31 +539,33 @@ describe("Test plugin manifest options", () => {
     };
     const { localize, ...manifest } = pluginSpecificOptions;
     const expectedResults = localize
-      .concat(manifest)
-      .map(({ language, manifest }) => {
+      ?.concat(manifest)
+      // @ts-ignore Property 'manifest' does not exist on type 'Localize'.ts(2339)
+      .map(({ manifest }): PluginOptions => {
         return {
           ...manifestOptions,
           ...manifest,
         };
       });
 
-    await onPostBootstrap(apiArgs, pluginSpecificOptions);
+    await onPostBootstrap?.(apiArgs, pluginSpecificOptions, () => {});
 
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[0]),
+      JSON.stringify(expectedResults?.[0]),
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[1]),
+      JSON.stringify(expectedResults?.[1]),
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[2]),
+      JSON.stringify(expectedResults?.[2]),
     );
   });
 
   it("writes SVG to public if src icon is SVG", async () => {
+    // @ts-ignore
     sharp.mockReturnValueOnce({
       metadata: () => {
         return { format: "svg" };
@@ -503,7 +577,7 @@ describe("Test plugin manifest options", () => {
       icon: icon,
     };
 
-    await onPostBootstrap({ ...apiArgs }, specificOptions);
+    await onPostBootstrap?.({ ...apiArgs }, specificOptions, () => {});
 
     expect(fs.copyFileSync).toHaveBeenCalledWith(
       expect.stringContaining("icon.svg"),
@@ -519,7 +593,7 @@ describe("Test plugin manifest options", () => {
       icon: "this/is/an/icon.png",
     };
 
-    await onPostBootstrap({ ...apiArgs }, specificOptions);
+    await onPostBootstrap?.({ ...apiArgs }, specificOptions, () => {});
 
     expect(fs.copyFileSync).toHaveBeenCalledTimes(0);
   });
@@ -527,12 +601,16 @@ describe("Test plugin manifest options", () => {
 
 describe("pluginOptionsSchema", () => {
   it("validates options correctly", async () => {
-    const { isValid, errors } = await testPluginOptionsSchema(
+    const r = await testPluginOptionsSchema(
       pluginOptionsSchema,
       manifestOptions,
     );
 
-    expect(isValid).toBe(true);
-    expect(errors).toEqual([]);
+    if (!r) {
+      throw new Error("test failed");
+    }
+
+    expect(r.isValid).toBe(true);
+    expect(r.errors).toEqual([]);
   });
 });

@@ -1,13 +1,13 @@
-import crypto from "crypto";
-import { basename, extname } from "path";
-import { URL } from "url";
+import crypto from "node:crypto";
+import { basename, extname } from "node:path";
+import { URL } from "node:url";
 import { createContentDigest } from "gatsby-core-utils/create-content-digest";
-import { isImage } from "../types";
-import type {
-  ImageCdnUrlGeneratorFn,
-  ImageCdnSourceImage,
-  ImageCdnTransformArgs,
-  FileCdnUrlGeneratorFn,
+import {
+  isImage,
+  type ImageCdnUrlGeneratorFn,
+  type ImageCdnSourceImage,
+  type ImageCdnTransformArgs,
+  type FileCdnUrlGeneratorFn,
 } from "../types";
 import type { Store } from "gatsby";
 

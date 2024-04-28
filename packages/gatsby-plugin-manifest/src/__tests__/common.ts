@@ -1,4 +1,4 @@
-const { defaultIcons, addDigestToPath } = require("../common");
+import { defaultIcons, addDigestToPath } from "../common";
 
 describe("gatsby-plugin-manifest", () => {
   describe("defaultIcons", () => {

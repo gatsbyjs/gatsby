@@ -1,7 +1,6 @@
-import { Joi } from "./joi";
-import type { GatsbyNode } from "gatsby";
+import { Joi, type ObjectSchema } from "./joi";
+import type { GatsbyNode, PluginOptions } from "gatsby";
 import { validateOptionsSchema } from "./validate";
-import type { IPluginInfoOptions } from "./types";
 
 type ITestPluginOptionsSchemaReturnType = {
   errors: Array<string>;
@@ -12,9 +11,10 @@ type ITestPluginOptionsSchemaReturnType = {
 
 export async function testPluginOptionsSchema(
   pluginSchemaFunction: GatsbyNode["pluginOptionsSchema"],
-  pluginOptions: IPluginInfoOptions,
+  pluginOptions: PluginOptions,
 ): Promise<ITestPluginOptionsSchemaReturnType | undefined> {
-  const pluginSchema = pluginSchemaFunction?.({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pluginSchema: ObjectSchema<any> | undefined = pluginSchemaFunction?.({
     Joi: Joi.extend((joi) => {
       return {
         type: "subPlugins",

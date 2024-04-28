@@ -45,7 +45,7 @@ import {
 
 import { getPluginOptionsDefaults, setPluginOptions } from "../plugin-options";
 import type { FileNode } from "../image-data";
-import { Actions } from "gatsby";
+import type { Actions } from "gatsby";
 
 jest.mock("gatsby/reporter", () => {
   return {
