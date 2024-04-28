@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file";
 import { cpuCoreCount } from "gatsby-core-utils/cpu-core-count";
 import Queue from "fastq";

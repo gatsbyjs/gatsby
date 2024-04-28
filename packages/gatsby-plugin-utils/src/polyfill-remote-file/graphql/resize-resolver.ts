@@ -39,11 +39,11 @@ const allowedFormats: Array<ImageFormat> = [
 export async function resizeResolver(
   source: IRemoteFileNode,
   args: Partial<IResizeArgs> & {
-    width: number | undefined;
-    height: number | undefined;
+    width?: number | undefined;
+    height?: number | undefined;
   },
   actions: Actions,
-  store?: Store,
+  store?: Store | undefined,
 ): Promise<{
   width: number;
   height: number;

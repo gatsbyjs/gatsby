@@ -1,15 +1,16 @@
-import sharp from "./safe-sharp";
+import Sharp from "sharp";
 import fs from "fs-extra";
-import path from "path";
+import path from "node:path";
 import debug from "debug";
 import { createContentDigest } from "gatsby-core-utils/create-content-digest";
-import duotone from "./duotone";
+import { duotone } from "./duotone";
 import {
   healOptions,
-  ITransformArgs,
-  ISharpPluginOptions,
+  type ITransformArgs,
+  type ISharpPluginOptions,
 } from "./plugin-options";
 import { SharpError } from "./sharp-error";
+import sharp from "sharp";
 
 const log = debug("gatsby:gatsby-plugin-sharp");
 
@@ -27,15 +28,16 @@ type ITransform = {
   args: ITransformArgs;
 };
 
-export const processFile = async (
+export const processFile = async function processFile(
   file: string,
   transforms: Array<ITransform>,
-  options = {} as ISharpPluginOptions,
-): Promise<Array<ITransform>> => {
-  let pipeline;
+  options: ISharpPluginOptions = {},
+): Promise<Array<ITransform>> {
+  let pipeline: Sharp.Sharp;
+
   try {
     const inputBuffer = await fs.readFile(file);
-    pipeline = sharp(inputBuffer, { failOn: options.failOn });
+    pipeline = Sharp(inputBuffer, { failOn: options.failOn });
 
     // Keep Metadata
     if (!options.stripMetadata) {
@@ -53,15 +55,15 @@ export const processFile = async (
         await fs.ensureDir(path.dirname(outputPath));
 
         const transformArgs = healOptions(
-          { defaultQuality: options.defaultQuality as number },
+          { defaultQuality: options.defaultQuality },
           args,
         );
 
-        let clonedPipeline =
+        let clonedPipeline: Sharp.Sharp | null =
           transforms.length > 1 ? pipeline.clone() : pipeline;
 
         if (transformArgs.trim) {
-          clonedPipeline = clonedPipeline.trim(transformArgs.trim);
+          clonedPipeline = clonedPipeline.trim({}); // transformArgs.trim
         }
 
         if (!transformArgs.rotate) {
@@ -122,7 +124,7 @@ export const processFile = async (
         }
 
         // duotone
-        if (transformArgs.duotone) {
+        if (transformArgs.duotone && transformArgs.toFormat) {
           clonedPipeline = await duotone(
             transformArgs.duotone,
             transformArgs.toFormat,
@@ -131,8 +133,10 @@ export const processFile = async (
         }
 
         try {
-          const buffer = await clonedPipeline.toBuffer();
-          await fs.writeFile(outputPath, buffer);
+          const buffer = await clonedPipeline?.toBuffer();
+          if (buffer) {
+            await fs.writeFile(outputPath, buffer);
+          }
         } catch (err) {
           throw new Error(
             `Failed to write ${file} into ${outputPath}. (${err.message})`,
@@ -152,8 +156,8 @@ export const processFile = async (
   );
 };
 
-export const createArgsDigest = (args: unknown): string => {
+export function createArgsDigest(args: unknown): string {
   const argsDigest = createContentDigest(args);
 
   return argsDigest.slice(-5);
-};
+}

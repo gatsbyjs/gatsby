@@ -10,7 +10,7 @@ import fetchGraphql from "~/utils/fetch-graphql";
 import { getFileNodeMetaBySourceUrl } from "~/steps/source-nodes/create-nodes/create-local-file-node";
 import uniq from "lodash/uniq";
 import urlUtil from "url";
-import path from "path";
+import path from "node:path";
 import { getPluginOptions } from "~/utils/get-gatsby-api";
 import { formatLogMessage } from "~/utils/format-log-message";
 import { getPlaceholderUrlFromMediaItemNode } from "../create-nodes/process-node";

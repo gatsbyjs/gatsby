@@ -79,8 +79,8 @@ export type CalculateImageSizesArgs = {
   outputPixelDensities: Array<number>;
   breakpoints?: Array<number> | undefined;
   aspectRatio?: number | undefined;
-  width: number | undefined;
-  height: number | undefined;
+  width?: number | undefined;
+  height?: number | undefined;
 };
 
 export function isImage(node: {

@@ -1,11 +1,18 @@
-const path = require("path");
-const fs = require("fs-extra");
+import path from "node:path";
+import fs from "fs-extra";
 
-jest.mock("async/queue", () => () => {
-  return {
-    push: jest.fn(),
-  };
-});
+jest.mock(
+  "async/queue",
+  () =>
+    (): {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      push: jest.Mock<any, any, any>;
+    } => {
+      return {
+        push: jest.fn(),
+      };
+    },
+);
 jest.mock("gatsby/dist/redux/actions", () => {
   return {
     actions: {
@@ -14,16 +21,17 @@ jest.mock("gatsby/dist/redux/actions", () => {
   };
 });
 
-const sharp = require("sharp");
+import sharp from "sharp";
 fs.ensureDirSync = jest.fn();
 fs.existsSync = jest.fn().mockReturnValue(false);
 
-const decodeBase64PngAsRaw = async (png) =>
-  sharp(Buffer.from(png.replace("data:image/png;base64,", ""), "base64"))
+async function decodeBase64PngAsRaw(png: string): Promise<Buffer> {
+  return sharp(Buffer.from(png.replace("data:image/png;base64,", ""), "base64"))
     .raw()
     .toBuffer();
+}
 
-const {
+import {
   base64,
   generateBase64,
   fluid,
@@ -33,12 +41,11 @@ const {
   getImageSizeAsync,
   stats,
   setActions,
-} = require("../");
+} from "../";
 
-const {
-  getPluginOptionsDefaults,
-  setPluginOptions,
-} = require("../plugin-options");
+import { getPluginOptionsDefaults, setPluginOptions } from "../plugin-options";
+import type { FileNode } from "../image-data";
+import { Actions } from "gatsby";
 
 jest.mock("gatsby/reporter", () => {
   return {
@@ -46,7 +53,14 @@ jest.mock("gatsby/reporter", () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
-    activityTimer: () => {
+    activityTimer: (): {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      start: jest.Mock<any, any, any>;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setStatus: jest.Mock<any, any, any>;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      end: jest.Mock<any, any, any>;
+    } => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
@@ -58,26 +72,27 @@ jest.mock("gatsby/reporter", () => {
 
 describe("gatsby-plugin-sharp", () => {
   const args = {
-    duotone: false,
+    duotone: undefined,
     grayscale: false,
-    rotate: false,
+    rotate: undefined,
   };
   const absolutePath = path.join(__dirname, "images/test.png");
   const file = getFileObject(absolutePath);
 
   // used to find all breakpoints in a srcSet string
-  const findAllBreakpoints = (srcSet) => {
+  function findAllBreakpoints(srcSet: string): RegExpMatchArray | null {
     // RegEx to find all occurrences of 'Xw', where 'X' can be any int
     const regEx = /[0-9]+w/g;
     return srcSet.match(regEx);
-  };
+  }
 
   describe("queueImageResizing", () => {
-    let actions;
+    let actions: Partial<Actions>;
     beforeEach(() => {
       actions = {
         createJobV2: jest.fn().mockReturnValue(Promise.resolve()),
       };
+      // @ts-ignore
       setActions(actions);
     });
 
@@ -134,14 +149,21 @@ describe("gatsby-plugin-sharp", () => {
   });
 
   describe("fluid", () => {
-    const actions = {};
+    const actions: Partial<Actions> = {};
     beforeEach(() => {
       actions.createJobV2 = jest.fn().mockReturnValue(Promise.resolve());
+      // @ts-ignore
       setActions(actions);
     });
 
     it("includes responsive image properties, e.g. sizes, srcset, etc.", async () => {
-      const { base64, ...result } = await fluid({ file });
+      const r = await fluid({ file });
+
+      if (!r) {
+        throw new Error("fluid failed");
+      }
+
+      const { base64, ...result } = r;
 
       expect(actions.createJobV2).toHaveBeenCalledTimes(1);
       expect(result).toMatchSnapshot();
@@ -159,8 +181,8 @@ describe("gatsby-plugin-sharp", () => {
         },
       });
 
-      expect(result.src.indexOf(pathPrefix)).toBe(0);
-      expect(result.srcSet.indexOf(pathPrefix)).toBe(0);
+      expect(result?.src?.indexOf(pathPrefix)).toBe(0);
+      expect(result?.srcSet.indexOf(pathPrefix)).toBe(0);
       expect(actions.createJobV2).toMatchSnapshot();
     });
 
@@ -169,8 +191,8 @@ describe("gatsby-plugin-sharp", () => {
         file,
       });
 
-      expect(path.parse(result.src).name).toBe(file.name);
-      expect(path.parse(result.srcSet).name).toBe(file.name);
+      expect(path.parse(result?.src ?? "").name).toBe(file.name);
+      expect(path.parse(result?.srcSet ?? "").name).toBe(file.name);
       expect(actions.createJobV2).toMatchSnapshot();
     });
 
@@ -192,7 +214,7 @@ describe("gatsby-plugin-sharp", () => {
         args,
       });
 
-      expect(result.presentationWidth).toEqual(41);
+      expect(result?.presentationWidth).toEqual(41);
       expect(actions.createJobV2).toMatchSnapshot();
     });
 
@@ -230,15 +252,18 @@ describe("gatsby-plugin-sharp", () => {
       );
 
       for (const testCase of testsCases) {
-        actions.createJobV2.mockClear();
+        // @ts-ignore
+        actions.createJobV2?.mockClear();
+
         const result = await fluid({
           file: fileObject,
           args: testCase.args,
         });
 
-        expect(actions.createJobV2.mock.calls).toMatchSnapshot();
-        expect(result.presentationWidth).toEqual(testCase.result[0]);
-        expect(result.presentationHeight).toEqual(testCase.result[1]);
+        // @ts-ignore
+        expect(actions.createJobV2?.mock.calls).toMatchSnapshot();
+        expect(result?.presentationWidth).toEqual(testCase.result[0]);
+        expect(result?.presentationHeight).toEqual(testCase.result[1]);
       }
     });
 
@@ -267,7 +292,7 @@ describe("gatsby-plugin-sharp", () => {
       // add the original size of `144-density.png`
       expected.push(`${originalWidth}w`);
 
-      const actual = findAllBreakpoints(result.srcSet);
+      const actual = findAllBreakpoints(result?.srcSet ?? "");
       // should contain all requested sizes as well as the original size
       expect(actual).toEqual(expect.arrayContaining(expected));
       expect(actions.createJobV2).toMatchSnapshot();
@@ -297,7 +322,7 @@ describe("gatsby-plugin-sharp", () => {
         args,
       });
 
-      expect(result.srcSet).toEqual(expect.stringContaining(`${maxWidth}w`));
+      expect(result?.srcSet).toEqual(expect.stringContaining(`${maxWidth}w`));
       expect(actions.createJobV2).toMatchSnapshot();
     });
 
@@ -328,11 +353,11 @@ describe("gatsby-plugin-sharp", () => {
       // add the original size of `144-density.png`
       expected.push(`${originalWidth}w`);
 
-      const actual = findAllBreakpoints(result.srcSet);
+      const actual = findAllBreakpoints(result?.srcSet ?? "");
       // should contain all requested sizes as well as the original size
       expect(actual).toEqual(expect.arrayContaining(expected));
       // should contain no other sizes
-      expect(actual.length).toEqual(expected.length);
+      expect(actual?.length).toEqual(expected.length);
       expect(actions.createJobV2).toMatchSnapshot();
     });
 
@@ -351,17 +376,18 @@ describe("gatsby-plugin-sharp", () => {
       const originalWidth = 281;
       const expected = ["50w", "100w", "250w", `${originalWidth}w`];
 
-      const actual = findAllBreakpoints(result.srcSet);
+      const actual = findAllBreakpoints(result?.srcSet ?? "");
       expect(actual).toEqual(expect.arrayContaining(expected));
-      expect(actual.length).toEqual(expected.length);
+      expect(actual?.length).toEqual(expected.length);
       expect(actions.createJobV2).toMatchSnapshot();
     });
   });
 
   describe("fixed", () => {
-    const actions = {};
+    const actions: Partial<Actions> = {};
     beforeEach(() => {
       actions.createJobV2 = jest.fn().mockReturnValue(Promise.resolve());
+      // @ts-ignore
       setActions(actions);
       console.warn = jest.fn();
     });
@@ -381,7 +407,7 @@ describe("gatsby-plugin-sharp", () => {
 
     it("warns when the requested width is greater than the image width", async () => {
       const { width } = await sharp(file.absolutePath).metadata();
-      const args = { width: width * 2 };
+      const args = { width: (width ?? 0) * 2 };
 
       const result = await fixed({
         file,
@@ -408,10 +434,15 @@ describe("gatsby-plugin-sharp", () => {
 
   describe("base64", () => {
     it("converts image to base64", async () => {
-      const { src, ...result } = await base64({
+      const r = await base64({
         file,
-        args,
       });
+
+      if (!r) {
+        throw new Error("base64 failed");
+      }
+
+      const { src, ...result } = r;
 
       expect(result).toMatchSnapshot();
 
@@ -428,15 +459,12 @@ describe("gatsby-plugin-sharp", () => {
 
       const result = await base64({
         file: file1,
-        args,
       });
       const result2 = await base64({
         file: file2,
-        args,
       });
       const result3 = await base64({
         file: file3,
-        args,
       });
 
       // I would like to test sharp being executed but I don't really know how to mock that beast :p
@@ -466,7 +494,7 @@ describe("gatsby-plugin-sharp", () => {
           args: { base64Width: 42 },
         });
 
-        expect(result.width).toEqual(42);
+        expect(result?.width).toEqual(42);
       });
 
       it("should support a configurable default width", async () => {
@@ -474,10 +502,9 @@ describe("gatsby-plugin-sharp", () => {
 
         const result = await generateBase64({
           file,
-          args,
         });
 
-        expect(result.width).toEqual(32);
+        expect(result?.width).toEqual(32);
         setPluginOptions(getPluginOptionsDefaults());
       });
 
@@ -489,7 +516,7 @@ describe("gatsby-plugin-sharp", () => {
           args: { base64Width: 42 },
         });
 
-        expect(result.width).toEqual(42);
+        expect(result?.width).toEqual(42);
         setPluginOptions(getPluginOptionsDefaults());
       });
     });
@@ -501,7 +528,7 @@ describe("gatsby-plugin-sharp", () => {
           args: { toFormatBase64: "webp" },
         });
 
-        expect(result.src).toEqual(
+        expect(result?.src).toEqual(
           expect.stringMatching(/^data:image\/webp;base64/),
         );
       });
@@ -513,7 +540,7 @@ describe("gatsby-plugin-sharp", () => {
           args,
         });
 
-        expect(result.src).toEqual(
+        expect(result?.src).toEqual(
           expect.stringMatching(/^data:image\/webp;base64/),
         );
         setPluginOptions(getPluginOptionsDefaults());
@@ -526,7 +553,7 @@ describe("gatsby-plugin-sharp", () => {
           args: { toFormatBase64: "webp" },
         });
 
-        expect(result.src).toEqual(
+        expect(result?.src).toEqual(
           expect.stringMatching(/^data:image\/webp;base64/),
         );
         setPluginOptions(getPluginOptionsDefaults());
@@ -568,11 +595,10 @@ describe("gatsby-plugin-sharp", () => {
           "wide-aspect-ratio",
           "1000x10",
         ),
-        args,
       });
 
-      expect(result.width).toEqual(20);
-      expect(result.height).toEqual(1);
+      expect(result?.width).toEqual(20);
+      expect(result?.height).toEqual(1);
     });
   });
 
@@ -584,19 +610,19 @@ describe("gatsby-plugin-sharp", () => {
         tracedSVG: { color: "#FF0000" },
       };
 
-      let result = await fixed({
+      const result = await fixed({
         file,
         args,
       });
 
       expect(result.tracedSVG).toBeUndefined();
 
-      result = await fluid({
+      const r = await fluid({
         file,
         args,
       });
 
-      expect(result.tracedSVG).toBeUndefined();
+      expect(r?.tracedSVG).toBeUndefined();
     });
 
     it("runs on demand (and falls back to blurred)", async () => {
@@ -608,30 +634,42 @@ describe("gatsby-plugin-sharp", () => {
         base64: false,
       };
 
-      const { tracedSVG: fixedTracedSVG, ...fixedSvg } = await fixed({
+      const r = await fixed({
         file,
         args,
       });
+
+      const { tracedSVG: fixedTracedSVG, ...fixedSvg } = r;
 
       expect(fixedSvg).toMatchSnapshot("fixed");
 
       expect(fixedTracedSVG).toMatch("data:image/png;base64");
       expect(fixedTracedSVG).not.toMatch("data:image/svg+xml");
 
-      const fixedRawPixelData = await decodeBase64PngAsRaw(fixedTracedSVG);
+      const fixedRawPixelData = await decodeBase64PngAsRaw(
+        fixedTracedSVG ?? "",
+      );
       expect(fixedRawPixelData.toString("hex")).toMatchSnapshot();
 
-      const { tracedSVG: fluidTracedSVG, ...fluidSvg } = await fluid({
+      const r2 = await fluid({
         file,
         args,
       });
+
+      if (!r2) {
+        throw new Error("fluid failed");
+      }
+
+      const { tracedSVG: fluidTracedSVG, ...fluidSvg } = r;
 
       expect(fluidSvg).toMatchSnapshot("fluid");
 
       expect(fluidTracedSVG).toMatch("data:image/png;base64");
       expect(fluidTracedSVG).not.toMatch("data:image/svg+xml");
 
-      const fluidRawPixelData = await decodeBase64PngAsRaw(fluidTracedSVG);
+      const fluidRawPixelData = await decodeBase64PngAsRaw(
+        fluidTracedSVG ?? "",
+      );
       expect(fluidRawPixelData.toString("hex")).toMatchSnapshot();
     });
   });
@@ -648,12 +686,19 @@ describe("gatsby-plugin-sharp", () => {
 
       expect(result).toMatchSnapshot();
 
-      const rawPixelData = await decodeBase64PngAsRaw(base64);
+      const rawPixelData = await decodeBase64PngAsRaw(base64 ?? "");
       expect(rawPixelData.toString("hex")).toMatchSnapshot();
     });
 
     it("fluid", async () => {
-      const { base64, ...result } = await fluid({ file, args });
+      const r = await fluid({ file, args });
+
+      if (!r) {
+        throw new Error("fluid failed");
+      }
+
+      const { base64, ...result } = r;
+
       expect(result).toMatchSnapshot();
 
       const rawPixelData = await decodeBase64PngAsRaw(base64);
@@ -679,27 +724,31 @@ describe("gatsby-plugin-sharp", () => {
         },
       });
 
-      expect(firstImage.src).not.toEqual(secondImage.src);
+      expect(firstImage?.src).not.toEqual(secondImage?.src);
     });
   });
 
   describe("stats", () => {
     it("determines if the image is transparent, based on the presence and use of alpha channel", async () => {
-      const result = await stats({ file, args });
+      const result = await stats({ file });
       expect(result).toMatchSnapshot();
-      expect(result.isTransparent).toEqual(false);
+      expect(result?.isTransparent).toEqual(false);
 
       const alphaResult = await stats({
         file: getFileObject(path.join(__dirname, "images/alphatest.png")),
-        args,
+        // args,
       });
       expect(alphaResult).toMatchSnapshot();
-      expect(alphaResult.isTransparent).toEqual(true);
+      expect(alphaResult?.isTransparent).toEqual(true);
     });
   });
 });
 
-function getFileObject(absolutePath, name = "test", contentDigest = "1234") {
+function getFileObject(
+  absolutePath,
+  name = "test",
+  contentDigest = "1234",
+): FileNode {
   const parsedPath = path.parse(absolutePath);
   return {
     id: `${absolutePath} absPath of file`,
@@ -707,7 +756,11 @@ function getFileObject(absolutePath, name = "test", contentDigest = "1234") {
     base: parsedPath.base,
     absolutePath,
     extension: "png",
+    parent: null,
+    children: [],
     internal: {
+      type: "File",
+      owner: "gatsby-plugin-sharp",
       contentDigest,
     },
   };

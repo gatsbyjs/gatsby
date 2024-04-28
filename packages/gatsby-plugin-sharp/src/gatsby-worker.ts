@@ -1,9 +1,9 @@
-const path = require("path");
-const queue = require("async/queue");
-const { cpuCoreCount } = require("gatsby-core-utils/cpu-core-count");
-const { processFile } = require("./process-file");
+import path from "node:path";
+import queue from "async/queue";
+import { cpuCoreCount } from "gatsby-core-utils/cpu-core-count";
+import { processFile } from "./process-file";
 
-exports.IMAGE_PROCESSING_JOB_NAME = "IMAGE_PROCESSING";
+export const IMAGE_PROCESSING_JOB_NAME = "IMAGE_PROCESSING";
 
 /** @typedef {import('./process-file').TransformArgs} TransformArgs */
 
@@ -38,18 +38,30 @@ const q = queue(
  * @param {{inputPaths: string[], outputDir: string, args: WorkerInput}} args
  * @return Promise
  */
-exports.IMAGE_PROCESSING = ({ inputPaths, outputDir, args }) => {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function IMAGE_PROCESSING({
+  inputPaths,
+  outputDir,
+  args,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  inputPaths: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  outputDir: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  args: any;
+}): Promise<void> {
   if (args.isLazy) {
     return Promise.resolve();
   }
 
   return new Promise((resolve, reject) => {
-    q.push({ inputPaths, outputDir, args }, function (err) {
+    q.push({ inputPaths, outputDir, args }, (err) => {
       if (err) {
         return reject(err);
       }
 
-      return resolve();
+      return resolve(undefined);
     });
   });
-};
+}

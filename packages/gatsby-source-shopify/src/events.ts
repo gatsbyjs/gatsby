@@ -1,6 +1,6 @@
 import { createRestClient } from "./clients";
 
-type IEvent = {
+export type IEvent = {
   subject_id: number;
   subject_type: string;
 };

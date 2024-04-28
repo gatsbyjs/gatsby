@@ -1,21 +1,23 @@
 const DOCLET_PATTERN = /^@(\w+)(?:$|\s((?:[^](?!^@\w))*))/gim;
 
-const cleanDocletValue = (str) => {
+function cleanDocletValue(str) {
   str = str.trim();
   if (str.endsWith("}") && str.startsWith("{")) str = str.slice(1, -1);
   return str;
-};
+}
 
-const isLiteral = (str) => /^('|"|true|false|\d+)/.test(str.trim());
+function isLiteral(str) {
+  return /^('|"|true|false|\d+)/.test(str.trim());
+}
 
 /**
  * Remove doclets from string
  */
-export const cleanDoclets = (desc) => {
+export function cleanDoclets(desc) {
   desc = desc || "";
   const idx = desc.search(DOCLET_PATTERN);
   return (idx === -1 ? desc : desc.slice(0, idx)).trim();
-};
+}
 
 /**
  * Given a string, this function returns an object with doclet names as keys
@@ -24,7 +26,7 @@ export const cleanDoclets = (desc) => {
  * Adapted from https://github.com/reactjs/react-docgen/blob/ee8a5359c478b33a6954f4546637312764798d6b/src/utils/docblock.js#L62
  * Updated to strip \r from the end of doclets
  */
-const getDoclets = (str) => {
+function getDoclets(str) {
   const doclets = [];
   let match = DOCLET_PATTERN.exec(str);
   let val;
@@ -35,17 +37,17 @@ const getDoclets = (str) => {
     doclets.push({ tag: key, value: val });
   }
   return doclets;
-};
+}
 
 /**
  * parse out description doclets to an object and remove the comment
  *
  * @param  {ComponentMetadata|PropMetadata} obj
  */
-export const parseDoclets = (obj) => {
+export function parseDoclets(obj) {
   const desc = obj.description || "";
   return getDoclets(desc) || Object.create(null);
-};
+}
 
 function parseType(type) {
   if (!type) {
@@ -84,7 +86,7 @@ function parseType(type) {
  * @param  {Object} props     Object Hash of the prop metadata
  * @param  {String} propName
  */
-export const applyPropDoclets = (prop) => {
+export function applyPropDoclets(prop) {
   prop.doclets.forEach(({ tag, value }) => {
     // the @type doclet to provide a prop type
     // Also allows enums (oneOf) if string literals are provided
@@ -105,9 +107,9 @@ export const applyPropDoclets = (prop) => {
           .map((v) => v.trim());
         const name = value.every(isLiteral) ? "enum" : "union";
         prop.type.name = name;
-        prop.type.value = value.map((value) =>
-          name === "enum" ? { value, computed: false } : { name: value },
-        );
+        prop.type.value = value.map((value) => {
+          return name === "enum" ? { value, computed: false } : { name: value };
+        });
       }
       return;
     }
@@ -132,4 +134,4 @@ export const applyPropDoclets = (prop) => {
   }
 
   return prop;
-};
+}

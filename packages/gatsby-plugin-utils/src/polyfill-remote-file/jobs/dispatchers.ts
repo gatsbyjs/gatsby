@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import { getGatsbyVersion } from "../utils/get-gatsby-version";
 import { generateFileUrl, generateImageUrl } from "../utils/url-generator";
 import type { Actions, Store } from "gatsby";

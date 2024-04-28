@@ -6,7 +6,10 @@ export class SharpError extends Error {
    * @param {string} message
    * @param {Error} err
    */
-  constructor(message, err = null) {
+  constructor(
+    message: string,
+    err: (Error & { shortMessage: string | undefined }) | null = null,
+  ) {
     let fullErrorMessage = message;
 
     if (err) {

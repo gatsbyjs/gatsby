@@ -1,5 +1,5 @@
 import groupBy from "lodash/groupBy";
-import path from "path";
+import path from "node:path";
 import gatsbyNode from "../gatsby-node";
 
 describe("gatsby-transformer-documentationjs: onCreateNode", () => {

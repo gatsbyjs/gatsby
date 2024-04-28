@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import {
   appendFileSync,
   readFileSync,
@@ -6,7 +6,7 @@ import {
   readdirSync,
   existsSync,
   unlinkSync,
-} from "fs";
+} from "node:fs";
 
 export class Store {
   bufferFilePath: string;

@@ -1,12 +1,13 @@
-import fs from "fs"
-import path from "path"
+import fs from "node:fs"
+import path from "node:path"
 
-import { NodePluginArgs } from "gatsby"
+import type { SourceNodesArgs } from "gatsby"
 import { createContentDigest } from "gatsby-core-utils"
 
 import ids from "./ids.json"
+import type { IEvent } from "../../src/events"
 
-export function mockGatsbyApi(): NodePluginArgs {
+export function mockGatsbyApi(): SourceNodesArgs {
   return {
     actions: {
       createTypes: jest.fn(),
@@ -39,10 +40,10 @@ export function mockGatsbyApi(): NodePluginArgs {
     getNodesByType: jest.fn((type: string) =>
       require(`../fixtures/shopify-nodes/${type}.json`)
     ),
-  } as unknown as NodePluginArgs
+  } as unknown as SourceNodesArgs
 }
 
-export function mockPluginOptions() {
+export function mockPluginOptions(): IShopifyPluginOptions {
   return {
     password: `test-password`,
     storeUrl: `test.myshopify.com`,
@@ -51,7 +52,7 @@ export function mockPluginOptions() {
     typePrefix: ``,
     salesChannel: ``,
     prioritize: undefined,
-  }
+  } as unknown as IShopifyPluginOptions
 }
 
 export function mockExecute() {
@@ -150,7 +151,7 @@ export function makeMockEnvironment(): (
   }
 }
 
-export function mockBulkResults(type: string): ReadableStream {
+export function mockBulkResults(type: string): fs.ReadStream {
   return fs.createReadStream(
     path.join(__dirname, `../fixtures/bulk-results/${type}.jsonl`)
   )

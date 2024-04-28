@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { isWebUri } from "valid-url";
 import { GatsbyImage } from "gatsby-plugin-image";
 import React from "react";
@@ -7,7 +6,7 @@ import stringify from "fast-json-stable-stringify";
 import execall from "execall";
 import cheerio from "cheerio";
 import url from "url";
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensions";
 import replaceAll from "replaceall";
@@ -430,6 +429,7 @@ const cacheCreatedFileNodeBySrc = ({ node, src }) => {
 };
 
 const imgSrcRemoteFileRegex =
+  // eslint-disable-next-line no-useless-escape
   /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.|\/)(?:[^'"])*\.(?:jpeg|jpg|png|gif|ico|mpg|ogv|svg|bmp|tif|tiff))(\?[^\\" \.]*|)(?=\\"| |\.)/gim;
 
 export const getImgSrcRemoteFileMatchesFromNodeString = (nodeString) =>
@@ -444,11 +444,14 @@ export const getImgSrcRemoteFileMatchesFromNodeString = (nodeString) =>
 
 export const getImgTagMatches = ({ nodeString }) =>
   execall(
+    // eslint-disable-next-line no-useless-escape
     /<img([\w\W]+?)[\/]?>/gim,
     nodeString
       // we don't want to match images inside pre
+      // eslint-disable-next-line no-useless-escape
       .replace(/<pre([\w\W]+?)[\/]?>(?:(?!<\/pre>).)+(<\/pre>)/gim, "")
       // and code tags, so temporarily remove those tags and everything inside them
+      // eslint-disable-next-line no-useless-escape
       .replace(/<code([\w\W]+?)[\/]?>(?:(?!<\/code>).)+(<\/code>)/gim, ""),
   );
 
@@ -752,6 +755,7 @@ const replaceFileLinks = async ({
     // match full urls in json fields, for ex https://example.com/wp-content/uploads/2019/01/image.jpg
     ...(execall(
       new RegExp(
+        // eslint-disable-next-line no-useless-escape
         `(\\"|\\'|\\()([^'"()]*)(${wpUrl}\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\\))`,
         "gm",
       ),

@@ -1654,7 +1654,7 @@ function createServerVisitedPage(
 // eslint-disable-next-line @typescript-eslint/naming-convention
 function unstable_createNodeManifest(
   { manifestId, node, updatedAtUTC },
-  plugin: IPlugin,
+  plugin?: IPlugin | undefined,
 ): {
   type: string;
   payload: {
@@ -1670,7 +1670,7 @@ function unstable_createNodeManifest(
     payload: {
       manifestId,
       node,
-      pluginName: plugin.name,
+      pluginName: plugin?.name ?? "",
       updatedAtUTC,
     },
   };

@@ -1,28 +1,34 @@
-const sharp = require("./safe-sharp");
-const { generateImageData } = require("./image-data");
-const imageSize = require("probe-image-size");
-const { isCI } = require("gatsby-core-utils/ci");
+import "@total-typescript/ts-reset";
+import sharp, { type FormatEnum } from "sharp";
+import { generateImageData, type FileNode } from "./image-data";
+import imageSize from "probe-image-size";
+import { isCI } from "gatsby-core-utils/ci";
 
-const _ = require("lodash");
-const fs = require("fs-extra");
-const path = require("path");
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash";
+import fs from "fs-extra";
+import path from "node:path";
 
-const { createArgsDigest } = require("./process-file");
-const { reportError } = require("./report-error");
-const {
+import { createArgsDigest } from "./process-file";
+import { reportError } from "./report-error";
+import {
   getPluginOptions,
   healOptions,
   createTransformObject,
   removeDefaultValues,
-} = require("./plugin-options");
-const duotone = require("./duotone");
-const { IMAGE_PROCESSING_JOB_NAME } = require("./gatsby-worker");
-const { getDimensionsAndAspectRatio } = require("./utils");
-const { getDominantColor } = require("./utils");
+  type ITransformArgs,
+  type ISharpPluginOptions,
+} from "./plugin-options";
+import { duotone } from "./duotone";
+import { IMAGE_PROCESSING_JOB_NAME } from "./gatsby-worker";
+import { getDimensionsAndAspectRatio, getDominantColor } from "./utils";
+import type { Actions, GatsbyCache, Reporter } from "gatsby";
 
-const imageSizeCache = new Map();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const imageSizeCache = new Map<string, any>();
 
-const getImageSizeAsync = async (file) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function getImageSizeAsync(file: FileNode): Promise<any> {
   if (
     process.env.NODE_ENV !== "test" &&
     imageSizeCache.has(file.internal.contentDigest)
@@ -35,15 +41,15 @@ const getImageSizeAsync = async (file) => {
   if (!dimensions) {
     reportError(
       `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
-      "",
     );
   }
 
   imageSizeCache.set(file.internal.contentDigest, dimensions);
   return dimensions;
-};
+}
 // Remove in next major as it's really slow
-const getImageSize = (file) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getImageSize(file: FileNode): any {
   if (
     process.env.NODE_ENV !== "test" &&
     imageSizeCache.has(file.internal.contentDigest)
@@ -55,33 +61,52 @@ const getImageSize = (file) => {
     if (!dimensions) {
       reportError(
         `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
-        "",
       );
     }
 
     imageSizeCache.set(file.internal.contentDigest, dimensions);
     return dimensions;
   }
-};
+}
 
 // Actions should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let actions;
-exports.setActions = (_actions) => {
+let actions: Actions;
+
+export function setActions(_actions: Actions): void {
   actions = _actions;
-};
+}
 
-exports.generateImageData = generateImageData;
-
-function calculateImageDimensionsAndAspectRatio(file, options) {
+function calculateImageDimensionsAndAspectRatio(
+  file: FileNode,
+  options: Partial<ITransformArgs>,
+): {
+  width?: number | undefined;
+  height?: number | undefined;
+  aspectRatio: number;
+} {
   const dimensions = getImageSize(file);
   return getDimensionsAndAspectRatio(dimensions, options);
 }
 
-function prepareQueue({ file, args }) {
+function prepareQueue({
+  file,
+  args,
+}: {
+  file: FileNode;
+  args: Partial<ITransformArgs>;
+}): {
+  src: string;
+  outputDir: string;
+  relativePath: string;
+  width?: number | undefined;
+  height?: number | undefined;
+  aspectRatio: number;
+  options: Partial<ITransformArgs>;
+} {
   const { pathPrefix, duotone, ...rest } = args;
   // Duotone is a nested object inside transformOptions and has a [Object: Null Prototype]
   // So it's flattened into a new object so that createArgsDigest also takes duotone into account
@@ -125,9 +150,24 @@ function prepareQueue({ file, args }) {
   };
 }
 
-function createJob(job, { reporter }) {
+function createJob(
+  job: {
+    name: string;
+    inputPaths: Array<string>;
+    outputDir: string;
+    args: {
+      isLazy: boolean | "" | undefined;
+      pluginOptions: ISharpPluginOptions;
+      operations: Array<{
+        outputPath: string;
+        args: Partial<ITransformArgs>;
+      }>;
+    };
+  },
+  { reporter }: { reporter?: Reporter | undefined },
+): Promise<void> {
   if (!actions) {
-    reporter.panic(
+    reporter?.panic(
       "Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.",
     );
   }
@@ -139,14 +179,15 @@ function createJob(job, { reporter }) {
   // in resolve / reject handlers). If we would use async/await
   // entire closure would keep duplicate job in memory until
   // initial job finish.
+  // @ts-ignore Property 'catch' does not exist on type '(dispatch: any, getState: any) => Promise<Record<string, unknown>>'.ts(2339)
   const promise = actions.createJobV2(job).catch((err) => {
-    reporter.panic("error converting image", err);
+    reporter?.panic("error converting image", err);
   });
 
   return promise;
 }
 
-function lazyJobsEnabled() {
+function lazyJobsEnabled(): boolean | "" | undefined {
   return (
     process.env.gatsby_executing_command === "develop" &&
     (!isCI() || process.env.GATSBY_ENABLE_LAZY_IMAGES_IN_CI) &&
@@ -157,7 +198,23 @@ function lazyJobsEnabled() {
   );
 }
 
-function queueImageResizing({ file, args = {}, reporter }) {
+export function queueImageResizing({
+  file,
+  args = {},
+  reporter,
+}: {
+  file: FileNode;
+  args?: ITransformArgs | undefined;
+  reporter?: Reporter | undefined;
+}): {
+  src: string;
+  absolutePath: string;
+  width: number | undefined;
+  height: number | undefined;
+  aspectRatio: number;
+  finishedPromise: Promise<void> | null;
+  originalName: string;
+} {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension);
   const { src, width, height, aspectRatio, relativePath, outputDir, options } =
     prepareQueue({ file, args: createTransformObject(fullOptions) });
@@ -193,9 +250,38 @@ function queueImageResizing({ file, args = {}, reporter }) {
   };
 }
 
-function batchQueueImageResizing({ file, transforms = [], reporter }) {
-  const operations = [];
-  const images = [];
+export const resize = queueImageResizing;
+
+export function batchQueueImageResizing({
+  file,
+  transforms = [],
+  reporter,
+}: {
+  file: FileNode;
+  transforms?: Array<Partial<ITransformArgs>> | undefined;
+  reporter?: Reporter | undefined;
+}): Array<{
+  src: string;
+  absolutePath: string;
+  width?: number | undefined;
+  height?: number | undefined;
+  aspectRatio: number;
+  originalName: string;
+  finishedPromise: Promise<void> | null;
+}> {
+  const operations: Array<{
+    outputPath: string;
+    args: Partial<ITransformArgs>;
+  }> = [];
+  const images: Array<{
+    src: string;
+    absolutePath: string;
+    width?: number | undefined;
+    height?: number | undefined;
+    aspectRatio: number;
+    originalName: string;
+    finishedPromise: Promise<void> | null;
+  }> = [];
 
   // loop through all transforms to set correct variables
   transforms.forEach((transform) => {
@@ -252,7 +338,22 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
   });
 }
 
-async function generateBase64({ file, args = {}, reporter }) {
+export async function generateBase64({
+  file,
+  args = {},
+  reporter,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  file: any;
+  args?: ITransformArgs | undefined;
+  reporter?: Reporter | undefined;
+}): Promise<{
+  src: string;
+  width: number;
+  height: number;
+  aspectRatio: number;
+  originalName: string;
+} | null> {
   const pluginOptions = getPluginOptions();
   const options = healOptions(pluginOptions, args, file.extension, {
     // Should already be set to base64Width by `fluid()`/`fixed()` methods
@@ -276,7 +377,7 @@ async function generateBase64({ file, args = {}, reporter }) {
     pipeline = pipeline.trim(options.trim);
   }
 
-  const changedBase64Format =
+  const changedBase64Format: "" | keyof FormatEnum | undefined =
     options.toFormatBase64 || pluginOptions.forceBase64Format;
   if (changedBase64Format) {
     options.toFormat = changedBase64Format;
@@ -317,16 +418,22 @@ async function generateBase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    if (options.duotone.highlight && options.duotone.shadow) {
+    if (
+      options.duotone.highlight &&
+      options.duotone.shadow &&
+      options.toFormat
+    ) {
       pipeline = await duotone(options.duotone, options.toFormat, pipeline);
     } else {
-      reporter.warn(
+      reporter?.warn(
         `Invalid duotone option specified for ${file.absolutePath}, ignoring. Please pass an object to duotone with the keys "highlight" and "shadow" set to the corresponding hex values you want to use.`,
       );
     }
   }
-  let buffer;
-  let info;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let buffer: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let info: any;
   try {
     const result = await pipeline.toBuffer({
       resolveWithObject: true,
@@ -353,26 +460,62 @@ It is probably corrupt, so please try replacing it.  If it still fails, please o
   return base64output;
 }
 
-const generateCacheKey = ({ file, args }) =>
-  `${file.internal.contentDigest}${JSON.stringify(args)}`;
+function generateCacheKey({
+  file,
+  args,
+}: {
+  file: FileNode;
+  args?: ITransformArgs | undefined;
+}): string {
+  return `${file.internal.contentDigest}${JSON.stringify(args)}`;
+}
 
 const memoizedBase64 = _.memoize(generateBase64, generateCacheKey);
 
-const cachifiedProcess = async ({ cache, ...arg }, genKey, processFn) => {
+async function cachifiedProcess(
+  {
+    cache,
+    ...arg
+  }: {
+    file: FileNode;
+    cache?: GatsbyCache | undefined;
+    args?: ITransformArgs | undefined;
+    reporter?: Reporter | undefined;
+  },
+  genKey: ({
+    file,
+    args,
+  }: {
+    file: FileNode;
+    args?: ITransformArgs | undefined;
+  }) => string,
+  processFn,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> {
   const cachedKey = genKey(arg);
-  const cached = await cache.get(cachedKey);
+  const cached = await cache?.get(cachedKey);
 
   if (cached) {
     return cached;
   }
 
   const result = await processFn(arg);
-  await cache.set(cachedKey, result);
+  await cache?.set(cachedKey, result);
 
   return result;
-};
+}
 
-async function base64(arg) {
+export async function base64(arg: {
+  file: FileNode;
+  cache?: GatsbyCache | undefined;
+  reporter?: Reporter | undefined;
+}): Promise<{
+  src: string;
+  width: number;
+  height: number;
+  aspectRatio: number;
+  originalName: string;
+} | null> {
   if (arg.cache) {
     // Not all transformer plugins are going to provide cache
     return await cachifiedProcess(arg, generateCacheKey, generateBase64);
@@ -382,23 +525,39 @@ async function base64(arg) {
 }
 
 let didShowTraceSVGRemovalWarning = false;
-async function traceSVG(args) {
+
+export async function traceSVG(args: {
+  file: FileNode;
+  cache: GatsbyCache;
+  reporter: Reporter;
+}): Promise<string | undefined> {
   if (!didShowTraceSVGRemovalWarning) {
     console.warn(
       "traceSVG placeholder generation is no longer supported, falling back to blurred. See https://gatsby.dev/tracesvg-removal/",
     );
+
     didShowTraceSVGRemovalWarning = true;
   }
 
-  const { src } = await base64(args);
-  return src;
+  const a = await base64(args);
+  return a?.src;
 }
 
-async function stats({ file, reporter }) {
+export async function stats({
+  file,
+  reporter,
+}: {
+  file: FileNode;
+  reporter?: Reporter | undefined;
+}): Promise<{
+  isTransparent: boolean;
+} | null> {
   const pluginOptions = getPluginOptions();
-  let imgStats;
+  let imgStats: sharp.Stats;
+
   try {
     const pipeline = sharp({ failOn: pluginOptions.failOn });
+
     fs.createReadStream(file.absolutePath).pipe(pipeline);
 
     imgStats = await pipeline.stats();
@@ -417,11 +576,36 @@ async function stats({ file, reporter }) {
 }
 
 let didShowTraceSVGRemovalWarningFluid = false;
-async function fluid({ file, args = {}, reporter, cache }) {
+
+export async function fluid({
+  file,
+  args = {},
+  reporter,
+  cache,
+}: {
+  file: FileNode;
+  args?: ITransformArgs | undefined;
+  reporter?: Reporter | undefined;
+  cache?: GatsbyCache | undefined;
+}): Promise<{
+  base64: string;
+  aspectRatio: number;
+  src?: string | undefined;
+  srcSet: string;
+  srcSetType: string;
+  sizes: string;
+  originalImg?: string | undefined;
+  originalName: string;
+  density?: number | undefined;
+  presentationWidth?: number | undefined;
+  presentationHeight?: number | undefined;
+  tracedSVG?: boolean | undefined;
+} | null> {
   const pluginOptions = getPluginOptions();
   const options = healOptions(pluginOptions, args, file.extension);
 
-  let metadata;
+  let metadata: sharp.Metadata;
+
   try {
     const pipeline = sharp({ failOn: pluginOptions.failOn });
     fs.createReadStream(file.absolutePath).pipe(pipeline);
@@ -442,13 +626,13 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const fixedDimension =
     options.maxWidth === undefined ? "maxHeight" : "maxWidth";
   const maxWidth = options.maxWidth
-    ? Math.min(options.maxWidth, width)
+    ? Math.min(options.maxWidth, width ?? 0)
     : undefined;
   const maxHeight = options.maxHeight
-    ? Math.min(options.maxHeight, height)
+    ? Math.min(options.maxHeight, height ?? 0)
     : undefined;
 
-  if (options[fixedDimension] < 1) {
+  if ((options?.[fixedDimension] ?? 0) < 1) {
     throw new Error(
       `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`,
     );
@@ -467,10 +651,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
   ];
   // use standard breakpoints if no custom breakpoints are specified
   if (!options.srcSetBreakpoints || !options.srcSetBreakpoints.length) {
-    fluidSizes.push(options[fixedDimension] / 4);
-    fluidSizes.push(options[fixedDimension] / 2);
-    fluidSizes.push(options[fixedDimension] * 1.5);
-    fluidSizes.push(options[fixedDimension] * 2);
+    fluidSizes.push((options?.[fixedDimension] || 0) / 4);
+    fluidSizes.push((options?.[fixedDimension] || 0) / 2);
+    fluidSizes.push((options?.[fixedDimension] || 0) * 1.5);
+    fluidSizes.push((options?.[fixedDimension] || 0) * 2);
   } else {
     options.srcSetBreakpoints.forEach((breakpoint) => {
       if (breakpoint < 1) {
@@ -486,14 +670,15 @@ async function fluid({ file, args = {}, reporter, cache }) {
     });
   }
   let filteredSizes = fluidSizes.filter(
-    (size) => size < (fixedDimension === "maxWidth" ? width : height),
+    (size) =>
+      (size ?? 0) < (fixedDimension === "maxWidth" ? width ?? 0 : height ?? 0),
   );
 
   // Add the original image to ensure the largest image possible
   // is available for small images. Also so we can link to
   // the original image.
   filteredSizes.push(fixedDimension === "maxWidth" ? width : height);
-  filteredSizes = _.sortBy(filteredSizes);
+  filteredSizes = _.sortBy(filteredSizes.filter(Boolean));
 
   // Queue sizes for processing.
   const dimensionAttr = fixedDimension === "maxWidth" ? "width" : "height";
@@ -509,7 +694,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     if (arrrgs[otherDimensionAttr]) {
       arrrgs[otherDimensionAttr] = undefined;
     }
-    arrrgs[dimensionAttr] = Math.round(size);
+    arrrgs[dimensionAttr] = Math.round(size ?? 0);
 
     // we need pathPrefix to calculate the correct outputPath
     if (options.pathPrefix) {
@@ -518,10 +703,12 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
     if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
       if (options.fit === sharp.fit.inside) {
-        arrrgs.height = Math.round(size * (maxHeight / maxWidth));
+        arrrgs.height = Math.round(
+          (size ?? 0) * ((maxHeight ?? 0) / (maxWidth ?? 1)),
+        );
       } else {
         arrrgs.height = Math.round(
-          size * (options.maxHeight / options.maxWidth),
+          (size ?? 0) * (options.maxHeight / options.maxWidth),
         );
       }
     }
@@ -545,37 +732,50 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   let base64Image;
+
   if (options.base64 || (options.generateTracedSVG && options.tracedSVG)) {
-    const base64Width = options.base64Width;
-    const base64Height = Math.max(
-      1,
-      Math.round(base64Width / images[0].aspectRatio),
-    );
-    const base64Args = {
-      background: options.background,
-      duotone: options.duotone,
-      grayscale: options.grayscale,
-      rotate: options.rotate,
-      trim: options.trim,
-      toFormat: options.toFormat,
-      toFormatBase64: options.toFormatBase64,
-      cropFocus: options.cropFocus,
-      fit: options.fit,
-      width: base64Width,
-      height: base64Height,
-    };
+    // const base64Width = options.base64Width;
+    // const base64Height = Math.max(
+    //   1,
+    //   Math.round((base64Width ?? 0) / images[0].aspectRatio),
+    // );
+    // const base64Args = {
+    //   background: options.background,
+    //   duotone: options.duotone,
+    //   grayscale: options.grayscale,
+    //   rotate: options.rotate,
+    //   trim: options.trim,
+    //   toFormat: options.toFormat,
+    //   toFormatBase64: options.toFormatBase64,
+    //   cropFocus: options.cropFocus,
+    //   fit: options.fit,
+    //   width: base64Width,
+    //   height: base64Height,
+    // };
     // Get base64 version
-    base64Image = await base64({ file, args: base64Args, reporter, cache });
+    base64Image = await base64({
+      file,
+      // args: base64Args,
+      reporter,
+      cache,
+    });
   }
 
   // Construct src and srcSet strings.
-  const originalImg = _.maxBy(images, (image) => image.width).src;
-  const fallbackSrc = _.minBy(images, (image) =>
-    Math.abs(options[fixedDimension] - image[dimensionAttr]),
-  ).src;
+  const originalImg = _.maxBy(images, (image) => {
+    return image.width ?? 0;
+  })?.src;
+
+  const fallbackSrc = _.minBy(images, (image) => {
+    return Math.abs(
+      (options[fixedDimension] ?? 0) - (image[dimensionAttr] ?? 0),
+    );
+  })?.src;
 
   const srcSet = images
-    .map((image) => `${image.src} ${Math.round(image.width)}w`)
+    .map((image) => {
+      return `${image.src} ${Math.round(image.width ?? 0)}w`;
+    })
     .join(",\n");
   const originalName = file.base;
 
@@ -596,7 +796,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
       case "avif":
         srcSetType = "image/avif";
         break;
+      // @ts-ignore Type '""' is not comparable to type 'keyof FormatEnum'.ts(2678)
       case "":
+      // @ts-ignore Type '"no_change"' is not comparable to type 'keyof FormatEnum'.ts(2678)
+      // eslint-disable-next-line no-fallthrough
       case "no_change":
       default:
         break;
@@ -614,7 +817,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`;
 
   return {
-    base64: (options.base64 && base64Image && base64Image.src) || undefined,
+    base64: (options.base64 && base64Image && base64Image.src) ?? undefined,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
@@ -634,23 +837,45 @@ async function fluid({ file, args = {}, reporter, cache }) {
   };
 }
 
+export const sizes = fluid;
+
 let didShowTraceSVGRemovalWarningFixed = false;
-async function fixed({ file, args = {}, reporter, cache }) {
+
+export async function fixed({
+  file,
+  args = {},
+  reporter,
+  cache,
+}: {
+  file: FileNode;
+  args?: ITransformArgs | undefined;
+  reporter?: Reporter | undefined;
+  cache?: GatsbyCache | undefined;
+}): Promise<{
+  base64: string | undefined;
+  aspectRatio: number;
+  width: number | undefined;
+  height: number | undefined;
+  src: string;
+  srcSet: string;
+  originalName: string;
+  tracedSVG: string | undefined;
+}> {
   const options = healOptions(getPluginOptions(), args, file.extension);
 
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? "height" : "width";
 
   // Create sizes for different resolutions — we do 1x, 1.5x, and 2x.
-  const sizes = [];
-  sizes.push(options[fixedDimension]);
-  sizes.push(options[fixedDimension] * 1.5);
-  sizes.push(options[fixedDimension] * 2);
+  const sizes: Array<number> = [];
+  sizes.push(options[fixedDimension] ?? 0);
+  sizes.push((options[fixedDimension] ?? 0) * 1.5);
+  sizes.push((options[fixedDimension] ?? 0) * 2);
   const dimensions = await getImageSizeAsync(file);
 
-  const filteredSizes = sizes.filter(
-    (size) => size <= dimensions[fixedDimension],
-  );
+  const filteredSizes = sizes.filter((size) => {
+    return size <= dimensions[fixedDimension];
+  });
 
   // If there's no fluid images after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)
@@ -658,7 +883,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     filteredSizes.push(dimensions[fixedDimension]);
     console.warn(
       `
-                 The requested ${fixedDimension} "${options[fixedDimension]}px" for a resolutions field for
+                 The requested ${fixedDimension} "${options[fixedDimension] ?? 0}px" for a resolutions field for
                  the file ${file.absolutePath}
                  was larger than the actual image ${fixedDimension} of ${dimensions[fixedDimension]}px!
                  If possible, replace the current image with a larger one.
@@ -698,30 +923,40 @@ async function fixed({ file, args = {}, reporter, cache }) {
     }
   }
 
-  let base64Image;
+  let base64Image:
+    | {
+        src: string;
+        width: number;
+        height: number;
+        aspectRatio: number;
+        originalName: string;
+      }
+    | null
+    | undefined;
+
   if (options.base64 || (options.generateTracedSVG && options.tracedSVG)) {
-    const base64Width = options.base64Width;
-    const base64Height = Math.max(
-      1,
-      Math.round(base64Width / images[0].aspectRatio),
-    );
-    const base64Args = {
-      background: options.background,
-      duotone: options.duotone,
-      grayscale: options.grayscale,
-      rotate: options.rotate,
-      trim: options.trim,
-      toFormat: options.toFormat,
-      toFormatBase64: options.toFormatBase64,
-      cropFocus: options.cropFocus,
-      fit: options.fit,
-      width: base64Width,
-      height: base64Height,
-    };
+    // const base64Width = options.base64Width;
+    // const base64Height = Math.max(
+    //   1,
+    //   Math.round((base64Width ?? 0) / images[0].aspectRatio),
+    // );
+    // const base64Args = {
+    //   background: options.background,
+    //   duotone: options.duotone,
+    //   grayscale: options.grayscale,
+    //   rotate: options.rotate,
+    //   trim: options.trim,
+    //   toFormat: options.toFormat,
+    //   toFormatBase64: options.toFormatBase64,
+    //   cropFocus: options.cropFocus,
+    //   fit: options.fit,
+    //   width: base64Width,
+    //   height: base64Height,
+    // };
     // Get base64 version
     base64Image = await base64({
       file,
-      args: base64Args,
+      // args: base64Args,
       reporter,
       cache,
     });
@@ -766,19 +1001,11 @@ async function fixed({ file, args = {}, reporter, cache }) {
   };
 }
 
-exports.queueImageResizing = queueImageResizing;
-exports.batchQueueImageResizing = batchQueueImageResizing;
-exports.resize = queueImageResizing;
-exports.base64 = base64;
-exports.generateBase64 = generateBase64;
-exports.traceSVG = traceSVG;
-exports.sizes = fluid;
-exports.resolutions = fixed;
-exports.fluid = fluid;
-exports.fixed = fixed;
-exports.getImageSize = getImageSize;
-exports.getImageSizeAsync = getImageSizeAsync;
-exports.getDominantColor = getDominantColor;
-exports.stats = stats;
-exports._unstable_createJob = createJob;
-exports._lazyJobsEnabled = lazyJobsEnabled;
+export const resolutions = fixed;
+
+export { generateImageData, getDominantColor };
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const _unstable_createJob = createJob;
+
+export const _lazyJobsEnabled = lazyJobsEnabled;

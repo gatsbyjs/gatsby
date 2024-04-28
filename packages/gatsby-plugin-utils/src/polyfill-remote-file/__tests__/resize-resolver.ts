@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import path from "path";
+import path from "node:path";
 import { createContentDigest } from "gatsby-core-utils/create-content-digest";
 import { URL, URLSearchParams } from "url";
 import { resizeResolver } from "../index";

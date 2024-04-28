@@ -1,7 +1,7 @@
 jest.mock("gatsby/reporter");
-const { calculateImageSizes } = require("../utils");
-const reporter = require("gatsby/reporter");
-const sharp = require("sharp");
+import { calculateImageSizes } from "../utils";
+import reporter from "gatsby/reporter";
+import sharp from "sharp";
 
 const file = {
   absolutePath: "~/Usr/gatsby-sites/src/img/photo.png",
@@ -19,7 +19,15 @@ describe("calculateImageSizes (fixed)", () => {
       file,
       imgDimensions,
     };
-    const getSizes = () => calculateImageSizes(args);
+    function getSizes(): {
+      sizes: Array<number>;
+      aspectRatio: number;
+      presentationWidth: number;
+      presentationHeight: number;
+      unscaledWidth: number;
+    } | null {
+      return calculateImageSizes(args);
+    }
     expect(getSizes).toThrow();
   });
 
@@ -30,7 +38,15 @@ describe("calculateImageSizes (fixed)", () => {
       file,
       imgDimensions,
     };
-    const getSizes = () => calculateImageSizes(args);
+    function getSizes(): {
+      sizes: Array<number>;
+      aspectRatio: number;
+      presentationWidth: number;
+      presentationHeight: number;
+      unscaledWidth: number;
+    } | null {
+      return calculateImageSizes(args);
+    }
     expect(getSizes).toThrow();
   });
 
@@ -41,8 +57,8 @@ describe("calculateImageSizes (fixed)", () => {
       file,
       imgDimensions,
     };
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toContain(600);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toContain(600);
   });
 
   it("should return the original width of the image when only height is provided", () => {
@@ -52,8 +68,10 @@ describe("calculateImageSizes (fixed)", () => {
       file,
       imgDimensions,
     };
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toContain(500 * (imgDimensions.width / imgDimensions.height));
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toContain(
+      500 * (imgDimensions.width / imgDimensions.height),
+    );
   });
 
   it("should create images of different sizes based on pixel densities with a given width", () => {
@@ -63,8 +81,8 @@ describe("calculateImageSizes (fixed)", () => {
       file,
       imgDimensions,
     };
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toEqual([120, 240]);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toEqual([120, 240]);
   });
 
   it("should create images of different sizes based on pixel densities with a given height", () => {
@@ -74,8 +92,8 @@ describe("calculateImageSizes (fixed)", () => {
       file,
       imgDimensions,
     };
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toEqual([120, 240]);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toEqual([120, 240]);
   });
 });
 
@@ -87,7 +105,15 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       file,
       imgDimensions,
     };
-    const getSizes = () => calculateImageSizes(args);
+    function getSizes(): {
+      sizes: Array<number>;
+      aspectRatio: number;
+      presentationWidth: number;
+      presentationHeight: number;
+      unscaledWidth: number;
+    } | null {
+      return calculateImageSizes(args);
+    }
     expect(getSizes).toThrow();
   });
 
@@ -98,7 +124,15 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       file,
       imgDimensions,
     };
-    const getSizes = () => calculateImageSizes(args);
+    function getSizes(): {
+      sizes: Array<number>;
+      aspectRatio: number;
+      presentationWidth: number;
+      presentationHeight: number;
+      unscaledWidth: number;
+    } | null {
+      return calculateImageSizes(args);
+    }
     expect(getSizes).toThrow();
   });
 
@@ -110,8 +144,8 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       imgDimensions,
       reporter,
     };
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toContain(400);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toContain(400);
   });
 
   it("should include the original size of the image when height is passed", () => {
@@ -121,8 +155,8 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       file,
       imgDimensions,
     };
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toContain(450);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toContain(450);
   });
 
   it("should create images of different sizes (0.25x, 0.5x, 1x, 2x) from a width", () => {
@@ -132,8 +166,8 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       file,
       imgDimensions,
     };
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toEqual([80, 160, 320, 640]);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toEqual([80, 160, 320, 640]);
   });
 
   it("should create images of different sizes (0.25x, 0.5x, 1x) without any defined size provided", () => {
@@ -142,8 +176,8 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       file,
       imgDimensions,
     };
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toEqual([200, 400, 800]);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toEqual([200, 400, 800]);
   });
 
   it("should return sizes of provided breakpoints in fullWidth", () => {
@@ -158,8 +192,8 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       reporter,
     };
 
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toEqual([50, 70, 150, 250, 300]);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toEqual([50, 70, 150, 250, 300]);
   });
 
   it("should include provided width along with breakpoints in constrained", () => {
@@ -174,8 +208,8 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       reporter,
     };
 
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toEqual([50, 70, 150, 250, 300, 500]);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toEqual([50, 70, 150, 250, 300, 500]);
   });
 
   it("should reject any breakpoints larger than the original width", () => {
@@ -197,8 +231,8 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       reporter,
     };
 
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toEqual([50, 70, 150, 250, 1200]);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toEqual([50, 70, 150, 250, 1200]);
   });
 
   it("should add the original width instead of larger breakpoints", () => {
@@ -219,8 +253,8 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       reporter,
     };
 
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toEqual([50, 70, 150, 250, 1200]);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toEqual([50, 70, 150, 250, 1200]);
   });
 
   it("should ignore outputPixelDensities when breakpoints are passed in", () => {
@@ -236,8 +270,8 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       reporter,
     };
 
-    const { sizes } = calculateImageSizes(args);
-    expect(sizes).toEqual([400, 800]);
+    const s = calculateImageSizes(args);
+    expect(s?.sizes).toEqual([400, 800]);
   });
 
   it("should adjust fullWidth sizes according to fit type", () => {
@@ -301,7 +335,7 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       },
     ];
     testsCases.forEach(({ args, result }) => {
-      const { presentationWidth, presentationHeight } = calculateImageSizes({
+      const s = calculateImageSizes({
         ...args,
         file,
         outputPixelDensities,
@@ -309,7 +343,7 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
         imgDimensions,
         layout: "fullWidth",
       });
-      expect([presentationWidth, presentationHeight]).toEqual(result);
+      expect([s?.presentationWidth, s?.presentationHeight]).toEqual(result);
     });
   });
 
@@ -374,7 +408,7 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
       },
     ];
     testsCases.forEach(({ args, result }) => {
-      const { presentationWidth, presentationHeight } = calculateImageSizes({
+      const s = calculateImageSizes({
         ...args,
         file,
         outputPixelDensities,
@@ -382,7 +416,7 @@ describe("calculateImageSizes (fullWidth & constrained)", () => {
         imgDimensions,
         layout: "fixed",
       });
-      expect([presentationWidth, presentationHeight]).toEqual(result);
+      expect([s?.presentationWidth, s?.presentationHeight]).toEqual(result);
     });
   });
 });

@@ -1,5 +1,5 @@
 import * as docgen from "react-docgen";
-import path from "path";
+import path from "node:path";
 import displayNameHandler, {
   createDisplayNameHandler,
 } from "../displayname-handler";

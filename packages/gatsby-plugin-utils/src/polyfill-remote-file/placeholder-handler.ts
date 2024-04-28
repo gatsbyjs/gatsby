@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import { createReadStream, readFile, mkdtemp } from "fs-extra";
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file";
 import { createMutex } from "gatsby-core-utils/mutex";

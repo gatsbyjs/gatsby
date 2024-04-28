@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import sitemap from "sitemap";
 import { onPostBuild } from "../gatsby-node";
 import { Joi } from "gatsby-plugin-utils";

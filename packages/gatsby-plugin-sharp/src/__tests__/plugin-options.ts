@@ -48,23 +48,17 @@ describe("pluginOptionsSchema", () => {
       '"defaults.avifOptions" must be of type object',
     ];
 
-    const { isValid, errors } = await testPluginOptionsSchema(
-      pluginOptionsSchema,
-      options,
-    );
+    const r = await testPluginOptionsSchema(pluginOptionsSchema, options);
 
-    expect(isValid).toBe(false);
-    expect(errors).toEqual(expectedErrors);
+    expect(r?.isValid).toBe(false);
+    expect(r?.errors).toEqual(expectedErrors);
   });
 
   it("should accept correct options", async () => {
     const options = { defaults };
-    const { isValid, errors } = await testPluginOptionsSchema(
-      pluginOptionsSchema,
-      options,
-    );
-    expect(isValid).toBe(true);
-    expect(errors).toEqual([]);
+    const r = await testPluginOptionsSchema(pluginOptionsSchema, options);
+    expect(r?.isValid).toBe(true);
+    expect(r?.errors).toEqual([]);
   });
 });
 

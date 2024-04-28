@@ -1,6 +1,8 @@
+import type { PluginOptions } from "gatsby";
 import type { ISharpGatsbyImageArgs, Fit } from "gatsby-plugin-image";
 import { pickBy, defaults, mergeWith, omitBy, isNil, identity } from "lodash";
-import type { FailOnOptions, SharpOptions } from "sharp";
+import type sharp from "sharp";
+import type { FailOnOptions, FormatEnum, SharpOptions } from "sharp";
 
 export type PluginOptionsDefaults = Pick<
   ISharpGatsbyImageArgs,
@@ -19,26 +21,28 @@ export type PluginOptionsDefaults = Pick<
 
 export type ISharpPluginOptions = {
   base64Width?: number | undefined;
-  forceBase64Format?: "png" | "webp" | "jpg" | string | undefined;
+  forceBase64Format?: keyof sharp.FormatEnum | "" | undefined;
   useMozJpeg?: boolean | undefined;
   stripMetadata?: boolean | undefined;
   lazyImageGeneration?: boolean | undefined;
-  defaultQuality: number;
+  defaultQuality?: number | undefined;
   failOn?: SharpOptions["failOn"] | undefined;
   defaults?: PluginOptionsDefaults | undefined;
 };
 
-type IDuotoneArgs = {
+export type IDuotoneArgs = {
   highlight: string;
   shadow: string;
   opacity?: number | undefined;
 };
 
 export type ITransformArgs = {
-  height: number;
-  width: number;
+  srcSetBreakpoints?: Array<number> | undefined;
+  toFormatBase64?: keyof FormatEnum | undefined;
+  height?: number | undefined;
+  width?: number | undefined;
   cropFocus?: number | string | undefined;
-  toFormat: string;
+  toFormat?: keyof FormatEnum | "" | undefined;
   pngCompressionLevel?: number | undefined;
   quality?: number | undefined;
   jpegQuality?: number | undefined;
@@ -60,12 +64,16 @@ export type ITransformArgs = {
 type IGeneralArgs = {
   base64: boolean;
   pathPrefix: string;
-  toFormatBase64?: string | undefined;
+  toFormatBase64?: keyof sharp.FormatEnum | undefined;
   pngCompressionSpeed?: number | undefined;
+  srcSetBreakpoints?: Array<number> | undefined;
+  generateTracedSVG?: boolean | undefined;
+  tracedSVG?: boolean | undefined;
+  sizes?: string | undefined;
 } & ITransformArgs;
 
 // Plugin options are loaded onPreBootstrap in gatsby-node
-const pluginDefaults = {
+const pluginDefaults: ISharpPluginOptions = {
   base64Width: 20,
   forceBase64Format: "", // valid formats: png,jpg,webp
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === "MOZJPEG",
@@ -76,7 +84,7 @@ const pluginDefaults = {
 };
 
 const generalArgs: Partial<IGeneralArgs> = {
-  quality: 50,
+  quality: 100,
   jpegQuality: undefined,
   pngQuality: undefined,
   webpQuality: undefined,
@@ -88,31 +96,33 @@ const generalArgs: Partial<IGeneralArgs> = {
   grayscale: false,
   duotone: undefined,
   pathPrefix: "",
-  toFormat: "",
-  toFormatBase64: "",
+  toFormat: "png",
+  // toFormatBase64: "",
   rotate: 0,
 };
 
 let pluginOptions: ISharpPluginOptions = Object.assign({}, pluginDefaults);
-export const setPluginOptions = (
-  opts: Record<string, string>,
-): ISharpPluginOptions => {
+
+export function setPluginOptions(opts: PluginOptions): ISharpPluginOptions {
   pluginOptions = Object.assign({}, pluginOptions, opts);
   generalArgs.quality = pluginOptions.defaultQuality;
 
   return pluginOptions;
-};
+}
 
-export const getPluginOptions = (): ISharpPluginOptions => pluginOptions;
-export const getPluginOptionsDefaults = (): ISharpPluginOptions =>
-  pluginDefaults;
+export function getPluginOptions(): ISharpPluginOptions {
+  return pluginOptions;
+}
+export function getPluginOptionsDefaults(): ISharpPluginOptions {
+  return pluginDefaults;
+}
 
 /**
  * Creates a transform object
  */
-export const createTransformObject = (
+export function createTransformObject(
   args: ITransformArgs,
-): Partial<ITransformArgs> => {
+): Partial<ITransformArgs> {
   const options = {
     height: args.height,
     width: args.width,
@@ -135,7 +145,7 @@ export const createTransformObject = (
 
   // get all non falsey values
   return pickBy(options, identity);
-};
+}
 
 /**
  * Used for gatsbyImageData and StaticImage only
@@ -169,7 +179,7 @@ export function healOptions(
   fileExtension = "",
   defaultArgs = {},
 ): Partial<IGeneralArgs> & {
-  quality: number;
+  quality?: number | undefined;
 } & ITransformArgs {
   const options = defaults({}, args, { quality }, defaultArgs, generalArgs);
   // @ts-ignore Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
@@ -181,18 +191,22 @@ export function healOptions(
   // @ts-ignore Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
   // parseInt as safeguard, expects string tho
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10);
-  options.toFormat = options.toFormat.toLowerCase();
-  options.toFormatBase64 = options.toFormatBase64?.toLowerCase();
+  options.toFormat = options.toFormat?.toLowerCase() as
+    | keyof FormatEnum
+    | undefined;
+  options.toFormatBase64 = options.toFormatBase64?.toLowerCase() as
+    | keyof FormatEnum
+    | undefined;
   options.base64Width = options.base64Width || base64Width;
 
   // when toFormat is not set we set it based on fileExtension
-  if (options.toFormat === "") {
+  if (!options.toFormat) {
     if (!fileExtension) {
       throw new Error(
         "toFormat seems to be empty, we need a fileExtension to set it.",
       );
     }
-    options.toFormat = fileExtension.toLowerCase();
+    options.toFormat = fileExtension.toLowerCase() as keyof FormatEnum;
 
     if (fileExtension === "jpeg") {
       options.toFormat = "jpg";

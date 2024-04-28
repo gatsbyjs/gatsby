@@ -1005,8 +1005,11 @@ export interface GatsbySSR<
 }
 
 export interface PluginOptions {
-  plugins: unknown[];
-  [key: string]: unknown;
+  base64Width?: number | undefined;
+  plugins?: string[];
+  defaultQuality?: number | undefined;
+  defaults?: PluginOptionsDefaults | undefined;
+  forceBase64Format?: keyof sharp.FormatEnum | "" | undefined;
 }
 
 export type PluginCallback<R = any> = (
@@ -1397,7 +1400,10 @@ export interface BuildArgs extends ParentSpanPluginArgs {
 
 export interface Actions {
   /** @see https://www.gatsbyjs.com/docs/actions/#deletePage */
-  deletePage: (this: void, args: { path: string; component: string }) => void;
+  deletePage: (
+    this: void,
+    args: { path: string; component: string },
+  ) => { type: string; payload: IPageInput };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createPage */
   createPage: <TContext = Record<string, unknown>>(
@@ -1405,7 +1411,17 @@ export interface Actions {
     args: Page<TContext>,
     plugin?: ActionPlugin | undefined,
     option?: ActionOptions | undefined,
-  ) => void;
+  ) => Array<{
+    type: string;
+    contextModified: boolean;
+    componentModified: boolean;
+    slicesModified: boolean;
+    plugin: IPlugin;
+    payload: IGatsbyPage | IGatsbyNode;
+    traceId?: string | undefined;
+    parentSpan?: Span | SpanContext | undefined;
+    followsSpan?: Span | SpanContext | undefined;
+  }>;
 
   /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createSlice */
   createSlice: <TContext = Record<string, unknown>>(
@@ -1416,7 +1432,23 @@ export interface Actions {
   ) => void;
 
   /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
-  deleteNode: (node: NodeInput, plugin?: ActionPlugin | undefined) => void;
+  deleteNode: (
+    node: IGatsbyNode,
+    plugin?: ActionPlugin | undefined,
+  ) => Array<
+    | {
+        type: string;
+        plugin: IPlugin;
+        payload: any;
+        isRecursiveChildrenDelete: boolean;
+      }
+    | {
+        type: string;
+        plugin: IPlugin;
+        payload: any;
+        isRecursiveChildrenDelete: boolean;
+      }
+  >;
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createNode */
   createNode: <TNode = Record<string, unknown>>(
@@ -1424,10 +1456,15 @@ export interface Actions {
     node: NodeInput & TNode,
     plugin?: ActionPlugin | undefined,
     options?: ActionOptions | undefined,
-  ) => void | Promise<void>;
+  ) => (dispatch: any) => Promise<unknown>;
 
   /** @see https://www.gatsbyjs.com/docs/actions/#touchNode */
-  touchNode: (node: NodeInput, plugin?: ActionPlugin | undefined) => void;
+  touchNode: (
+    node: IGatsbyNode,
+    plugin?: ActionPlugin | undefined,
+  ) =>
+    | Array<never>
+    | { type: string; plugin: IPlugin; payload: any; typeName: any };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createNodeField */
   createNodeField: (
@@ -1439,14 +1476,22 @@ export interface Actions {
     },
     plugin?: ActionPlugin | undefined,
     options?: ActionOptions | undefined,
-  ) => void;
+  ) => {
+    type: string;
+    plugin: IPlugin;
+    payload?: IGatsbyPage | IGatsbyNode | undefined;
+    addedField: string;
+    traceId?: string | undefined;
+    parentSpan?: Span | SpanContext | undefined;
+    followsSpan?: Span | SpanContext | undefined;
+  };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createParentChildLink */
   createParentChildLink: (
     this: void,
     args: { parent: Node; child: NodeInput },
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: any };
 
   /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest */
   unstable_createNodeManifest: (
@@ -1457,56 +1502,64 @@ export interface Actions {
       updatedAtUTC?: string | number | undefined;
     },
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => {
+    type: string;
+    payload: {
+      manifestId: string;
+      node: any;
+      pluginName: string;
+      updatedAtUTC: string;
+    };
+  };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setRequestHeaders */
   setRequestHeaders: (
     this: void,
     args: { domain: string; headers: Record<string, string> },
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; payload: { domain: string; headers: any } };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setWebpackConfig */
   setWebpackConfig: (
     this: void,
     config: object,
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: Record<string, unknown> };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#replaceWebpackConfig */
   replaceWebpackConfig: (
     this: void,
     config: object,
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: Record<string, unknown> };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setBabelOptions */
   setBabelOptions: (
     this: void,
     options: object,
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: Record<string, unknown> };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPlugin */
   setBabelPlugin: (
     this: void,
     config: { name: string; options: object },
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: Record<string, unknown> };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPreset */
   setBabelPreset: (
     this: void,
     config: { name: string; options: object },
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: Record<string, unknown> };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createJob */
   createJob: (
     this: void,
     job: Record<string, unknown> & { id: string },
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: Job };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createJobV2 */
   createJobV2: (
@@ -1518,31 +1571,34 @@ export interface Actions {
       args: Record<string, unknown>;
     },
     plugin?: ActionPlugin | undefined,
-  ) => Promise<unknown>;
+  ) => (dispatch: any, getState: any) => Promise<Record<string, unknown>>;
 
   /** @see https://www.gatsbyjs.com/docs/actions/#addGatsbyImageSourceUrl */
-  addGatsbyImageSourceUrl: (this: void, sourceUrl: string) => void;
+  addGatsbyImageSourceUrl: (
+    this: void,
+    sourceUrl: string,
+  ) => { type: string; payload: { sourceUrl: string } };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setJob */
   setJob: (
     this: void,
     job: Record<string, unknown> & { id: string },
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: Job };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#endJob */
   endJob: (
     this: void,
     job: { id: string },
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: Job };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setPluginStatus */
   setPluginStatus: (
     this: void,
     status: Record<string, unknown>,
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => { type: string; plugin: IPlugin; payload: { [key: string]: any } };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createRedirect */
   createRedirect: (
@@ -1558,7 +1614,16 @@ export interface Actions {
       [key: string]: unknown;
     },
     plugin?: ActionPlugin | undefined,
-  ) => void;
+  ) => {
+    type: string;
+    payload: {
+      fromPath: string;
+      isPermanent: boolean;
+      ignoreCase: boolean;
+      redirectInBrowser: boolean;
+      toPath: string;
+    };
+  };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#addThirdPartySchema */
   addThirdPartySchema: (
@@ -1603,9 +1668,10 @@ export interface Actions {
   /**
    * Marks the source plugin that called this function as stateful. Gatsby will not check for stale nodes for any plugin that calls this.
    */
-  enableStatefulSourceNodes?:
-    | ((this: void, plugin?: ActionPlugin | undefined) => void)
-    | undefined;
+  enableStatefulSourceNodes: (
+    this: void,
+    plugin?: ActionPlugin | undefined,
+  ) => { type: string; plugin: IPlugin };
 
   /** @see https://www.gatsbyjs.com/docs/actions/#addRemoteFileAllowedUrl */
   addRemoteFileAllowedUrl?: (
@@ -1614,6 +1680,22 @@ export interface Actions {
     plugin?: ActionPlugin | undefined,
     traceId?: string | undefined,
   ) => void;
+  createPageDependency: (
+    {
+      path,
+      nodeId,
+      connection,
+    }: { path: string; nodeId: string; connection: string },
+    plugin?: string,
+  ) => {
+    type: string;
+    plugin: string;
+    payload: Array<{ path: string; nodeId: string; connection: string }>;
+  };
+  createPageDependency: boolean;
+  createServerVisitedPage: (
+    chunkName: string,
+  ) => never[] | { type: string; payload: { componentChunkName: string } };
 }
 
 export interface Store {

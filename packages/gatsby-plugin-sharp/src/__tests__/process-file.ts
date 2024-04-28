@@ -4,7 +4,8 @@ jest.mock("../safe-sharp", () => {
     concurrency: jest.fn(),
   };
 });
-const { createArgsDigest } = require("../process-file");
+
+import { createArgsDigest } from "../process-file";
 
 describe("createArgsDigest", () => {
   const defaultArgsBaseline = {
@@ -23,7 +24,11 @@ describe("createArgsDigest", () => {
   };
 
   describe("changes hash if used args are different", () => {
-    const testHashDifferent = (label, change, extraBaselineOptions = {}) => {
+    function testHashDifferent(
+      label: string,
+      change,
+      extraBaselineOptions = {},
+    ): void {
       it(label, () => {
         const argsBaseline = {
           ...defaultArgsBaseline,
@@ -36,7 +41,7 @@ describe("createArgsDigest", () => {
         });
         expect(baselineHash).not.toBe(outputHash);
       });
-    };
+    }
 
     testHashDifferent("width change", { width: defaultArgsBaseline.width + 1 });
     testHashDifferent("height change", {

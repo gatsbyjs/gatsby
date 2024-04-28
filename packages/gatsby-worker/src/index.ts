@@ -1,7 +1,7 @@
-import { fork } from "child_process";
+import { fork } from "node:child_process";
 import fs from "fs-extra";
-import os from "os";
-import path from "path";
+import os from "node:os";
+import path from "node:path";
 
 import { TaskQueue } from "./task-queue";
 import {

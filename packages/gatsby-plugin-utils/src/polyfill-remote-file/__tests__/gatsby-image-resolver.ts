@@ -1,5 +1,5 @@
-import path from "path";
-import url from "url";
+import path from "node:path";
+import url from "node:url";
 import { ensureDir, remove } from "fs-extra";
 import importFrom from "import-from";
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file";
@@ -8,7 +8,6 @@ import * as dispatchers from "../jobs/dispatchers";
 import { PlaceholderType } from "../placeholder-handler";
 import { generateImageUrl } from "../utils/url-generator";
 import type { Actions, Store } from "gatsby";
-import { satisfies } from "semver";
 
 jest
   .spyOn(dispatchers, "shouldDispatchLocalImageServiceJob")
@@ -639,8 +638,8 @@ describe("gatsbyImageData", () => {
       store,
     );
 
-    expect(result?.images.fallback.src).not.toContain(" ");
-    expect(result?.images.fallback.src).toContain("name%20with%20spaces");
+    expect(result?.images.fallback?.src).not.toContain(" ");
+    expect(result?.images.fallback?.src).toContain("name%20with%20spaces");
   });
 
   it("should return proper srcSet from breakpoints only for fullWidth", async () => {
@@ -801,7 +800,7 @@ describe("gatsbyImageData", () => {
 
     expect(constrainedResult?.images.sources[0].type).toBe("image/avif");
     expect(constrainedResult?.images.sources[1].type).toBe("image/webp");
-    expect(constrainedResult?.images.fallback.src).toContain(
+    expect(constrainedResult?.images.fallback?.src).toContain(
       "dog-portrait.jpg",
     );
 

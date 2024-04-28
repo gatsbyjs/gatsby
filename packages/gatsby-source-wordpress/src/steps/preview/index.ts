@@ -32,7 +32,9 @@ const inPreviewRunner =
 
 // this is a function simply because many places in the code expect it to be.
 // it used to call getStore().getState() and check for some state to determine preview mode
-export const inPreviewMode = (): boolean => inDevelopPreview || inPreviewRunner;
+export function inPreviewMode(): boolean {
+  return inDevelopPreview || inPreviewRunner;
+}
 
 export type PreviewStatusUnion =
   | "PREVIEW_SUCCESS"
@@ -298,6 +300,7 @@ export async function sourcePreview({
     node
   ) {
     previewData.manifestIds.forEach((manifestId) => {
+      // @ts-ignore Expected 2 arguments, but got 1.ts(2554)
       actions.unstable_createNodeManifest({
         manifestId,
         node,

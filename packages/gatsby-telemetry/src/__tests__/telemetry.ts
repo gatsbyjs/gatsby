@@ -1,9 +1,8 @@
 import { EventStorage } from "../event-storage";
 import { AnalyticsTracker } from "../telemetry";
-import * as fs from "fs-extra";
-import * as os from "os";
-import * as path from "path";
-// @ts-ignore
+import fs from "fs-extra";
+import os from "node:os";
+import path from "node:path";
 import { uuid } from "gatsby-core-utils";
 
 const uuidv4 = uuid.v4;

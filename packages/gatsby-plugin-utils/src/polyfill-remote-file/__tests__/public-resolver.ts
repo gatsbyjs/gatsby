@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import type { Actions, Store } from "gatsby";
 import { publicUrlResolver } from "../index";
 import { generateFileUrl } from "../utils/url-generator";

@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import { SchemaComposer } from "graphql-compose";
 import { getRemoteFileEnums } from "./graphql/get-remote-file-enums";
 import { getGatsbyVersion } from "./utils/get-gatsby-version";

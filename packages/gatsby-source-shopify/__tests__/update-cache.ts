@@ -21,7 +21,6 @@ describe("updateCache", () => {
   it("successfully runs without delete events", async () => {
     eventsApi.mockReturnValue({ fetchDestroyEventsSince: async () => [] });
 
-    // @ts-ignore
     await updateCache(gatsbyApi, pluginOptions, new Date(0));
 
     // @ts-ignore
@@ -35,7 +34,6 @@ describe("updateCache", () => {
       fetchDestroyEventsSince: async () => mockShopifyEvents("destroy"),
     });
 
-    // @ts-ignore
     await updateCache(gatsbyApi, pluginOptions, new Date(0));
 
     // @ts-ignore

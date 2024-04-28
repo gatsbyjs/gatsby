@@ -1,6 +1,6 @@
 import fs from "fs-extra";
-import path from "path";
-import url from "url";
+import path from "node:path";
+import url from "node:url";
 import { bold } from "chalk";
 
 import retry from "async-retry";
@@ -43,13 +43,13 @@ export const getMediaItemEditLink = (node) => {
   return `${baseUrl}/wp-admin/upload.php?item=${node.databaseId}`;
 };
 
-export const errorPanicker = ({
+export function errorPanicker({
   error,
   reporter,
   node,
   fetchState,
   parentName,
-}) => {
+}) {
   const editUrl = getMediaItemEditLink(node);
 
   const stepMessage = parentName ? ` in step:\n\n"${parentName}"` : "";
@@ -57,9 +57,7 @@ export const errorPanicker = ({
   const editLink = `\nEdit link: ${editUrl || "N/A"}`;
   const fileUrl = `\nFile url: ${node.mediaItemUrl}`;
 
-  const sharedError = `occurred while fetching media item${
-    node.databaseId ? ` #${node.databaseId}` : ""
-  }${stepMessage}\n${mediaItemLink}${editLink}${fileUrl}`;
+  const sharedError = `occurred while fetching media item${node.databaseId ? ` #${node.databaseId}` : ""}${stepMessage}\n${mediaItemLink}${editLink}${fileUrl}`;
 
   const errorString =
     typeof error === "string" ? error : error && error.toString();
@@ -149,12 +147,9 @@ export const errorPanicker = ({
     console.error(error);
     reporter.panic();
   }
-};
+}
 
-export const getFileNodeByMediaItemNode = async ({
-  mediaItemNode,
-  helpers,
-}) => {
+export async function getFileNodeByMediaItemNode({ mediaItemNode, helpers }) {
   const { sourceUrl, modifiedGmt, mediaItemUrl, databaseId } = mediaItemNode;
 
   const fileUrl = sourceUrl || mediaItemUrl;
@@ -194,15 +189,15 @@ export const getFileNodeByMediaItemNode = async ({
   }
 
   return null;
-};
+}
 
 const failedImageUrls = new Set();
 
-export const createLocalFileNode = async ({
+export async function createLocalFileNode({
   mediaItemNode,
   parentName,
   skipExistingNode = false,
-}) => {
+}) {
   const state = getStore().getState();
   const { helpers, pluginOptions } = state.gatsbyApi;
 
@@ -373,4 +368,4 @@ export const createLocalFileNode = async ({
 
   // and use it
   return remoteFileNode;
-};
+}

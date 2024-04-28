@@ -1,5 +1,5 @@
 import { findCollectionPageFiles } from "../path-utils";
-import path from "path";
+import path from "node:path";
 
 describe("findCollectionPageFiles", () => {
   it("will find all and only the collection routes in a fixture", async () => {

@@ -1,9 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../types/interface.d.ts" />
-
-import fs from "fs";
-import path from "path";
-import os from "os";
+import fs from "node:fs";
+import path from "node:path";
+import os from "node:os";
 import { graphql, http } from "msw";
 import { setupServer } from "msw/node";
 import * as processBulkResultsModule from "../src/process-bulk-results";

@@ -1,4 +1,10 @@
-const reportError = (message, err, reporter) => {
+import type { Reporter } from "gatsby";
+
+export function reportError(
+  message: string,
+  err?: Error | undefined,
+  reporter?: Reporter | undefined,
+): void {
   if (reporter) {
     reporter.error({
       id: "gatsby-plugin-sharp-20000",
@@ -12,5 +18,4 @@ const reportError = (message, err, reporter) => {
   if (process.env.gatsby_executing_command === "build") {
     process.exit(1);
   }
-};
-exports.reportError = reportError;
+}

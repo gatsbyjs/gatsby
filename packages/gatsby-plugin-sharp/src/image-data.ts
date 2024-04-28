@@ -7,11 +7,12 @@ import type { Reporter } from "gatsby/reporter";
 import fs from "fs-extra";
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils";
 import { getImageSizeAsync, base64, batchQueueImageResizing } from ".";
-import sharp from "./safe-sharp";
+import sharp from "sharp";
 import {
   createTransformObject,
   getPluginOptions,
   mergeDefaults,
+  type ITransformArgs,
 } from "./plugin-options";
 import { reportError } from "./report-error";
 
@@ -24,6 +25,8 @@ const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920];
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto";
 
 export type FileNode = Node & {
+  base: string;
+  name: string;
   absolutePath: string;
   extension: string;
 };
@@ -244,7 +247,7 @@ export async function generateImageData({
     presentationHeight: number;
     aspectRatio: number;
     unscaledWidth: number;
-  } = calculateImageSizes({
+  } | null = calculateImageSizes({
     file,
     layout,
     ...args,
@@ -260,21 +263,22 @@ export async function generateImageData({
     background: backgroundColor,
   };
 
-  const transforms = imageSizes.sizes.map((outputWidth) => {
-    const width = Math.round(outputWidth);
-    const transform = createTransformObject({
-      ...sharedOptions,
-      ...options,
-      width,
-      height: Math.round(width / imageSizes.aspectRatio),
-      toFormat: primaryFormat,
-    });
+  const transforms: Array<Partial<ITransformArgs>> | undefined =
+    imageSizes?.sizes.map((outputWidth) => {
+      const width = Math.round(outputWidth);
+      const transform = createTransformObject({
+        ...sharedOptions,
+        ...options,
+        width,
+        height: Math.round(width / imageSizes.aspectRatio),
+        toFormat: primaryFormat,
+      });
 
-    if (pathPrefix) {
-      transform.pathPrefix = pathPrefix;
-    }
-    return transform;
-  });
+      if (pathPrefix) {
+        transform.pathPrefix = pathPrefix;
+      }
+      return transform;
+    });
 
   const images = batchQueueImageResizing({
     file,
@@ -284,14 +288,14 @@ export async function generateImageData({
 
   const srcSet = getSrcSet(images);
 
-  const sizes = args.sizes || getSizes(imageSizes.unscaledWidth, layout);
+  const sizes = args.sizes || getSizes(imageSizes?.unscaledWidth, layout);
 
   const primaryIndex =
-    layout === "fullWidth"
-      ? imageSizes.sizes.length - 1 // The largest image
-      : imageSizes.sizes.findIndex(
+    (layout === "fullWidth"
+      ? (imageSizes?.sizes.length ?? 1) - 1 // The largest image
+      : imageSizes?.sizes.findIndex(
           (size) => size === Math.round(imageSizes.unscaledWidth),
-        );
+        )) ?? 0;
 
   if (primaryIndex === -1) {
     reporter.error(
@@ -325,20 +329,21 @@ export async function generateImageData({
   };
 
   if (primaryFormat !== "avif" && formats.has("avif")) {
-    const transforms = imageSizes.sizes.map((outputWidth) => {
-      const width = Math.round(outputWidth);
-      const transform = createTransformObject({
-        ...sharedOptions,
-        ...args.avifOptions,
-        width,
-        height: Math.round(width / imageSizes.aspectRatio),
-        toFormat: "avif",
-      });
-      if (pathPrefix) {
-        transform.pathPrefix = pathPrefix;
-      }
-      return transform;
-    });
+    const transforms =
+      imageSizes?.sizes.map((outputWidth) => {
+        const width = Math.round(outputWidth);
+        const transform = createTransformObject({
+          ...sharedOptions,
+          ...args.avifOptions,
+          width,
+          height: Math.round(width / (imageSizes?.aspectRatio ?? 1)),
+          toFormat: "avif",
+        });
+        if (pathPrefix) {
+          transform.pathPrefix = pathPrefix;
+        }
+        return transform;
+      }) ?? [];
 
     const avifImages = batchQueueImageResizing({
       file,
@@ -354,15 +359,16 @@ export async function generateImageData({
   }
 
   if (primaryFormat !== "webp" && formats.has("webp")) {
-    const transforms = imageSizes.sizes.map((outputWidth) => {
+    const transforms = imageSizes?.sizes.map((outputWidth) => {
       const width = Math.round(outputWidth);
-      const transform = createTransformObject({
-        ...sharedOptions,
-        ...args.webpOptions,
-        width,
-        height: Math.round(width / imageSizes.aspectRatio),
-        toFormat: "webp",
-      });
+      const transform =
+        createTransformObject({
+          ...sharedOptions,
+          ...args.webpOptions,
+          width,
+          height: Math.round(width / imageSizes.aspectRatio),
+          toFormat: "webp",
+        }) ?? [];
       if (pathPrefix) {
         transform.pathPrefix = pathPrefix;
       }
@@ -385,22 +391,23 @@ export async function generateImageData({
   if (placeholder === "blurred") {
     const placeholderWidth =
       args.blurredOptions?.width || DEFAULT_BLURRED_IMAGE_WIDTH;
-    const { src: fallback } = await base64({
+    const a = await base64({
       file,
-      args: {
+      cache: {
         ...sharedOptions,
         ...options,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
         height: Math.max(
           1,
-          Math.round(placeholderWidth / imageSizes.aspectRatio),
+          Math.round(placeholderWidth / (imageSizes?.aspectRatio ?? 1)),
         ),
       },
       reporter,
     });
+
     imageProps.placeholder = {
-      fallback,
+      fallback: a?.src,
     };
   } else if (metadata?.dominantColor) {
     imageProps.backgroundColor = metadata.dominantColor;
@@ -409,19 +416,22 @@ export async function generateImageData({
   primaryImage.aspectRatio = primaryImage.aspectRatio || 1;
 
   switch (layout) {
-    case "fixed":
-      imageProps.width = imageSizes.presentationWidth;
-      imageProps.height = imageSizes.presentationHeight;
+    case "fixed": {
+      imageProps.width = imageSizes?.presentationWidth;
+      imageProps.height = imageSizes?.presentationHeight;
       break;
+    }
 
-    case "fullWidth":
+    case "fullWidth": {
       imageProps.width = 1;
       imageProps.height = 1 / primaryImage.aspectRatio;
       break;
+    }
 
-    case "constrained":
+    case "constrained": {
       imageProps.width = args.width || primaryImage.width || 1;
       imageProps.height = (imageProps.width || 1) / primaryImage.aspectRatio;
+    }
   }
   return imageProps as IGatsbyImageData;
 }

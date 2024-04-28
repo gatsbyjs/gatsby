@@ -27,7 +27,9 @@ export async function processBulkResults(
   results: BulkResults,
 ): Promise<number> {
   let nodeCount = 0;
-  const promises: Array<Promise<void>> = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const promises: Array<Promise<void | ((dispatch: any) => Promise<unknown>)>> =
+    [];
   const children: IDecoratedResultChildren = {};
 
   const gatsbyCreateNodeId = (shopifyId: string): string =>
@@ -99,9 +101,9 @@ export async function processBulkResults(
 
       if (pluginOptions.downloadImages && imageFields) {
         promises.push(
-          processShopifyImages(gatsbyApi, node).then(() =>
-            gatsbyApi.actions.createNode(node),
-          ),
+          processShopifyImages(gatsbyApi, node).then(() => {
+            return gatsbyApi.actions.createNode(node);
+          }),
         );
       } else {
         gatsbyApi.actions.createNode(node);

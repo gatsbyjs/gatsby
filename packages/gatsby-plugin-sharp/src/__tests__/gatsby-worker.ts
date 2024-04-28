@@ -1,8 +1,8 @@
 jest.mock("../process-file");
 
-const path = require("path");
-const worker = require("../gatsby-worker").IMAGE_PROCESSING;
-const { processFile } = require("../process-file");
+import path from "node:path";
+import { IMAGE_PROCESSING } from "../gatsby-worker";
+import { processFile } from "../process-file";
 
 describe("worker", () => {
   beforeEach(() => {
@@ -10,6 +10,7 @@ describe("worker", () => {
   });
 
   it("should call processFile with the right arguments", async () => {
+    // @ts-ignore
     processFile.mockImplementation((file, transforms) =>
       transforms.map((transform) => Promise.resolve(transform)),
     );
@@ -35,7 +36,7 @@ describe("worker", () => {
       },
     };
 
-    await worker(job);
+    await IMAGE_PROCESSING(job);
 
     expect(processFile).toHaveBeenCalledTimes(1);
     expect(processFile).toHaveBeenCalledWith(
@@ -54,6 +55,7 @@ describe("worker", () => {
   });
 
   it("should fail a promise when image processing fails", async () => {
+    // @ts-ignore
     processFile.mockImplementation(() =>
       Promise.reject(new Error("transform failed")),
     );
@@ -82,7 +84,7 @@ describe("worker", () => {
 
     expect.assertions(1);
     try {
-      await worker(job);
+      await IMAGE_PROCESSING(job);
     } catch (err) {
       expect(err.message).toEqual("transform failed");
     }

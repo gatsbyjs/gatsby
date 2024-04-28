@@ -1,11 +1,11 @@
-import path from "path";
+import path from "node:path";
 import { simpleSitemapAndIndex } from "sitemap";
 import { pluginOptionsSchema } from "./options-validation";
 import { prefixPath, pageFilter, REPORTER_PREFIX } from "./internals";
 
 exports.pluginOptionsSchema = pluginOptionsSchema;
 
-exports.onPostBuild = async (
+exports.onPostBuild = async function onPostBuild(
   { graphql, reporter, basePath, pathPrefix },
   {
     output,
@@ -18,7 +18,7 @@ exports.onPostBuild = async (
     filterPages,
     serialize,
   },
-) => {
+) {
   const { data: queryRecords, errors } = await graphql(query);
 
   // resolvePages and resolveSiteUrl are allowed to be sync or async. The Promise.resolve handles each possibility

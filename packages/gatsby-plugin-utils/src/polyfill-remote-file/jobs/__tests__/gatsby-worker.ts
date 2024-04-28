@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 import { http } from "msw";
 import { setupServer } from "msw/node";
@@ -6,7 +6,7 @@ import { IMAGE_CDN } from "../gatsby-worker";
 import getSharpInstance from "gatsby-sharp";
 
 const server = setupServer(
-  http.get("https://example.com/another-file.jpg", async ({ request }) => {
+  http.get("https://example.com/another-file.jpg", async () => {
     const content = await fs.readFile(
       path.join(__dirname, "../../__tests__/__fixtures__/dog-portrait.jpg"),
     );
@@ -20,19 +20,6 @@ const server = setupServer(
     });
   }),
 );
-
-async (req, res, ctx) => {
-  const content = await fs.readFile(
-    path.join(__dirname, "../../__tests__/__fixtures__/dog-portrait.jpg"),
-  );
-
-  return res(
-    ctx.set("Content-Type", "image/jpg"),
-    ctx.set("Content-Length", content.length.toString()),
-    ctx.status(200),
-    ctx.body(content),
-  );
-};
 
 describe("gatsby-worker", () => {
   beforeAll(() => server.listen());

@@ -1,6 +1,4 @@
-/* @flow */
-
-import path from "path";
+import path from "node:path";
 import { namedTypes as types } from "ast-types";
 import { utils, type Documentation, type NodePath } from "react-docgen";
 import type {
@@ -30,10 +28,20 @@ const DEFAULT_NAME = "UnknownComponent";
 
 function getNameFromPath(path: NodePath): string | number | boolean | null {
   const node = path.node;
+
   switch (node.type) {
+    // @ts-ignore Property 'name' does not exist on type 'Type<Identifier>'.
+    // Property 'name' does not exist on type 'ArrayType<Identifier>'.ts(2339)
     case types.Identifier.name:
-    case types.Literal.name:
+
+    // @ts-ignore Property 'name' does not exist on type 'Type<Literal>'.
+    // Property 'name' does not exist on type 'ArrayType<Literal>'.ts(2339)
+    // eslint-disable-next-line no-fallthrough
+    case types.Literal.name: {
       return getNameOrValue(path);
+    }
+    // @ts-ignore Property 'name' does not exist on type 'Type<MemberExpression>'.
+    // Property 'name' does not exist on type 'ArrayType<MemberExpression>'.ts(2339)
     case types.MemberExpression.name:
       return utils.getMembers(path).reduce(
         (name, { path, computed }) => {
@@ -41,6 +49,8 @@ function getNameFromPath(path: NodePath): string | number | boolean | null {
             ? name
             : `${name}.${getNameFromPath(path) || ""}`;
         },
+        // @ts-ignore Argument of type 'NodePath<Node> | NodePath<Node>[]' is not assignable to parameter of type 'NodePath<Node>'.
+        // Type 'NodePath<Node>[]' is missing the following properties from type 'NodePath<Node>': parent, hub, data, context, and 721 more.ts(2345)
         getNameFromPath(path.get("object")),
       );
     default:
@@ -68,6 +78,8 @@ function getNodeIdentifier(path: NodePath): string | number | boolean | null {
     types.ClassExpression.check(path.node) ||
     types.ClassDeclaration.check(path.node)
   ) {
+    // @ts-ignore Argument of type 'NodePath<Node> | NodePath<Node>[]' is not assignable to parameter of type 'NodePath<Node>'.
+    // Type 'NodePath<Node>[]' is not assignable to type 'NodePath<Node>'.ts(2345)
     displayName = getNameFromPath(path.get("id"));
   }
 
@@ -82,6 +94,8 @@ function getVariableIdentifier(
 
   while (searchPath !== null) {
     if (types.VariableDeclarator.check(searchPath.node)) {
+      // @ts-ignore Argument of type 'NodePath<Node> | NodePath<Node>[]' is not assignable to parameter of type 'NodePath<Node>'.
+      // Type 'NodePath<Node>[]' is not assignable to type 'NodePath<Node>'.ts(2345)
       displayName = getNameFromPath(searchPath.get("id"));
       break;
     }
@@ -89,6 +103,8 @@ function getVariableIdentifier(
       types.AssignmentExpression.check(searchPath.node) &&
       !isExportsOrModuleAssignment(searchPath)
     ) {
+      // @ts-ignore Argument of type 'NodePath<Node> | NodePath<Node>[]' is not assignable to parameter of type 'NodePath<Node>'.
+      // Type 'NodePath<Node>[]' is not assignable to type 'NodePath<Node>'.ts(2345)
       displayName = getNameFromPath(searchPath.get("left"));
       break;
     }
@@ -127,12 +143,19 @@ export function createDisplayNameHandler(
       getStaticDisplayName,
       getNodeIdentifier,
       getVariableIdentifier,
-    ].reduce((name, getDisplayName) => name || getDisplayName(path), "");
+    ].reduce((name, getDisplayName) => {
+      // @ts-ignore Argument of type 'NodePath<Node>' is not assignable to parameter of type 'NodePath<SupportedNodes>'.
+      // Type 'Node' is not assignable to type 'SupportedNodes' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      // Type 'AnyTypeAnnotation' is not assignable to type 'SupportedNodes' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      // Type 'AnyTypeAnnotation' is missing the following properties from type 'VariableDeclaration': kind, declarationsts(2345)
+      return name ?? getDisplayName(path);
+    }, "");
 
     if (!displayName) {
       displayName = getNameFromFilePath(filePath);
     }
 
+    // @ts-ignore Property 'set' does not exist on type 'Documentation'.ts(2339
     documentation.set("displayName", displayName || DEFAULT_NAME);
   };
 }

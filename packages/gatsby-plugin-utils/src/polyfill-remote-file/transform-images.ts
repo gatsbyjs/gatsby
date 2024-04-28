@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import { readFile, writeFile, pathExists, mkdirp } from "fs-extra";
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file";
 import { createContentDigest } from "gatsby-core-utils/create-content-digest";

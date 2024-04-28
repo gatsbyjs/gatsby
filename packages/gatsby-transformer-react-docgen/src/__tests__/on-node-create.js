@@ -1,7 +1,7 @@
-import fs from "fs";
+import fs from "node:fs";
 import { groupBy } from "lodash";
 import { onCreateNode } from "../on-node-create";
-import path from "path";
+import path from "node:path";
 
 const readFile = (file) =>
   new Promise((y, n) => {
