@@ -78,7 +78,11 @@ const typeExtensions = {
         description: `A list of auth scopes that are allowed to access this type.`,
       },
     },
-    locations: [DirectiveLocation.OBJECT, DirectiveLocation.FIELD_DEFINITION],
+    locations: [
+      DirectiveLocation.OBJECT,
+      DirectiveLocation.FIELD_DEFINITION,
+      DirectiveLocation.SCHEMA,
+    ],
   },
 }
 
