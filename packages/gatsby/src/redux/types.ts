@@ -488,7 +488,21 @@ export type ICachedReduxState = {
   slicesByTemplate: IGatsbyState["slicesByTemplate"];
 };
 
+export type IApiRunningQueueEmptyAction = {
+  type: "API_RUNNING_QUEUE_EMPTY";
+  payload: undefined;
+};
+
+export type ISevSsrCompilationDoneAction = {
+  type: "DEV_SSR_COMPILATION_DONE";
+  payload: undefined;
+};
+
 export type ActionsUnion =
+  | ISevSsrCompilationDoneAction
+  | IApiRunningQueueEmptyAction
+  | ICreateRedirectAction
+  | ICreateServerVisitedPage
   | IInitAction
   | IAddChildNodeToParentNodeAction
   | IAddFieldToNodeAction
@@ -602,8 +616,9 @@ export type IApiFinishedAction = {
   };
 };
 
-type ISetBabelPluginAction = {
+export type ISetBabelPluginAction = {
   type: "SET_BABEL_PLUGIN";
+  plugin: IPlugin | null;
   payload: {
     stage: Stage;
     name: IPlugin["name"];
@@ -611,8 +626,9 @@ type ISetBabelPluginAction = {
   };
 };
 
-type ISetBabelPresetAction = {
+export type ISetBabelPresetAction = {
   type: "SET_BABEL_PRESET";
+  plugin: IPlugin | null;
   payload: {
     stage: Stage;
     name: IPlugin["name"];
@@ -620,8 +636,9 @@ type ISetBabelPresetAction = {
   };
 };
 
-type ISetBabelOptionsAction = {
+export type ISetBabelOptionsAction = {
   type: "SET_BABEL_OPTIONS";
+  plugin: IPlugin | null;
   payload: {
     stage: Stage;
     name: IPlugin["name"];
@@ -660,31 +677,31 @@ export type ICreateJobV2FromInternalAction = ThunkAction<
   ActionsUnion
 >;
 
-type ICreateJobAction = {
+export type ICreateJobAction = {
   type: "CREATE_JOB";
   payload: {
     id: string;
     job: IGatsbyIncompleteJob["job"];
   };
-  plugin: IGatsbyIncompleteJob["plugin"];
+  plugin: IGatsbyIncompleteJob["plugin"] | null;
 };
 
-type ISetJobAction = {
+export type ISetJobAction = {
   type: "SET_JOB";
   payload: {
     id: string;
     job: IGatsbyIncompleteJob["job"];
   };
-  plugin: IGatsbyIncompleteJob["plugin"];
+  plugin: IGatsbyIncompleteJob["plugin"] | null;
 };
 
-type IEndJobAction = {
+export type IEndJobAction = {
   type: "END_JOB";
   payload: {
     id: string;
     job: IGatsbyIncompleteJob["job"];
   };
-  plugin: IGatsbyIncompleteJob["plugin"];
+  plugin: IGatsbyIncompleteJob["plugin"] | null;
 };
 
 export type ICreatePageDependencyActionPayloadType = {
@@ -863,13 +880,13 @@ type ISetSchemaComposerAction = {
 
 export type ICreateServerVisitedPage = {
   type: "CREATE_SERVER_VISITED_PAGE";
-  payload: IGatsbyPage;
+  payload: { componentChunkName: string };
   plugin?: IGatsbyPlugin | undefined;
 };
 
 export type ICreatePageAction = {
   type: "CREATE_PAGE";
-  payload: IGatsbyPage;
+  payload?: IGatsbyNode | IGatsbyPage | undefined;
   plugin?: IGatsbyPlugin | undefined;
   contextModified?: boolean | undefined;
   componentModified?: boolean | undefined;
@@ -1053,11 +1070,13 @@ export type ISetPluginStatusAction = {
 
 export type IReplaceWebpackConfigAction = {
   type: "REPLACE_WEBPACK_CONFIG";
+  plugin: IPlugin | null;
   payload: IGatsbyState["webpack"];
 };
 
 export type ISetWebpackConfigAction = {
   type: "SET_WEBPACK_CONFIG";
+  plugin: IPlugin | null;
   payload: Partial<IGatsbyState["webpack"]>;
 };
 
@@ -1099,14 +1118,15 @@ export type IAddFieldToNodeAction = {
 
 export type IAddChildNodeToParentNodeAction = {
   type: "ADD_CHILD_NODE_TO_PARENT_NODE";
-  payload: IGatsbyNode;
+  plugin?: IPlugin | undefined;
+  payload: IGatsbyNode | { children: Array<string> } | undefined;
 };
 
 export type IDeleteNodeAction = {
   type: "DELETE_NODE";
   // FIXME: figure out why payload can be undefined here
   payload: IGatsbyNode | void;
-  plugin: IGatsbyPlugin;
+  plugin?: IGatsbyPlugin | undefined;
   isRecursiveChildrenDelete?: boolean | undefined;
 };
 

@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.5",
+  "packageManager": "pnpm@9.0.6",
   "name": "babel-preset-gatsby",
   "version": "3.14.0-next.2",
   "author": "Philipp Spiess <hello@philippspiess.com>",

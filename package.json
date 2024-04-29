@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.5",
+  "packageManager": "pnpm@9.0.6",
   "devDependencies": {
     "@total-typescript/ts-reset": "0.5.1",
     "@babel/core": "7.24.4",

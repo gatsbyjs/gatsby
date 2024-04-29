@@ -371,18 +371,18 @@ export function startListener(): void {
     debouncedWriteAll();
   });
 
-  emitter.on("CREATE_PAGE_END", (): void => {
-    reporter.pendingActivity({ id: "requires-writer" });
-    debouncedWriteAll();
-  });
+  // emitter.on("CREATE_PAGE_END", (): void => {
+  //   reporter.pendingActivity({ id: "requires-writer" });
+  //   debouncedWriteAll();
+  // });
 
   emitter.on("DELETE_PAGE", (): void => {
     reporter.pendingActivity({ id: "requires-writer" });
     debouncedWriteAll();
   });
 
-  emitter.on("DELETE_PAGE_BY_PATH", (): void => {
-    reporter.pendingActivity({ id: "requires-writer" });
-    debouncedWriteAll();
-  });
+  // emitter.on("DELETE_PAGE_BY_PATH", (): void => {
+  //   reporter.pendingActivity({ id: "requires-writer" });
+  //   debouncedWriteAll();
+  // });
 }

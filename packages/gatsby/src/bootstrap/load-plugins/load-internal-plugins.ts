@@ -57,7 +57,7 @@ export function loadInternalPlugins(
   // match the plugin definition order before that. This works fine for themes
   // because themes have already been added in the proper order to the plugins
   // array
-  plugins.forEach((plugin) => {
+  plugins.forEach((plugin: IPluginInfo): void => {
     plugins.push(
       processPlugin(
         {

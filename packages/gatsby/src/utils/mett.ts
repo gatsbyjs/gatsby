@@ -2,24 +2,31 @@
 // It mainly changes the data model to use a Map and Set, rather than a
 // regular object and an array.
 
-type MettHandler<EventName, Payload> = (
-  e: Payload,
+import type { ActionsUnion } from "../redux/types";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MettHandler<EventName, Payload = any> = (
+  payload: Payload,
   eventName: EventName,
 ) => void;
 
-export type IMett = {
+export type IMett<
+  EventName extends ActionsUnion["type"] | "*",
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Payload = any,
+> = {
   on(eventName: EventName, callback: MettHandler<EventName, Payload>): void;
   off(eventName: EventName, callback: MettHandler<EventName, Payload>): void;
-  emit(eventName: EventName, e?: Payload): void;
+  emit(eventName: EventName, payload?: Payload | undefined): void;
 };
 
-type EventName = string;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Payload = any;
-
-export function mett(): IMett {
+export function mett<
+  EventName extends ActionsUnion["type"] | "*",
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Payload = any,
+>(): IMett<EventName, Payload> {
   const mettEvents: Map<
-    EventName,
+    EventName | "*",
     Set<MettHandler<EventName, Payload>>
   > = new Map();
 
@@ -38,17 +45,18 @@ export function mett(): IMett {
         set.delete(callback);
       }
     },
-    emit(eventName: EventName, e: Payload): void {
+    emit(eventName: EventName, payload: Payload): void {
       const setName = mettEvents.get(eventName);
+
       if (setName) {
         setName.forEach(function mettEmitEachC(callback) {
-          callback(e, eventName);
+          callback(payload, eventName);
         });
       }
       const setStar = mettEvents.get("*");
       if (setStar) {
         setStar.forEach(function mettEmitEachStar(callback) {
-          callback(e, eventName);
+          callback(payload, eventName);
         });
       }
     },

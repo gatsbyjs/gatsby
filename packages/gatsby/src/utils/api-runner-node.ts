@@ -810,6 +810,8 @@ export function apiRunnerNode(
     }
 
     if (apisRunningById.size === 0) {
+      // TODO: there is no on handler for this event
+      // @ts-ignore Argument of type '"API_RUNNING_START"' is not assignable to parameter of type
       emitter.emit("API_RUNNING_START");
     }
 

@@ -1,8 +1,8 @@
-const { actions } = require("../../redux/actions");
-const { store } = require("../../redux");
-const { getDataStore, getNode, getNodes } = require("..");
+import { actions } from "../../redux/actions";
+import { store } from "../../redux";
+import { getDataStore, getNode, getNodes } from "..";
+import { IGatsbyNode } from "../../redux/types";
 
-const report = require("gatsby-cli/lib/reporter");
 jest.mock("gatsby-cli/lib/reporter");
 
 describe("nodes db tests", () => {
@@ -188,11 +188,18 @@ describe("nodes db tests", () => {
         },
       ),
     );
-    store.dispatch(
-      actions.deleteNode(getNode("hi"), {
-        name: "tests",
-      }),
-    );
+    const action = actions.deleteNode(getNode("hi"), {
+      id: "hi",
+      version: "1",
+      name: "tests",
+    });
+
+    if (Array.isArray(action)) {
+      action.forEach((a) => store.dispatch(a));
+    } else {
+      store.dispatch(action);
+    }
+
     await getDataStore().ready();
     expect(getNodes()).toHaveLength(1);
   });
@@ -268,11 +275,18 @@ describe("nodes db tests", () => {
         },
       ),
     );
-    store.dispatch(
-      actions.deleteNode(getNode("hi"), {
-        name: "tests",
-      }),
-    );
+    const action = actions.deleteNode(getNode("hi"), {
+      id: "hi",
+      version: "1",
+      name: "tests",
+    });
+
+    if (Array.isArray(action)) {
+      action.forEach((a) => store.dispatch(a));
+    } else {
+      store.dispatch(action);
+    }
+
     expect(getNodes()).toHaveLength(0);
   });
 
@@ -303,7 +317,13 @@ describe("nodes db tests", () => {
         },
       ),
     );
-    store.dispatch(actions.deleteNode(getNode("hi")));
+    const action = actions.deleteNode(getNode("hi"));
+
+    if (Array.isArray(action)) {
+      action.forEach((a) => store.dispatch(a));
+    } else {
+      store.dispatch(action);
+    }
     expect(getNode("hi")).toBeUndefined();
   });
 
@@ -325,16 +345,24 @@ describe("nodes db tests", () => {
           },
         ),
       );
-      store.dispatch(
-        actions.deleteNode(getNode("hi"), {
-          name: "tests",
-        }),
-      );
+      const action = actions.deleteNode(getNode("hi"), {
+        id: "hi",
+        version: "1",
+        name: "tests",
+      });
+
+      if (Array.isArray(action)) {
+        action.forEach((a) => store.dispatch(a));
+      } else {
+        store.dispatch(action);
+      }
     }).toThrow(/deleted/);
   });
 
   it("does not crash when delete node is called on undefined", () => {
     actions.deleteNode(undefined, {
+      id: "hi",
+      version: "1",
       name: "tests",
     });
     expect(getNodes()).toHaveLength(0);
@@ -346,6 +374,8 @@ describe("nodes db tests", () => {
       actions.createNode(
         {
           id: "1",
+          parent: null,
+          children: [],
           internal: {
             type: "OwnerOneTestTypeOne",
             contentDigest: "ok",
@@ -361,6 +391,8 @@ describe("nodes db tests", () => {
       actions.createNode(
         {
           id: "2",
+          parent: null,
+          children: [],
           internal: {
             type: "OwnerOneTestTypeOne",
             contentDigest: "ok",
@@ -377,6 +409,8 @@ describe("nodes db tests", () => {
       actions.createNode(
         {
           id: "3",
+          parent: null,
+          children: [],
           internal: {
             type: "OwnerOneTestTypeTwo",
             contentDigest: "ok",
@@ -393,6 +427,8 @@ describe("nodes db tests", () => {
       actions.createNode(
         {
           id: "4",
+          parent: null,
+          children: [],
           internal: {
             type: "OwnerTwoTestTypeThree",
             contentDigest: "ok",
@@ -405,8 +441,10 @@ describe("nodes db tests", () => {
     );
 
     // fifth node by second plugin but the node is deleted. Deleted nodes still have type owners
-    const nodeFive = {
+    const nodeFive: IGatsbyNode = {
       id: "5",
+      parent: null,
+      children: [],
       internal: {
         type: "OwnerTwoTestTypeFour",
         contentDigest: "ok",
@@ -417,25 +455,32 @@ describe("nodes db tests", () => {
         name: "test-owner-2",
       }),
     );
-    store.dispatch(
-      actions.deleteNode(nodeFive, {
-        name: "test-owner-2",
-      }),
-    );
+    const action = actions.deleteNode(nodeFive, {
+      id: "5",
+      version: "1",
+      name: "test-owner-2",
+    });
+
+    if (Array.isArray(action)) {
+      action.forEach((a) => store.dispatch(a));
+    } else {
+      store.dispatch(action);
+    }
+
     expect(getNode("5")).toBeUndefined();
 
     const state = store.getState();
 
     const ownerOne = state.typeOwners.pluginsToTypes.get("test-owner-1");
     expect(ownerOne).toBeTruthy();
-    expect(ownerOne.has("OwnerOneTestTypeOne")).toBeTrue();
-    expect(ownerOne.has("OwnerOneTestTypeTwo")).toBeTrue();
-    expect(ownerOne.has("OwnerTwoTestTypeThree")).toBeFalse();
+    expect(ownerOne?.has("OwnerOneTestTypeOne")).toBeTrue();
+    expect(ownerOne?.has("OwnerOneTestTypeTwo")).toBeTrue();
+    expect(ownerOne?.has("OwnerTwoTestTypeThree")).toBeFalse();
 
     const ownerTwo = state.typeOwners.pluginsToTypes.get("test-owner-2");
     expect(ownerTwo).toBeTruthy();
-    expect(ownerTwo.has("OwnerOneTestTypeTwo")).toBeFalse();
-    expect(ownerTwo.has("OwnerTwoTestTypeThree")).toBeTrue();
-    expect(ownerTwo.has("OwnerTwoTestTypeFour")).toBeTrue();
+    expect(ownerTwo?.has("OwnerOneTestTypeTwo")).toBeFalse();
+    expect(ownerTwo?.has("OwnerTwoTestTypeThree")).toBeTrue();
+    expect(ownerTwo?.has("OwnerTwoTestTypeFour")).toBeTrue();
   });
 });

@@ -7,7 +7,7 @@ import { GraphQLRunner } from "../query/graphql-runner";
 import errorParser from "../query/error-parser";
 import { emitter } from "../redux";
 import type { Reporter } from "../..";
-import type { IGatsbyState } from "../redux/types";
+import type { ActionsUnion, IGatsbyState } from "../redux/types";
 import type { IMatch } from "../types";
 
 export type Runner = (
@@ -32,7 +32,7 @@ export function createGraphQLRunner(
     graphqlTracing,
   });
 
-  const eventTypes: Array<string> = [
+  const eventTypes: Array<ActionsUnion["type"]> = [
     "DELETE_CACHE",
     "CREATE_NODE",
     "DELETE_NODE",
@@ -42,18 +42,23 @@ export function createGraphQLRunner(
     "ADD_CHILD_NODE_TO_PARENT_NODE",
   ];
 
-  eventTypes.forEach((type) => {
+  eventTypes.forEach((type: ActionsUnion["type"]) => {
     emitter.on(type, () => {
       runner = undefined;
     });
   });
 
-  return (query, context): ReturnType<Runner> => {
+  return (
+    query: string | Source,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: Record<string, any>,
+  ): ReturnType<Runner> => {
     if (!runner) {
       runner = new GraphQLRunner(store, {
         graphqlTracing,
       });
     }
+
     return runner
       .query(query, context, {
         queryName: "gatsby-node query",

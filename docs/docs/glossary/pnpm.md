@@ -90,7 +90,7 @@ When you run `gatsby new` for the first time, you'll be prompted to choose npm o
 ```shell
 {
   "cli": {
-    "packageManager": "pnpm@9.0.5",
+    "packageManager": "pnpm@9.0.6",
   }
 }
 ```

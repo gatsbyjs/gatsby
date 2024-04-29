@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@9.0.5",
+  "packageManager": "pnpm@9.0.6",
   "name": "gatsby-plugin-google-gtag",
   "description": "Gatsby plugin to add google gtag onto a site",
   "version": "5.14.0-next.2",

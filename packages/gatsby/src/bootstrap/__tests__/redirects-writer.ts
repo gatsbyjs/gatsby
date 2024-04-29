@@ -45,6 +45,7 @@ describe("redirect-writer", () => {
 
     expect(writeFileMock).toBeCalledTimes(1);
 
+    // @ts-ignore
     const clientSideRedirects = JSON.parse(writeFileMock.mock.calls[0][1]);
 
     expect(clientSideRedirects).toContainEqual(
@@ -71,22 +72,24 @@ describe("redirect-writer", () => {
         redirectInBrowser: true,
       }),
     );
-    store.dispatch(
-      actions.createPage(
-        {
-          path: "/server-overlap", // intentionally missing trailing slash - this checks if redirect for /server-overlap/ is discovered
-          component: "/whatever/index.js",
-        },
-        { id: "test", name: "test" },
-      ),
+
+    const action1 = actions.createPage(
+      {
+        path: "/server-overlap", // intentionally missing trailing slash - this checks if redirect for /server-overlap/ is discovered
+        component: "/whatever/index.js",
+      },
+      { id: "test", name: "test", version: "1.0.0" },
     );
+
+    store.dispatch(action1);
+
     store.dispatch(
       actions.createPage(
         {
           path: "/client-overlap/",
           component: "/whatever/index.js",
         },
-        { id: "test", name: "test" },
+        { id: "test", name: "test", version: "1.0.0" },
       ),
     );
 
@@ -94,6 +97,7 @@ describe("redirect-writer", () => {
 
     expect(writeFileMock).toBeCalledTimes(1);
 
+    // @ts-ignore
     const clientSideRedirects = JSON.parse(writeFileMock.mock.calls[0][1]);
 
     expect(clientSideRedirects).toContainEqual(

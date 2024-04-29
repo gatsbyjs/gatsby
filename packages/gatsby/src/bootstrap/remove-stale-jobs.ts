@@ -2,6 +2,8 @@ import type {
   IGatsbyState,
   IRemoveStaleJobV2Action,
   ICreateJobV2FromInternalAction,
+  IGatsbyCompleteJobV2,
+  IGatsbyIncompleteJobV2,
 } from "../redux/types";
 
 import { isJobStale } from "../utils/jobs/manager";
@@ -15,15 +17,17 @@ export const removeStaleJobs = (
   > = [];
 
   // If any of our finished jobs are stale we remove them to keep our cache small
-  jobs.complete.forEach((job, contentDigest) => {
-    if (isJobStale(job)) {
-      actions.push(internalActions.removeStaleJob(contentDigest));
-    }
-  });
+  jobs.complete.forEach(
+    (job: IGatsbyCompleteJobV2, contentDigest: string): void => {
+      if (isJobStale(job)) {
+        actions.push(internalActions.removeStaleJob(contentDigest));
+      }
+    },
+  );
 
   // If any of our pending jobs do not have an existing inputPath or the inputPath changed
   // we remove it from the queue as they would fail anyway
-  jobs.incomplete.forEach(({ job }): void => {
+  jobs.incomplete.forEach(({ job }: IGatsbyIncompleteJobV2): void => {
     if (isJobStale(job)) {
       actions.push(internalActions.removeStaleJob(job.contentDigest));
     } else {

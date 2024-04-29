@@ -5,7 +5,7 @@ type Identifier = string;
 export interface IGatsbyPage {
   internalComponentName: string;
   path: string;
-  matchPath: undefined | string;
+  matchPath?: undefined | string;
   component: SystemPath;
   componentChunkName: string;
   isCreatedByStatefulCreatePages: boolean;
@@ -19,8 +19,8 @@ export interface IGatsbyPage {
 
 // also inlined
 export interface IQueryResult {
-  errors?: Array<Error>;
-  data?: any;
+  errors?: Array<Error> | undefined;
+  data?: any | undefined;
 }
 
 export class GraphQLEngine {

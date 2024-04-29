@@ -33,9 +33,36 @@ import { createJobV2FromInternalJob } from "./internal";
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging";
 import { reportOnce } from "../../utils/report-once";
 import { wrapNode } from "../../utils/detect-node-mutations";
-import type { IGatsbyNode, IGatsbyPage, IPlugin } from "../types";
+import type {
+  HttpStatusCode,
+  IAddChildNodeToParentNodeAction,
+  ICreateJobAction,
+  ICreateNodeManifest,
+  ICreatePageAction,
+  ICreatePageDependencyAction,
+  ICreateRedirectAction,
+  ICreateServerVisitedPage,
+  IDeleteNodeAction,
+  IEnableStatefulSourcePluginAction,
+  IEndJobAction,
+  IGatsbyIncompleteJob,
+  IGatsbyNode,
+  IGatsbyPage,
+  IGatsbyPlugin,
+  IPlugin,
+  IProcessGatsbyImageSourceUrlAction,
+  IReplaceWebpackConfigAction,
+  ISetBabelOptionsAction,
+  ISetBabelPluginAction,
+  ISetBabelPresetAction,
+  ISetDomainRequestHeaders,
+  ISetJobAction,
+  ISetPluginStatusAction,
+  ISetWebpackConfigAction,
+} from "../types";
 import type { Span, SpanContext } from "opentracing";
 import { createInternalJob } from "../../utils/jobs/manager";
+import type { Stage } from "../../internal";
 
 const isNotTestEnv = process.env.NODE_ENV !== "test";
 const isTestEnv = process.env.NODE_ENV === "test";
@@ -77,10 +104,10 @@ function findChildren(initialChildren: Array<string>): Array<string> {
   return children;
 }
 
-type Job = {
-  id: string;
-  progress?: number | undefined;
-};
+// type Job = {
+//   id: string;
+//   progress?: number | undefined;
+// };
 
 type JobV2 = {
   name: string;
@@ -96,7 +123,7 @@ export type IPageInput = {
   context?: Record<string, unknown> | undefined;
   ownerNodeId?: string | undefined;
   defer?: boolean | undefined;
-  slices: Record<string, string>;
+  slices?: Record<string, string> | undefined;
 };
 
 // type PageMode = "SSG" | "DSG" | "SSR"
@@ -202,19 +229,9 @@ const reservedFields = [
  */
 function createPage(
   page: IPageInput,
-  plugin?: IPlugin | undefined,
+  plugin?: IGatsbyPlugin | undefined,
   actionOptions?: ActionOptions | undefined,
-): Array<{
-  type: string;
-  contextModified: boolean;
-  componentModified: boolean;
-  slicesModified: boolean;
-  plugin: IPlugin | undefined;
-  payload: IGatsbyPage | IGatsbyNode | undefined;
-  traceId?: string | null | undefined;
-  parentSpan?: Span | SpanContext | null | undefined;
-  followsSpan?: Span | SpanContext | null | undefined;
-}> {
+): Array<ICreatePageAction> {
   let name = `The plugin "${plugin?.name}"`;
   if (plugin?.name === "default-site-plugin") {
     name = 'Your site\'s "gatsby-node.js"';
@@ -576,7 +593,7 @@ ${reservedFields.map((f) => `  * "${f}"`).join("\n")}
   // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
   const sanitizedPayload = sanitizeNode(internalPage);
 
-  const actions = [
+  const actions: Array<ICreatePageAction> = [
     {
       ...actionOptions,
       type: "CREATE_PAGE",
@@ -605,40 +622,18 @@ ${reservedFields.map((f) => `  * "${f}"`).join("\n")}
  */
 function deleteNode(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  node: IGatsbyNode,
-  plugin?: IPlugin | undefined,
-):
-  | {
-      type: string;
-      plugin: IPlugin | undefined;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      payload: any;
-      // main node need to be owned by plugin that calls deleteNode
-      // child nodes should skip ownership check
-      isRecursiveChildrenDelete: boolean;
-    }
-  | Array<{
-      type: string;
-      plugin: IPlugin | undefined;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      payload: any;
-      // main node need to be owned by plugin that calls deleteNode
-      // child nodes should skip ownership check
-      isRecursiveChildrenDelete: boolean;
-    }> {
+  node?: IGatsbyNode | undefined,
+  plugin?: IGatsbyPlugin | undefined,
+): IDeleteNodeAction | Array<IDeleteNodeAction> {
   const id = node && node.id;
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
-  const internalNode = getNode(id);
+  const internalNode = typeof id === "string" ? getNode(id) : undefined;
 
-  function createDeleteAction(node): {
-    type: string;
-    plugin: IPlugin | undefined;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    payload: any;
-    isRecursiveChildrenDelete: boolean;
-  } {
+  function createDeleteAction(
+    node: IGatsbyNode | undefined,
+  ): IDeleteNodeAction {
     return {
       type: "DELETE_NODE",
       plugin,
@@ -649,7 +644,7 @@ function deleteNode(
     };
   }
 
-  const deleteAction = createDeleteAction(internalNode);
+  const deleteAction: IDeleteNodeAction = createDeleteAction(internalNode);
 
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
@@ -1115,12 +1110,15 @@ function createParentChildLink(
   {
     parent,
     child,
-  }: { parent: { children: Array<string> }; child: { id: string } },
+  }: {
+    parent?: { children: Array<string> } | IGatsbyNode | undefined;
+    child: { id: string } | IGatsbyNode | undefined;
+  },
   plugin?: IPlugin | undefined,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): { type: string; plugin: IPlugin | undefined; payload: any } {
-  if (!parent.children.includes(child.id)) {
-    parent.children.push(child.id);
+): IAddChildNodeToParentNodeAction {
+  if (child?.id && parent?.children && !parent?.children.includes(child.id)) {
+    parent.children.push(child?.id);
   }
 
   return {
@@ -1142,7 +1140,7 @@ function createParentChildLink(
 function setWebpackConfig(
   config: Record<string, unknown>,
   plugin: IPlugin | null | undefined = null,
-): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
+): ISetWebpackConfigAction {
   // @ts-ignore Property 'fs' does not exist on type '{}'.ts(2339)
   if (config.node?.fs === "empty") {
     report.warn(
@@ -1179,7 +1177,7 @@ function setWebpackConfig(
 function replaceWebpackConfig(
   config: Record<string, unknown>,
   plugin: IPlugin | null | undefined = null,
-): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
+): IReplaceWebpackConfigAction {
   // @ts-ignore Property 'fs' does not exist on type '{}'.ts(2339)
   if (config.node?.fs === "empty") {
     report.warn(
@@ -1216,9 +1214,13 @@ function replaceWebpackConfig(
  * })
  */
 function setBabelOptions(
-  options: Record<string, unknown>,
+  options: {
+    stage: Stage;
+    name: IPlugin["name"];
+    options: IPlugin["options"];
+  },
   plugin: IPlugin | null | undefined = null,
-): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
+): ISetBabelOptionsAction {
   // Validate
   let name = `The plugin "${plugin?.name}"`;
   if (plugin?.name === "default-site-plugin") {
@@ -1261,9 +1263,13 @@ function setBabelOptions(
  * })
  */
 function setBabelPlugin(
-  config: Record<string, unknown>,
+  config: {
+    stage: Stage;
+    name: IPlugin["name"];
+    options: IPlugin["options"];
+  },
   plugin: IPlugin | null | undefined = null,
-): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
+): ISetBabelPluginAction {
   // Validate
   let name = `The plugin "${plugin?.name}"`;
   if (plugin?.name === "default-site-plugin") {
@@ -1300,9 +1306,13 @@ function setBabelPlugin(
  * })
  */
 function setBabelPreset(
-  config: Record<string, unknown>,
+  config: {
+    stage: Stage;
+    name: IPlugin["name"];
+    options: IPlugin["options"];
+  },
   plugin: IPlugin | null | undefined = null,
-): { type: string; plugin: IPlugin | null; payload: Record<string, unknown> } {
+): ISetBabelPresetAction {
   // Validate
   let name = `The plugin "${plugin?.name}"`;
   if (plugin?.name === "default-site-plugin") {
@@ -1341,9 +1351,12 @@ function setBabelPreset(
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
 function createJob(
-  job: Job,
-  plugin: IPlugin | null | undefined = null,
-): { type: string; plugin: IPlugin | null; payload: Job } {
+  job: {
+    id: string;
+    job: IGatsbyIncompleteJob["job"];
+  },
+  plugin: IGatsbyIncompleteJob["plugin"] | null | undefined = null,
+): ICreateJobAction {
   let msg =
     'Action "createJob" is deprecated. Please use "createJobV2" instead';
 
@@ -1389,10 +1402,9 @@ function createJobV2(job: JobV2, plugin: IPlugin) {
   };
 }
 
-function addGatsbyImageSourceUrl(sourceUrl: string): {
-  type: string;
-  payload: { sourceUrl: string };
-} {
+function addGatsbyImageSourceUrl(
+  sourceUrl: string,
+): IProcessGatsbyImageSourceUrlAction {
   return {
     type: "PROCESS_GATSBY_IMAGE_SOURCE_URL",
     payload: { sourceUrl },
@@ -1412,9 +1424,12 @@ function addGatsbyImageSourceUrl(sourceUrl: string): {
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
 function setJob(
-  job: Job,
-  plugin: IPlugin | null | undefined = null,
-): { type: string; plugin: IPlugin | null; payload: Job } {
+  job: {
+    id: string;
+    job: IGatsbyIncompleteJob["job"];
+  },
+  plugin: IGatsbyIncompleteJob["plugin"] | null | undefined = null,
+): ISetJobAction {
   let msg = 'Action "setJob" is deprecated. Please use "createJobV2" instead';
 
   if (plugin?.name) {
@@ -1442,9 +1457,12 @@ function setJob(
  * endJob({ id: `write file id: 123` })
  */
 function endJob(
-  job: Job,
-  plugin: IPlugin | null | undefined = null,
-): { type: string; plugin: IPlugin | null; payload: Job } {
+  job: {
+    id: string;
+    job: IGatsbyIncompleteJob["job"];
+  },
+  plugin: IGatsbyIncompleteJob["plugin"] | null | undefined = null,
+): IEndJobAction {
   let msg = 'Action "endJob" is deprecated. Please use "createJobV2" instead';
 
   if (plugin?.name) {
@@ -1470,9 +1488,8 @@ function endJob(
 function setPluginStatus(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   status: { [key: string]: any },
-  plugin: IPlugin,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): { type: string; plugin: IPlugin; payload: { [key: string]: any } } {
+  plugin: IGatsbyPlugin,
+): ISetPluginStatusAction {
   return {
     type: "SET_PLUGIN_STATUS",
     plugin,
@@ -1535,23 +1552,14 @@ function createRedirect({
   redirectInBrowser?: boolean | undefined;
   toPath: string;
   ignoreCase?: boolean | undefined;
-  statusCode?: number | undefined;
+  statusCode?: HttpStatusCode | undefined;
   conditions?:
     | {
         country?: string | Array<string> | undefined;
         language?: string | Array<string> | undefined;
       }
     | undefined;
-}): {
-  type: string;
-  payload: {
-    fromPath: string;
-    isPermanent: boolean;
-    ignoreCase: boolean;
-    redirectInBrowser: boolean;
-    toPath: string;
-  };
-} {
+}): ICreateRedirectAction {
   let pathPrefix = "";
   if (store.getState().program.prefixPaths) {
     pathPrefix = store.getState().config.pathPrefix ?? "";
@@ -1586,11 +1594,7 @@ function createPageDependency(
     connection,
   }: { path: string; nodeId: string; connection: string },
   plugin: string = "",
-): {
-  type: string;
-  plugin: string;
-  payload: Array<{ path: string; nodeId: string; connection: string }>;
-} {
+): ICreatePageDependencyAction {
   console.warn(
     'Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".',
   );
@@ -1615,15 +1619,17 @@ function createPageDependency(
  */
 function createServerVisitedPage(
   chunkName: string,
-): Array<never> | { type: string; payload: { componentChunkName: string } } {
+  plugin: IGatsbyPlugin | undefined,
+): ICreateServerVisitedPage | null {
   if (store.getState().visitedPages.get("server")?.has(chunkName)) {
     // we already have given chunk tracked, let's not emit `CREATE_SERVER_VISITED_PAGE`
     // action to not cause any additional work
-    return [];
+    return null;
   }
 
   return {
     type: "CREATE_SERVER_VISITED_PAGE",
+    plugin,
     payload: { componentChunkName: chunkName },
   };
 }
@@ -1653,24 +1659,25 @@ function createServerVisitedPage(
 // * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated. If this parameter is not included, a manifest is created for every node that gets called. By default, node manifests are created for content updated in the last 30 days. To change this, set a `NODE_MANIFEST_MAX_DAYS_OLD` environment variable.
 // eslint-disable-next-line @typescript-eslint/naming-convention
 function unstable_createNodeManifest(
-  { manifestId, node, updatedAtUTC },
-  plugin?: IPlugin | undefined,
-): {
-  type: string;
-  payload: {
+  {
+    pluginName,
+    manifestId,
+    node,
+    updatedAtUTC,
+  }: {
     manifestId: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    node: any;
+    node: IGatsbyNode;
     pluginName: string;
-    updatedAtUTC: string;
-  };
-} {
+    updatedAtUTC?: string | number | undefined;
+  },
+  plugin?: IPlugin | undefined,
+): ICreateNodeManifest {
   return {
     type: "CREATE_NODE_MANIFEST",
     payload: {
       manifestId,
       node,
-      pluginName: plugin?.name ?? "",
+      pluginName: plugin?.name ?? pluginName ?? "",
       updatedAtUTC,
     },
   };
@@ -1695,10 +1702,9 @@ function unstable_createNodeManifest(
  * @param {IPlugin} plugin
  * @returns {{ type: string; plugin: IPlugin }}
  */
-function enableStatefulSourceNodes(plugin: IPlugin): {
-  type: string;
-  plugin: IPlugin;
-} {
+function enableStatefulSourceNodes(
+  plugin: IGatsbyPlugin,
+): IEnableStatefulSourcePluginAction {
   return {
     type: "ENABLE_STATEFUL_SOURCE_PLUGIN",
     plugin,
@@ -1714,8 +1720,7 @@ function enableStatefulSourceNodes(plugin: IPlugin): {
 function setRequestHeaders(
   { domain, headers }: { domain: string; headers: Record<string, string> },
   plugin: IPlugin,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): { type: string; payload: { domain: string; headers: any } } | null {
+): ISetDomainRequestHeaders | null {
   const headersIsobject =
     typeof headers === "object" && headers !== null && !Array.isArray(headers);
 
