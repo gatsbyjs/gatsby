@@ -1,4 +1,28 @@
-import type { Node, GatsbyCache } from "gatsby";
+// import type { GatsbyCache } from "gatsby";
+
+interface NodeInput {
+  id: string;
+  parent?: string | null | undefined;
+  children?: string[] | undefined;
+  internal: {
+    type: string;
+    mediaType?: string | undefined;
+    content?: string | undefined;
+    contentDigest: string;
+    description?: string | undefined;
+    contentFilePath?: string | undefined;
+  };
+  [key: string]: unknown;
+}
+
+interface Node extends NodeInput {
+  parent: string | null;
+  children: string[];
+  internal: NodeInput["internal"] & {
+    owner: string;
+  };
+  [key: string]: unknown;
+}
 
 /**
  * @see https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/?=files#createfilepath
@@ -28,7 +52,7 @@ export interface CreateFilePathArgs {
 
 export interface CreateRemoteFileNodeArgs {
   url: string;
-  cache?: GatsbyCache | undefined;
+  cache?: any | undefined; // GatsbyCache | undefined;
   getCache?: Function | undefined;
   createNode: Function;
   createNodeId: Function;
@@ -46,7 +70,7 @@ export interface CreateRemoteFileNodeArgs {
 
 export interface CreateFileNodeFromBufferArgs {
   buffer: Buffer;
-  cache?: GatsbyCache | undefined;
+  cache?: any | undefined; // GatsbyCache | undefined;
   getCache?: Function | undefined;
   createNode: Function;
   createNodeId: Function;

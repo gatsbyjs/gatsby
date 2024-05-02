@@ -52,6 +52,7 @@
     "common-tags": "^1.8.2",
     "fs-extra": "^11.2.0",
     "gatsby-source-filesystem": "workspace:*",
+    "gatsby-core-utils": "workspace:*",
     "objectFitPolyfill": "^2.3.5"
   },
   "devDependencies": {
@@ -91,7 +92,6 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.24.4",
-    "gatsby-core-utils": "workspace:*",
     "gatsby-plugin-utils": "workspace:*",
     "gatsby-plugin-sharp": "workspace:*",
     "babel-plugin-remove-graphql-queries": "workspace:*",

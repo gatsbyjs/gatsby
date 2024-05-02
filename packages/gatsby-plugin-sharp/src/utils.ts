@@ -1,9 +1,9 @@
 import sharp from "sharp";
 import fs from "fs-extra";
-import type { Reporter } from "gatsby/reporter";
+// import type { Reporter } from "gatsby/reporter";
 import type { IImageMetadata } from "./image-data";
 import type { ITransformArgs } from "./plugin-options";
-import type { Fit } from "gatsby-plugin-image";
+// import type { Fit } from "gatsby-plugin-image";
 
 export function rgbToHex(red: number, green: number, blue: number): string {
   return `#${(blue | (green << 8) | (red << 16) | (1 << 24))
@@ -24,9 +24,11 @@ export function calculateImageSizes(args: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   file: any;
   layout?: string | undefined;
-  reporter?: Reporter | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined; // Reporter | undefined;
   imgDimensions?: IImageMetadata | undefined;
-  transformOptions?: { fit?: Fit | undefined } | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transformOptions?: { fit?: any | undefined } | undefined;
   outputPixelDensities?: Array<number> | undefined;
   breakpoints?: Array<number> | undefined;
 }): {
@@ -81,9 +83,11 @@ export function fixedImageSizes({
   imgDimensions?: IImageMetadata | undefined;
   width?: number | undefined;
   height?: number | undefined;
-  transformOptions?: { fit?: Fit | undefined } | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transformOptions?: { fit?: any | undefined } | undefined;
   outputPixelDensities?: Array<number> | undefined;
-  reporter?: Reporter | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined; // Reporter | undefined;
 }): {
   sizes: Array<number>;
   aspectRatio: number;
@@ -172,7 +176,8 @@ export function responsiveImageSizes({
   imgDimensions?: IImageMetadata | undefined;
   width?: number | undefined;
   height?: number | undefined;
-  transformOptions?: { fit?: Fit | undefined } | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transformOptions?: { fit?: any | undefined } | undefined;
   outputPixelDensities?: Array<number> | undefined;
   breakpoints?: Array<number> | undefined;
   layout?: string | undefined;

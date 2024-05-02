@@ -22,7 +22,7 @@ import {
 import { duotone } from "./duotone";
 import { IMAGE_PROCESSING_JOB_NAME } from "./gatsby-worker";
 import { getDimensionsAndAspectRatio, getDominantColor } from "./utils";
-import type { Actions, GatsbyCache, Reporter } from "gatsby";
+// import type { Actions, GatsbyCache, Reporter } from "gatsby";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const imageSizeCache = new Map<string, any>();
@@ -74,9 +74,11 @@ export function getImageSize(file: FileNode): any {
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let actions: Actions;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let actions: any; // Actions;
 
-export function setActions(_actions: Actions): void {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function setActions(_actions: any): void {
   actions = _actions;
 }
 
@@ -164,7 +166,8 @@ function createJob(
       }>;
     };
   },
-  { reporter }: { reporter?: Reporter | undefined },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { reporter }: { reporter?: any | undefined },
 ): Promise<void> {
   if (!actions) {
     reporter?.panic(
@@ -205,7 +208,8 @@ export function queueImageResizing({
 }: {
   file: FileNode;
   args?: ITransformArgs | undefined;
-  reporter?: Reporter | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined;
 }): {
   src: string;
   absolutePath: string;
@@ -259,7 +263,8 @@ export function batchQueueImageResizing({
 }: {
   file: FileNode;
   transforms?: Array<Partial<ITransformArgs>> | undefined;
-  reporter?: Reporter | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined;
 }): Array<{
   src: string;
   absolutePath: string;
@@ -346,7 +351,8 @@ export async function generateBase64({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   file: any;
   args?: ITransformArgs | undefined;
-  reporter?: Reporter | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined;
 }): Promise<{
   src: string;
   width: number;
@@ -478,9 +484,11 @@ async function cachifiedProcess(
     ...arg
   }: {
     file: FileNode;
-    cache?: GatsbyCache | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    cache?: any | undefined; // GatsbyCache | undefined;
     args?: ITransformArgs | undefined;
-    reporter?: Reporter | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    reporter?: any | undefined; // Reporter | undefined;
   },
   genKey: ({
     file,
@@ -507,8 +515,10 @@ async function cachifiedProcess(
 
 export async function base64(arg: {
   file: FileNode;
-  cache?: GatsbyCache | undefined;
-  reporter?: Reporter | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache?: any | undefined; // GatsbyCache | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined; // Reporter | undefined;
 }): Promise<{
   src: string;
   width: number;
@@ -528,8 +538,10 @@ let didShowTraceSVGRemovalWarning = false;
 
 export async function traceSVG(args: {
   file: FileNode;
-  cache: GatsbyCache;
-  reporter: Reporter;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any; // GatsbyCache;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
 }): Promise<string | undefined> {
   if (!didShowTraceSVGRemovalWarning) {
     console.warn(
@@ -548,7 +560,8 @@ export async function stats({
   reporter,
 }: {
   file: FileNode;
-  reporter?: Reporter | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined; // Reporter | undefined;
 }): Promise<{
   isTransparent: boolean;
 } | null> {
@@ -585,8 +598,10 @@ export async function fluid({
 }: {
   file: FileNode;
   args?: ITransformArgs | undefined;
-  reporter?: Reporter | undefined;
-  cache?: GatsbyCache | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined; // Reporter | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache?: any | undefined; // GatsbyCache | undefined;
 }): Promise<{
   base64: string;
   aspectRatio: number;
@@ -849,8 +864,10 @@ export async function fixed({
 }: {
   file: FileNode;
   args?: ITransformArgs | undefined;
-  reporter?: Reporter | undefined;
-  cache?: GatsbyCache | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined; // Reporter | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache?: any | undefined; // GatsbyCache | undefined;
 }): Promise<{
   base64: string | undefined;
   aspectRatio: number;

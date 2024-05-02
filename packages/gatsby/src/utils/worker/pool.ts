@@ -42,6 +42,8 @@ function handleRunQueriesInWorkersQueueError(e: Error): never {
     context: {},
     error: e,
   });
+
+  throw new Error("Panic was called");
 }
 
 export async function runQueriesInWorkersQueue(

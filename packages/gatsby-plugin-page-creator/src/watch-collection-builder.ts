@@ -1,4 +1,4 @@
-import { Actions, Reporter } from "gatsby";
+// import { Actions, Reporter } from "gatsby";
 import chokidar from "chokidar";
 import { collectionExtractQueryString } from "./collection-extract-query-string";
 
@@ -14,8 +14,10 @@ export function watchCollectionBuilder(
   absolutePath: string,
   previousQueryString: string,
   paths: Array<string>,
-  actions: Actions,
-  reporter: Reporter,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any, // Actions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any, // Reporter,
   rerunCollectionBuilder: () => void,
 ): void {
   const watcher = chokidar.watch(absolutePath).on("change", () => {

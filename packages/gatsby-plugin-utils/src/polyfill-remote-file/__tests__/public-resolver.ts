@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { Actions, Store } from "gatsby";
+// import type { Actions, Store } from "gatsby";
 import { publicUrlResolver } from "../index";
 import { generateFileUrl } from "../utils/url-generator";
 import * as dispatchers from "../jobs/dispatchers";
@@ -14,10 +14,12 @@ const store = {
       requestHeaders: new Map(),
     };
   },
-} as unknown as Store;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+} as unknown as any;
 
 describe("publicResolver", () => {
-  const actions = {} as Actions;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const actions = {} as any;
 
   it("should return a file based url", () => {
     const source = {

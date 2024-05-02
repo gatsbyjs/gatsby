@@ -9,7 +9,7 @@ import { getImageFormatFromMimeType } from "./utils/mime-type-helpers";
 import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url";
 
 import type { IRemoteImageNode } from "./types";
-import type { Store } from "gatsby";
+// import type { Store } from "gatsby";
 
 export enum PlaceholderType {
   BLURRED = "blurred",
@@ -43,7 +43,8 @@ const queue = Queue<
     width: number;
     height: number;
     type: PlaceholderType;
-    store?: Store | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    store?: any | undefined; // Store | undefined;
   },
   string
   // eslint-disable-next-line consistent-return
@@ -120,7 +121,8 @@ const queue = Queue<
 export async function generatePlaceholder(
   source: IRemoteImageNode,
   placeholderType: PlaceholderType,
-  store?: Store,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined, // Store | undefined,
 ): Promise<{
   fallback?: string | undefined;
   backgroundColor?: string | undefined;
@@ -199,7 +201,8 @@ async function runPlaceholder({
 }: IPlaceholderGenerationArgs & {
   type: PlaceholderType;
   placeholderOptions: { width: number; quality: number };
-  store?: Store | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined; // Store | undefined;
 }): Promise<string> {
   const cache = getCache();
   const cacheKey = `image-cdn:${id}-${contentDigest}:${type}`;

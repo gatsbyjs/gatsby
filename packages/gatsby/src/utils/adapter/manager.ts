@@ -501,6 +501,8 @@ function getRoutesManifest(): {
       id: "12200",
       context: {},
     });
+
+    throw new Error("Missing webpackAssets");
   }
 
   for (const asset of webpackAssets) {

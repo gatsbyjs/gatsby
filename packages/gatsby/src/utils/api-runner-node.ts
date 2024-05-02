@@ -361,7 +361,8 @@ function extendLocalReporterToCatchPluginErrors({
       errorMeta: ErrorMeta,
       error?: Error | Array<Error> | undefined,
     ): never => {
-      return reporter.panic(errorMeta, error, pluginName);
+      reporter.panic(errorMeta, error, pluginName);
+      throw new Error("Panic was called");
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

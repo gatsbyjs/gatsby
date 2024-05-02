@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { validateOptionsSchema, Joi } from "../";
-import type { PluginOptions, PluginOptionsSchemaArgs } from "../../../gatsby";
+// import type { PluginOptions, PluginOptionsSchemaArgs } from "../../../gatsby";
 import { testPluginOptionsSchema } from "../test-plugin-options-schema";
 
 it("validates a basic schema", async () => {
@@ -8,7 +8,8 @@ it("validates a basic schema", async () => {
     str: Joi.string(),
   });
 
-  const validOptions: PluginOptions = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const validOptions: any = {
     // @ts-ignore
     str: "is a string",
   };
@@ -69,8 +70,8 @@ it("throws an warning on unknown values", async () => {
 
   const optionsSchema = await testPluginOptionsSchema(
     // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (_args: PluginOptionsSchemaArgs) => schema,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+    (_args: any) => schema,
     {
       // @ts-ignore
       str: "bla",
@@ -88,7 +89,8 @@ it("populates default values", async () => {
     default: Joi.string().default("default"),
   });
 
-  const validOptions: PluginOptions = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const validOptions: any = {
     // @ts-ignore
     str: "is a string",
   };

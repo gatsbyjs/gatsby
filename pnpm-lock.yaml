@@ -195,12 +195,15 @@ importers:
       '@babel/types':
         specifier: ^7.24.0
         version: 7.24.0
-      gatsby:
-        specifier: workspace:*
-        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
+      graphql:
+        specifier: ^16.8.1
+        version: 16.8.1
+      graphql-compose:
+        specifier: ^9.0.10
+        version: 9.0.10(graphql@16.8.1)
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -1428,9 +1431,6 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
-      gatsby:
-        specifier: workspace:*
-        version: link:../gatsby
       got:
         specifier: ^14.2.1
         version: 14.2.1
@@ -3148,9 +3148,6 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
-      gatsby:
-        specifier: workspace:*
-        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -3525,9 +3522,6 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
-      gatsby:
-        specifier: workspace:*
-        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -3589,9 +3583,6 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
-      gatsby-plugin-image:
-        specifier: workspace:*
-        version: link:../gatsby-plugin-image
 
   packages/gatsby-plugin-sitemap:
     dependencies:
@@ -3893,9 +3884,6 @@ importers:
       babel-plugin-remove-graphql-queries:
         specifier: workspace:*
         version: link:../babel-plugin-remove-graphql-queries
-      gatsby:
-        specifier: workspace:*
-        version: link:../gatsby
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -3973,9 +3961,6 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
-      gatsby:
-        specifier: workspace:*
-        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -5060,9 +5045,6 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
-      gatsby:
-        specifier: workspace:*
-        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils

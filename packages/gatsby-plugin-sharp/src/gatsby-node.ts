@@ -7,15 +7,15 @@ import {
   _lazyJobsEnabled,
 } from "./index";
 
-import type {
-  GatsbyCache,
-  GatsbyNode,
-  ParentSpanPluginArgs,
-  PluginOptions,
-  PluginOptionsSchemaArgs,
-  Reporter,
-  Store,
-} from "gatsby";
+// import type {
+//   GatsbyCache,
+//   GatsbyNode,
+//   ParentSpanPluginArgs,
+//   PluginOptions,
+//   PluginOptionsSchemaArgs,
+//   Reporter,
+//   Store,
+// } from "gatsby";
 
 import { slash } from "gatsby-core-utils/path";
 
@@ -23,8 +23,11 @@ import { setPluginOptions } from "./plugin-options";
 import path from "node:path";
 import type { ObjectSchema } from "gatsby-plugin-utils";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function removeCachedValue(cache: GatsbyCache, key: string): Promise<void> {
+function removeCachedValue(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any, // GatsbyCache,
+  key: string,
+): Promise<void> {
   if (cache?.del) {
     // if cache expose ".del" method directly on public interface
     return cache.del(key);
@@ -39,65 +42,66 @@ function removeCachedValue(cache: GatsbyCache, key: string): Promise<void> {
   );
 }
 
-export const onCreateDevServer: GatsbyNode["onCreateDevServer"] =
-  async function onCreateDevServer({
-    app,
-    cache,
-    reporter,
-  }: {
-    // TODO: add express.js app type
+export const onCreateDevServer = async function onCreateDevServer({
+  app,
+  cache,
+  reporter,
+}: {
+  // TODO: add express.js app type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  app: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any; // GatsbyCache;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
+}): Promise<void> {
+  if (!_lazyJobsEnabled()) {
+    return;
+  }
+
+  app.use(async (req, res, next) => {
+    const decodedURI = decodeURIComponent(req.path);
+    const pathOnDisk = path.resolve(path.join("./public/", decodedURI));
+
+    const jobContentDigest: string = await cache.get(decodedURI);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    app: any;
-    cache: GatsbyCache;
-    reporter: Reporter;
-  }) {
-    if (!_lazyJobsEnabled()) {
-      return;
+    const cacheResult: any | null = jobContentDigest
+      ? await cache.get(jobContentDigest)
+      : null;
+
+    if (!cacheResult) {
+      // this handler is meant to handle lazy images only (images that were registered for
+      // processing, but deffered to be processed only on request in develop server).
+      // If we don't have cache result - it means that this is not lazy image or that
+      // image was already handled in which case `express.static` handler (that is earlier
+      // than this handler) should take care of handling request.
+      return next();
     }
 
-    app.use(async (req, res, next) => {
-      const decodedURI = decodeURIComponent(req.path);
-      const pathOnDisk = path.resolve(path.join("./public/", decodedURI));
+    // We are going to run a job for a single operation only
+    // and postpone all other operations
+    // This speeds up the loading of lazy images in the browser and
+    // also helps to free up the browser connection queue earlier.
+    const { matchingJob, jobWithRemainingOperations } =
+      splitOperationsByRequestedFile(cacheResult, pathOnDisk);
 
-      const jobContentDigest: string = await cache.get(decodedURI);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const cacheResult: any | null = jobContentDigest
-        ? await cache.get(jobContentDigest)
-        : null;
+    await _unstable_createJob(matchingJob, { reporter });
+    await removeCachedValue(cache, decodedURI);
 
-      if (!cacheResult) {
-        // this handler is meant to handle lazy images only (images that were registered for
-        // processing, but deffered to be processed only on request in develop server).
-        // If we don't have cache result - it means that this is not lazy image or that
-        // image was already handled in which case `express.static` handler (that is earlier
-        // than this handler) should take care of handling request.
-        return next();
-      }
+    if (jobWithRemainingOperations.args.operations.length > 0) {
+      // There are still some operations pending for this job - replace the cached job
+      await cache.set(jobContentDigest, jobWithRemainingOperations);
+    } else {
+      // No operations left to process - purge the cache
+      await removeCachedValue(cache, jobContentDigest);
+    }
 
-      // We are going to run a job for a single operation only
-      // and postpone all other operations
-      // This speeds up the loading of lazy images in the browser and
-      // also helps to free up the browser connection queue earlier.
-      const { matchingJob, jobWithRemainingOperations } =
-        splitOperationsByRequestedFile(cacheResult, pathOnDisk);
-
-      await _unstable_createJob(matchingJob, { reporter });
-      await removeCachedValue(cache, decodedURI);
-
-      if (jobWithRemainingOperations.args.operations.length > 0) {
-        // There are still some operations pending for this job - replace the cached job
-        await cache.set(jobContentDigest, jobWithRemainingOperations);
-      } else {
-        // No operations left to process - purge the cache
-        await removeCachedValue(cache, jobContentDigest);
-      }
-
-      // we reach this point only when this is a lazy image that we just processed
-      // because `express.static` is earlier handler, we do have to manually serve
-      // produced file for current request
-      return res.sendFile(pathOnDisk);
-    });
-  };
+    // we reach this point only when this is a lazy image that we just processed
+    // because `express.static` is earlier handler, we do have to manually serve
+    // produced file for current request
+    return res.sendFile(pathOnDisk);
+  });
+};
 
 // Split the job into two jobs:
 //  - first job with a single operation matching requestedPathOnDisk
@@ -140,185 +144,188 @@ function splitOperationsByRequestedFile(
 
 // So something is wrong with the reporter, when I do this in preBootstrap,
 // the progressbar gets not updated
-export const onPostBootstrap: GatsbyNode["onPostBootstrap"] =
-  async function onPostBootstrap({
-    reporter,
-    cache,
-    store,
-  }: {
-    reporter: Reporter;
-    cache: GatsbyCache;
-    store: Store;
-  }): Promise<void> {
-    if (process.env.gatsby_executing_command !== "develop") {
-      // recreate jobs that haven't been triggered by develop yet
-      // removing stale jobs has already kicked in so we know these still need to process
-      for (const [contentDigest] of store.getState().jobsV2.complete) {
-        const job = await cache.get(contentDigest);
+export const onPostBootstrap = async function onPostBootstrap({
+  reporter,
+  cache,
+  store,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any; // GatsbyCache;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store: any; // Store;
+}): Promise<void> {
+  if (process.env.gatsby_executing_command !== "develop") {
+    // recreate jobs that haven't been triggered by develop yet
+    // removing stale jobs has already kicked in so we know these still need to process
+    for (const [contentDigest] of store.getState().jobsV2.complete) {
+      const job = await cache.get(contentDigest);
 
-        if (job) {
-          // we don't have to await, gatsby does this for us
-          _unstable_createJob(job, { reporter });
-        }
+      if (job) {
+        // we don't have to await, gatsby does this for us
+        _unstable_createJob(job, { reporter });
       }
     }
-  };
+  }
+};
 
 // to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
-export const onPluginInit: GatsbyNode["onPluginInit"] =
-  async function onPluginInit(
-    { actions }: ParentSpanPluginArgs,
-    pluginOptions: PluginOptions,
-  ): Promise<void> {
-    setActions(actions);
-    setPluginOptions(pluginOptions);
-  };
+export const onPluginInit = async function onPluginInit(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { actions }: any, // ParentSpanPluginArgs,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pluginOptions: any, // PluginOptions,
+): Promise<void> {
+  setActions(actions);
+  setPluginOptions(pluginOptions);
+};
 
-export const onPreBootstrap: GatsbyNode["onPreBootstrap"] =
-  async function onPreBootstrap(
-    { actions, emitter, cache }: ParentSpanPluginArgs,
-    pluginOptions: PluginOptions,
-  ): Promise<void> {
-    setActions(actions);
-    setPluginOptions(pluginOptions);
+export const onPreBootstrap = async function onPreBootstrap(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { actions, emitter, cache }: any, // ParentSpanPluginArgs,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pluginOptions: any, // PluginOptions,
+): Promise<void> {
+  setActions(actions);
+  setPluginOptions(pluginOptions);
 
-    // below is a hack / hot fix for confusing progress bar behaviour
-    // that doesn't recognize duplicate jobs, as it's now
-    // in gatsby core internals (if `createJobV2` is available)
-    // we should remove this or make this code path not hit
-    // (we should never use emitter in plugins)
-    // as soon as possible (possibly by moving progress bar handling
-    // inside jobs-manager in core)
+  // below is a hack / hot fix for confusing progress bar behaviour
+  // that doesn't recognize duplicate jobs, as it's now
+  // in gatsby core internals (if `createJobV2` is available)
+  // we should remove this or make this code path not hit
+  // (we should never use emitter in plugins)
+  // as soon as possible (possibly by moving progress bar handling
+  // inside jobs-manager in core)
 
-    if (emitter) {
-      // track how many image transformation each job has
-      // END_JOB_V2 doesn't contain that information
-      // so we store it in <JobContentHash, TransformsCount> map
-      // when job is created. Then retrieve that when job finishes
-      // and remove that entry from the map.
-      const imageCountInJobsMap = new Map();
+  if (emitter) {
+    // track how many image transformation each job has
+    // END_JOB_V2 doesn't contain that information
+    // so we store it in <JobContentHash, TransformsCount> map
+    // when job is created. Then retrieve that when job finishes
+    // and remove that entry from the map.
+    const imageCountInJobsMap = new Map();
 
-      emitter.on("CREATE_JOB_V2", (action) => {
-        if (action.plugin.name === "gatsby-plugin-sharp") {
-          if (action.payload.job.args.isLazy) {
-            // we have to remove some internal pieces
-            const job = {
-              name: action.payload.job.name,
-              inputPaths: action.payload.job.inputPaths.map(
-                (input) => input.path,
+    emitter.on("CREATE_JOB_V2", (action) => {
+      if (action.plugin.name === "gatsby-plugin-sharp") {
+        if (action.payload.job.args.isLazy) {
+          // we have to remove some internal pieces
+          const job = {
+            name: action.payload.job.name,
+            inputPaths: action.payload.job.inputPaths.map(
+              (input) => input.path,
+            ),
+            outputDir: action.payload.job.outputDir,
+            args: {
+              ...action.payload.job.args,
+              isLazy: false,
+            },
+          };
+          cache.set(action.payload.job.contentDigest, job);
+
+          action.payload.job.args.operations.forEach((op) => {
+            const cacheKey = slash(
+              path.relative(
+                path.join(process.cwd(), "public"),
+                path.join(action.payload.job.outputDir, op.outputPath),
               ),
-              outputDir: action.payload.job.outputDir,
-              args: {
-                ...action.payload.job.args,
-                isLazy: false,
-              },
-            };
-            cache.set(action.payload.job.contentDigest, job);
+            );
 
-            action.payload.job.args.operations.forEach((op) => {
-              const cacheKey = slash(
-                path.relative(
-                  path.join(process.cwd(), "public"),
-                  path.join(action.payload.job.outputDir, op.outputPath),
-                ),
-              );
+            cache.set(`/${cacheKey}`, action.payload.job.contentDigest);
+          });
 
-              cache.set(`/${cacheKey}`, action.payload.job.contentDigest);
-            });
-
-            return;
-          }
-
-          const job = action.payload.job;
-          const imageCount = job.args.operations.length;
-          imageCountInJobsMap.set(job.contentDigest, imageCount);
+          return;
         }
-      });
 
-      emitter.on("END_JOB_V2", (action) => {
-        if (action.plugin.name === "gatsby-plugin-sharp") {
-          const jobContentDigest = action.payload.jobContentDigest;
+        const job = action.payload.job;
+        const imageCount = job.args.operations.length;
+        imageCountInJobsMap.set(job.contentDigest, imageCount);
+      }
+    });
 
-          // when it's lazy we didn't set it
-          if (!imageCountInJobsMap.has(jobContentDigest)) {
-            return;
-          }
+    emitter.on("END_JOB_V2", (action) => {
+      if (action.plugin.name === "gatsby-plugin-sharp") {
+        const jobContentDigest = action.payload.jobContentDigest;
 
-          imageCountInJobsMap.delete(jobContentDigest);
+        // when it's lazy we didn't set it
+        if (!imageCountInJobsMap.has(jobContentDigest)) {
+          return;
         }
-      });
-    }
 
-    // normalizedOptions = setPluginOptions(pluginOptions)
-  };
+        imageCountInJobsMap.delete(jobContentDigest);
+      }
+    });
+  }
 
-export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] =
-  function pluginOptionsSchema({
-    Joi,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }: PluginOptionsSchemaArgs): ObjectSchema<any> {
-    return Joi.object({
-      base64Width: Joi.number()
-        .default(20)
-        .description("The width of the generated base64 preview image"),
-      forceBase64Format: Joi.any()
-        .valid("png", "jpg", "webp")
-        .description(
-          "Force a different format for the generated base64 image. Defaults to the same format as the input image",
-        ),
-      useMozJpeg: Joi.boolean().description(
-        "The the mozJpeg library for encoding. Defaults to false, unless `process.env.GATSBY_JPEG_ENCODER` === `MOZJPEG`",
+  // normalizedOptions = setPluginOptions(pluginOptions)
+};
+
+export const pluginOptionsSchema = function pluginOptionsSchema({
+  Joi,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}): ObjectSchema<any> {
+  return Joi.object({
+    base64Width: Joi.number()
+      .default(20)
+      .description("The width of the generated base64 preview image"),
+    forceBase64Format: Joi.any()
+      .valid("png", "jpg", "webp")
+      .description(
+        "Force a different format for the generated base64 image. Defaults to the same format as the input image",
       ),
-      stripMetadata: Joi.boolean().default(true),
-      defaultQuality: Joi.number().default(50),
-      // TODO(v6): Remove deprecated failOnError option
-      failOnError: Joi.boolean().default(true),
-      failOn: Joi.any()
-        .valid("none", "truncated", "error", "warning")
-        .default("warning")
-        .description("Level of sensitivity to invalid images"),
-      defaults: Joi.object({
-        formats: Joi.array().items(
-          Joi.string().valid("auto", "png", "jpg", "webp", "avif"),
-        ),
-        placeholder: Joi.string().valid(
-          "tracedSVG",
-          "dominantColor",
-          "blurred",
-          "none",
-        ),
-        quality: Joi.number(),
-        breakpoints: Joi.array().items(Joi.number()),
-        backgroundColor: Joi.string(),
-        transformOptions: Joi.object(),
-        tracedSVGOptions: Joi.object(),
-        blurredOptions: Joi.object(),
-        jpgOptions: Joi.object(),
-        pngOptions: Joi.object(),
-        webpOptions: Joi.object(),
-        avifOptions: Joi.object(),
-      }).description(
-        "Default options used by gatsby-plugin-image. \nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/",
+    useMozJpeg: Joi.boolean().description(
+      "The the mozJpeg library for encoding. Defaults to false, unless `process.env.GATSBY_JPEG_ENCODER` === `MOZJPEG`",
+    ),
+    stripMetadata: Joi.boolean().default(true),
+    defaultQuality: Joi.number().default(50),
+    // TODO(v6): Remove deprecated failOnError option
+    failOnError: Joi.boolean().default(true),
+    failOn: Joi.any()
+      .valid("none", "truncated", "error", "warning")
+      .default("warning")
+      .description("Level of sensitivity to invalid images"),
+    defaults: Joi.object({
+      formats: Joi.array().items(
+        Joi.string().valid("auto", "png", "jpg", "webp", "avif"),
       ),
-    }).custom((value) => {
-      const shouldNotFailOnError = !value.failOnError;
+      placeholder: Joi.string().valid(
+        "tracedSVG",
+        "dominantColor",
+        "blurred",
+        "none",
+      ),
+      quality: Joi.number(),
+      breakpoints: Joi.array().items(Joi.number()),
+      backgroundColor: Joi.string(),
+      transformOptions: Joi.object(),
+      tracedSVGOptions: Joi.object(),
+      blurredOptions: Joi.object(),
+      jpgOptions: Joi.object(),
+      pngOptions: Joi.object(),
+      webpOptions: Joi.object(),
+      avifOptions: Joi.object(),
+    }).description(
+      "Default options used by gatsby-plugin-image. \nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/",
+    ),
+  }).custom((value) => {
+    const shouldNotFailOnError = !value.failOnError;
 
-      if (shouldNotFailOnError) {
-        // show this warning only once in main process
-        if (!process.env.GATSBY_WORKER_ID) {
-          console.warn(
-            '[gatsby-plugin-sharp]: The "failOnError" option is deprecated. Please use "failOn" instead.',
-          );
-        }
-
-        return {
-          ...value,
-          failOn: "none",
-        };
+    if (shouldNotFailOnError) {
+      // show this warning only once in main process
+      if (!process.env.GATSBY_WORKER_ID) {
+        console.warn(
+          '[gatsby-plugin-sharp]: The "failOnError" option is deprecated. Please use "failOn" instead.',
+        );
       }
 
       return {
         ...value,
+        failOn: "none",
       };
-    });
-  };
+    }
+
+    return {
+      ...value,
+    };
+  });
+};

@@ -7,7 +7,7 @@ import { gatsbyImageResolver } from "../index";
 import * as dispatchers from "../jobs/dispatchers";
 import { PlaceholderType } from "../placeholder-handler";
 import { generateImageUrl } from "../utils/url-generator";
-import type { Actions, Store } from "gatsby";
+// import type { Actions, Store } from "gatsby";
 
 jest
   .spyOn(dispatchers, "shouldDispatchLocalImageServiceJob")
@@ -45,7 +45,8 @@ const store = {
       requestHeaders: new Map(),
     };
   },
-} as unknown as Store;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+} as unknown as any;
 
 describe("gatsbyImageData", () => {
   const cacheDir = path.join(__dirname, ".cache");
@@ -829,7 +830,8 @@ describe("gatsbyImageData", () => {
           requestHeaders: new Map([[baseDomain, { Authorization: authToken }]]),
         };
       },
-    } as unknown as Store;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as unknown as any;
 
     const fixedResult = await gatsbyImageResolver(
       portraitSource,
@@ -859,7 +861,8 @@ describe("gatsbyImageData", () => {
     );
     const actions = {
       addGatsbyImageSourceUrl: jest.fn(),
-    } as unknown as Actions;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as unknown as any;
 
     await gatsbyImageResolver(
       portraitSource,

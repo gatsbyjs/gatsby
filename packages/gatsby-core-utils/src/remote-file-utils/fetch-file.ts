@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import type { IncomingMessage } from "http";
 import type { Headers, Options } from "got";
-import type { GatsbyCache } from "gatsby";
+// import type { GatsbyCache } from "gatsby";
 
 // keeping the I for backward compatibility
 export type IFetchRemoteFileOptions = {
@@ -18,7 +18,8 @@ export type IFetchRemoteFileOptions = {
   cacheKey?: string | undefined;
   excludeDigest?: boolean | undefined;
   directory?: string | undefined;
-  cache?: GatsbyCache | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache?: any | undefined; // GatsbyCache | undefined;
 };
 
 const STALL_RETRY_LIMIT = process.env.GATSBY_STALL_RETRY_LIMIT

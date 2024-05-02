@@ -16,7 +16,7 @@ import {
   gatsbyImageResolver,
 } from "./graphql/gatsby-image-resolver";
 
-import type { Actions, Store } from "gatsby";
+// import type { Actions, Store } from "gatsby";
 import type { ObjectTypeComposerFieldConfigMapDefinition } from "graphql-compose";
 import type { SchemaBuilder } from "./types";
 
@@ -24,8 +24,10 @@ let enums: ReturnType<typeof getRemoteFileEnums> | undefined;
 
 export function getRemoteFileFields(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  actions: Actions,
-  store?: Store | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any, // Actions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined, // Store | undefined,
 ): Record<string, unknown> {
   return {
     id: "ID!",
@@ -50,8 +52,10 @@ function addRemoteFilePolyfillInterface<
     store,
   }: {
     schema: SchemaBuilder;
-    actions: Actions;
-    store: Store;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    actions: any; // Actions;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    store: any; // Store;
   },
 ): T {
   // When the image-cdn is part of Gatsby we will only add the RemoteFile interface if necessary

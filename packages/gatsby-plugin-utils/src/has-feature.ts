@@ -1,9 +1,12 @@
-import type { AvailableFeatures } from "gatsby";
+// import type { AvailableFeatures } from "gatsby";
 
 /**
  * Check the readme for a list of available features.
  */
-export function hasFeature(name: AvailableFeatures): boolean {
+export function hasFeature(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  name: any, // AvailableFeatures
+): boolean {
   try {
     const availableAPIs = require("gatsby/apis.json");
 

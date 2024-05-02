@@ -3,13 +3,13 @@ import _ from "lodash";
 import glob from "globby";
 import systemPath from "path";
 import { sync as existsSync } from "fs-exists-cached";
-import type {
-  CreatePagesArgs,
-  ParentSpanPluginArgs,
-  SetFieldsOnGraphQLNodeTypeArgs,
-  PluginOptions,
-  PluginCallback,
-} from "gatsby";
+// import type {
+//   CreatePagesArgs,
+//   ParentSpanPluginArgs,
+//   SetFieldsOnGraphQLNodeTypeArgs,
+//   PluginOptions,
+//   PluginCallback,
+// } from "gatsby";
 import { trackFeatureIsUsed } from "gatsby-telemetry";
 import { parse, GraphQLString } from "gatsby/graphql";
 import {
@@ -17,7 +17,7 @@ import {
   watchDirectory,
   applyTrailingSlashOption,
 } from "gatsby-page-utils";
-import type { Options as ISlugifyOptions } from "@sindresorhus/slugify";
+// import type { Options as ISlugifyOptions } from "@sindresorhus/slugify";
 import { createPage } from "./create-page-wrapper";
 import { collectionExtractQueryString } from "./collection-extract-query-string";
 import { derivePath } from "./derive-path";
@@ -36,7 +36,8 @@ import { getMatchPath } from "gatsby-core-utils/match-path";
 
 const knownCollections = new Map();
 
-export function createPages(_: CreatePagesArgs, pluginOptions: IOptions): void {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function createPages(_: any, pluginOptions: IOptions): void {
   const instance = getPluginInstance(pluginOptions);
   if (instance.syncPages) {
     instance.syncPages();
@@ -55,11 +56,13 @@ export async function createPagesStatefully(
     reporter,
     graphql,
     emitter,
-  }: CreatePagesArgs & {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }: any & {
     traceId: "initial-createPages";
   },
   pluginOptions: IOptions,
-  doneCb: PluginCallback,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  doneCb: any, // PluginCallback,
 ): Promise<void> {
   const {
     path: pagesPath,
@@ -138,14 +141,14 @@ Please pick a path to an existing directory.`,
         return [];
       }
 
-      const { data } = await graphql<{
-        nodes: Record<string, unknown>;
-      }>(queryString);
+      // <{ nodes: Record<string, unknown>; }>
+      const { data } = await graphql(queryString);
 
       if (!data) {
         return [];
       }
 
+      // @ts-ignore
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const nodes = Object.values(Object.values(data)[0])[0] as any as Array<
         Record<string, Record<string, unknown>>
@@ -349,8 +352,10 @@ Please pick a path to an existing directory.`,
 }
 
 export function setFieldsOnGraphQLNodeType(
-  { getNode, type, store, reporter }: SetFieldsOnGraphQLNodeTypeArgs,
-  { slugify: slugifyOptions }: PluginOptions & { slugify: ISlugifyOptions },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { getNode, type, store, reporter }: any, // SetFieldsOnGraphQLNodeTypeArgs,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { slugify: slugifyOptions }: any, // PluginOptions & { slugify: ISlugifyOptions },
 ): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions;
@@ -415,7 +420,8 @@ export function setFieldsOnGraphQLNodeType(
 }
 
 export async function onPluginInit(
-  { reporter }: ParentSpanPluginArgs,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { reporter }: any, // ParentSpanPluginArgs,
   { path: pagesPath }: IOptions,
 ): Promise<void> {
   if (reporter.setErrorMap) {

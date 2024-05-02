@@ -6,7 +6,7 @@
  * See gatsbyjs/gatsby#27578
  */
 
-import type { PluginOptions } from "gatsby";
+// import type { PluginOptions } from "gatsby";
 
 export type IRawSiteConfig = {
   plugins?: Array<PluginRef> | undefined;
@@ -34,7 +34,8 @@ export type IPluginInfo = {
   version: string;
 
   /** Options passed to the plugin */
-  pluginOptions?: PluginOptions | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pluginOptions?: any | undefined; // PluginOptions | undefined;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   module?: any | undefined;
@@ -56,7 +57,8 @@ export type IFlattenedPlugin = IPluginInfo & {
 
 export type IPluginRefObject = {
   resolve: string;
-  options?: PluginOptions | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  options?: any | undefined; // PluginOptions | undefined;
   parentDir?: string | undefined;
   subPluginPaths?: Array<string> | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,11 +1,15 @@
-import type { CreatePagesArgs } from "gatsby";
-import { getPluginInstance, IStatePerInstance } from "./tracked-nodes-state";
+// import type { CreatePagesArgs } from "gatsby";
+import {
+  getPluginInstance,
+  type IStatePerInstance,
+} from "./tracked-nodes-state";
 import type { IOptions } from "./types";
 
 export async function createPagesFromChangedNodes(
   {
     actions,
-  }: Pick<CreatePagesArgs, "actions"> & {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }: Pick<any, "actions"> & {
     pluginInstance: IStatePerInstance;
   },
   pluginOptions: IOptions,
@@ -79,6 +83,7 @@ export async function createPagesFromChangedNodes(
         absolutePath,
       });
       const previousPath = pluginInstance.nodeIdToPagePath
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .get(node.id as any)
         ?.get(absolutePath);
 
@@ -89,6 +94,7 @@ export async function createPagesFromChangedNodes(
             component: absolutePath,
           });
           pluginInstance.nodeIdToPagePath
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .get(node.id as any)
             ?.delete(absolutePath);
           pluginInstance.knownPagePaths.delete(previousPath);

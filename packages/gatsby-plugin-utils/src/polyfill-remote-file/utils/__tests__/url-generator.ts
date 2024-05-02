@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import type { Store } from "gatsby";
+// import type { Store } from "gatsby";
 import url from "node:url";
 
 import {
@@ -7,6 +7,7 @@ import {
   generateImageUrl,
   ImageCDNUrlKeys,
 } from "../url-generator";
+import { Store } from "gatsby";
 
 type ImageArgs = Parameters<typeof generateImageUrl>[1];
 
@@ -47,7 +48,8 @@ describe("url-generator", () => {
           format: "webp",
           quality: 80,
         },
-        store as unknown as Store,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        store as unknown as any,
       ),
     ).toMatchInlineSnapshot(
       '"/prefix-test/_gatsby/image/18867d45576d8283d6fabb82406789c8/a5d4237c29c15bd781f3586364b7e168/image.webp?u=https%3A%2F%2Fexample.com%2Fimage.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80&cd=1234"',

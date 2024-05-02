@@ -24,7 +24,6 @@
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

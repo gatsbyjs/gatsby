@@ -22,11 +22,13 @@
     "@babel/core": "^7.24.4",
     "@babel/traverse": "7.24.1",
     "babel-preset-gatsby-package": "workspace:*",
+    "gatsby-core-utils": "workspace:*",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.24.4",
-    "gatsby": "workspace:*",
+    "graphql": "^16.8.1",
+    "graphql-compose": "^9.0.10",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

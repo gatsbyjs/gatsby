@@ -1,6 +1,6 @@
 import type { ValidationOptions } from "joi";
 import { type ObjectSchema, Joi } from "./joi";
-import type { PluginOptions } from "gatsby";
+// import type { PluginOptions } from "gatsby";
 
 const validationOptions: ValidationOptions = {
   // Show all errors at once, rather than only the first one every time
@@ -14,7 +14,8 @@ type IOptions = {
 };
 
 type IValidateAsyncResult = {
-  value: PluginOptions;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any; // PluginOptions;
   warning: {
     message: string;
     details: Array<{
@@ -28,7 +29,8 @@ type IValidateAsyncResult = {
 
 export async function validateOptionsSchema(
   pluginSchema: ObjectSchema,
-  pluginOptions: PluginOptions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pluginOptions: any, // PluginOptions,
   options: IOptions = {
     validateExternalRules: true,
     returnWarnings: true,

@@ -61,11 +61,14 @@ async function attemptImport(
 async function attemptImportCompiled(
   siteDirectory: string,
   configName: string,
-): Promise<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  configModule: any;
-  configFilePath: string;
-}> {
+): Promise<
+  | {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      configModule: any;
+      configFilePath: string;
+    }
+  | undefined
+> {
   let compiledResult:
     | {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

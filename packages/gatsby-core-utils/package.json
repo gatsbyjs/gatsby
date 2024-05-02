@@ -94,7 +94,6 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

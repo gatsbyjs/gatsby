@@ -57,6 +57,8 @@ export async function getSslCert({
       id: "11521",
       context: {},
     });
+
+    throw new Error("Missing keyFile");
   }
 
   if (certFile && keyFile) {
@@ -112,4 +114,6 @@ export async function getSslCert({
       },
     });
   }
+
+  return undefined;
 }

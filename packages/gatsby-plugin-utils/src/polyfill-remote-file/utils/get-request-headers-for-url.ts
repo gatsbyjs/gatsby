@@ -1,13 +1,14 @@
 import url from "node:url";
 
 import type { Headers } from "got";
-import type { Store } from "gatsby";
+// import type { Store } from "gatsby";
 
 let loggedWarning = false;
 
 export function getRequestHeadersForUrl(
   passedUrl: string,
-  store?: Store | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined,
 ): Headers | undefined {
   const storeIsMissing = !store || !("getState" in store);
 

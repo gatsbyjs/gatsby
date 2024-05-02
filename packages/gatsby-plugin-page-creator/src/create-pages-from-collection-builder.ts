@@ -1,7 +1,7 @@
 // Move this to gatsby-core-utils?
-import { Actions, CreatePagesArgs } from "gatsby";
-import { Reporter } from "gatsby/reporter";
-import { Options as ISlugifyOptions } from "@sindresorhus/slugify";
+// import { Actions, CreatePagesArgs } from "gatsby";
+// import { Reporter } from "gatsby/reporter";
+import type { Options as ISlugifyOptions } from "@sindresorhus/slugify";
 import type { TrailingSlash } from "gatsby-page-utils";
 import { watchCollectionBuilder } from "./watch-collection-builder";
 import { collectionExtractQueryString } from "./collection-extract-query-string";
@@ -14,11 +14,14 @@ type ICreatePagesFromCollectionBuilderArgs = {
   filePath: string;
   absolutePath: string;
   pagesPath: string;
-  actions: Actions;
-  graphql: CreatePagesArgs["graphql"];
-  reporter: Reporter;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any; // Actions;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  graphql: any; // CreatePagesArgs["graphql"];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
   trailingSlash: TrailingSlash;
-  slugifyOptions?: ISlugifyOptions;
+  slugifyOptions?: ISlugifyOptions | undefined;
 };
 
 export async function createPagesFromCollectionBuilder(
@@ -45,9 +48,8 @@ export async function createPagesFromCollectionBuilder(
     return;
   }
 
-  const { data, errors } = await graphql<{ nodes: Record<string, unknown> }>(
-    queryString,
-  );
+  // <{ nodes: Record<string, unknown> }>
+  const { data, errors } = await graphql(queryString);
 
   // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
@@ -76,6 +78,8 @@ ${errors.map((error) => error.message).join("\n")}`.trim(),
 
   // 2. Get the nodes out of the data. We very much expect data to come back in a known shape:
   //    data = { [key: string]: { nodes: Array<ACTUAL_DATA> } }
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const nodes = Object.values(Object.values(data)[0])[0] as any as Array<
     Record<string, Record<string, unknown>>
   >;

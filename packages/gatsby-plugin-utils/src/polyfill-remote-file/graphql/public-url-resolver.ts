@@ -3,13 +3,15 @@ import {
   dispatchLocalFileServiceJob,
   shouldDispatchLocalFileServiceJob,
 } from "../jobs/dispatchers";
-import type { Actions, Store } from "gatsby";
+// import type { Actions, Store } from "gatsby";
 import type { IRemoteFileNode, IGraphQLFieldConfigDefinition } from "../types";
 
 export function publicUrlResolver(
   source: IRemoteFileNode,
-  actions: Actions,
-  store?: Store,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any, // Actions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined, // Store | undefined,
 ): string {
   if (shouldDispatchLocalFileServiceJob()) {
     dispatchLocalFileServiceJob(
@@ -38,8 +40,10 @@ export function publicUrlResolver(
 }
 
 export function generatePublicUrlFieldConfig(
-  actions: Actions,
-  store?: Store,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any, // Actions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined, // Store | undefined,
 ): IGraphQLFieldConfigDefinition<IRemoteFileNode, string> {
   return {
     type: "String!",

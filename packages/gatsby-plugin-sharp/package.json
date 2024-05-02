@@ -41,11 +41,9 @@
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.4",
     "babel-preset-gatsby-package": "workspace:*",
-    "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "workspace:*"
+    "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "gatsby": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

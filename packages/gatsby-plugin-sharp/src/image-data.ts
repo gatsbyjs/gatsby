@@ -1,9 +1,9 @@
-import type {
-  IGatsbyImageData,
-  ISharpGatsbyImageArgs,
-} from "gatsby-plugin-image";
-import type { GatsbyCache, Node } from "gatsby";
-import type { Reporter } from "gatsby/reporter";
+// import type {
+//   IGatsbyImageData,
+//   ISharpGatsbyImageArgs,
+// } from "gatsby-plugin-image";
+// import type { GatsbyCache } from "gatsby";
+// import type { Reporter } from "gatsby/reporter";
 import fs from "fs-extra";
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils";
 import { getImageSizeAsync, base64, batchQueueImageResizing } from ".";
@@ -15,6 +15,30 @@ import {
   type ITransformArgs,
 } from "./plugin-options";
 import { reportError } from "./report-error";
+
+type NodeInput = {
+  id: string;
+  parent?: string | null | undefined;
+  children?: Array<string> | undefined;
+  internal: {
+    type: string;
+    mediaType?: string | undefined;
+    content?: string | undefined;
+    contentDigest: string;
+    description?: string | undefined;
+    contentFilePath?: string | undefined;
+  };
+  [key: string]: unknown;
+};
+
+type Node = {
+  parent: string | null;
+  children: Array<string>;
+  internal: NodeInput["internal"] & {
+    owner: string;
+  };
+  [key: string]: unknown;
+} & NodeInput;
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20;
 
@@ -44,7 +68,8 @@ const metadataCache = new Map<string, IImageMetadata>();
 export async function getImageMetadata(
   file: FileNode,
   getDominantColor?: boolean | undefined,
-  cache?: GatsbyCache | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache?: any | undefined, // GatsbyCache | undefined,
 ): Promise<IImageMetadata> {
   if (!getDominantColor) {
     // If we don't need the dominant color we can use the cheaper size function
@@ -104,17 +129,23 @@ export async function getImageMetadata(
 
 export type IImageDataProps = {
   file: FileNode;
-  args: ISharpGatsbyImageArgs;
-  cache: GatsbyCache;
-  reporter: Reporter;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  args: any; // ISharpGatsbyImageArgs;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any; // GatsbyCache;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
 };
 
 export type IImageDataArgs = {
   file: FileNode;
-  args: ISharpGatsbyImageArgs;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  args: any; // ISharpGatsbyImageArgs;
   pathPrefix: string;
-  cache: GatsbyCache;
-  reporter: Reporter;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any; // GatsbyCache;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
 };
 
 function normalizeFormat(format: string): ImageFormat {
@@ -131,7 +162,8 @@ export async function generateImageData({
   pathPrefix,
   reporter,
   cache,
-}: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}: IImageDataArgs): Promise<any | undefined> {
   args = mergeDefaults(args);
 
   let { placeholder = "dominantColor" } = args;
@@ -311,10 +343,12 @@ export async function generateImageData({
   }
 
   const imageProps: Pick<
-    IGatsbyImageData,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
     "backgroundColor" | "layout" | "placeholder" | "images"
   > &
-    Partial<Pick<IGatsbyImageData, "width" | "height">> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Partial<Pick<any, "width" | "height">> = {
     layout,
     placeholder: undefined,
     backgroundColor,
@@ -433,5 +467,6 @@ export async function generateImageData({
       imageProps.height = (imageProps.width || 1) / primaryImage.aspectRatio;
     }
   }
-  return imageProps as IGatsbyImageData;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return imageProps as any;
 }

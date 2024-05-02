@@ -4,7 +4,7 @@ import { URL, URLSearchParams } from "url";
 import { resizeResolver } from "../index";
 import { generateImageUrl } from "../utils/url-generator";
 import * as dispatchers from "../jobs/dispatchers";
-import type { Actions } from "gatsby";
+// import type { Actions } from "gatsby";
 import type { ImageFit, IRemoteImageNode } from "../types";
 
 jest
@@ -17,7 +17,8 @@ describe("resizeResolver", () => {
     dispatchers.shouldDispatchLocalImageServiceJob.mockClear();
   });
 
-  const actions = {} as Actions;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const actions = {} as any;
   const portraitSource = {
     id: "1",
     url: "https://images.unsplash.com/photo-1588795945-b9c8d9f9b9c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",

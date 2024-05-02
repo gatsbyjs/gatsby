@@ -1,4 +1,28 @@
-import type { Node, GatsbyNode, NodeInput } from "gatsby";
+// import type { GatsbyNode } from "gatsby";
+
+type NodeInput = {
+  id: string;
+  parent?: string | null | undefined;
+  children?: Array<string> | undefined;
+  internal: {
+    type: string;
+    mediaType?: string | undefined;
+    content?: string | undefined;
+    contentDigest: string;
+    description?: string | undefined;
+    contentFilePath?: string | undefined;
+  };
+  [key: string]: unknown;
+};
+
+type Node = {
+  parent: string | null;
+  children: Array<string>;
+  internal: NodeInput["internal"] & {
+    owner: string;
+  };
+  [key: string]: unknown;
+} & NodeInput;
 
 type IRemoteFileNodeFields = {
   url: string;
@@ -56,9 +80,9 @@ export type IGraphQLFieldConfigDefinition<
   resolve(source: TSource, args: TArgs): R;
 };
 
-export type SchemaBuilder = Parameters<
-  NonNullable<GatsbyNode["createSchemaCustomization"]>
->[0]["schema"];
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type SchemaBuilder = Parameters<NonNullable<any>>[0]["schema"];
 
 export type ImageFit = import("sharp").FitEnum[keyof import("sharp").FitEnum];
 export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto";

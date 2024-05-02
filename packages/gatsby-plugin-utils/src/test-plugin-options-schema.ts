@@ -1,5 +1,5 @@
 import { Joi, type ObjectSchema } from "./joi";
-import type { GatsbyNode, PluginOptions } from "gatsby";
+// import type { GatsbyNode, PluginOptions } from "gatsby";
 import { validateOptionsSchema } from "./validate";
 
 type ITestPluginOptionsSchemaReturnType = {
@@ -10,8 +10,10 @@ type ITestPluginOptionsSchemaReturnType = {
 };
 
 export async function testPluginOptionsSchema(
-  pluginSchemaFunction: GatsbyNode["pluginOptionsSchema"],
-  pluginOptions: PluginOptions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pluginSchemaFunction: any, // GatsbyNode["pluginOptionsSchema"],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pluginOptions: any, // PluginOptions,
 ): Promise<ITestPluginOptionsSchemaReturnType | undefined> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pluginSchema: ObjectSchema<any> | undefined = pluginSchemaFunction?.({

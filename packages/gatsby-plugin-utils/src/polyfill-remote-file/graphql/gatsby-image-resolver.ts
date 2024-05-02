@@ -10,7 +10,7 @@ import { generatePlaceholder, PlaceholderType } from "../placeholder-handler";
 import { type ImageCropFocus, isImage } from "../types";
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils";
 
-import type { Actions, Store } from "gatsby";
+// import type { Actions, Store } from "gatsby";
 import type {
   IRemoteFileNode,
   IRemoteImageNode,
@@ -84,8 +84,10 @@ let didShowTraceSVGRemovalWarning = false;
 export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
-  actions: Actions,
-  store?: Store | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any, // Actions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined, // Store | undefined,
 ): Promise<{
   images: IGatsbyImageData;
   layout: string;
@@ -283,8 +285,10 @@ export async function gatsbyImageResolver(
 
 export function generateGatsbyImageFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  actions: Actions,
-  store?: Store,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any, // Actions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined, // Store | undefined,
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode | IRemoteImageNode,
   ReturnType<typeof gatsbyImageResolver>,

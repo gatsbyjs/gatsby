@@ -1,8 +1,8 @@
-import { Actions } from "gatsby";
+// import type { Actions } from "gatsby";
 import {
   createPath,
   applyTrailingSlashOption,
-  TrailingSlash,
+  type TrailingSlash,
 } from "gatsby-page-utils";
 import { getMatchPath } from "gatsby-core-utils";
 
@@ -13,7 +13,8 @@ import { getMatchPath } from "gatsby-core-utils";
 export function createClientOnlyPage(
   filePath: string,
   absolutePath: string,
-  actions: Actions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any, // Actions,
   trailingSlash: TrailingSlash,
 ): void {
   const path = createPath(filePath);

@@ -8,11 +8,12 @@ import { transformImage } from "./transform-images";
 import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url";
 
 import type { Application } from "express";
-import type { Store } from "gatsby";
+// import type { Store } from "gatsby";
 
 export function polyfillImageServiceDevRoutes(
   app: Application,
-  store?: Store,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined,
 ): void {
   if (hasFeature("image-cdn")) {
     return;
@@ -21,7 +22,11 @@ export function polyfillImageServiceDevRoutes(
   addImageRoutes(app, store);
 }
 
-export function addImageRoutes(app: Application, store?: Store): Application {
+export function addImageRoutes(
+  app: Application,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined,
+): Application {
   app.get("/_gatsby/file/:url/:filename", async (req, res) => {
     const outputDir = path.join(
       global.__GATSBY?.root || process.cwd(),

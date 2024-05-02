@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-expressions */
 /*  eslint-disable new-cap */
-import graphql from "gatsby/graphql";
 import nodePath from "path";
 import { NodePath, PluginObj } from "@babel/core";
 import { slash } from "gatsby-core-utils/path";
@@ -28,6 +27,20 @@ import {
   isFunction,
   isIdentifier,
 } from "@babel/types";
+import { graphql as gq } from "graphql";
+import { GraphQLJSON } from "graphql-compose";
+
+// class StaticQueryDocument {
+//   /** Prevents structural type widening. */
+//   // @ts-ignore
+//   #kind: "StaticQueryDocument";
+
+//   /** Allows type-safe access to the static query hash for debugging purposes. */
+//   // @ts-ignore
+//   toString(): string;
+// }
+
+const graphql = Object.assign({}, gq, { GraphQLJSON });
 
 type ISourcePosition = {
   line: number;

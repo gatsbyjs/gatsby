@@ -33,8 +33,10 @@ export async function startWebpackServer({
   websocketManager: WebsocketManager;
   webpackWatching: IWebpackWatchingPauseResume | undefined;
 }> {
-  if (!program || !app || !store) {
+  if (typeof program === "undefined" || !app || !store) {
     report.panic("Missing required params");
+
+    throw new Error("Missing required params");
   }
 
   // eslint-disable-next-line prefer-const

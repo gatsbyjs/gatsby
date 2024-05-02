@@ -1,9 +1,10 @@
-import type { Reporter } from "gatsby";
+// import type { Reporter } from "gatsby";
 
 export function reportError(
   message: string,
   err?: Error | undefined,
-  reporter?: Reporter | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter?: any | undefined, // Reporter | undefined,
 ): void {
   if (reporter) {
     reporter.error({

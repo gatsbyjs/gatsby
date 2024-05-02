@@ -1,7 +1,8 @@
 import path from "node:path";
 import { getGatsbyVersion } from "../utils/get-gatsby-version";
 import { generateFileUrl, generateImageUrl } from "../utils/url-generator";
-import type { Actions, Store } from "gatsby";
+// import type { Actions, Store } from "gatsby";
+
 import { getRequestHeadersForUrl } from "../utils/get-request-headers-for-url";
 
 export function shouldDispatchLocalFileServiceJob(): boolean {
@@ -36,8 +37,10 @@ export function dispatchLocalFileServiceJob(
     mimeType: string;
     contentDigest: string;
   },
-  actions: Actions,
-  store?: Store,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any, // Actions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined, // Store | undefined,
 ): void {
   const GATSBY_VERSION = getGatsbyVersion();
   const publicUrl = generateFileUrl(
@@ -93,8 +96,10 @@ export function dispatchLocalImageServiceJob(
     contentDigest: string;
   },
   imageArgs: Parameters<typeof generateImageUrl>[1],
-  actions: Actions,
-  store?: Store,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  actions: any, // Actions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined, // Store | undefined,
 ): void {
   const GATSBY_VERSION = getGatsbyVersion();
   const publicUrl = generateImageUrl(

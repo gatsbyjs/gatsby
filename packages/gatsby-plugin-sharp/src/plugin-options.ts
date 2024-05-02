@@ -1,11 +1,12 @@
-import type { PluginOptions } from "gatsby";
-import type { ISharpGatsbyImageArgs, Fit } from "gatsby-plugin-image";
+// import type { PluginOptions } from "gatsby";
+// import type { ISharpGatsbyImageArgs, Fit } from "gatsby-plugin-image";
 import { pickBy, defaults, mergeWith, omitBy, isNil, identity } from "lodash";
 import type sharp from "sharp";
 import type { FailOnOptions, FormatEnum, SharpOptions } from "sharp";
 
 export type PluginOptionsDefaults = Pick<
-  ISharpGatsbyImageArgs,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  any,
   | "formats"
   | "placeholder"
   | "quality"
@@ -54,7 +55,8 @@ export type ITransformArgs = {
   trim?: number | undefined;
   duotone?: IDuotoneArgs | undefined;
   background?: string | undefined;
-  fit?: Fit | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fit?: any | undefined;
   pathPrefix?: string | undefined;
   maxHeight?: number | undefined;
   maxWidth?: number | undefined;
@@ -103,7 +105,10 @@ const generalArgs: Partial<IGeneralArgs> = {
 
 let pluginOptions: ISharpPluginOptions = Object.assign({}, pluginDefaults);
 
-export function setPluginOptions(opts: PluginOptions): ISharpPluginOptions {
+export function setPluginOptions(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  opts: any, // PluginOptions,
+): ISharpPluginOptions {
   pluginOptions = Object.assign({}, pluginOptions, opts);
   generalArgs.quality = pluginOptions.defaultQuality;
 
@@ -151,8 +156,10 @@ export function createTransformObject(
  * Used for gatsbyImageData and StaticImage only
  */
 export function mergeDefaults(
-  args: ISharpGatsbyImageArgs,
-): PluginOptionsDefaults & ISharpGatsbyImageArgs {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  args: any, // ISharpGatsbyImageArgs,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): PluginOptionsDefaults & any {
   return doMergeDefaults(args, pluginOptions.defaults);
 }
 
@@ -161,9 +168,11 @@ function customizer<T>(objValue: unknown, srcValue: T): T | undefined {
 }
 
 export function doMergeDefaults(
-  args: ISharpGatsbyImageArgs,
-  defaults?: PluginOptionsDefaults,
-): PluginOptionsDefaults & ISharpGatsbyImageArgs {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  args: any, // ISharpGatsbyImageArgs,
+  defaults?: PluginOptionsDefaults | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): PluginOptionsDefaults & any {
   if (!defaults) {
     return args;
   }

@@ -9,7 +9,7 @@ import {
   type ImageCdnTransformArgs,
   type FileCdnUrlGeneratorFn,
 } from "../types";
-import type { Store } from "gatsby";
+// import type { Store } from "gatsby";
 
 // this is an arbitrary origin that we use #branding so we can construct a full url for the URL constructor
 const ORIGIN = "https://gatsbyjs.com";
@@ -71,7 +71,8 @@ function preferDefault(m: any): any {
 
 export function generateFileUrl(
   source: ImageCdnSourceImage,
-  store?: Store | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined,
 ): string {
   const state = store?.getState();
 
@@ -110,7 +111,8 @@ export function generateFileUrl(
 export function generateImageUrl(
   source: ImageCdnSourceImage,
   imageArgs: ImageCdnTransformArgs,
-  store?: Store | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  store?: any | undefined, // Store | undefined,
 ): string {
   const state = store?.getState();
 
