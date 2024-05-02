@@ -127,7 +127,7 @@ apiRunnerAsync("onClientEntry").then(() => {
         if (cleanupFn && typeof cleanupFn === "function") {
           cleanupFn();
         } else {
-          ReactDOM.unmountComponentAtNode(indicatorMountElement);
+          ReactDOM.root.unmount(indicatorMountElement);
         }
         indicatorMountElement.remove();
       }

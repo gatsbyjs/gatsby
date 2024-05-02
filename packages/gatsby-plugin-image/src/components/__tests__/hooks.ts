@@ -1,4 +1,4 @@
-import { Node } from "gatsby";
+// import type { Node } from "gatsby";
 import { getImageData, getSrc, getSrcSet, getImage } from "../hooks";
 import type { IGatsbyImageData, IGetImageDataArgs } from "../../";
 
@@ -14,7 +14,8 @@ const imageData: IGatsbyImageData = {
   height: 2,
 };
 
-const node: Node = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const node: any = {
   id: "",
   parent: "",
   children: [],
@@ -73,13 +74,13 @@ describe("The image helper functions", () => {
     });
     it("generates data with explicit dimensions", () => {
       const data = getImageData({ ...getImageDataArgs, width: 600 });
-      expect(data.images.fallback.srcSet).toMatchInlineSnapshot(`
+      expect(data.images.fallback?.srcSet).toMatchInlineSnapshot(`
         "https://example.com/img/1234.jpg/150x113.auto 150w,
         https://example.com/img/1234.jpg/300x225.auto 300w,
         https://example.com/img/1234.jpg/600x450.auto 600w,
         https://example.com/img/1234.jpg/1200x900.auto 1200w"
       `);
-      expect(data.images.fallback.sizes).toEqual(
+      expect(data.images.fallback?.sizes).toEqual(
         "(min-width: 600px) 600px, 100vw",
       );
     });
@@ -89,7 +90,7 @@ describe("The image helper functions", () => {
         ...getImageDataArgs,
         layout: "fullWidth",
       });
-      expect(data.images.fallback.srcSet).toMatchInlineSnapshot(`
+      expect(data.images.fallback?.srcSet).toMatchInlineSnapshot(`
         "https://example.com/img/1234.jpg/320x240.auto 320w,
         https://example.com/img/1234.jpg/654x491.auto 654w,
         https://example.com/img/1234.jpg/768x576.auto 768w,
@@ -105,7 +106,7 @@ describe("The image helper functions", () => {
         layout: "fullWidth",
         breakpoints: [100, 200, 300, 1024, 2048],
       });
-      expect(data.images.fallback.srcSet).toMatchInlineSnapshot(`
+      expect(data.images.fallback?.srcSet).toMatchInlineSnapshot(`
         "https://example.com/img/1234.jpg/100x75.auto 100w,
         https://example.com/img/1234.jpg/200x150.auto 200w,
         https://example.com/img/1234.jpg/300x225.auto 300w,
@@ -173,11 +174,13 @@ describe("The image helper functions", () => {
     });
 
     it("returns undefined when passed a number", () => {
-      expect(getImage(1 as any as Node)).toBeUndefined();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(getImage(1 as unknown as any)).toBeUndefined();
     });
 
     it("returns undefined when passed undefined", () => {
-      expect(getImage(undefined as any as Node)).toBeUndefined();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(getImage(undefined as unknown as any)).toBeUndefined();
     });
   });
 
@@ -199,11 +202,13 @@ describe("The image helper functions", () => {
       expect(getSrc(node)).toBeUndefined();
     });
     it("returns undefined when passed undefined", () => {
-      expect(getSrc(undefined as any as Node)).toBeUndefined();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(getSrc(undefined as unknown as any)).toBeUndefined();
     });
 
     it("returns undefined when passed a number", () => {
-      expect(getSrc(1 as any as Node)).toBeUndefined();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(getSrc(1 as unknown as any)).toBeUndefined();
     });
   });
 
@@ -226,11 +231,13 @@ describe("The image helper functions", () => {
     });
 
     it("returns undefined when passed undefined", () => {
-      expect(getSrcSet(undefined as any as Node)).toBeUndefined();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(getSrcSet(undefined as unknown as any)).toBeUndefined();
     });
 
     it("returns undefined when passed a number", () => {
-      expect(getSrcSet(1 as any as Node)).toBeUndefined();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(getSrcSet(1 as unknown as any)).toBeUndefined();
     });
   });
 });

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { collectedScriptsByPage } from "gatsby-script";
 import { getForwards } from "./utils/get-forwards";
 import { partytownSnippet } from "@builder.io/partytown/integration";

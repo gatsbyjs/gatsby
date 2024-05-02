@@ -23,42 +23,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-const promisify = require("util").promisify;
-const fs = require("fs");
-const zlib = require("zlib");
+import { promisify } from "node:util";
+import fs from "node:fs";
+import zlib from "node:zlib";
 
-type IExternalBuffer = {
+export type IExternalBuffer = {
   index: number;
   buffer: Buffer;
 };
 
-exports.write = async function (path, data, options): Promise<void> {
+export async function write(path, data, options): Promise<void> {
   const externalBuffers: Array<IExternalBuffer> = [];
-  let dataString = JSON.stringify(data, function replacerFunction(_k, value) {
-    // Buffers searilize to {data: [...], type: "Buffer"}
-    if (
-      value &&
-      value.type === "Buffer" &&
-      value.data &&
-      value.data.length >=
-        1024 /* only save bigger Buffers external, small ones can be inlined */
-    ) {
-      const buffer = Buffer.from(value.data);
-      externalBuffers.push({
-        index: externalBuffers.length,
-        buffer: buffer,
-      });
-      return {
-        type: "ExternalBuffer",
-        index: externalBuffers.length - 1,
-        size: buffer.length,
-      };
-    } else if (value === Infinity || value === -Infinity) {
-      return { type: "Infinity", sign: Math.sign(value) };
-    } else {
-      return value;
-    }
-  });
+  let dataString: string | Buffer = JSON.stringify(
+    data,
+    function replacerFunction(_k, value) {
+      // Buffers searilize to {data: [...], type: "Buffer"}
+      if (
+        value &&
+        value.type === "Buffer" &&
+        value.data &&
+        value.data.length >=
+          1024 /* only save bigger Buffers external, small ones can be inlined */
+      ) {
+        const buffer = Buffer.from(value.data);
+        externalBuffers.push({
+          index: externalBuffers.length,
+          buffer: buffer,
+        });
+        return {
+          type: "ExternalBuffer",
+          index: externalBuffers.length - 1,
+          size: buffer.length,
+        };
+      } else if (value === Infinity || value === -Infinity) {
+        return { type: "Infinity", sign: Math.sign(value) };
+      } else {
+        return value;
+      }
+    },
+  );
 
   let zipExtension = "";
   if (options.zip) {
@@ -86,9 +89,9 @@ exports.write = async function (path, data, options): Promise<void> {
       );
     }),
   );
-};
+}
 
-exports.read = async function (path, options): Promise<string> {
+export async function read(path, options): Promise<string> {
   let zipExtension = "";
   if (options.zip) {
     zipExtension = ".gz";
@@ -170,9 +173,9 @@ exports.read = async function (path, options): Promise<string> {
     }),
   );
   return data;
-};
+}
 
-exports.delete = async function (path, options): Promise<void> {
+export async function remove(path, options): Promise<void> {
   let zipExtension = "";
   if (options.zip) {
     zipExtension = ".gz";
@@ -192,4 +195,4 @@ exports.delete = async function (path, options): Promise<void> {
       throw err;
     }
   }
-};
+}

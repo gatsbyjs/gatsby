@@ -9,8 +9,8 @@ export const listenForMutations: InvokeCallback = function listenForMutations(
     callback({ type: "ADD_NODE_MUTATION", payload: event });
   }
 
-  function emitSourceChange(event: unknown): void {
-    callback({ type: "SOURCE_FILE_CHANGED", payload: event });
+  function emitSourceChange(payload: string): void {
+    callback({ type: "SOURCE_FILE_CHANGED", payload });
   }
 
   function emitWebhook(event: unknown): void {

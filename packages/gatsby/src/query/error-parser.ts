@@ -1,7 +1,7 @@
 import type { IMatch } from "../types";
 import type { SourceLocation } from "graphql";
 
-type IErrorParser = {
+export type IErrorParser = {
   message: string;
   filePath: string | undefined;
   location:

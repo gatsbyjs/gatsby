@@ -23,12 +23,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-const fs = require("fs");
-const crypto = require("crypto");
-const path = require("path");
-const promisify = require("util").promisify;
-const jsonFileStore = require("./json-file-store");
-const wrapCallback = require("./wrap-callback");
+import fs from "node:fs";
+import crypto from "node:crypto";
+import path from "node:path";
+import { promisify } from "node:util";
+
+import * as jsonFileStore from "./json-file-store";
+import { wrapCallback } from "./wrap-callback";
 
 import reporter from "gatsby-cli/lib/reporter";
 
@@ -50,12 +51,12 @@ let showLockTimeoutWarning = true; // Only show this once
  * @param {boolean} [args.subdirs] create subdirectories
  * @returns {DiskStore}
  */
-exports.create = function create(args): typeof DiskStore {
+export function create(args): typeof DiskStore {
   return new DiskStore(args && args.options ? args.options : args);
-};
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function DiskStore(this: any, options): void {
+export function DiskStore(this: any, options): void {
   options = options || {};
 
   this.options = {
@@ -92,13 +93,13 @@ function DiskStore(this: any, options): void {
  * @param {function} [cb]
  * @returns {Promise}
  */
-DiskStore.prototype.set = wrapCallback(async function set(
+DiskStore.prototype.set = wrapCallback<void>(async function set(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   this: any,
   key,
   val,
   options,
-) {
+): Promise<void> {
   key = key + "";
   const filePath = this._getFilePathByKey(key);
 
@@ -127,6 +128,8 @@ DiskStore.prototype.set = wrapCallback(async function set(
   } finally {
     await this._unlock(filePath);
   }
+
+  return undefined;
 });
 
 /**
@@ -136,7 +139,7 @@ DiskStore.prototype.set = wrapCallback(async function set(
  * @returns {Promise}
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-DiskStore.prototype.get = wrapCallback(async function (this: any, key) {
+DiskStore.prototype.get = wrapCallback(async function get(this: any, key) {
   key = key + "";
   const filePath = this._getFilePathByKey(key);
 
@@ -157,15 +160,18 @@ DiskStore.prototype.get = wrapCallback(async function (this: any, key) {
           await this._unlock(filePath);
         }
       });
+    // @ts-ignore
     if (data.expireTime <= Date.now()) {
       // cache expired
       this.del(key).catch(() => 0 /* ignore */);
       return undefined;
     }
+    // @ts-ignore
     if (data.key !== key) {
       // hash collision
       return undefined;
     }
+    // @ts-ignore
     return data.val;
   } catch (err) {
     // file does not exist lets return a cache miss
@@ -191,7 +197,7 @@ DiskStore.prototype.del = wrapCallback(async function del(this: any, key) {
     }
 
     await this._lock(filePath);
-    await jsonFileStore.delete(filePath, this.options);
+    await jsonFileStore.remove(filePath, this.options);
   } catch (err) {
     // ignore deleting non existing keys
     if (err.code !== "ENOENT") {

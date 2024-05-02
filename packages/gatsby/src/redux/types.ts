@@ -20,7 +20,8 @@ import type {
   IAdapterFinalConfig,
   IAdapterManager,
 } from "../utils/adapter/types";
-import webpack from "webpack";
+import webpack, { Stats } from "webpack";
+import type { PluginRef } from "../..";
 
 type SystemPath = string;
 type Identifier = string;
@@ -113,15 +114,7 @@ export type IHeader = {
 
 // TODO: The keys of IGatsbyConfig are all optional so that in reducers like reducers/config.ts the default state for the config can be an empty object. This isn't ideal because some of those options are actually always defined because Joi validation sets defaults. Somehow fix this :D
 export type IGatsbyConfig = {
-  plugins?:
-    | Array<{
-        // This is the name of the plugin like `gatsby-plugin-manifest`
-        resolve: string;
-        options: {
-          [key: string]: unknown;
-        };
-      }>
-    | undefined;
+  plugins?: Array<PluginRef> | undefined;
   siteMetadata?:
     | {
         title?: string | undefined;
@@ -151,7 +144,12 @@ export type IGatsbyConfig = {
 
 export type IGatsbyNode = {
   id: Identifier;
+  name?: string | undefined;
+  slug?: string | undefined;
   parent: Identifier | null;
+  dir?: string | undefined;
+  absolutePath?: string | Array<string> | undefined;
+  mode?: PageMode | undefined;
   children: Array<Identifier>;
   internal: {
     type?: string | undefined;
@@ -163,8 +161,8 @@ export type IGatsbyNode = {
     description?: string | undefined;
     fieldOwners?: Record<string, Identifier> | undefined;
   };
-  [key: string]: unknown;
   fields?: Record<string, unknown> | undefined;
+  gatsbyNodePartialInternalData?: IGatsbyNode | undefined;
 };
 
 export type IGatsbyPlugin = {
@@ -295,7 +293,8 @@ export type GatsbyNodeAPI =
   | "preprocessSource"
   | "onPreBuild"
   | "setFieldsOnGraphQLNodeType"
-  | "onCreateDevServer";
+  | "onCreateDevServer"
+  | "onCreateBabelConfig";
 
 export type FlattenedPlugin = {
   resolve: SystemPath;
@@ -493,13 +492,70 @@ export type IApiRunningQueueEmptyAction = {
   payload: undefined;
 };
 
-export type ISevSsrCompilationDoneAction = {
+export type IDevSsrCompilationDoneAction = {
   type: "DEV_SSR_COMPILATION_DONE";
   payload: undefined;
 };
 
+export type ISourceFileChangedAction = {
+  type: "SOURCE_FILE_CHANGED";
+  payload: string;
+};
+
+export type IEnqueueNodeMutationAction = {
+  type: "ENQUEUE_NODE_MUTATION";
+  payload: {
+    type: "createNode";
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    args: Array<any>;
+    resolve?:
+      | ((thenableOrResult?: Promise<void> | undefined) => void)
+      | undefined;
+  };
+};
+
+export type IWebhookReceivedAction = {
+  type: "WEBHOOK_RECEIVED";
+  payload: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    webhookBody: any;
+    pluginName: string | undefined;
+  };
+};
+
+export type IQueryRunRequestedAction = {
+  type: "QUERY_RUN_REQUESTED";
+  payload: {
+    pagePath: string;
+  };
+};
+
+export type ICompilationDoneAction = {
+  type: "COMPILATION_DONE";
+  payload: Stats;
+};
+
+export type IBootstrapFinishedAction = {
+  type: "BOOTSTRAP_FINISHED";
+  payload: undefined;
+};
+
+export type ISetSiteFunctionsAction = {
+  type: "SET_SITE_FUNCTIONS";
+  payload: {
+    titleFunction: string;
+  };
+};
+
 export type ActionsUnion =
-  | ISevSsrCompilationDoneAction
+  | ISetSiteFunctionsAction
+  | IBootstrapFinishedAction
+  | ICompilationDoneAction
+  | IQueryRunRequestedAction
+  | IWebhookReceivedAction
+  | IEnqueueNodeMutationAction
+  | ISourceFileChangedAction
+  | IDevSsrCompilationDoneAction
   | IApiRunningQueueEmptyAction
   | ICreateRedirectAction
   | ICreateServerVisitedPage
@@ -886,7 +942,7 @@ export type ICreateServerVisitedPage = {
 
 export type ICreatePageAction = {
   type: "CREATE_PAGE";
-  payload?: IGatsbyNode | IGatsbyPage | undefined;
+  payload: IGatsbyPage;
   plugin?: IGatsbyPlugin | undefined;
   contextModified?: boolean | undefined;
   componentModified?: boolean | undefined;
@@ -1119,7 +1175,7 @@ export type IAddFieldToNodeAction = {
 export type IAddChildNodeToParentNodeAction = {
   type: "ADD_CHILD_NODE_TO_PARENT_NODE";
   plugin?: IPlugin | undefined;
-  payload: IGatsbyNode | { children: Array<string> } | undefined;
+  payload: IGatsbyNode;
 };
 
 export type IDeleteNodeAction = {

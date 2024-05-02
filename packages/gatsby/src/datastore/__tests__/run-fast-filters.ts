@@ -1,23 +1,28 @@
-const {
-  runFastFiltersAndSort: doRunFastFiltersAndSort,
+import {
+  runFastFiltersAndSort as doRunFastFiltersAndSort,
   applyFastFilters,
-} = require("../in-memory/run-fast-filters");
-const { store } = require("../../redux");
-const { getDataStore, getNode } = require("../../datastore");
-const { createDbQueriesFromObject } = require("../common/query");
-const { GatsbyIterable } = require("../common/iterable");
-const { actions } = require("../../redux/actions");
-const {
+  IRunFilterArg,
+} from "../in-memory/run-fast-filters";
+import { store } from "../../redux";
+import { getDataStore, getNode } from "../../datastore";
+import { createDbQueriesFromObject } from "../common/query";
+import { GatsbyIterable } from "../common/iterable";
+import { actions } from "../../redux/actions";
+import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLID,
   GraphQLString,
   GraphQLList,
-} = require("graphql");
+} from "graphql";
+import { IGatsbyNode } from "../../internal";
+import { IQueryArgs } from "../types";
+import { IGatsbyNodePartial } from "../in-memory/indexing";
 
-const mockNodes = () => [
+const mockNodes = (): Array<IGatsbyNode> => [
   {
     id: "id_1",
+    // @ts-ignore Property 'string' does not exist on type 'IGatsbyNode'.ts(2339)
     string: "foo",
     slog: "abc",
     deep: { flat: { search: { chain: 123 } } },
@@ -33,6 +38,7 @@ const mockNodes = () => [
   },
   {
     id: "id_2",
+    // @ts-ignore Property 'string' does not exist on type 'IGatsbyNode'.ts(2339)
     string: "bar",
     slog: "def",
     elemList: [
@@ -48,6 +54,7 @@ const mockNodes = () => [
   },
   {
     id: "id_3",
+    // @ts-ignore Property 'slog' does not exist on type 'IGatsbyNode'.ts(2339)
     slog: "abc",
     string: "baz",
     elemList: [
@@ -66,6 +73,7 @@ const mockNodes = () => [
   },
   {
     id: "id_4",
+    // @ts-ignore Property 'string' does not exist on type 'IGatsbyNode'.ts(2339)
     string: "qux",
     slog: "def",
     deep: { flat: { search: { chain: 300 } } },
@@ -90,7 +98,8 @@ const mockNodes = () => [
 const typeName = "test";
 const gqlType = new GraphQLObjectType({
   name: typeName,
-  fields: () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fields: (): any => {
     return {
       id: { type: new GraphQLNonNull(GraphQLID) },
       string: { type: GraphQLString },
@@ -100,7 +109,7 @@ const gqlType = new GraphQLObjectType({
           fields: {
             willBeResolved: {
               type: GraphQLString,
-              resolve: () => "resolvedValue",
+              resolve: (): string => "resolvedValue",
             },
             second: {
               type: new GraphQLList(
@@ -111,9 +120,11 @@ const gqlType = new GraphQLObjectType({
                       type: GraphQLString,
                       resolve: () => "resolvedValue",
                     },
+                    // @ts-ignore
                     third: new GraphQLObjectType({
                       name: "Third",
                       fields: {
+                        // @ts-ignore
                         foo: GraphQLString,
                       },
                     }),
@@ -128,8 +139,11 @@ const gqlType = new GraphQLObjectType({
   },
 });
 
-function runFastFiltersAndSort(...args) {
-  const result = doRunFastFiltersAndSort(...args);
+function runFastFiltersAndSort(args: IRunFilterArg): {
+  entries: Array<IGatsbyNode>;
+  totalCount: () => Promise<number>;
+} {
+  const result = doRunFastFiltersAndSort(args);
   expect(result.entries).toBeInstanceOf(GatsbyIterable);
   expect(typeof result.totalCount).toBe("function");
   return {
@@ -202,7 +216,7 @@ describe("fast filter tests", () => {
     });
 
     it("non-eq operator", async () => {
-      const queryArgs = {
+      const queryArgs: IQueryArgs = {
         filter: {
           id: { ne: "id_2" },
         },
@@ -230,7 +244,14 @@ describe("fast filter tests", () => {
       expect(await totalCount()).toEqual(2);
     });
     it("return empty array in case of empty nodes", async () => {
-      const queryArgs = { filter: {}, sort: {}, limit: 1 };
+      const queryArgs: IQueryArgs = {
+        filter: {},
+        sort: {
+          fields: [],
+          order: [],
+        },
+        limit: 1,
+      };
       const { entries: resultSingular } = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
@@ -259,6 +280,7 @@ describe("fast filter tests", () => {
       expect(resultSingular.length).toEqual(1);
 
       resultSingular.map((node) => {
+        // @ts-ignore Property 'slog' does not exist on type 'IGatsbyNode'.ts(2339)
         expect(node.slog).toEqual("def");
       });
     });
@@ -281,6 +303,7 @@ describe("fast filter tests", () => {
       expect(await totalCount()).toEqual(2);
 
       resultMany.map((node) => {
+        // @ts-ignore Property 'slog' does not exist on type 'IGatsbyNode'.ts(2339)
         expect(node.slog).toEqual("def");
       });
     });
@@ -302,6 +325,7 @@ describe("fast filter tests", () => {
       expect(resultSingular.length).toEqual(1);
 
       resultSingular.map((node) => {
+        // @ts-ignore Property 'deep' does not exist on type 'IGatsbyNode'.ts(2339)
         expect(node.deep.flat.search.chain).toEqual(300);
       });
     });
@@ -324,6 +348,7 @@ describe("fast filter tests", () => {
       expect(await totalCount()).toEqual(2);
 
       resultMany.map((node) => {
+        // @ts-ignore Property 'deep' does not exist on type 'IGatsbyNode'.ts(2339)
         expect(node.deep.flat.search.chain).toEqual(300);
       });
     });
@@ -406,10 +431,11 @@ describe("applyFastFilters", () => {
       [],
     );
     expect(Array.isArray(result)).toBe(true);
-    expect(result.length).toEqual(2);
+    expect(result?.length).toEqual(2);
 
-    result.map((node) => {
-      expect(getNode(node.id).slog).toEqual("def");
+    result?.map((node) => {
+      // @ts-ignore Property 'slog' does not exist on type 'IGatsbyNode'.ts(2339)
+      expect(getNode(node.id)?.slog).toEqual("def");
     });
   });
 
@@ -426,10 +452,11 @@ describe("applyFastFilters", () => {
       [],
     );
     expect(Array.isArray(result)).toBe(true);
-    expect(result.length).toEqual(2);
+    expect(result?.length).toEqual(2);
 
-    result.map((node) => {
-      expect(getNode(node.id).deep.flat.search.chain).toEqual(300);
+    result?.map((node) => {
+      // @ts-ignore Property 'deep' does not exist on type 'IGatsbyNode'.ts(2339)
+      expect(getNode(node.id)?.deep.flat.search.chain).toEqual(300);
     });
   });
 
@@ -449,9 +476,11 @@ describe("applyFastFilters", () => {
 
     // Count is irrelevant as long as it is non-zero and they all match filter
     expect(Array.isArray(results)).toBe(true);
-    expect(results.length).toEqual(1);
-    expect(getNode(results[0].id).slog).toEqual("def");
-    expect(getNode(results[0].id).deep.flat.search.chain).toEqual(300);
+    expect(results?.length).toEqual(1);
+    // @ts-ignore Property 'slog' does not exist on type 'IGatsbyNode'.ts(2339)
+    expect(getNode(results?.[0].id ?? "")?.slog).toEqual("def");
+    // @ts-ignore Property 'deep' does not exist on type 'IGatsbyNode'.ts(2339)
+    expect(getNode(results?.[0].id ?? "")?.deep.flat.search.chain).toEqual(300);
   });
 
   it("supports elemMatch", () => {
@@ -470,7 +499,7 @@ describe("applyFastFilters", () => {
     );
 
     expect(result).not.toBe(undefined);
-    expect(result.length).toBe(2);
+    expect(result?.length).toBe(2);
   });
 });
 
@@ -498,8 +527,8 @@ describe("edge cases (yay)", () => {
     );
 
     // Sanity-check
-    expect(result.length).toEqual(1);
-    expect(result[0].id).toEqual("id_2");
+    expect(result?.length).toEqual(1);
+    expect(result?.[0].id).toEqual("id_2");
 
     // After process restart node.internal.counter is reset and conflicts with counters from the previous run
     //  in some situations this leads to incorrect intersection of filtered results.
@@ -511,7 +540,7 @@ describe("edge cases (yay)", () => {
       internal: {
         type: typeName,
         contentDigest: "bad-node",
-        counter: getNode("id_4").internal.counter,
+        counter: getNode("id_4")?.internal.counter,
       },
     };
     store.dispatch({
@@ -520,14 +549,15 @@ describe("edge cases (yay)", () => {
     });
     await getDataStore().ready();
 
-    const run = () =>
-      applyFastFilters(
+    const run = (): Array<IGatsbyNodePartial> | null => {
+      return applyFastFilters(
         createDbQueriesFromObject(filter),
         [typeName],
         new Map(),
         [],
         [],
       );
+    };
 
     expect(run).toThrow(
       "Invariant violation: inconsistent node counters detected",
@@ -556,9 +586,9 @@ describe("edge cases (yay)", () => {
         [],
       );
 
-      expect(result1.length).toEqual(2);
-      expect(result1[0].id).toEqual("id_2");
-      expect(result1[1].id).toEqual("id_4");
+      expect(result1?.length).toEqual(2);
+      expect(result1?.[0].id).toEqual("id_2");
+      expect(result1?.[1].id).toEqual("id_4");
     }
 
     {
@@ -576,8 +606,8 @@ describe("edge cases (yay)", () => {
         [],
       );
 
-      expect(result2.length).toEqual(1);
-      expect(result2[0].id).toEqual("id_2");
+      expect(result2?.length).toEqual(1);
+      expect(result2?.[0].id).toEqual("id_2");
     }
   });
 });

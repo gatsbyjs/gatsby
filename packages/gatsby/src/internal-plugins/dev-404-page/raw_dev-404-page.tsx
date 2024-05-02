@@ -1,16 +1,34 @@
-import React from "react";
+import React, { type FormEvent, type JSX } from "react";
 import PropTypes from "prop-types";
-import { graphql, Link, navigate } from "gatsby";
 import queryString from "query-string";
+import { Link } from "gatsby-link";
+import { navigate } from "@reach/router";
+import { graphql } from "../../..";
 
-class Dev404Page extends React.Component {
+type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  location: any;
+  custom404: null | JSX.Element;
+};
+
+type State = {
+  hasMounted: boolean;
+  showCustom404: boolean;
+  initPagePaths: Array<string>;
+  pagePathSearchTerms: string;
+  pagePaths: Array<string>;
+};
+
+class Dev404Page extends React.Component<Props, State> {
   static propTypes = {
     data: PropTypes.object,
     custom404: PropTypes.element,
     location: PropTypes.object,
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     const { data, location } = this.props;
     const pagePaths = data.allSitePage.nodes.map((node) => node.path);
@@ -20,9 +38,12 @@ class Dev404Page extends React.Component {
 
     this.state = {
       hasMounted: false,
-      showCustom404: process.env.GATSBY_DISABLE_CUSTOM_404 || false,
+      showCustom404: Boolean(process.env.GATSBY_DISABLE_CUSTOM_404) ?? false,
       initPagePaths: pagePaths,
-      pagePathSearchTerms: initialPagePathSearchTerms,
+      pagePathSearchTerms:
+        typeof initialPagePathSearchTerms === "string"
+          ? initialPagePathSearchTerms
+          : "",
       pagePaths: this.getFilteredPagePaths(
         pagePaths,
         initialPagePathSearchTerms,
@@ -33,17 +54,17 @@ class Dev404Page extends React.Component {
     this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.setState({
       hasMounted: true,
     });
   }
 
-  showCustom404() {
+  showCustom404(): void {
     this.setState({ showCustom404: true });
   }
 
-  handleSearchTermChange(event) {
+  handleSearchTermChange(event): void {
     const searchValue = event.target.value;
 
     this.setSearchUrl(searchValue);
@@ -53,9 +74,11 @@ class Dev404Page extends React.Component {
     });
   }
 
-  handlePagePathSearch(event) {
+  handlePagePathSearch(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+
     const allPagePaths = [...this.state.initPagePaths];
+
     this.setState({
       pagePaths: this.getFilteredPagePaths(
         allPagePaths,
@@ -64,12 +87,15 @@ class Dev404Page extends React.Component {
     });
   }
 
-  getFilteredPagePaths(allPagePaths, pagePathSearchTerms) {
+  getFilteredPagePaths(
+    allPagePaths,
+    pagePathSearchTerms: string | Array<string | null>,
+  ): Array<string> {
     const searchTerm = new RegExp(`${pagePathSearchTerms}`);
     return allPagePaths.filter((pagePath) => searchTerm.test(pagePath));
   }
 
-  setSearchUrl(searchValue) {
+  setSearchUrl(searchValue): void {
     const {
       location: { pathname, search },
     } = this.props;
@@ -84,7 +110,7 @@ class Dev404Page extends React.Component {
     }
   }
 
-  render() {
+  render(): JSX.Element | null {
     if (!this.state.hasMounted) {
       return null;
     }
@@ -257,5 +283,5 @@ export const pagesQuery = graphql`
       }
     }
   }
-`
+`;
 /* eslint-enable */

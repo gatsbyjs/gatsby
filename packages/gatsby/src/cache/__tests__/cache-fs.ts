@@ -1,27 +1,29 @@
-const assert = require("assert");
-const fs = require("fs");
-const removeDir = require("rimraf");
-const store = require("../cache-fs.ts");
+import assert from "assert";
+import fs from "fs";
+import removeDir from "rimraf";
+import { create } from "../cache-fs.ts";
 const cacheDirectory = __dirname + "/cache";
 
-function countFilesInCacheDir() {
+function countFilesInCacheDir(): number {
   return fs.readdirSync(cacheDirectory).length;
 }
 
-describe("DiskStore", function () {
+describe("DiskStore", function (): void {
   let cache;
   // remove test directory before each test
   beforeEach(async function () {
     return new Promise((resolve) => {
-      removeDir(cacheDirectory, () => {
-        cache = store.create({ path: cacheDirectory });
-        resolve();
+      removeDir.rimraf(cacheDirectory).then(() => {
+        cache = create({ path: cacheDirectory });
+        resolve(undefined);
       });
     });
   });
   // remove test directory after last test
   afterEach(async function () {
-    return new Promise((resolve) => removeDir(cacheDirectory, resolve));
+    return new Promise((resolve) =>
+      removeDir.rimraf(cacheDirectory).then(resolve),
+    );
   });
 
   describe("construction", function () {
@@ -36,7 +38,7 @@ describe("DiskStore", function () {
         cache.get("not existing key", function (err, data) {
           expect(err).toEqual(null);
           expect(data).toEqual(undefined);
-          resolve();
+          resolve(undefined);
         });
       });
     });
@@ -71,7 +73,7 @@ describe("DiskStore", function () {
 
       await Promise.all(
         Array(30)
-          .fill()
+          .fill(undefined)
           .map(async function (v, i) {
             const data = await cache.get("not existing key" + i);
             expect(data).toEqual(undefined);
@@ -117,14 +119,16 @@ describe("DiskStore", function () {
   describe("del()", function () {
     it("should not throw for deleting nonexisting key", async function () {
       // this.slow(20)
-      const cache = store.create({ path: cacheDirectory });
+      const cache = create({ path: cacheDirectory });
+      // @ts-ignore prototype
       await cache.del("nonexisting key");
       expect(true).toEqual(true);
     });
 
     it("should not throw for deleting nonexisting key (subdirs)", async function () {
       // this.slow(20)
-      const cache = store.create({ path: cacheDirectory, subdirs: true });
+      const cache = create({ path: cacheDirectory, subdirs: true });
+      // @ts-ignore prototype
       await cache.del("nonexisting key");
       expect(true).toEqual(true);
     });
@@ -158,8 +162,10 @@ describe("DiskStore", function () {
     });
 
     it("should not load expired data (global options)", async function () {
-      const cache = store.create({ path: cacheDirectory, ttl: 0 });
+      const cache = create({ path: cacheDirectory, ttl: 0 });
+      // @ts-ignore prototype
       await cache.set("key", "value");
+      // @ts-ignore prototype
       const loadedValue = await cache.get("key");
       expect(loadedValue).toEqual(undefined);
     });
@@ -186,23 +192,27 @@ describe("DiskStore", function () {
 
     it("should be able to get a value written by an other cache instance using the same directory", async function () {
       const originalValue = "value";
-      const cache1 = store.create({ path: cacheDirectory });
-      const cache2 = store.create({ path: cacheDirectory });
+      const cache1 = create({ path: cacheDirectory });
+      const cache2 = create({ path: cacheDirectory });
 
+      // @ts-ignore prototype
       await cache1.set("key", originalValue);
+      // @ts-ignore prototype
       const loadedValue = await cache2.get("key");
       expect(loadedValue).toEqual(originalValue);
     });
 
     it("should work with subdirs", async function () {
-      const cache = store.create({ path: cacheDirectory, subdirs: true });
+      const cache = create({ path: cacheDirectory, subdirs: true });
       const originalValue = {
         int: 8,
         bool: true,
         float: 0.9,
         string: "dsfsdöv",
       };
+      // @ts-ignore prototype
       await cache.set("(simple object)", originalValue);
+      // @ts-ignore prototype
       const loadedValue = await cache.get("(simple object)");
       expect(loadedValue).toEqual(originalValue);
     });
@@ -211,9 +221,9 @@ describe("DiskStore", function () {
       // this.slow(600)
       // this.timeout(5000)
 
-      const cache1 = store.create({ path: cacheDirectory });
-      const cache2 = store.create({ path: cacheDirectory });
-      const cache3 = store.create({ path: cacheDirectory });
+      const cache1 = create({ path: cacheDirectory });
+      const cache2 = create({ path: cacheDirectory });
+      const cache3 = create({ path: cacheDirectory });
 
       const value1 = {
         int: 5,
@@ -241,13 +251,19 @@ describe("DiskStore", function () {
       };
 
       await Promise.all([
+        // @ts-ignore prototype
         cache1.set("key", value1),
+        // @ts-ignore prototype
         cache2.set("key", value2),
+        // @ts-ignore prototype
         cache3.set("key", value3),
       ]);
       const values = await Promise.all([
+        // @ts-ignore prototype
         cache1.get("key"),
+        // @ts-ignore prototype
         cache2.get("key"),
+        // @ts-ignore prototype
         cache3.get("key"),
       ]);
       // all caches should be the same
@@ -267,7 +283,7 @@ describe("DiskStore", function () {
     });
 
     it("should work with zip option", async function () {
-      const cache = store.create({ path: cacheDirectory, zip: true });
+      const cache = create({ path: cacheDirectory, zip: true });
       const originalValue = {
         int: 5,
         bool: true,
@@ -277,16 +293,19 @@ describe("DiskStore", function () {
         largeBuffer: Buffer.alloc(1),
       };
 
+      // @ts-ignore prototype
       await cache.set("key", originalValue);
+      // @ts-ignore prototype
       const loadedValue = await cache.get("key");
       expect(loadedValue).toEqual(originalValue);
     });
 
     it("should be able to store the number Infinity", async function () {
-      const cache = store.create({ path: cacheDirectory });
+      const cache = create({ path: cacheDirectory });
       const originalValue = Infinity;
-
+      // @ts-ignore prototype
       await cache.set("key", originalValue);
+      // @ts-ignore prototype
       const loadedValue = await cache.get("key");
       expect(loadedValue).toEqual(originalValue);
     });

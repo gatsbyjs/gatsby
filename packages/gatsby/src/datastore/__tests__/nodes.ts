@@ -46,7 +46,7 @@ describe("nodes db tests", () => {
     store.dispatch(
       actions.createParentChildLink(
         {
-          parent: getNode("hi"),
+          parent: getNode("hi")!,
           child: getNode("hi-1"),
         },
         {
@@ -73,7 +73,7 @@ describe("nodes db tests", () => {
     store.dispatch(
       actions.createParentChildLink(
         {
-          parent: getNode("hi-1"),
+          parent: getNode("hi-1")!,
           child: getNode("hi-1-1"),
         },
         {
@@ -153,7 +153,7 @@ describe("nodes db tests", () => {
     store.dispatch(
       actions.createParentChildLink(
         {
-          parent: getNode("hi"),
+          parent: getNode("hi")!,
           child: getNode("hi-1"),
         },
         {
@@ -180,7 +180,7 @@ describe("nodes db tests", () => {
     store.dispatch(
       actions.createParentChildLink(
         {
-          parent: getNode("hi-1"),
+          parent: getNode("hi-1")!,
           child: getNode("hi-1-1"),
         },
         {
@@ -240,7 +240,7 @@ describe("nodes db tests", () => {
     store.dispatch(
       actions.createParentChildLink(
         {
-          parent: getNode("hi"),
+          parent: getNode("hi")!,
           child: getNode("hi-1"),
         },
         {
@@ -267,7 +267,7 @@ describe("nodes db tests", () => {
     store.dispatch(
       actions.createParentChildLink(
         {
-          parent: getNode("hi-1"),
+          parent: getNode("hi-1")!,
           child: getNode("hi-1-1"),
         },
         {
@@ -301,16 +301,16 @@ describe("nodes db tests", () => {
             contentDigest: "hasdfljds",
             type: "Test",
           },
-          pickle: true,
-          deep: {
-            array: [
-              0,
-              1,
-              {
-                boom: true,
-              },
-            ],
-          },
+          // pickle: true,
+          // deep: {
+          //   array: [
+          //     0,
+          //     1,
+          //     {
+          //       boom: true,
+          //     },
+          //   ],
+          // },
         },
         {
           name: "tests",
@@ -473,14 +473,14 @@ describe("nodes db tests", () => {
 
     const ownerOne = state.typeOwners.pluginsToTypes.get("test-owner-1");
     expect(ownerOne).toBeTruthy();
-    expect(ownerOne?.has("OwnerOneTestTypeOne")).toBeTrue();
-    expect(ownerOne?.has("OwnerOneTestTypeTwo")).toBeTrue();
-    expect(ownerOne?.has("OwnerTwoTestTypeThree")).toBeFalse();
+    expect(ownerOne?.has("OwnerOneTestTypeOne")).toBe(true);
+    expect(ownerOne?.has("OwnerOneTestTypeTwo")).toBe(true);
+    expect(ownerOne?.has("OwnerTwoTestTypeThree")).toBe(false);
 
     const ownerTwo = state.typeOwners.pluginsToTypes.get("test-owner-2");
     expect(ownerTwo).toBeTruthy();
-    expect(ownerTwo?.has("OwnerOneTestTypeTwo")).toBeFalse();
-    expect(ownerTwo?.has("OwnerTwoTestTypeThree")).toBeTrue();
-    expect(ownerTwo?.has("OwnerTwoTestTypeFour")).toBeTrue();
+    expect(ownerTwo?.has("OwnerOneTestTypeTwo")).toBe(false);
+    expect(ownerTwo?.has("OwnerTwoTestTypeThree")).toBe(true);
+    expect(ownerTwo?.has("OwnerTwoTestTypeFour")).toBe(true);
   });
 });

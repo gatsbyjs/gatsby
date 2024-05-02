@@ -105,13 +105,13 @@ export const clearDerivedTypes = ({
   typeComposer.setExtension("derivedTypes", new Set());
 };
 
-export const addDerivedType = ({
+export function addDerivedType({
   typeComposer,
   derivedTypeName,
 }: {
   typeComposer: AllTypeComposer;
   derivedTypeName: string;
-}): void => {
+}): void {
   const derivedTypes = getDerivedTypes({ typeComposer });
   typeComposer.setExtension("derivedTypes", derivedTypes.add(derivedTypeName));
-};
+}

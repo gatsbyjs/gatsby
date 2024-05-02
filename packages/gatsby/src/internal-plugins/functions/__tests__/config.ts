@@ -2,6 +2,7 @@ import { createConfig, type IGatsbyFunctionConfigProcessed } from "../config";
 import { printConfigWarnings } from "../middleware";
 import reporter from "gatsby-cli/lib/reporter";
 import type { IGatsbyFunction } from "../../../redux/types";
+
 const reporterWarnSpy = jest.spyOn(reporter, "warn");
 
 beforeEach(() => {

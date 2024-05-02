@@ -1,4 +1,4 @@
-import type { PreprocessSourceArgs } from "gatsby";
+// import type { PreprocessSourceArgs } from "gatsby";
 import { babelParseToAst } from "./parser";
 import path from "node:path";
 import { extractStaticImageProps } from "./parser";
@@ -20,7 +20,8 @@ export async function preprocessSource({
   store,
   createNodeId,
   actions: { createNode },
-}: PreprocessSourceArgs): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}: any): Promise<void> {
   if (
     !contents.includes("StaticImage") ||
     !contents.includes("gatsby-plugin-image") ||

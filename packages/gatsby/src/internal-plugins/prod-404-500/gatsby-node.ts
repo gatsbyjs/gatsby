@@ -1,7 +1,7 @@
-const isEqual = require("lodash/isEqual");
+import isEqual from "lodash/isEqual";
 
-const { emitter, store } = require("../../redux");
-const { actions } = require("../../redux/actions");
+import { emitter, store } from "../../redux";
+import { actions } from "../../redux/actions";
 
 const originalStatusPageByStatus = {};
 const originalStatusPageByPath = {};

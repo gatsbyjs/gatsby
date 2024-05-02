@@ -1,4 +1,3 @@
-import type { GatsbyNode } from "gatsby";
 import { getCacheDir } from "./node-apis/node-utils";
 import {
   ImageFormatType,
@@ -8,19 +7,15 @@ import {
 
 export * from "./node-apis/preprocess-source";
 
-export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
-  ({ actions, schema }) => {
-    actions.createTypes([
-      schema.buildEnumType(ImageFormatType),
-      schema.buildEnumType(ImageLayoutType),
-      schema.buildEnumType(ImagePlaceholderType),
-    ]);
-  };
+export function createSchemaCustomization({ actions, schema }): void {
+  actions.createTypes([
+    schema.buildEnumType(ImageFormatType),
+    schema.buildEnumType(ImageLayoutType),
+    schema.buildEnumType(ImagePlaceholderType),
+  ]);
+}
 
-export const onCreateBabelConfig: GatsbyNode["onCreateBabelConfig"] = ({
-  actions,
-  store,
-}) => {
+export function onCreateBabelConfig({ actions, store }): void {
   const root = store.getState().program.directory;
 
   const cacheDir = getCacheDir(root);
@@ -31,13 +26,9 @@ export const onCreateBabelConfig: GatsbyNode["onCreateBabelConfig"] = ({
       cacheDir,
     },
   });
-};
+}
 
-export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
-  stage,
-  plugins,
-  actions,
-}) => {
+export function onCreateWebpackConfig({ stage, plugins, actions }): void {
   if (
     stage !== "develop" &&
     stage !== "build-javascript" &&
@@ -54,4 +45,4 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
       }),
     ],
   });
-};
+}

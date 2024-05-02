@@ -1,8 +1,9 @@
 import { loadPlugins } from "../index";
 import { slash } from "gatsby-core-utils";
 import reporter from "gatsby-cli/lib/reporter";
-import { IFlattenedPlugin } from "../types";
+import type { IFlattenedPlugin } from "../types";
 import { silent as resolveFrom } from "resolve-from";
+import type { IGatsbyConfig } from "../../../internal";
 
 const mockNonIncompatibleWarn = jest.fn();
 
@@ -44,12 +45,14 @@ jest.mock("../../resolve-js-file-path", () => {
 jest.mock("resolve-from");
 const mockProcessExit = jest
   .spyOn(process, "exit")
+  // @ts-ignore
   .mockImplementation(() => {});
 
 afterEach(() => {
   Object.keys(reporter).forEach((method) => {
     reporter[method].mockClear();
   });
+  // @ts-ignore
   resolveFrom.mockClear();
   mockProcessExit.mockClear();
 });
@@ -92,7 +95,7 @@ describe("Load plugins", () => {
   });
 
   it("Loads plugins defined with an object but without an options key", async () => {
-    const config = {
+    const config: IGatsbyConfig = {
       plugins: [
         {
           resolve: "___TEST___",
@@ -231,6 +234,7 @@ describe("Load plugins", () => {
 
   describe("gatsby-plugin-gatsby-cloud support", () => {
     it("doesn't load gatsby-plugin-gatsby-cloud if not installed", async () => {
+      // @ts-ignore
       resolveFrom.mockImplementation(() => undefined);
       const config = {
         plugins: [],
@@ -250,6 +254,7 @@ describe("Load plugins", () => {
     });
 
     it("doesn't load gatsby-plugin-gatsby-cloud if not provided and installed", async () => {
+      // @ts-ignore
       resolveFrom.mockImplementation(
         (rootDir, pkg) => rootDir + "/node_modules/" + pkg,
       );
@@ -271,6 +276,7 @@ describe("Load plugins", () => {
     });
 
     it("loads gatsby-plugin-gatsby-cloud if not provided and installed on gatsby-cloud", async () => {
+      // @ts-ignore
       resolveFrom.mockImplementation((rootDir, pkg) => {
         if (pkg !== "gatsby-plugin-gatsby-cloud") {
           return undefined;
@@ -297,6 +303,7 @@ describe("Load plugins", () => {
     });
 
     it("uses the user provided plugin-gatsby-cloud if provided", async () => {
+      // @ts-ignore
       resolveFrom.mockImplementation((rootDir, pkg) => {
         if (pkg !== "gatsby-plugin-gatsby-cloud") {
           return undefined;
@@ -334,6 +341,7 @@ describe("Load plugins", () => {
     });
 
     it("does not add gatsby-plugin-gatsby-cloud if it exists in config.plugins", async () => {
+      // @ts-ignore
       resolveFrom.mockImplementation((rootDir, pkg) => {
         if (pkg !== "gatsby-plugin-gatsby-cloud") {
           return undefined;
@@ -379,6 +387,7 @@ describe("Load plugins", () => {
       ];
       await loadPlugins(
         {
+          // @ts-ignore
           plugins: invalidPlugins,
         },
         process.cwd(),
@@ -477,6 +486,7 @@ describe("Load plugins", () => {
       ];
       await loadPlugins(
         {
+          // @ts-ignore
           plugins,
         },
         process.cwd(),
@@ -501,6 +511,7 @@ describe("Load plugins", () => {
             {
               resolve: "gatsby-plugin-google-analytics",
               options: {
+                // @ts-ignore
                 trackingId: "fake",
               },
             },
@@ -514,7 +525,7 @@ describe("Load plugins", () => {
       expect(
         plugins.find(
           (plugin) => plugin.name === "gatsby-plugin-google-analytics",
-        ).pluginOptions,
+        )?.pluginOptions,
       ).toEqual({
         // All the options that have defaults are defined
         anonymize: false,
@@ -591,6 +602,7 @@ describe("Load plugins", () => {
                   {
                     resolve: "gatsby-remark-autolink-headers",
                     options: {
+                      // @ts-ignore
                       maintainCase: "should be boolean",
                     },
                   },
@@ -684,6 +696,7 @@ describe("Load plugins", () => {
             {
               resolve: require.resolve("./fixtures/local-plugin"),
               options: {
+                // @ts-ignore
                 optionalString: 1234,
               },
             },

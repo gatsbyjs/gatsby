@@ -13,7 +13,7 @@ import { preferDefault } from "./prefer-default";
 export async function getConfigFile(
   siteDirectory: string,
   configName: string,
-  distance: number = 3,
+  distance: number | undefined = 3,
 ): Promise<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   configModule: any;
@@ -31,7 +31,7 @@ export async function getConfigFile(
     distance,
   );
 
-  return uncompiledResult || {};
+  return uncompiledResult;
 }
 
 async function attemptImport(

@@ -32,9 +32,9 @@ import type { IGatsbyNode } from "../../internal";
 import type { GraphQLSchema } from "graphql";
 
 export type IRunFilterArg = {
-  gqlSchema: GraphQLSchema;
+  gqlSchema?: GraphQLSchema | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  gqlComposer: any;
+  gqlComposer?: any | undefined;
   filtersCache?: FiltersCache | undefined;
 } & IRunQueryArgs;
 
@@ -345,7 +345,7 @@ function convertAndApplyFastFilters(
   filtersCache: FiltersCache | undefined,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvedFields: Record<string, any>,
-  stats: IGraphQLRunnerStats,
+  stats: IGraphQLRunnerStats | undefined,
   sort: ISortParameters,
 ): Array<IGatsbyNodePartial> {
   const filters = filterFields
@@ -445,7 +445,7 @@ function sortNodes(
   sort: ISortParameters,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resolvedFields: any,
-  stats: IGraphQLRunnerStats,
+  stats?: IGraphQLRunnerStats | undefined,
 ): Array<IGatsbyNodePartial> {
   if (!sort || sort.fields?.length === 0 || !nodes || nodes.length === 0) {
     return nodes;

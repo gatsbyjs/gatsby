@@ -1,15 +1,12 @@
-import type {
-  GatsbyCache,
-  Reporter,
-  ParentSpanPluginArgs,
-  Actions,
-} from "gatsby";
 import fs from "fs-extra";
 import path from "node:path";
 import { watchImage } from "./watcher";
 import type { FileSystemNode } from "gatsby-source-filesystem";
 import type { IStaticImageProps } from "../components/static-image.server";
 import type { ISharpGatsbyImageArgs } from "../image-utils";
+import { createFileNode } from "gatsby-source-filesystem/create-file-node";
+// import { Actions, GatsbyCache } from "gatsby";
+// import { Reporter } from "gatsby-cli/lib/reporter/reporter";
 
 const supportedTypes = new Set(["image/png", "image/jpeg", "image/webp"]);
 export type IImageMetadata = {
@@ -26,20 +23,20 @@ export async function createImageNode({
   reporter,
 }: {
   fullPath: string;
-  createNodeId: ParentSpanPluginArgs["createNodeId"];
-  createNode: Actions["createNode"];
-  reporter: Reporter;
+  createNodeId: (this: void, input: string) => string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createNode: any; // Actions["createNode"];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
 }): Promise<FileSystemNode | undefined> {
   if (!fs.existsSync(fullPath)) {
     return undefined;
   }
 
-  let file: FileSystemNode;
+  let file: FileSystemNode | undefined;
 
   try {
-    const {
-      createFileNode,
-    } = require("gatsby-source-filesystem/create-file-node");
+    // @ts-ignore Property 'gid' is missing in type '{ dev: number; mode: number; nlink: number; uid: number; rdev: number; blksize: number; ino: number; size: number; blocks: number; atimeMs: number; mtimeMs: number; ctimeMs: number; birthtimeMs: number; ... 22 more ...; birthTime: string; }' but required in type 'FileSystemNode'.ts(2741)
     file = await createFileNode(fullPath, createNodeId, {});
   } catch (e) {
     reporter.panic("Please install gatsby-source-filesystem");
@@ -50,7 +47,9 @@ export async function createImageNode({
     return undefined;
   }
 
-  file.internal.type = "StaticImage";
+  if (file.internal) {
+    file.internal.type = "StaticImage";
+  }
 
   createNode(file);
 
@@ -73,13 +72,16 @@ export async function writeImages({
   filename,
 }: {
   images: Map<string, IStaticImageProps>;
-  pathPrefix: string;
+  pathPrefix?: string | undefined;
   cacheDir: string;
-  reporter: Reporter;
-  cache: GatsbyCache;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any; // GatsbyCache;
   sourceDir: string;
-  createNodeId: ParentSpanPluginArgs["createNodeId"];
-  createNode: Actions["createNode"];
+  createNodeId: (this: void, input: string) => string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createNode: any; // Actions["createNode"];
   filename: string;
 }): Promise<void> {
   const promises = [...images.entries()].map(
@@ -111,12 +113,12 @@ export async function writeImages({
           return;
         }
         if (
-          !file?.internal.mediaType ||
+          !file?.internal?.mediaType ||
           !supportedTypes.has(file.internal.mediaType)
         ) {
           reporter.error(
             `The file loaded from ${src} is not a valid image type. Found "${
-              file?.internal.mediaType || "unknown"
+              file?.internal?.mediaType || "unknown"
             }"`,
           );
           return;
@@ -147,8 +149,11 @@ export async function writeImages({
         return;
       }
 
-      // We need our own type, because `File` belongs to the filesystem plugin
-      file.internal.type = "StaticImage";
+      if (file.internal) {
+        // We need our own type, because `File` belongs to the filesystem plugin
+        file.internal.type = "StaticImage";
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (file.internal as any).owner;
       createNode(file);
@@ -190,9 +195,11 @@ export async function writeImages({
 export async function writeImage(
   file: FileSystemNode,
   args: ISharpGatsbyImageArgs,
-  pathPrefix: string,
-  reporter: Reporter,
-  cache: GatsbyCache,
+  pathPrefix: string | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any, // Reporter,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any, // GatsbyCache,
   filename: string,
 ): Promise<void> {
   let generateImageData;

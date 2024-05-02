@@ -39,7 +39,8 @@ export async function installPackages({
 
     let workspacesLayout;
     try {
-      workspacesLayout = JSON.parse(JSON.parse(stdout).data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      workspacesLayout = JSON.parse((JSON.parse(stdout) as any).data);
     } catch (e) {
       /*
       Yarn 1.22 doesn't output pure json - it has leading and trailing text:

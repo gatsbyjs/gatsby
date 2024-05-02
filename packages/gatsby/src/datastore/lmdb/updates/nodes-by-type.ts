@@ -10,7 +10,7 @@ export function updateNodesByType(
     case "ADD_FIELD_TO_NODE":
     case "ADD_CHILD_NODE_TO_PARENT_NODE": {
       // nodesByType db uses dupSort, so `put` will effectively append an id
-      return action.payload.internal.type
+      return action.payload.internal?.type
         ? nodesByTypeDb.put(action.payload.internal.type, action.payload.id)
         : false;
     }

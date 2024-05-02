@@ -5,8 +5,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { GatsbyImage } from "../gatsby-image.server";
-import { IGatsbyImageData } from "../gatsby-image.browser";
-import { SourceProps } from "../picture";
+import type { IGatsbyImageData } from "../gatsby-image.browser";
+import type { SourceProps } from "../picture";
 
 // Prevents terser for bailing because we're not in a babel plugin
 jest.mock(

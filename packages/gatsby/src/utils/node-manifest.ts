@@ -4,7 +4,7 @@ import type { IGatsbyNode, IGatsbyPage, INodeManifest } from "./../redux/types";
 import reporter from "gatsby-cli/lib/reporter";
 import { store } from "../redux/";
 import { internalActions } from "../redux/actions";
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 import fastq from "fastq";
 
@@ -281,7 +281,7 @@ export async function processNodeManifest(
     nodeId,
     fullNode,
     // querying by node.slug in GraphQL queries is common enough that we can search for it as a fallback after ownerNodeId, filesystem routes, and context.id
-    slug: fullNode?.slug as string,
+    slug: fullNode?.slug,
   });
 
   const nodeManifestMappingProblemsContext = {

@@ -1,8 +1,11 @@
-import path from "path";
-import ShadowingPlugin from "../";
+import path from "node:path";
+import { GatsbyThemeComponentShadowingResolverPlugin } from "..";
 
 // allow writing paths like path/to/thing, even on windows
-const xplatPath = (uri) => uri.split("/").join(path.sep);
+function xplatPath(uri: string): string {
+  return uri.split("/").join(path.sep);
+}
+
 describe("Component Shadowing", () => {
   it.each([
     [
@@ -27,7 +30,7 @@ describe("Component Shadowing", () => {
   ])(
     "gets matching themes",
     (componentFullPath, { themeDir, themeName }, component) => {
-      const plugin = new ShadowingPlugin({
+      const plugin = new GatsbyThemeComponentShadowingResolverPlugin({
         themes: [
           "a-theme",
           "theme-b",
@@ -101,7 +104,7 @@ describe("Component Shadowing", () => {
   ])(
     "can determine if the request path is in the shadow chain for the issuer",
     ({ issuerPath, requestPath, userSiteDir }, result) => {
-      const plugin = new ShadowingPlugin({
+      const plugin = new GatsbyThemeComponentShadowingResolverPlugin({
         themes: [
           "a-theme",
           "theme-b",

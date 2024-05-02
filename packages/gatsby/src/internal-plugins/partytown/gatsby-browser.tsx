@@ -1,3 +1,4 @@
+// @ts-ignore
 import { collectedScriptsByPage } from "gatsby-script";
 import { injectPartytownSnippet } from "./utils/inject-partytown-snippet";
 import type { GatsbyBrowser } from "../../..";

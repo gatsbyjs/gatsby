@@ -1048,10 +1048,14 @@ export interface PluginOptions {
   icon?: string | undefined;
   localize?: Array<Localize> | undefined;
   base64Width?: number | undefined;
-  plugins?: IPluginInfo[] | undefined;
+  plugins?: Array<IPluginInfo> | undefined;
   defaultQuality?: number | undefined;
   defaults?: PluginOptionsDefaults | undefined;
   forceBase64Format?: keyof sharp.FormatEnum | "" | undefined;
+  generateMatchPathRewrites?: boolean | undefined;
+  gatsbyRemarkPlugins?: Array<PluginRef> | undefined;
+  maintainCase?: boolean | undefined;
+  testSubplugins?: Array<string> | undefined;
 }
 
 export type PluginCallback<R = any> = (
@@ -1585,7 +1589,7 @@ export interface Actions {
   /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPlugin */
   setBabelPlugin: (
     this: void,
-    config: { name: string; options: object },
+    config: { name: string; options?: object | undefined },
     plugin?: ActionPlugin | undefined,
   ) => { type: string; plugin: IPlugin; payload: Record<string, unknown> };
 

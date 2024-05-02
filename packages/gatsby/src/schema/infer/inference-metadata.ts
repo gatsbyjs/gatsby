@@ -221,13 +221,13 @@ function updateValueDescriptorArray(
   });
 }
 
-const updateValueDescriptorRelNodes = (
+function updateValueDescriptorRelNodes(
   listOfNodeIds: Array<string>,
   delta: number,
   operation: Operation,
   typeInfo: ITypeInfoRelatedNodes,
   metadata: ITypeMetadata,
-): void => {
+): void {
   const { nodes = {} } = typeInfo;
   typeInfo.nodes = nodes;
 
@@ -241,7 +241,7 @@ const updateValueDescriptorRelNodes = (
       metadata.dirty = true;
     }
   });
-};
+}
 
 function updateValueDescriptorString(
   value: string,

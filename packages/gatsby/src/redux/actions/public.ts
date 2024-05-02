@@ -13,7 +13,7 @@ import { createContentDigest } from "gatsby-core-utils/create-content-digest";
 import { splitComponentPath } from "gatsby-core-utils/parse-component-path";
 import { hasNodeChanged } from "../../utils/nodes";
 import { getNode, getDataStore } from "../../datastore";
-import { sanitizeNode } from "../../utils/sanitize-node";
+import { sanitizeNode, sanitizePage } from "../../utils/sanitize-node";
 import { store } from "../index";
 import { validateComponent } from "../../utils/validate-component";
 import { nodeSchema } from "../../joi-schemas/joi";
@@ -96,7 +96,7 @@ function findChildren(initialChildren: Array<string>): Array<string> {
     }
     traversedNodes.add(currentChild.id);
     const newChildren = currentChild.children;
-    if (_.isArray(newChildren) && newChildren.length > 0) {
+    if (Array.isArray(newChildren) && newChildren.length > 0) {
       children.push(...newChildren);
       queue.push(...newChildren);
     }
@@ -591,7 +591,7 @@ ${reservedFields.map((f) => `  * "${f}"`).join("\n")}
   }
 
   // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
-  const sanitizedPayload = sanitizeNode(internalPage);
+  const sanitizedPayload = sanitizePage(internalPage);
 
   const actions: Array<ICreatePageAction> = [
     {
@@ -774,7 +774,7 @@ function _createNode(
   }
 
   // Ensure the new node has a children array.
-  if (!node.array && !_.isArray(node.children)) {
+  if (!_.isArray(node.children)) {
     node.children = [];
   }
 
@@ -1111,7 +1111,7 @@ function createParentChildLink(
     parent,
     child,
   }: {
-    parent?: { children: Array<string> } | IGatsbyNode | undefined;
+    parent: IGatsbyNode;
     child: { id: string } | IGatsbyNode | undefined;
   },
   plugin?: IPlugin | undefined,
@@ -1593,7 +1593,7 @@ function createPageDependency(
     nodeId,
     connection,
   }: { path: string; nodeId: string; connection: string },
-  plugin: string = "",
+  plugin: string | undefined = "",
 ): ICreatePageDependencyAction {
   console.warn(
     'Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".',

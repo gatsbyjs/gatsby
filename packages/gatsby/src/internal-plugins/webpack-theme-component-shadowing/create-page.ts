@@ -1,15 +1,23 @@
-const GatsbyThemeComponentShadowingResolverPlugin = require(".");
-const { store } = require("../../redux");
+import { GatsbyThemeComponentShadowingResolverPlugin } from ".";
+import { store } from "../../redux";
+import type { FlattenedPlugin } from "../../redux/types";
 
-module.exports = function (pageComponent) {
+module.exports = function createPage(pageComponent): string | false {
   const shadowingPlugin = new GatsbyThemeComponentShadowingResolverPlugin({
     extensions: store.getState().program.extensions,
-    themes: store.getState().flattenedPlugins.map((aPlugin) => {
-      return {
-        themeDir: aPlugin.pluginFilepath,
-        themeName: aPlugin.name,
-      };
-    }),
+    themes: store.getState().flattenedPlugins.map(
+      (
+        aPlugin: FlattenedPlugin,
+      ): {
+        themeDir: string;
+        themeName: string;
+      } => {
+        return {
+          themeDir: aPlugin.pluginFilepath,
+          themeName: aPlugin.name,
+        };
+      },
+    ),
     projectRoot: store.getState().program.directory,
   });
   const [theme, component] =

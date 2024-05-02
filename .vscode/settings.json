@@ -31,7 +31,5 @@
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-    "cSpell.words": [
-        "corepack"
-    ]
+  "cSpell.words": ["corepack", "memoizee"]
 }

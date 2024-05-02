@@ -82,6 +82,7 @@ export function queriesReducer(
       state.deletedQueries.delete(path);
       return state;
     }
+
     case "CREATE_SLICE": {
       const { name, componentPath } = action.payload;
       const path = `slice--${name}`;
@@ -100,6 +101,7 @@ export function queriesReducer(
       state.deletedQueries.delete(path);
       return state;
     }
+
     case "DELETE_PAGE": {
       // Don't actually remove the page query from trackedQueries, just mark it as "deleted". Why?
       //   We promote a technique of a consecutive deletePage/createPage calls in onCreatePage hook,
@@ -110,12 +112,14 @@ export function queriesReducer(
       state.deletedQueries.add(action.payload.path);
       return state;
     }
+
     case "DELETE_SLICE": {
       const { name } = action.payload;
       const path = `slice--${name}`;
       state.deletedQueries.add(path);
       return state;
     }
+
     case "API_FINISHED": {
       if (action.payload.apiName !== "createPages") {
         return state;
@@ -131,6 +135,7 @@ export function queriesReducer(
       state.deletedQueries.clear();
       return state;
     }
+
     case "QUERY_EXTRACTED": {
       // Note: this action is called even in case of
       // extraction error or missing query (with query === ``)
@@ -153,6 +158,7 @@ export function queriesReducer(
       }
       return state;
     }
+
     case "QUERY_EXTRACTION_GRAPHQL_ERROR":
     case "QUERY_EXTRACTION_BABEL_ERROR":
     case "QUERY_EXTRACTION_BABEL_SUCCESS": {
@@ -162,6 +168,7 @@ export function queriesReducer(
       component.errors = setFlag(component.errors, FLAG_ERROR_EXTRACTION, set);
       return state;
     }
+
     case "REPLACE_STATIC_QUERY": {
       // Only called when static query text has changed, so no need to compare
       // TODO: unify the behavior?
@@ -173,10 +180,12 @@ export function queriesReducer(
       state.deletedQueries.delete(action.payload.id);
       return state;
     }
+
     case "REMOVE_STATIC_QUERY": {
       state.deletedQueries.add(action.payload);
       return state;
     }
+
     case "CREATE_COMPONENT_DEPENDENCY": {
       action.payload.forEach((dep) => {
         const { path: queryId, nodeId, connection } = dep;
@@ -191,6 +200,7 @@ export function queriesReducer(
 
       return state;
     }
+
     case "QUERY_START": {
       // Reset data dependencies as they will be updated when running the query
       const { path } = action.payload;
@@ -202,6 +212,7 @@ export function queriesReducer(
       }
       return state;
     }
+
     case "CREATE_NODE":
     case "DELETE_NODE": {
       const node = action.payload;
@@ -229,6 +240,7 @@ export function queriesReducer(
       }
       return state;
     }
+
     case "PAGE_QUERY_RUN": {
       const { path } = action.payload;
       const query = registerQuery(state, path);
@@ -236,6 +248,7 @@ export function queriesReducer(
       query.running = 0; // TODO: also
       return state;
     }
+
     case "SET_PROGRAM_STATUS": {
       if (action.payload === "BOOTSTRAP_FINISHED") {
         // Reset the running state (as it could've been persisted)
@@ -247,10 +260,12 @@ export function queriesReducer(
       }
       return state;
     }
+
     case "QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET": {
       state.dirtyQueriesListToEmitViaWebsocket = [];
       return state;
     }
+
     case "MERGE_WORKER_QUERY_STATE": {
       // This action may be dispatched in cases where queries might not be included in the merge data
       if (!action.payload.queryStateChunk) {
@@ -271,6 +286,7 @@ function setFlag(allFlags: number, flag: number, set = true): number {
   if (allFlags < 0) {
     allFlags = 0;
   }
+
   return set ? allFlags | flag : allFlags & ~flag;
 }
 

@@ -40,9 +40,9 @@ export type IRunQueryArgs = {
   queryArgs: IQueryArgs;
   firstOnly?: boolean | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  resolvedFields: Record<string, any>;
+  resolvedFields?: Record<string, any> | undefined;
   nodeTypeNames: Array<string>;
-  stats: IGraphQLRunnerStats;
+  stats?: IGraphQLRunnerStats | undefined;
 };
 
 export type IDataStore = {

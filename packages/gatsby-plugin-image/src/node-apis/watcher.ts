@@ -1,10 +1,10 @@
 import chokidar, { type FSWatcher } from "chokidar";
-import type {
-  Actions,
-  ParentSpanPluginArgs,
-  GatsbyCache,
-  Reporter,
-} from "gatsby";
+// import type {
+//   Actions,
+//   ParentSpanPluginArgs,
+//   GatsbyCache,
+//   Reporter,
+// } from "gatsby";
 import {
   createImageNode,
   type IImageMetadata,
@@ -26,11 +26,15 @@ export function watchImage({
   reporter,
 }: {
   fullPath: string;
-  pathPrefix: string;
-  createNodeId: ParentSpanPluginArgs["createNodeId"];
-  createNode: Actions["createNode"];
-  cache: GatsbyCache;
-  reporter: Reporter;
+  pathPrefix?: string | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createNodeId: any; // ParentSpanPluginArgs["createNodeId"];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createNode: any; // Actions["createNode"];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any; // GatsbyCache;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
 }): void {
   // We use a shared watcher, but only create it if needed
   if (!watcher) {
@@ -63,10 +67,12 @@ async function updateImages({
   pathPrefix,
   reporter,
 }: {
-  cache: GatsbyCache;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  cache: any; // GatsbyCache;
   node: FileSystemNode;
-  pathPrefix: string;
-  reporter: Reporter;
+  pathPrefix?: string | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  reporter: any; // Reporter;
 }): Promise<void> {
   // See if any static image instances use this source image file
   const imageRefs: Record<string, IImageMetadata> = await cache.get(
@@ -80,7 +86,7 @@ async function updateImages({
   await Promise.all(
     Object.values(imageRefs).map(
       async ({ contentDigest, args, cacheFilename }) => {
-        if (contentDigest && contentDigest === node.internal.contentDigest) {
+        if (contentDigest && contentDigest === node.internal?.contentDigest) {
           // Skipping, because the file is unchanged
           return;
         }

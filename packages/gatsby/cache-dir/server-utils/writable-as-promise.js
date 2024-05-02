@@ -1,4 +1,4 @@
-import { Writable } from "stream";
+import { Writable } from "node:stream";
 
 export class WritableAsPromise extends Writable {
   constructor() {

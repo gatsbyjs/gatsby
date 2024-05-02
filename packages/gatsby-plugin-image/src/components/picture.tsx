@@ -1,5 +1,4 @@
 import React, { type JSX, type ImgHTMLAttributes } from "react";
-import * as PropTypes from "prop-types";
 
 export type IResponsiveImageProps = {
   sizes?: string | undefined;
@@ -97,13 +96,5 @@ export function Picture({
     </picture>
   );
 }
-
-Image.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-  sizes: PropTypes.string,
-  srcSet: PropTypes.string,
-  shouldLoad: PropTypes.bool,
-};
 
 Picture.displayName = "Picture";

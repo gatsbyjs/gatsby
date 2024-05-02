@@ -20,7 +20,7 @@ const expressBuiltinMiddleware = {
   raw,
 };
 
-type IGatsbyRequestContext = {
+export type IGatsbyRequestContext = {
   functionObj: IGatsbyFunction;
   fnToExecute: (req: Request, res: Response) => void | Promise<void>;
   // we massage params early in setContext middleware, but apparently other middlewares
@@ -30,17 +30,17 @@ type IGatsbyRequestContext = {
   showDebugMessageInResponse: boolean;
 };
 
-type IGatsbyInternalRequest = {
+export type IGatsbyInternalRequest = {
   context?: IGatsbyRequestContext | undefined;
 } & Request;
 
-type IGatsbyMiddleware = (
+export type IGatsbyMiddleware = (
   req: IGatsbyInternalRequest,
   res: Response,
   next: NextFunction,
 ) => Promise<void> | void;
 
-type ICreateMiddlewareConfig = {
+export type ICreateMiddlewareConfig = {
   getFunctions: () => Array<IGatsbyFunction>;
   prepareFn?:
     | ((functionObj: IGatsbyFunction) => Promise<void> | void)

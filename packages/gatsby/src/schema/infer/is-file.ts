@@ -45,7 +45,8 @@ function getBaseDir(node: IGatsbyNode): string | null {
     const { dir } = findAncestorNode(
       node,
       (node) => node.internal.type === "File",
-    ) || { dir: "" };
+    ) ?? { dir: "" };
+
     return typeof dir === "string" ? dir : null;
   }
 

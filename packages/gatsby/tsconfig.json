@@ -1,7 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "declaration": false
+    "declaration": false,
+    "lib": ["ESNext", "DOM", "ESNext.WeakRef"]
   },
   // For now index.d.ts is manually-created, but gatsby/internal is auto-generated
   "include": [

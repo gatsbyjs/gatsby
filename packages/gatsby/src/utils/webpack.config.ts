@@ -1,6 +1,6 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 import fs from "fs-extra";
-import path from "path";
+import path from "node:path";
 import dotenv from "dotenv";
 import { CoreJSResolver } from "./webpack/plugins/corejs-resolver";
 import { CacheFolderResolver } from "./webpack/plugins/cache-folder-resolver";
@@ -231,36 +231,23 @@ export async function webpackConfig(
   function getEntry():
     | {
         commons: Array<string>;
-        polyfill?: undefined;
-        "render-page"?: undefined;
-        app?: undefined;
       }
     | {
         polyfill: string;
         commons: Array<string>;
-        "render-page"?: undefined;
-        app?: undefined;
       }
     | {
         "render-page": string;
-        commons?: undefined;
-        polyfill?: undefined;
-        app?: undefined;
       }
     | {
         app: string;
-        commons?: undefined;
-        polyfill?: undefined;
-        "render-page"?: undefined;
       }
     | {
         polyfill: string;
         app: string;
-        commons?: undefined;
-        "render-page"?: undefined;
       } {
     switch (suppliedStage) {
-      case "develop":
+      case "develop": {
         return hasES6ModuleSupport(directory)
           ? {
               commons: [directoryPath(".cache/app")],
@@ -269,12 +256,14 @@ export async function webpackConfig(
               polyfill: directoryPath(".cache/polyfill-entry"),
               commons: [directoryPath(".cache/app")],
             };
-      case "develop-html":
+      }
+      case "develop-html": {
         return {
           "render-page": process.env.GATSBY_EXPERIMENTAL_DEV_SSR
             ? directoryPath(".cache/ssr-develop-static-entry")
             : directoryPath(".cache/develop-static-entry"),
         };
+      }
       case "build-html": {
         return {
           "render-page": directoryPath(".cache/static-entry"),

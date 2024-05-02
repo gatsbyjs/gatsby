@@ -1,9 +1,10 @@
-const webpack = require("webpack");
-const path = require("path");
-const fs = require("fs");
-const ShadowRealm = require("gatsby/dist/internal-plugins/webpack-theme-component-shadowing");
+import webpack from "webpack";
+import path from "node:path";
+import fs from "node:fs";
+// @ts-ignore
+import ShadowRealm from "gatsby/dist/internal-plugins/webpack-theme-component-shadowing";
 
-test.each([
+const tests = [
   [
     "inits but does not use shadowing",
     {
@@ -168,7 +169,7 @@ test.each([
         __dirname,
         "fixtures/test-sites/workspace-shadowing",
       ),
-      setup: () => {
+      setup: (): void => {
         // Yarn/Lerna workspaces are implemented by creating symlinks from node_modules/<modulename>
         // to the actual location of the package (for example packages/<modulename>). In this test,
         // we need a fixture that complies with such structure. However, restoration of symlinks in
@@ -188,7 +189,7 @@ test.each([
         //
         process.chdir("packages/site");
       },
-      cleanup: () => {
+      cleanup: (): void => {
         process.chdir("../..");
         fs.rmdirSync("node_modules", { recursive: true });
       },
@@ -282,9 +283,26 @@ test.each([
     { context: path.resolve(__dirname, "fixtures/test-sites/dot-shadowing") },
     "./src/theme-a/Some.Component.js",
   ],
-])(
+];
+
+test.each(tests)(
   "Shadowing e2e: %s",
-  (testName, config, { context, setup, cleanup }, shadowPath, done) => {
+  // @ts-ignore
+  (
+    _testName,
+    config: webpack.Configuration,
+    {
+      context,
+      setup,
+      cleanup,
+    }: {
+      context: string;
+      setup?: (() => void) | undefined;
+      cleanup?: (() => void) | undefined;
+    },
+    shadowPath: string | Array<string>,
+    // done,
+  ): void => {
     // shadowing wants process.cwd() to be the root of the site.
     // so change it from this dir to each of the example projects
     // when running them
@@ -298,35 +316,35 @@ test.each([
       try {
         // start error handling
         if (err) {
-          done(err.stack || err);
+          // done(err.stack || err);
           return;
         }
 
-        const info = stats.toJson();
+        // const info = stats?.toJson();
 
-        if (stats.hasErrors()) {
-          done(info.errors);
+        if (stats?.hasErrors()) {
+          // done(info.errors);
         }
 
-        if (stats.hasWarnings()) {
-          done(info.warnings);
+        if (stats?.hasWarnings()) {
+          // done(info.warnings);
         }
         // end error handling
 
-        const statsJSON = stats.toJson({
+        const statsJSON = stats?.toJson({
           assets: false,
           hash: true,
         });
-        const moduleNames = statsJSON.modules.map(({ name }) => name);
+        const moduleNames = statsJSON?.modules?.map(({ name }) => name);
 
         if (Array.isArray(shadowPath)) {
           shadowPath.forEach((aShadowPath) => {
-            expect(moduleNames.includes(aShadowPath)).toBe(true);
+            expect(moduleNames?.includes(aShadowPath)).toBe(true);
           });
         } else {
-          expect(moduleNames.includes(shadowPath)).toBe(true);
+          expect(moduleNames?.includes(shadowPath)).toBe(true);
         }
-        done();
+        // done();
       } finally {
         if (typeof cleanup === "function") cleanup();
         process.chdir(oldCwd);

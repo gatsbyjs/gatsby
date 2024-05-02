@@ -27,7 +27,7 @@ const syncCssMinify = doSync<[code: string], postcss.Result<postcss.Root>>(
         preset,
         plugins: [autoprefixer],
       }),
-    ]).process(code, { from: undefined, to: undefined });
+    ]).process(code, { from: "", to: "" });
   },
 );
 

@@ -93,7 +93,6 @@
     "gatsby-core-utils": "workspace:*",
     "gatsby-graphiql-explorer": "workspace:*",
     "gatsby-legacy-polyfills": "workspace:*",
-    "gatsby-plugin-image": "workspace:*",
     "gatsby-link": "workspace:*",
     "gatsby-page-utils": "workspace:*",
     "gatsby-parcel-config": "workspace:*",
@@ -183,6 +182,9 @@
     "@types/lodash": "4.17.0",
     "@babel/cli": "^7.24.1",
     "@types/multer": "1.4.11",
+    "@types/debug": "^4.1.12",
+    "@types/memoizee": "^0.4.11",
+    "@types/babel__code-frame": "^7.0.6",
     "@babel/helper-plugin-utils": "^7.24.0",
     "@babel/helper-plugin-test-runner": "^7.24.1",
     "@babel/register": "^7.23.7",
@@ -228,8 +230,13 @@
   "optionalDependencies": {
     "gatsby-sharp": "^1.14.0-next.0"
   },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^0.0.0",
+    "react-dom": "^18.2.0 || ^0.0.0",
+    "gatsby-plugin-image": "workspace:*"
+  },
   "engines": {
-    "node": ">=20.11.0"
+    "node": ">=20.12.2"
   },
   "files": [
     "adapters.js",
@@ -264,10 +271,6 @@
   "license": "MIT",
   "main": "cache-dir/commonjs/gatsby-browser-entry.js",
   "module": "cache-dir/gatsby-browser-entry.js",
-  "peerDependencies": {
-    "react": "^18.2.0 || ^0.0.0",
-    "react-dom": "^18.2.0 || ^0.0.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gatsbyjs/gatsby.git"

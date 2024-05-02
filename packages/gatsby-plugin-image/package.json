@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm-run-all --npm-path pnpm -s clean -p build:*",
     "postbuild": "prepend-directive --files=dist/gatsby-image.browser.js,dist/gatsby-image.browser.modern.js --directive=\"use client\"",
-    "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declaration --declarationDir dist/src",
+    "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop --resolveJsonModule true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declaration --declarationDir dist/src",
     "build:gatsby-ssr": "microbundle -i src/gatsby-ssr.tsx -f cjs -o ./[name].js --no-pkg-main --jsx React.createElement --jsxFragment React.Fragment --no-compress --external=common-tags,react --no-sourcemap",
     "build:server": "microbundle -f cjs,es --jsx React.createElement --jsxFragment React.Fragment --define SERVER=true",
     "build:browser": "microbundle -i src/index.browser.ts -f cjs,modern --jsx React.createElement --jsxFragment React.Fragment -o dist/gatsby-image.browser --define SERVER=false",
@@ -47,15 +47,12 @@
     "@babel/runtime": "^7.24.4",
     "@babel/traverse": "^7.24.1",
     "babel-jsx-utils": "^1.1.0",
-    "babel-plugin-remove-graphql-queries": "workspace:*",
     "camelcase": "^8.0.0",
     "chokidar": "^3.6.0",
     "common-tags": "^1.8.2",
     "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "workspace:*",
-    "gatsby-plugin-utils": "workspace:*",
-    "objectFitPolyfill": "^2.3.5",
-    "prop-types": "^15.8.1"
+    "gatsby-source-filesystem": "workspace:*",
+    "objectFitPolyfill": "^2.3.5"
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",
@@ -94,9 +91,10 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.24.4",
-    "gatsby": "workspace:*",
+    "gatsby-core-utils": "workspace:*",
+    "gatsby-plugin-utils": "workspace:*",
     "gatsby-plugin-sharp": "workspace:*",
-    "gatsby-source-filesystem": "workspace:*",
+    "babel-plugin-remove-graphql-queries": "workspace:*",
     "react": "^18.2.0 || ^0.0.0",
     "react-dom": "^18.2.0 || ^0.0.0"
   },

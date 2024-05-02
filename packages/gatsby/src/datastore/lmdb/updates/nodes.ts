@@ -26,7 +26,9 @@ export function updateNodes(
       if (!node) {
         throw new Error(`Could not find SitePage node by id: ${id}`);
       }
+
       node.mode = action.payload.pageMode;
+
       return nodesDb.put(id, node);
     }
   }

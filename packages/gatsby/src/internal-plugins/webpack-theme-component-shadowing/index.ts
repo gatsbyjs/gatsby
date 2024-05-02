@@ -1,8 +1,13 @@
-const path = require("path");
-const debug = require("debug")("gatsby:component-shadowing");
-const fs = require("fs");
-const _ = require("lodash");
-const { splitComponentPath } = require("gatsby-core-utils");
+import path from "node:path";
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _debug from "debug";
+const debug = _debug("gatsby:component-shadowing");
+import fs from "node:fs";
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash";
+import { splitComponentPath } from "gatsby-core-utils";
+import type { PluginRef } from "../../..";
+import type { IGatsbyConfig } from "../../internal";
 
 // A file can be shadowed by a file of the same extension, or a file of a
 // "compatible" file extension; two files extensions are compatible if they both
@@ -58,12 +63,51 @@ const DEFAULT_FILE_EXTENSIONS_CATEGORIES = {
 //    - this will also need to add memo invalidation for page template shadowing:
 //      see memoized `shadowCreatePagePath` function used in `createPage` action creator.
 
-module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
-  constructor({ projectRoot, themes, extensions, extensionsCategory }) {
+export class GatsbyThemeComponentShadowingResolverPlugin {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  themes: Array<{
+    themeName: string;
+    themeDir: string;
+    themeSpec?: PluginRef | undefined;
+    parentDir?: string | undefined;
+    config?: IGatsbyConfig | undefined;
+  }>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  extensions: Array<any>;
+  projectRoot: string | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  extensionsCategory: any | undefined;
+  additionalShadowExtensions: Array<{
+    key: string;
+    value: Array<string>;
+  }>;
+
+  constructor({
+    projectRoot,
+    themes,
+    extensions,
+    extensionsCategory,
+  }: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    projectRoot?: string | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    themes: Array<{
+      themeName: string;
+      themeDir: string;
+      themeSpec?: PluginRef | undefined;
+      parentDir?: string | undefined;
+      config?: IGatsbyConfig | undefined;
+    }>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    extensions?: any | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    extensionsCategory?: any | undefined;
+  }) {
     debug(
       "themes list",
       themes.map(({ themeName }) => themeName),
     );
+
     this.themes = themes;
     this.projectRoot = projectRoot;
 
@@ -75,13 +119,19 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     this.additionalShadowExtensions = this.buildAdditionalShadowExtensions();
   }
 
-  buildAdditionalShadowExtensions() {
+  buildAdditionalShadowExtensions(): Array<{
+    key: string;
+    value: Array<string>;
+  }> {
     const extensionsByCategory = _.groupBy(
       this.extensions,
       (ext) => this.extensionsCategory[ext.substring(1)] || "undefined",
     );
 
-    const additionalExtensions = [];
+    const additionalExtensions: Array<{
+      key: string;
+      value: Array<string>;
+    }> = [];
     for (const [category, exts] of Object.entries(extensionsByCategory)) {
       if (category === "undefined") continue;
       for (const ext of exts) {
@@ -91,18 +141,18 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
 
     // Sort extensions in reverse length order, so that something such as
     // ".css.js" get caught before ".js"
-    return additionalExtensions.sort(
-      ({ key: a }, { key: b }) => a.length <= b.length,
-    );
+    return additionalExtensions.sort(({ key: a }, { key: b }): number => {
+      return Number(a.length <= b.length);
+    });
   }
 
-  apply(resolver) {
+  apply(resolver): void {
     // This hook is executed very early and captures the original file name
     resolver
       .getHook("resolve")
       .tapAsync(
         "GatsbyThemeComponentShadowingResolverPlugin",
-        (request, stack, callback) => {
+        (request, _stack, callback) => {
           if (!request._gatsbyThemeShadowingOriginalRequestPath) {
             request._gatsbyThemeShadowingOriginalRequestPath = request.request;
           }
@@ -115,8 +165,9 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       .getHook("before-resolved")
       .tapAsync(
         "GatsbyThemeComponentShadowingResolverPlugin",
-        (request, stack, callback) => {
+        (request, _stack, callback) => {
           const [theme, component] = this.getThemeAndComponent(request.path);
+
           if (!theme) {
             return callback();
           }
@@ -181,7 +232,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     theme,
     component: originalComponent,
     originalRequestComponent,
-  }) {
+  }): string | null {
     const [component, content] = splitComponentPath(originalComponent);
 
     // don't include matching theme in possible shadowing paths
@@ -190,7 +241,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     );
 
     const themesArray = [
-      path.join(this.projectRoot, "src", theme.themeName),
+      path.join(this.projectRoot ?? "", "src", theme.themeName),
     ].concat(
       themes
         .reverse()
@@ -236,7 +287,8 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     return null;
   }
 
-  getThemeAndComponent(filepath) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getThemeAndComponent(filepath: string): Array<any> {
     // find out which theme's src/components dir we're requiring from
     const allMatchingThemes = this.themes.filter(({ themeDir }) =>
       filepath.startsWith(path.join(themeDir, "src")),
@@ -244,7 +296,10 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
 
     // The same theme can be included twice in the themes list causing multiple
     // matches. This case should only be counted as a single match for that theme.
-    const matchingThemes = _.uniqBy(allMatchingThemes, "themeName");
+    const matchingThemes: Array<{
+      themeDir: string;
+      themeName: string;
+    }> = _.uniqBy(allMatchingThemes, "themeName");
 
     // 0 matching themes happens a lot for paths we don't want to handle
     // > 1 matching theme means we have a path like
@@ -270,7 +325,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   // given a theme name, return all of the possible shadow locations
-  getBaseShadowDirsForThemes(theme) {
+  getBaseShadowDirsForThemes(theme): Array<string> {
     return Array.from(this.themes)
       .reverse()
       .map(({ themeName, themeDir }) => {
@@ -282,7 +337,21 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       });
   }
 
-  requestPathIsIssuerShadowPath({ theme, component, issuerPath, userSiteDir }) {
+  requestPathIsIssuerShadowPath({
+    theme,
+    component,
+    issuerPath,
+    userSiteDir,
+  }: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    theme: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    component: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    issuerPath: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userSiteDir: any;
+  }): boolean {
     if (!theme || !component) {
       return false;
     }
@@ -297,18 +366,21 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     return shadowFiles.includes(issuerPath);
   }
 
-  getAcceptableShadowFileNames(componentName, originalRequestComponent) {
+  getAcceptableShadowFileNames(
+    componentName: string,
+    originalRequestComponent?: string | undefined,
+  ): Array<string> {
     const matchingEntry = this.additionalShadowExtensions.find((entry) =>
       componentName.endsWith(entry.key),
     );
 
-    let additionalNames = [];
+    let additionalNames: Array<string> = [];
     if (matchingEntry) {
       const baseName = componentName.slice(0, -matchingEntry.key.length);
       additionalNames = matchingEntry.value.map((ext) => `${baseName}${ext}`);
     }
 
-    let legacyAdditionalNames = [];
+    let legacyAdditionalNames: Array<string> = [];
     if (originalRequestComponent) {
       legacyAdditionalNames = this.extensions.map(
         (ext) => `${originalRequestComponent}${ext}`,
@@ -321,4 +393,4 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       ...legacyAdditionalNames,
     ]);
   }
-};
+}

@@ -963,6 +963,9 @@ importers:
       '@types/babel-core':
         specifier: ^6.25.10
         version: 6.25.10
+      '@types/babel__code-frame':
+        specifier: ^7.0.6
+        version: 7.0.6
       '@types/bluebird':
         specifier: ^3.5.42
         version: 3.5.42
@@ -972,6 +975,9 @@ importers:
       '@types/common-tags':
         specifier: ^1.8.4
         version: 1.8.4
+      '@types/debug':
+        specifier: ^4.1.12
+        version: 4.1.12
       '@types/eslint':
         specifier: ^8.56.10
         version: 8.56.10
@@ -993,9 +999,15 @@ importers:
       '@types/lodash':
         specifier: 4.17.0
         version: 4.17.0
+      '@types/memoizee':
+        specifier: ^0.4.11
+        version: 0.4.11
       '@types/micromatch':
         specifier: ^4.0.7
         version: 4.0.7
+      '@types/multer':
+        specifier: 1.4.11
+        version: 1.4.11
       '@types/normalize-path':
         specifier: ^3.0.2
         version: 3.0.2
@@ -2532,9 +2544,6 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
-      gatsby:
-        specifier: workspace:*
-        version: link:../gatsby
       gatsby-core-utils:
         specifier: workspace:*
         version: link:../gatsby-core-utils
@@ -2550,9 +2559,6 @@ importers:
       objectFitPolyfill:
         specifier: ^2.3.5
         version: 2.3.5
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       react:
         specifier: ^18.2.0 || ^0.0.0
         version: 18.2.0
@@ -9708,6 +9714,9 @@ packages:
   '@types/babel-types@7.0.15':
     resolution: {integrity: sha512-JUgfZHUOMbtjopxiOQaaF+Uovk5wpDqpXR+XLWiOivCWSy1FccO30lvNNpCt8geFwq8VmGT2y9OMkOpA0g5O5g==}
 
+  '@types/babel__code-frame@7.0.6':
+    resolution: {integrity: sha512-Anitqkl3+KrzcW2k77lRlg/GfLZLWXBuNgbEcIOU6M92yw42vsd3xV/Z/yAHEj8m+KUjL6bWOVOFqX8PFPJ4LA==}
+
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -9888,6 +9897,9 @@ packages:
   '@types/mdx@2.0.13':
     resolution: {integrity: sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==}
 
+  '@types/memoizee@0.4.11':
+    resolution: {integrity: sha512-2gyorIBZu8GoDr9pYjROkxWWcFtHCquF7TVbN2I+/OvgZhnIGQS0vX5KJz4lXNKb8XOSfxFOSG5OLru1ESqLUg==}
+
   '@types/micromatch@4.0.7':
     resolution: {integrity: sha512-C/FMQ8HJAZhTsDpl4wDKZdMeeW5USjgzOczUwTGbRc1ZopPgOhIEnxY2ZgUrsuyy4DwK1JVOJZKFakv3TbCKiA==}
 
@@ -9908,6 +9920,9 @@ packages:
 
   '@types/ms@0.7.34':
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
+
+  '@types/multer@1.4.11':
+    resolution: {integrity: sha512-svK240gr6LVWvv3YGyhLlA+6LRRWA4mnGIU7RcNmgjBYFl6665wcXrRfxGp5tEPVHUNm5FMcmq7too9bxCwX/w==}
 
   '@types/mute-stream@0.0.4':
     resolution: {integrity: sha512-CPM9nzrCPPJHQNA9keH9CVkVI+WR5kMa+7XEs5jcGQ0VoAGnLv242w8lIVgwAEfmE4oufJRaTc9PNLQl0ioAow==}
@@ -18118,9 +18133,6 @@ packages:
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
-  react-is@18.2.0:
-    resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
-
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
@@ -24800,6 +24812,8 @@ snapshots:
 
   '@types/babel-types@7.0.15': {}
 
+  '@types/babel__code-frame@7.0.6': {}
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.24.4
@@ -25014,6 +25028,8 @@ snapshots:
 
   '@types/mdx@2.0.13': {}
 
+  '@types/memoizee@0.4.11': {}
+
   '@types/micromatch@4.0.7':
     dependencies:
       '@types/braces': 3.0.4
@@ -25031,6 +25047,10 @@ snapshots:
       '@types/node': 20.12.7
 
   '@types/ms@0.7.34': {}
+
+  '@types/multer@1.4.11':
+    dependencies:
+      '@types/express': 4.17.21
 
   '@types/mute-stream@0.0.4':
     dependencies:
@@ -35116,7 +35136,7 @@ snapshots:
     dependencies:
       '@jest/schemas': 29.6.3
       ansi-styles: 5.2.0
-      react-is: 18.2.0
+      react-is: 18.3.1
 
   pretty-format@3.8.0: {}
 
@@ -35509,8 +35529,6 @@ snapshots:
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
-
-  react-is@18.2.0: {}
 
   react-is@18.3.1: {}
 

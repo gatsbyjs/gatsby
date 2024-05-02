@@ -36,8 +36,6 @@ export type IGatsbyNodePartial = {
   gatsbyNodePartialInternalData: {
     indexFields: Set<string>;
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [k: string]: any;
 };
 
 const nodeIdToIdentifierMap = new Map<
@@ -67,9 +65,13 @@ export function getGatsbyNodePartial(
     if (
       derefPartial &&
       _.every(
-        indexFields.map((field) =>
-          derefPartial!.gatsbyNodePartialInternalData.indexFields.has(field),
-        ),
+        indexFields.map((field: string): boolean => {
+          return (
+            derefPartial?.gatsbyNodePartialInternalData.indexFields.has(
+              field,
+            ) ?? false
+          );
+        }),
       )
     ) {
       return derefPartial;
@@ -90,8 +92,8 @@ export function getGatsbyNodePartial(
     [...fieldsToStore],
     resolvedFields,
   );
-  let fullNodeObject: IGatsbyNode | undefined =
-    node.gatsbyNodePartialInternalData ? undefined : (node as IGatsbyNode);
+  let fullNodeObject: IGatsbyNodePartial | IGatsbyNode | undefined =
+    node.gatsbyNodePartialInternalData ? undefined : node;
   let resolvedNodeFields;
 
   for (const dottedField of sortFieldIds) {

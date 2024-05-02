@@ -3,13 +3,10 @@
   "compilerOptions": {
     "allowJs": false,
     "declaration": true,
-    "declarationMap": true,
     "target": "ESNext",
     "outDir": "./dist",
-    "declarationDir": "./dist",
-    "lib": ["ESNext", "dom"],
-    "module": "ESNext",
-    "moduleResolution": "node"
+    "lib": ["ESNext", "dom", "ESNext.WeakRef"],
+    "module": "ESNext"
   },
   "files": ["./src/global.ts", "./src/index.ts", "./src/index.browser.ts"]
 }

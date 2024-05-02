@@ -30,7 +30,12 @@ describe("EnsureResources", () => {
     };
     const { container } = render(
       <EnsureResources location={location}>
-        {(data: any): string => JSON.stringify(data.pageResources)}
+        {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (data: any): string => {
+            return JSON.stringify(data.pageResources);
+          }
+        }
       </EnsureResources>,
     );
 

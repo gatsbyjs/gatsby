@@ -5,7 +5,7 @@ type Identifier = string;
 export interface IGatsbyPage {
   internalComponentName: string;
   path: string;
-  matchPath?: undefined | string;
+  matchPath?: undefined | string | undefined;
   component: SystemPath;
   componentChunkName: string;
   isCreatedByStatefulCreatePages: boolean;

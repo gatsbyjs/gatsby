@@ -28,8 +28,9 @@ SOFTWARE.
  * @param {function} fn
  * @returns {function}
  */
-module.exports = function wrapCallback<T>(
-  fn: () => Promise<T>,
+export function wrapCallback<T>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fn: (...args: Array<any>) => Promise<T>,
 ): () => Promise<T> {
   return function (...args): Promise<T> {
     let cb;
@@ -50,4 +51,4 @@ module.exports = function wrapCallback<T>(
 
     return promise;
   };
-};
+}

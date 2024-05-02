@@ -1,7 +1,7 @@
 import { suggestIndex } from "../suggest-index";
 import { IRunQueryArgs } from "../../../types";
 
-type Sort = IRunQueryArgs["queryArgs"]["sort"];
+type Sort = Exclude<IRunQueryArgs["queryArgs"]["sort"], undefined>;
 
 describe("suggestIndex", () => {
   describe("filter: yes; sort: no", () => {

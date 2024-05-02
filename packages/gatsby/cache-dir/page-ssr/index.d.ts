@@ -38,15 +38,15 @@ type PageContext = Record<string, any>;
 
 interface IPageData {
   componentChunkName: IGatsbyPage["componentChunkName"];
-  matchPath?: IGatsbyPage["matchPath"];
+  matchPath?: IGatsbyPage["matchPath"] | undefined;
   path: IGatsbyPage["path"];
   staticQueryHashes: Array<string>;
 }
 
 export interface IPageDataWithQueryResult extends IPageData {
   result: {
-    data?: any;
-    pageContext?: PageContext;
+    data?: any | undefined;
+    pageContext?: PageContext | undefined;
   };
 }
 
@@ -74,5 +74,5 @@ export function renderPageData(args: {
 
 export function renderHTML(args: {
   data: ISSRData;
-  pageData?: IPageDataWithQueryResult;
+  pageData?: IPageDataWithQueryResult | undefined;
 }): Promise<string>;

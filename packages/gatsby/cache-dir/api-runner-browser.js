@@ -42,11 +42,12 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
   }
 };
 
-exports.apiRunnerAsync = (api, args, defaultReturn) =>
-  plugins.reduce(
+exports.apiRunnerAsync = (api, args) => {
+  return plugins.reduce(
     (previous, next) =>
       next.plugin[api]
         ? previous.then(() => next.plugin[api](args, next.options))
         : previous,
     Promise.resolve(),
   );
+};

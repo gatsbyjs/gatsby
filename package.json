@@ -61,7 +61,7 @@
     "yargs": "17.7.2"
   },
   "engines": {
-    "pnpm": ">=9.0.5"
+    "pnpm": "9.0.6"
   },
   "eslintIgnore": [
     "interfaces",

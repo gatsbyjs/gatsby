@@ -12,7 +12,7 @@ import { trackCli } from "gatsby-telemetry";
 import { isWorker } from "gatsby-worker";
 import { resolveModuleExports } from "../resolve-module-exports";
 import { getLatestAPIs } from "../../utils/get-latest-gatsby-files";
-import type { GatsbyNode, PackageJson } from "../../../";
+
 import type {
   IPluginInfo,
   IFlattenedPlugin,
@@ -24,6 +24,7 @@ import { resolvePlugin } from "./resolve-plugin";
 import { preferDefault } from "../prefer-default";
 import { importGatsbyPlugin } from "../../utils/import-gatsby-plugin";
 import { maybeAddFileProtocol } from "../resolve-js-file-path";
+import type { GatsbyNode, PackageJson } from "../../..";
 
 type IApi = {
   version?: string | undefined;
@@ -184,10 +185,10 @@ export async function handleBadExports({
   }
 }
 
-const addModuleImportAndValidateOptions = (
+function addModuleImportAndValidateOptions(
   rootDir: string,
   incErrors: (inc: number) => void,
-) => {
+) {
   return async (
     value: Array<IPluginRefObject>,
   ): Promise<Array<IPluginRefObject>> => {
@@ -207,7 +208,7 @@ const addModuleImportAndValidateOptions = (
     incErrors(subErrors);
     return subPlugins;
   };
-};
+}
 
 async function validatePluginsOptions(
   plugins: Array<IPluginRefObject>,
@@ -421,7 +422,7 @@ async function validatePluginsOptions(
 }
 
 export async function validateConfigPluginsOptions(
-  config: ISiteConfig = {},
+  config: ISiteConfig | undefined = {},
   rootDir: string,
 ): Promise<void> {
   if (!config.plugins) return;

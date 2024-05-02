@@ -1,23 +1,32 @@
-const moment = require("moment");
-const chokidar = require("chokidar");
-const systemPath = require("path");
-const _ = require("lodash");
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import _ from "lodash";
+import moment from "moment";
+import chokidar from "chokidar";
+import systemPath from "node:path";
 
-const { emitter, store } = require("../../redux");
-const { actions } = require("../../redux/actions");
-const { getNode } = require("../../datastore");
-const {
-  findCompiledLocalPluginModule,
-} = require("../../utils/parcel/compile-gatsby-files");
+import { emitter, store } from "../../redux";
+import { actions } from "../../redux/actions";
+import { getNode } from "../../datastore";
+import { findCompiledLocalPluginModule } from "../../utils/parcel/compile-gatsby-files";
+import type {
+  CreateResolversArgs,
+  GatsbyNode,
+  SourceNodesArgs,
+} from "../../..";
 
-function transformPackageJson(json) {
-  const transformDeps = (deps) =>
-    _.entries(deps).map(([name, version]) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function transformPackageJson(json: any): any {
+  function transformDeps(deps): Array<{
+    name: string;
+    version: unknown;
+  }> {
+    return _.entries(deps).map(([name, version]) => {
       return {
         name,
         version,
       };
     });
+  }
 
   json = _.pick(json, [
     "name",
@@ -42,14 +51,16 @@ function transformPackageJson(json) {
   return json;
 }
 
-const createPageId = (path) => `SitePage ${path}`;
+function createPageId(path: string): string {
+  return `SitePage ${path}`;
+}
 
-exports.sourceNodes = ({
+export const sourceNodes: GatsbyNode["sourceNodes"] = function sourceNodes({
   createContentDigest,
   getNodesByType,
   actions,
   store,
-}) => {
+}: SourceNodesArgs): void {
   const { createNode, deleteNode } = actions;
   const { program, flattenedPlugins, config } = store.getState();
 
@@ -72,12 +83,16 @@ exports.sourceNodes = ({
 
   // Add site node.
 
-  const createGatsbyConfigNode = (config = {}) => {
+  function createGatsbyConfigNode(config = {}): void {
     // Delete plugins from the config as we add plugins above.
     const configCopy = { ...config };
+
+    // @ts-ignore
     delete configCopy.plugins;
+
     const node = {
       siteMetadata: {
+        // @ts-ignore
         ...configCopy.siteMetadata,
       },
       port: program.port,
@@ -94,7 +109,7 @@ exports.sourceNodes = ({
         type: "Site",
       },
     });
-  };
+  }
 
   createGatsbyConfigNode(config);
 
@@ -126,7 +141,8 @@ exports.sourceNodes = ({
 
   // Create nodes for functions
   const { functions } = store.getState();
-  const createFunctionNode = (config) => {
+
+  function createFunctionNode(config): void {
     createNode({
       id: `gatsby-function-${config.absoluteCompiledFilePath}`,
       ...config,
@@ -137,7 +153,8 @@ exports.sourceNodes = ({
         type: "SiteFunction",
       },
     });
-  };
+  }
+
   functions.forEach((config) => {
     createFunctionNode(config);
   });
@@ -161,13 +178,15 @@ exports.sourceNodes = ({
   });
 };
 
-function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode) {
-  chokidar.watch(pathToGatsbyConfig).on("change", () => {
+function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode): void {
+  chokidar.watch(pathToGatsbyConfig).on("change", async () => {
     const oldCache = require.cache[require.resolve(pathToGatsbyConfig)];
     try {
       // Delete require cache so we can reload the module.
       delete require.cache[require.resolve(pathToGatsbyConfig)];
-      const config = require(pathToGatsbyConfig);
+      const config = await import(pathToGatsbyConfig).then(
+        (mod) => mod.default,
+      );
       createGatsbyConfigNode(config);
     } catch (e) {
       // Restore the old cache since requiring the new gatsby-config.js failed.
@@ -178,36 +197,46 @@ function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode) {
   });
 }
 
-exports.createResolvers = ({ createResolvers }) => {
-  const resolvers = {
-    Site: {
-      buildTime: {
-        type: "Date",
-        resolve(source, args, context, info) {
-          const { buildTime } = context.nodeModel.getNodeById({
-            id: "SiteBuildMetadata",
-            type: "SiteBuildMetadata",
-          });
-          return info.originalResolver(
-            {
-              ...source,
-              buildTime,
-            },
-            args,
-            context,
-            info,
-          );
+export const createResolvers: GatsbyNode["createResolvers"] =
+  function createResolvers({ createResolvers }: CreateResolversArgs): void {
+    const resolvers = {
+      Site: {
+        buildTime: {
+          type: "Date",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          resolve(source, args, context, info): any {
+            const { buildTime } = context.nodeModel.getNodeById({
+              id: "SiteBuildMetadata",
+              type: "SiteBuildMetadata",
+            });
+            return info.originalResolver(
+              {
+                ...source,
+                buildTime,
+              },
+              args,
+              context,
+              info,
+            );
+          },
         },
       },
-    },
-  };
+    };
 
-  createResolvers(resolvers);
-};
+    createResolvers(resolvers);
+  };
 
 // Listen for DELETE_PAGE and delete page nodes.
 emitter.on("DELETE_PAGE", (action) => {
   const nodeId = createPageId(action.payload.path);
   const node = getNode(nodeId);
-  store.dispatch(actions.deleteNode(node));
+  const ax = actions.deleteNode(node);
+
+  if (Array.isArray(ax)) {
+    action.forEach((a) => {
+      store.dispatch(a);
+    });
+  } else {
+    store.dispatch(ax);
+  }
 });

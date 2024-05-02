@@ -1,6 +1,5 @@
 import React, { type DOMAttributes } from "react";
 import { oneLine } from "common-tags";
-import type { RenderBodyArgs } from "gatsby";
 
 import {
   type MacroHandler,
@@ -231,7 +230,7 @@ function generateHtml(
   };
 }
 
-export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
+export function onRenderBody({ setHeadComponents }): void {
   setHeadComponents([
     <style
       key='gatsby-image-style'

@@ -1,7 +1,7 @@
 /* global GATSBY___IMAGE */
 import { generateImageData, EVERY_BREAKPOINT } from "../image-utils";
 import type { CSSProperties, HTMLAttributes, ImgHTMLAttributes } from "react";
-import type { Node } from "gatsby";
+// import type { Node } from "gatsby";
 import type { PlaceholderProps } from "./placeholder";
 import type { MainImageProps } from "./main-image";
 import type { IGatsbyImageData } from "./gatsby-image.browser";
@@ -30,8 +30,10 @@ export type IGatsbyImageDataParent<T = never> = T & {
 export type IGatsbyImageParent<T = never> = T & {
   gatsbyImage: IGatsbyImageData;
 };
-export type FileNode = Partial<Node> & {
-  childImageSharp?: IGatsbyImageDataParent<Partial<Node>> | undefined;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type FileNode = Partial<any> & {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  childImageSharp?: IGatsbyImageDataParent<Partial<any>> | undefined;
 };
 
 function isGatsbyImageData(

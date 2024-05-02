@@ -32,6 +32,7 @@ import errorParser from "./api-runner-error-parser";
 import { wrapNode, wrapNodes } from "./detect-node-mutations";
 import { reportOnce } from "./report-once";
 import type {
+  ActionsUnion,
   FlattenedPlugin,
   GatsbyNodeAPI,
   IGatsbyNode,
@@ -215,11 +216,14 @@ function initAPICallTracing(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function deferredAction(type): (...args: Array<any>) => void | Promise<void> {
+function deferredAction(
+  type: ActionsUnion["type"],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): (...args: Array<any>) => void | Promise<void> {
   return (...args): void | Promise<void> => {
     // Regular createNode returns a Promise, but when deferred we need
     // to wrap it in another which we resolve when it's actually called
-    if (type === "createNode") {
+    if (type === "CREATE_NODE") {
       return new Promise((resolve) => {
         emitter.emit("ENQUEUE_NODE_MUTATION", {
           type,
@@ -236,18 +240,18 @@ function deferredAction(type): (...args: Array<any>) => void | Promise<void> {
   };
 }
 
-const NODE_MUTATION_ACTIONS = [
-  "createNode",
-  "deleteNode",
-  "touchNode",
-  "createParentChildLink",
-  "createNodeField",
+const NODE_MUTATION_ACTIONS: Array<ActionsUnion["type"]> = [
+  "CREATE_NODE",
+  "DELETE_NODE",
+  "TOUCH_NODE",
+  // "CREATE_PARENT_CHILD_LINK",
+  // "CREATE_NODE_FIELD",
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function deferActions(actions: any): any {
+function deferActions(actions: Array<ActionsUnion>): any {
   const deferred = { ...actions };
-  NODE_MUTATION_ACTIONS.forEach((action) => {
+  NODE_MUTATION_ACTIONS.forEach((action: ActionsUnion["type"]) => {
     deferred[action] = deferredAction(action);
   });
   return deferred;
