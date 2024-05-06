@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-adapter-netlify@1.1.4/packages/gatsby-adapter-netlify) (2024-04-10)
+
+#### Bug Fixes
+
+- handler generation on windows [#38900](https://github.com/gatsbyjs/gatsby/issues/38900) [#38929](https://github.com/gatsbyjs/gatsby/issues/38929) ([edaf016](https://github.com/gatsbyjs/gatsby/commit/edaf016906b593f0e028fa4a4e0b4ecc41cf1cc6))
+
 ### [1.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-adapter-netlify@1.1.3/packages/gatsby-adapter-netlify) (2024-01-25)
 
 #### Bug Fixes
@@ -71,8 +77,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.12)
 
-#### Features
-
-- Adapters [#38232](https://github.com/gatsbyjs/gatsby/issues/38232) ([b2d4aef](https://github.com/gatsbyjs/gatsby/commit/b2d4aefa7716e3ef02a19b530a8a7e4678d086e1))
+**Note:** Version bump only for package gatsby-adapter-netlify
 
 <a name="before-release-process"></a>
