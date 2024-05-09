@@ -47,21 +47,21 @@ console.log(`Deployed to ${deployUrl}`)
 try {
   await execa(`npm`, [`run`, npmScriptToRun], { stdio: `inherit` })
 } finally {
-  if (!process.env.GATSBY_TEST_SKIP_CLEANUP) {
-    console.log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
-    const deleteResponse = await execa("ntl", [
-      "api",
-      "deleteDeploy",
-      "--data",
-      `{ "deploy_id": "${deployInfo.deploy_id}" }`,
-    ])
-    if (deleteResponse.exitCode !== 0) {
-      throw new Error(
-        `Failed to delete project ${deleteResponse.stdout} ${deleteResponse.stderr} (${deleteResponse.exitCode})`
-      )
-    }
-    console.log(
-      `Successfully deleted project with deploy_id ${deployInfo.deploy_id}`
-    )
-  }
+  // if (!process.env.GATSBY_TEST_SKIP_CLEANUP) {
+  //   console.log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
+  //   const deleteResponse = await execa("ntl", [
+  //     "api",
+  //     "deleteDeploy",
+  //     "--data",
+  //     `{ "deploy_id": "${deployInfo.deploy_id}" }`,
+  //   ])
+  //   if (deleteResponse.exitCode !== 0) {
+  //     throw new Error(
+  //       `Failed to delete project ${deleteResponse.stdout} ${deleteResponse.stderr} (${deleteResponse.exitCode})`
+  //     )
+  //   }
+  //   console.log(
+  //     `Successfully deleted project with deploy_id ${deployInfo.deploy_id}`
+  //   )
+  // }
 }
