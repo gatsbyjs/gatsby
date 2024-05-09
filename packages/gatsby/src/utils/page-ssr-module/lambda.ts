@@ -8,8 +8,7 @@ import { pipeline } from "stream"
 import { URL } from "url"
 import { promisify } from "util"
 
-import type { IGatsbyPage } from "../../internal"
-import type { ISSRData } from "./entry"
+import type { ISSRData, EnginePage } from "./entry"
 import { link, rewritableMethods as linkRewritableMethods } from "linkfs"
 
 const cdnDatastore = `%CDN_DATASTORE_PATH%`
@@ -223,7 +222,7 @@ type GraphQLEngineType =
 const { GraphQLEngine } =
   require(`../query-engine`) as typeof import("../../schema/graphql-engine/entry")
 
-const { getData, renderPageData, renderHTML } =
+const { getData, renderPageData, renderHTML, findPageByPath } =
   require(`./index`) as typeof import("./entry")
 
 const streamPipeline = promisify(pipeline)
@@ -237,8 +236,11 @@ function get(
     : httpGet(url, callback)
 }
 
-async function getEngine(): Promise<GraphQLEngineType> {
+async function getGraphqlEngineInner(): Promise<GraphQLEngineType> {
   if (cdnDatastore) {
+    console.log(`Waiting before downloading datastore from CDN`)
+    await new Promise(resolve => setTimeout(resolve, 6000))
+
     // if this variable is set we need to download the datastore from the CDN
     const downloadPath = dbPath + `/data.mdb`
     console.log(
@@ -289,7 +291,15 @@ async function getEngine(): Promise<GraphQLEngineType> {
   return graphqlEngine
 }
 
-const engineReadyPromise = getEngine()
+let memoizedGraphqlEnginePromise: Promise<GraphQLEngineType> | null = null
+function getGraphqlEngine(): Promise<GraphQLEngineType> {
+  if (!memoizedGraphqlEnginePromise) {
+    memoizedGraphqlEnginePromise = getGraphqlEngineInner()
+  }
+  return memoizedGraphqlEnginePromise
+}
+
+// const engineReadyPromise = getGraphqlEngine()
 
 function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
@@ -321,7 +331,7 @@ function setStatusAndHeaders({
   data,
   res,
 }: {
-  page: IGatsbyPage
+  page: EnginePage
   data: ISSRData
   res: GatsbyFunctionResponse
 }): void {
@@ -354,15 +364,12 @@ function getErrorBody(statusCode: number): string {
 }
 
 interface IPageInfo {
-  page: IGatsbyPage
+  page: EnginePage
   isPageData: boolean
   pagePath: string
 }
 
-function getPage(
-  pathname: string,
-  graphqlEngine: GraphQLEngineType
-): IPageInfo | undefined {
+function getPage(pathname: string): IPageInfo | undefined {
   const pathInfo = getPathInfo(pathname)
   if (!pathInfo) {
     return undefined
@@ -370,7 +377,7 @@ function getPage(
 
   const { isPageData, pagePath } = pathInfo
 
-  const page = graphqlEngine.findPageByPath(pagePath)
+  const page = findPageByPath(pagePath)
   if (!page) {
     return undefined
   }
@@ -387,18 +394,17 @@ async function engineHandler(
   res: GatsbyFunctionResponse
 ): Promise<void> {
   try {
-    const graphqlEngine = await engineReadyPromise
     let pageInfo: IPageInfo | undefined
 
     const originalPathName = req.url ?? ``
 
     if (PATH_PREFIX && originalPathName.startsWith(PATH_PREFIX)) {
       const maybePath = originalPathName.slice(PATH_PREFIX.length)
-      pageInfo = getPage(maybePath, graphqlEngine)
+      pageInfo = getPage(maybePath)
     }
 
     if (!pageInfo) {
-      pageInfo = getPage(originalPathName, graphqlEngine)
+      pageInfo = getPage(originalPathName)
     }
 
     if (!pageInfo) {
@@ -410,7 +416,7 @@ async function engineHandler(
 
     const data = await getData({
       pathName: pagePath,
-      graphqlEngine,
+      getGraphqlEngine,
       req,
     })
 

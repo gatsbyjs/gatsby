@@ -4,7 +4,7 @@ import webpack from "webpack"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
-import type { ITemplateDetails } from "./entry"
+import type { EnginePage, ITemplateDetails } from "./entry"
 
 import {
   getScriptsAndStylesForTemplate,
@@ -13,6 +13,7 @@ import {
 import { IGatsbyState } from "../../redux/types"
 import { store } from "../../redux"
 import { getLmdbOnCdnPath, shouldBundleDatastore } from "../engines-helpers"
+import { getPageMode } from "../page-mode"
 
 type Reporter = typeof reporter
 
@@ -112,6 +113,25 @@ export async function createPageSSRBundle({
     }
   }
 
+  const pagesIterable: Array<[string, EnginePage]> = []
+  for (const [pagePath, page] of state.pages) {
+    const mode = getPageMode(page, state)
+    if (mode !== "SSG") {
+      pagesIterable.push([
+        pagePath,
+        {
+          componentChunkName: page.componentChunkName,
+          componentPath: page.componentPath,
+          context: page.context,
+          matchPath: page.matchPath,
+          mode,
+          path: page.path,
+          slices: page.slices,
+        },
+      ])
+    }
+  }
+
   const compiler = webpack({
     name: `Page Engine`,
     mode: `none`,
@@ -193,6 +213,7 @@ export async function createPageSSRBundle({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
         INLINED_HEADERS_CONFIG: JSON.stringify(state.config.headers),
         WEBPACK_COMPILATION_HASH: JSON.stringify(webpackCompilationHash),
+        GATSBY_PAGES: JSON.stringify(pagesIterable),
         GATSBY_SLICES: JSON.stringify(slicesStateObject),
         GATSBY_SLICES_BY_TEMPLATE: JSON.stringify(slicesByTemplateStateObject),
         GATSBY_SLICES_SCRIPT: JSON.stringify(
