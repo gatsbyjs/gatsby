@@ -12,7 +12,7 @@ import {
 } from "../client-assets-for-template"
 import { IGatsbyState } from "../../redux/types"
 import { store } from "../../redux"
-import { LmdbOnCdnPath, shouldBundleDatastore } from "../engines-helpers"
+import { getLmdbOnCdnPath, shouldBundleDatastore } from "../engines-helpers"
 
 type Reporter = typeof reporter
 
@@ -250,7 +250,7 @@ export async function createPageSSRBundle({
       `%CDN_DATASTORE_PATH%`,
       shouldBundleDatastore()
         ? ``
-        : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
+        : `${state.adapter.config.deployURL ?? ``}/${getLmdbOnCdnPath()}`
     )
     .replaceAll(`%PATH_PREFIX%`, pathPrefix)
     .replaceAll(
