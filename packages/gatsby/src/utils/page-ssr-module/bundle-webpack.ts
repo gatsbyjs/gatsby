@@ -116,7 +116,7 @@ export async function createPageSSRBundle({
   const pagesIterable: Array<[string, EnginePage]> = []
   for (const [pagePath, page] of state.pages) {
     const mode = getPageMode(page, state)
-    if (mode !== "SSG") {
+    if (mode !== `SSG`) {
       pagesIterable.push([
         pagePath,
         {
