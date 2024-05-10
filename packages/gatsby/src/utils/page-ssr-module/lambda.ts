@@ -11,7 +11,7 @@ import { promisify } from "util"
 import type { ISSRData, EnginePage } from "./entry"
 import { link, rewritableMethods as linkRewritableMethods } from "linkfs"
 
-const cdnDatastore = `%CDN_DATASTORE_PATH%`
+const cdnDatastoreFromBuild = `%CDN_DATASTORE_PATH%`
 const PATH_PREFIX = `%PATH_PREFIX%`
 
 function setupFsWrapper(): string {
@@ -174,7 +174,7 @@ function setupFsWrapper(): string {
     // @ts-ignore __promisify__ stuff
     global._fsWrapper = lfs
 
-    if (!cdnDatastore) {
+    if (!cdnDatastoreFromBuild) {
       const dir = `data`
       if (
         !process.env.NETLIFY_LOCAL &&
@@ -236,11 +236,18 @@ function get(
     : httpGet(url, callback)
 }
 
-async function getGraphqlEngineInner(): Promise<GraphQLEngineType> {
-  if (cdnDatastore) {
-    console.log(`Waiting before downloading datastore from CDN`)
-    await new Promise(resolve => setTimeout(resolve, 6000))
-
+async function getGraphqlEngineInner(
+  requestUrl?: string
+): Promise<GraphQLEngineType> {
+  if (cdnDatastoreFromBuild) {
+    let cdnDatastore = cdnDatastoreFromBuild
+    if (requestUrl) {
+      const url = new URL(cdnDatastoreFromBuild)
+      url.host = requestUrl
+      url.port = ``
+      url.protocol = `https:`
+      cdnDatastore = url.href
+    }
     // if this variable is set we need to download the datastore from the CDN
     const downloadPath = dbPath + `/data.mdb`
     console.log(
@@ -292,9 +299,9 @@ async function getGraphqlEngineInner(): Promise<GraphQLEngineType> {
 }
 
 let memoizedGraphqlEnginePromise: Promise<GraphQLEngineType> | null = null
-function getGraphqlEngine(): Promise<GraphQLEngineType> {
+function getGraphqlEngine(requestUrl?: string): Promise<GraphQLEngineType> {
   if (!memoizedGraphqlEnginePromise) {
-    memoizedGraphqlEnginePromise = getGraphqlEngineInner()
+    memoizedGraphqlEnginePromise = getGraphqlEngineInner(requestUrl)
   }
   return memoizedGraphqlEnginePromise
 }
@@ -416,7 +423,9 @@ async function engineHandler(
 
     const data = await getData({
       pathName: pagePath,
-      getGraphqlEngine,
+      getGraphqlEngine: () =>
+        // @ts-ignore - this is temporary, so ts-ignore is fine - we won't use netlifyFunctionParams here ultimately
+        getGraphqlEngine(req.netlifyFunctionParams?.event?.headers?.[`host`]),
       req,
     })
 
