@@ -248,7 +248,6 @@ async function getGraphqlEngineInner(
 ): Promise<GraphQLEngineType> {
   if (cdnDatastorePath) {
     const cdnDatastore = `${origin}/${cdnDatastorePath}`
-    console.time(`Fetching datastore from "${cdnDatastore}"`)
     // if this variable is set we need to download the datastore from the CDN
     const downloadPath = dbPath + `/data.mdb`
     console.log(
@@ -292,7 +291,6 @@ async function getGraphqlEngineInner(
       })
     })
     console.log(`Downloaded datastore from CDN`)
-    console.timeEnd(`Fetching datastore`)
   }
 
   const graphqlEngine = new GraphQLEngine({
@@ -329,6 +327,7 @@ function tryToDownloadEngineFromCollectedOrigins(): Promise<GraphQLEngineType> {
           }
         )
         originToGraphqlEnginePromise.set(origin, engineForOriginPromise)
+        return engineForOriginPromise
       } else {
         return originEngineState
       }
@@ -361,7 +360,11 @@ function getGraphqlEngine(
   return memoizedGraphqlEnginePromise
 }
 
-getGraphqlEngine()
+getGraphqlEngine().catch(
+  () =>
+    // we don't want to crash the process if we can't get the engine without a request
+    null
+)
 
 function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
