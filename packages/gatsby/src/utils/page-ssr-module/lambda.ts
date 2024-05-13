@@ -11,7 +11,10 @@ import { promisify } from "util"
 import type { ISSRData, EnginePage } from "./entry"
 import { link, rewritableMethods as linkRewritableMethods } from "linkfs"
 
-const cdnDatastoreFromBuild = `%CDN_DATASTORE_PATH%`
+const cdnDatastorePath = `%CDN_DATASTORE_PATH%`
+// this is fallback origin, we will prefer to extract it from first request instead
+// as in some cases one reported by adapter might not be correct
+const cdnDatastoreOrigin = `%CDN_DATASTORE_ORIGIN%`
 const PATH_PREFIX = `%PATH_PREFIX%`
 
 function setupFsWrapper(): string {
@@ -174,7 +177,7 @@ function setupFsWrapper(): string {
     // @ts-ignore __promisify__ stuff
     global._fsWrapper = lfs
 
-    if (!cdnDatastoreFromBuild) {
+    if (!cdnDatastorePath) {
       const dir = `data`
       if (
         !process.env.NETLIFY_LOCAL &&
@@ -236,18 +239,16 @@ function get(
     : httpGet(url, callback)
 }
 
+interface IEngineError extends Error {
+  downloadError?: boolean
+}
+
 async function getGraphqlEngineInner(
-  requestUrl?: string
+  origin: string
 ): Promise<GraphQLEngineType> {
-  if (cdnDatastoreFromBuild) {
-    let cdnDatastore = cdnDatastoreFromBuild
-    if (requestUrl) {
-      const url = new URL(cdnDatastoreFromBuild)
-      url.host = requestUrl
-      url.port = ``
-      url.protocol = `https:`
-      cdnDatastore = url.href
-    }
+  if (cdnDatastorePath) {
+    const cdnDatastore = `${origin}/${cdnDatastorePath}`
+    console.time(`Fetching datastore from "${cdnDatastore}"`)
     // if this variable is set we need to download the datastore from the CDN
     const downloadPath = dbPath + `/data.mdb`
     console.log(
@@ -262,13 +263,13 @@ async function getGraphqlEngineInner(
           response.statusCode < 200 ||
           response.statusCode > 299
         ) {
-          reject(
-            new Error(
-              `Failed to download ${cdnDatastore}: ${response.statusCode} ${
-                response.statusMessage || ``
-              }`
-            )
-          )
+          const engineError = new Error(
+            `Failed to download ${cdnDatastore}: ${response.statusCode} ${
+              response.statusMessage || ``
+            }`
+          ) as IEngineError
+          engineError.downloadError = true
+          reject(engineError)
           return
         }
 
@@ -277,16 +278,21 @@ async function getGraphqlEngineInner(
           .then(resolve)
           .catch(error => {
             console.log(`Error downloading ${cdnDatastore}`, error)
-            reject(error)
+            const engineError = error as IEngineError
+            engineError.downloadError = true
+            reject(engineError)
           })
       })
 
       req.on(`error`, error => {
         console.log(`Error downloading ${cdnDatastore}`, error)
-        reject(error)
+        const engineError = error as IEngineError
+        engineError.downloadError = true
+        reject(engineError)
       })
     })
     console.log(`Downloaded datastore from CDN`)
+    console.timeEnd(`Fetching datastore`)
   }
 
   const graphqlEngine = new GraphQLEngine({
@@ -299,14 +305,63 @@ async function getGraphqlEngineInner(
 }
 
 let memoizedGraphqlEnginePromise: Promise<GraphQLEngineType> | null = null
-function getGraphqlEngine(requestUrl?: string): Promise<GraphQLEngineType> {
+const originToGraphqlEnginePromise = new Map<
+  string,
+  Promise<GraphQLEngineType> | null | Error
+>()
+
+function tryToDownloadEngineFromCollectedOrigins(): Promise<GraphQLEngineType> {
+  for (const [origin, originEngineState] of originToGraphqlEnginePromise) {
+    if (!(originEngineState instanceof Error)) {
+      if (originEngineState === null) {
+        const engineForOriginPromise = getGraphqlEngineInner(origin).catch(
+          e => {
+            originToGraphqlEnginePromise.set(
+              origin,
+              e instanceof Error ? e : new Error(e)
+            )
+
+            if (e.downloadError) {
+              return tryToDownloadEngineFromCollectedOrigins()
+            }
+
+            throw e
+          }
+        )
+        originToGraphqlEnginePromise.set(origin, engineForOriginPromise)
+      } else {
+        return originEngineState
+      }
+    }
+  }
+
+  return Promise.reject(new Error(`No engine available`))
+}
+
+function getGraphqlEngine(
+  req?: GatsbyFunctionRequest
+): Promise<GraphQLEngineType> {
+  const origin = req?.rawUrl ? new URL(req.rawUrl).origin : cdnDatastoreOrigin
+
+  if (!originToGraphqlEnginePromise.has(origin)) {
+    // register origin, but for now don't init anything
+    originToGraphqlEnginePromise.set(origin, null)
+  }
+
   if (!memoizedGraphqlEnginePromise) {
-    memoizedGraphqlEnginePromise = getGraphqlEngineInner(requestUrl)
+    // pick first non-errored entry
+    memoizedGraphqlEnginePromise =
+      tryToDownloadEngineFromCollectedOrigins().catch(e => {
+        // at this point we don't have any origin that work, but maybe we will get one in future
+        // so unset memoizedGraphqlEnginePromise as it would be not allowing any more attempts once it settled
+        memoizedGraphqlEnginePromise = null
+        throw e
+      })
   }
   return memoizedGraphqlEnginePromise
 }
 
-// const engineReadyPromise = getGraphqlEngine()
+getGraphqlEngine()
 
 function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
@@ -423,9 +478,7 @@ async function engineHandler(
 
     const data = await getData({
       pathName: pagePath,
-      getGraphqlEngine: () =>
-        // @ts-ignore - this is temporary, so ts-ignore is fine - we won't use netlifyFunctionParams here ultimately
-        getGraphqlEngine(req.netlifyFunctionParams?.event?.headers?.[`host`]),
+      getGraphqlEngine: () => getGraphqlEngine(req),
       req,
     })
 

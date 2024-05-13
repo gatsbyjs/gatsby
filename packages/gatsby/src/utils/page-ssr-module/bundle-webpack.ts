@@ -269,9 +269,11 @@ export async function createPageSSRBundle({
   functionCode = functionCode
     .replaceAll(
       `%CDN_DATASTORE_PATH%`,
-      shouldBundleDatastore()
-        ? ``
-        : `${state.adapter.config.deployURL ?? ``}/${getLmdbOnCdnPath()}`
+      shouldBundleDatastore() ? `` : getLmdbOnCdnPath()
+    )
+    .replaceAll(
+      `%CDN_DATASTORE_ORIGIN%`,
+      shouldBundleDatastore() ? `` : state.adapter.config.deployURL ?? ``
     )
     .replaceAll(`%PATH_PREFIX%`, pathPrefix)
     .replaceAll(
