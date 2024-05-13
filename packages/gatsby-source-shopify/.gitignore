@@ -1,6 +1,0 @@
-*.js
-*.js.map
-*.d.ts
-!/types/*.d.ts
-
-!jest.config.js

@@ -1,2 +1,0 @@
-exports.onPreInit = () => {}
-exports.otherTestApi = () => {}

@@ -1,5 +1,0 @@
-;(() => {
-  window.marked = {
-    it: `loaded`,
-  }
-})()
