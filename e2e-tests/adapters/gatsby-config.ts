@@ -2,8 +2,6 @@ import type { GatsbyConfig } from "gatsby"
 import debugAdapter from "./debug-adapter"
 import { siteDescription, title } from "./constants"
 
-process.env.GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE = `true`
-
 const shouldUseDebugAdapter = process.env.USE_DEBUG_ADAPTER ?? false
 const trailingSlash = (process.env.TRAILING_SLASH ||
   `never`) as GatsbyConfig["trailingSlash"]
