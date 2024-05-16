@@ -34,7 +34,7 @@ import { ICollectedSlice } from "../babel/find-slices"
 import { createHeadersMatcher } from "../adapter/create-headers"
 import { MUST_REVALIDATE_HEADERS } from "../adapter/constants"
 import { getRoutePathFromPage } from "../adapter/get-route-path"
-import { findPageByPath as findPageByPathInner } from "../find-page-by-path"
+import { findPageByPath } from "../find-page-by-path"
 
 export interface ITemplateDetails {
   query: string
@@ -144,7 +144,7 @@ export async function getData(arg: IGetDataArgs): Promise<ISSRData> {
       potentialPagePath = getPagePathFromPageDataPath(pathName) || pathName
 
       // 1. Find a page for pathname
-      const maybePage = findPageByPath(potentialPagePath)
+      const maybePage = findEnginePageByPath(potentialPagePath)
 
       if (!maybePage) {
         // page not found, nothing to run query for
@@ -526,6 +526,6 @@ const stateWithPages = {
   pages: new Map(GATSBY_PAGES),
 } as unknown as IGatsbyState
 
-export function findPageByPath(pathName: string): EnginePage | undefined {
-  return findPageByPathInner(stateWithPages, pathName, false)
+export function findEnginePageByPath(pathName: string): EnginePage | undefined {
+  return findPageByPath(stateWithPages, pathName, false)
 }

@@ -225,7 +225,7 @@ type GraphQLEngineType =
 const { GraphQLEngine } =
   require(`../query-engine`) as typeof import("../../schema/graphql-engine/entry")
 
-const { getData, renderPageData, renderHTML, findPageByPath } =
+const { getData, renderPageData, renderHTML, findEnginePageByPath } =
   require(`./index`) as typeof import("./entry")
 
 const streamPipeline = promisify(pipeline)
@@ -442,7 +442,7 @@ function getPage(pathname: string): IPageInfo | undefined {
 
   const { isPageData, pagePath } = pathInfo
 
-  const page = findPageByPath(pagePath)
+  const page = findEnginePageByPath(pagePath)
   if (!page) {
     return undefined
   }

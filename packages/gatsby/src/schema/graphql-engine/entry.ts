@@ -196,7 +196,7 @@ export class GraphQLEngine {
   }
 
   /**
-   * @deprecated use findPageByPath exported from page-ssr module instead
+   * @deprecated use findEnginePageByPath exported from page-ssr module instead
    */
   public findPageByPath(pathName: string): IGatsbyPage | undefined {
     // adapter so `findPageByPath` use SitePage nodes in datastore
