@@ -119,7 +119,7 @@ const installPackages = async ({
 
     // package.json files are changed - so we just want to install
     // using verdaccio registry
-    const yarnCommands = [`install`]
+    const yarnCommands = [`install`, `--ignore-engines`]
 
     if (!externalRegistry) {
       yarnCommands.push(`--registry=${registryUrl}`)
