@@ -134,6 +134,7 @@ const installPackages = async ({
         return `${packageName}@${packageVersion}`
       }),
       `--exact`,
+      `--ignore-engines`,
     ]
 
     if (!externalRegistry) {
