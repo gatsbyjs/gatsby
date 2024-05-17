@@ -191,37 +191,6 @@ module.exports = async function build(
     buildActivityTimer.end()
   }
 
-  if (shouldGenerateEngines()) {
-    const state = store.getState()
-    const buildActivityTimer = report.activityTimer(
-      `Building Rendering Engines`,
-      { parentSpan: buildSpan }
-    )
-    try {
-      buildActivityTimer.start()
-      // bundle graphql-engine
-      engineBundlingPromises.push(
-        createGraphqlEngineBundle(program.directory, report, program.verbose)
-      )
-
-      engineBundlingPromises.push(
-        createPageSSRBundle({
-          rootDir: program.directory,
-          components: state.components,
-          staticQueriesByTemplate: state.staticQueriesByTemplate,
-          webpackCompilationHash: webpackCompilationHash as string, // we set webpackCompilationHash above
-          reporter: report,
-          isVerbose: program.verbose,
-        })
-      )
-      await Promise.all(engineBundlingPromises)
-    } catch (err) {
-      reporter.panic(err)
-    } finally {
-      buildActivityTimer.end()
-    }
-  }
-
   const buildSSRBundleActivityProgress = report.activityTimer(
     `Building HTML renderer`,
     { parentSpan: buildSpan }
@@ -295,6 +264,35 @@ module.exports = async function build(
   }
 
   if (shouldGenerateEngines()) {
+    const state = store.getState()
+    const buildActivityTimer = report.activityTimer(
+      `Building Rendering Engines`,
+      { parentSpan: buildSpan }
+    )
+    try {
+      buildActivityTimer.start()
+      // bundle graphql-engine
+      engineBundlingPromises.push(
+        createGraphqlEngineBundle(program.directory, report, program.verbose)
+      )
+
+      engineBundlingPromises.push(
+        createPageSSRBundle({
+          rootDir: program.directory,
+          components: state.components,
+          staticQueriesByTemplate: state.staticQueriesByTemplate,
+          webpackCompilationHash: webpackCompilationHash as string, // we set webpackCompilationHash above
+          reporter: report,
+          isVerbose: program.verbose,
+        })
+      )
+      await Promise.all(engineBundlingPromises)
+    } catch (err) {
+      reporter.panic(err)
+    } finally {
+      buildActivityTimer.end()
+    }
+
     await validateEnginesWithActivity(program.directory, buildSpan)
   }
 
