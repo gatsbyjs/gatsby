@@ -8,11 +8,13 @@ import { pipeline } from "stream"
 import { URL } from "url"
 import { promisify } from "util"
 
-import type { IGatsbyPage } from "../../internal"
-import type { ISSRData } from "./entry"
+import type { ISSRData, EnginePage } from "./entry"
 import { link, rewritableMethods as linkRewritableMethods } from "linkfs"
 
-const cdnDatastore = `%CDN_DATASTORE_PATH%`
+const cdnDatastorePath = `%CDN_DATASTORE_PATH%`
+// this is fallback origin, we will prefer to extract it from first request instead
+// as in some cases one reported by adapter might not be correct
+const cdnDatastoreOrigin = `%CDN_DATASTORE_ORIGIN%`
 const PATH_PREFIX = `%PATH_PREFIX%`
 
 function setupFsWrapper(): string {
@@ -175,7 +177,7 @@ function setupFsWrapper(): string {
     // @ts-ignore __promisify__ stuff
     global._fsWrapper = lfs
 
-    if (!cdnDatastore) {
+    if (!cdnDatastorePath) {
       const dir = `data`
       if (
         !process.env.NETLIFY_LOCAL &&
@@ -223,7 +225,7 @@ type GraphQLEngineType =
 const { GraphQLEngine } =
   require(`../query-engine`) as typeof import("../../schema/graphql-engine/entry")
 
-const { getData, renderPageData, renderHTML } =
+const { getData, renderPageData, renderHTML, findEnginePageByPath } =
   require(`./index`) as typeof import("./entry")
 
 const streamPipeline = promisify(pipeline)
@@ -237,47 +239,66 @@ function get(
     : httpGet(url, callback)
 }
 
-async function getEngine(): Promise<GraphQLEngineType> {
-  if (cdnDatastore) {
-    // if this variable is set we need to download the datastore from the CDN
-    const downloadPath = dbPath + `/data.mdb`
-    console.log(
-      `Downloading datastore from CDN (${cdnDatastore} -> ${downloadPath})`
-    )
+interface IEngineError extends Error {
+  downloadError?: boolean
+}
 
-    await fs.ensureDir(dbPath)
-    await new Promise((resolve, reject) => {
-      const req = get(cdnDatastore, response => {
-        if (
-          !response.statusCode ||
-          response.statusCode < 200 ||
-          response.statusCode > 299
-        ) {
-          reject(
-            new Error(
-              `Failed to download ${cdnDatastore}: ${response.statusCode} ${
-                response.statusMessage || ``
-              }`
-            )
-          )
-          return
-        }
+function shouldDownloadDatastoreFromCDN(): boolean {
+  return !!cdnDatastorePath
+}
 
-        const fileStream = fs.createWriteStream(downloadPath)
-        streamPipeline(response, fileStream)
-          .then(resolve)
-          .catch(error => {
-            console.log(`Error downloading ${cdnDatastore}`, error)
-            reject(error)
-          })
-      })
+async function downloadDatastoreFromCDN(origin: string): Promise<void> {
+  const cdnDatastore = `${origin}/${cdnDatastorePath}`
+  // if this variable is set we need to download the datastore from the CDN
+  const downloadPath = dbPath + `/data.mdb`
+  console.log(
+    `Downloading datastore from CDN (${cdnDatastore} -> ${downloadPath})`
+  )
 
-      req.on(`error`, error => {
-        console.log(`Error downloading ${cdnDatastore}`, error)
-        reject(error)
-      })
+  await fs.ensureDir(dbPath)
+  await new Promise((resolve, reject) => {
+    const req = get(cdnDatastore, response => {
+      if (
+        !response.statusCode ||
+        response.statusCode < 200 ||
+        response.statusCode > 299
+      ) {
+        const engineError = new Error(
+          `Failed to download ${cdnDatastore}: ${response.statusCode} ${
+            response.statusMessage || ``
+          }`
+        ) as IEngineError
+        engineError.downloadError = true
+        reject(engineError)
+        return
+      }
+
+      const fileStream = fs.createWriteStream(downloadPath)
+      streamPipeline(response, fileStream)
+        .then(resolve)
+        .catch(error => {
+          console.log(`Error downloading ${cdnDatastore}`, error)
+          const engineError = error as IEngineError
+          engineError.downloadError = true
+          reject(engineError)
+        })
     })
-    console.log(`Downloaded datastore from CDN`)
+
+    req.on(`error`, error => {
+      console.log(`Error downloading ${cdnDatastore}`, error)
+      const engineError = error as IEngineError
+      engineError.downloadError = true
+      reject(engineError)
+    })
+  })
+  console.log(`Downloaded datastore from CDN`)
+}
+
+async function initializeGraphqlEngine(
+  origin: string
+): Promise<GraphQLEngineType> {
+  if (shouldDownloadDatastoreFromCDN()) {
+    await downloadDatastoreFromCDN(origin)
   }
 
   const graphqlEngine = new GraphQLEngine({
@@ -289,7 +310,67 @@ async function getEngine(): Promise<GraphQLEngineType> {
   return graphqlEngine
 }
 
-const engineReadyPromise = getEngine()
+let memoizedGraphqlEnginePromise: Promise<GraphQLEngineType> | null = null
+const originToGraphqlEnginePromise = new Map<
+  string,
+  Promise<GraphQLEngineType> | null | Error
+>()
+
+function tryToInitializeGraphqlEngineFromCollectedOrigins(): Promise<GraphQLEngineType> {
+  for (const [origin, originEngineState] of originToGraphqlEnginePromise) {
+    if (!(originEngineState instanceof Error)) {
+      if (originEngineState === null) {
+        const engineForOriginPromise = initializeGraphqlEngine(origin).catch(
+          e => {
+            originToGraphqlEnginePromise.set(
+              origin,
+              e instanceof Error ? e : new Error(e)
+            )
+
+            if (e.downloadError) {
+              return tryToInitializeGraphqlEngineFromCollectedOrigins()
+            }
+
+            throw e
+          }
+        )
+        originToGraphqlEnginePromise.set(origin, engineForOriginPromise)
+        return engineForOriginPromise
+      } else {
+        return originEngineState
+      }
+    }
+  }
+
+  return Promise.reject(new Error(`No engine available`))
+}
+
+function memoizedInitializeGraphqlEngine(
+  origin: string
+): Promise<GraphQLEngineType> {
+  if (!originToGraphqlEnginePromise.has(origin)) {
+    // register origin, but for now don't init anything
+    originToGraphqlEnginePromise.set(origin, null)
+  }
+
+  if (!memoizedGraphqlEnginePromise) {
+    // pick first non-errored entry
+    memoizedGraphqlEnginePromise =
+      tryToInitializeGraphqlEngineFromCollectedOrigins().catch(e => {
+        // at this point we don't have any origin that work, but maybe we will get one in future
+        // so unset memoizedGraphqlEnginePromise as it would be not allowing any more attempts once it settled
+        memoizedGraphqlEnginePromise = null
+        throw e
+      })
+  }
+  return memoizedGraphqlEnginePromise
+}
+
+memoizedInitializeGraphqlEngine(cdnDatastoreOrigin).catch(
+  () =>
+    // we don't want to crash the process if we can't get the engine without a request
+    null
+)
 
 function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
@@ -321,7 +402,7 @@ function setStatusAndHeaders({
   data,
   res,
 }: {
-  page: IGatsbyPage
+  page: EnginePage
   data: ISSRData
   res: GatsbyFunctionResponse
 }): void {
@@ -354,15 +435,12 @@ function getErrorBody(statusCode: number): string {
 }
 
 interface IPageInfo {
-  page: IGatsbyPage
+  page: EnginePage
   isPageData: boolean
   pagePath: string
 }
 
-function getPage(
-  pathname: string,
-  graphqlEngine: GraphQLEngineType
-): IPageInfo | undefined {
+function getPage(pathname: string): IPageInfo | undefined {
   const pathInfo = getPathInfo(pathname)
   if (!pathInfo) {
     return undefined
@@ -370,7 +448,7 @@ function getPage(
 
   const { isPageData, pagePath } = pathInfo
 
-  const page = graphqlEngine.findPageByPath(pagePath)
+  const page = findEnginePageByPath(pagePath)
   if (!page) {
     return undefined
   }
@@ -387,18 +465,17 @@ async function engineHandler(
   res: GatsbyFunctionResponse
 ): Promise<void> {
   try {
-    const graphqlEngine = await engineReadyPromise
     let pageInfo: IPageInfo | undefined
 
     const originalPathName = req.url ?? ``
 
     if (PATH_PREFIX && originalPathName.startsWith(PATH_PREFIX)) {
       const maybePath = originalPathName.slice(PATH_PREFIX.length)
-      pageInfo = getPage(maybePath, graphqlEngine)
+      pageInfo = getPage(maybePath)
     }
 
     if (!pageInfo) {
-      pageInfo = getPage(originalPathName, graphqlEngine)
+      pageInfo = getPage(originalPathName)
     }
 
     if (!pageInfo) {
@@ -410,7 +487,10 @@ async function engineHandler(
 
     const data = await getData({
       pathName: pagePath,
-      graphqlEngine,
+      getGraphqlEngine: () =>
+        memoizedInitializeGraphqlEngine(
+          req?.rawUrl ? new URL(req.rawUrl).origin : cdnDatastoreOrigin
+        ),
       req,
     })
 
