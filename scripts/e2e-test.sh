@@ -19,7 +19,7 @@ echo "Copy $SRC_PATH into $TMP_LOCATION to isolate test"
 cp -Rv $SRC_PATH/. $TMP_TEST_LOCATION
 cp -Rv $GATSBY_PATH/scripts/. $TMP_LOCATION/scripts/
 
-echo '"--install.ignore-engines" true' > $TMP_TEST_LOCATION/.npmrc
+echo '"--install.ignore-engines" true' > $TMP_TEST_LOCATION/.yarnrc
 
 # setting up child integration test link to gatsby packages
 cd "$TMP_TEST_LOCATION"
