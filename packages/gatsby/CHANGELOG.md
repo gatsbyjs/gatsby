@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.5/packages/gatsby) (2024-05-17)
+
+#### Features
+
+- allow dsg/ssr renders without access to datastore if it's not required [#38974](https://github.com/gatsbyjs/gatsby/issues/38974) [#38979](https://github.com/gatsbyjs/gatsby/issues/38979) ([326c89a](https://github.com/gatsbyjs/gatsby/commit/326c89aaa30edcd3d6e46e797a4b7bcec171b6f2))
+
+#### Chores
+
+- pin @vercel/webpack-asset-relocator-loader [#38981](https://github.com/gatsbyjs/gatsby/issues/38981) [#38982](https://github.com/gatsbyjs/gatsby/issues/38982) ([e7231ec](https://github.com/gatsbyjs/gatsby/commit/e7231ec9d087d6a1be9215a0cc186d6c833fe84e))
+
 ### [5.13.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.4/packages/gatsby) (2024-04-10)
 
 #### Bug Fixes
