@@ -19,6 +19,7 @@ cp -Rv $GATSBY_PATH/scripts/. $TMP_LOCATION/scripts/
 # setting up child integration test link to gatsby packages
 cd "$TMP_TEST_LOCATION"
 
+echo "Using $GATSBY_PATH/packages/gatsby-dev-cli/dist/index.js"
 
 node $GATSBY_PATH/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo "$GATSBY_PATH"
 node $GATSBY_PATH/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once  # Do not copy files, only install through npm, like our users would
