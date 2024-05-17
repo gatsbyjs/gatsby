@@ -195,6 +195,9 @@ export class GraphQLEngine {
     }
   }
 
+  /**
+   * @deprecated use findEnginePageByPath exported from page-ssr module instead
+   */
   public findPageByPath(pathName: string): IGatsbyPage | undefined {
     // adapter so `findPageByPath` use SitePage nodes in datastore
     // instead of `pages` redux slice

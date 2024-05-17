@@ -202,7 +202,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     try {
       const { GraphQLEngine } =
         require(graphqlEnginePath) as typeof import("../schema/graphql-engine/entry")
-      const { getData, renderPageData, renderHTML } =
+      const { getData, renderPageData, renderHTML, findEnginePageByPath } =
         require(pageSSRModule) as typeof import("../utils/page-ssr-module/entry")
       const graphqlEngine = new GraphQLEngine({
         dbPath: path.posix.join(
@@ -222,7 +222,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           }
 
           const potentialPagePath = reverseFixedPagePath(requestedPagePath)
-          const page = graphqlEngine.findPageByPath(potentialPagePath)
+          const page = findEnginePageByPath(potentialPagePath)
 
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const requestActivity = report.phantomActivity(
@@ -272,7 +272,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       router.use(async (req, res, next) => {
         if (req.accepts(`html`)) {
           const potentialPagePath = req.path
-          const page = graphqlEngine.findPageByPath(potentialPagePath)
+          const page = findEnginePageByPath(potentialPagePath)
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const requestActivity = report.phantomActivity(
               `request for "${req.path}"`

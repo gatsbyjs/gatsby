@@ -1869,6 +1869,10 @@ export interface GatsbyFunctionRequest<ReqBody = any> extends IncomingMessage {
    * Object of `cookies` from header
    */
   cookies: Record<string, string>
+  /**
+   * Optional field to store the full raw URL by adapters
+   */
+  rawUrl?: string
 }
 
 export interface GatsbyFunctionBodyParserCommonMiddlewareConfig {

@@ -11,7 +11,9 @@ function maybeDropNamedPartOfWildcard(
   return path.replace(/\*.+$/, `*`)
 }
 
-export function getRoutePathFromPage(page: IGatsbyPage): string {
+export function getRoutePathFromPage(
+  page: Pick<IGatsbyPage, "path" | "matchPath">
+): string {
   return maybeDropNamedPartOfWildcard(page.matchPath) ?? page.path
 }
 
