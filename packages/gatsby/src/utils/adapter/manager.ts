@@ -26,7 +26,7 @@ import { getPageMode } from "../page-mode"
 import { getStaticQueryPath } from "../static-query-utils"
 import { getAdapterInit } from "./init"
 import {
-  LmdbOnCdnPath,
+  getLmdbOnCdnPath,
   shouldBundleDatastore,
   shouldGenerateEngines,
 } from "../engines-helpers"
@@ -192,7 +192,7 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
       }
 
       // handle lmdb file
-      const mdbInPublicPath = `public/${LmdbOnCdnPath}`
+      const mdbInPublicPath = `public/${getLmdbOnCdnPath()}`
       if (!shouldBundleDatastore()) {
         const mdbPath = getDefaultDbPath() + `/data.mdb`
         copy(mdbPath, mdbInPublicPath)
@@ -286,6 +286,8 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
         deployURL: configFromAdapter?.deployURL,
         supports: configFromAdapter?.supports,
         pluginsToDisable: configFromAdapter?.pluginsToDisable ?? [],
+        functionsArch: configFromAdapter?.functionsArch,
+        functionsPlatform: configFromAdapter?.functionsPlatform,
       }
     },
   }

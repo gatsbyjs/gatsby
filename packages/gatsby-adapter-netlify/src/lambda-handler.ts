@@ -2,6 +2,7 @@ import type { IFunctionDefinition } from "gatsby"
 import packageJson from "gatsby-adapter-netlify/package.json"
 import fs from "fs-extra"
 import * as path from "path"
+import { slash } from "gatsby-core-utils/path"
 
 interface INetlifyFunctionConfig {
   externalNodeModules?: Array<string>
@@ -25,7 +26,7 @@ interface INetlifyFunctionManifest {
   version: number
 }
 
-async function prepareFunction(
+export async function prepareFunction(
   fun: IFunctionDefinition,
   odbfunctionName?: string
 ): Promise<void> {
@@ -58,7 +59,7 @@ async function prepareFunction(
       name: displayName,
       generator: `gatsby-adapter-netlify@${packageJson?.version ?? `unknown`}`,
       includedFiles: fun.requiredFiles.map(file =>
-        file.replace(/\[/g, `*`).replace(/]/g, `*`)
+        slash(file).replace(/\[/g, `*`).replace(/]/g, `*`)
       ),
       externalNodeModules: [`msgpackr-extract`],
     },
@@ -73,7 +74,10 @@ async function prepareFunction(
   function getRelativePathToModule(modulePath: string): string {
     const absolutePath = require.resolve(modulePath)
 
-    return `./` + path.relative(internalFunctionsDir, absolutePath)
+    return (
+      `./` +
+      path.posix.relative(slash(internalFunctionsDir), slash(absolutePath))
+    )
   }
 
   const handlerSource = /* javascript */ `
@@ -172,11 +176,13 @@ const createRequestObject = ({ event, context }) => {
     multiValueHeaders = {},
     body,
     isBase64Encoded,
+    rawUrl
   } = event
   const newStream = new Stream.Readable()
   const req = Object.assign(newStream, http.IncomingMessage.prototype)
   req.url = path
   req.originalUrl = req.url
+  req.rawUrl = rawUrl
   req.query = queryStringParameters
   req.multiValueQuery = multiValueQueryStringParameters
   req.method = httpMethod

@@ -14,13 +14,14 @@
     "develop:debug": "start-server-and-test develop http://localhost:8000 'npm run cy:open -- --config baseUrl=http://localhost:8000'",
     "ssat:debug": "start-server-and-test serve http://localhost:9000 cy:open",
     "test:template": "cross-env-shell CYPRESS_GROUP_NAME=\"adapter:$ADAPTER / trailingSlash:${TRAILING_SLASH:-always} / pathPrefix:${PATH_PREFIX:--}\" TRAILING_SLASH=$TRAILING_SLASH PATH_PREFIX=$PATH_PREFIX node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH,PATH_PREFIX=$PATH_PREFIX",
-    "test:template:debug": "cross-env-shell CYPRESS_GROUP_NAME=\"adapter:$ADAPTER / trailingSlash:${TRAILING_SLASH:-always} / pathPrefix:${PATH_PREFIX:--}\" TRAILING_SLASH=$TRAILING_SLASH PATH_PREFIX=$PATH_PREFIX npm run cy:open -- --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH,PATH_PREFIX=$PATH_PREFIX",
+    "test:template:debug": "cross-env-shell CYPRESS_GROUP_NAME=\"adapter:$ADAPTER / trailingSlash:${TRAILING_SLASH:-always} / pathPrefix:${PATH_PREFIX:--} / excludeDatastoreFromBundle:${GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE:-false}\" TRAILING_SLASH=$TRAILING_SLASH PATH_PREFIX=$PATH_PREFIX npm run cy:open -- --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH,PATH_PREFIX=$PATH_PREFIX",
     "test:debug": "npm-run-all -s build:debug ssat:debug",
     "test:netlify": "cross-env TRAILING_SLASH=always node scripts/deploy-and-run/netlify.mjs test:template",
+    "test:smoke": "node smoke-test.mjs",
     "test:netlify:debug": "cross-env TRAILING_SLASH=always node scripts/deploy-and-run/netlify.mjs test:template:debug",
-    "test:netlify:prefix-never": "cross-env TRAILING_SLASH=never PATH_PREFIX=/prefix node scripts/deploy-and-run/netlify.mjs test:template",
-    "test:netlify:prefix-never:debug": "cross-env TRAILING_SLASH=never PATH_PREFIX=/prefix node scripts/deploy-and-run/netlify.mjs test:template:debug",
-    "test": "npm-run-all -c -s test:netlify test:netlify:prefix-never"
+    "test:netlify:non-defaults-variant": "cross-env TRAILING_SLASH=never PATH_PREFIX=/prefix GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE=true node scripts/deploy-and-run/netlify.mjs test:template",
+    "test:netlify:non-defaults-variant:debug": "cross-env TRAILING_SLASH=never PATH_PREFIX=/prefix GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE=true node scripts/deploy-and-run/netlify.mjs test:template:debug",
+    "test": "npm-run-all -c -s test:netlify test:netlify:non-defaults-variant"
   },
   "dependencies": {
     "gatsby": "next",
