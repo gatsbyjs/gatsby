@@ -18,12 +18,12 @@ const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
 const configs = [
   {
     title: `remote-file (SSG, Page Query)`,
-    pagePath: `/routes/remote-file/`,
+    pagePath: `/routes/ssg/remote-file/`,
     placeholders: true,
   },
   {
     title: `remote-file (SSG, Page Context)`,
-    pagePath: `/routes/remote-file-data-from-context/`,
+    pagePath: `/routes/ssg/remote-file-data-from-context/`,
     placeholders: true,
   },
   {

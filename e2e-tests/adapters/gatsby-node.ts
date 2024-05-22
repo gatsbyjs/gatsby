@@ -55,7 +55,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
   createPage({
     path: applyTrailingSlashOption(
-      `/routes/remote-file-data-from-context/`,
+      `/routes/ssg/remote-file-data-from-context/`,
       TRAILING_SLASH
     ),
     component: path.resolve(`./src/templates/remote-file-from-context.jsx`),
