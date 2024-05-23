@@ -342,10 +342,10 @@ function getRoutesManifest(): {
 } {
   const routes: Array<RouteWithScore> = []
   const state = store.getState()
-  const createHeaders = createHeadersMatcher(state.config.headers)
   const pathPrefix = state.program.prefixPaths
     ? state.config.pathPrefix ?? ``
     : ``
+  const createHeaders = createHeadersMatcher(state.config.headers, pathPrefix)
 
   const headerRoutes: HeaderRoutes = [...getDefaultHeaderRoutes(pathPrefix)]
 

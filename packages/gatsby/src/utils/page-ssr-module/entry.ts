@@ -75,6 +75,7 @@ declare global {
   const WEBPACK_COMPILATION_HASH: string
   const GATSBY_SLICES_SCRIPT: string
   const GATSBY_PAGES: Array<[string, EnginePage]>
+  const PATH_PREFIX: string
 }
 
 const tracerReadyPromise = initTracer(
@@ -85,7 +86,7 @@ type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
   | undefined
 
-const createHeaders = createHeadersMatcher(INLINED_HEADERS_CONFIG)
+const createHeaders = createHeadersMatcher(INLINED_HEADERS_CONFIG, PATH_PREFIX)
 
 interface IGetDataBaseArgs {
   pathName: string
