@@ -15,12 +15,12 @@ executors:
     environment:
       GATSBY_CPU_COUNT: 2
       COMPILER_OPTIONS: GATSBY_MAJOR=<< parameters.gatsby_major >>
+      NODE_NO_WARNINGS: 1
 
 aliases:
   e2e-executor-env: &e2e-executor-env
     GATSBY_CPU_COUNT: 2
     VERBOSE: 1
-    NODE_NO_WARNINGS: 1
 
   e2e-executor: &e2e-executor
     docker:
