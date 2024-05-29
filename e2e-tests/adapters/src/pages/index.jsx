@@ -7,12 +7,12 @@ import "./index.css"
 const routes = [
   {
     text: "Static",
-    url: "/routes/static",
+    url: "/routes/ssg/static",
     id: "static-without-slash",
   },
   {
     text: "Static (With Slash)",
-    url: "/routes/static/",
+    url: "/routes/ssg/static/",
     id: "static-with-slash",
   },
   {
@@ -41,11 +41,11 @@ const routes = [
   },
   {
     text: "RemoteFile (ImageCDN and FileCDN) (SSG, Page Query)",
-    url: "/routes/remote-file",
+    url: "/routes/ssg/remote-file",
   },
   {
     text: "RemoteFile (ImageCDN and FileCDN) (SSG, Page Context)",
-    url: "/routes/remote-file-data-from-context",
+    url: "/routes/ssg/remote-file-data-from-context",
   },
   {
     text: "RemoteFile (ImageCDN and FileCDN) (SSR, Page Query)",

@@ -236,13 +236,13 @@ export function processRoutesManifest(
         _headers += buildHeaderString(route.path, route.headers)
       }
     }
+  }
 
-    if (headerRoutes) {
-      _headers = headerRoutes.reduce((acc, curr) => {
-        acc += buildHeaderString(curr.path, curr.headers)
-        return acc
-      }, ``)
-    }
+  if (headerRoutes) {
+    _headers = headerRoutes.reduce((acc, curr) => {
+      acc += buildHeaderString(curr.path, curr.headers)
+      return acc
+    }, ``)
   }
 
   return {

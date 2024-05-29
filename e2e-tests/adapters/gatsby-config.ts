@@ -77,6 +77,15 @@ const config: GatsbyConfig = {
         },
       ],
     },
+    {
+      source: `routes/ssg/*`,
+      headers: [
+        {
+          key: "x-ssg-header",
+          value: "my custom header value",
+        },
+      ],
+    },
   ],
   ...configOverrides,
 }
