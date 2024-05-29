@@ -12,8 +12,17 @@ const normalizePath = (input: string): string =>
   input.endsWith(`/`) ? input : `${input}/`
 
 export const createHeadersMatcher = (
-  headers: Array<IHeader> | undefined
+  headers: Array<IHeader> | undefined,
+  pathPrefix: string
 ): ((path: string, defaultHeaders: Headers) => Headers) => {
+  function stripPathPrefix(path: string): string {
+    if (pathPrefix && path.startsWith(pathPrefix)) {
+      path = path.slice(pathPrefix.length)
+    }
+
+    return path
+  }
+
   // Split the incoming user headers into two buckets:
   // - dynamicHeaders: Headers with dynamic paths (e.g. /* or /:tests)
   // - staticHeaders: Headers with fully static paths (e.g. /static/)
@@ -27,13 +36,21 @@ export const createHeadersMatcher = (
   }
 
   for (const header of headers) {
-    if (header.source.includes(`:`) || header.source.includes(`*`)) {
+    const source = stripPathPrefix(header.source)
+    if (source.includes(`:`) || source.includes(`*`)) {
       // rankRoute is the internal function that also "match" uses
-      const score = rankRoute(header.source)
+      const score = rankRoute(source)
 
-      dynamicHeaders.push({ ...header, score })
+      dynamicHeaders.push({
+        ...header,
+        score,
+        source,
+      })
     } else {
-      staticHeaders.set(normalizePath(header.source), header)
+      staticHeaders.set(normalizePath(source), {
+        ...header,
+        source,
+      })
     }
   }
 
@@ -48,6 +65,8 @@ export const createHeadersMatcher = (
   })
 
   return (path: string, defaultHeaders: Headers): Headers => {
+    path = stripPathPrefix(path)
+
     // Create a map of headers for the given path
     // The key will be the header key. Since a key may only appear once in a map, the last header with the same key will win
     const uniqueHeaders: Map<string, string> = new Map()

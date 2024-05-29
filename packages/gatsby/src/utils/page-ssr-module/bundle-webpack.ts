@@ -230,6 +230,7 @@ export async function createPageSSRBundle({
               )
             : ``
         ),
+        PATH_PREFIX: JSON.stringify(pathPrefix),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         // eslint-disable-next-line @typescript-eslint/naming-convention
