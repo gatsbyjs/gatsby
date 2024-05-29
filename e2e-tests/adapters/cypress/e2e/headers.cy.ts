@@ -77,6 +77,10 @@ describe("Headers", () => {
   beforeEach(() => {
     cy.intercept(PATH_PREFIX + "/", WorkaroundCachedResponse).as("index")
     cy.intercept(
+      PATH_PREFIX + "/routes/ssg/static",
+      WorkaroundCachedResponse
+    ).as("ssg")
+    cy.intercept(
       PATH_PREFIX + "/routes/ssr/static",
       WorkaroundCachedResponse
     ).as("ssr")
@@ -126,6 +130,22 @@ describe("Headers", () => {
     // index page is only one showing webpack imported image
     checkHeaders("@img-webpack-import")
     checkHeaders("@js")
+  })
+
+  it("should contain correct headers for ssg page", () => {
+    cy.visit("routes/ssg/static").waitForRouteChange()
+
+    checkHeaders("@ssg", {
+      ...defaultHeaders,
+      "x-custom-header": "my custom header value",
+      "x-ssg-header": "my custom header value",
+      "cache-control": "public,max-age=0,must-revalidate",
+    })
+
+    checkHeaders("@app-data")
+    checkHeaders("@page-data")
+    checkHeaders("@slice-data")
+    checkHeaders("@static-query-result")
   })
 
   it("should contain correct headers for ssr page", () => {
