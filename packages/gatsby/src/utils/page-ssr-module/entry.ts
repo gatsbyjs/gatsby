@@ -34,15 +34,28 @@ import { ICollectedSlice } from "../babel/find-slices"
 import { createHeadersMatcher } from "../adapter/create-headers"
 import { MUST_REVALIDATE_HEADERS } from "../adapter/constants"
 import { getRoutePathFromPage } from "../adapter/get-route-path"
+import { findPageByPath } from "../find-page-by-path"
 
 export interface ITemplateDetails {
   query: string
   staticQueryHashes: Array<string>
   assets: IScriptsAndStyles
 }
+
+export type EnginePage = Pick<
+  IGatsbyPage,
+  | "componentChunkName"
+  | "componentPath"
+  | "context"
+  | "matchPath"
+  | "mode"
+  | "path"
+  | "slices"
+>
+
 export interface ISSRData {
   results: IExecutionResult
-  page: IGatsbyPage
+  page: EnginePage
   templateDetails: ITemplateDetails
   potentialPagePath: string
   /**
@@ -61,6 +74,8 @@ declare global {
   const INLINED_HEADERS_CONFIG: Array<IHeader> | undefined
   const WEBPACK_COMPILATION_HASH: string
   const GATSBY_SLICES_SCRIPT: string
+  const GATSBY_PAGES: Array<[string, EnginePage]>
+  const PATH_PREFIX: string
 }
 
 const tracerReadyPromise = initTracer(
@@ -71,21 +86,37 @@ type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
   | undefined
 
-const createHeaders = createHeadersMatcher(INLINED_HEADERS_CONFIG)
+const createHeaders = createHeadersMatcher(INLINED_HEADERS_CONFIG, PATH_PREFIX)
 
-export async function getData({
-  pathName,
-  graphqlEngine,
-  req,
-  spanContext,
-  telemetryResolverTimings,
-}: {
-  graphqlEngine: GraphQLEngine
+interface IGetDataBaseArgs {
   pathName: string
   req?: Partial<Pick<Request, "query" | "method" | "url" | "headers">>
   spanContext?: Span | SpanContext
   telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
-}): Promise<ISSRData> {
+}
+
+interface IGetDataEagerEngineArgs extends IGetDataBaseArgs {
+  graphqlEngine: GraphQLEngine
+}
+
+interface IGetDataLazyEngineArgs extends IGetDataBaseArgs {
+  getGraphqlEngine: () => Promise<GraphQLEngine>
+}
+
+type IGetDataArgs = IGetDataEagerEngineArgs | IGetDataLazyEngineArgs
+
+function isEagerGraphqlEngine(
+  arg: IGetDataArgs
+): arg is IGetDataEagerEngineArgs {
+  return typeof (arg as IGetDataEagerEngineArgs).graphqlEngine !== `undefined`
+}
+
+export async function getData(arg: IGetDataArgs): Promise<ISSRData> {
+  const getGraphqlEngine = isEagerGraphqlEngine(arg)
+    ? (): Promise<GraphQLEngine> => Promise.resolve(arg.graphqlEngine)
+    : arg.getGraphqlEngine
+
+  const { pathName, req, spanContext, telemetryResolverTimings } = arg
   await tracerReadyPromise
 
   let getDataWrapperActivity: MaybePhantomActivity
@@ -97,7 +128,7 @@ export async function getData({
       getDataWrapperActivity.start()
     }
 
-    let page: IGatsbyPage
+    let page: EnginePage
     let templateDetails: ITemplateDetails
     let potentialPagePath: string
     let findMetaActivity: MaybePhantomActivity
@@ -114,7 +145,7 @@ export async function getData({
       potentialPagePath = getPagePathFromPageDataPath(pathName) || pathName
 
       // 1. Find a page for pathname
-      const maybePage = graphqlEngine.findPageByPath(potentialPagePath)
+      const maybePage = findEnginePageByPath(potentialPagePath)
 
       if (!maybePage) {
         // page not found, nothing to run query for
@@ -151,44 +182,46 @@ export async function getData({
         runningQueryActivity.start()
       }
       executionPromises.push(
-        graphqlEngine
-          .runQuery(
-            templateDetails.query,
-            {
-              ...page,
-              ...page.context,
-            },
-            {
-              queryName: page.path,
-              componentPath: page.componentPath,
-              parentSpan: runningQueryActivity?.span,
-              forceGraphqlTracing: !!runningQueryActivity,
-              telemetryResolverTimings,
-            }
-          )
-          .then(queryResults => {
-            if (queryResults.errors && queryResults.errors.length > 0) {
-              const e = queryResults.errors[0]
-              const codeFrame = getCodeFrame(
-                templateDetails.query,
-                e.locations && e.locations[0].line,
-                e.locations && e.locations[0].column
-              )
+        getGraphqlEngine().then(graphqlEngine =>
+          graphqlEngine
+            .runQuery(
+              templateDetails.query,
+              {
+                ...page,
+                ...page.context,
+              },
+              {
+                queryName: page.path,
+                componentPath: page.componentPath,
+                parentSpan: runningQueryActivity?.span,
+                forceGraphqlTracing: !!runningQueryActivity,
+                telemetryResolverTimings,
+              }
+            )
+            .then(queryResults => {
+              if (queryResults.errors && queryResults.errors.length > 0) {
+                const e = queryResults.errors[0]
+                const codeFrame = getCodeFrame(
+                  templateDetails.query,
+                  e.locations && e.locations[0].line,
+                  e.locations && e.locations[0].column
+                )
 
-              const queryRunningError = new Error(
-                e.message + `\n\n` + codeFrame
-              )
-              queryRunningError.stack = e.stack
-              throw queryRunningError
-            } else {
-              results = queryResults
-            }
-          })
-          .finally(() => {
-            if (runningQueryActivity) {
-              runningQueryActivity.end()
-            }
-          })
+                const queryRunningError = new Error(
+                  e.message + `\n\n` + codeFrame
+                )
+                queryRunningError.stack = e.stack
+                throw queryRunningError
+              } else {
+                results = queryResults
+              }
+            })
+            .finally(() => {
+              if (runningQueryActivity) {
+                runningQueryActivity.end()
+              }
+            })
+        )
       )
     }
 
@@ -488,4 +521,12 @@ export async function renderHTML({
       wrapperActivity.end()
     }
   }
+}
+
+const stateWithPages = {
+  pages: new Map(GATSBY_PAGES),
+} as unknown as IGatsbyState
+
+export function findEnginePageByPath(pathName: string): EnginePage | undefined {
+  return findPageByPath(stateWithPages, pathName, false)
 }

@@ -32,7 +32,7 @@ function getCDNObfuscatedPath(path: string): string {
   return `${store.getState().status.cdnObfuscatedPrefix}-${path}`
 }
 
-export const LmdbOnCdnPath = getCDNObfuscatedPath(`data.mdb`)
+export const getLmdbOnCdnPath = (): string => getCDNObfuscatedPath(`data.mdb`)
 
 export interface IPlatformAndArch {
   platform: string

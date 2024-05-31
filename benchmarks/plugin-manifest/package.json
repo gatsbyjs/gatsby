@@ -9,7 +9,7 @@
     "develop": "gatsby develop",
     "serve": "gatsby serve"
   },
-  "author": "Alex Moon <alex.jared.moon@gmail.com",
+  "author": "Alex Moon <alex.jared.moon@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "fs-extra": "^8.1.0",

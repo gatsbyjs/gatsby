@@ -15,6 +15,7 @@ executors:
     environment:
       GATSBY_CPU_COUNT: 2
       COMPILER_OPTIONS: GATSBY_MAJOR=<< parameters.gatsby_major >>
+      NODE_NO_WARNINGS: 1
 
 aliases:
   e2e-executor-env: &e2e-executor-env

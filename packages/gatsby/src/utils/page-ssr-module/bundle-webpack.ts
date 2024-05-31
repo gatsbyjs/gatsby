@@ -4,7 +4,7 @@ import webpack from "webpack"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
-import type { ITemplateDetails } from "./entry"
+import type { EnginePage, ITemplateDetails } from "./entry"
 
 import {
   getScriptsAndStylesForTemplate,
@@ -12,7 +12,8 @@ import {
 } from "../client-assets-for-template"
 import { IGatsbyState } from "../../redux/types"
 import { store } from "../../redux"
-import { LmdbOnCdnPath, shouldBundleDatastore } from "../engines-helpers"
+import { getLmdbOnCdnPath, shouldBundleDatastore } from "../engines-helpers"
+import { getPageMode } from "../page-mode"
 
 type Reporter = typeof reporter
 
@@ -112,6 +113,25 @@ export async function createPageSSRBundle({
     }
   }
 
+  const pagesIterable: Array<[string, EnginePage]> = []
+  for (const [pagePath, page] of state.pages) {
+    const mode = getPageMode(page, state)
+    if (mode !== `SSG`) {
+      pagesIterable.push([
+        pagePath,
+        {
+          componentChunkName: page.componentChunkName,
+          componentPath: page.componentPath,
+          context: page.context,
+          matchPath: page.matchPath,
+          mode,
+          path: page.path,
+          slices: page.slices,
+        },
+      ])
+    }
+  }
+
   const compiler = webpack({
     name: `Page Engine`,
     mode: `none`,
@@ -193,6 +213,7 @@ export async function createPageSSRBundle({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
         INLINED_HEADERS_CONFIG: JSON.stringify(state.config.headers),
         WEBPACK_COMPILATION_HASH: JSON.stringify(webpackCompilationHash),
+        GATSBY_PAGES: JSON.stringify(pagesIterable),
         GATSBY_SLICES: JSON.stringify(slicesStateObject),
         GATSBY_SLICES_BY_TEMPLATE: JSON.stringify(slicesByTemplateStateObject),
         GATSBY_SLICES_SCRIPT: JSON.stringify(
@@ -209,6 +230,7 @@ export async function createPageSSRBundle({
               )
             : ``
         ),
+        PATH_PREFIX: JSON.stringify(pathPrefix),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -248,9 +270,11 @@ export async function createPageSSRBundle({
   functionCode = functionCode
     .replaceAll(
       `%CDN_DATASTORE_PATH%`,
-      shouldBundleDatastore()
-        ? ``
-        : `${state.adapter.config.deployURL ?? ``}/${LmdbOnCdnPath}`
+      shouldBundleDatastore() ? `` : getLmdbOnCdnPath()
+    )
+    .replaceAll(
+      `%CDN_DATASTORE_ORIGIN%`,
+      shouldBundleDatastore() ? `` : state.adapter.config.deployURL ?? ``
     )
     .replaceAll(`%PATH_PREFIX%`, pathPrefix)
     .replaceAll(

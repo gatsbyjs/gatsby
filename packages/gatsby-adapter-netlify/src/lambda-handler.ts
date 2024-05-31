@@ -176,11 +176,13 @@ const createRequestObject = ({ event, context }) => {
     multiValueHeaders = {},
     body,
     isBase64Encoded,
+    rawUrl
   } = event
   const newStream = new Stream.Readable()
   const req = Object.assign(newStream, http.IncomingMessage.prototype)
   req.url = path
   req.originalUrl = req.url
+  req.rawUrl = rawUrl
   req.query = queryStringParameters
   req.multiValueQuery = multiValueQueryStringParameters
   req.method = httpMethod
