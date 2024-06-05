@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.6/packages/gatsby) (2024-05-29)
+
+#### Performance Improvements
+
+- improve adapt() performance [#38988](https://github.com/gatsbyjs/gatsby/issues/38988) [#38991](https://github.com/gatsbyjs/gatsby/issues/38991) [#38988](https://github.com/gatsbyjs/gatsby/issues/38988) ([04c438a](https://github.com/gatsbyjs/gatsby/commit/04c438ada54a16c0d34d973464b80027eff61191))
+
 ### [5.13.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.5/packages/gatsby) (2024-05-17)
 
 #### Features
