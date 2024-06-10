@@ -4,8 +4,7 @@ examples:
   - label: Using Gatsby Head
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-head"
 ---
-
-> Support for the Gatsby Head API was added in `gatsby@4.19.0`.
+### Support for the Gatsby Head API was added in `gatsby@4.19.0`.
 
 Gatsby includes a built-in `Head` export that allows you to add elements to the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) of your pages.
 
