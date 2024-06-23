@@ -62,7 +62,6 @@ if (process.env.BUILD_STAGE === `develop`) {
   const originalConsoleError = console.error.bind(console)
   console.error = (...args) => {
     try {
-
       if (
         Array.isArray(args) &&
         args.length >= 2 &&
