@@ -61,6 +61,7 @@ export async function prepareFunction(
       includedFiles: fun.requiredFiles.map(file =>
         slash(file).replace(/\[/g, `*`).replace(/]/g, `*`)
       ),
+      includedFilesBasePath: process.cwd(),
       externalNodeModules: [`msgpackr-extract`],
     },
     version: 1,

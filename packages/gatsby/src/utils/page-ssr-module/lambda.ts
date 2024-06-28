@@ -17,12 +17,22 @@ const cdnDatastorePath = `%CDN_DATASTORE_PATH%`
 const cdnDatastoreOrigin = `%CDN_DATASTORE_ORIGIN%`
 const PATH_PREFIX = `%PATH_PREFIX%`
 
+// this file should be in `.cache/page-ssr-module/lambda.js`
+// so getting `.cache` location should be one directory above
+// directory of this file
+const cacheDir = path.join(__dirname, `..`)
+
+// gatsby relies on process.cwd() a lot, so this ensures that CWD is set correctly
+// in relation to bundled files for lambda. In some scenarios those files are not in
+// expected relative locations to CWD, so here we are forcing setting CWD so the
+// relative paths are correct
+process.chdir(path.join(cacheDir, `..`))
+
 function setupFsWrapper(): string {
   // setup global._fsWrapper
   try {
     fs.accessSync(__filename, fs.constants.W_OK)
-    // TODO: this seems funky - not sure if this is correct way to handle this, so just marking TODO to revisit this
-    return path.join(__dirname, `..`, `data`, `datastore`)
+    return path.join(cacheDir, `data`, `datastore`)
   } catch (e) {
     // we are in a read-only filesystem, so we need to use a temp dir
 
@@ -30,9 +40,6 @@ function setupFsWrapper(): string {
     const TEMP_CACHE_DIR = path.join(TEMP_DIR, `.cache`)
 
     global.__GATSBY.root = TEMP_DIR
-
-    // TODO: don't hardcode this
-    const cacheDir = `${process.cwd()}/.cache`
 
     // we need to rewrite fs
     const rewrites = [

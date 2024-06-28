@@ -19,8 +19,16 @@ const npmScriptToRun = process.argv[2] || "test:netlify"
 await execa(`npm`, [`run`, `clean`], { stdio: `inherit` })
 
 const deployResults = await execa(
-  "ntl",
-  ["deploy", "--build", "--json", "--cwd=.", "--message", deployTitle],
+  "npx",
+  [
+    "ntl",
+    "deploy",
+    "--build",
+    "--json",
+    "--message",
+    deployTitle,
+    process.env.EXTRA_NTL_CLI_ARGS ?? "--cwd=.",
+  ],
   {
     reject: false,
   }
@@ -49,7 +57,8 @@ try {
 } finally {
   if (!process.env.GATSBY_TEST_SKIP_CLEANUP) {
     console.log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
-    const deleteResponse = await execa("ntl", [
+    const deleteResponse = await execa("npx", [
+      "ntl",
       "api",
       "deleteDeploy",
       "--data",
