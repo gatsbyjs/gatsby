@@ -166,13 +166,13 @@ class LocalNodeModel {
    * @returns {Node[]}
    * @example
    * // Using only the id
-   * getNodeByIds({ ids: [`123`, `456`] })
+   * getNodesByIds({ ids: [`123`, `456`] })
    *
    * // Using id and type
-   * getNodeByIds({ ids: [`123`, `456`], type: `MyType` })
+   * getNodesByIds({ ids: [`123`, `456`], type: `MyType` })
    *
    * // Providing page dependencies
-   * getNodeByIds({ ids: [`123`, `456`] }, { path: `/` })
+   * getNodesByIds({ ids: [`123`, `456`] }, { path: `/` })
    */
   getNodesByIds(args, pageDependencies) {
     const { ids, type } = args || {}
