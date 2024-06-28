@@ -123,6 +123,7 @@ The `adapt` hook takes Gatsby's output and prepares it for deployment on the ada
 - `functionsManifest`: Array of objects containing each function's entry point and required files.
 - `pathPrefix`: Value of the [`pathPrefix`](/docs/reference/config-files/gatsby-config/#pathprefix) option inside `gatsby-config`
 - `trailingSlash`: Value of the [`trailingSlash`](/docs/reference/config-files/gatsby-config/#trailingslash) option inside `gatsby-config`
+- `remoteFileAllowedUrls`: Array of objects containing allowed url for Gatsby Image and File CDN (if used source plugin provided those). Optionally used to automatically configure or instruct user how to configure Image and File CDN provided by adapter. Support for this field was added in `gatsby@5.13.0`.
 
 You can find the TypeScript types for these inputs on [on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/adapter/types.ts).
 
@@ -146,6 +147,8 @@ The `config` hook has to return an object with the following keys:
   - `pathPrefix` (Optional): If `false`, Gatsby will fail the build if user tries to use pathPrefix
   - `trailingSlash` (Optional): Provide an array of supported [`trailingSlash`](/docs/reference/config-files/gatsby-config/#trailingslash) options, e.g. `['always']`
 - `pluginsToDisable` (Optional): Provide an array of plugin names that should be disabled when adapter is used. Purpose of this is to disable any potential plugins that serve similar role as adapter that would cause conflicts when both plugin and adapter is used at the same time.
+- `imageCDNUrlGeneratorModulePath` (Optional): Specifies the absolute path to a CommonJS module that exports a function to generate CDN URLs for images. This function, matching the `ImageCdnUrlGeneratorFn` type signature, takes `source: ImageCdnSourceImage`, `args: ImageCdnTransformArgs` and `pathPrefix: string` as arguments to create optimized CDN URLs for image assets. It is particularly useful for adapting image paths to different CDN providers to optimize image delivery. Providing this will allow Gatsby from processing `IMAGE_CDN` jobs during the build and instead offload the that work to be done at request time which will decrease build times for sites using Gatsby Image CDN. Support for this field was added in `gatsby@5.13.0`.
+- `fileCDNUrlGeneratorModulePath` (Optional): Specifies the absolute path to a CommonJS module that exports a function to generate CDN URLs for files. This function, matching the `FileCdnUrlGeneratorFn` type signature, takes `FileCdnSourceImage` and `pathPrefix: string` as arguments to create CDN URLs for file assets. Providing this will allow Gatsby from processing `FILE_CDN` jobs during the build and instead offload the that work to be done at request time which will decrease build times for sites using Gatsby File CDN. Support for this field was added in `gatsby@5.13.0`.
 
 ## Running locally
 
