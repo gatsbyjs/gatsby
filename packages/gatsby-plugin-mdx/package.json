@@ -50,15 +50,15 @@
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
-    "@types/estree": "^1.0.1",
-    "@types/mdast": "^3.0.11",
-    "@types/unist": "^2.0.6",
+    "@types/estree": "^1.0.5",
+    "@types/mdast": "^3.0.15",
+    "@types/unist": "^2.0.10",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
-    "del-cli": "^5.0.0",
+    "del-cli": "^5.1.0",
     "opentracing": "^0.14.7",
     "typescript": "^5.1.6",
-    "webpack": "^5.88.1"
+    "webpack": "^5.92.1"
   },
   "jest": {
     "testEnvironment": "node"
