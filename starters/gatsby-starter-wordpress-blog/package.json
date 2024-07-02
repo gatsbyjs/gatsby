@@ -11,7 +11,7 @@
     "@fontsource/merriweather": "^5.0.8",
     "@fontsource-variable/montserrat": "^5.0.17",
     "@wordpress/block-library": "^8.28.1",
-    "gatsby": "^5.13.5",
+    "gatsby": "^5.13.6",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-manifest": "^5.13.1",
     "gatsby-plugin-sharp": "^5.13.1",
