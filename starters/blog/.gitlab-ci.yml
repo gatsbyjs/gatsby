@@ -1,0 +1,12 @@
+pages:
+  stage: test
+  image: node:latest
+  cache:
+    paths: ["node_modules"]
+  script: 
+    - npm install
+    - npm run build
+  artifacts:
+    expire_in: 1 days
+    paths:
+      - public
