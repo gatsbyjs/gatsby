@@ -1,5 +1,5 @@
 pages:
-  stage: test
+  stage: deploy
   image: node:latest
   cache:
     paths: ["node_modules"]
