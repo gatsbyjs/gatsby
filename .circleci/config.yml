@@ -134,6 +134,9 @@ commands:
       slices:
         type: boolean
         default: true # allow disabling it later when setting up partial hydration tests
+      pre_gatsby_dev_command:
+        type: string
+        default: ""
     steps:
       - checkout
       # In case of failure, add these steps again. Cache probably got deleted
@@ -164,7 +167,7 @@ commands:
           command: yarn global add gatsby-dev-cli@next --ignore-engines
       - run:
           name: Run tests (using defaults)
-          command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
+          command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>" "<< parameters.pre_gatsby_dev_command >>"
 
 version: 2.1
 
@@ -507,6 +510,19 @@ jobs:
       - store_test_results:
           path: e2e-tests/adapters/cypress/results
 
+  e2e_tests_adapters_monorepo:
+    <<: *e2e-executor
+    docker:
+      - image: cypress/browsers:node-18.16.1-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
+    steps:
+      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_ADAPTERS}"' >> "$BASH_ENV"
+      - e2e-test:
+          test_path: e2e-tests/adapters
+          test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
+          pre_gatsby_dev_command: ./make-monorepo.sh
+      - store_test_results:
+          path: e2e-tests/adapters/cypress/results
+
   starters_validate:
     executor: node
     steps:
@@ -707,6 +723,8 @@ workflows:
       - e2e_tests_trailing-slash:
           <<: *e2e-test-workflow
       - e2e_tests_adapters:
+          <<: *e2e-test-workflow
+      - e2e_tests_adapters_monorepo:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime_with_react_18:
           <<: *e2e-test-workflow
