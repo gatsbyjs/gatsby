@@ -25,6 +25,7 @@ gatsby new {your-project-name} {link-to-starter}
 
 ```shell
 cd {your-project-name}
+npm install
 gatsby develop
 ```
 
