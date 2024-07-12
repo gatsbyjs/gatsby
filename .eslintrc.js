@@ -5,7 +5,11 @@ module.exports = {
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended",
+    "react-app"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -15,8 +19,20 @@ module.exports = {
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": "error",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off"
+  },
+  "globals": {
+    "__PATH_PREFIX__": true,
+    "__TRAILING_SLASH__": true,
+    "___emitter": true,
+    "GATSBY_LAYOUT_COMPONENT_PATH": true
   }
 };
