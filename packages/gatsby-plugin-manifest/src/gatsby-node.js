@@ -11,17 +11,7 @@ const pluginOptionsSchema = require(`./pluginOptionsSchema`)
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)
 
-  // console.log(`generating icon: `, icon.src)
-  // if (fs.existsSync(imgPath)) {
-  //   console.log(`icon already Exists, not regenerating`)
-  //   return true
-  // }
   const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
-
-  // For vector graphics, instruct sharp to use a pixel density
-  // suitable for the resolution we're rasterizing to.
-  // For pixel graphics sources this has no effect.
-  // Sharp accept density from 1 to 2400
   const density = Math.min(2400, Math.max(1, size))
 
   const sharp = await getSharpInstance()
@@ -53,10 +43,6 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
-/**
- * Setup pluginOption defaults
- * TODO: Remove once pluginOptionsSchema is stable
- */
 exports.onPreInit = (_, pluginOptions) => {
   pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? `query`
   pluginOptions.include_favicon = pluginOptions.include_favicon ?? true
@@ -141,7 +127,6 @@ exports.onPostBootstrap = async (
       locales.map(async locale => {
         let cacheModeOverride = {}
 
-        // Ensure unique filenames for output files if a different src Icon is defined.
         if (locale.icon && !locale.icons) {
           cacheModeOverride = { cache_busting_mode: `name` }
         }
@@ -152,7 +137,6 @@ exports.onPostBootstrap = async (
           ...cacheModeOverride,
         }
 
-        // Validate and ensure assetPrefix and pathPrefix are properly set
         const validatedAssetPrefix = validatePrefix(assetPrefix, `assetPrefix`)
         const validatedPathPrefix = validatePrefix(pathPrefix, `pathPrefix`)
 
@@ -178,22 +162,6 @@ exports.onPostBootstrap = async (
   activity.end()
 }
 
-/**
- * The complete Triforce, or one or more components of the Triforce.
- * @typedef {Object} makeManifestArgs
- * @property {Object} cache - from gatsby-node api
- * @property {Object} reporter - from gatsby-node api
- * @property {Object} pluginOptions - from gatsby-node api/gatsby config
- * @property {boolean?} shouldLocalize
- * @property {string?} basePath - string of base path provided by gatsby node
- * @property {string?} assetPrefix - string of asset prefix provided by gatsby node
- * @property {string?} pathPrefix - string of path prefix provided by gatsby node
- */
-
-/**
- * Build manifest
- * @param {makeManifestArgs}
- */
 const makeManifest = async ({
   cache,
   reporter,
@@ -209,7 +177,6 @@ const makeManifest = async ({
 
   const faviconIsEnabled = pluginOptions.include_favicon ?? true
 
-  // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
   delete manifest.legacy
   delete manifest.theme_color_in_head
@@ -219,12 +186,10 @@ const makeManifest = async ({
   delete manifest.include_favicon
   delete manifest.cacheDigest
 
-  // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
     manifest.icons = [...defaultIcons]
   }
 
-  // Specify extra options for each icon (if requested).
   if (pluginOptions.icon_options) {
     manifest.icons = manifest.icons.map(icon => ({
       ...pluginOptions.icon_options,
@@ -258,9 +223,7 @@ const makeManifest = async ({
     }
   })
 
-  // Only auto-generate icons if a src icon is defined.
   if (typeof icon !== `undefined`) {
-    // Check if the icon exists
     if (!doesIconExist(icon)) {
       throw new Error(
         `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
@@ -279,7 +242,6 @@ const makeManifest = async ({
       )
     }
 
-    // add cache busting
     const cacheMode =
       typeof pluginOptions.cache_busting_mode !== `undefined`
         ? pluginOptions.cache_busting_mode
@@ -287,12 +249,7 @@ const makeManifest = async ({
 
     const iconDigest = createContentDigest(fs.readFileSync(icon))
 
-    /**
-     * Given an array of icon configs, generate the various output sizes from
-     * the source icon image.
-     */
     async function processIconSet(iconSet) {
-      // if cacheBusting is being done via url query icons must be generated before cache busting runs
       if (cacheMode === `query`) {
         for (const dstIcon of iconSet) {
           await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
@@ -307,7 +264,6 @@ const makeManifest = async ({
         })
       }
 
-      // if file names are being modified by cacheBusting icons must be generated after cache busting runs
       if (cacheMode !== `query`) {
         for (const dstIcon of iconSet) {
           await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
@@ -319,8 +275,6 @@ const makeManifest = async ({
 
     manifest.icons = await processIconSet(manifest.icons)
 
-    // If favicon is enabled, apply the same caching policy and generate
-    // the resized image(s)
     if (faviconIsEnabled) {
       await processIconSet(favicons)
 
@@ -329,7 +283,7 @@ const makeManifest = async ({
       }
     }
   }
-  // Optimize icon paths and validate
+
   const prefixPath = src =>
     slash([assetPrefix, pathPrefix, basePath, src].filter(Boolean).join(`/`))
 
@@ -365,7 +319,6 @@ const makeManifest = async ({
     reporter.warn(`manifest.start_url is not defined`)
   }
 
-  // Write manifest efficiently
   const manifestPath = path.join(`public`, `manifest${suffix}.webmanifest`)
 
   const writeManifest = async () => {
@@ -377,7 +330,6 @@ const makeManifest = async ({
 
       reporter.success(`Manifest written to ${manifestPath}`)
 
-      // Validate critical manifest fields
       const criticalFields = [
         `name`,
         `short_name`,
@@ -394,12 +346,11 @@ const makeManifest = async ({
         )
       }
 
-      // Check icons
       if (!manifest.icons || manifest.icons.length === 0) {
         reporter.warn(`No icons defined in manifest`)
       } else {
         const iconSizes = manifest.icons.map(icon => parseInt(icon.sizes))
-        if (!iconSizes.includes(192) || !iconSizes.includes(512)) {
+        if (!iconSizes.includes(192) or !iconSizes.includes(512)) {
           reporter.warn(
             `Manifest should include at least 192x192 and 512x512 icons`
           )
