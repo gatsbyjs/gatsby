@@ -5,9 +5,8 @@ module.exports = {
     `eslint:recommended`,
     `plugin:flowtype/recommended`,
     `plugin:react/recommended`,
-    `prettier`,
   ],
-  plugins: [`flowtype`, `prettier`, `react`, `filenames`, `@babel`],
+  plugins: [`flowtype`, `react`, `filenames`, `@babel`],
   parserOptions: {
     ecmaVersion: 2016,
     sourceType: `module`,
@@ -67,7 +66,6 @@ module.exports = {
     "filenames/match-regex": [`error`, `^[a-z-\\d\\.]+$`, true],
     "no-console": `off`,
     "no-inner-declarations": `off`,
-    "prettier/prettier": `error`,
     quotes: [`error`, `backtick`],
     "react/display-name": `off`,
     "react/jsx-key": `warn`,
