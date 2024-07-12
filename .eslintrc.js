@@ -1,17 +1,17 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import babelParser from '@babel/eslint-parser';
-import flowtype from 'eslint-plugin-flowtype';
-import react from 'eslint-plugin-react';
-import filenames from 'eslint-plugin-filenames';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
+const { FlatCompat } = require('@eslint/eslintrc');
+const js = require('@eslint/js');
+const babelParser = require('@babel/eslint-parser');
+const flowtype = require('eslint-plugin-flowtype');
+const react = require('eslint-plugin-react');
+const filenames = require('eslint-plugin-filenames');
+const typescriptEslint = require('@typescript-eslint/eslint-plugin');
 
 const compat = new FlatCompat({
-  baseDirectory: import.meta.url,
-  resolvePluginsRelativeTo: import.meta.url,
+  baseDirectory: __dirname,
+  resolvePluginsRelativeTo: __dirname,
 });
 
-export default [
+module.exports = [
   {
     files: ['*.js', '*.jsx'],
     languageOptions: {
