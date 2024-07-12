@@ -72,7 +72,13 @@ exports.onPreInit = (_, pluginOptions) => {
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan, basePath, assetPrefix, pathPrefix },
+  { 
+    reporter, 
+    parentSpan, 
+    basePath, 
+    assetPrefix, 
+    pathPrefix 
+  },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -83,7 +89,14 @@ exports.onPostBootstrap = async (
 
   const cache = new Map()
 
-  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath, assetPrefix, pathPrefix })
+  await makeManifest({ 
+    cache, 
+    reporter, 
+    pluginOptions: manifest, 
+    basePath, 
+    assetPrefix, 
+    pathPrefix 
+  })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
@@ -269,7 +282,12 @@ const makeManifest = async ({
   })
 
   if (manifest.start_url) {
-    manifest.start_url = path.posix.join(assetPrefix, pathPrefix, basePath, manifest.start_url)
+    manifest.start_url = path.posix.join(
+      assetPrefix, 
+      pathPrefix, 
+      basePath, 
+      manifest.start_url
+    )
   }
 
   // Write manifest
