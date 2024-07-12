@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   parser: `@babel/eslint-parser`,
   extends: [
     `google`,
