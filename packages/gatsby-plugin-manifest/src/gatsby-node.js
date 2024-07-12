@@ -72,13 +72,7 @@ exports.onPreInit = (_, pluginOptions) => {
 }
 
 exports.onPostBootstrap = async (
-  { 
-    reporter, 
-    parentSpan, 
-    basePath, 
-    assetPrefix, 
-    pathPrefix 
-  },
+  { reporter, parentSpan, basePath, assetPrefix, pathPrefix },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -89,19 +83,19 @@ exports.onPostBootstrap = async (
 
   const cache = new Map()
 
-  await makeManifest({ 
-    cache, 
-    reporter, 
-    pluginOptions: manifest, 
-    basePath, 
-    assetPrefix, 
-    pathPrefix 
+  await makeManifest({
+    cache,
+    reporter,
+    pluginOptions: manifest,
+    basePath,
+    assetPrefix,
+    pathPrefix,
   })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
     await Promise.all(
-      locales.map(locale => {
+      locales.map((locale) => {
         let cacheModeOverride = {}
 
         /* localization requires unique filenames for output files if a different src Icon is defined.
@@ -179,7 +173,7 @@ const makeManifest = async ({
 
   // Specify extra options for each icon (if requested).
   if (pluginOptions.icon_options) {
-    manifest.icons = manifest.icons.map(icon => {
+    manifest.icons = manifest.icons.map((icon) => {
       return {
         ...pluginOptions.icon_options,
         ...icon,
@@ -189,7 +183,7 @@ const makeManifest = async ({
 
   // Determine destination path for icons.
   const paths = {}
-  manifest.icons.forEach(icon => {
+  manifest.icons.forEach((icon) => {
     const iconPath = path.join(`public`, path.dirname(icon.src))
     if (!paths[iconPath]) {
       const exists = fs.existsSync(iconPath)
@@ -243,7 +237,7 @@ const makeManifest = async ({
       }
 
       if (cacheMode !== `none`) {
-        iconSet = iconSet.map(icon => {
+        iconSet = iconSet.map((icon) => {
           const newIcon = { ...icon }
           newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
           return newIcon
@@ -274,20 +268,17 @@ const makeManifest = async ({
   }
 
   // Fix #18497 by prefixing paths
-  manifest.icons = manifest.icons.map(icon => {
+  manifest.icons = manifest.icons.map((icon) => {
+    const paths = [[assetPrefix], [pathPrefix], [icon.src]]
     return {
       ...icon,
-      src: slash(path.join(assetPrefix, pathPrefix, basePath, icon.src)),
+      src: slash(paths.flat().filter(Boolean).join('/')),
     }
   })
 
   if (manifest.start_url) {
-    manifest.start_url = path.posix.join(
-      assetPrefix, 
-      pathPrefix, 
-      basePath, 
-      manifest.start_url
-    )
+    const paths = [[assetPrefix], [pathPrefix], [manifest.start_url]]
+    manifest.start_url = slash(paths.flat().filter(Boolean).join('/'))
   }
 
   // Write manifest
