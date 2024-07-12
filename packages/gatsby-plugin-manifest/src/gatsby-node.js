@@ -150,8 +150,9 @@ exports.onPostBootstrap = async (
         }
       })
     )
-    activity.end()
   }
+  activity.end()
+}
 
 /**
  * The complete Triforce, or one or more components of the Triforce.
@@ -286,7 +287,6 @@ const makeManifest = async ({
 
       // if file names are being modified by cacheBusting icons must be generated after cache busting runs
       if (cacheMode !== 'query') {
-      if (cacheMode !== "query") {
         for (const dstIcon of iconSet) {
           await checkCache(cache, dstIcon, icon, iconDigest, generateIcon);
         }
