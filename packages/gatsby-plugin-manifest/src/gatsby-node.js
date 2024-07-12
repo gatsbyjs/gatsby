@@ -1,12 +1,12 @@
-import * as fs from `fs`
-import * as path from `path`
+const fs = require(`fs`)
+const path = require(`path`)
 // TODO(v5): use gatsby/sharp
-import getSharpInstance from `./safe-sharp`
-import { createContentDigest, slash } from `gatsby-core-utils`
-import { defaultIcons, addDigestToPath, favicons } from `./common`
-import { doesIconExist } from `./node-helpers`
+const getSharpInstance = require(`./safe-sharp`)
+const { createContentDigest, slash } = require(`gatsby-core-utils`)
+const { defaultIcons, addDigestToPath, favicons } = require(`./common`)
+const { doesIconExist } = require(`./node-helpers`)
 
-import pluginOptionsSchema from `./pluginOptionsSchema`
+const pluginOptionsSchema = require(`./pluginOptionsSchema`)
 
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)
