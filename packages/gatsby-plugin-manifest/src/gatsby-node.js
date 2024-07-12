@@ -72,7 +72,7 @@ exports.onPreInit = (_, pluginOptions) => {
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan, basePath },
+  { reporter, parentSpan, basePath, assetPrefix, pathPrefix },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -83,7 +83,7 @@ exports.onPostBootstrap = async (
 
   const cache = new Map()
 
-  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
+  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath, assetPrefix, pathPrefix })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
@@ -109,6 +109,8 @@ exports.onPostBootstrap = async (
           },
           shouldLocalize: true,
           basePath,
+          assetPrefix,
+          pathPrefix,
         })
       })
     )
@@ -123,7 +125,9 @@ exports.onPostBootstrap = async (
  * @property {Object} reporter - from gatsby-node api
  * @property {Object} pluginOptions - from gatsby-node api/gatsby config
  * @property {boolean?} shouldLocalize
- * @property {string?} basePath - string of base path frpvided by gatsby node
+ * @property {string?} basePath - string of base path provided by gatsby node
+ * @property {string?} assetPrefix - string of asset prefix provided by gatsby node
+ * @property {string?} pathPrefix - string of path prefix provided by gatsby node
  */
 
 /**
@@ -136,6 +140,8 @@ const makeManifest = async ({
   pluginOptions,
   shouldLocalize = false,
   basePath = ``,
+  assetPrefix = ``,
+  pathPrefix = ``,
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
@@ -258,12 +264,12 @@ const makeManifest = async ({
   manifest.icons = manifest.icons.map(icon => {
     return {
       ...icon,
-      src: slash(path.join(basePath, icon.src)),
+      src: slash(path.join(assetPrefix, pathPrefix, basePath, icon.src)),
     }
   })
 
   if (manifest.start_url) {
-    manifest.start_url = path.posix.join(basePath, manifest.start_url)
+    manifest.start_url = path.posix.join(assetPrefix, pathPrefix, basePath, manifest.start_url)
   }
 
   // Write manifest
