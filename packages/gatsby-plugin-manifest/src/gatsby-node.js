@@ -9,14 +9,14 @@ import { doesIconExist } from "./node-helpers"
 import pluginOptionsSchema from "./pluginOptionsSchema"
 
 async function generateIcon(icon, srcIcon) {
-  const imgPath = path.join(`public`, icon.src)
+  const imgPath = path.join("public", icon.src)
 
-  // console.log('generating icon: ', icon.src);
+  // console.log('generating icon: ', icon.src)
   // if (fs.existsSync(imgPath)) {
-  //   console.log('icon already Exists, not regenerating');
-  //   return true;
+  //   console.log('icon already Exists, not regenerating')
+  //   return true
   // }
-  const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
+  const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf("x")))
 
   // For vector graphics, instruct sharp to use a pixel density
   // suitable for the resolution we're rasterizing to.
@@ -29,7 +29,7 @@ async function generateIcon(icon, srcIcon) {
     .resize({
       width: size,
       height: size,
-      fit: `contain`,
+      fit: "contain",
       background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
     .toFile(imgPath)
@@ -58,13 +58,13 @@ exports.pluginOptionsSchema = pluginOptionsSchema
  * TODO: Remove once pluginOptionsSchema is stable
  */
 exports.onPreInit = (_, pluginOptions) => {
-  pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? `query`
+  pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? "query"
   pluginOptions.include_favicon = pluginOptions.include_favicon ?? true
   pluginOptions.legacy = pluginOptions.legacy ?? true
   pluginOptions.theme_color_in_head = pluginOptions.theme_color_in_head ?? true
   pluginOptions.cacheDigest = null
 
-  if (pluginOptions.cache_busting_mode !== `none` && pluginOptions.icon) {
+  if (pluginOptions.cache_busting_mode !== "none" && pluginOptions.icon) {
     pluginOptions.cacheDigest = createContentDigest(
       fs.readFileSync(pluginOptions.icon)
     )
@@ -75,7 +75,7 @@ exports.onPostBootstrap = async (
   { reporter, parentSpan, basePath, assetPrefix, pathPrefix },
   { localize, ...manifest }
 ) => {
-  const activity = reporter.activityTimer(`Build manifest and related icons`, {
+  const activity = reporter.activityTimer("Build manifest and related icons", {
     parentSpan,
   })
 
@@ -84,17 +84,17 @@ exports.onPostBootstrap = async (
   const cache = new Map()
 
   function validatePrefix(prefix, name) {
-    if (typeof prefix !== `string`) {
-      return ``
+    if (typeof prefix !== "string") {
+      return ""
     }
-    if (!prefix.trim().startsWith(`/`)) {
+    if (!prefix.trim().startsWith("/")) {
       reporter.warn(`${name} should start with '/'`)
     }
     return prefix.trim()
   }
 
   function validateOptions(options) {
-    if (!options || typeof options !== `object` || !options.icon) {
+    if (!options || typeof options !== "object" || !options.icon) {
       throw new Error(
         `pluginOptions must be an object and include an "icon" property`
       )
@@ -115,8 +115,8 @@ exports.onPostBootstrap = async (
       reporter,
       pluginOptions: manifest,
       basePath,
-      assetPrefix: validatePrefix(assetPrefix, `assetPrefix`),
-      pathPrefix: validatePrefix(pathPrefix, `pathPrefix`),
+      assetPrefix: validatePrefix(assetPrefix, "assetPrefix"),
+      pathPrefix: validatePrefix(pathPrefix, "pathPrefix"),
     }
   }
 
@@ -132,7 +132,7 @@ exports.onPostBootstrap = async (
       })
     )
   } catch (error) {
-    reporter.panic(`Error in onPostBootstrap: `, error)
+    reporter.panic("Error in onPostBootstrap: ", error)
   }
 
   if (Array.isArray(localize)) {
@@ -143,7 +143,7 @@ exports.onPostBootstrap = async (
 
         // Ensure unique filenames for output files if a different src Icon is defined.
         if (locale.icon && !locale.icons) {
-          cacheModeOverride = { cache_busting_mode: `name` }
+          cacheModeOverride = { cache_busting_mode: "name" }
         }
 
         const localizedManifest = {
@@ -153,8 +153,8 @@ exports.onPostBootstrap = async (
         }
 
         // Validate and ensure assetPrefix and pathPrefix are properly set
-        const validatedAssetPrefix = validatePrefix(assetPrefix, `assetPrefix`)
-        const validatedPathPrefix = validatePrefix(pathPrefix, `pathPrefix`)
+        const validatedAssetPrefix = validatePrefix(assetPrefix, "assetPrefix")
+        const validatedPathPrefix = validatePrefix(pathPrefix, "pathPrefix")
 
         try {
           await makeManifest({
@@ -162,13 +162,13 @@ exports.onPostBootstrap = async (
             reporter,
             pluginOptions: localizedManifest,
             shouldLocalize: true,
-            basePath: basePath || ``,
+            basePath: basePath || "",
             assetPrefix: validatedAssetPrefix,
             pathPrefix: validatedPathPrefix,
           })
         } catch (error) {
           reporter.error(
-            `Error processing locale ${locale.lang || `unknown`}: `,
+            `Error processing locale ${locale.lang || "unknown"}: `,
             error
           )
         }
@@ -199,13 +199,13 @@ const makeManifest = async ({
   reporter,
   pluginOptions,
   shouldLocalize = false,
-  basePath = ``,
-  assetPrefix = ``,
-  pathPrefix = ``,
+  basePath = "",
+  assetPrefix = "",
+  pathPrefix = "",
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
-    shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : ``
+    shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : ""
 
   const faviconIsEnabled = pluginOptions.include_favicon ?? true
 
@@ -234,7 +234,7 @@ const makeManifest = async ({
     })
   }
   const iconPaths = manifest.icons.map(icon => ({
-    dir: path.resolve(`public`, path.dirname(icon.src)),
+    dir: path.resolve("public", path.dirname(icon.src)),
     src: icon.src,
   }))
 
@@ -242,7 +242,7 @@ const makeManifest = async ({
 
   const createDirectory = dir => {
     const dirParts = dir.split(path.sep)
-    let currentPath = ``
+    let currentPath = ""
     for (const part of dirParts) {
       currentPath = path.join(currentPath, part)
       if (!fs.existsSync(currentPath)) {
@@ -261,7 +261,7 @@ const makeManifest = async ({
   })
 
   // Only auto-generate icons if a src icon is defined.
-  if (typeof icon !== `undefined`) {
+  if (typeof icon !== "undefined") {
     // Check if the icon exists
     if (!doesIconExist(icon)) {
       throw new Error(
@@ -283,9 +283,9 @@ const makeManifest = async ({
 
     // add cache busting
     const cacheMode =
-      typeof pluginOptions.cache_busting_mode !== `undefined`
+      typeof pluginOptions.cache_busting_mode !== "undefined"
         ? pluginOptions.cache_busting_mode
-        : `query`
+        : "query"
 
     const iconDigest = createContentDigest(fs.readFileSync(icon))
 
@@ -295,13 +295,13 @@ const makeManifest = async ({
      */
     async function processIconSet(iconSet) {
       // if cacheBusting is being done via url query icons must be generated before cache busting runs
-      if (cacheMode === `query`) {
+      if (cacheMode === "query") {
         for (const dstIcon of iconSet) {
           await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
         }
       }
 
-      if (cacheMode !== `none`) {
+      if (cacheMode !== "none") {
         iconSet = iconSet.map(icon => {
           const newIcon = { ...icon }
           newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
@@ -310,7 +310,7 @@ const makeManifest = async ({
       }
 
       // if file names are being modified by cacheBusting icons must be generated after cache busting runs
-      if (cacheMode !== `query`) {
+      if (cacheMode !== "query") {
         for (const dstIcon of iconSet) {
           await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
         }
@@ -326,21 +326,21 @@ const makeManifest = async ({
     if (faviconIsEnabled) {
       await processIconSet(favicons)
 
-      if (metadata.format === `svg`) {
-        fs.copyFileSync(icon, path.join(`public`, `favicon.svg`))
+      if (metadata.format === "svg") {
+        fs.copyFileSync(icon, path.join("public", "favicon.svg"))
       }
     }
   }
   // Optimize icon paths and validate
   const prefixPath = src =>
-    slash([assetPrefix, pathPrefix, basePath, src].filter(Boolean).join(`/`))
+    slash([assetPrefix, pathPrefix, basePath, src].filter(Boolean).join("/"))
 
   manifest.icons = Array.isArray(manifest.icons)
     ? manifest.icons.reduce((valid, icon) => {
         if (icon?.src) {
           valid.push({ ...icon, src: prefixPath(icon.src) })
         } else {
-          reporter.warn(`Skipping invalid icon:`, icon)
+          reporter.warn("Skipping invalid icon:", icon)
         }
         return valid
       }, [])
@@ -349,61 +349,61 @@ const makeManifest = async ({
   manifest.icons.length
     ? reporter.info(
         `Processed ${manifest.icons.length} icon${
-          manifest.icons.length === 1 ? `` : `s`
+          manifest.icons.length === 1 ? "" : "s"
         }.`
       )
-    : reporter.warn(`No valid icons found in manifest.`)
+    : reporter.warn("No valid icons found in manifest.")
 
   if (manifest.start_url) {
     manifest.start_url = slash(
       path.join(
-        assetPrefix || ``,
-        pathPrefix || ``,
-        basePath || ``,
+        assetPrefix || "",
+        pathPrefix || "",
+        basePath || "",
         manifest.start_url
       )
     )
   } else {
-    reporter.warn(`manifest.start_url is not defined`)
+    reporter.warn("manifest.start_url is not defined")
   }
 
   // Write manifest efficiently
-  const manifestPath = path.join(`public`, `manifest${suffix}.webmanifest`)
+  const manifestPath = path.join("public", `manifest${suffix}.webmanifest`)
 
   const writeManifest = async () => {
     try {
       await fs.promises.mkdir(path.dirname(manifestPath), { recursive: true })
 
       const optimizedManifest = JSON.stringify(manifest)
-      await fs.promises.writeFile(manifestPath, optimizedManifest, `utf8`)
+      await fs.promises.writeFile(manifestPath, optimizedManifest, "utf8")
 
       reporter.success(`Manifest written to ${manifestPath}`)
 
       // Validate critical manifest fields
       const criticalFields = [
-        `name`,
-        `short_name`,
-        `start_url`,
-        `display`,
-        `background_color`,
-        `theme_color`,
+        "name",
+        "short_name",
+        "start_url",
+        "display",
+        "background_color",
+        "theme_color",
       ]
       const missingFields = criticalFields.filter(field => !manifest[field])
       
       if (missingFields.length) {
         reporter.warn(
-          `Missing critical fields in manifest: ${missingFields.join(`, `)}`
+          `Missing critical fields in manifest: ${missingFields.join(", ")}`
         )
       }
 
       // Check icons
       if (!manifest.icons || manifest.icons.length === 0) {
-        reporter.warn(`No icons defined in manifest`)
+        reporter.warn("No icons defined in manifest")
       } else {
         const iconSizes = manifest.icons.map(icon => parseInt(icon.sizes))
         if (!iconSizes.includes(192) || !iconSizes.includes(512)) {
           reporter.warn(
-            `Manifest should include at least 192x192 and 512x512 icons`
+            "Manifest should include at least 192x192 and 512x512 icons"
           )
         }
       }
