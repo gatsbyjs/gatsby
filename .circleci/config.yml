@@ -139,15 +139,10 @@ commands:
         default: ""
     steps:
       - checkout
-      # In case of failure, add these steps again. Cache probably got deleted
-      #- <<: *restore_cache
-      #- <<: *install_node_modules
-      #- <<: *persist_cache
       - unless:
           condition: << parameters.skip_file_change_test >>
           steps:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
-
       - when:
           condition: << parameters.slices >>
           steps:
