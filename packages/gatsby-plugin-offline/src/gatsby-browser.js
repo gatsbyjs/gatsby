@@ -107,3 +107,14 @@ exports.onRouteUpdate = ({ location, getResourceURLsForPathname }) => {
 exports.onPostPrefetchPathname = ({ pathname, getResourceURLsForPathname }) => {
   setPathResources(pathname, getResourceURLsForPathname)
 }
+
+export const onServiceWorkerUpdateReady = () => {
+  const answer = window.confirm(
+    `This application has been updated. ` +
+      `Reload to display the latest version?`
+  )
+
+  if (answer === true) {
+    window.location.reload()
+  }
+}
