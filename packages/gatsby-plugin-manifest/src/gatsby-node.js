@@ -1,20 +1,20 @@
-const fs = require(`fs`)
-const path = require(`path`)
-// TODO(v5): use gatsby/sharp
-const getSharpInstance = require(`./safe-sharp`)
-const { createContentDigest, slash } = require(`gatsby-core-utils`)
-const { defaultIcons, addDigestToPath, favicons } = require(`./common`)
-const { doesIconExist } = require(`./node-helpers`)
+const fs = require(`fs`);
+const path = require(`path`);
+// TODO: use gatsby/sharp
+const getSharpInstance = require(`./safe-sharp`);
+const { createContentDigest, slash } = require(`gatsby-core-utils`);
+const { defaultIcons, addDigestToPath, favicons } = require(`./common`);
+const { doesIconExist } = require(`./node-helpers`);
 
-const pluginOptionsSchema = require(`./pluginOptionsSchema`)
+const pluginOptionsSchema = require(`./pluginOptionsSchema`);
 
 async function generateIcon(icon, srcIcon) {
-  const imgPath = path.join(`public`, icon.src)
+  const imgPath = path.join(`public`, icon.src);
 
-  const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)), 10)
-  const density = Math.min(2400, Math.max(1, size))
+  const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)), 10);
+  const density = Math.min(2400, Math.max(1, size));
 
-  const sharp = await getSharpInstance()
+  const sharp = await getSharpInstance();
   return sharp(srcIcon, { density })
     .resize({
       width: size,
@@ -22,26 +22,26 @@ async function generateIcon(icon, srcIcon) {
       fit: `contain`,
       background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
-    .toFile(imgPath)
+    .toFile(imgPath);
 }
 
 async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
-  const cacheKey = createContentDigest(`${icon.src}${srcIcon}${srcIconDigest}`)
+  const cacheKey = createContentDigest(`${icon.src}${srcIcon}${srcIconDigest}`);
 
-  const created = cache.get(cacheKey, srcIcon)
+  const created = cache.get(cacheKey);
   if (!created) {
-    cache.set(cacheKey, true)
+    cache.set(cacheKey, true);
 
     try {
-      await callback(icon, srcIcon)
+      await callback(icon, srcIcon);
     } catch (e) {
-      cache.set(cacheKey, false)
-      throw e
+      cache.set(cacheKey, false);
+      throw e;
     }
   }
 }
 
-exports.pluginOptionsSchema = pluginOptionsSchema
+exports.pluginOptionsSchema = pluginOptionsSchema;
 
 exports.onPreInit = (_, pluginOptions) => {
   const defaultOptions = {
@@ -150,19 +150,17 @@ exports.onPostBootstrap = async (
             reporter,
             pluginOptions: localizedManifest,
             shouldLocalize: true,
-            basePath: basePath || '',
+            basePath,
             assetPrefix: validatedAssetPrefix,
             pathPrefix: validatedPathPrefix,
           });
         } catch (error) {
-          reporter.error(
-            `Error processing locale ${locale.lang || 'unknown'}: `,
-            error
-          );
+          reporter.panic('Error in onPostBootstrap (localized): ', error);
         }
       })
     );
   }
+
   activity.end();
 };
 
@@ -209,16 +207,6 @@ const makeManifest = async ({
 
   const createDirectory = (dir) => {
     fs.mkdirSync(dir, { recursive: true });
-  };
-
-    const dirParts = dir.split(path.sep);
-    let currentPath = '';
-    for (const part of dirParts) {
-      currentPath = path.join(currentPath, part);
-      if (!fs.existsSync(currentPath)) {
-        fs.mkdirSync(currentPath);
-      }
-    }
   };
 
   uniqueIconDirs.forEach((dir) => {
@@ -346,7 +334,7 @@ const makeManifest = async ({
       }
 
       if (!manifest.icons || manifest.icons.length === 0) {
-        reporter.warn('No icons defined in manifest');
+        reporter.warn('No icons defined in manifest.');
       } else {
         const iconSizes = manifest.icons.map((icon) => parseInt(icon.sizes));
         if (!iconSizes.includes(192) || !iconSizes.includes(512)) {
@@ -362,6 +350,7 @@ const makeManifest = async ({
 
   await writeManifest();
 };
+
 const { DefinePlugin } = require('webpack');
 
 exports.onCreateWebpackConfig = ({ actions }, pluginOptions) => {
