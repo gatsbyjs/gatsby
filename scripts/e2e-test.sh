@@ -3,6 +3,7 @@ set -e # bail on errors
 
 SRC_PATH=$1
 CUSTOM_COMMAND="${2:-yarn test}"
+PRE_GATSBY_DEV_COMMAND="${3:-}"
 eval GATSBY_PATH=${CIRCLE_WORKING_DIRECTORY:-../..}
 TMP_LOCATION=$(mktemp -d);
 
@@ -21,6 +22,11 @@ cp -Rv $GATSBY_PATH/scripts/. $TMP_LOCATION/scripts/
 
 # setting up child integration test link to gatsby packages
 cd "$TMP_TEST_LOCATION"
+
+if [[ $PRE_GATSBY_DEV_COMMAND != "" ]]; then
+  echo "Running pre-gatsby-dev command: $PRE_GATSBY_DEV_COMMAND"
+  sh -c "$PRE_GATSBY_DEV_COMMAND"
+fi
 
 gatsby-dev --set-path-to-repo "$GATSBY_PATH"
 gatsby-dev --force-install --scan-once  # Do not copy files, only install through npm, like our users would
