@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.13.7](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.7/packages/gatsby) (2024-07-12)
+
+#### Bug Fixes
+
+- support monorepos [#39005](https://github.com/gatsbyjs/gatsby/issues/39005) [#39037](https://github.com/gatsbyjs/gatsby/issues/39037) ([74d1fd1](https://github.com/gatsbyjs/gatsby/commit/74d1fd117eb7c2dc75b584c03c8ce025748f5358))
+
 ### [5.13.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.6/packages/gatsby) (2024-05-29)
 
 #### Performance Improvements
