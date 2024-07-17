@@ -46,7 +46,9 @@ With `gatsby-transformer-sharp`:
 ```graphql
 image {
   sqip(numberOfPrimitives: 12, blur: 12, width: 256, height: 256) {
-    dataURI
+    additionalMetadata {
+      dataURI
+    }
   },
   fluid(maxWidth: 400, maxHeight: 400) {
     ...GatsbyImageSharpFluid_noBase64
@@ -59,7 +61,9 @@ With `gatsby-source-contentful`:
 ```graphql
 image {
   sqip(numberOfPrimitives: 30, blur: 0) {
-    dataURI
+    additionalMetadata {
+      dataURI
+    }
   },
   fixed {
     ...GatsbyContentfulFixed_withWebp_noBase64
@@ -139,7 +143,7 @@ See: https://www.contentful.com/developers/docs/references/images-api/#/referenc
 
 ```jsx
 <div className="image-wrapper">
-  <img src={image.sqip.dataURI} alt="" role="presentation" />
+  <img src={image.sqip.additonalMetadata.dataURI} alt="" role="presentation" />
   <img src={image.src} alt="Useful description" className="image" />
 </div>
 ```
@@ -183,7 +187,7 @@ const Img = require(`gatsby-image`)
 <Img
   fixed={{
     ...image.fixed,
-    base64: image.sqip.dataURI
+    base64: image.sqip.additonalMetadata.dataURI
   }}
 />
 
@@ -192,7 +196,7 @@ const Img = require(`gatsby-image`)
 <Img
   fluid={{
     ...image.fluid,
-    base64: image.sqip.dataURI
+    base64: image.sqip.additonalMetadata.dataURI
   }}
 />
 ```

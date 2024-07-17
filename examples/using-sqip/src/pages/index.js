@@ -73,7 +73,7 @@ const IndexPage = ({ data }) => (
     <h3>Pure JSX/HTML</h3>
     <pre>
       <code>{`<div className="image-wrapper">
-  <img src={image.dataURI} alt="" role="presentation" />
+  <img src={image.additonalMetadata.dataURI} alt="" role="presentation" />
   <img src={image.src} alt="Useful description" className="image" />
 </div>`}</code>
     </pre>
@@ -185,7 +185,9 @@ export const query = graphql`
               blur: 8
               mode: 1
             ) {
-              dataURI
+              additionalMetadata {
+                dataURI
+              }
             }
           }
         }
@@ -203,7 +205,9 @@ export const query = graphql`
               ...GatsbyImageSharpFluid_noBase64
             }
             sqip(numberOfPrimitives: 160, blur: 0) {
-              dataURI
+              additionalMetadata {
+                dataURI
+              }
             }
           }
         }

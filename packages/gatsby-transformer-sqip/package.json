@@ -6,22 +6,27 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "main": "index.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.14.0-next.2",
     "gatsby-plugin-sharp": "^5.14.0-next.2",
-    "md5-file": "^5.0.0",
-    "mini-svg-data-uri": "^1.4.4",
     "p-queue": "^6.6.2",
-    "sqip": "^0.3.3"
+    "sqip": "^1.0.0-alpha.44",
+    "sqip-plugin-blur": "^1.0.0-alpha.45",
+    "sqip-plugin-data-uri": "^1.0.0-alpha.45",
+    "sqip-plugin-primitive": "^1.0.0-alpha.46",
+    "sqip-plugin-svgo": "^1.0.0-alpha.46"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
     "babel-preset-gatsby-package": "^3.14.0-next.2",
     "cross-env": "^7.0.3",
-    "debug": "^4.3.4"
+    "debug": "^4.3.4",
+    "del-cli": "^5.0.0",
+    "typescript": "^5.0.3"
   },
   "peerDependencies": {
     "gatsby": "^5.0.0-next",
@@ -43,9 +48,12 @@
     "directory": "packages/gatsby-transformer-sqip"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build && npm run typegen",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
+    "test": "jest",
+    "clean": "del-cli dist/*"
   },
   "engines": {
     "node": ">=18.0.0"
