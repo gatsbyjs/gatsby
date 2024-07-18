@@ -4,6 +4,7 @@ const pluginDefaults = {
   className: `anchor`,
   icon: true,
   offsetY: 0,
+  titleAttribute: `Direct link to this heading`,
 }
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
@@ -72,9 +73,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   `
 
   const style = icon ? (
-    <style key={`gatsby-remark-autolink-headers-style`} type="text/css">
-      {styles}
-    </style>
+    <style key={`gatsby-remark-autolink-headers-style`}>{styles}</style>
   ) : undefined
 
   return setHeadComponents([

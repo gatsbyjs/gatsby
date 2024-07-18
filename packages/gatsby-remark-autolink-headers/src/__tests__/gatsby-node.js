@@ -13,6 +13,7 @@ describe(`pluginOptionsSchema`, () => {
         maintainCase: true,
         removeAccents: true,
         isIconAfterHeader: true,
+        titleAttribute: `this is a custom link title value`,
         elements: [`h1`, `h4`],
       }
     )
@@ -42,6 +43,7 @@ describe(`pluginOptionsSchema`, () => {
       `"maintainCase" must be a boolean`,
       `"removeAccents" must be a boolean`,
       `"isIconAfterHeader" must be a boolean`,
+      `"titleAttribute must be a string"`,
       `"elements[0]" must be a string`,
       `"elements[1]" must be a string`,
     ]

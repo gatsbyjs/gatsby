@@ -22,6 +22,7 @@ module.exports = (
     removeAccents = false,
     enableCustomId = false,
     isIconAfterHeader = false,
+    titleAttribute = `Direct link to this heading`,
     elements = null,
   }
 ) => {
@@ -68,7 +69,7 @@ module.exports = (
       node.children[method]({
         type: `link`,
         url: `#${id}`,
-        title: null,
+        title: titleAttribute,
         children: [],
         data: {
           hProperties: {

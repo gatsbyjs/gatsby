@@ -1,3 +1,5 @@
+const { title } = require(`process`)
+
 exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     offsetY: Joi.number()
@@ -24,6 +26,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     isIconAfterHeader: Joi.boolean().description(
       `Enable the anchor icon to be inline at the end of the header text.`
     ),
+    titleAttribute: Joi.string()
+      .description(`Set the title attribute for the anchor.`)
+      .default(`Direct link to this heading`),
     elements: Joi.array()
       .items(Joi.string())
       .description(`Specify which type of header tags to link.`),
