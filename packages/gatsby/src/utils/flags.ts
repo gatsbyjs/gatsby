@@ -6,24 +6,21 @@ type executingCommand = "build" | "develop" | "all"
 
 export const satisfiesSemvers = (
   semverConstraints: Record<string, string>
-): boolean => {
+): boolean =>
   // Check each semver constraint for the flag.
   // If any are false, then the flag doesn't pass
-  return _.toPairs(semverConstraints).every(
-    ([packageName, semverConstraint]) => {
-      let packageVersion: string
-      try {
-        packageVersion = require(`${packageName}/package.json`).version
-      } catch (e) {
-        return false
-      }
-
-      return semver.satisfies(packageVersion, semverConstraint, {
-        includePrerelease: true,
-      })
+  _.toPairs(semverConstraints).every(([packageName, semverConstraint]) => {
+    let packageVersion: string
+    try {
+      packageVersion = require(`${packageName}/package.json`).version
+    } catch (e) {
+      return false
     }
-  )
-}
+
+    return semver.satisfies(packageVersion, semverConstraint, {
+      includePrerelease: true,
+    })
+  })
 
 export type fitnessEnum = true | false | "OPT_IN" | "LOCKED_IN"
 
@@ -158,126 +155,153 @@ const activeFlags: Array<IFlag> = [
     description: `Prevent Parcel from processing gatsby-config and gatsby-node files to improve build times.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/issues/38948`,
     testFitness: (): fitnessEnum => {
-      const fs = require('fs-extra');
-      const semver = require('semver');
-      const path = require('path');
-      const os = require('os');
+      const fs = require(`fs-extra`)
+      const semver = require(`semver`)
+      const path = require(`path`)
+      const os = require(`os`)
 
-      const logger = console;
+      const logger = console
 
       try {
         // Utility function for version checking
-        const checkVersion = (packageName: string, versionConstraint: string): boolean => {
+        const checkVersion = (
+          packageName: string,
+          versionConstraint: string
+        ): boolean => {
           try {
-            const version = require(`${packageName}/package.json`).version;
-            return semver.satisfies(version, versionConstraint);
+            const version = require(`${packageName}/package.json`).version
+            return semver.satisfies(version, versionConstraint)
           } catch (error) {
-            logger.warn(`${packageName} not found or version check failed.`);
-            return false;
+            logger.warn(`${packageName} not found or version check failed.`)
+            return false
           }
-        };
+        }
 
         // Check Parcel version
-        if (!checkVersion('parcel', '>=2.0.0')) {
-          logger.warn('Parcel version is not compatible. Required: >=2.0.0');
-          return false;
+        if (!checkVersion(`parcel`, `>=2.0.0`)) {
+          logger.warn(`Parcel version is not compatible. Required: >=2.0.0`)
+          return false
         }
 
         // Check Gatsby version
-        if (!checkVersion('gatsby', '>=4.0.0')) {
-          logger.warn('Gatsby version is not compatible. Required: >=4.0.0');
-          return false;
+        if (!checkVersion(`gatsby`, `>=4.0.0`)) {
+          logger.warn(`Gatsby version is not compatible. Required: >=4.0.0`)
+          return false
         }
 
         // Load and validate gatsby-config.js
-        const gatsbyConfigPath = path.resolve(process.cwd(), 'gatsby-config.js');
+        const gatsbyConfigPath = path.resolve(process.cwd(), `gatsby-config.js`)
         if (!fs.pathExistsSync(gatsbyConfigPath)) {
-          logger.warn('gatsby-config.js not found. Ensure it exists in the project root.');
-          return false;
+          logger.warn(
+            `gatsby-config.js not found. Ensure it exists in the project root.`
+          )
+          return false
         }
 
-        let gatsbyConfig;
+        let gatsbyConfig
         try {
-          gatsbyConfig = require(gatsbyConfigPath);
-          if (typeof gatsbyConfig === 'function') {
-            gatsbyConfig = gatsbyConfig();
+          gatsbyConfig = require(gatsbyConfigPath)
+          if (typeof gatsbyConfig === `function`) {
+            gatsbyConfig = gatsbyConfig()
           }
         } catch (error) {
-          logger.warn('Error loading gatsby-config.js:', error.message);
-          return false;
+          logger.warn(`Error loading gatsby-config.js:`, error.message)
+          return false
         }
 
-        if (!gatsbyConfig || typeof gatsbyConfig !== 'object') {
-          logger.warn('Invalid gatsby-config.js structure. Ensure it exports a valid object.');
-          return false;
+        if (!gatsbyConfig || typeof gatsbyConfig !== `object`) {
+          logger.warn(
+            `Invalid gatsby-config.js structure. Ensure it exports a valid object.`
+          )
+          return false
         }
 
         // Check if Parcel is enabled
-        const isParcelEnabled = gatsbyConfig.flags && gatsbyConfig.flags.PARCEL === true;
+        const isParcelEnabled =
+          gatsbyConfig.flags && gatsbyConfig.flags.PARCEL === true
         if (!isParcelEnabled) {
-          logger.warn('Parcel is not enabled in gatsby-config.js. Please enable it to use this feature.');
-          return false;
+          logger.warn(
+            `Parcel is not enabled in gatsby-config.js. Please enable it to use this feature.`
+          )
+          return false
         }
 
         // Validate gatsby-node.js
-        const gatsbyNodePath = path.resolve(process.cwd(), 'gatsby-node.js');
+        const gatsbyNodePath = path.resolve(process.cwd(), `gatsby-node.js`)
         if (!fs.pathExistsSync(gatsbyNodePath)) {
-          logger.warn('gatsby-node.js not found. It\'s required for this feature.');
-          return false;
+          logger.warn(
+            `gatsby-node.js not found. It's required for this feature.`
+          )
+          return false
         }
 
         try {
-          require(gatsbyNodePath);
+          require(gatsbyNodePath)
         } catch (error) {
-          logger.warn('Error loading gatsby-node.js:', error.message);
-          return false;
+          logger.warn(`Error loading gatsby-node.js:`, error.message)
+          return false
         }
 
         // Check system resources
-        const totalMemory = os.totalmem();
-        const freeMemory = os.freemem();
-        const cpuCount = os.cpus().length;
+        const totalMemory = os.totalmem()
+        const freeMemory = os.freemem()
+        const cpuCount = os.cpus().length
 
         if (freeMemory < 2 * 1024 * 1024 * 1024 || cpuCount < 4) {
-          logger.warn('Insufficient system resources. At least 2GB free memory and 4 CPU cores are required.');
-          return false;
+          logger.warn(
+            `Insufficient system resources. At least 2GB free memory and 4 CPU cores are required.`
+          )
+          return false
         }
 
         // Check for conflicting plugins
-        const plugins = gatsbyConfig.plugins || [];
-        const conflictingPlugins = plugins.filter(plugin => 
-          (typeof plugin === 'string' && plugin.includes('parcel')) ||
-          (typeof plugin === 'object' && plugin.resolve && plugin.resolve.includes('parcel'))
-        );
+        const plugins = gatsbyConfig.plugins || []
+        const conflictingPlugins = plugins.filter(
+          plugin =>
+            (typeof plugin === `string` && plugin.includes(`parcel`)) ||
+            (typeof plugin === `object` &&
+              plugin.resolve &&
+              plugin.resolve.includes(`parcel`))
+        )
         if (conflictingPlugins.length > 0) {
-          logger.warn('Potential conflicts detected with plugins:', conflictingPlugins);
-          return false;
+          logger.warn(
+            `Potential conflicts detected with plugins:`,
+            conflictingPlugins
+          )
+          return false
         }
 
         // Check for necessary dependencies
-        const requiredDeps = ['react', 'react-dom'];
+        const requiredDeps = [`react`, `react-dom`]
         for (const dep of requiredDeps) {
-          if (!checkVersion(dep, '>=16.9.0')) {
-            logger.warn(`${dep} version >=16.9.0 is required. Please update.`);
-            return false;
+          if (!checkVersion(dep, `>=16.9.0`)) {
+            logger.warn(`${dep} version >=16.9.0 is required. Please update.`)
+            return false
           }
         }
 
         // Check for development environment
-        if (process.env.NODE_ENV !== 'production') {
-          logger.warn('This feature is recommended for production builds only. Current environment: ' + process.env.NODE_ENV);
-          return false;
+        if (process.env.NODE_ENV !== `production`) {
+          logger.warn(
+            `This feature is recommended for production builds only. Current environment: ` +
+              process.env.NODE_ENV
+          )
+          return false
         }
 
         // All checks passed
-        logger.info('All checks passed. DISABLE_PARCEL_FOR_CONFIG is ready to be used.');
-        return true;
+        logger.info(
+          `All checks passed. DISABLE_PARCEL_FOR_CONFIG is ready to be used.`
+        )
+        return true
       } catch (error) {
-        logger.error('Unexpected error in DISABLE_PARCEL_FOR_CONFIG testFitness:', error);
-        return false;
+        logger.error(
+          `Unexpected error in DISABLE_PARCEL_FOR_CONFIG testFitness:`,
+          error
+        )
+        return false
       }
     },
     requires: `Parcel 2.0.0+, Gatsby 4.0.0+, React 16.9.0+, enabled Parcel in gatsby-config.js, valid gatsby-node.js, sufficient system resources (4+ CPU cores, 2GB+ free memory), and production environment.`,
-  },
-
-export default activeFlags
+  }, // Ensure this comma is here to avoid parsing errors
+] // End of Selection
