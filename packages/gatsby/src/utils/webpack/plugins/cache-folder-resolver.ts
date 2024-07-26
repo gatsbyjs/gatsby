@@ -14,7 +14,7 @@ type ProcessWithPNP = NodeJS.ProcessVersions & { pnp?: string }
  * If you see error like
  *
  * ModuleNotFoundError: Module not found: Error: Can't resolve 'prop-types'
- * in '<site-directory>/.cache'
+ * in 'site-directory/.cache'
  *
  * it probably means this plugin is not enabled when it should be and there
  * might be need to adjust conditions for setting `this.isEnabled` in the
