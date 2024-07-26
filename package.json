@@ -123,7 +123,8 @@
     "test:watch": "jest --watch",
     "typecheck": "node ./scripts/check-ts",
     "version": "node ./scripts/gatsby-changelog-generator/lerna-version-lifecycle.js && prettier --write \"**/CHANGELOG.md\"",
-    "watch": "lerna run watch --no-sort --stream --concurrency 999"
+    "watch": "lerna run watch --no-sort --stream --concurrency 999",
+    "develop": "GATSBY_EXPERIMENTAL_PARCEL=true gatsby develop"
   },
   "workspaces": [
     "packages/*"
