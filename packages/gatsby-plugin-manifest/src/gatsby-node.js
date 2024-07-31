@@ -1,27 +1,19 @@
-import * as fs from "fs"
-import * as path from "path"
-// TODO(v5): use gatsby/sharp
-import getSharpInstance from "./safe-sharp"
-import { createContentDigest, slash } from "gatsby-core-utils"
-import { defaultIcons, addDigestToPath, favicons } from "./common"
-import { doesIconExist } from "./node-helpers"
+const fs = require(`fs`)
+const path = require(`path`)
+const getSharpInstance = require(`./safe-sharp`)
+const { createContentDigest, slash } = require(`gatsby-core-utils`)
+const { defaultIcons, addDigestToPath, favicons } = require(`./common`)
+const { doesIconExist } = require(`./node-helpers`)
 
-import pluginOptionsSchema from "./pluginOptionsSchema"
+const pluginOptionsSchema = require(`./pluginOptionsSchema`)
 
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)
 
-  // console.log(`generating icon: `, icon.src)
-  // if (fs.existsSync(imgPath)) {
-  //   console.log(`icon already Exists, not regenerating`)
-  //   return true
-  // }
-  const size = parseInt(icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)))
-
-  // For vector graphics, instruct sharp to use a pixel density
-  // suitable for the resolution we're rasterizing to.
-  // For pixel graphics sources this has no effect.
-  // Sharp accept density from 1 to 2400
+  const size = parseInt(
+    icon.sizes.substring(0, icon.sizes.lastIndexOf(`x`)),
+    10
+  )
   const density = Math.min(2400, Math.max(1, size))
 
   const sharp = await getSharpInstance()
@@ -38,7 +30,7 @@ async function generateIcon(icon, srcIcon) {
 async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   const cacheKey = createContentDigest(`${icon.src}${srcIcon}${srcIconDigest}`)
 
-  const created = cache.get(cacheKey, srcIcon)
+  const created = cache.get(cacheKey)
   if (!created) {
     cache.set(cacheKey, true)
 
@@ -53,26 +45,26 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
-/**
- * Setup pluginOption defaults
- * TODO: Remove once pluginOptionsSchema is stable
- */
 exports.onPreInit = (_, pluginOptions) => {
-  pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? `query`
-  pluginOptions.include_favicon = pluginOptions.include_favicon ?? true
-  pluginOptions.legacy = pluginOptions.legacy ?? true
-  pluginOptions.theme_color_in_head = pluginOptions.theme_color_in_head ?? true
-  pluginOptions.cacheDigest = null
-
-  if (pluginOptions.cache_busting_mode !== `none` && pluginOptions.icon) {
-    pluginOptions.cacheDigest = createContentDigest(
-      fs.readFileSync(pluginOptions.icon)
-    )
+  const defaultOptions = {
+    cache_busting_mode: `query`,
+    include_favicon: true,
+    legacy: true,
+    theme_color_in_head: true,
+    cacheDigest: null,
   }
+
+  const options = { ...defaultOptions, ...pluginOptions }
+
+  if (options.cache_busting_mode !== `none` && options.icon) {
+    options.cacheDigest = createContentDigest(fs.readFileSync(options.icon))
+  }
+
+  Object.assign(pluginOptions, options)
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan, basePath },
+  { reporter, parentSpan, basePath, assetPrefix, pathPrefix },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -83,59 +75,105 @@ exports.onPostBootstrap = async (
 
   const cache = new Map()
 
-  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
+  const validatePrefix = (prefix, name) => {
+    if (typeof prefix !== `string`) {
+      return ``
+    }
+    if (!prefix.trim().startsWith(`/`)) {
+      reporter.warn(`${name} should start with '/'`)
+    }
+    return prefix.trim()
+  }
+
+  const validateOptions = options => {
+    if (!options || typeof options !== `object` || !options.icon) {
+      throw new Error(
+        `pluginOptions must be an object and include an "icon" property`
+      )
+    }
+  }
+
+  const createManifestArgs = ({
+    cache,
+    reporter,
+    manifest,
+    basePath,
+    assetPrefix,
+    pathPrefix,
+  }) => {
+    validateOptions(manifest)
+    return {
+      cache,
+      reporter,
+      pluginOptions: manifest,
+      basePath,
+      assetPrefix: validatePrefix(assetPrefix, `assetPrefix`),
+      pathPrefix: validatePrefix(pathPrefix, `pathPrefix`),
+    }
+  }
+
+  try {
+    await makeManifest(
+      createManifestArgs({
+        cache,
+        reporter,
+        manifest,
+        basePath,
+        assetPrefix,
+        pathPrefix,
+      })
+    )
+  } catch (error) {
+    reporter.panic(`Error in onPostBootstrap: `, error)
+  }
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
     await Promise.all(
-      locales.map(locale => {
+      locales.map(async locale => {
         let cacheModeOverride = {}
 
-        /* localization requires unique filenames for output files if a different src Icon is defined.
-           otherwise one language would override anothers icons in automatic mode.
-        */
-        if (locale.hasOwnProperty(`icon`) && !locale.hasOwnProperty(`icons`)) {
-          // console.debug(`OVERRIDING CACHE BUSTING`, locale)
+        if (locale.icon && !locale.icons) {
           cacheModeOverride = { cache_busting_mode: `name` }
         }
 
-        return makeManifest({
-          cache,
-          reporter,
-          pluginOptions: {
-            ...manifest,
-            ...locale,
-            ...cacheModeOverride,
-          },
-          shouldLocalize: true,
-          basePath,
-        })
+        const localizedManifest = {
+          ...manifest,
+          ...locale,
+          ...cacheModeOverride,
+        }
+
+        const validatedAssetPrefix = validatePrefix(assetPrefix, `assetPrefix`)
+        const validatedPathPrefix = validatePrefix(pathPrefix, `pathPrefix`)
+
+        try {
+          await makeManifest({
+            cache,
+            reporter,
+            pluginOptions: localizedManifest,
+            shouldLocalize: true,
+            basePath,
+            assetPrefix: validatedAssetPrefix,
+            pathPrefix: validatedPathPrefix,
+          })
+        } catch (error) {
+          reporter.panic(`Error in onPostBootstrap (localized): `, error)
+        }
       })
     )
   }
+
   activity.end()
 }
 
-/**
- * The complete Triforce, or one or more components of the Triforce.
- * @typedef {Object} makeManifestArgs
- * @property {Object} cache - from gatsby-node api
- * @property {Object} reporter - from gatsby-node api
- * @property {Object} pluginOptions - from gatsby-node api/gatsby config
- * @property {boolean?} shouldLocalize
- * @property {string?} basePath - string of base path frpvided by gatsby node
- */
-
-/**
- * Build manifest
- * @param {makeManifestArgs}
- */
 const makeManifest = async ({
   cache,
   reporter,
   pluginOptions,
   shouldLocalize = false,
   basePath = ``,
+  assetPrefix = ``,
+  pathPrefix = ``,
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
@@ -143,7 +181,6 @@ const makeManifest = async ({
 
   const faviconIsEnabled = pluginOptions.include_favicon ?? true
 
-  // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
   delete manifest.legacy
   delete manifest.theme_color_in_head
@@ -153,12 +190,10 @@ const makeManifest = async ({
   delete manifest.include_favicon
   delete manifest.cacheDigest
 
-  // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
     manifest.icons = [...defaultIcons]
   }
 
-  // Specify extra options for each icon (if requested).
   if (pluginOptions.icon_options) {
     manifest.icons = manifest.icons.map(icon => {
       return {
@@ -167,24 +202,29 @@ const makeManifest = async ({
       }
     })
   }
-
-  // Determine destination path for icons.
-  const paths = {}
-  manifest.icons.forEach(icon => {
-    const iconPath = path.join(`public`, path.dirname(icon.src))
-    if (!paths[iconPath]) {
-      const exists = fs.existsSync(iconPath)
-      // create destination directory if it doesn't exist
-      if (!exists) {
-        fs.mkdirSync(iconPath, { recursive: true })
-      }
-      paths[iconPath] = true
+  const iconPaths = manifest.icons.map(icon => {
+    return {
+      dir: path.resolve(`public`, path.dirname(icon.src)),
+      src: icon.src,
     }
   })
 
-  // Only auto-generate icons if a src icon is defined.
+  const uniqueIconDirs = Array.from(new Set(iconPaths.map(icon => icon.dir)))
+
+  const createDirectory = dir => {
+    fs.mkdirSync(dir, { recursive: true })
+  }
+
+  uniqueIconDirs.forEach(dir => {
+    try {
+      createDirectory(dir)
+    } catch (error) {
+      reporter.error(`Failed to create directory at ${dir}: ${error.message}`)
+      throw error
+    }
+  })
+
   if (typeof icon !== `undefined`) {
-    // Check if the icon exists
     if (!doesIconExist(icon)) {
       throw new Error(
         `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
@@ -203,7 +243,6 @@ const makeManifest = async ({
       )
     }
 
-    // add cache busting
     const cacheMode =
       typeof pluginOptions.cache_busting_mode !== `undefined`
         ? pluginOptions.cache_busting_mode
@@ -211,12 +250,7 @@ const makeManifest = async ({
 
     const iconDigest = createContentDigest(fs.readFileSync(icon))
 
-    /**
-     * Given an array of icon configs, generate the various output sizes from
-     * the source icon image.
-     */
-    async function processIconSet(iconSet) {
-      // if cacheBusting is being done via url query icons must be generated before cache busting runs
+    const processIconSet = async iconSet => {
       if (cacheMode === `query`) {
         for (const dstIcon of iconSet) {
           await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
@@ -231,7 +265,6 @@ const makeManifest = async ({
         })
       }
 
-      // if file names are being modified by cacheBusting icons must be generated after cache busting runs
       if (cacheMode !== `query`) {
         for (const dstIcon of iconSet) {
           await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
@@ -243,8 +276,6 @@ const makeManifest = async ({
 
     manifest.icons = await processIconSet(manifest.icons)
 
-    // If favicon is enabled, apply the same caching policy and generate
-    // the resized image(s)
     if (faviconIsEnabled) {
       await processIconSet(favicons)
 
@@ -254,31 +285,92 @@ const makeManifest = async ({
     }
   }
 
-  // Fix #18497 by prefixing paths
-  manifest.icons = manifest.icons.map(icon => {
-    return {
-      ...icon,
-      src: slash(path.join(basePath, icon.src)),
-    }
-  })
+  const prefixPath = src =>
+    slash([assetPrefix, pathPrefix, basePath, src].filter(Boolean).join(`/`))
 
-  if (manifest.start_url) {
-    manifest.start_url = path.posix.join(basePath, manifest.start_url)
+  manifest.icons = Array.isArray(manifest.icons)
+    ? manifest.icons.reduce((valid, icon) => {
+        if (icon?.src) {
+          valid.push({ ...icon, src: prefixPath(icon.src) })
+        } else {
+          reporter.warn(`Skipping invalid icon:`, icon)
+        }
+        return valid
+      }, [])
+    : []
+  if (manifest.icons.length > 0) {
+    const iconCount = manifest.icons.length
+    const iconWord = iconCount === 1 ? `icon` : `icons`
+    reporter.info(`Processed ${iconCount} ${iconWord}.`)
+  } else {
+    reporter.warn(`No valid icons found in manifest.`)
   }
 
-  // Write manifest
-  fs.writeFileSync(
-    path.join(`public`, `manifest${suffix}.webmanifest`),
-    JSON.stringify(manifest)
-  )
+  if (manifest.start_url) {
+    manifest.start_url = slash(
+      [assetPrefix, pathPrefix, basePath, manifest.start_url]
+        .filter(Boolean)
+        .join(`/`)
+    )
+  } else {
+    reporter.warn(`manifest.start_url is not defined`)
+  }
+
+  const manifestPath = path.join(`public`, `manifest${suffix}.webmanifest`)
+
+  const writeManifest = async () => {
+    try {
+      await fs.promises.mkdir(path.dirname(manifestPath), { recursive: true })
+
+      const optimizedManifest = JSON.stringify(manifest)
+      await fs.promises.writeFile(manifestPath, optimizedManifest, `utf8`)
+
+      reporter.success(`Manifest written to ${manifestPath}`)
+
+      const criticalFields = [
+        `name`,
+        `short_name`,
+        `start_url`,
+        `display`,
+        `background_color`,
+        `theme_color`,
+      ]
+      const missingFields = criticalFields.filter(field => !manifest[field])
+
+      if (missingFields.length) {
+        reporter.warn(
+          `Missing critical fields in manifest: ${missingFields.join(`, `)}`
+        )
+      }
+
+      if (!manifest.icons || manifest.icons.length === 0) {
+        reporter.warn(`No icons defined in manifest.`)
+      } else {
+        const iconSizes = manifest.icons.map(icon => parseInt(icon.sizes))
+        if (!iconSizes.includes(192) || !iconSizes.includes(512)) {
+          reporter.warn(
+            `Manifest should include at least 192x192 and 512x512 icons`
+          )
+        }
+      }
+    } catch (error) {
+      reporter.panicOnBuild(`Failed to write manifest: ${error.message}`)
+    }
+  }
+
+  await writeManifest()
 }
 
-exports.onCreateWebpackConfig = ({ actions, plugins }, pluginOptions) => {
+const { DefinePlugin } = require(`webpack`)
+
+exports.onCreateWebpackConfig = ({ actions }, pluginOptions) => {
+  const hasLocalization = Boolean(
+    pluginOptions.localize && pluginOptions.localize.length
+  )
   actions.setWebpackConfig({
     plugins: [
-      plugins.define({
-        __MANIFEST_PLUGIN_HAS_LOCALISATION__:
-          pluginOptions.localize && pluginOptions.localize.length,
+      new DefinePlugin({
+        __MANIFEST_PLUGIN_HAS_LOCALIZATION__: JSON.stringify(hasLocalization),
       }),
     ],
   })
