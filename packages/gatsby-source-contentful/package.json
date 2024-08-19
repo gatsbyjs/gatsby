@@ -14,7 +14,7 @@
     "@vercel/fetch-retry": "^5.1.3",
     "chalk": "^4.1.2",
     "common-tags": "^1.8.2",
-    "contentful": "^9.3.5",
+    "contentful": "^9.3.6",
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.14.0-next.2",
     "gatsby-plugin-utils": "^4.14.0-next.2",
