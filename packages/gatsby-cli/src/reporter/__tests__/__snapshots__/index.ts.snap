@@ -95,6 +95,12 @@ Object {
       "lineNumber": 297,
     },
     Object {
+      "columnNumber": 5,
+      "fileName": "node:internal/process/task_queues",
+      "functionName": "processTicksAndRejections",
+      "lineNumber": 95,
+    },
+    Object {
       "columnNumber": 3,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
       "functionName": "_runTest",
@@ -141,6 +147,12 @@ Object {
       "fileName": "<PROJECT_ROOT>/node_modules/jest-runner/build/runTest.js",
       "functionName": "runTest",
       "lineNumber": 444,
+    },
+    Object {
+      "columnNumber": 12,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-runner/build/testWorker.js",
+      "functionName": "Object.worker",
+      "lineNumber": 106,
     },
   ],
   "text": "Error string passed to reporter Message from new Error",

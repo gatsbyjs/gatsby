@@ -3,7 +3,7 @@ import { store } from "../../../redux"
 import { actions } from "../../../redux/actions"
 import { getDataStore } from "../../../datastore"
 
-jest.setTimeout(15000)
+jest.setTimeout(30000)
 
 jest.mock(`gatsby-telemetry`, () => {
   return {

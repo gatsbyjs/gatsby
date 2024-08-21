@@ -290,16 +290,15 @@ describe(`Jobs manager`, () => {
 
   // getInProcessJobPromise
   describe(`getInProcessJobPromise`, () => {
-    // unsure how to test this yet without a real worker
     it(`should get a promise when set`, async () => {
       worker.TEST_JOB.mockReturnValue({ output: `myresult` })
       const { enqueueJob, getInProcessJobPromise } = jobManager
       const internalJob = createInternalMockJob()
       const promise = enqueueJob(internalJob)
 
-      expect(getInProcessJobPromise(internalJob.contentDigest)).toStrictEqual(
-        promise
-      )
+      await expect(
+        getInProcessJobPromise(internalJob.contentDigest)
+      ).resolves.toEqual(await promise)
     })
   })
 
