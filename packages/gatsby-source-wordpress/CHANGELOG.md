@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.13.5](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.5/packages/gatsby-source-wordpress) (2024-08-26)
+
+#### Bug Fixes
+
+- pin cheerio [#39066](https://github.com/gatsbyjs/gatsby/issues/39066) [#39069](https://github.com/gatsbyjs/gatsby/issues/39069) ([282caaf](https://github.com/gatsbyjs/gatsby/commit/282caafe45ff3f8f4a8bd0d82807ca5b9b742dd1))
+
 ### [7.13.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.4/packages/gatsby-source-wordpress) (2024-04-10)
 
 **Note:** Version bump only for package gatsby-source-wordpress
