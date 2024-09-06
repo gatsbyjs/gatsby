@@ -706,14 +706,14 @@ Array [
         featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
-        handle: String!
+        handle: Handle!
         hasOnlyDefaultVariant: Boolean!
         hasOutOfStockVariants: Boolean!
         id: ID!
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Int!
+        mediaCount: Count!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -724,7 +724,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupsCount: Count!
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -785,7 +785,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupsCount: Count!
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -817,14 +817,14 @@ Array [
         description: String!
         descriptionHtml: String!
         feedback: __PREFIX__ShopifyResourceFeedback
-        handle: String!
+        handle: Handle!
         id: ID!
         image: __PREFIX__ShopifyImage
         legacyResourceId: String!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         products: [__PREFIX__ShopifyProduct!]! @link(from: \\"products___NODE\\", by: \\"id\\")
-        productsCount: Int!
+        productsCount: Count!
         ruleSet: __PREFIX__ShopifyCollectionRuleSet
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
@@ -891,7 +891,7 @@ Array [
       type __PREFIX__ShopifyFulfillmentService {
         callbackUrl: String
         fulfillmentOrdersOptIn: Boolean!
-        handle: String!
+        handle: Handle!
         inventoryManagement: Boolean!
         productBased: Boolean!
         serviceName: String!
@@ -914,7 +914,7 @@ Array [
         inventoryHistoryUrl: String
         inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(from: \\"inventoryLevels___NODE\\", by: \\"id\\")
         legacyResourceId: String!
-        locationsCount: Int!
+        locationsCount: Count!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -928,7 +928,10 @@ Array [
 
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
-        available: Int!
+        quantities(names: ["available"]) {
+          name
+          quantity
+        }
         id: ID!
         location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
@@ -1716,14 +1719,14 @@ Array [
         featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
-        handle: String!
+        handle: Handle!
         hasOnlyDefaultVariant: Boolean!
         hasOutOfStockVariants: Boolean!
         id: ID!
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Int!
+        mediaCount: Count!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -1734,7 +1737,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupsCount: Count!
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -1795,7 +1798,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupsCount: Count!
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -2538,14 +2541,14 @@ Array [
         featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
-        handle: String!
+        handle: Handle!
         hasOnlyDefaultVariant: Boolean!
         hasOutOfStockVariants: Boolean!
         id: ID!
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Int!
+        mediaCount: Count!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -2556,7 +2559,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupsCount: Count!
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -2617,7 +2620,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupsCount: Count!
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -2649,14 +2652,14 @@ Array [
         description: String!
         descriptionHtml: String!
         feedback: __PREFIX__ShopifyResourceFeedback
-        handle: String!
+        handle: Handle!
         id: ID!
         image: __PREFIX__ShopifyImage
         legacyResourceId: String!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         products: [__PREFIX__ShopifyProduct!]! @link(from: \\"products___NODE\\", by: \\"id\\")
-        productsCount: Int!
+        productsCount: Count!
         ruleSet: __PREFIX__ShopifyCollectionRuleSet
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
@@ -2723,7 +2726,7 @@ Array [
       type __PREFIX__ShopifyFulfillmentService {
         callbackUrl: String
         fulfillmentOrdersOptIn: Boolean!
-        handle: String!
+        handle: Handle!
         inventoryManagement: Boolean!
         productBased: Boolean!
         serviceName: String!
@@ -2746,7 +2749,7 @@ Array [
         inventoryHistoryUrl: String
         inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(from: \\"inventoryLevels___NODE\\", by: \\"id\\")
         legacyResourceId: String!
-        locationsCount: Int!
+        locationsCount: Count!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -2760,7 +2763,10 @@ Array [
 
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
-        available: Int!
+        quantities(names: ["available"]) {
+          name
+          quantity
+        }
         id: ID!
         location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
@@ -3543,14 +3549,14 @@ Array [
         featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
-        handle: String!
+        handle: Handle!
         hasOnlyDefaultVariant: Boolean!
         hasOutOfStockVariants: Boolean!
         id: ID!
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Int!
+        mediaCount: Count!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -3561,7 +3567,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupsCount: Count!
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -3622,7 +3628,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupsCount: Count!
         sku: String
         shopifyId: String!
         storefrontId: String!

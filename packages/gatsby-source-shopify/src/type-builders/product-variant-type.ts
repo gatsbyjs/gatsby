@@ -21,7 +21,7 @@ export function productVariantTypeBuilder(prefix: string): string {
         product: ${prefix}Product! @link(from: "_product", by: "id")
         requiresShipping: Boolean! @deprecated(reason: "Use \`InventoryItem.requiresShipping\` instead.")
         selectedOptions: [${prefix}SelectedOption!]!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupsCount: Count!
         sku: String
         shopifyId: String!
         storefrontId: String!

@@ -47,7 +47,10 @@ export class ProductVariantsQuery extends BulkQuery {
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: ["available"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -56,7 +59,10 @@ export class ProductVariantsQuery extends BulkQuery {
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -111,7 +117,7 @@ export class ProductVariantsQuery extends BulkQuery {
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount
               sku
               storefrontId
               taxCode

@@ -10,7 +10,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         products(query: \\"(status:active) AND (published_status:'__TEST__:visible') AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -196,7 +196,7 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount
               seo {
                 description
                 title
@@ -222,7 +222,7 @@ Array [
           }
         }
       }
-    
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -246,7 +246,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         productVariants(query: \\"(status:active) AND (published_status:'__TEST__:visible') AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -276,7 +276,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: ["available"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -340,7 +343,7 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount
               sku
               storefrontId
               taxCode
@@ -370,7 +373,7 @@ Array [
           }
         }
       }
-    
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -394,7 +397,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         orders(query: \\"(created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -444,7 +447,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         collections(query: \\"(published_status:'__TEST__:visible') AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -525,7 +528,7 @@ Array [
           }
         }
       }
-      
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -549,7 +552,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         locations(includeInactive: true, includeLegacy: true, query: \\"(published_status:'__TEST__:visible') AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -598,7 +601,7 @@ Array [
           }
         }
       }
-      
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -656,7 +659,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         products(query: \\"(status:active) AND (published_status:'__TEST__:visible')\\") {
           edges {
@@ -842,7 +845,7 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount
               seo {
                 description
                 title
@@ -868,7 +871,7 @@ Array [
           }
         }
       }
-    
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -892,7 +895,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         productVariants(query: \\"(status:active) AND (published_status:'__TEST__:visible')\\") {
           edges {
@@ -922,7 +925,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: ["available"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -986,7 +992,7 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount
               sku
               storefrontId
               taxCode
@@ -1016,7 +1022,7 @@ Array [
           }
         }
       }
-    
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1040,7 +1046,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         orders(query: \\"\\") {
           edges {
@@ -1090,7 +1096,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         collections(query: \\"(published_status:'__TEST__:visible')\\") {
           edges {
@@ -1171,7 +1177,7 @@ Array [
           }
         }
       }
-      
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1195,7 +1201,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         locations(includeInactive: true, includeLegacy: true, query: \\"(published_status:'__TEST__:visible')\\") {
           edges {
@@ -1244,7 +1250,7 @@ Array [
           }
         }
       }
-      
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1302,7 +1308,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         products(query: \\"(status:active) AND (published_status:published) AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1488,7 +1494,7 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount
               seo {
                 description
                 title
@@ -1514,7 +1520,7 @@ Array [
           }
         }
       }
-    
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1538,7 +1544,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         productVariants(query: \\"(status:active) AND (published_status:published) AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1568,7 +1574,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: ["available"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -1632,7 +1641,7 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount
               sku
               storefrontId
               taxCode
@@ -1662,7 +1671,7 @@ Array [
           }
         }
       }
-    
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1686,7 +1695,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         orders(query: \\"(created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1736,7 +1745,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         collections(query: \\"(published_status:published) AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1817,7 +1826,7 @@ Array [
           }
         }
       }
-      
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1841,7 +1850,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         locations(includeInactive: true, includeLegacy: true, query: \\"(published_status:published) AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1890,7 +1899,7 @@ Array [
           }
         }
       }
-      
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1948,7 +1957,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         products(query: \\"(status:active) AND (published_status:published)\\") {
           edges {
@@ -2134,7 +2143,7 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount
               seo {
                 description
                 title
@@ -2160,7 +2169,7 @@ Array [
           }
         }
       }
-    
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -2184,7 +2193,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         productVariants(query: \\"(status:active) AND (published_status:published)\\") {
           edges {
@@ -2214,7 +2223,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: ["available"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -2278,7 +2290,7 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount
               sku
               storefrontId
               taxCode
@@ -2308,7 +2320,7 @@ Array [
           }
         }
       }
-    
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -2332,7 +2344,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         orders(query: \\"\\") {
           edges {
@@ -2382,7 +2394,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         collections(query: \\"(published_status:published)\\") {
           edges {
@@ -2463,7 +2475,7 @@ Array [
           }
         }
       }
-      
+
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -2487,7 +2499,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-          
+
       {
         locations(includeInactive: true, includeLegacy: true, query: \\"(published_status:published)\\") {
           edges {
@@ -2536,7 +2548,7 @@ Array [
           }
         }
       }
-      
+
         \\"\\"\\"
       ) {
         bulkOperation {

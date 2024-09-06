@@ -3,7 +3,7 @@ export function locationTypeBuilder(prefix: string): string {
       type ${prefix}FulfillmentService {
         callbackUrl: String
         fulfillmentOrdersOptIn: Boolean!
-        handle: String!
+        handle: Handle!
         inventoryManagement: Boolean!
         productBased: Boolean!
         serviceName: String!
@@ -26,7 +26,7 @@ export function locationTypeBuilder(prefix: string): string {
         inventoryHistoryUrl: String
         inventoryLevels: [${prefix}InventoryLevel!]! @link(from: "inventoryLevels___NODE", by: "id")
         legacyResourceId: String!
-        locationsCount: Int!
+        locationsCount: Count!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -40,7 +40,10 @@ export function locationTypeBuilder(prefix: string): string {
 
       type ${prefix}InventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
-        available: Int!
+        quantities(names: ["available"]) {
+          name
+          quantity
+        }
         id: ID!
         location: ${prefix}Location! @link(from: "_location", by: "id")
         shopifyId: String!
