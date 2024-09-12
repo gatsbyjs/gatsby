@@ -928,7 +928,7 @@ Array [
 
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
-        quantities(names: ["available"]) {
+        quantities(names: [\\"available\\"]) {
           name
           quantity
         }
@@ -2763,7 +2763,7 @@ Array [
 
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
-        quantities(names: ["available"]) {
+        quantities(names: [\\"available\\"]) {
           name
           quantity
         }

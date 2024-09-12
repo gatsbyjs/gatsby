@@ -10,7 +10,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         products(query: \\"(status:active) AND (published_status:'__TEST__:visible') AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -147,7 +147,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -196,7 +199,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupsCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -222,7 +228,7 @@ Array [
           }
         }
       }
-
+    
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -246,7 +252,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         productVariants(query: \\"(status:active) AND (published_status:'__TEST__:visible') AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -276,7 +282,7 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      quantities(names: ["available"]) {
+                      quantities(names: [\\"available\\"]) {
                         name
                         quantity
                       }
@@ -288,7 +294,10 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -373,7 +382,7 @@ Array [
           }
         }
       }
-
+    
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -397,7 +406,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         orders(query: \\"(created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -447,7 +456,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         collections(query: \\"(published_status:'__TEST__:visible') AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -506,7 +515,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -528,7 +540,7 @@ Array [
           }
         }
       }
-
+      
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -552,7 +564,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         locations(includeInactive: true, includeLegacy: true, query: \\"(published_status:'__TEST__:visible') AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -601,7 +613,7 @@ Array [
           }
         }
       }
-
+      
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -659,7 +671,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         products(query: \\"(status:active) AND (published_status:'__TEST__:visible')\\") {
           edges {
@@ -796,7 +808,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -845,7 +860,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupsCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -871,7 +889,7 @@ Array [
           }
         }
       }
-
+    
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -895,7 +913,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         productVariants(query: \\"(status:active) AND (published_status:'__TEST__:visible')\\") {
           edges {
@@ -925,7 +943,7 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      quantities(names: ["available"]) {
+                      quantities(names: [\\"available\\"]) {
                         name
                         quantity
                       }
@@ -937,7 +955,10 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -1022,7 +1043,7 @@ Array [
           }
         }
       }
-
+    
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1046,7 +1067,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         orders(query: \\"\\") {
           edges {
@@ -1096,7 +1117,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         collections(query: \\"(published_status:'__TEST__:visible')\\") {
           edges {
@@ -1155,7 +1176,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -1177,7 +1201,7 @@ Array [
           }
         }
       }
-
+      
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1201,7 +1225,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         locations(includeInactive: true, includeLegacy: true, query: \\"(published_status:'__TEST__:visible')\\") {
           edges {
@@ -1250,7 +1274,7 @@ Array [
           }
         }
       }
-
+      
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1308,7 +1332,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         products(query: \\"(status:active) AND (published_status:published) AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1445,7 +1469,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -1494,7 +1521,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupsCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -1520,7 +1550,7 @@ Array [
           }
         }
       }
-
+    
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1544,7 +1574,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         productVariants(query: \\"(status:active) AND (published_status:published) AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1574,7 +1604,7 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      quantities(names: ["available"]) {
+                      quantities(names: [\\"available\\"]) {
                         name
                         quantity
                       }
@@ -1586,7 +1616,10 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -1671,7 +1704,7 @@ Array [
           }
         }
       }
-
+    
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1695,7 +1728,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         orders(query: \\"(created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1745,7 +1778,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         collections(query: \\"(published_status:published) AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1804,7 +1837,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -1826,7 +1862,7 @@ Array [
           }
         }
       }
-
+      
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1850,7 +1886,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         locations(includeInactive: true, includeLegacy: true, query: \\"(published_status:published) AND (created_at:>='1970-01-01T00:00:00.000Z' OR updated_at:>='1970-01-01T00:00:00.000Z')\\") {
           edges {
@@ -1899,7 +1935,7 @@ Array [
           }
         }
       }
-
+      
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -1957,7 +1993,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         products(query: \\"(status:active) AND (published_status:published)\\") {
           edges {
@@ -2094,7 +2130,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -2143,7 +2182,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupsCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -2169,7 +2211,7 @@ Array [
           }
         }
       }
-
+    
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -2193,7 +2235,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         productVariants(query: \\"(status:active) AND (published_status:published)\\") {
           edges {
@@ -2223,7 +2265,7 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      quantities(names: ["available"]) {
+                      quantities(names: [\\"available\\"]) {
                         name
                         quantity
                       }
@@ -2235,7 +2277,10 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -2320,7 +2365,7 @@ Array [
           }
         }
       }
-
+    
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -2344,7 +2389,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         orders(query: \\"\\") {
           edges {
@@ -2394,7 +2439,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         collections(query: \\"(published_status:published)\\") {
           edges {
@@ -2453,7 +2498,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -2475,7 +2523,7 @@ Array [
           }
         }
       }
-
+      
         \\"\\"\\"
       ) {
         bulkOperation {
@@ -2499,7 +2547,7 @@ Array [
       mutation INITIATE_BULK_OPERATION {
         bulkOperationRunQuery(
         query: \\"\\"\\"
-
+          
       {
         locations(includeInactive: true, includeLegacy: true, query: \\"(published_status:published)\\") {
           edges {
@@ -2548,7 +2596,7 @@ Array [
           }
         }
       }
-
+      
         \\"\\"\\"
       ) {
         bulkOperation {
