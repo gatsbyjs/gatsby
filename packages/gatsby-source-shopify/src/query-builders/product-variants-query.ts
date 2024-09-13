@@ -117,7 +117,10 @@ export class ProductVariantsQuery extends BulkQuery {
                 name
                 value
               }
-              sellingPlanGroupsCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode

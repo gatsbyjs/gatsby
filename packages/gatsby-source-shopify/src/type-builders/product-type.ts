@@ -9,14 +9,14 @@ export function productTypeBuilder(prefix: string): string {
         featuredMedia: ${prefix}Media @link(from: "_featuredMedia", by: "id")
         feedback: ${prefix}ResourceFeedback
         giftCardTemplateSuffix: String
-        handle: Handle!
+        handle: String!
         hasOnlyDefaultVariant: Boolean!
         hasOutOfStockVariants: Boolean!
         id: ID!
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [${prefix}Media!]! @link(from: "media___NODE", by: "id")
-        mediaCount: Count!
+        mediaCount: ${prefix}Count!
         metafield(namespace: String! key: String!): ${prefix}Metafield
         metafields: [${prefix}Metafield!]! @link(from: "metafields___NODE", by: "id")
         onlineStorePreviewUrl: String
@@ -27,7 +27,7 @@ export function productTypeBuilder(prefix: string): string {
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupsCount: Count!
+        sellingPlanGroupsCount: ${prefix}Count!
         seo: ${prefix}SEO!
         shopifyId: String!
         status: ${prefix}ProductStatus!

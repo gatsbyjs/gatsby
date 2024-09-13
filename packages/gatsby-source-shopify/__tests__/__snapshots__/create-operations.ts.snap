@@ -352,7 +352,10 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupsCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
@@ -1013,7 +1016,10 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupsCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
@@ -1674,7 +1680,10 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupsCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
@@ -2335,7 +2344,10 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupsCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode

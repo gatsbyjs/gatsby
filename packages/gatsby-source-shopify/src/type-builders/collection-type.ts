@@ -4,14 +4,14 @@ export function collectionTypeBuilder(prefix: string): string {
         description: String!
         descriptionHtml: String!
         feedback: ${prefix}ResourceFeedback
-        handle: Handle!
+        handle: String!
         id: ID!
         image: ${prefix}Image
         legacyResourceId: String!
         metafield(namespace: String! key: String!): ${prefix}Metafield
         metafields: [${prefix}Metafield!]! @link(from: "metafields___NODE", by: "id")
         products: [${prefix}Product!]! @link(from: "products___NODE", by: "id")
-        productsCount: Count!
+        productsCount: ${prefix}Count!
         ruleSet: ${prefix}CollectionRuleSet
         seo: ${prefix}SEO!
         shopifyId: String!

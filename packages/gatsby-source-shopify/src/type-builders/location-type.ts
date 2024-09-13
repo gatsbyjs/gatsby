@@ -3,7 +3,7 @@ export function locationTypeBuilder(prefix: string): string {
       type ${prefix}FulfillmentService {
         callbackUrl: String
         fulfillmentOrdersOptIn: Boolean!
-        handle: Handle!
+        handle: String!
         inventoryManagement: Boolean!
         productBased: Boolean!
         serviceName: String!

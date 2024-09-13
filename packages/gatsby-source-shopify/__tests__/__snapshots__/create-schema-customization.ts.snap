@@ -516,6 +516,16 @@ Array [
         POUNDS
         OUNCES
       }
+
+      enum __PREFIX__ShopifyCountPrecision {
+        EXACT
+        AT_LEAST
+      }
+
+      type __PREFIX__ShopifyCount {
+        count: Int!
+        precision: __PREFIX__ShopifyCountPrecision!
+      }
     ",
       "
       type __PREFIX__ShopifyExternalVideo implements Node & __PREFIX__ShopifyMedia @dontInfer {
@@ -706,14 +716,14 @@ Array [
         featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
-        handle: Handle!
+        handle: String!
         hasOnlyDefaultVariant: Boolean!
         hasOutOfStockVariants: Boolean!
         id: ID!
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Count!
+        mediaCount: __PREFIX__ShopifyCount!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -724,7 +734,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupsCount: Count!
+        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -785,7 +795,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupsCount: Count!
+        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -817,14 +827,14 @@ Array [
         description: String!
         descriptionHtml: String!
         feedback: __PREFIX__ShopifyResourceFeedback
-        handle: Handle!
+        handle: String!
         id: ID!
         image: __PREFIX__ShopifyImage
         legacyResourceId: String!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         products: [__PREFIX__ShopifyProduct!]! @link(from: \\"products___NODE\\", by: \\"id\\")
-        productsCount: Count!
+        productsCount: __PREFIX__ShopifyCount!
         ruleSet: __PREFIX__ShopifyCollectionRuleSet
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
@@ -891,7 +901,7 @@ Array [
       type __PREFIX__ShopifyFulfillmentService {
         callbackUrl: String
         fulfillmentOrdersOptIn: Boolean!
-        handle: Handle!
+        handle: String!
         inventoryManagement: Boolean!
         productBased: Boolean!
         serviceName: String!
@@ -1529,6 +1539,16 @@ Array [
         POUNDS
         OUNCES
       }
+
+      enum __PREFIX__ShopifyCountPrecision {
+        EXACT
+        AT_LEAST
+      }
+
+      type __PREFIX__ShopifyCount {
+        count: Int!
+        precision: __PREFIX__ShopifyCountPrecision!
+      }
     ",
       "
       type __PREFIX__ShopifyExternalVideo implements Node & __PREFIX__ShopifyMedia @dontInfer {
@@ -1719,14 +1739,14 @@ Array [
         featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
-        handle: Handle!
+        handle: String!
         hasOnlyDefaultVariant: Boolean!
         hasOutOfStockVariants: Boolean!
         id: ID!
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Count!
+        mediaCount: __PREFIX__ShopifyCount!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -1737,7 +1757,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupsCount: Count!
+        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -1798,7 +1818,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupsCount: Count!
+        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -2351,6 +2371,16 @@ Array [
         POUNDS
         OUNCES
       }
+
+      enum __PREFIX__ShopifyCountPrecision {
+        EXACT
+        AT_LEAST
+      }
+
+      type __PREFIX__ShopifyCount {
+        count: Int!
+        precision: __PREFIX__ShopifyCountPrecision!
+      }
     ",
       "
       type __PREFIX__ShopifyExternalVideo implements Node & __PREFIX__ShopifyMedia @dontInfer {
@@ -2541,14 +2571,14 @@ Array [
         featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
-        handle: Handle!
+        handle: String!
         hasOnlyDefaultVariant: Boolean!
         hasOutOfStockVariants: Boolean!
         id: ID!
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Count!
+        mediaCount: __PREFIX__ShopifyCount!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -2559,7 +2589,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupsCount: Count!
+        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -2620,7 +2650,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupsCount: Count!
+        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -2652,14 +2682,14 @@ Array [
         description: String!
         descriptionHtml: String!
         feedback: __PREFIX__ShopifyResourceFeedback
-        handle: Handle!
+        handle: String!
         id: ID!
         image: __PREFIX__ShopifyImage
         legacyResourceId: String!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         products: [__PREFIX__ShopifyProduct!]! @link(from: \\"products___NODE\\", by: \\"id\\")
-        productsCount: Count!
+        productsCount: __PREFIX__ShopifyCount!
         ruleSet: __PREFIX__ShopifyCollectionRuleSet
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
@@ -2726,7 +2756,7 @@ Array [
       type __PREFIX__ShopifyFulfillmentService {
         callbackUrl: String
         fulfillmentOrdersOptIn: Boolean!
-        handle: Handle!
+        handle: String!
         inventoryManagement: Boolean!
         productBased: Boolean!
         serviceName: String!
@@ -3359,6 +3389,16 @@ Array [
         POUNDS
         OUNCES
       }
+
+      enum __PREFIX__ShopifyCountPrecision {
+        EXACT
+        AT_LEAST
+      }
+
+      type __PREFIX__ShopifyCount {
+        count: Int!
+        precision: __PREFIX__ShopifyCountPrecision!
+      }
     ",
       "
       type __PREFIX__ShopifyExternalVideo implements Node & __PREFIX__ShopifyMedia @dontInfer {
@@ -3549,14 +3589,14 @@ Array [
         featuredMedia: __PREFIX__ShopifyMedia @link(from: \\"_featuredMedia\\", by: \\"id\\")
         feedback: __PREFIX__ShopifyResourceFeedback
         giftCardTemplateSuffix: String
-        handle: Handle!
+        handle: String!
         hasOnlyDefaultVariant: Boolean!
         hasOutOfStockVariants: Boolean!
         id: ID!
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Count!
+        mediaCount: __PREFIX__ShopifyCount!
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -3567,7 +3607,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupsCount: Count!
+        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -3628,7 +3668,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupsCount: Count!
+        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
         sku: String
         shopifyId: String!
         storefrontId: String!
