@@ -146,6 +146,8 @@ Gatsby is dedicated to building a welcoming, diverse, safe community. We expect 
 
 ## 🤝 How to Contribute
 
+[![Open in DevZero](https://assets.devzero.io/open-in-devzero.svg)](https://www.devzero.io/dashboard/recipes/new?repo-url=https://github.com/gatsbyjs/gatsby)
+
 Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community!
 
 Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
