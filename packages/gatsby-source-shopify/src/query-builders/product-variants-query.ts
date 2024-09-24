@@ -47,7 +47,7 @@ export class ProductVariantsQuery extends BulkQuery {
                 inventoryLevels {
                   edges {
                     node {
-                      quantities(names: ["available"]) {
+                      quantities(names: ["incoming", "available", "committed", "reserved", "damaged", "safety_stock", "quality_control"]) {
                         name
                         quantity
                       }
