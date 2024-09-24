@@ -2946,16 +2946,42 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "cedae3ee-f225-5c34-9dd8-f1a25f8d810c",
       "internal": Object {
-        "contentDigest": "256becd77e70e2fdc260cc904098277d",
+        "contentDigest": "66722f007ac1579519fbb7a397fddaed",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
         "shopifyId": "gid://shopify/Location/57173475534",
       },
-      "quantities": Object {
-        "name": "available",
-        "quantity": 0,
-      },
+      "quantities": Array [
+        Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
+          "name": "available",
+          "quantity": 0,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
+          "quantity": 0,
+        },
+      ],
       "shopifyId": "gid://shopify/InventoryLevel/91371143374?inventory_item_id=43101443326158",
     },
   ],
@@ -3044,7 +3070,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "8970ecd9-9a83-5e55-915b-682cfff58699",
       "internal": Object {
-        "contentDigest": "9dd9fbfc7bb7a61df19e98b1687fac7b",
+        "contentDigest": "3ee56ed994b624cb1de780d06a481f37",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3052,7 +3078,31 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
+          "quantity": 0,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
           "quantity": 0,
         },
       ],
@@ -3144,7 +3194,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "6eeb7894-1eb4-5556-a797-396fdf229a63",
       "internal": Object {
-        "contentDigest": "64afe10230bcc1f909a9845e66e174f7",
+        "contentDigest": "07f7fb2e63f13bb1a969f2e58d3612b3",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3152,7 +3202,31 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
+          "quantity": 0,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
           "quantity": 0,
         },
       ],
@@ -3244,7 +3318,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "e8f4985b-ed74-5a19-836d-b5d310c277e5",
       "internal": Object {
-        "contentDigest": "246301ced9133375e8f817f033d56185",
+        "contentDigest": "51397f4cd40bd4e008b002b73797c3b8",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3252,8 +3326,32 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
           "quantity": 1,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
+          "quantity": 0,
         },
       ],
       "shopifyId": "gid://shopify/InventoryLevel/91371143374?inventory_item_id=43100044460238",
@@ -3352,7 +3450,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "453dda5f-1323-5aa3-8e75-9a0dd08025c2",
       "internal": Object {
-        "contentDigest": "0afac1174b2e44d47b4579773b059369",
+        "contentDigest": "bd4f5897a47f9c8912acd6d3da46fcfb",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3360,8 +3458,32 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
           "quantity": 1,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
+          "quantity": 0,
         },
       ],
       "shopifyId": "gid://shopify/InventoryLevel/91371143374?inventory_item_id=43100044427470",
@@ -3460,7 +3582,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "2261ddf5-7c64-5934-a990-7dc64fe17040",
       "internal": Object {
-        "contentDigest": "347bbb9776e3e61fdf2216b61de1c041",
+        "contentDigest": "23d2d35e04ff3fa2f5b43c1d3f2c0f28",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3468,8 +3590,32 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
           "quantity": 1,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
+          "quantity": 0,
         },
       ],
       "shopifyId": "gid://shopify/InventoryLevel/91371143374?inventory_item_id=43100044394702",
@@ -3807,16 +3953,42 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "cedae3ee-f225-5c34-9dd8-f1a25f8d810c",
       "internal": Object {
-        "contentDigest": "256becd77e70e2fdc260cc904098277d",
+        "contentDigest": "66722f007ac1579519fbb7a397fddaed",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
         "shopifyId": "gid://shopify/Location/57173475534",
       },
-      "quantities": Object {
-        "name": "available",
-        "quantity": 0,
-      },
+      "quantities": Array [
+        Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
+          "name": "available",
+          "quantity": 0,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
+          "quantity": 0,
+        },
+      ],
       "shopifyId": "gid://shopify/InventoryLevel/91371143374?inventory_item_id=43101443326158",
     },
   ],
@@ -3905,7 +4077,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "8970ecd9-9a83-5e55-915b-682cfff58699",
       "internal": Object {
-        "contentDigest": "9dd9fbfc7bb7a61df19e98b1687fac7b",
+        "contentDigest": "3ee56ed994b624cb1de780d06a481f37",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -3913,7 +4085,31 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
+          "quantity": 0,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
           "quantity": 0,
         },
       ],
@@ -4005,7 +4201,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "6eeb7894-1eb4-5556-a797-396fdf229a63",
       "internal": Object {
-        "contentDigest": "64afe10230bcc1f909a9845e66e174f7",
+        "contentDigest": "07f7fb2e63f13bb1a969f2e58d3612b3",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -4013,7 +4209,31 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
+          "quantity": 0,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
           "quantity": 0,
         },
       ],
@@ -4105,7 +4325,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "e8f4985b-ed74-5a19-836d-b5d310c277e5",
       "internal": Object {
-        "contentDigest": "246301ced9133375e8f817f033d56185",
+        "contentDigest": "51397f4cd40bd4e008b002b73797c3b8",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -4113,8 +4333,32 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
           "quantity": 1,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
+          "quantity": 0,
         },
       ],
       "shopifyId": "gid://shopify/InventoryLevel/91371143374?inventory_item_id=43100044460238",
@@ -4213,7 +4457,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "453dda5f-1323-5aa3-8e75-9a0dd08025c2",
       "internal": Object {
-        "contentDigest": "0afac1174b2e44d47b4579773b059369",
+        "contentDigest": "bd4f5897a47f9c8912acd6d3da46fcfb",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -4221,8 +4465,32 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
           "quantity": 1,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
+          "quantity": 0,
         },
       ],
       "shopifyId": "gid://shopify/InventoryLevel/91371143374?inventory_item_id=43100044427470",
@@ -4321,7 +4589,7 @@ Array [
       "_location": "e3e3dfac-3cbd-5cef-b3d6-3fd214f93ab8",
       "id": "2261ddf5-7c64-5934-a990-7dc64fe17040",
       "internal": Object {
-        "contentDigest": "347bbb9776e3e61fdf2216b61de1c041",
+        "contentDigest": "23d2d35e04ff3fa2f5b43c1d3f2c0f28",
         "type": "ShopifyInventoryLevel",
       },
       "location": Object {
@@ -4329,8 +4597,32 @@ Array [
       },
       "quantities": Array [
         Object {
+          "name": "incoming",
+          "quantity": 0,
+        },
+        Object {
           "name": "available",
           "quantity": 1,
+        },
+        Object {
+          "name": "committed",
+          "quantity": 0,
+        },
+        Object {
+          "name": "reserved",
+          "quantity": 0,
+        },
+        Object {
+          "name": "damaged",
+          "quantity": 0,
+        },
+        Object {
+          "name": "safety_stock",
+          "quantity": 0,
+        },
+        Object {
+          "name": "quality_control",
+          "quantity": 0,
         },
       ],
       "shopifyId": "gid://shopify/InventoryLevel/91371143374?inventory_item_id=43100044394702",
