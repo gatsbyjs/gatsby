@@ -282,7 +282,7 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      quantities(names: [\\"available\\"]) {
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
                         name
                         quantity
                       }
@@ -946,7 +946,7 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      quantities(names: [\\"available\\"]) {
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
                         name
                         quantity
                       }
@@ -1610,7 +1610,7 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      quantities(names: [\\"available\\"]) {
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
                         name
                         quantity
                       }
@@ -2274,7 +2274,7 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      quantities(names: [\\"available\\"]) {
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
                         name
                         quantity
                       }

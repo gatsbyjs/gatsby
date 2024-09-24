@@ -922,9 +922,9 @@ Array [
         duplicateSkuCount: Int!
         harmonizedSystemCode: String
         inventoryHistoryUrl: String
-        inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(from: \\"inventoryLevels___NODE\\", by: \\"id\\")
+        inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(by: \\"id\\") @proxy(from: \\"inventoryLevels___NODE\\", fromNode: true)
         legacyResourceId: String!
-        locationsCount: Count!
+        locationsCount: __PREFIX__ShopifyCount!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -936,12 +936,21 @@ Array [
         variant: __PREFIX__ShopifyProductVariantConnection!
       }
 
+      type __PREFIX__ShopifyInventoryQuantity {
+        name: String!
+        quantity: Int!
+      }
+
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
-        quantities(names: [\\"available\\"]) {
-          name
-          quantity
-        }
+        quantities: [__PREFIX__ShopifyInventoryQuantity!]!
+        available: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"available\\")
+        incoming: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"incoming\\")
+        committed: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"committed\\")
+        reserved: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"reserved\\")
+        damaged: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"damaged\\")
+        safety_stock: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"safety_stock\\")
+        quality_control: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"quality_control\\")
         id: ID!
         location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
@@ -2777,9 +2786,9 @@ Array [
         duplicateSkuCount: Int!
         harmonizedSystemCode: String
         inventoryHistoryUrl: String
-        inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(from: \\"inventoryLevels___NODE\\", by: \\"id\\")
+        inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(by: \\"id\\") @proxy(from: \\"inventoryLevels___NODE\\", fromNode: true)
         legacyResourceId: String!
-        locationsCount: Count!
+        locationsCount: __PREFIX__ShopifyCount!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -2791,12 +2800,21 @@ Array [
         variant: __PREFIX__ShopifyProductVariantConnection!
       }
 
+      type __PREFIX__ShopifyInventoryQuantity {
+        name: String!
+        quantity: Int!
+      }
+
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
-        quantities(names: [\\"available\\"]) {
-          name
-          quantity
-        }
+        quantities: [__PREFIX__ShopifyInventoryQuantity!]!
+        available: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"available\\")
+        incoming: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"incoming\\")
+        committed: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"committed\\")
+        reserved: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"reserved\\")
+        damaged: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"damaged\\")
+        safety_stock: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"safety_stock\\")
+        quality_control: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"quality_control\\")
         id: ID!
         location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
