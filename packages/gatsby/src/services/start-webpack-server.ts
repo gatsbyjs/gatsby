@@ -12,7 +12,7 @@ import {
 import { showExperimentNotices } from "../utils/show-experiment-notice"
 import { printInstructions } from "../utils/print-instructions"
 import { prepareUrls } from "../utils/prepare-urls"
-import { startServer, IWebpackWatchingPauseResume } from "../utils/start-server"
+import { startServer, WebpackWatching } from "../utils/start-server"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { IBuildContext } from "./"
 import {
@@ -29,7 +29,7 @@ export async function startWebpackServer({
 }: Partial<IBuildContext>): Promise<{
   compiler: Compiler
   websocketManager: WebsocketManager
-  webpackWatching: IWebpackWatchingPauseResume
+  webpackWatching: WebpackWatching
 }> {
   if (!program || !app || !store) {
     report.panic(`Missing required params`)
