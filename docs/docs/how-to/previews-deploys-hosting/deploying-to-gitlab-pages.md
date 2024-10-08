@@ -87,4 +87,4 @@ GitLab Pages doesn't support advanced features like [SSR](/docs/how-to/rendering
 
 ## Additional resources
 
-- Visit the [GitLab Pages](https://gitlab.com/help/user/project/pages/getting_started_part_one.md) to learn how to set up custom domains and find out about advanced configurations.
+- Visit the [GitLab Pages](https://docs.gitlab.com/ee/user/project/pages/) to learn how to set up custom domains and find out about advanced configurations.
