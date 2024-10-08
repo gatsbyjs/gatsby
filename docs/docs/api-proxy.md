@@ -42,6 +42,8 @@ This way, when you `fetch('/api/todos')` in development, the development server 
 
 Keep in mind that `proxy` only has effect in development (with `gatsby develop`), and it is up to you to ensure that URLs like `/api/todos` point to the right place in production.
 
+:warning: Don't rely on 401 or 403 HTTP response codes being passed back to be handled if you are developing with security. The development proxy converts these to a 500.
+
 ## Advanced proxying
 
 Sometimes you need more granular/flexible access to the development server. Gatsby exposes the [Express.js](https://expressjs.com/) development server to your site's `gatsby-config.js` where you can add Express middleware as needed.
