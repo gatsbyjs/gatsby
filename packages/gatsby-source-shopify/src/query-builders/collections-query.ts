@@ -73,7 +73,10 @@ export class CollectionsQuery extends BulkQuery {
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
