@@ -1,5 +1,5 @@
 import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
-import webpackDevMiddleware from "webpack-dev-middleware"
+import webpackDevMiddleware, { type Watching } from "webpack-dev-middleware"
 import got, { Method } from "got"
 import webpack, { Compilation } from "webpack"
 import express from "express"
@@ -54,18 +54,15 @@ import { isFileInsideCompilations } from "./webpack/utils/is-file-inside-compila
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
+export type WebpackWatching = NonNullable<Watching>
+
 interface IServer {
   compiler: webpack.Compiler
   listener: http.Server | https.Server
   webpackActivity: ActivityTracker
   websocketManager: WebsocketManager
   workerPool: WorkerPool.GatsbyWorkerPool
-  webpackWatching: IWebpackWatchingPauseResume
-}
-
-export interface IWebpackWatchingPauseResume {
-  suspend: () => void
-  resume: () => void
+  webpackWatching: WebpackWatching
 }
 
 export async function startServer(
@@ -895,6 +892,7 @@ export async function startServer(
     webpackActivity,
     websocketManager,
     workerPool,
-    webpackWatching: webpackDevMiddlewareInstance.context.watching,
+    webpackWatching: webpackDevMiddlewareInstance.context
+      .watching as WebpackWatching,
   }
 }
