@@ -10,7 +10,7 @@ import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { Actor, AnyEventObject } from "xstate"
 import { Compiler } from "webpack"
 import { WebsocketManager } from "../utils/websocket-manager"
-import { IWebpackWatchingPauseResume } from "../utils/start-server"
+import { type WebpackWatching } from "../utils/start-server"
 
 type Reporter = typeof reporter
 
@@ -46,7 +46,7 @@ export interface IBuildContext {
   nodeMutationBatch?: Array<IMutationAction>
   compiler?: Compiler
   websocketManager?: WebsocketManager
-  webpackWatching?: IWebpackWatchingPauseResume
+  webpackWatching?: WebpackWatching
   webpackListener?: Actor<unknown, AnyEventObject>
   queryFilesDirty?: boolean
   sourceFilesDirty?: boolean
