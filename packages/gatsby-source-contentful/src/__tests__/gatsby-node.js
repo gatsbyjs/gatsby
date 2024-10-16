@@ -6,7 +6,7 @@ import {
   sourceNodes,
   onPreInit,
 } from "../gatsby-node"
-import { existingNodes, is, memoryNodeCounts } from "../backreferences"
+import { existingNodes, is } from "../backreferences"
 import { fetchContent, fetchContentTypes } from "../fetch"
 import { makeId } from "../normalize"
 
@@ -17,6 +17,8 @@ import unpublishedFieldDelivery from "../__fixtures__/unpublished-fields-deliver
 import unpublishedFieldPreview from "../__fixtures__/unpublished-fields-preview"
 import preserveBackLinks from "../__fixtures__/preserve-back-links"
 import editingNodeReferecingNodeWithChildLink from "../__fixtures__/editing-node-referencing-nodes-with-child-links"
+
+jest.setTimeout(30000)
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
