@@ -27,7 +27,6 @@ import {
 import { generateComponentChunkName } from "../../utils/js-chunk-names"
 import { store } from "../index"
 import normalizePath from "normalize-path"
-import { trackFeatureIsUsed } from "gatsby-telemetry"
 import { validateComponent } from "../../utils/validate-component"
 
 type RestrictionActionNames =
@@ -502,8 +501,6 @@ export const actions = {
           report.panic(error)
         }
       }
-
-      trackFeatureIsUsed(`SliceAPI`)
 
       const componentPath = normalizePath(payload.component)
 

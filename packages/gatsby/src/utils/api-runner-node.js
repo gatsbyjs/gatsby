@@ -30,7 +30,6 @@ const { getNodeAndSavePathDependency, loadNodeContent } = require(`./nodes`)
 const { getPublicPath } = require(`./get-public-path`)
 const { importGatsbyPlugin } = require(`./import-gatsby-plugin`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
-const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
 import { wrapNode, wrapNodes } from "./detect-node-mutations"
 import { reportOnce } from "./report-once"
@@ -494,15 +493,7 @@ const runAPI = async (plugin, api, args, activity) => {
           callback(err, val)
         }
 
-        try {
-          gatsbyNode[api](...apiCallArgs, cb)
-        } catch (e) {
-          trackBuildError(api, {
-            error: e,
-            pluginName: `${plugin.name}@${plugin.version}`,
-          })
-          throw e
-        }
+        gatsbyNode[api](...apiCallArgs, cb)
       })
     } else {
       try {
@@ -662,10 +653,6 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
               runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity)
             )
           }).catch(err => {
-            decorateEvent(`BUILD_PANIC`, {
-              pluginName: `${plugin.name}@${plugin.version}`,
-            })
-
             const localReporter = getLocalReporter({ activity, reporter })
 
             const file = stackTrace

@@ -3,7 +3,6 @@ import { execSync } from "child_process"
 import execa from "execa"
 import { sync as existsSync } from "fs-exists-cached"
 import fs from "fs-extra"
-import { trackCli, trackError } from "gatsby-telemetry"
 import hostedGitInfo from "hosted-git-info"
 import isValid from "is-valid-path"
 import sysPath from "path"
@@ -290,8 +289,6 @@ export async function initStarter(
     return
   }
   if (urlObject.protocol && urlObject.host) {
-    trackError(`NEW_PROJECT_NAME_MISSING`)
-
     const isStarterAUrl =
       starter && !url.parse(starter).hostname && !url.parse(starter).protocol
 
@@ -325,7 +322,6 @@ export async function initStarter(
   }
 
   if (existsSync(sysPath.join(rootPath, `package.json`))) {
-    trackError(`NEW_PROJECT_IS_NPM_PROJECT`)
     report.panic({
       id: `11613`,
       context: {
@@ -337,9 +333,6 @@ export async function initStarter(
 
   const hostedInfo = hostedGitInfo.fromUrl(starterPath)
 
-  trackCli(`NEW_PROJECT`, {
-    starterName: hostedInfo ? hostedInfo.shortcut() : `local:starter`,
-  })
   if (hostedInfo) {
     await clone(hostedInfo, rootPath)
   } else {
@@ -366,5 +359,4 @@ export async function initStarter(
   )
 
   successMessage(rootPath)
-  trackCli(`NEW_PROJECT_END`)
 }

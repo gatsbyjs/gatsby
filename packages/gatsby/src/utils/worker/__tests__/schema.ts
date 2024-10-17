@@ -35,15 +35,6 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
-jest.mock(`gatsby-telemetry`, () => {
-  return {
-    decorateEvent: jest.fn(),
-    trackError: jest.fn(),
-    trackCli: jest.fn(),
-    isTrackingEnabled: jest.fn(),
-  }
-})
-
 describe(`worker (schema)`, () => {
   let stateFromWorker: CombinedState<IGatsbyState>
 

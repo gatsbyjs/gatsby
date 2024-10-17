@@ -5,7 +5,6 @@ import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
 import { WorkerPool } from "gatsby-worker"
 import { ensureDir, emptyDir, existsSync, remove, readdir } from "fs-extra"
-import telemetry from "gatsby-telemetry"
 import { isNearMatch } from "../is-near-match"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
@@ -232,13 +231,6 @@ export async function compileGatsbyFiles(
           compiledTSFilesCount = compiledTSFilesCount + 1
         }
       }
-    }
-
-    if (telemetry.isTrackingEnabled()) {
-      telemetry.trackCli(`PARCEL_COMPILATION_END`, {
-        valueInteger: compiledTSFilesCount,
-        name: `count of compiled ts files`,
-      })
     }
   } catch (error) {
     if (error.diagnostics) {

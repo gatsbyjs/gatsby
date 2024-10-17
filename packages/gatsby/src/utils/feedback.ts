@@ -1,6 +1,5 @@
 import report from "gatsby-cli/lib/reporter"
 import { getConfigStore, getGatsbyVersion, isCI } from "gatsby-core-utils"
-import { trackCli } from "gatsby-telemetry"
 import getDayOfYear from "date-fns/getDayOfYear"
 
 const feedbackKey = `feedback.disabled`
@@ -18,9 +17,6 @@ export function setFeedbackDisabledValue(enabled: boolean): void {
 // Print the feedback request to the user
 export function showFeedbackRequest(): void {
   getConfigStore().set(lastDateKey, Date.now())
-  trackCli(`SHOW_FEEDBACK_LINK`, {
-    name: `https://gatsby.dev/feedback`,
-  })
   report.log(
     `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
   )
@@ -29,9 +25,6 @@ export function showFeedbackRequest(): void {
 
 export function showSevenDayFeedbackRequest(): void {
   getConfigStore().set(sevenDayKey, Date.now())
-  trackCli(`SHOW_SEVEN_DAY_FEEDBACK_LINK`, {
-    name: `https://gatsby.dev/feedback-survey`,
-  })
   report.log(
     `\n\nHi there! Will you tell us about how you're learning Gatsby? \nIt takes less than 5 minutes and your feedback will help us make installing and using Gatsby so much better.`
   )

@@ -7,15 +7,6 @@ import {
 } from "../../../redux"
 import { GatsbyStateKeys } from "../../../redux/types"
 
-jest.mock(`gatsby-telemetry`, () => {
-  return {
-    decorateEvent: jest.fn(),
-    trackError: jest.fn(),
-    trackCli: jest.fn(),
-    isTrackingEnabled: jest.fn(),
-  }
-})
-
 let worker: GatsbyTestWorkerPool | undefined
 
 const dummyPagePayload = {

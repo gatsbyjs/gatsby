@@ -9,7 +9,6 @@ import {
   PluginOptions,
   PluginCallback,
 } from "gatsby"
-import { trackFeatureIsUsed } from "gatsby-telemetry"
 import { parse, GraphQLString } from "gatsby/graphql"
 import {
   createPath,
@@ -423,10 +422,6 @@ export async function onPluginInit(
 
   try {
     const files = await findCollectionPageFiles(pagesPath)
-
-    if (files.length > 0) {
-      trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
-    }
 
     await Promise.all(
       files.map(async relativePath => {

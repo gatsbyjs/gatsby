@@ -12,7 +12,6 @@ import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
 import cors from "cors"
-import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
 import * as fs from "fs-extra"
@@ -153,7 +152,6 @@ export async function startServer(
    * Set up the express app.
    **/
   app.use(compression())
-  app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
     webpackHotMiddleware(compiler, {
       log: false,
@@ -313,14 +311,7 @@ export async function startServer(
           let pageData: IPageDataWithQueryResult
           // TODO move to query-engine
           if (process.env.GATSBY_QUERY_ON_DEMAND) {
-            const start = Date.now()
-
             pageData = await getPageDataExperimental(page.path)
-
-            telemetry.trackCli(`RUN_QUERY_ON_DEMAND`, {
-              name: `getPageData`,
-              duration: Date.now() - start,
-            })
           } else {
             pageData = await readPageData(
               path.join(store.getState().program.directory, `public`),
@@ -655,8 +646,6 @@ export async function startServer(
   // Render an HTML page and serve it.
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     app.get(`*`, async (req, res, next) => {
-      telemetry.trackFeatureIsUsed(`GATSBY_EXPERIMENTAL_DEV_SSR`)
-
       const pathObj = findPageByPath(store.getState(), decodeURI(req.path))
 
       if (!pathObj) {

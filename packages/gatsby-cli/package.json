@@ -32,7 +32,6 @@
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.14.0-next.2",
-    "gatsby-telemetry": "^4.14.0-next.2",
     "hosted-git-info": "^3.0.8",
     "is-valid-path": "^0.1.1",
     "joi": "^17.9.2",

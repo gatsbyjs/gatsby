@@ -1,7 +1,6 @@
 import { getConfigStore } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
-import telemetry from "gatsby-telemetry"
 
 type CancelExperimentNoticeCallback = () => void
 
@@ -66,7 +65,6 @@ ${chalk.bgBlue.bold(notice.experimentIdentifier)} (${notice.umbrellaLink}), ${
 
 export const showExperimentNotices = (): void => {
   if (noticesToShow.length > 0) {
-    telemetry.trackCli(`InviteToTryExperiment`)
     // Store that we're showing the invite.
     noticesToShow.forEach(notice =>
       getConfigStore().set(

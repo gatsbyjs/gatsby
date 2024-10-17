@@ -5,9 +5,7 @@ import compression from "compression"
 import express from "express"
 import chalk from "chalk"
 import { match as reachMatch } from "@gatsbyjs/reach-router"
-import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
-import telemetry from "gatsby-telemetry"
 
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import { getConfigFile } from "../bootstrap/get-config-file"
@@ -39,10 +37,6 @@ interface IMatchPath {
 interface IServeProgram extends IProgram {
   prefixPaths: boolean
 }
-
-onExit(() => {
-  telemetry.trackCli(`SERVE_STOP`)
-})
 
 const readMatchPaths = async (
   program: IServeProgram
@@ -100,8 +94,6 @@ const matchPathRouter =
   }
 
 module.exports = async (program: IServeProgram): Promise<void> => {
-  telemetry.trackCli(`SERVE_START`)
-  telemetry.startBackgroundUpdate()
   await initTracer(
     process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
   )
@@ -129,8 +121,6 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
   // eslint-disable-next-line new-cap
   const router = express.Router()
-
-  app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
 

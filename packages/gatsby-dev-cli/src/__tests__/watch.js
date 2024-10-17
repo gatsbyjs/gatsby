@@ -350,7 +350,6 @@ describe(`dependency changes`, () => {
     `gatsby-theme-blog`,
     `gatsby-theme-blog-core`,
     `gatsby-theme-notes`,
-    `gatsby-telemetry`,
     `gatsby-transformer-asciidoc`,
     `gatsby-transformer-csv`,
     `gatsby-transformer-documentationjs`,

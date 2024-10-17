@@ -1,7 +1,6 @@
 import React from "react"
 import { Box, Static } from "ink"
 import { isTTY } from "../../../util/is-tty"
-import { trackBuildError } from "gatsby-telemetry"
 import { Spinner } from "./components/spinner"
 import { ProgressBar } from "./components/progress-bar"
 import { Message, IMessageProps } from "./components/messages"
@@ -32,16 +31,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
   }
   memoizedReactElementsForMessages: Array<React.ReactElement> = []
 
-  componentDidCatch(error: Error, info: React.ErrorInfo): void {
-    trackBuildError(`INK`, {
-      error: {
-        error: {
-          stack: info.componentStack,
-        },
-        text: error.message,
-      },
-    })
-  }
+  componentDidCatch(): void {}
 
   static getDerivedStateFromError(error: Error): ICLIState {
     return { hasError: true, error }

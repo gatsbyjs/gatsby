@@ -27,7 +27,6 @@ const {
 } = require(`../../utils/path`)
 const { applyTrailingSlashOption } = require(`gatsby-page-utils`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
-const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 const { getPageMode } = require(`../../utils/page-mode`)
 const normalizePath = require(`../../utils/normalize-path`).default
@@ -719,8 +718,6 @@ const createNode = (
     node.internal.owner = plugin.name
     trackParams[`pluginName`] = `${plugin.name}@${plugin.version}`
   }
-
-  trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
   const result = nodeSchema.validate(node)
   if (result.error) {

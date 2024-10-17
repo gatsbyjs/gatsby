@@ -5,7 +5,6 @@ import {
   joinPath,
   generateHtmlPath,
 } from "gatsby-core-utils"
-import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
@@ -38,7 +37,7 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
 exports.onPostBuild = async ({ store }, userPluginOptions) => {
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  const { redirects, pageDataStats, nodes, pages } = store.getState()
+  const { redirects, pages } = store.getState()
 
   const pluginData = makePluginData(store, assetsManifest)
 
@@ -63,32 +62,6 @@ exports.onPostBuild = async ({ store }, userPluginOptions) => {
   }
   if (Object.keys(batch).length > 0) {
     await emitRoutes(batch)
-  }
-
-  let nodesCount
-
-  try {
-    const { getDataStore } = require(`gatsby/dist/datastore`)
-    nodesCount = getDataStore().countNodes()
-  } catch (e) {
-    // swallow exception
-  }
-
-  if (typeof nodesCount === `undefined`) {
-    nodesCount = nodes && nodes.size
-  }
-
-  const pagesCount = pageDataStats && pageDataStats.size
-
-  try {
-    captureEvent(`GATSBY_CLOUD_METADATA`, {
-      siteMeasurements: {
-        pagesCount,
-        nodesCount,
-      },
-    })
-  } catch (e) {
-    console.error(e)
   }
 
   let rewrites = []

@@ -12,7 +12,6 @@ import { plugin } from "./components/plugin"
 import { makePluginConfigQuestions } from "./plugin-options-form"
 import { center, wrap } from "./components/utils"
 import { stripIndent } from "common-tags"
-import { trackCli } from "./tracking"
 import { reporter } from "./utils/reporter"
 import { setSiteMetadata } from "./utils/site-metadata"
 import { makeNpmSafe } from "./utils/make-npm-safe"
@@ -20,7 +19,6 @@ import {
   generateQuestions,
   validateProjectName,
 } from "./utils/question-helpers"
-import { sha256, md5 } from "./utils/hash"
 import { maybeUseEmoji } from "./utils/emoji"
 import { parseArgs } from "./utils/parse-args"
 
@@ -74,8 +72,6 @@ export type PluginConfigMap = Record<string, Record<string, unknown>>
 
 export async function run(): Promise<void> {
   const { flags, dirName } = parseArgs(process.argv.slice(2))
-
-  trackCli(`CREATE_GATSBY_START`)
 
   const { version } = require(`../package.json`)
 
@@ -148,28 +144,6 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
   if (flags.ts) {
     answers.language = `ts`
   }
-
-  // Telemetry
-  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
-    name: `project_name`,
-    valueString: sha256(answers.project),
-  })
-  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
-    name: `LANGUAGE`,
-    valueString: answers.language,
-  })
-  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
-    name: `CMS`,
-    valueString: answers.cms || `none`,
-  })
-  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
-    name: `CSS_TOOLS`,
-    valueString: answers.styling || `none`,
-  })
-  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
-    name: `PLUGIN`,
-    valueStringArray: answers.features || [],
-  })
 
   // Collect a report of things we will do to present to the user once the questions are complete
   const messages: Array<string> = [
@@ -263,14 +237,10 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
     )
 
-    trackCli(`CREATE_GATSBY_SET_PLUGINS_START`)
-
     const enquirer = new Enquirer<Record<string, Record<string, unknown>>>()
     enquirer.use(plugin)
 
     pluginConfig = { ...pluginConfig, ...(await enquirer.prompt(config)) }
-
-    trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
 
   // If we're not skipping prompts, give the user a report of what we're about to do
@@ -291,8 +261,6 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
     })
 
     if (!confirm) {
-      trackCli(`CREATE_GATSBY_CANCEL`)
-
       reporter.info(`OK, bye!`)
       return
     }
@@ -349,15 +317,4 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
   reporter.info(`See all commands at\n
   ${colors.blueBright(`https://www.gatsbyjs.com/docs/reference/gatsby-cli/`)}
   `)
-
-  const siteHash = md5(fullPath)
-  trackCli(`CREATE_GATSBY_SUCCESS`, { siteHash })
 }
-
-process.on(`exit`, exitCode => {
-  trackCli(`CREATE_GATSBY_END`, { exitCode })
-
-  if (exitCode === -1) {
-    trackCli(`CREATE_GATSBY_ERROR`)
-  }
-})

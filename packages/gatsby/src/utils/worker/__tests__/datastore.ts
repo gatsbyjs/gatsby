@@ -5,15 +5,6 @@ import { getDataStore } from "../../../datastore"
 
 jest.setTimeout(15000)
 
-jest.mock(`gatsby-telemetry`, () => {
-  return {
-    decorateEvent: jest.fn(),
-    trackError: jest.fn(),
-    trackCli: jest.fn(),
-    isTrackingEnabled: jest.fn(),
-  }
-})
-
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {}
 })

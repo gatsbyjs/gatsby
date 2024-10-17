@@ -1,121 +1,120 @@
-import {
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import type {
   AnalyticsTracker,
   IAggregateStats,
   ITelemetryTagsPayload,
   ITelemetryOptsPayload,
   IDefaultTelemetryTagsPayload,
 } from "./telemetry"
-import { Request, Response } from "express"
-import { createFlush } from "./create-flush"
-import time, { TimeUnit } from "@turist/time"
+import type { Request, Response } from "express"
 
-const instance = new AnalyticsTracker()
+export const flush = (): Promise<void> => Promise.resolve()
 
-export const flush = createFlush(instance.isTrackingEnabled())
-
-process.on(`exit`, flush)
-
-// For long running commands we want to occasionally flush the data
-//
-// The data is also sent on exit.
-
-const intervalDuration = process.env.TELEMETRY_BUFFER_INTERVAL
-const interval =
-  intervalDuration && Number.isFinite(+intervalDuration)
-    ? Math.max(Number(intervalDuration), 1000)
-    : time(10, TimeUnit.Minute)
-
-function tick(): void {
-  flush()
-    .catch(console.error)
-    .then(() => setTimeout(tick, interval))
-}
-
-export function trackFeatureIsUsed(name: string): void {
-  instance.trackFeatureIsUsed(name)
+export function trackFeatureIsUsed(_name: string): void {
+  // no_op
 }
 
 export function trackCli(
-  input: string | Array<string>,
-  tags?: ITelemetryTagsPayload,
-  opts?: ITelemetryOptsPayload
+  _input: string | Array<string>,
+  _tags?: ITelemetryTagsPayload,
+  _opts?: ITelemetryOptsPayload
 ): void {
-  instance.trackCli(input, tags, opts)
+  // no_op
 }
 
 export function captureEvent(
-  input: string | Array<string>,
-  tags?: ITelemetryTagsPayload,
-  opts?: ITelemetryOptsPayload
+  _input: string | Array<string>,
+  _tags?: ITelemetryTagsPayload,
+  _opts?: ITelemetryOptsPayload
 ): void {
-  instance.captureEvent(input, tags, opts)
+  // no_op
 }
 
-export function trackError(input: string, tags?: ITelemetryTagsPayload): void {
-  instance.captureError(input, tags)
+export function trackError(
+  _input: string,
+  _tags?: ITelemetryTagsPayload
+): void {
+  // no_op
 }
 
 export function trackBuildError(
-  input: string,
-  tags?: ITelemetryTagsPayload
+  _input: string,
+  _tags?: ITelemetryTagsPayload
 ): void {
-  instance.captureBuildError(input, tags)
+  // no_op
 }
 
-export function setDefaultTags(tags: IDefaultTelemetryTagsPayload): void {
-  instance.decorateAll(tags)
+export function setDefaultTags(_tags: IDefaultTelemetryTagsPayload): void {
+  // no_op
 }
 
 export function decorateEvent(
-  event: string,
-  tags?: Record<string, unknown>
+  _event: string,
+  _tags?: Record<string, unknown>
 ): void {
-  instance.decorateNextEvent(event, tags)
+  // no_op
 }
 
-export function setTelemetryEnabled(enabled: boolean): void {
-  instance.setTelemetryEnabled(enabled)
+export function setTelemetryEnabled(_enabled: boolean): void {
+  // no_op
 }
 
 export function startBackgroundUpdate(): void {
-  setTimeout(tick, interval)
+  // no_op
 }
 
 export function isTrackingEnabled(): boolean {
-  return instance.isTrackingEnabled()
+  return false
 }
 
 export function aggregateStats(data: Array<number>): IAggregateStats {
-  return instance.aggregateStats(data)
+  const sum = data.reduce((acc, x) => acc + x, 0)
+  const mean = sum / data.length || 0
+  const median = data.sort()[Math.floor((data.length - 1) / 2)] || 0
+  const stdDev =
+    Math.sqrt(
+      data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
+        (data.length - 1)
+    ) || 0
+
+  const skewness =
+    data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) /
+    data.length /
+    Math.pow(stdDev, 3)
+
+  return {
+    count: data.length,
+    min: data.reduce((acc, x) => (x < acc ? x : acc), data[0] || 0),
+    max: data.reduce((acc, x) => (x > acc ? x : acc), 0),
+    sum: sum,
+    mean: mean,
+    median: median,
+    stdDev: stdDev,
+    skewness: !Number.isNaN(skewness) ? skewness : 0,
+  }
 }
 
 export function addSiteMeasurement(
-  event: string,
-  obj: ITelemetryTagsPayload["siteMeasurements"]
+  _event: string,
+  _obj: ITelemetryTagsPayload["siteMeasurements"]
 ): void {
-  instance.addSiteMeasurement(event, obj)
+  // no_op
 }
 
-export function expressMiddleware(source: string) {
-  return function (req: Request, _res: Response, next): void {
-    try {
-      instance.trackActivity(`${source}_ACTIVE`, {
-        userAgent: req.headers[`user-agent`],
-      })
-    } catch (e) {
-      // ignore
-    }
+export function expressMiddleware(_source: string) {
+  return function (_req: Request, _res: Response, next): void {
+    // no_op
     next()
   }
 }
 
 // Internal
-export function setDefaultComponentId(componentId: string): void {
-  instance.componentId = componentId
+export function setDefaultComponentId(_componentId: string): void {
+  // no_op
 }
 
-export function setGatsbyCliVersion(version: string): void {
-  instance.gatsbyCliVersion = version
+export function setGatsbyCliVersion(_version: string): void {
+  // no_op
 }
 
 export {

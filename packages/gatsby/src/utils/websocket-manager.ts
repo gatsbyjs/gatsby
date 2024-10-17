@@ -6,9 +6,7 @@ import { clearDirtyQueriesListToEmitViaWebsocket } from "../redux/actions/intern
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
 import { IPageDataWithQueryResult } from "../utils/page-data"
-import telemetry from "gatsby-telemetry"
 import url from "url"
-import { createHash } from "crypto"
 import { findPageByPath } from "./find-page-by-path"
 import { Server as SocketIO, Socket } from "socket.io"
 import { getPageMode } from "./page-mode"
@@ -24,10 +22,6 @@ export interface IStaticQueryResult {
 }
 
 type QueryResultsMap = Map<string, IStaticQueryResult>
-
-function hashPaths(paths: Array<string>): Array<string> {
-  return paths.map(path => createHash(`sha256`).update(path).digest(`hex`))
-}
 
 interface IClientInfo {
   activePath: string | null
@@ -166,38 +160,12 @@ export class WebsocketManager {
 
     if (this.websocket) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
-
-      if (this.clients.size > 0) {
-        telemetry.trackCli(
-          `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
-          {
-            siteMeasurements: {
-              clientsCount: this.clients.size,
-              paths: hashPaths(Array.from(this.activePaths)),
-            },
-          },
-          { debounce: true }
-        )
-      }
     }
   }
 
   emitPageData = (data: IPageOrSliceQueryResult): void => {
     if (this.websocket) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
-
-      if (this.clients.size > 0) {
-        telemetry.trackCli(
-          `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
-          {
-            siteMeasurements: {
-              clientsCount: this.clients.size,
-              paths: hashPaths(Array.from(this.activePaths)),
-            },
-          },
-          { debounce: true }
-        )
-      }
     }
   }
 
