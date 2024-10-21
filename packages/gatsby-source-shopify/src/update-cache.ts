@@ -74,18 +74,8 @@ export async function updateCache(
   pluginOptions: IShopifyPluginOptions,
   lastBuildTime: Date
 ): Promise<void> {
-  let timer = gatsbyApi.reporter.activityTimer(
-    `[gatsby-source-shopify debug] updateCache - fetch events since`
-  )
-  timer.start()
   const { fetchDestroyEventsSince } = eventsApi(pluginOptions)
   const destroyEvents = await fetchDestroyEventsSince(lastBuildTime)
-  timer.end()
-
-  timer = gatsbyApi.reporter.activityTimer(
-    `[gatsby-source-shopify debug] updateCache - get list of invalidated nodes`
-  )
-  timer.start()
 
   const invalidatedNodeIds = new Set<string>()
   for (const value of destroyEvents) {
@@ -93,15 +83,10 @@ export async function updateCache(
     const nodeId = createNodeId(shopifyId, gatsbyApi, pluginOptions)
     invalidateNode(gatsbyApi, pluginOptions, nodeId, invalidatedNodeIds)
   }
-  timer.end()
 
   // don't block event loop for too long
   await new Promise(resolve => setImmediate(resolve))
 
-  timer = gatsbyApi.reporter.activityTimer(
-    `[gatsby-source-shopify debug] updateCache - touch or delete nodes`
-  )
-  timer.start()
   for (const shopifyType of Object.keys(shopifyTypes)) {
     {
       // closure so we can let Node GC `nodes` (if needed) before next iteration
@@ -123,14 +108,7 @@ export async function updateCache(
     await new Promise(resolve => setImmediate(resolve))
   }
 
-  timer.end()
-
   if (invalidatedNodeIds.size > 0) {
-    timer = gatsbyApi.reporter.activityTimer(
-      `[gatsby-source-shopify debug] updateCache - reportDeletionSummary`
-    )
-    timer.start()
     reportDeletionSummary(gatsbyApi)
-    timer.end()
   }
 }
