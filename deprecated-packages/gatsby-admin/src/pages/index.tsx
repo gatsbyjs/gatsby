@@ -17,6 +17,19 @@ import boltIcon from "../bolt.svg"
 import sparklesIcon from "../sparkles.svg"
 import PluginSearchBar from "../components/plugin-search"
 
+
+interface Plugin {
+  name: string;
+  description?: string;
+  options?: Record<string, any>;
+  id: string;
+}
+
+interface PluginListProps {
+  plugin: Plugin;
+}
+//Added interfaces Plugin and PluginListProps for better type safety.
+
 function InstalledPluginListItem({
   plugin,
 }: {
@@ -99,14 +112,11 @@ function Index(): JSX.Element {
     `,
   })
 
-  let errMsg: string | false = false
-
-  if (error) {
-    errMsg =
-      (error.networkError && error.networkError.message) ||
-      (Array.isArray(error.graphQLErrors) &&
-        error.graphQLErrors.map(e => e.message).join(` | `))
-  }
+  const errMsg = error && (
+    (error.networkError && error.networkError.message) ||
+    (Array.isArray(error.graphQLErrors) && error.graphQLErrors.map(e => e.message).join(` | `))
+  ) || "An error occurred while fetching data.";
+  
 
   return (
     <Fragment>
