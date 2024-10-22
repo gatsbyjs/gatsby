@@ -147,7 +147,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -196,7 +199,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -276,7 +282,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -285,7 +294,10 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -340,7 +352,10 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
@@ -503,7 +518,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -793,7 +811,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -842,7 +863,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -922,7 +946,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -931,7 +958,10 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -986,7 +1016,10 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
@@ -1149,7 +1182,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -1439,7 +1475,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -1488,7 +1527,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -1568,7 +1610,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -1577,7 +1622,10 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -1632,7 +1680,10 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
@@ -1795,7 +1846,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -2085,7 +2139,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -2134,7 +2191,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -2214,7 +2274,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -2223,7 +2286,10 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -2278,7 +2344,10 @@ Array [
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
@@ -2441,7 +2510,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
