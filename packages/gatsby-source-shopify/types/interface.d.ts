@@ -33,10 +33,6 @@ interface IBulkOperationNode {
   query: string
 }
 
-interface IShopifyNodeMap {
-  [key: string]: IShopifyNode
-}
-
 interface ICurrentBulkOperationResponse {
   currentBulkOperation: {
     id: string
@@ -129,7 +125,7 @@ interface IShopifyImage extends IShopifyNode {
 
 interface IShopifyNode {
   id: string
-  shopifyId: string
+  shopifyId?: string
   internal: {
     type: string
     mediaType?: string
@@ -147,7 +143,7 @@ interface IShopifyPluginOptions {
   shopifyConnections: Array<string>
   typePrefix: string
   salesChannel: string
-  prioritize?: boolean,
+  prioritize?: boolean
   apiVersion: string
 }
 
