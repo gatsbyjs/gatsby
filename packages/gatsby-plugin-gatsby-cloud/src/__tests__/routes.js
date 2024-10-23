@@ -3,12 +3,6 @@ import * as path from "path"
 import * as os from "os"
 const { onPostBuild } = require(`../gatsby-node`)
 
-jest.mock(`gatsby-telemetry`, () => {
-  return {
-    captureEvent: jest.fn(),
-  }
-})
-
 describe(`Routes IPC`, () => {
   let tmpDir
 
