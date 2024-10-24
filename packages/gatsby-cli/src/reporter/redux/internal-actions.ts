@@ -1,5 +1,4 @@
 import { uuid } from "gatsby-core-utils"
-import { trackCli } from "gatsby-telemetry"
 import signalExit from "signal-exit"
 import { Dispatch } from "redux"
 
@@ -242,11 +241,6 @@ export const endActivity = ({
       },
     })
   } else if (activity.status === ActivityStatuses.InProgress) {
-    trackCli(`ACTIVITY_DURATION`, {
-      name: activity.text,
-      duration: Math.round(durationMS),
-    })
-
     if (activity.errored) {
       status = ActivityStatuses.Failed
     }
