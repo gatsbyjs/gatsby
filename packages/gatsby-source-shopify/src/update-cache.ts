@@ -10,7 +10,6 @@ const deletionCounter: { [key: string]: number } = {}
  * invalidateNode - Recursive function that returns an array of node ids that are invalidated
  * @param gatsbyApi - Gatsby Helpers
  * @param pluginOptions - Plugin Options Object
- * @param nodeMap - Map Object of all nodes that haven't been deleted
  * @param id - The root node to invalidate
  *
  * Note: This function is designed to receive a single top-level node on the first pass
@@ -19,24 +18,26 @@ const deletionCounter: { [key: string]: number } = {}
 function invalidateNode(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
-  nodeMap: IShopifyNodeMap,
-  id: string
-): Array<string> {
+  id: string,
+  invalidatedNodeIds = new Set<string>()
+): Set<string> {
   const { typePrefix } = pluginOptions
 
-  const node = nodeMap[id]
-  let invalidatedNodeIds: Array<string> = []
+  const node = gatsbyApi.getNode(id)
 
   if (node) {
-    invalidatedNodeIds.push(node.id)
+    invalidatedNodeIds.add(node.id)
     const type = node.internal.type.replace(`${typePrefix}Shopify`, ``)
     const { coupledNodeFields } = shopifyTypes[type]
 
     if (coupledNodeFields) {
       for (const field of coupledNodeFields) {
         for (const coupledNodeId of node[field] as Array<string>) {
-          invalidatedNodeIds = invalidatedNodeIds.concat(
-            invalidateNode(gatsbyApi, pluginOptions, nodeMap, coupledNodeId)
+          invalidateNode(
+            gatsbyApi,
+            pluginOptions,
+            coupledNodeId,
+            invalidatedNodeIds
           )
         }
       }
@@ -73,39 +74,41 @@ export async function updateCache(
   pluginOptions: IShopifyPluginOptions,
   lastBuildTime: Date
 ): Promise<void> {
-  const { typePrefix } = pluginOptions
-
-  const nodeMap: IShopifyNodeMap = Object.keys(shopifyTypes)
-    .map(type => gatsbyApi.getNodesByType(`${typePrefix}Shopify${type}`))
-    .reduce((acc, value) => acc.concat(value), [])
-    .reduce((acc, value) => {
-      return { ...acc, [value.id]: value }
-    }, {})
-
   const { fetchDestroyEventsSince } = eventsApi(pluginOptions)
   const destroyEvents = await fetchDestroyEventsSince(lastBuildTime)
 
-  const invalidatedNodeIds = destroyEvents.reduce<Array<string>>(
-    (acc, value) => {
-      const shopifyId = `gid://shopify/${value.subject_type}/${value.subject_id}`
-      const nodeId = createNodeId(shopifyId, gatsbyApi, pluginOptions)
-      return acc.concat(
-        invalidateNode(gatsbyApi, pluginOptions, nodeMap, nodeId)
-      )
-    },
-    []
-  )
-
-  for (const node of Object.values(nodeMap)) {
-    if (invalidatedNodeIds.includes(node.id)) {
-      gatsbyApi.actions.deleteNode(node)
-      reportNodeDeletion(gatsbyApi, node)
-    } else {
-      gatsbyApi.actions.touchNode(node)
-    }
+  const invalidatedNodeIds = new Set<string>()
+  for (const value of destroyEvents) {
+    const shopifyId = `gid://shopify/${value.subject_type}/${value.subject_id}`
+    const nodeId = createNodeId(shopifyId, gatsbyApi, pluginOptions)
+    invalidateNode(gatsbyApi, pluginOptions, nodeId, invalidatedNodeIds)
   }
 
-  if (invalidatedNodeIds.length > 0) {
+  // don't block event loop for too long
+  await new Promise(resolve => setImmediate(resolve))
+
+  for (const shopifyType of Object.keys(shopifyTypes)) {
+    {
+      // closure so we can let Node GC `nodes` (if needed) before next iteration
+      const nodes = gatsbyApi.getNodesByType(
+        `${pluginOptions.typePrefix}Shopify${shopifyType}`
+      ) as Array<IShopifyNode>
+
+      for (const node of nodes) {
+        if (invalidatedNodeIds.has(node.id)) {
+          gatsbyApi.actions.deleteNode(node)
+          reportNodeDeletion(gatsbyApi, node)
+        } else {
+          gatsbyApi.actions.touchNode(node)
+        }
+      }
+    }
+
+    // don't block event loop for too long
+    await new Promise(resolve => setImmediate(resolve))
+  }
+
+  if (invalidatedNodeIds.size > 0) {
     reportDeletionSummary(gatsbyApi)
   }
 }
