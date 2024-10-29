@@ -56,6 +56,7 @@ module.exports = async function getUnownedPackages({
           return false
         }
 
+        console.log(`checking ${pkg.name}`)
         try {
           return !execSync(`npm view ${pkg.name} version`, { stdio: `pipe` })
             .stderr
