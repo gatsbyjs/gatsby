@@ -7,7 +7,7 @@ apiCalls: NodeAPI
 
 ## Introduction
 
-Gatsby gives plugins and site builders many APIs for building your site. Code in the file `gatsby-node.js`/`gatsby-node.ts` is run once in the process of building your site. You can use its APIs to create pages dynamically, add data into GraphQL, or respond to events during the build lifecycle. To use the [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/), create a file named `gatsby-node.js`/`gatsby-node.ts` in the root of your site. Export any of the APIs you wish to use in this file.
+Gatsby gives plugins and site builders many APIs for building your site. Code in the file `gatsby-node.js`/`gatsby-node.ts` is run once in the process of building your site. You can use its APIs to create pages dynamically, add data into GraphQL, or respond to events during the build lifecycle. To use the Gatsby Node APIs, create a file named `gatsby-node.js`/`gatsby-node.ts` in the root of your site. Export any of the APIs you wish to use in this file.
 
 You can author the file in JavaScript (CommonJS or [ES Modules (ESM)](/docs/how-to/custom-configuration/es-modules/) syntax) or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-nodets).
 

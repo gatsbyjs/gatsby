@@ -2,7 +2,6 @@ import path from "path"
 import { reporter } from "../utils/reporter"
 import { initStarter } from "../init-starter"
 import { setSiteMetadata } from "../utils/site-metadata"
-import { trackCli } from "../tracking"
 import { run, DEFAULT_STARTERS } from "../index"
 
 jest.mock(`../utils/parse-args`)
@@ -35,11 +34,6 @@ jest.mock(`enquirer`, () => {
   return MockedEnquirer
 })
 jest.mock(`../utils/reporter`)
-jest.mock(`../tracking`, () => {
-  return {
-    trackCli: jest.fn(),
-  }
-})
 jest.mock(`../init-starter`, () => {
   return {
     initStarter: jest.fn(),
@@ -55,12 +49,6 @@ jest.mock(`../install-plugins`, () => {
 jest.mock(`../utils/site-metadata`, () => {
   return {
     setSiteMetadata: jest.fn(),
-  }
-})
-jest.mock(`../utils/hash`, () => {
-  return {
-    sha256: jest.fn(args => args),
-    md5: jest.fn(args => args),
   }
 })
 
@@ -185,13 +173,6 @@ describe(`run`, () => {
         dirName
       )
     })
-    it(`should track JS was selected as language`, async () => {
-      await run()
-      expect(trackCli).toHaveBeenCalledWith(`CREATE_GATSBY_SELECT_OPTION`, {
-        name: `LANGUAGE`,
-        valueString: `js`,
-      })
-    })
   })
 
   describe(`no ts flag`, () => {
@@ -210,13 +191,6 @@ describe(`run`, () => {
         [],
         siteName
       )
-    })
-    it(`should track JS was selected as language`, async () => {
-      await run()
-      expect(trackCli).toHaveBeenCalledWith(`CREATE_GATSBY_SELECT_OPTION`, {
-        name: `LANGUAGE`,
-        valueString: `js`,
-      })
     })
   })
 
@@ -237,14 +211,6 @@ describe(`run`, () => {
         siteName
       )
     })
-
-    it(`should track TS was selected as language`, async () => {
-      await run()
-      expect(trackCli).toHaveBeenCalledWith(`CREATE_GATSBY_SELECT_OPTION`, {
-        name: `LANGUAGE`,
-        valueString: `ts`,
-      })
-    })
   })
 })
 
@@ -264,12 +230,5 @@ describe(`skip and ts flag`, () => {
       [],
       dirName
     )
-  })
-  it(`should track TS was selected as language`, async () => {
-    await run()
-    expect(trackCli).toHaveBeenCalledWith(`CREATE_GATSBY_SELECT_OPTION`, {
-      name: `LANGUAGE`,
-      valueString: `ts`,
-    })
   })
 })
