@@ -1,5 +1,4 @@
 import reporter from "gatsby-cli/lib/reporter"
-import telemetry from "gatsby-telemetry"
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
 import { internalActions } from "../../redux/actions"
@@ -62,18 +61,6 @@ export async function loadConfig({
     }
 
     process.env.GATSBY_SLICES = `true`
-
-    //  track usage of feature
-    enabledConfigFlags.forEach(flag => {
-      if (flag.telemetryId) {
-        telemetry.trackFeatureIsUsed(flag.telemetryId)
-      }
-    })
-
-    // Track the usage of config.flags
-    if (config?.flags) {
-      telemetry.trackFeatureIsUsed(`ConfigFlags`)
-    }
   }
 
   // theme gatsby configs can be functions or objects
