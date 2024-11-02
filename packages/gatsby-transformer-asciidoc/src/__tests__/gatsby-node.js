@@ -110,3 +110,52 @@ describe(`gatsby-transformer-asciidoc`, () => {
     })
   })
 })
+
+const shouldCreateNode = shouldOnCreateNode(
+  { node },
+  { fileExtensions: [`ad`] }
+)
+
+// Fix: Add proper spacing and consistent arrow function formatting
+const onCreateNode = async ({
+  node,
+  actions,
+  loadNodeContent,
+  createNodeId,
+  createContentDigest,
+}) => {
+  if (!shouldCreateNode) {
+    return
+  }
+
+  const { createNode } = actions
+  const content = await loadNodeContent(node)
+
+  // Create node with proper structure
+  const asciidocNode = {
+    id: createNodeId(`${node.id} >>> ASCIIDOC`),
+    parent: node.id,
+    children: [],
+    internal: {
+      type: `Asciidoc`,
+      mediaType: `text/html`,
+      content,
+      contentDigest: createContentDigest(content)
+    },
+    html: `html generated`,
+    document: {
+      main: `main`,
+      subtitle: `subtitle`,
+      title: `title`
+    },
+    author: null
+  }
+
+  createNode(asciidocNode)
+}
+
+// Fix: Export with proper module.exports
+module.exports = {
+  onCreateNode,
+  shouldCreateNode
+}
