@@ -8,6 +8,7 @@ import { testImportError } from "../utils/test-import-error"
 import { resolveModule, ModuleResolver } from "../utils/module-resolver"
 import { maybeAddFileProtocol, resolveJSFilepath } from "./resolve-js-file-path"
 import { preferDefault } from "./prefer-default"
+import { match } from "@reach/router"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
@@ -237,4 +238,21 @@ export async function resolveModuleExports(
   }
 
   return []
+}
+function matchPathParams(path: string, matchPath?: string) {
+  // Try original path
+  let result = match(matchPath || path, { path })
+
+  // Production SSR with encoded URL
+  if (!result && path.includes('%')) {
+    try {
+      const decoded = decodeURIComponent(path)
+      result = match(matchPath || decoded, { path: decoded })
+    } catch {
+      // Fallback to original on decode fail
+    }
+  }
+
+  // Never return null in SSR to prevent TypeError
+  return result?.params || {}
 }
