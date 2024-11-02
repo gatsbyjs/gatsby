@@ -1,31 +1,23 @@
-const fs = require('fs-extra');
-const path = require('path');
-const { createContentDigest } = require('gatsby-core-utils');
+const fs = require('fs-extra')
+const path = require('path')
+const { createContentDigest } = require('gatsby-core-utils')
 const { onCreateNode, shouldOnCreateNode } = require(`../gatsby-node`)
 
-jest.mock(`asciidoctor`, () => () => {
-  return {
-    load: jest.fn(() => {
-      return {
-        hasRevisionInfo: jest.fn(),
-        getAuthor: jest.fn(),
-        getAttributes: jest.fn(() => {
-          return {}
-        }),
-        getAttribute: jest.fn(),
-        convert: jest.fn(() => `html generated`),
-        getDocumentTitle: jest.fn(() => {
-          return {
-            getCombined: jest.fn(() => `title`),
-            hasSubtitle: jest.fn(() => true),
-            getSubtitle: jest.fn(() => `subtitle`),
-            getMain: jest.fn(() => `main`),
-          }
-        }),
-      }
-    }),
-  }
-})
+jest.mock(`asciidoctor`, () => () => ({
+  load: jest.fn(() => ({
+    hasRevisionInfo: jest.fn(),
+    getAuthor: jest.fn(),
+    getAttributes: jest.fn(() => ({})),
+    getAttribute: jest.fn(),
+    convert: jest.fn(() => `html generated`),
+    getDocumentTitle: jest.fn(() => ({
+      getCombined: jest.fn(() => `title`),
+      hasSubtitle: jest.fn(() => true),
+      getSubtitle: jest.fn(() => `subtitle`),
+      getMain: jest.fn(() => `main`),
+    })),
+  })),
+}))
 
 describe(`gatsby-transformer-asciidoc`, () => {
   let node
@@ -110,52 +102,3 @@ describe(`gatsby-transformer-asciidoc`, () => {
     })
   })
 })
-
-const shouldCreateNode = shouldOnCreateNode(
-  { node },
-  { fileExtensions: [`ad`] }
-)
-
-// Fix: Add proper spacing and consistent arrow function formatting
-const onCreateNode = async ({
-  node,
-  actions,
-  loadNodeContent,
-  createNodeId,
-  createContentDigest,
-}) => {
-  if (!shouldCreateNode) {
-    return
-  }
-
-  const { createNode } = actions
-  const content = await loadNodeContent(node)
-
-  // Create node with proper structure
-  const asciidocNode = {
-    id: createNodeId(`${node.id} >>> ASCIIDOC`),
-    parent: node.id,
-    children: [],
-    internal: {
-      type: `Asciidoc`,
-      mediaType: `text/html`,
-      content,
-      contentDigest: createContentDigest(content)
-    },
-    html: `html generated`,
-    document: {
-      main: `main`,
-      subtitle: `subtitle`,
-      title: `title`
-    },
-    author: null
-  }
-
-  createNode(asciidocNode)
-}
-
-// Fix: Export with proper module.exports
-module.exports = {
-  onCreateNode,
-  shouldCreateNode
-}
