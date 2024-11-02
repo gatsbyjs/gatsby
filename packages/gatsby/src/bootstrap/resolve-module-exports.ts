@@ -239,7 +239,7 @@ export async function resolveModuleExports(
 
   return []
 }
-export function matchPathParams(path: string, matchPath?: string) {
+function matchPathParams(path: string, matchPath?: string) {
   // Try original path
   let result = match(matchPath || path, { path })
 
