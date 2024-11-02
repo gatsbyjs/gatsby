@@ -1,4 +1,6 @@
-const path = require(`path`)
+const fs = require('fs-extra');
+const path = require('path');
+const { createContentDigest } = require('gatsby-core-utils');
 const { onCreateNode, shouldOnCreateNode } = require(`../gatsby-node`)
 
 jest.mock(`asciidoctor`, () => () => {
