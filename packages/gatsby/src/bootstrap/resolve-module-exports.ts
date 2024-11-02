@@ -239,20 +239,38 @@ export async function resolveModuleExports(
 
   return []
 }
-function matchPathParams(path: string, matchPath?: string) {
-  // Try original path
-  let result = match(matchPath || path, { path })
+import { match } from "@reach/router"
 
-  // Production SSR with encoded URL
+export function matchPath(rawPath: string, matchPath?: string): PathMatch {
+  // Normalize paths
+  const path = rawPath || `/`
+
+  // First try original path
+  let result = reachMatch(matchPath || path, { path })
+
+  // If no match and path has encoded characters
   if (!result && path.includes('%')) {
     try {
-      const decoded = decodeURIComponent(path)
-      result = match(matchPath || decoded, { path: decoded })
-    } catch {
-      // Fallback to original on decode fail
+      // Try matching decoded path
+      const decodedPath = decodeURIComponent(path)
+      result = reachMatch(matchPath || decodedPath, { path: decodedPath })
+
+      // Handle double-encoded paths
+      if (!result && decodedPath.includes('%')) {
+        const doubleDecodedPath = decodeURIComponent(decodedPath)
+        result = reachMatch(matchPath || doubleDecodedPath, {
+          path: doubleDecodedPath
+        })
+      }
+    } catch (e) {
+      // Silently handle decode errors
     }
   }
 
-  // Never return null in SSR to prevent TypeError
-  return result?.params || {}
+  // Always return valid params object
+  return {
+    params: result?.params || {},
+    uri: result?.uri || path,
+    path: result?.path || path
+  }
 }
