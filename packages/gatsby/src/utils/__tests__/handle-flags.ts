@@ -1,6 +1,5 @@
 import _ from "lodash"
 
-import sampleSiteForExperiment from "../sample-site-for-experiment"
 import handleFlags from "../handle-flags"
 import { IFlag, satisfiesSemvers, fitnessEnum } from "../flags"
 
@@ -91,13 +90,7 @@ describe(`handle flags`, () => {
       experimental: false,
       description: `test`,
       umbrellaIssue: `test`,
-      testFitness: (flag): fitnessEnum => {
-        if (sampleSiteForExperiment(flag.name, 100)) {
-          return `OPT_IN`
-        } else {
-          return false
-        }
-      },
+      testFitness: (): fitnessEnum => `OPT_IN`,
     },
     {
       name: `PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH`,
@@ -112,10 +105,7 @@ describe(`handle flags`, () => {
           // Because of this, this flag will never show up
           lodash: `<=3.9`,
         }
-        if (
-          satisfiesSemvers(semver) &&
-          sampleSiteForExperiment(flag.name, 100)
-        ) {
+        if (satisfiesSemvers(semver)) {
           return `OPT_IN`
         } else {
           return false
@@ -135,10 +125,7 @@ describe(`handle flags`, () => {
           // Because of this, this flag will never show up
           lodash: `>=4.9`,
         }
-        if (
-          satisfiesSemvers(semver) &&
-          sampleSiteForExperiment(flag.name, 100)
-        ) {
+        if (satisfiesSemvers(semver)) {
           return `OPT_IN`
         } else {
           return false

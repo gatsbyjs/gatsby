@@ -7,15 +7,6 @@ import type { MessagesFromChild, MessagesFromParent } from "../messaging"
 import { getReduxJobs, getJobsMeta } from "./test-helpers/child-for-tests"
 import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
-jest.mock(`gatsby-telemetry`, () => {
-  return {
-    decorateEvent: jest.fn(),
-    trackCli: jest.fn(),
-    isTrackingEnabled: jest.fn(),
-    trackError: jest.fn(),
-  }
-})
-
 // jest.mock(`gatsby-cli/lib/reporter`, () => jest.fn())
 
 let worker: GatsbyTestWorkerPool | undefined

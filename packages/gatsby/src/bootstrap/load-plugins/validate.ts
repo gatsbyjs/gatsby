@@ -7,7 +7,6 @@ import reporter from "gatsby-cli/lib/reporter"
 import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
 import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
 import { stripIndent } from "common-tags"
-import { trackCli } from "gatsby-telemetry"
 import { isWorker } from "gatsby-worker"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-gatsby-files"
@@ -362,12 +361,6 @@ async function validatePluginsOptions(
         } if you believe this option is valid.
       `)
           )
-          trackCli(`UNKNOWN_PLUGIN_OPTION`, {
-            name: plugin.resolve,
-            valueString: validationWarnings
-              .map(error => error.path.join(`.`))
-              .join(`, `),
-          })
           // We do not increment errors++ here as we do not want to process.exit if there are only warnings
         }
 
