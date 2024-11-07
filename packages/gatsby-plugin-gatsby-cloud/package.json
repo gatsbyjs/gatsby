@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-gatsby-cloud",
   "description": "A Gatsby plugin which optimizes working with Gatsby Cloud",
-  "version": "5.14.0-next.2",
+  "version": "5.15.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.20.13",
     "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "^4.14.0-next.2",
+    "gatsby-core-utils": "^4.15.0-next.0",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.21",
     "webpack-assets-manifest": "^5.1.0"
@@ -17,7 +17,7 @@
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
-    "babel-preset-gatsby-package": "^3.14.0-next.2",
+    "babel-preset-gatsby-package": "^3.15.0-next.0",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "msw": "^1.2.2"
