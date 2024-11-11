@@ -30,6 +30,7 @@ The following CMSs have high popularity among Gatsby users and support key funct
 | [Drupal](https://www.drupal.com/)             | [guide](/docs/how-to/sourcing-data/sourcing-from-drupal/)      | [docs](/plugins/gatsby-source-drupal)       |                                                                          |
 | [Prismic](https://www.prismic.io/)            | [guide](/docs/how-to/sourcing-data/sourcing-from-prismic/)     | [docs](/plugins/gatsby-source-prismic)      | [starter](https://github.com/prismicio/gatsby-blog)                      |
 | [NetlifyCMS](https://www.netlifycms.org/)     | [guide](/docs/how-to/sourcing-data/sourcing-from-netlify-cms/) | [docs](/plugins/gatsby-plugin-netlify-cms)  | [starter](/starters/netlify-templates/gatsby-starter-netlify-cms/)       |
+| [TinaCMS](https://tina.io/)     | [guide](https://tina.io/docs/frameworks/gatsby/) | [docs](https://www.npmjs.com/package/gatsby-plugin-tinacms)  | [starter (Coming soon)]       |
 
 ## Other CMSs
 
