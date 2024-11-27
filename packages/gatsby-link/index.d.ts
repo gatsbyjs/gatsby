@@ -33,11 +33,10 @@ export class Link<TState> extends React.Component<
  * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these
  * cases, `Link` won’t work.
  */
-interface NavigateFn {
+export const navigate: {
   (to: string, options?: NavigateOptions<{}>): void
   (to: number): void
 }
-export const navigate: NavigateFn
 
 /**
  * It is common to host sites in a sub-directory of a site. Gatsby lets you set the path prefix for your site.
