@@ -209,5 +209,25 @@ exports.createResolvers = ({ createResolvers }) => {
 emitter.on(`DELETE_PAGE`, action => {
   const nodeId = createPageId(action.payload.path)
   const node = getNode(nodeId)
-  store.dispatch(actions.deleteNode(node))
+  let deleteNodeActions = actions.deleteNode(node)
+  if (action.transactionId) {
+    function swapToStagedDelete(action) {
+      return {
+        ...action,
+        type: `DELETE_NODE_STAGING`,
+        transactionId: action.transactionId,
+      }
+    }
+
+    deleteNodeActions = Array.isArray(deleteNodeActions)
+      ? deleteNodeActions.map(swapToStagedDelete)
+      : swapToStagedDelete(deleteNodeActions)
+  }
+
+  console.log(`deletePage stuff`, {
+    transactionId: action.transactionId,
+    deleteNodeActions,
+  })
+
+  store.dispatch(deleteNodeActions)
 })

@@ -27,6 +27,7 @@ import {
   ICreatePageDependencyActionPayloadType,
   IDeleteNodeManifests,
   IClearGatsbyImageSourceUrlAction,
+  ActionsUnion,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -38,6 +39,9 @@ import {
   getInProcessJobPromise,
 } from "../../utils/jobs/manager"
 import { getEngineContext } from "../../utils/engine-context"
+import { store } from "../index"
+
+import { getNode } from "../../datastore"
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -445,3 +449,63 @@ export const clearGatsbyImageSourceUrls =
       type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`,
     }
   }
+
+let publicActions
+export const setPublicActions = (actions): void => {
+  publicActions = actions
+}
+
+export const commitStagingNodes = (
+  transactionId: string
+): Array<ActionsUnion> => {
+  const transaction = store
+    .getState()
+    .nodesStaging.transactions.get(transactionId)
+  if (!transaction) {
+    return []
+  }
+
+  const actions: Array<ActionsUnion> = [
+    {
+      type: `COMMIT_STAGING_NODES`,
+      payload: {
+        transactionId,
+      },
+    },
+  ]
+
+  const nodesState = new Map()
+  for (const action of transaction) {
+    if (action.type === `CREATE_NODE_STAGING`) {
+      nodesState.set(action.payload.id, action)
+    } else if (action.type === `DELETE_NODE_STAGING` && action.payload?.id) {
+      nodesState.set(action.payload.id, undefined)
+    }
+  }
+
+  function sanitizeNode(node: any): any {
+    return {
+      ...node,
+      internal: {
+        ...node.internal,
+        owner: undefined,
+      },
+    }
+  }
+
+  for (const [id, actionOrDelete] of nodesState.entries()) {
+    if (actionOrDelete) {
+      actions.push(
+        publicActions.createNode(
+          sanitizeNode(actionOrDelete.payload),
+          actionOrDelete.plugin
+        )
+      )
+    } else {
+      // delete case
+      actions.push(publicActions.deleteNode(getNode(id), actionOrDelete.plugin))
+    }
+  }
+
+  return actions
+}

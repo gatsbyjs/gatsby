@@ -426,6 +426,10 @@ export interface IGatsbyState {
     config: IAdapterFinalConfig
   }
   remoteFileAllowedUrls: Set<string>
+  nodesStaging: {
+    nodes: Map<string, IGatsbyNode>
+    transactions: Map<string, Array<TransactionActionsUnion>>
+  }
 }
 
 export type GatsbyStateKeys = keyof IGatsbyState
@@ -457,11 +461,13 @@ export type ActionsUnion =
   | IApiFinishedAction
   | ICreateFieldExtension
   | ICreateNodeAction
+  | ICreateNodeStagingAction
   | ICreatePageAction
   | ICreatePageDependencyAction
   | ICreateTypes
   | IDeleteCacheAction
   | IDeleteNodeAction
+  | IDeleteNodeStagingAction
   | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
@@ -541,7 +547,11 @@ export type ActionsUnion =
   | ISetAdapterAction
   | IDisablePluginsByNameAction
   | IAddImageCdnAllowedUrl
+  | ICommitStagingNodes
 
+export type TransactionActionsUnion =
+  | ICreateNodeStagingAction
+  | IDeleteNodeStagingAction
 export interface IInitAction {
   type: `INIT`
 }
@@ -823,6 +833,7 @@ export interface ICreatePageAction {
   contextModified?: boolean
   componentModified?: boolean
   slicesModified?: boolean
+  transactionId?: string
 }
 
 export interface ICreateSliceAction {
@@ -1040,6 +1051,11 @@ export interface ICreateNodeAction {
   plugin: IGatsbyPlugin
 }
 
+export type ICreateNodeStagingAction = Omit<ICreateNodeAction, "type"> & {
+  type: `CREATE_NODE_STAGING`
+  transactionId: string
+}
+
 export interface IAddFieldToNodeAction {
   type: `ADD_FIELD_TO_NODE`
   payload: IGatsbyNode
@@ -1057,6 +1073,11 @@ export interface IDeleteNodeAction {
   payload: IGatsbyNode | void
   plugin: IGatsbyPlugin
   isRecursiveChildrenDelete?: boolean
+}
+
+export type IDeleteNodeStagingAction = Omit<IDeleteNodeAction, "type"> & {
+  type: `DELETE_NODE_STAGING`
+  transactionId: string
 }
 
 export interface ISetSiteFlattenedPluginsAction {
@@ -1262,6 +1283,13 @@ export interface IClearJobV2Context {
   type: `CLEAR_JOB_V2_CONTEXT`
   payload: {
     requestId: string
+  }
+}
+
+export interface ICommitStagingNodes {
+  type: `COMMIT_STAGING_NODES`
+  payload: {
+    transactionId: string
   }
 }
 

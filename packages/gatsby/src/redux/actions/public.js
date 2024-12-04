@@ -30,7 +30,7 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 const { getPageMode } = require(`../../utils/page-mode`)
 const normalizePath = require(`../../utils/normalize-path`).default
-import { createJobV2FromInternalJob } from "./internal"
+import { createJobV2FromInternalJob, setPublicActions } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 import { reportOnce } from "../../utils/report-once"
 import { wrapNode } from "../../utils/detect-node-mutations"
@@ -78,6 +78,7 @@ const findChildren = initialChildren => {
 }
 
 import type { Plugin } from "./types"
+import { shouldRunOnCreateNode } from "../plugin-runner"
 
 type Job = {
   id: string,
@@ -137,10 +138,15 @@ type PageDataRemove = {
  * @example
  * deletePage(page)
  */
-actions.deletePage = (page: IPageInput) => {
+actions.deletePage = (
+  page: IPageInput,
+  plugin?: Plugin,
+  actionOptions?: ActionOptions
+) => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
+    transactionId: actionOptions?.transactionId,
   }
 }
 
@@ -475,10 +481,44 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     contentDigest: createContentDigest(node),
   }
   node.id = `SitePage ${internalPage.path}`
-  const oldNode = getNode(node.id)
 
   let deleteActions
   let updateNodeAction
+  // const shouldCommitImmediately =
+  //   // !shouldRunOnCreateNode() ||
+  //   !page.path.includes("hello-world")
+  const transactionId =
+    actionOptions?.transactionId ??
+    (shouldRunOnCreateNode() ? node.internal.contentDigest : undefined)
+
+  // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
+  const sanitizedPayload = sanitizeNode(internalPage)
+
+  const createPageAction = {
+    ...actionOptions,
+    type: `CREATE_PAGE`,
+    contextModified,
+    componentModified,
+    slicesModified,
+    plugin,
+    payload: sanitizedPayload,
+  }
+  const actions = [createPageAction]
+
+  if (transactionId) {
+    createPageAction.transactionId = transactionId
+    actions.push({
+      ...actionOptions,
+      type: `CREATE_NODE_STAGING`,
+      plugin: { name: `internal-data-bridge` },
+      payload: node,
+      transactionId,
+    })
+    return actions
+  }
+
+  const oldNode = getNode(node.id)
+
   // marking internal-data-bridge as owner of SitePage instead of plugin that calls createPage
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     updateNodeAction = {
@@ -516,21 +556,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       payload: node,
     }
   }
-
-  // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
-  const sanitizedPayload = sanitizeNode(internalPage)
-
-  const actions = [
-    {
-      ...actionOptions,
-      type: `CREATE_PAGE`,
-      contextModified,
-      componentModified,
-      slicesModified,
-      plugin,
-      payload: sanitizedPayload,
-    },
-  ]
 
   if (deleteActions && deleteActions.length) {
     actions.push(...deleteActions)
@@ -1526,3 +1551,5 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
 }
 
 module.exports = { actions }
+
+setPublicActions(actions)

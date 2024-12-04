@@ -2,7 +2,8 @@ import { Span } from "opentracing"
 import { emitter, store } from "./index"
 import apiRunnerNode from "../utils/api-runner-node"
 import { ActivityTracker } from "../../"
-import { ICreateNodeAction } from "./types"
+import { ICreateNodeStagingAction } from "./types"
+import { commitStagingNodes } from "./actions/internal"
 
 type Plugin = any // TODO
 
@@ -39,7 +40,11 @@ interface ICreatePageAction {
     pluginCreatorId: string
     componentPath: string
   }
+  transactionId?: string
 }
+
+let hasOnCreatePage = false
+let hasOnCreateNode = false
 
 export const startPluginRunner = (): void => {
   const plugins = store.getState().flattenedPlugins
@@ -50,11 +55,17 @@ export const startPluginRunner = (): void => {
     plugin.nodeAPIs.includes(`onCreateNode`)
   )
   if (pluginsImplementingOnCreatePage.length > 0) {
+    hasOnCreatePage = true
     emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
       const page = action.payload
       apiRunnerNode(
         `onCreatePage`,
-        { page, traceId: action.traceId, parentSpan: action.parentSpan },
+        {
+          page,
+          traceId: action.traceId,
+          parentSpan: action.parentSpan,
+          transactionId: action.transactionId,
+        },
         { pluginSource: action.plugin.name, activity: action.activity }
       )
     })
@@ -63,15 +74,25 @@ export const startPluginRunner = (): void => {
   // We make page nodes outside of the normal action for speed so we manually
   // call onCreateNode here for SitePage nodes.
   if (pluginsImplementingOnCreateNode.length > 0) {
-    emitter.on(`CREATE_NODE`, (action: ICreateNodeAction) => {
+    hasOnCreateNode = true
+    emitter.on(`CREATE_NODE_STAGING`, (action: ICreateNodeStagingAction) => {
       const node = action.payload
       if (node.internal.type === `SitePage`) {
         apiRunnerNode(`onCreateNode`, {
           node,
           parentSpan: action.parentSpan,
           traceTags: { nodeId: node.id, nodeType: node.internal.type },
+          traceId: action.transactionId,
+          transactionId: action.transactionId,
+          waitForCascadingActions: true,
+        }).then(() => {
+          store.dispatch(commitStagingNodes(action.transactionId))
         })
       }
     })
   }
 }
+
+export const shouldRunOnCreateNode = (): boolean => hasOnCreateNode
+
+export const shouldRunOnCreatePage = (): boolean => hasOnCreatePage
