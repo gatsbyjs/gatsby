@@ -1477,5 +1477,3 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
 }
 
 module.exports = { actions }
-
-// setPublicActions(actions)
