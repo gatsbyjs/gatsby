@@ -427,7 +427,6 @@ export interface IGatsbyState {
   }
   remoteFileAllowedUrls: Set<string>
   nodesStaging: {
-    nodes: Map<string, IGatsbyNode>
     transactions: Map<string, Array<TransactionActionsUnion>>
   }
 }

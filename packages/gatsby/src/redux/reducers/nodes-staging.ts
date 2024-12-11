@@ -1,7 +1,7 @@
 import { ActionsUnion, IGatsbyState, TransactionActionsUnion } from "../types"
 
 function getInitialState(): IGatsbyState["nodesStaging"] {
-  return { nodes: new Map(), transactions: new Map() }
+  return { transactions: new Map() }
 }
 
 function addActionToTransaction(
@@ -30,7 +30,6 @@ export const nodesStagingReducer = (
 
     case `CREATE_NODE_STAGING`: {
       if (action.transactionId) {
-        // state.nodes.set(action.payload.id, action.payload)
         addActionToTransaction(state, action)
       }
 
@@ -39,7 +38,6 @@ export const nodesStagingReducer = (
 
     case `DELETE_NODE_STAGING`: {
       if (action.payload && action.transactionId) {
-        // state.nodes.delete(action.payload.id)
         addActionToTransaction(state, action)
       }
       return state
