@@ -2,8 +2,7 @@ import { Span } from "opentracing"
 import { emitter, store } from "./index"
 import apiRunnerNode from "../utils/api-runner-node"
 import { ActivityTracker } from "../../"
-import { ICreateNodeStagingAction } from "./types"
-import { commitStagingNodes } from "./actions/internal"
+import { ICreateNodeAction, ICreateNodeStagingAction } from "./types"
 
 type Plugin = any // TODO
 
@@ -54,8 +53,11 @@ export const startPluginRunner = (): void => {
   const pluginsImplementingOnCreateNode = plugins.filter(plugin =>
     plugin.nodeAPIs.includes(`onCreateNode`)
   )
-  if (pluginsImplementingOnCreatePage.length > 0) {
-    hasOnCreatePage = true
+
+  hasOnCreatePage = pluginsImplementingOnCreatePage.length > 0
+  hasOnCreateNode = pluginsImplementingOnCreateNode.length > 0
+
+  if (hasOnCreatePage) {
     emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
       const page = action.payload
       apiRunnerNode(
@@ -73,23 +75,26 @@ export const startPluginRunner = (): void => {
 
   // We make page nodes outside of the normal action for speed so we manually
   // call onCreateNode here for SitePage nodes.
-  if (pluginsImplementingOnCreateNode.length > 0) {
-    hasOnCreateNode = true
-    emitter.on(`CREATE_NODE_STAGING`, (action: ICreateNodeStagingAction) => {
+  if (hasOnCreateNode) {
+    const createNodeMiddleware = (
+      action: ICreateNodeStagingAction | ICreateNodeAction
+    ): void => {
       const node = action.payload
       if (node.internal.type === `SitePage`) {
+        const transactionId =
+          action.type === `CREATE_NODE` ? undefined : action.transactionId
         apiRunnerNode(`onCreateNode`, {
           node,
           parentSpan: action.parentSpan,
           traceTags: { nodeId: node.id, nodeType: node.internal.type },
-          traceId: action.transactionId,
-          transactionId: action.transactionId,
+          traceId: transactionId,
+          transactionId,
           waitForCascadingActions: true,
-        }).then(() => {
-          store.dispatch(commitStagingNodes(action.transactionId))
         })
       }
-    })
+    }
+    emitter.on(`CREATE_NODE`, createNodeMiddleware)
+    emitter.on(`CREATE_NODE_STAGING`, createNodeMiddleware)
   }
 }
 

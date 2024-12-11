@@ -224,10 +224,5 @@ emitter.on(`DELETE_PAGE`, action => {
       : swapToStagedDelete(deleteNodeActions)
   }
 
-  console.log(`deletePage stuff`, {
-    transactionId: action.transactionId,
-    deleteNodeActions,
-  })
-
   store.dispatch(deleteNodeActions)
 })

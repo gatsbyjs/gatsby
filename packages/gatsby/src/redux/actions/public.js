@@ -30,10 +30,16 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 const { getPageMode } = require(`../../utils/page-mode`)
 const normalizePath = require(`../../utils/normalize-path`).default
-import { createJobV2FromInternalJob, setPublicActions } from "./internal"
+import {
+  createJobV2FromInternalJob,
+  internalCreateNodeWithoutValidation,
+  getNextNodeCounter,
+  findChildren,
+} from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 import { reportOnce } from "../../utils/report-once"
 import { wrapNode } from "../../utils/detect-node-mutations"
+import { shouldRunOnCreatePage, shouldRunOnCreateNode } from "../plugin-runner"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -56,29 +62,6 @@ const ensureWindowsDriveIsUppercase = filePath => {
     ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
     : filePath
 }
-
-const findChildren = initialChildren => {
-  const children = [...initialChildren]
-  const queue = [...initialChildren]
-  const traversedNodes = new Set()
-
-  while (queue.length > 0) {
-    const currentChild = getNode(queue.pop())
-    if (!currentChild || traversedNodes.has(currentChild.id)) {
-      continue
-    }
-    traversedNodes.add(currentChild.id)
-    const newChildren = currentChild.children
-    if (_.isArray(newChildren) && newChildren.length > 0) {
-      children.push(...newChildren)
-      queue.push(...newChildren)
-    }
-  }
-  return children
-}
-
-import type { Plugin } from "./types"
-import { shouldRunOnCreateNode } from "../plugin-runner"
 
 type Job = {
   id: string,
@@ -482,14 +465,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
   node.id = `SitePage ${internalPage.path}`
 
-  let deleteActions
-  let updateNodeAction
-  // const shouldCommitImmediately =
-  //   // !shouldRunOnCreateNode() ||
-  //   !page.path.includes("hello-world")
   const transactionId =
     actionOptions?.transactionId ??
-    (shouldRunOnCreateNode() ? node.internal.contentDigest : undefined)
+    (shouldRunOnCreatePage() ? node.internal.contentDigest : undefined)
 
   // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
   const sanitizedPayload = sanitizeNode(internalPage)
@@ -517,53 +495,13 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     return actions
   }
 
-  const oldNode = getNode(node.id)
+  const upsertNodeActions = internalCreateNodeWithoutValidation(
+    node,
+    { name: `internal-data-bridge` },
+    actionOptions
+  )
 
-  // marking internal-data-bridge as owner of SitePage instead of plugin that calls createPage
-  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
-    updateNodeAction = {
-      ...actionOptions,
-      plugin: { name: `internal-data-bridge` },
-      type: `TOUCH_NODE`,
-      typeName: node.internal.type,
-      payload: node.id,
-    }
-  } else {
-    // Remove any previously created descendant nodes as they're all due
-    // to be recreated.
-    if (oldNode) {
-      const createDeleteAction = node => {
-        return {
-          ...actionOptions,
-          type: `DELETE_NODE`,
-          plugin: { name: `internal-data-bridge` },
-          payload: node,
-          isRecursiveChildrenDelete: true,
-        }
-      }
-      deleteActions = findChildren(oldNode.children)
-        .map(getNode)
-        .map(createDeleteAction)
-    }
-
-    node.internal.counter = getNextNodeCounter()
-
-    updateNodeAction = {
-      ...actionOptions,
-      type: `CREATE_NODE`,
-      plugin: { name: `internal-data-bridge` },
-      oldNode,
-      payload: node,
-    }
-  }
-
-  if (deleteActions && deleteActions.length) {
-    actions.push(...deleteActions)
-  }
-
-  actions.push(updateNodeAction)
-
-  return actions
+  return [...actions, ...upsertNodeActions]
 }
 
 /**
@@ -603,18 +541,6 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
   } else {
     return deleteAction
   }
-}
-
-// We add a counter to node.internal for fast comparisons/intersections
-// of various node slices. The counter must increase even across builds.
-function getNextNodeCounter() {
-  const lastNodeCounter = store.getState().status.LAST_NODE_COUNTER ?? 0
-  if (lastNodeCounter >= Number.MAX_SAFE_INTEGER) {
-    throw new Error(
-      `Could not create more nodes. Maximum node count is reached: ${lastNodeCounter}`
-    )
-  }
-  return lastNodeCounter + 1
 }
 
 // memberof notation is added so this code can be referenced instead of the wrapper.
@@ -861,7 +787,7 @@ actions.createNode =
       Array.isArray(actions) ? actions : [actions]
     ).find(action => action.type === `CREATE_NODE`)
 
-    if (!createNodeAction) {
+    if (!createNodeAction || !shouldRunOnCreateNode()) {
       return Promise.resolve(undefined)
     }
 
@@ -1552,4 +1478,4 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
 
 module.exports = { actions }
 
-setPublicActions(actions)
+// setPublicActions(actions)
