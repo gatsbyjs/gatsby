@@ -1,6 +1,8 @@
 // @ts-check
 import { execa } from "execa"
 
+// trigger-ci-1
+
 // only set NETLIFY_SITE_ID from E2E_ADAPTERS_NETLIFY_SITE_ID if it's set
 if (process.env.E2E_ADAPTERS_NETLIFY_SITE_ID) {
   process.env.NETLIFY_SITE_ID = process.env.E2E_ADAPTERS_NETLIFY_SITE_ID
