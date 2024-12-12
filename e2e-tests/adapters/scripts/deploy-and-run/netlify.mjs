@@ -26,6 +26,7 @@ const deployResults = await execa(
     "ntl",
     "deploy",
     "--build",
+    "--json",
     "--message",
     deployTitle,
     process.env.EXTRA_NTL_CLI_ARGS ?? "--cwd=.",
