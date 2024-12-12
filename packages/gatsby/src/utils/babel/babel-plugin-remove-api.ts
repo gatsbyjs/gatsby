@@ -57,7 +57,7 @@ export default declare(function removeApiCalls(
               } else {
                 // if const {x,y} is used, we remove the property
                 if (
-                  t.isVariableDeclarator(ref.path.node) &&
+                  t.isVariableDeclarator(ref.path) &&
                   t.isObjectPattern(
                     (ref.path.parent as t.VariableDeclaration).declarations[0]
                       .id
