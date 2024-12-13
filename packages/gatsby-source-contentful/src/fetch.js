@@ -277,7 +277,9 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
     reporter,
     syncProgress,
   })
-  const syncClient = createClient(contentfulSyncClientOptions)
+  const syncClient = createClient(
+    contentfulSyncClientOptions
+  ).withoutLinkResolution
 
   let currentSyncData
   let currentPageLimit = pageLimit
@@ -287,8 +289,8 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
     while (!syncSuccess) {
       try {
         const query = syncToken
-          ? { nextSyncToken: syncToken, resolveLinks: false }
-          : { initial: true, limit: currentPageLimit, resolveLinks: false }
+          ? { nextSyncToken: syncToken }
+          : { initial: true, limit: currentPageLimit }
         currentSyncData = await syncClient.sync(query)
         syncSuccess = true
       } catch (e) {
