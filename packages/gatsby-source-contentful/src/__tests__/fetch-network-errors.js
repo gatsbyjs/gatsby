@@ -108,7 +108,7 @@ describe(`fetch-retry`, () => {
       const msg = expect(e.context.sourceMessage)
       msg.toEqual(
         expect.stringContaining(
-          `Fetching contentful data failed: ERR_BAD_RESPONSE 500 MockedContentfulError`
+          `Fetching contentful data failed: ERR_BAD_RESPONSE 500 500 MockedContentfulError`
         )
       )
       msg.toEqual(expect.stringContaining(`Request ID: 123abc`))
