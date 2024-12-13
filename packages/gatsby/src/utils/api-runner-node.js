@@ -315,6 +315,22 @@ const getUninitializedCache = plugin => {
   }
 }
 
+function maybeCommitTransaction(transactionId) {
+  if (transactionId) {
+    const count = (ongoingTransactions.get(transactionId) ?? 0) - 1
+    if (count <= 0) {
+      ongoingTransactions.delete(transactionId)
+      if (!commitStagingNodes) {
+        commitStagingNodes =
+          require(`../redux/actions/commit-staging-nodes`).commitStagingNodes
+      }
+      store.dispatch(commitStagingNodes(transactionId))
+    } else {
+      ongoingTransactions.set(transactionId, count)
+    }
+  }
+}
+
 const availableActionsCache = new Map()
 let publicPath
 const runAPI = async (plugin, api, args, activity) => {
@@ -538,6 +554,9 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
 
   // If there's no implementing plugins, return early.
   if (implementingPlugins.length === 0) {
+    setImmediate(() => {
+      maybeCommitTransaction(args.transactionId)
+    })
     return null
   }
 
@@ -737,19 +756,7 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
         emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
       }
 
-      if (transactionId) {
-        const count = (ongoingTransactions.get(transactionId) ?? 0) - 1
-        if (count <= 0) {
-          ongoingTransactions.delete(transactionId)
-          if (!commitStagingNodes) {
-            commitStagingNodes =
-              require(`../redux/actions/commit-staging-nodes`).commitStagingNodes
-          }
-          store.dispatch(commitStagingNodes(transactionId))
-        } else {
-          ongoingTransactions.set(transactionId, count)
-        }
-      }
+      maybeCommitTransaction(transactionId)
 
       // Filter empty results
       apiRunInstance.results = results.filter(result => !_.isEmpty(result))
