@@ -5,7 +5,6 @@ import { slash } from "gatsby-core-utils/path"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { posix } from "path"
 import { sync as globSync } from "glob"
-import telemetry from "gatsby-telemetry"
 import { copy, pathExists, unlink } from "fs-extra"
 import pathToRegexp from "path-to-regexp"
 import type {
@@ -137,8 +136,6 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
     // If we don't have adapter, use no-op adapter manager
     if (!adapterInit) {
-      telemetry.trackFeatureIsUsed(`adapter:no-op`)
-
       const manager = noOpAdapterManager()
 
       await setAdapter({ manager })
@@ -150,7 +147,6 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
   }
 
   reporter.info(`Using ${adapter.name} adapter`)
-  telemetry.trackFeatureIsUsed(`adapter:${adapter.name}`)
 
   const directoriesToCache = [`.cache`, `public`]
   const manager: IAdapterManager = {
