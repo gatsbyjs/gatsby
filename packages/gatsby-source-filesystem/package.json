@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "chokidar": "^3.5.3",
+    "chokidar": "^3.6.0",
     "file-type": "^16.5.4",
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.15.0-next.0",
