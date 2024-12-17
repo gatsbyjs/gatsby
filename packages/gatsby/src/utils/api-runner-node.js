@@ -85,17 +85,25 @@ const nodeMutationsWrappers = {
   },
 }
 
+const transactionToDoubleBindCacheKey = new Map()
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
 const boundPluginActionCreators = {}
 const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
-  const {
-    traceId,
-    deferNodeMutation,
-    transactionId = `no-transaction`,
-  } = actionOptions
+  const { traceId, deferNodeMutation, transactionId } = actionOptions
   const defer = deferNodeMutation ? `defer-node-mutation` : ``
-  const actionKey = plugin.name + api + traceId + defer + transactionId
+  const actionKey =
+    plugin.name + api + traceId + defer + (transactionId ?? `no-transaction`)
+
+  if (transactionId) {
+    let actionKeys = transactionToDoubleBindCacheKey.get(transactionId)
+    if (!actionKeys) {
+      actionKeys = new Set()
+      transactionToDoubleBindCacheKey.set(transactionId, actionKeys)
+    }
+    actionKeys.add(actionKey)
+  }
+
   if (boundPluginActionCreators[actionKey]) {
     return boundPluginActionCreators[actionKey]
   } else {
@@ -330,6 +338,15 @@ function maybeCommitTransaction(transactionId) {
             require(`../redux/actions/commit-staging-nodes`).commitStagingNodes
         }
         store.dispatch(commitStagingNodes(transactionId))
+
+        // cleanup double bound action creators for this transaction
+        const actionKeys = transactionToDoubleBindCacheKey.get(transactionId)
+        if (actionKeys) {
+          actionKeys.forEach(actionKey => {
+            delete boundPluginActionCreators[actionKey]
+          })
+          transactionToDoubleBindCacheKey.delete(transactionId)
+        }
       } else {
         ongoingTransactions.set(transactionId, count)
       }
