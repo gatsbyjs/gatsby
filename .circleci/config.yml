@@ -93,7 +93,7 @@ aliases:
             yarn why lmdb-store
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand --detectOpenHandles $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
+          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: "true"
