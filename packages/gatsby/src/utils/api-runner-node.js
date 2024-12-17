@@ -89,9 +89,13 @@ const nodeMutationsWrappers = {
 // metadata to actions they create.
 const boundPluginActionCreators = {}
 const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
-  const { traceId, deferNodeMutation } = actionOptions
+  const {
+    traceId,
+    deferNodeMutation,
+    transactionId = `no-transaction`,
+  } = actionOptions
   const defer = deferNodeMutation ? `defer-node-mutation` : ``
-  const actionKey = plugin.name + api + traceId + defer
+  const actionKey = plugin.name + api + traceId + defer + transactionId
   if (boundPluginActionCreators[actionKey]) {
     return boundPluginActionCreators[actionKey]
   } else {
@@ -317,17 +321,19 @@ const getUninitializedCache = plugin => {
 
 function maybeCommitTransaction(transactionId) {
   if (transactionId) {
-    const count = (ongoingTransactions.get(transactionId) ?? 0) - 1
-    if (count <= 0) {
-      ongoingTransactions.delete(transactionId)
-      if (!commitStagingNodes) {
-        commitStagingNodes =
-          require(`../redux/actions/commit-staging-nodes`).commitStagingNodes
+    setImmediate(() => {
+      const count = (ongoingTransactions.get(transactionId) ?? 0) - 1
+      if (count <= 0) {
+        ongoingTransactions.delete(transactionId)
+        if (!commitStagingNodes) {
+          commitStagingNodes =
+            require(`../redux/actions/commit-staging-nodes`).commitStagingNodes
+        }
+        store.dispatch(commitStagingNodes(transactionId))
+      } else {
+        ongoingTransactions.set(transactionId, count)
       }
-      store.dispatch(commitStagingNodes(transactionId))
-    } else {
-      ongoingTransactions.set(transactionId, count)
-    }
+    })
   }
 }
 
@@ -553,10 +559,9 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
   }
 
   // If there's no implementing plugins, return early.
-  if (implementingPlugins.length === 0) {
-    setImmediate(() => {
-      maybeCommitTransaction(args.transactionId)
-    })
+  if (implementingPlugins.length === 0 && args.transactionId) {
+    maybeCommitTransaction(args.transactionId)
+
     return null
   }
 
@@ -756,7 +761,9 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
         emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
       }
 
-      maybeCommitTransaction(transactionId)
+      if (transactionId) {
+        maybeCommitTransaction(args.transactionId)
+      }
 
       // Filter empty results
       apiRunInstance.results = results.filter(result => !_.isEmpty(result))
