@@ -5,7 +5,7 @@ export function locationTypeBuilder(prefix: string): string {
         fulfillmentOrdersOptIn: Boolean!
         handle: String!
         inventoryManagement: Boolean!
-        productBased: Boolean! @deprecated(reason: "\`productBased\` will be removed 2024-07, non-product based fulfillment services are no longer supported")
+        productBased: Boolean! @deprecated(reason: "\`productBased\` will be removed in version 2024-07, non-product based fulfillment services are no longer supported")
         serviceName: String!
         shippingMethods: [${prefix}ShippingMethod!]!
         shopifyId: String!

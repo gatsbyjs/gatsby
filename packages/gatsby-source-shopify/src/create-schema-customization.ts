@@ -61,11 +61,10 @@ export function createSchemaCustomization(
           const quantities = await resolver(source, args, context, info)
 
           if (quantities && Array.isArray(quantities)) {
-            for (const quantity of quantities) {
-              if (quantity?.name === name) {
-                return quantity.quantity
-              }
-            }
+            return (
+              quantities.find(quantity => quantity?.name === name)?.quantity ??
+              0
+            )
           }
 
           return 0
