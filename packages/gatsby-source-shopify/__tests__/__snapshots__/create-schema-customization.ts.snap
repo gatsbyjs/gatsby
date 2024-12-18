@@ -893,7 +893,7 @@ Array [
         fulfillmentOrdersOptIn: Boolean!
         handle: String!
         inventoryManagement: Boolean!
-        productBased: Boolean!
+        productBased: Boolean! @deprecated(reason: \\"\`productBased\` will be removed in version 2024-07, non-product based fulfillment services are no longer supported\\")
         serviceName: String!
         shippingMethods: [__PREFIX__ShopifyShippingMethod!]!
         shopifyId: String!
@@ -2737,7 +2737,7 @@ Array [
         fulfillmentOrdersOptIn: Boolean!
         handle: String!
         inventoryManagement: Boolean!
-        productBased: Boolean!
+        productBased: Boolean! @deprecated(reason: \\"\`productBased\` will be removed in version 2024-07, non-product based fulfillment services are no longer supported\\")
         serviceName: String!
         shippingMethods: [__PREFIX__ShopifyShippingMethod!]!
         shopifyId: String!
