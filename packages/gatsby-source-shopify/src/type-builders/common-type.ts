@@ -511,15 +511,5 @@ export function commonTypeBuilder(prefix: string): string {
         POUNDS
         OUNCES
       }
-
-      enum ${prefix}CountPrecision {
-        EXACT
-        AT_LEAST
-      }
-
-      type ${prefix}Count {
-        count: Int!
-        precision: ${prefix}CountPrecision!
-      }
     `
 }

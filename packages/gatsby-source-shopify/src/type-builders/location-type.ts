@@ -26,7 +26,7 @@ export function locationTypeBuilder(prefix: string): string {
         inventoryHistoryUrl: String
         inventoryLevels: [${prefix}InventoryLevel!]! @link(by: "id") @proxy(from: "inventoryLevels___NODE", fromNode: true)
         legacyResourceId: String!
-        locationsCount: ${prefix}Count!
+        locationsCount: Int! @proxy(from: "locationsCount.count")
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!

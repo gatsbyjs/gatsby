@@ -516,16 +516,6 @@ Array [
         POUNDS
         OUNCES
       }
-
-      enum __PREFIX__ShopifyCountPrecision {
-        EXACT
-        AT_LEAST
-      }
-
-      type __PREFIX__ShopifyCount {
-        count: Int!
-        precision: __PREFIX__ShopifyCountPrecision!
-      }
     ",
       "
       type __PREFIX__ShopifyExternalVideo implements Node & __PREFIX__ShopifyMedia @dontInfer {
@@ -723,7 +713,7 @@ Array [
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: __PREFIX__ShopifyCount!
+        mediaCount: Int! @proxy(from: \\"mediaCount.count\\")
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -734,7 +724,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -795,7 +785,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -834,7 +824,7 @@ Array [
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         products: [__PREFIX__ShopifyProduct!]! @link(from: \\"products___NODE\\", by: \\"id\\")
-        productsCount: __PREFIX__ShopifyCount!
+        productsCount: Int! @proxy(from: \\"productsCount.count\\")
         ruleSet: __PREFIX__ShopifyCollectionRuleSet
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
@@ -924,7 +914,7 @@ Array [
         inventoryHistoryUrl: String
         inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(by: \\"id\\") @proxy(from: \\"inventoryLevels___NODE\\", fromNode: true)
         legacyResourceId: String!
-        locationsCount: __PREFIX__ShopifyCount!
+        locationsCount: Int! @proxy(from: \\"locationsCount.count\\")
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -1548,16 +1538,6 @@ Array [
         POUNDS
         OUNCES
       }
-
-      enum __PREFIX__ShopifyCountPrecision {
-        EXACT
-        AT_LEAST
-      }
-
-      type __PREFIX__ShopifyCount {
-        count: Int!
-        precision: __PREFIX__ShopifyCountPrecision!
-      }
     ",
       "
       type __PREFIX__ShopifyExternalVideo implements Node & __PREFIX__ShopifyMedia @dontInfer {
@@ -1755,7 +1735,7 @@ Array [
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: __PREFIX__ShopifyCount!
+        mediaCount: Int! @proxy(from: \\"mediaCount.count\\")
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -1766,7 +1746,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -1827,7 +1807,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -2380,16 +2360,6 @@ Array [
         POUNDS
         OUNCES
       }
-
-      enum __PREFIX__ShopifyCountPrecision {
-        EXACT
-        AT_LEAST
-      }
-
-      type __PREFIX__ShopifyCount {
-        count: Int!
-        precision: __PREFIX__ShopifyCountPrecision!
-      }
     ",
       "
       type __PREFIX__ShopifyExternalVideo implements Node & __PREFIX__ShopifyMedia @dontInfer {
@@ -2587,7 +2557,7 @@ Array [
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: __PREFIX__ShopifyCount!
+        mediaCount: Int! @proxy(from: \\"mediaCount.count\\")
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -2598,7 +2568,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -2659,7 +2629,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -2698,7 +2668,7 @@ Array [
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         products: [__PREFIX__ShopifyProduct!]! @link(from: \\"products___NODE\\", by: \\"id\\")
-        productsCount: __PREFIX__ShopifyCount!
+        productsCount: Int! @proxy(from: \\"productsCount.count\\")
         ruleSet: __PREFIX__ShopifyCollectionRuleSet
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
@@ -2788,7 +2758,7 @@ Array [
         inventoryHistoryUrl: String
         inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(by: \\"id\\") @proxy(from: \\"inventoryLevels___NODE\\", fromNode: true)
         legacyResourceId: String!
-        locationsCount: __PREFIX__ShopifyCount!
+        locationsCount: Int! @proxy(from: \\"locationsCount.count\\")
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -3407,16 +3377,6 @@ Array [
         POUNDS
         OUNCES
       }
-
-      enum __PREFIX__ShopifyCountPrecision {
-        EXACT
-        AT_LEAST
-      }
-
-      type __PREFIX__ShopifyCount {
-        count: Int!
-        precision: __PREFIX__ShopifyCountPrecision!
-      }
     ",
       "
       type __PREFIX__ShopifyExternalVideo implements Node & __PREFIX__ShopifyMedia @dontInfer {
@@ -3614,7 +3574,7 @@ Array [
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: __PREFIX__ShopifyCount!
+        mediaCount: Int! @proxy(from: \\"mediaCount.count\\")
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -3625,7 +3585,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -3686,7 +3646,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupsCount: __PREFIX__ShopifyCount!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         sku: String
         shopifyId: String!
         storefrontId: String!
