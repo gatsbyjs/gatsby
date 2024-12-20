@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "cheerio": "^1.0.0-rc.10",
+    "cheerio": "1.0.0-rc.12",
     "fs-extra": "^11.1.1",
     "is-relative-url": "^3.0.0",
     "lodash": "^4.17.21",
