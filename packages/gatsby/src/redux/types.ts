@@ -399,6 +399,9 @@ export interface IGatsbyState {
   slices: Map<string, IGatsbySlice>
   componentsUsingSlices: Map<string, ICollectedSlices>
   slicesByTemplate: Map<SystemPath, ICollectedSlices>
+  nodesStaging: {
+    transactions: Map<string, Array<TransactionActionsUnion>>
+  }
 }
 
 export type GatsbyStateKeys = keyof IGatsbyState
@@ -429,11 +432,13 @@ export type ActionsUnion =
   | IApiFinishedAction
   | ICreateFieldExtension
   | ICreateNodeAction
+  | ICreateNodeStagingAction
   | ICreatePageAction
   | ICreatePageDependencyAction
   | ICreateTypes
   | IDeleteCacheAction
   | IDeleteNodeAction
+  | IDeleteNodeStagingAction
   | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
@@ -510,6 +515,14 @@ export type ActionsUnion =
   | ISlicesScriptsRegenerated
   | IProcessGatsbyImageSourceUrlAction
   | IClearGatsbyImageSourceUrlAction
+  | ICommitStagingNodes
+
+export type TransactionActionsUnion =
+  | ICreateNodeStagingAction
+  | IDeleteNodeStagingAction
+export interface IInitAction {
+  type: `INIT`
+}
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -788,6 +801,7 @@ export interface ICreatePageAction {
   contextModified?: boolean
   componentModified?: boolean
   slicesModified?: boolean
+  transactionId?: string
 }
 
 export interface ICreateSliceAction {
@@ -1005,6 +1019,11 @@ export interface ICreateNodeAction {
   plugin: IGatsbyPlugin
 }
 
+export type ICreateNodeStagingAction = Omit<ICreateNodeAction, "type"> & {
+  type: `CREATE_NODE_STAGING`
+  transactionId: string
+}
+
 export interface IAddFieldToNodeAction {
   type: `ADD_FIELD_TO_NODE`
   payload: IGatsbyNode
@@ -1022,6 +1041,11 @@ export interface IDeleteNodeAction {
   payload: IGatsbyNode | void
   plugin: IGatsbyPlugin
   isRecursiveChildrenDelete?: boolean
+}
+
+export type IDeleteNodeStagingAction = Omit<IDeleteNodeAction, "type"> & {
+  type: `DELETE_NODE_STAGING`
+  transactionId: string
 }
 
 export interface ISetSiteFlattenedPluginsAction {
@@ -1201,5 +1225,12 @@ export interface IClearJobV2Context {
   type: `CLEAR_JOB_V2_CONTEXT`
   payload: {
     requestId: string
+  }
+}
+
+export interface ICommitStagingNodes {
+  type: `COMMIT_STAGING_NODES`
+  payload: {
+    transactionId: string
   }
 }

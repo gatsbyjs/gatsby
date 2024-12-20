@@ -37,6 +37,7 @@ import { statefulSourcePluginsReducer } from "./stateful-source-plugins"
 import { slicesReducer } from "./slices"
 import { componentsUsingSlicesReducer } from "./components-using-slices"
 import { slicesByTemplateReducer } from "./slices-by-template"
+import { nodesStagingReducer } from "./nodes-staging"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -81,4 +82,5 @@ export {
   componentsUsingSlicesReducer as componentsUsingSlices,
   slicesByTemplateReducer as slicesByTemplate,
   telemetryReducer as telemetry,
+  nodesStagingReducer as nodesStaging,
 }
