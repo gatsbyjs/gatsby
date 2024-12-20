@@ -321,7 +321,9 @@ jobs:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_pnp:
-    executor: node
+    executor:
+      name: node
+      image: "18.12.0"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"

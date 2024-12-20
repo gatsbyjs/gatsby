@@ -36,7 +36,7 @@
     "@types/http-proxy": "^1.17.11",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
-    "@vercel/webpack-asset-relocator-loader": "^1.7.3",
+    "@vercel/webpack-asset-relocator-loader": "1.7.3",
     "acorn-loose": "^8.3.0",
     "acorn-walk": "^8.2.0",
     "address": "1.2.2",
