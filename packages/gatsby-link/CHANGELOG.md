@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.14.1/packages/gatsby-link) (2024-12-20)
+
+#### Bug Fixes
+
+- fix navigate method type fix [#39188](https://github.com/gatsbyjs/gatsby/issues/39188) ([139aedd](https://github.com/gatsbyjs/gatsby/commit/139aedd6c91d2ec655bfa4996beaaa39b8d84c65))
+
 ## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.14.0/packages/gatsby-link) (2024-11-06)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
