@@ -11,7 +11,7 @@ export function collectionTypeBuilder(prefix: string): string {
         metafield(namespace: String! key: String!): ${prefix}Metafield
         metafields: [${prefix}Metafield!]! @link(from: "metafields___NODE", by: "id")
         products: [${prefix}Product!]! @link(from: "products___NODE", by: "id")
-        productsCount: Int!
+        productsCount: Int! @proxy(from: "productsCount.count")
         ruleSet: ${prefix}CollectionRuleSet
         seo: ${prefix}SEO!
         shopifyId: String!
