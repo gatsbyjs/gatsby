@@ -713,7 +713,7 @@ Array [
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Int!
+        mediaCount: Int! @proxy(from: \\"mediaCount.count\\")
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -724,7 +724,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -785,7 +785,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -824,7 +824,7 @@ Array [
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         products: [__PREFIX__ShopifyProduct!]! @link(from: \\"products___NODE\\", by: \\"id\\")
-        productsCount: Int!
+        productsCount: Int! @proxy(from: \\"productsCount.count\\")
         ruleSet: __PREFIX__ShopifyCollectionRuleSet
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
@@ -893,7 +893,7 @@ Array [
         fulfillmentOrdersOptIn: Boolean!
         handle: String!
         inventoryManagement: Boolean!
-        productBased: Boolean!
+        productBased: Boolean! @deprecated(reason: \\"\`productBased\` will be removed in version 2024-07, non-product based fulfillment services are no longer supported\\")
         serviceName: String!
         shippingMethods: [__PREFIX__ShopifyShippingMethod!]!
         shopifyId: String!
@@ -912,9 +912,9 @@ Array [
         duplicateSkuCount: Int!
         harmonizedSystemCode: String
         inventoryHistoryUrl: String
-        inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(from: \\"inventoryLevels___NODE\\", by: \\"id\\")
+        inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(by: \\"id\\") @proxy(from: \\"inventoryLevels___NODE\\", fromNode: true)
         legacyResourceId: String!
-        locationsCount: Int!
+        locationsCount: Int! @proxy(from: \\"locationsCount.count\\")
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -926,9 +926,21 @@ Array [
         variant: __PREFIX__ShopifyProductVariantConnection!
       }
 
+      type __PREFIX__ShopifyInventoryQuantity {
+        name: String!
+        quantity: Int!
+      }
+
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
-        available: Int!
+        quantities: [__PREFIX__ShopifyInventoryQuantity!]!
+        available: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"available\\")
+        incoming: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"incoming\\")
+        committed: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"committed\\")
+        reserved: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"reserved\\")
+        damaged: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"damaged\\")
+        safety_stock: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"safety_stock\\")
+        quality_control: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"quality_control\\")
         id: ID!
         location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
@@ -1723,7 +1735,7 @@ Array [
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Int!
+        mediaCount: Int! @proxy(from: \\"mediaCount.count\\")
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -1734,7 +1746,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -1795,7 +1807,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -2545,7 +2557,7 @@ Array [
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Int!
+        mediaCount: Int! @proxy(from: \\"mediaCount.count\\")
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -2556,7 +2568,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -2617,7 +2629,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         sku: String
         shopifyId: String!
         storefrontId: String!
@@ -2656,7 +2668,7 @@ Array [
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         products: [__PREFIX__ShopifyProduct!]! @link(from: \\"products___NODE\\", by: \\"id\\")
-        productsCount: Int!
+        productsCount: Int! @proxy(from: \\"productsCount.count\\")
         ruleSet: __PREFIX__ShopifyCollectionRuleSet
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
@@ -2725,7 +2737,7 @@ Array [
         fulfillmentOrdersOptIn: Boolean!
         handle: String!
         inventoryManagement: Boolean!
-        productBased: Boolean!
+        productBased: Boolean! @deprecated(reason: \\"\`productBased\` will be removed in version 2024-07, non-product based fulfillment services are no longer supported\\")
         serviceName: String!
         shippingMethods: [__PREFIX__ShopifyShippingMethod!]!
         shopifyId: String!
@@ -2744,9 +2756,9 @@ Array [
         duplicateSkuCount: Int!
         harmonizedSystemCode: String
         inventoryHistoryUrl: String
-        inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(from: \\"inventoryLevels___NODE\\", by: \\"id\\")
+        inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(by: \\"id\\") @proxy(from: \\"inventoryLevels___NODE\\", fromNode: true)
         legacyResourceId: String!
-        locationsCount: Int!
+        locationsCount: Int! @proxy(from: \\"locationsCount.count\\")
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -2758,9 +2770,21 @@ Array [
         variant: __PREFIX__ShopifyProductVariantConnection!
       }
 
+      type __PREFIX__ShopifyInventoryQuantity {
+        name: String!
+        quantity: Int!
+      }
+
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
-        available: Int!
+        quantities: [__PREFIX__ShopifyInventoryQuantity!]!
+        available: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"available\\")
+        incoming: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"incoming\\")
+        committed: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"committed\\")
+        reserved: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"reserved\\")
+        damaged: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"damaged\\")
+        safety_stock: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"safety_stock\\")
+        quality_control: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"quality_control\\")
         id: ID!
         location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
@@ -3550,7 +3574,7 @@ Array [
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [__PREFIX__ShopifyMedia!]! @link(from: \\"media___NODE\\", by: \\"id\\")
-        mediaCount: Int!
+        mediaCount: Int! @proxy(from: \\"mediaCount.count\\")
         metafield(namespace: String! key: String!): __PREFIX__ShopifyMetafield
         metafields: [__PREFIX__ShopifyMetafield!]! @link(from: \\"metafields___NODE\\", by: \\"id\\")
         onlineStorePreviewUrl: String
@@ -3561,7 +3585,7 @@ Array [
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         seo: __PREFIX__ShopifySEO!
         shopifyId: String!
         status: __PREFIX__ShopifyProductStatus!
@@ -3622,7 +3646,7 @@ Array [
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
         requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
         sku: String
         shopifyId: String!
         storefrontId: String!
