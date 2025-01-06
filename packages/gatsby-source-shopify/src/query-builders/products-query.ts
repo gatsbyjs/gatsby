@@ -151,7 +151,10 @@ export class ProductsQuery extends BulkQuery {
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -200,7 +203,10 @@ export class ProductsQuery extends BulkQuery {
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
