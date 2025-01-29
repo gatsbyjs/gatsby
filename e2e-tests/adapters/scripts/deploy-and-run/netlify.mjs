@@ -18,6 +18,7 @@ const npmScriptToRun = process.argv[2] || "test:netlify"
 // ensure clean build
 await execa(`npm`, [`run`, `clean`], { stdio: `inherit` })
 
+const deployAlias = 'gatsby-e2e-tests'
 const deployResults = await execa(
   "npx",
   [
@@ -25,6 +26,8 @@ const deployResults = await execa(
     "deploy",
     "--build",
     "--json",
+    "--alias",
+    deployAlias,
     "--message",
     deployTitle,
     process.env.EXTRA_NTL_CLI_ARGS ?? "--cwd=.",
