@@ -18,7 +18,7 @@ const npmScriptToRun = process.argv[2] || "test:netlify"
 // ensure clean build
 await execa(`npm`, [`run`, `clean`], { stdio: `inherit` })
 
-const deployAlias = 'gatsby-e2e-tests'
+const deployAlias = "gatsby-e2e-tests"
 const deployResults = await execa(
   "npx",
   [
@@ -50,7 +50,9 @@ if (deployResults.exitCode !== 0) {
 
 const deployInfo = JSON.parse(deployResults.stdout)
 
-const deployUrl = deployInfo.deploy_url + (process.env.PATH_PREFIX ?? ``)
+const deployUrl =
+  `https://${deployInfo.deploy_id}--${deployInfo.site_name}.netlify.app` +
+  (process.env.PATH_PREFIX ?? ``)
 process.env.DEPLOY_URL = deployUrl
 
 console.log(`Deployed to ${deployUrl}`)
