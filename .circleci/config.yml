@@ -6,7 +6,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "22.0.0"
+        default: "22.14.0"
       gatsby_major:
         type: string
         default: "5"
