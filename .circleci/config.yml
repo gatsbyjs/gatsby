@@ -178,7 +178,7 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       # setuptools is not built in and node-gyp needs it to build lmdb
-      - run: pip install --no-cache-dir setuptools==75.6.0
+      - run: sudo apt-get update && sudo apt-get install python3 -y && pip install --no-cache-dir setuptools==75.6.0
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *check_lockfile
@@ -535,7 +535,7 @@ jobs:
     steps:
       - checkout
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
-      - run: sudo apt-get update && sudo apt-get install jq python -y
+      - run: sudo apt-get update && sudo apt-get install jq python3 -y && pip install --no-cache-dir setuptools==75.6.0
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
@@ -547,7 +547,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install jq python -y
+      - run: sudo apt-get update && sudo apt-get install jq python3 -y && pip install --no-cache-dir setuptools==75.6.0
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
