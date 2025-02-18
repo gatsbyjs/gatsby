@@ -6,7 +6,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "18.0.0"
+        default: "22.0.0"
       gatsby_major:
         type: string
         default: "5"
@@ -24,7 +24,7 @@ aliases:
 
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node18.6.0-chrome105-ff104
+      - image: cypress/browsers:node-22.14.0-chrome-133.0.6943.53-1-ff-135.0-edge-133.0.3065.59-1
     environment:
       <<: *e2e-executor-env
 
@@ -112,7 +112,7 @@ aliases:
     requires:
       - lint
       - typecheck
-      - unit_tests_node18
+      - unit_tests_node22
 
 commands:
   e2e-test:
@@ -216,10 +216,10 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
-  unit_tests_node18:
+  unit_tests_node22:
     executor:
       name: node
-      image: "18.2.0"
+      image: "22.14.0"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -230,8 +230,8 @@ jobs:
           command: |
             echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-            echo nvm install v18 >> $BASH_ENV
-            echo nvm alias default v18 >> $BASH_ENV
+            echo nvm install v22.14.0 >> $BASH_ENV
+            echo nvm alias default v22.14.0 >> $BASH_ENV
       - run: |
           node -v
       - run: npm i -g yarn@1.22.11
@@ -334,7 +334,7 @@ jobs:
   e2e_tests_pnp:
     executor:
       name: node
-      image: "18.12.0"
+      image: "22.14.0"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -389,7 +389,7 @@ jobs:
   e2e_tests_pnpm:
     executor:
       name: node
-      image: "18.12.0"
+      image: "22.14.0"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -502,7 +502,7 @@ jobs:
   e2e_tests_adapters:
     <<: *e2e-executor
     docker:
-      - image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
+      - image: cypress/browsers:node-22.14.0-chrome-133.0.6943.53-1-ff-135.0-edge-133.0.3065.59-1
     steps:
       - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_ADAPTERS}"' >> "$BASH_ENV"
       - e2e-test:
@@ -513,7 +513,7 @@ jobs:
   e2e_tests_adapters_monorepo:
     <<: *e2e-executor
     docker:
-      - image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
+      - image: cypress/browsers:node-22.14.0-chrome-133.0.6943.53-1-ff-135.0-edge-133.0.3065.59-1
     steps:
       - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_ADAPTERS}"' >> "$BASH_ENV"
       - e2e-test:
@@ -572,11 +572,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.0.0 and yarn
+          name: Install node 22.14.0 and yarn
           command: |
-            nvm install 18.0.0
-            nvm alias default 18.0.0
-            nvm use 18.0.0
+            nvm install 22.14.0
+            nvm alias default 22.14.0
+            nvm use 22.14.0
             choco install yarn -y
       - run:
           name: Rebuild packages for windows
@@ -607,11 +607,11 @@ jobs:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.19.0, yarn and netlify-cli
+          name: Install node 22.14.0, yarn and netlify-cli
           command: |
-            nvm install 18.19.0
-            nvm alias default 18.19.0
-            nvm use 18.19.0
+            nvm install 22.14.0
+            nvm alias default 22.14.0
+            nvm use 22.14.0
             npm install -g yarn netlify-cli
       - run:
           name: Clear out sharp
@@ -672,8 +672,8 @@ workflows:
             # to resemble setup for more robust E2E tests
             - lint
             - bootstrap
-            - unit_tests_node18
-      - unit_tests_node18:
+            - unit_tests_node22
+      - unit_tests_node22:
           <<: *ignore_docs
           requires:
             - lint
