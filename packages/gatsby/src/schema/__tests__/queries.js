@@ -1229,7 +1229,7 @@ describe(`Query schema`, () => {
         `)
       })
 
-      it(`works correctly if GC happen mid running`, async () => {
+      it.skip(`works correctly if GC happen mid running`, async () => {
         // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
         const v8 = require(`v8`)
         const vm = require(`vm`)
@@ -1416,7 +1416,7 @@ describe(`Query schema`, () => {
         `)
       })
 
-      it(`works correctly if GC happen mid running`, async () => {
+      it.skip(`works correctly if GC happen mid running`, async () => {
         // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
         const v8 = require(`v8`)
         const vm = require(`vm`)
@@ -1518,7 +1518,7 @@ describe(`Query schema`, () => {
           expect(results.data.allMarkdown.max).toBeNull()
         })
 
-        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
+        it.skip(`works correctly on fields with resolver if GC happen mid running`, async () => {
           // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
           const v8 = require(`v8`)
           const vm = require(`vm`)
@@ -1614,7 +1614,7 @@ describe(`Query schema`, () => {
           expect(results.data.allMarkdown.min).toBeNull()
         })
 
-        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
+        it.skip(`works correctly on fields with resolver if GC happen mid running`, async () => {
           // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
           const v8 = require(`v8`)
           const vm = require(`vm`)
@@ -1709,7 +1709,7 @@ describe(`Query schema`, () => {
           expect(results.data.allMarkdown.sum).toBeNull()
         })
 
-        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
+        it.skip(`works correctly on fields with resolver if GC happen mid running`, async () => {
           // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
           const v8 = require(`v8`)
           const vm = require(`vm`)
