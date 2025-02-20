@@ -176,7 +176,6 @@ Here are some things to keep in mind and some "gotchas" depending on how the CMS
 
 - Inside the CMS, sometimes you will need to wait to make sure you have the correct `updatedAt` timestamp as some CMS may take a second to update their backend and then wait for the change to propagate to the frontend. While others will immediately update the frontend and then propagate that to the backend. You will need the _most_ up to date timestamp when opening the Content Sync UI waiting room.
 - Make sure that a preview webhook is being sent to Gatsby Cloud after the content is edited, whether it's before you press the "Open Preview" button or the "Open Preview" is the trigger that sends the webhook.
-- The node manifests get written out in the `public` dir of your gatsby site, so you can check the manifests on your local disk at `/public/__node-manifests/<sourcePluginName>/<manifestId>.json` or you can navigate directly to that piece of content `https://<your-domain>/__node-manifests/<sourcePluginName>/<manifestId>`.
 
 ## MIME types
 

@@ -25,7 +25,6 @@ import {
   IQueryClearDirtyQueriesListToEmitViaWebsocket,
   ICreateJobV2FromInternalAction,
   ICreatePageDependencyActionPayloadType,
-  IDeleteNodeManifests,
   IClearGatsbyImageSourceUrlAction,
 } from "../types"
 
@@ -363,12 +362,6 @@ export const setFunctions = (
   return {
     type: `SET_SITE_FUNCTIONS`,
     payload: functions,
-  }
-}
-
-export const deleteNodeManifests = (): IDeleteNodeManifests => {
-  return {
-    type: `DELETE_NODE_MANIFESTS`,
   }
 }
 
