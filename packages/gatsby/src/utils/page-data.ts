@@ -19,7 +19,6 @@ import {
 import { Span } from "opentracing"
 
 export { reverseFixedPagePath }
-import { processNodeManifests } from "../utils/node-manifest"
 import { IExecutionResult } from "../query/types"
 import { getPageMode } from "./page-mode"
 import { ICollectedSlices } from "./babel/find-slices"
@@ -182,9 +181,6 @@ export function isFlushEnqueued(): boolean {
   return isFlushPending
 }
 
-let staleNodeManifests = false
-const maxManifestIdsToLog = 50
-
 type IDataTask =
   | {
       type: "page"
@@ -211,40 +207,11 @@ export async function flush(parentSpan?: Span): Promise<void> {
     queries,
     slices,
     slicesByTemplate,
-    nodeManifests,
   } = store.getState()
   const isBuild = program?._?.[0] !== `develop`
 
   const { pagePaths, sliceNames } = pendingPageDataWrites
   let writePageDataActivity
-
-  let nodeManifestPagePathMap
-
-  if (pagePaths.size > 0) {
-    // we process node manifests in this location because we need to add the manifestId to the page data.
-    // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
-    // We only do this when there are pending page-data writes because otherwise we could flush pending createNodeManifest calls before page-data.json files are written. Which means those page-data files wouldn't have the corresponding manifest id's written to them.
-    nodeManifestPagePathMap = await processNodeManifests()
-  } else if (nodeManifests.length > 0 && staleNodeManifests) {
-    staleNodeManifests = false
-
-    reporter.warn(
-      `[gatsby] node manifests were created but no page-data.json files were written, so manifest ID's were not added to page-data.json files. This may be a bug or it may be due to a source plugin creating a node manifest for a node that did not change. Node manifest IDs: ${nodeManifests
-        .map(n => n.manifestId)
-        .slice(0, maxManifestIdsToLog)
-        .join(`,`)}${
-        nodeManifests.length > maxManifestIdsToLog
-          ? ` There were ${
-              nodeManifests.length - maxManifestIdsToLog
-            } additional ID's that were not logged due to output length.`
-          : ``
-      }`
-    )
-
-    nodeManifestPagePathMap = await processNodeManifests()
-  } else if (nodeManifests.length > 0) {
-    staleNodeManifests = true
-  }
 
   if (pagePaths.size > 0 || sliceNames.size > 0) {
     writePageDataActivity = reporter.createProgress(
@@ -270,10 +237,6 @@ export async function flush(parentSpan?: Span): Promise<void> {
       // them, a page might not exist anymore щ（ﾟДﾟщ）
       // This is why we need this check
       if (page) {
-        if (page.path && nodeManifestPagePathMap) {
-          page.manifestId = nodeManifestPagePathMap.get(page.path)
-        }
-
         if (!isBuild && process.env.GATSBY_QUERY_ON_DEMAND) {
           // check if already did run query for this page
           // with query-on-demand we might have pending page-data write due to

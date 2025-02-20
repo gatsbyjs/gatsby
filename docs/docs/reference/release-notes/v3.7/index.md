@@ -11,7 +11,6 @@ Key highlights of this release:
 - [Functions](#functions) - Now generally available
 - [webpack caching](#webpack-caching) - Starting gradual rollout
 - [Yarn 2 (PNP) support](#yarn-2-pnp-support)
-- [New API for source plugins: `createNodeManifest`](#new-api-for-source-plugins-createnodemanifest)
 - [Experimental: Node persistence in LMDB](#experimental-node-persistence-in-lmdb) - Lower peak memory usage
 - [`gatsby-remark-images`: async image decoding by default](#gatsby-remark-images-async-image-decoding-by-default)
 
@@ -41,25 +40,6 @@ We've added this feature in [3.4 release](/docs/reference/release-notes/v3.4/)
 behind a flag. Now we are starting a gradual rollout for everyone. This release enables it for 20% of users.
 
 If you encounter any issues, please let us know in the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/31525).
-
-## New API for source plugins: `createNodeManifest`
-
-This new API will be used to write out information that ties the state of some CMS content to a finally built page.
-Useful for routing to previews or even production content once they're built.
-
-This release adds a new public action `unstable_createNodeManifest` which is used to tie a manifest ID
-(a CMS id that maps to a unique revision state of some content) to a page that was built from a specific node.
-
-To make the mapping from node to page more accurate, this release introduces a new argument to the `createPage` helper,
-`ownerNodeId` so that a user can specify that a page is owned by a specific node.
-
-In the case that no `ownerNodeId` is provided, the logic checks for a page with an `id` variable in page context that
-matches to the node id of the node manifest. If neither of those exist the logic maps the manifest to the first
-page the node is found on in query tracking.
-
-The result is that a source plugin can allow a CMS to create a manifest file using a CMS ID that maps to a finally built page in Gatsby, allowing for a service to redirect to the right page after a build is complete.
-
-[Original PR](https://github.com/gatsbyjs/gatsby/pull/31127).
 
 ## Experimental: Node persistence in LMDB
 
