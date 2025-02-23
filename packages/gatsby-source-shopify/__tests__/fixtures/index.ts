@@ -9,6 +9,7 @@ import ids from "./ids.json"
 export function mockGatsbyApi(): NodePluginArgs {
   return {
     actions: {
+      createFieldExtension: jest.fn(),
       createTypes: jest.fn(),
       createNode: jest.fn(),
       touchNode: jest.fn(),
