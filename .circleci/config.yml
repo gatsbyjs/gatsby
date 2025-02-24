@@ -383,7 +383,7 @@ jobs:
   e2e_tests_pnpm:
     executor:
       name: node
-      image: "18.12.0"
+      image: "18.20.7"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
