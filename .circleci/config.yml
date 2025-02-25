@@ -238,12 +238,6 @@ jobs:
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
-  integration_tests_node_manifest:
-    executor: node
-    steps:
-      - e2e-test:
-          test_path: integration-tests/node-manifest
-
   integration_tests_long_term_caching:
     executor: node
     steps:
@@ -392,6 +386,7 @@ jobs:
       image: "18.12.0"
     steps:
       - checkout
+      - run: npm i -g pnpm@latest-9
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run:
@@ -680,8 +675,6 @@ workflows:
             - typecheck
             - bootstrap
       - integration_tests_gatsby_source_wordpress:
-          <<: *e2e-test-workflow
-      - integration_tests_node_manifest:
           <<: *e2e-test-workflow
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow

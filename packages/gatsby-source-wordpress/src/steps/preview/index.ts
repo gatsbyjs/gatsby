@@ -8,13 +8,11 @@ import PQueue from "p-queue"
 import { dump } from "dumper.js"
 import { actions as gatsbyActions } from "gatsby/dist/redux/actions/public"
 
-import { remoteSchemaSupportsFieldNameOnTypeName } from "~/steps/ingest-remote-schema/introspect-remote-schema"
 import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated"
 import fetchGraphql from "~/utils/fetch-graphql"
 
 import { getStore } from "~/store"
 
-import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-actions/update"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates"
 
@@ -279,26 +277,6 @@ export const sourcePreview = async ({
     modified: previewData.modified,
     sendPreviewStatus,
   })
-
-  const { node } = await fetchAndCreateSingleNode({
-    actionType: `PREVIEW`,
-    ...previewData,
-    previewParentId: previewData.parentDatabaseId,
-    isPreview: true,
-  })
-
-  if (
-    previewData?.manifestIds?.length &&
-    `unstable_createNodeManifest` in actions &&
-    node
-  ) {
-    previewData.manifestIds.forEach(manifestId => {
-      actions.unstable_createNodeManifest({
-        manifestId,
-        node,
-      })
-    })
-  }
 }
 
 /**
@@ -358,12 +336,6 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     dump(webhookBody)
   }
 
-  const wpGatsbyPreviewNodeManifestsAreSupported =
-    await remoteSchemaSupportsFieldNameOnTypeName({
-      typeName: `GatsbyPreviewData`,
-      fieldName: `manifestIds`,
-    })
-
   const previewActions = await paginatedWpNodeFetch({
     contentTypePlural: `actionMonitorActions`,
     nodeTypeName: `ActionMonitor`,
@@ -398,7 +370,6 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
               remoteUrl
               singleName
               userDatabaseId
-              ${wpGatsbyPreviewNodeManifestsAreSupported ? `manifestIds` : ``}
             }
           }
           pageInfo {

@@ -287,77 +287,6 @@ function prepareJSONNode(id, node, key, content) {
   return JSONNode
 }
 
-let numberOfContentSyncDebugLogs = 0
-const maxContentSyncDebugLogTimes = 50
-
-let warnOnceForNoSupport = false
-let warnOnceToUpgradeGatsby = false
-
-/**
- * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
- * Content Sync routes a user from Contentful to a page created from the entry data they're interested in previewing.
- */
-
-function contentfulCreateNodeManifest({
-  pluginConfig,
-  entryItem,
-  entryNode,
-  space,
-  unstable_createNodeManifest,
-}) {
-  const isPreview = pluginConfig.get(`host`) === `preview.contentful.com`
-
-  const createNodeManifestIsSupported =
-    typeof unstable_createNodeManifest === `function`
-
-  const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported
-
-  const updatedAt = entryItem.sys.updatedAt
-
-  const manifestId = `${space.sys.id}-${entryItem.sys.id}-${updatedAt}`
-
-  if (
-    process.env.CONTENTFUL_DEBUG_NODE_MANIFEST === `true` &&
-    numberOfContentSyncDebugLogs <= maxContentSyncDebugLogTimes
-  ) {
-    numberOfContentSyncDebugLogs++
-
-    console.info(
-      JSON.stringify({
-        isPreview,
-        createNodeManifestIsSupported,
-        shouldCreateNodeManifest,
-        manifestId,
-        entryItemSysUpdatedAt: updatedAt,
-      })
-    )
-  }
-
-  if (shouldCreateNodeManifest) {
-    if (shouldUpgradeGatsbyVersion && !warnOnceToUpgradeGatsby) {
-      console.warn(
-        `Your site is doing more work than it needs to for Preview, upgrade to Gatsby ^${GATSBY_VERSION_MANIFEST_V2} for better performance`
-      )
-      warnOnceToUpgradeGatsby = true
-    }
-
-    unstable_createNodeManifest({
-      manifestId,
-      node: entryNode,
-      updatedAtUTC: updatedAt,
-    })
-  } else if (
-    isPreview &&
-    !createNodeManifestIsSupported &&
-    !warnOnceForNoSupport
-  ) {
-    console.warn(
-      `Contentful: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
-    )
-    warnOnceForNoSupport = true
-  }
-}
-
 function makeQueuedCreateNode({ nodeCount, createNode }) {
   if (nodeCount > 5000) {
     let createdNodeCount = 0
@@ -411,7 +340,6 @@ export const createNodesForContentType = async ({
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
-  unstable_createNodeManifest,
   createNode,
   createNodeId,
   getNode,
@@ -616,14 +544,6 @@ export const createNodesForContentType = async ({
           type: entryItem.sys.type,
         },
       }
-
-      contentfulCreateNodeManifest({
-        pluginConfig,
-        entryItem,
-        entryNode,
-        space,
-        unstable_createNodeManifest,
-      })
 
       // Revision applies to entries, assets, and content types
       if (entryItem.sys.revision) {
