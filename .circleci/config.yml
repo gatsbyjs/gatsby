@@ -386,6 +386,7 @@ jobs:
       image: "18.12.0"
     steps:
       - checkout
+      - run: npm i -g pnpm@latest-9
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run:
