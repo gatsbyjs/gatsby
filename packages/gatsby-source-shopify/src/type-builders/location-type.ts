@@ -5,7 +5,6 @@ export function locationTypeBuilder(prefix: string): string {
         fulfillmentOrdersOptIn: Boolean!
         handle: String!
         inventoryManagement: Boolean!
-        productBased: Boolean! @deprecated(reason: "\`productBased\` will be removed in version 2024-07, non-product based fulfillment services are no longer supported")
         serviceName: String!
         shippingMethods: [${prefix}ShippingMethod!]!
         shopifyId: String!
@@ -27,6 +26,7 @@ export function locationTypeBuilder(prefix: string): string {
         inventoryLevels: [${prefix}InventoryLevel!]! @link(by: "id") @proxy(from: "inventoryLevels___NODE", fromNode: true)
         legacyResourceId: String!
         locationsCount: Int! @proxy(from: "locationsCount.count")
+        measurement: ${prefix}InventoryItemMeasurement
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -36,6 +36,11 @@ export function locationTypeBuilder(prefix: string): string {
         unitCost: ${prefix}MoneyV2
         updatedAt: Date! @dateformat
         variant: ${prefix}ProductVariantConnection!
+      }
+
+      type ${prefix}InventoryItemMeasurement {
+        id: ID!
+        weight: ${prefix}Weight
       }
 
       type ${prefix}InventoryQuantity {
@@ -95,6 +100,18 @@ export function locationTypeBuilder(prefix: string): string {
       type ${prefix}ShippingMethod {
         code: String!
         label: String!
+      }
+
+      type ${prefix}Weight {
+        unit: ${prefix}WeightUnit!
+        value: Float!
+      }
+
+      enum ${prefix}WeightUnit {
+        GRAMS
+        KILOGRAMS
+        OUNCES
+        POUNDS
       }
 
       extend type ${prefix}ProductVariant {

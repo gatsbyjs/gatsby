@@ -63,6 +63,12 @@ export class ProductVariantsQuery extends BulkQuery {
                   count
                   precision
                 }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -112,7 +118,6 @@ export class ProductVariantsQuery extends BulkQuery {
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
@@ -127,8 +132,6 @@ export class ProductVariantsQuery extends BulkQuery {
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {

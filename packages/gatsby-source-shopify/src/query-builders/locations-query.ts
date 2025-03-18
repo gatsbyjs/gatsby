@@ -49,7 +49,6 @@ export class LocationsQuery extends BulkQuery {
                 handle
                 id
                 inventoryManagement
-                productBased
                 serviceName
                 shippingMethods {
                   code

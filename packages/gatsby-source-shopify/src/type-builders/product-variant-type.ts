@@ -19,7 +19,6 @@ export function productVariantTypeBuilder(prefix: string): string {
         presentmentPrices: [${prefix}ProductVariantPricePair!]!
         price: Float!
         product: ${prefix}Product! @link(from: "_product", by: "id")
-        requiresShipping: Boolean! @deprecated(reason: "Use \`InventoryItem.requiresShipping\` instead.")
         selectedOptions: [${prefix}SelectedOption!]!
         sellingPlanGroupCount: Int! @proxy(from: "sellingPlanGroupsCount.count")
         shopifyId: String!
@@ -29,8 +28,6 @@ export function productVariantTypeBuilder(prefix: string): string {
         taxCode: String
         title: String!
         updatedAt: Date! @dateformat
-        weight: Float
-        weightUnit: ${prefix}WeightUnit!
       }
 
       enum ${prefix}ProductVariantInventoryPolicy {
