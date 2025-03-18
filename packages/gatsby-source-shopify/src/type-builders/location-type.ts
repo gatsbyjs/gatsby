@@ -6,7 +6,6 @@ export function locationTypeBuilder(prefix: string): string {
         handle: String!
         inventoryManagement: Boolean!
         serviceName: String!
-        shippingMethods: [${prefix}ShippingMethod!]!
         shopifyId: String!
         type: ${prefix}FulfillmentServiceType!
       }
@@ -95,11 +94,6 @@ export function locationTypeBuilder(prefix: string): string {
         province: String
         provinceCode: String
         zip: String
-      }
-
-      type ${prefix}ShippingMethod {
-        code: String!
-        label: String!
       }
 
       type ${prefix}Weight {

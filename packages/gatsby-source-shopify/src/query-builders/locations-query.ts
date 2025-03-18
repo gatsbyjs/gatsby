@@ -50,10 +50,6 @@ export class LocationsQuery extends BulkQuery {
                 id
                 inventoryManagement
                 serviceName
-                shippingMethods {
-                  code
-                  label
-                }
                 type
               }
               fulfillsOnlineOrders
