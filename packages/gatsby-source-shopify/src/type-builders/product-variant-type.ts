@@ -22,11 +22,11 @@ export function productVariantTypeBuilder(prefix: string): string {
         requiresShipping: Boolean! @deprecated(reason: "Use \`InventoryItem.requiresShipping\` instead.")
         selectedOptions: [${prefix}SelectedOption!]!
         sellingPlanGroupCount: Int! @proxy(from: "sellingPlanGroupsCount.count")
-        sku: String
         shopifyId: String!
+        sku: String
         storefrontId: String!
-        taxCode: String
         taxable: Boolean!
+        taxCode: String
         title: String!
         updatedAt: Date! @dateformat
         weight: Float
@@ -34,8 +34,8 @@ export function productVariantTypeBuilder(prefix: string): string {
       }
 
       enum ${prefix}ProductVariantInventoryPolicy {
-        DENY
         CONTINUE
+        DENY
       }
 
       type ${prefix}ProductVariantPricePair {
