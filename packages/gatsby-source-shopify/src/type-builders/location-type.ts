@@ -49,13 +49,13 @@ export function locationTypeBuilder(prefix: string): string {
       type ${prefix}InventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
         quantities: [${prefix}InventoryQuantity!]!
-        available: Int! @proxy(from: "quantities") @selectQuantityByName(name: "available")
-        incoming: Int! @proxy(from: "quantities") @selectQuantityByName(name: "incoming")
-        committed: Int! @proxy(from: "quantities") @selectQuantityByName(name: "committed")
-        reserved: Int! @proxy(from: "quantities") @selectQuantityByName(name: "reserved")
-        damaged: Int! @proxy(from: "quantities") @selectQuantityByName(name: "damaged")
-        safety_stock: Int! @proxy(from: "quantities") @selectQuantityByName(name: "safety_stock")
-        quality_control: Int! @proxy(from: "quantities") @selectQuantityByName(name: "quality_control")
+        available: Int! @proxy(from: "quantities") @selectQuantityByName(name: "available") @deprecated(reason: "Query \`quantities\` field directly")
+        incoming: Int! @proxy(from: "quantities") @selectQuantityByName(name: "incoming") @deprecated(reason: "Query \`quantities\` field directly")
+        committed: Int! @proxy(from: "quantities") @selectQuantityByName(name: "committed") @deprecated(reason: "Query \`quantities\` field directly")
+        reserved: Int! @proxy(from: "quantities") @selectQuantityByName(name: "reserved") @deprecated(reason: "Query \`quantities\` field directly")
+        damaged: Int! @proxy(from: "quantities") @selectQuantityByName(name: "damaged") @deprecated(reason: "Query \`quantities\` field directly")
+        safety_stock: Int! @proxy(from: "quantities") @selectQuantityByName(name: "safety_stock") @deprecated(reason: "Query \`quantities\` field directly")
+        quality_control: Int! @proxy(from: "quantities") @selectQuantityByName(name: "quality_control") @deprecated(reason: "Query \`quantities\` field directly")
         id: ID!
         location: ${prefix}Location! @link(from: "_location", by: "id")
         shopifyId: String!
