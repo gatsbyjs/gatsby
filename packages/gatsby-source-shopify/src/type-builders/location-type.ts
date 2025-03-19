@@ -2,7 +2,7 @@ export function locationTypeBuilder(prefix: string): string {
   return `
       type ${prefix}FulfillmentService {
         callbackUrl: String
-        fulfillmentOrdersOptIn: Boolean!
+        fulfillmentOrdersOptIn: Boolean! @deprecated(reason: "Property is always set to true on correctly functioning fulfillment services.")
         handle: String!
         inventoryManagement: Boolean!
         serviceName: String!
