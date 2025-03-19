@@ -25,7 +25,7 @@ export function locationTypeBuilder(prefix: string): string {
         inventoryLevels: [${prefix}InventoryLevel!]! @link(by: "id") @proxy(from: "inventoryLevels___NODE", fromNode: true)
         legacyResourceId: String!
         locationsCount: Int! @proxy(from: "locationsCount.count")
-        measurement: ${prefix}InventoryItemMeasurement
+        measurement: ${prefix}InventoryItemMeasurement!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -38,7 +38,6 @@ export function locationTypeBuilder(prefix: string): string {
       }
 
       type ${prefix}InventoryItemMeasurement {
-        id: ID!
         weight: ${prefix}Weight
       }
 
