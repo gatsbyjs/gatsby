@@ -102,6 +102,8 @@ export function locationTypeBuilder(prefix: string): string {
 
       extend type ${prefix}ProductVariant {
         inventoryItem: ${prefix}InventoryItem!
+        weight: Float @proxy(from: "inventoryItem.measurement.weight.value") @deprecated(reason: "Query \`inventoryItem.measurement.weight.value\` directly")
+        weightUnit: ${prefix}WeightUnit! @proxy(from: "inventoryItem.measurement.weight.unit") @deprecated(reason: "Query \`inventoryItem.measurement.weight.unit\` directly")
       }
     `
 }
