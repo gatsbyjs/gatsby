@@ -100,13 +100,6 @@ export function locationTypeBuilder(prefix: string): string {
         value: Float!
       }
 
-      enum ${prefix}WeightUnit {
-        GRAMS
-        KILOGRAMS
-        OUNCES
-        POUNDS
-      }
-
       extend type ${prefix}ProductVariant {
         inventoryItem: ${prefix}InventoryItem!
       }
