@@ -221,13 +221,13 @@ const handleGraphQLErrors = async ({
     if (error.debugMessage) {
       reporter.error(
         formatLogMessage(
-          `Error category: ${error.category} \n\nError: \n  ${error.message} \n\n Debug message: \n  ${error.debugMessage} \n\n Error path: ${errorPath}`
+          `Error: \n  ${error.message} \n\n Debug message: \n  ${error.debugMessage} \n\n Error path: ${errorPath}`
         )
       )
     } else {
       reporter.error(
         formatLogMessage(
-          `(${error.category}) ${
+          `${
             error?.locations?.length
               ? error.locations
                   .map(
