@@ -1,4 +1,4 @@
-FROM wordpress:5.9
+FROM wordpress:6.1
 
 ARG ROOT_DIR=/var/www/html
 ARG WP_CONTENT_DIR=${ROOT_DIR}/wp-content
