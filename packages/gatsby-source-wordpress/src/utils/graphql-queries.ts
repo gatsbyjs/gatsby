@@ -74,7 +74,16 @@ export const introspectionQuery = /* GraphQL */ `
             }
           }
         }
-        fields {
+        # TODO: streamline deprecated things - for now just to unblock the build
+        # there is interface in remote schema that seems to not deprecate the field
+        # but types implementing interface do deprecate the field
+        # and without asking to include deprecated - following errors happens
+        # Error: Interface field WpAcfPageFieldsFlexibleContentField_Layout.fieldGroupNa
+        # me expected but WpAcfPageFieldsFlexibleContentFieldFlexLayout1Layout_Fields do
+        # es not provide it.
+        # Maybe we should includeDeprecated in all possible places
+        # and then gatsby-source-wordpress should apply deprecation state to recreated types
+        fields(includeDeprecated: true) {
           name
           description
           args {

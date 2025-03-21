@@ -199,6 +199,24 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
 
     if (!interfaceType.fields) {
       continue
+    } else {
+      // TODO: this is possibly temporary to get tests to pass, but it needs to be fully considered.
+      // Problem that this fix is ordering of type processing that was causing schema
+      // to be different between cold and warm builds.
+      // cold build would skip some types that were not yet "fetched", while warm build
+      // was adding those because they were actually fetched in the previous build, but not yet
+      // processed
+      for (const interfaceField of interfaceType.fields) {
+        if (
+          interfaceField.type &&
+          !typeIsExcluded({
+            typeName: findNamedType(interfaceField.type).name,
+            pluginOptions,
+          })
+        ) {
+          getStore().dispatch.remoteSchema.addFetchedType(interfaceField.type)
+        }
+      }
     }
 
     const typesThatImplementInterface =
@@ -216,20 +234,6 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
     }
 
     getStore().dispatch.remoteSchema.addFetchedType(interfaceType)
-
-    if (interfaceType.fields) {
-      for (const interfaceField of interfaceType.fields) {
-        if (
-          interfaceField.type &&
-          !typeIsExcluded({
-            typeName: findNamedType(interfaceField.type).name,
-            pluginOptions,
-          })
-        ) {
-          getStore().dispatch.remoteSchema.addFetchedType(interfaceField.type)
-        }
-      }
-    }
   }
 
   const nodeListFieldNames = nodeListRootFields.map(field => field.name)
