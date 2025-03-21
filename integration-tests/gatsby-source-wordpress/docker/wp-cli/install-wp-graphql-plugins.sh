@@ -9,8 +9,7 @@ mkdir -p ${PLUGIN_DIR} && \
 curl -LO https://github.com/wp-graphql/wp-graphql/releases/download/${WPGRAPHQL_VERSION}/wp-graphql.zip \
     && unzip ./wp-graphql.zip -d ${PLUGIN_DIR} && \
 
-
-Install wp-gatsby using git, and apply a diff
+# Install wp-gatsby using git, and apply a diff
 git clone --depth 1 -b ${WPGATSBY_VERSION} https://github.com/gatsbyjs/wp-gatsby.git ${PLUGIN_DIR}/wp-gatsby && \
 
 # WP GraphQL ACF from GitHub release
@@ -27,7 +26,6 @@ mkdir -p ${PLUGIN_DIR}/wp-graphql-content-blocks \
 install-plugin custom-post-type-ui WebDevStudios/custom-post-type-ui ${CPT_UI_VERSION} && \
 
 # WP GraphQL Yoast from GitHub release
-# curl -LO https://github.com/ashhitch/wp-graphql-yoast-seo/releases/download/v4.23.2/wp-graphql-yoast-seo.zip
 mkdir -p ${PLUGIN_DIR}/wp-graphql-yoast-seo \
     && curl -LO https://github.com/ashhitch/wp-graphql-yoast-seo/releases/download/${WPGRAPHQL_YOAST_VERSION}/wp-graphql-yoast-seo.zip \
     && unzip ./wp-graphql-yoast-seo.zip -d ${PLUGIN_DIR}/wp-graphql-yoast-seo && \
