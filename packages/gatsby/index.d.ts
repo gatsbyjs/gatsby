@@ -1380,17 +1380,6 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest */
-  unstable_createNodeManifest(
-    this: void,
-    args: {
-      manifestId: string
-      node: Node
-      updatedAtUTC?: string | number
-    },
-    plugin?: ActionPlugin
-  ): void
-
   /** @see https://www.gatsbyjs.com/docs/actions/#setRequestHeaders */
   setRequestHeaders(
     this: void,
