@@ -407,7 +407,7 @@ jobs:
           command: rm package-lock.json
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Install pnpm
-          command: npm install -g pnpm
+          command: npm install -g pnpm@9
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Install start-server-and-test
           command: npm install -g start-server-and-test@^1.11.0
