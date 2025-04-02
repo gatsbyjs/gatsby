@@ -32,8 +32,6 @@ const restrictedNodeFields = [
 
 const pluginConfig = createPluginConfig({})
 
-const unstable_createNodeManifest = jest.fn()
-
 // Counts the created nodes per node type
 function countCreatedNodeTypesFromMock(mock) {
   const nodeTypeCounts = {}
@@ -223,7 +221,6 @@ describe(`Process contentful data (by name)`, () => {
         space,
         useNameForId: true,
         pluginConfig,
-        unstable_createNodeManifest,
       })
     })
 
@@ -340,7 +337,6 @@ describe(`Process existing mutated nodes in warm build`, () => {
         space,
         useNameForId: true,
         pluginConfig,
-        unstable_createNodeManifest,
       })
     })
 
@@ -450,7 +446,6 @@ describe(`Process contentful data (by id)`, () => {
         space,
         useNameForId: false,
         pluginConfig,
-        unstable_createNodeManifest,
       })
     })
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)

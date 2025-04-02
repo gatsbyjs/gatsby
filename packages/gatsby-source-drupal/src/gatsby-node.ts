@@ -29,7 +29,6 @@ import {
   handleWebhookUpdate,
   createNodeIfItDoesNotExist,
   handleDeletedNode,
-  drupalCreateNodeManifest,
   getExtendedFileNodeData,
 } from "./utils"
 const imageCdnDocs = `https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
@@ -193,12 +192,7 @@ exports.sourceNodes = async (
     pluginOptions.imageCDN = true
   }
 
-  const {
-    createNode,
-    setPluginStatus,
-    touchNode,
-    unstable_createNodeManifest,
-  } = actions
+  const { createNode, setPluginStatus, touchNode } = actions
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
 
@@ -745,12 +739,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
         fileNodesExtendedData,
         reporter
       )
-
-      drupalCreateNodeManifest({
-        attributes: datum?.attributes,
-        gatsbyNode: node,
-        unstable_createNodeManifest,
-      })
 
       nodes.set(node.id, node)
     })
