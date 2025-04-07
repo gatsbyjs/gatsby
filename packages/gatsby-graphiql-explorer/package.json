@@ -55,7 +55,7 @@
     "react-dom": "^18.2.0",
     "regenerator-runtime": "^0.13.11",
     "style-loader": "^3.3.3",
-    "webpack": "^5.88.1",
+    "webpack": "~5.98.0",
     "webpack-cli": "^5.1.4"
   },
   "engines": {
