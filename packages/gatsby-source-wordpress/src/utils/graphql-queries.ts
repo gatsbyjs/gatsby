@@ -77,9 +77,9 @@ export const introspectionQuery = /* GraphQL */ `
         # there might be interface in remote schema that seems to not deprecate the field
         # but types implementing interface do deprecate the field
         # and without asking to include deprecated - following errors happens
-        # Error: Interface field WpAcfPageFieldsFlexibleContentField_Layout.fieldGroupNa
-        # me expected but WpAcfPageFieldsFlexibleContentFieldFlexLayout1Layout_Fields do
-        # es not provide it.
+        # Error: Interface field WpAcfPageFieldsFlexibleContentField_Layout.fieldGroupName
+        # expected but WpAcfPageFieldsFlexibleContentFieldFlexLayout1Layout_Fields does
+        # not provide it.
         fields(includeDeprecated: true) {
           name
           description
