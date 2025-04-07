@@ -1,6 +1,6 @@
 {
   "name": "gatsby-graphiql-explorer",
-  "version": "3.14.0",
+  "version": "3.14.1",
   "description": "GraphiQL IDE with custom features for Gatsby users",
   "main": "index.js",
   "scripts": {
