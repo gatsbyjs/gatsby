@@ -523,7 +523,7 @@ class LocalNodeModel {
     if (!ids) {
       ids = new Set()
     }
-    if (obj?.parent && typeof obj.parent === 'string') {
+    if (obj?.parent && typeof obj.parent === `string`) {
       ids.add(obj.parent)
     }
     let matchingRoot = null
