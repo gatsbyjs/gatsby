@@ -289,7 +289,6 @@ export interface IGatsbyState {
     >
     typesToPlugins: Map<IGatsbyNode[`internal`][`type`], IGatsbyPlugin[`name`]>
   }
-  nodeManifests: Array<INodeManifest>
   requestHeaders: Map<string, { [header: string]: string }>
   statefulSourcePlugins: Set<string>
   telemetry: ITelemetry
@@ -1153,28 +1152,6 @@ interface IMarkHtmlDirty {
 
 interface ISSRUsedUnsafeBuiltin {
   type: `SSR_USED_UNSAFE_BUILTIN`
-}
-
-export interface ICreateNodeManifest {
-  type: `CREATE_NODE_MANIFEST`
-  payload: {
-    manifestId: string
-    node: IGatsbyNode
-    pluginName: string
-    updatedAtUTC?: string | number
-  }
-}
-
-export interface IDeleteNodeManifests {
-  type: `DELETE_NODE_MANIFESTS`
-}
-
-export interface INodeManifest {
-  manifestId: string
-  pluginName: string
-  node: {
-    id: string
-  }
 }
 
 export interface ISetDomainRequestHeaders {

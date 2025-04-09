@@ -13,13 +13,6 @@ const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
     context.plugin ? `\nPlugin: ${context.plugin}` : ``
   }`
 
-const getSharedNodeManifestWarning = (inputManifest: {
-  manifestId: string
-  node: { id: string }
-  pluginName: string
-}): string =>
-  `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
-
 const errors: Record<string, IErrorMapEntry> = {
   "": {
     text: (context): string => {
@@ -816,50 +809,6 @@ const errors: Record<string, IErrorMapEntry> = {
     category: ErrorCategory.UNKNOWN,
     type: Type.UNKNOWN,
     docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
-  },
-  // Node Manifest warnings
-  "11801": {
-    text: ({ inputManifest }): string => `${getSharedNodeManifestWarning(
-      inputManifest
-    )} but Gatsby couldn't find a page for this node.
-      If you want a manifest to be created for this node (for previews or other purposes), ensure that a page was created (and that a ownerNodeId is added to createPage() if you're not using the Filesystem Route API). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.\n`,
-    level: Level.WARNING,
-    category: ErrorCategory.USER,
-    type: Type.API_NODE_VALIDATION,
-  },
-  "11802": {
-    text: ({ inputManifest, pagePath }): string =>
-      `${getSharedNodeManifestWarning(
-        inputManifest
-      )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.id in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
-    level: Level.WARNING,
-    category: ErrorCategory.USER,
-    type: Type.API_NODE_VALIDATION,
-  },
-  "11805": {
-    text: ({ inputManifest, pagePath }): string =>
-      `${getSharedNodeManifestWarning(
-        inputManifest
-      )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.slug in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
-    level: Level.WARNING,
-    category: ErrorCategory.USER,
-    type: Type.API_NODE_VALIDATION,
-  },
-  "11803": {
-    text: ({ inputManifest, pagePath }): string =>
-      `${getSharedNodeManifestWarning(
-        inputManifest
-      )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page where this node is queried.\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
-    level: Level.WARNING,
-    category: ErrorCategory.USER,
-    type: Type.API_NODE_VALIDATION,
-  },
-  "11804": {
-    text: ({ pluginName, nodeId }): string =>
-      `Plugin ${pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}`,
-    level: Level.WARNING,
-    category: ErrorCategory.USER,
-    type: Type.API_NODE_VALIDATION,
   },
   // Parcel Compilation Errors
   "11901": {

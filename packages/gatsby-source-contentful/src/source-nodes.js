@@ -66,7 +66,6 @@ export async function sourceNodes(
     createNode: originalCreateNode,
     touchNode,
     deleteNode: originalDeleteNode,
-    unstable_createNodeManifest,
     enableStatefulSourceNodes,
   } = actions
 
@@ -526,7 +525,6 @@ export async function sourceNodes(
       space,
       useNameForId: pluginConfig.get(`useNameForId`),
       pluginConfig,
-      unstable_createNodeManifest,
     })
 
     // allow node to garbage collect these items if it needs to
