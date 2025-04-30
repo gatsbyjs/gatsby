@@ -521,10 +521,10 @@ class LocalNodeModel {
     let iterations = 0
     let ids = this._rootNodeMap.get(obj)
     if (!ids) {
-      ids = []
+      ids = new Set()
     }
-    if (obj?.parent) {
-      ids.push(obj.parent)
+    if (obj?.parent && typeof obj.parent === `string`) {
+      ids.add(obj.parent)
     }
     let matchingRoot = null
 

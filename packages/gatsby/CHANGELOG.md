@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.14.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.3/packages/gatsby) (2025-04-09)
+
+#### Bug Fixes
+
+- Align types of rootNodeMap during root node tracking [#39262](https://github.com/gatsbyjs/gatsby/issues/39262) [#39270](https://github.com/gatsbyjs/gatsby/issues/39270) [#39261](https://github.com/gatsbyjs/gatsby/issues/39261) ([e990476](https://github.com/gatsbyjs/gatsby/commit/e990476537942aeab260af2104968d0898f5f90c))
+
+### [5.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.2/packages/gatsby) (2025-04-07)
+
+#### Bug Fixes
+
+- pin webpack [#39264](https://github.com/gatsbyjs/gatsby/issues/39264) [#39265](https://github.com/gatsbyjs/gatsby/issues/39265) ([8fc38b7](https://github.com/gatsbyjs/gatsby/commit/8fc38b7e358f3456d814f4293dc2413a2edf631c))
+
 ### [5.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.1/packages/gatsby) (2024-12-20)
 
 **Note:** Version bump only for package gatsby
