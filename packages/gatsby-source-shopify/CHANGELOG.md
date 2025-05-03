@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@10.0.0/packages/gatsby-source-shopify) (2025-03-28)
+
+#### Other Changes
+
+- feat!(gatsby-source-shopify): upgrade from Shopify API version 2024-04 to 2025-01 [#39247](https://github.com/gatsbyjs/gatsby/issues/39247) [#39252](https://github.com/gatsbyjs/gatsby/issues/39252) [#39247](https://github.com/gatsbyjs/gatsby/issues/39247) [#39248](https://github.com/gatsbyjs/gatsby/issues/39248) [#39222](https://github.com/gatsbyjs/gatsby/issues/39222) ([ee0a374](https://github.com/gatsbyjs/gatsby/commit/ee0a3741777232866bff76146ab969450988aaab))
+
 ## [9.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@9.0.0/packages/gatsby-source-shopify) (2025-01-02)
 
 #### Other Changes

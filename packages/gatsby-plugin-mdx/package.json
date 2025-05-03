@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "5.15.0-next.0",
+  "version": "5.15.0-next.1",
   "description": "MDX integration for Gatsby",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -58,7 +58,7 @@
     "del-cli": "^5.0.0",
     "opentracing": "^0.14.7",
     "typescript": "^5.1.6",
-    "webpack": "^5.88.1"
+    "webpack": "~5.98.0"
   },
   "jest": {
     "testEnvironment": "node"
