@@ -1,6 +1,8 @@
 export function isLocalLink(path) {
-  // Handle null/undefined case
-  if (!path) return false
+  // Return undefined for non-string inputs (to match existing tests)
+  if (typeof path !== `string`) {
+    return undefined
+  }
 
   // Check for protocol-containing URLs
   // This will match things like https://, http://, mailto:, tel:, etc.
