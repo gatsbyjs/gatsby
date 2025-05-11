@@ -147,7 +147,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -196,7 +199,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -276,7 +282,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -285,7 +294,16 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -335,20 +353,20 @@ Array [
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {
@@ -503,7 +521,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -578,12 +599,7 @@ Array [
                 handle
                 id
                 inventoryManagement
-                productBased
                 serviceName
-                shippingMethods {
-                  code
-                  label
-                }
                 type
               }
               fulfillsOnlineOrders
@@ -793,7 +809,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -842,7 +861,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -922,7 +944,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -931,7 +956,16 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -981,20 +1015,20 @@ Array [
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {
@@ -1149,7 +1183,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -1224,12 +1261,7 @@ Array [
                 handle
                 id
                 inventoryManagement
-                productBased
                 serviceName
-                shippingMethods {
-                  code
-                  label
-                }
                 type
               }
               fulfillsOnlineOrders
@@ -1439,7 +1471,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -1488,7 +1523,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -1568,7 +1606,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -1577,7 +1618,16 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -1627,20 +1677,20 @@ Array [
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {
@@ -1795,7 +1845,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -1870,12 +1923,7 @@ Array [
                 handle
                 id
                 inventoryManagement
-                productBased
                 serviceName
-                shippingMethods {
-                  code
-                  label
-                }
                 type
               }
               fulfillsOnlineOrders
@@ -2085,7 +2133,10 @@ Array [
                   }
                 }
               }
-              mediaCount
+              mediaCount {
+                count
+                precision
+              }
               metafields {
                 edges {
                   node {
@@ -2134,7 +2185,10 @@ Array [
               productType
               publishedAt
               requiresSellingPlan
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               seo {
                 description
                 title
@@ -2214,7 +2268,10 @@ Array [
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: [\\"incoming\\", \\"available\\", \\"committed\\", \\"reserved\\", \\"damaged\\", \\"safety_stock\\", \\"quality_control\\"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -2223,7 +2280,16 @@ Array [
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -2273,20 +2339,20 @@ Array [
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {
@@ -2441,7 +2507,10 @@ Array [
                   }
                 }
               }
-              productsCount
+              productsCount {
+                count
+                precision
+              }
               ruleSet {
                 appliedDisjunctively
                 rules {
@@ -2516,12 +2585,7 @@ Array [
                 handle
                 id
                 inventoryManagement
-                productBased
                 serviceName
-                shippingMethods {
-                  code
-                  label
-                }
                 type
               }
               fulfillsOnlineOrders

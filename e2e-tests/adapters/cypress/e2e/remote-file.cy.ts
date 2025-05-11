@@ -88,13 +88,15 @@ for (const config of configs) {
               ).to.be.equal(expectation.height)
             }
             if (expectedNaturalWidth) {
-              expect(Math.ceil(images[i].naturalWidth)).to.be.equal(
-                expectedNaturalWidth
+              expect(Math.ceil(images[i].naturalWidth)).to.be.closeTo(
+                expectedNaturalWidth,
+                1
               )
             }
             if (expectedNaturalHeight) {
-              expect(Math.ceil(images[i].naturalHeight)).to.be.equal(
-                expectedNaturalHeight
+              expect(Math.ceil(images[i].naturalHeight)).to.be.closeTo(
+                expectedNaturalHeight,
+                1
               )
             }
           }

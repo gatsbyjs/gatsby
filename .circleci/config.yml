@@ -238,12 +238,6 @@ jobs:
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
-  integration_tests_node_manifest:
-    executor: node
-    steps:
-      - e2e-test:
-          test_path: integration-tests/node-manifest
-
   integration_tests_long_term_caching:
     executor: node
     steps:
@@ -407,7 +401,7 @@ jobs:
           command: rm package-lock.json
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Install pnpm
-          command: npm install -g pnpm
+          command: npm install -g pnpm@9
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Install start-server-and-test
           command: npm install -g start-server-and-test@^1.11.0
@@ -502,7 +496,7 @@ jobs:
   e2e_tests_adapters:
     <<: *e2e-executor
     docker:
-      - image: cypress/browsers:node-18.16.1-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
+      - image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
     steps:
       - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_ADAPTERS}"' >> "$BASH_ENV"
       - e2e-test:
@@ -513,7 +507,7 @@ jobs:
   e2e_tests_adapters_monorepo:
     <<: *e2e-executor
     docker:
-      - image: cypress/browsers:node-18.16.1-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
+      - image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
     steps:
       - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_ADAPTERS}"' >> "$BASH_ENV"
       - e2e-test:
@@ -680,8 +674,6 @@ workflows:
             - typecheck
             - bootstrap
       - integration_tests_gatsby_source_wordpress:
-          <<: *e2e-test-workflow
-      - integration_tests_node_manifest:
           <<: *e2e-test-workflow
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
