@@ -2,12 +2,12 @@
 const ABSOLUTE_URL_REGEX = /^[a-zA-Z][a-zA-Z\d+\-.]*?:/
 const isAbsolute = path => ABSOLUTE_URL_REGEX.test(path)
 
-export const isLocalLink = path => {
-  if (typeof path !== `string`) {
-    return undefined
-    // TODO(v5): Re-Add TypeError
-    // throw new TypeError(`Expected a \`string\`, got \`${typeof path}\``)
+export function isLocalLink(path) {
+  // Handle null/undefined case
+  if (!path) throw new TypeError(`Expected a \`string\`, got \`${typeof path}\``)
+  if (/^(?:[a-z+]+:)?\/\//i.test(path)) {
+    return false
   }
-
-  return !isAbsolute(path)
+  // If it's not a protocol-based URL, it's likely a local link
+  return true
 }
