@@ -6,8 +6,8 @@ function isAbsolute(path) {
 
 export function isLocalLink(path) {
   if (typeof path !== `string`) {
-    throw new TypeError(`Expected a string, got ${typeof path}`)
+    return undefined
   }
-
+  if (!path) return false
   return !isAbsolute(path)
 }
