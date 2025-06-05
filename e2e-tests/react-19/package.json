@@ -1,0 +1,34 @@
+{
+  "name": "gatsby-react-19",
+  "private": true,
+  "description": "Test React 19",
+  "version": "1.0.0",
+  "author": "Gatsby Team",
+  "dependencies": {
+    "gatsby": "5.16.0-next.0-dev-1763762112311",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/cypress": "^9.0.0",
+    "cypress": "^12.0.0",
+    "gatsby-cypress": "next",
+    "start-server-and-test": "2.1.1",
+    "typescript": "^4.9.5"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "develop": "CYPRESS_SUPPORT=y gatsby develop",
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "serve": "gatsby serve",
+    "test": "start-server-and-test develop http://localhost:8000 'cypress run'",
+    "test:watch": "start-server-and-test develop http://localhost:8000 'cypress open'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

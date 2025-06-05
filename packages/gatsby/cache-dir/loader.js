@@ -1,4 +1,3 @@
-import { createFromReadableStream } from "react-server-dom-webpack"
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findPath, findMatchPath } from "./find-path"
@@ -510,13 +509,16 @@ export class BaseLoader {
                   cancel() {},
                 })
 
-                return waitForResponse(
-                  createFromReadableStream(readableStream)
-                ).then(result => {
-                  pageResources.partialHydration = result
+                // Only load this experimental module if opting in to experimental Partial Hydration
+                return import(`react-server-dom-webpack`)
+                  .then(({ createFromReadableStream }) =>
+                    waitForResponse(createFromReadableStream(readableStream))
+                  )
+                  .then(result => {
+                    pageResources.partialHydration = result
 
-                  return pageResources
-                })
+                    return pageResources
+                  })
               } else {
                 pageResources = toPageResources(
                   pageData,
