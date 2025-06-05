@@ -46,6 +46,15 @@ navigationInit()
 const reloadStorageKey = `gatsby-reload-compilation-hash-match`
 
 apiRunnerAsync(`onClientEntry`).then(() => {
+  const handleUncaughtError = (error, errorInfo) => {
+    console.error(`Uncaught error:`, error, errorInfo)
+    apiRunner(`onUncaughtError`, { error, errorInfo })
+  }
+
+  const handleCaughtError = (error, errorInfo) => {
+    apiRunner(`onCaughtError`, { error, errorInfo })
+  }
+
   // Let plugins register a service worker. The plugin just needs
   // to return true.
   if (apiRunner(`registerServiceWorker`).filter(Boolean).length > 0) {
@@ -277,16 +286,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     // Client only pages have any empty body so we just do a normal
     // render to avoid React complaining about hydration mis-matches.
-    let defaultRenderer = render
+    let defaultRenderer = (Component, el) =>
+      render(Component, el, {
+        onUncaughtError: handleUncaughtError,
+        onCaughtError: handleCaughtError,
+      })
+
     if (focusEl && focusEl.children.length) {
-      defaultRenderer = hydrate
+      defaultRenderer = (Component, el) =>
+        hydrate(Component, el, {
+          onUncaughtError: handleUncaughtError,
+          onCaughtError: handleCaughtError,
+        })
     }
 
-    const renderer = apiRunner(
-      `replaceHydrateFunction`,
-      undefined,
+    const renderer =
+      apiRunner(`replaceHydrateFunction`, undefined, defaultRenderer)[0] ||
       defaultRenderer
-    )[0]
 
     function runRender() {
       const rootElement =
