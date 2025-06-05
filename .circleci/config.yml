@@ -568,6 +568,20 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/development-runtime
 
+  e2e_tests_development_runtime_with_react_19:
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
+    steps:
+      # We use curl in this test suite but it isn't available in all images we use
+      - run: apt-get update && apt-get install -y curl
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+          react_version: "19.1.1"
+
   e2e_tests_production_runtime_with_react_18:
     parameters:
       node_version:
@@ -579,6 +593,30 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/production-runtime
           test_command: yarn test && yarn test:offline
+
+  e2e_tests_production_runtime_with_react_19:
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: yarn test && yarn test:offline
+          react_version: "19.1.1"
+
+  e2e_tests_react_19_compatibility:
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/react-19-compatibility
 
   themes_e2e_tests_development_runtime:
     parameters:
@@ -901,6 +939,12 @@ workflows:
       - e2e_tests_development_runtime_with_react_18:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime_with_react_18:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime_with_react_19:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime_with_react_19:
+          <<: *e2e-test-workflow
+      - e2e_tests_react_19_compatibility:
           <<: *e2e-test-workflow
       - themes_e2e_tests_production_runtime:
           <<: *e2e-test-workflow

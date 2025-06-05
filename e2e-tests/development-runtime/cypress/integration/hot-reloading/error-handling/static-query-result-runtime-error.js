@@ -27,62 +27,66 @@ after(() => {
 const errorPlaceholder = `false`
 const errorReplacement = `true`
 
-describe(`testing error overlay and ability to automatically recover from runtime errors (static queries variant)`, { testIsolation: false }, () => {
-  before(() => {
-    cy.visit(`/error-handling/static-query-result-runtime-error/`, {
-      // Hacky way to disable "uncaught:exception" message in error message itself
-      // See https://github.com/cypress-io/cypress/issues/254#issuecomment-292190924
-      onBeforeLoad: win => {
-        win.onerror = null
-      },
-    }).waitForRouteChange()
-  })
+describe(
+  `testing error overlay and ability to automatically recover from runtime errors (static queries variant)`,
+  { testIsolation: false },
+  () => {
+    before(() => {
+      cy.visit(`/error-handling/static-query-result-runtime-error/`, {
+        // Hacky way to disable "uncaught:exception" message in error message itself
+        // See https://github.com/cypress-io/cypress/issues/254#issuecomment-292190924
+        onBeforeLoad: win => {
+          win.onerror = null
+        },
+      }).waitForRouteChange()
+    })
 
-  it(`displays content initially (no errors yet)`, () => {
-    cy.findByTestId(`hot`).should(`contain.text`, `Working`)
-    cy.findByTestId(`results`).should(`contain.text`, `"hasError": false`)
-  })
+    it(`displays content initially (no errors yet)`, () => {
+      cy.findByTestId(`hot`).should(`contain.text`, `Working`)
+      cy.findByTestId(`results`).should(`contain.text`, `"hasError": false`)
+    })
 
-  it(`displays error with overlay on runtime errors`, () => {
-    cy.exec(
-      `npm run update -- --file content/error-recovery/static-query.json  --replacements "${errorPlaceholder}:${errorReplacement}" --exact`
-    )
-
-    cy.getFastRefreshOverlay()
-      .find(`#gatsby-overlay-labelledby`)
-      .should(`contain.text`, `Unhandled Runtime Error`)
-    cy.getFastRefreshOverlay()
-      .find(`#gatsby-overlay-describedby`)
-      .should(
-        `contain.text`,
-        `One unhandled runtime error found in your files. See the list below to fix it:`
+    it(`displays error with overlay on runtime errors`, () => {
+      cy.exec(
+        `npm run update -- --file content/error-recovery/static-query.json  --replacements "${errorPlaceholder}:${errorReplacement}" --exact`
       )
-    cy.getFastRefreshOverlay()
-      .find(
-        `[data-gatsby-overlay="accordion"] [data-gatsby-overlay="accordion__item__title"]`
-      )
-      .should(
-        `contain.text`,
-        `Error in function StaticQueryRuntimeError in ./src/pages/error-handling/static-query-result-runtime-error.js:14`
-      )
-    cy.getFastRefreshOverlay()
-      .find(
-        `[data-gatsby-overlay="accordion"] [data-gatsby-overlay="body__error-message"]`
-      )
-      .should(`contain.text`, `Static query results caused runtime error`)
-  })
 
-  it(`can recover without need to refresh manually`, () => {
-    cy.exec(
-      `npm run update -- --file content/error-recovery/static-query.json  --replacements "${errorReplacement}:${errorPlaceholder}" --exact`
-    )
-    cy.exec(
-      `npm run update -- --file src/pages/error-handling/static-query-result-runtime-error.js --replacements "Working:Updated" --exact`
-    )
+      cy.getFastRefreshOverlay()
+        .find(`#gatsby-overlay-labelledby`)
+        .should(`contain.text`, `Unhandled Runtime Error`)
+      cy.getFastRefreshOverlay()
+        .find(`#gatsby-overlay-describedby`)
+        .should(
+          `contain.text`,
+          `One unhandled runtime error found in your files. See the list below to fix it:`
+        )
+      cy.getFastRefreshOverlay()
+        .find(
+          `[data-gatsby-overlay="accordion"] [data-gatsby-overlay="accordion__item__title"]`
+        )
+        .should(
+          `contain.text`,
+          `Error in function StaticQueryRuntimeError in ./src/pages/error-handling/static-query-result-runtime-error.js:14`
+        )
+      cy.getFastRefreshOverlay()
+        .find(
+          `[data-gatsby-overlay="accordion"] [data-gatsby-overlay="body__error-message"]`
+        )
+        .should(`contain.text`, `Static query results caused runtime error`)
+    })
 
-    cy.findByTestId(`hot`).should(`contain.text`, `Updated`)
-    cy.findByTestId(`results`).should(`contain.text`, `"hasError": false`)
+    it(`can recover without need to refresh manually`, () => {
+      cy.exec(
+        `npm run update -- --file content/error-recovery/static-query.json  --replacements "${errorReplacement}:${errorPlaceholder}" --exact`
+      )
+      cy.exec(
+        `npm run update -- --file src/pages/error-handling/static-query-result-runtime-error.js --replacements "Working:Updated" --exact`
+      )
 
-    cy.assertNoFastRefreshOverlay()
-  })
-})
+      cy.findByTestId(`hot`).should(`contain.text`, `Updated`)
+      cy.findByTestId(`results`).should(`contain.text`, `"hasError": false`)
+
+      cy.assertNoFastRefreshOverlay()
+    })
+  }
+)
