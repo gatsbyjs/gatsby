@@ -128,7 +128,7 @@
     "mini-css-extract-plugin": "1.6.2",
     "mitt": "^1.2.0",
     "moment": "^2.29.4",
-    "multer": "^1.4.5-lts.1",
+    "multer": "^2.0.1",
     "node-fetch": "^2.6.11",
     "node-html-parser": "^5.4.2",
     "normalize-path": "^3.0.0",
