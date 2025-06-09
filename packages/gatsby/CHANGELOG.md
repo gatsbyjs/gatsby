@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.14.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.4/packages/gatsby) (2025-06-06)
+
+#### Bug Fixes
+
+- upgrade multer to resolve 3 security vulnerabilities resolve [#39307](https://github.com/gatsbyjs/gatsby/issues/39307) resolve [#39308](https://github.com/gatsbyjs/gatsby/issues/39308) ([e0cdefb](https://github.com/gatsbyjs/gatsby/commit/e0cdefb148accf40605f57ef3cb7e9ece423c826))
+
 ### [5.14.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.3/packages/gatsby) (2025-04-09)
 
 #### Bug Fixes
