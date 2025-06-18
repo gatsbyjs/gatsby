@@ -6,7 +6,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "18.0.0"
+        default: "18.17.0"
       gatsby_major:
         type: string
         default: "5"
@@ -24,7 +24,7 @@ aliases:
 
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node18.6.0-chrome105-ff104
+      - image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
     environment:
       <<: *e2e-executor-env
 
@@ -328,7 +328,7 @@ jobs:
   e2e_tests_pnp:
     executor:
       name: node
-      image: "18.12.0"
+      image: "18.17.0"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -383,7 +383,7 @@ jobs:
   e2e_tests_pnpm:
     executor:
       name: node
-      image: "18.12.0"
+      image: "18.17.0"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
