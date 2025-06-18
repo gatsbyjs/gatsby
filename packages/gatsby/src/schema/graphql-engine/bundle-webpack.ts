@@ -341,17 +341,17 @@ export async function createGraphqlEngineBundle(
   await printQueryEnginePlugins()
 
   // TODO: don't hardcode this
-  const sharpPlatformAndArch = `sharp-linux-x64`
-  // const sharpPlatformAndArch = `sharp-darwin-arm64`
+  const sharpPlatformAndArch = `linux-x64`
+  // const sharpPlatformAndArch = `darwin-arm64`
 
   const assetRelocatorUseEntry = {
     loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
     options: {
       outputAssetBase: `assets`,
       customEmit: (path: string): string | undefined => {
-        if (path === `@img/${sharpPlatformAndArch}/sharp.node`) {
+        if (path === `@img/sharp-${sharpPlatformAndArch}/sharp.node`) {
           return JSON.stringify(
-            `./assets/${sharpPlatformAndArch}/lib/${sharpPlatformAndArch}.node`
+            `./assets/sharp-${sharpPlatformAndArch}/lib/sharp-${sharpPlatformAndArch}.node`
           )
         }
         return undefined
