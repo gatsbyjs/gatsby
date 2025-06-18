@@ -233,7 +233,7 @@ function checkIfNeedToInstallMissingSharp(
   currentTarget: IPlatformAndArch
 ): IBinaryPackageStatus | undefined {
   try {
-    // check if shapr is resolvable
+    // check if sharp is resolvable
     const { version: sharpVersion } = require(`sharp/package.json`)
 
     if (isEqual(functionsTarget, currentTarget)) {
@@ -343,6 +343,20 @@ export async function createGraphqlEngineBundle(
     loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
     options: {
       outputAssetBase: `assets`,
+      customEmit: (path, { id, isRequire }) => {
+        if (path.includes("@img/sharp-")) {
+          if (id.endsWith("shims/gatsby-sharp.js")) {
+            // let forced sharp binaries be emitted by webpack
+            return
+          }
+
+          if (path === "@img/sharp-linux-x64/sharp.node") {
+            return JSON.stringify(
+              "./assets/sharp-linux-x64/lib/sharp-linux-x64.node"
+            )
+          }
+        }
+      },
     },
   }
 

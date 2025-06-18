@@ -14,15 +14,15 @@ const webpackPatchSharp: LoaderDefinitionFunction = function webpackPatchSharp(
     )
   }
 
-  // eslint-disable-next-line @babel/no-invalid-this
-  if (source && this?.resourcePath?.endsWith(`/lib/libvips.js`)) {
-    source = source.replace(
-      `require(\`@img/sharp-libvips-$\{buildPlatformArch()}/lib\`)`,
-      // todo: this should not hardcode the platform specific package name
-      // and instead figure out correct one for deployment platform
-      `require(\`@img/sharp-libvips-linux-x64/lib\`)`
-    )
-  }
+  // // eslint-disable-next-line @babel/no-invalid-this
+  // if (source && this?.resourcePath?.endsWith(`/lib/libvips.js`)) {
+  //   source = source.replace(
+  //     `require(\`@img/sharp-libvips-$\{buildPlatformArch()}/lib\`)`,
+  //     // todo: this should not hardcode the platform specific package name
+  //     // and instead figure out correct one for deployment platform
+  //     `require(\`@img/sharp-libvips-linux-x64/lib\`)`
+  //   )
+  // }
 
   return source?.replace(
     `versions = require(\`../vendor/\${versions.vips}/\${platformAndArch}/versions.json\`);`,
