@@ -340,7 +340,13 @@ export async function createGraphqlEngineBundle(
   )
   await printQueryEnginePlugins()
 
-  // TODO: don't hardcode this
+  // TODO: don't hardcode this, example:
+  // import detectLibc from "detect-libc"
+  // const runtimeLibc = (): string =>
+  //   detectLibc.isNonGlibcLinuxSync() ? detectLibc.familySync() : ``
+  // const sharpPlatformAndArch = (): string =>
+  //   `${process.platform}${runtimeLibc()}-${process.arch}`
+
   const sharpPlatformAndArch = `linux-x64`
   // const sharpPlatformAndArch = `darwin-arm64`
 
