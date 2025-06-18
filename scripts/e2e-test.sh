@@ -28,6 +28,8 @@ if [[ $PRE_GATSBY_DEV_COMMAND != "" ]]; then
   sh -c "$PRE_GATSBY_DEV_COMMAND"
 fi
 
+echo "ignore-engines true" > .yarnrc
+
 gatsby-dev --set-path-to-repo "$GATSBY_PATH"
 gatsby-dev --force-install --scan-once  # Do not copy files, only install through npm, like our users would
 if test -f "./node_modules/.bin/gatsby"; then
@@ -36,6 +38,8 @@ if test -f "./node_modules/.bin/gatsby"; then
 else
   echo "Gatsby bin doesn't exist. Skipping chmod."
 fi
+
+
 
 sh -c "$CUSTOM_COMMAND"
 echo "e2e test run succeeded"
