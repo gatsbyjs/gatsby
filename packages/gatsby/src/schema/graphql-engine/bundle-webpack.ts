@@ -23,6 +23,7 @@ import {
   getCurrentPlatformAndTarget,
   getFunctionsTargetPlatformAndTarget,
 } from "../../utils/engines-helpers"
+import type { ISharpBundlingPatchOptions } from "./sharp-bundling-patch"
 
 type Reporter = typeof reporter
 
@@ -339,23 +340,21 @@ export async function createGraphqlEngineBundle(
   )
   await printQueryEnginePlugins()
 
+  // TODO: don't hardcode this
+  const sharpPlatformAndArch = `sharp-linux-x64`
+  // const sharpPlatformAndArch = `sharp-darwin-arm64`
+
   const assetRelocatorUseEntry = {
     loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
     options: {
       outputAssetBase: `assets`,
-      customEmit: (path, { id, isRequire }) => {
-        if (path.includes("@img/sharp-")) {
-          if (id.endsWith("shims/gatsby-sharp.js")) {
-            // let forced sharp binaries be emitted by webpack
-            return
-          }
-
-          if (path === "@img/sharp-linux-x64/sharp.node") {
-            return JSON.stringify(
-              "./assets/sharp-linux-x64/lib/sharp-linux-x64.node"
-            )
-          }
+      customEmit: (path: string): string | undefined => {
+        if (path === `@img/${sharpPlatformAndArch}/sharp.node`) {
+          return JSON.stringify(
+            `./assets/${sharpPlatformAndArch}/lib/${sharpPlatformAndArch}.node`
+          )
         }
+        return undefined
       },
     },
   }
@@ -457,6 +456,9 @@ export async function createGraphqlEngineBundle(
                 assetRelocatorUseEntry,
                 {
                   loader: require.resolve(`./sharp-bundling-patch`),
+                  options: {
+                    sharpPlatformAndArch,
+                  } satisfies ISharpBundlingPatchOptions,
                 },
               ],
             },
