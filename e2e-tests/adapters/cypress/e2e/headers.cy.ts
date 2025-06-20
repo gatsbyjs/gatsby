@@ -1,6 +1,25 @@
+import { applyTrailingSlashOption } from "../../utils"
+import { CyHttpMessages } from "cypress/types/net-stubbing"
+
 import { WorkaroundCachedResponse } from "../utils/dont-cache-responses-in-browser"
 
+const TRAILING_SLASH = Cypress.env(`TRAILING_SLASH`) || `never`
 const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
+
+const WorkaroundHtmlCachedResponse = (
+  req: CyHttpMessages.IncomingHttpRequest
+): void | Promise<void> => {
+  // make sure we use cache workaround
+  WorkaroundCachedResponse(req)
+
+  // this is forcing html request to skip potential trailing slash redirect
+  // ideally cy.visit() url would already do that, but for index page it will always force
+  // trailing slash, so instead we apply it here, when url is fully formed
+  // otherwise cy.wait would get redirect response and assert headers of that,
+  // which is not what we want and because tests are parametrized, it would be messy
+  // to conditionally do `cy.wait()` multiple times to get actual html response
+  req.url = applyTrailingSlashOption(req.url, TRAILING_SLASH)
+}
 
 describe("Headers", () => {
   const defaultHeaders = {
@@ -86,18 +105,18 @@ describe("Headers", () => {
   }
 
   beforeEach(() => {
-    cy.intercept(PATH_PREFIX + "/", WorkaroundCachedResponse).as("index")
+    cy.intercept(PATH_PREFIX + "/", WorkaroundHtmlCachedResponse).as("index")
     cy.intercept(
       PATH_PREFIX + "/routes/ssg/static",
-      WorkaroundCachedResponse
+      WorkaroundHtmlCachedResponse
     ).as("ssg")
     cy.intercept(
       PATH_PREFIX + "/routes/ssr/static",
-      WorkaroundCachedResponse
+      WorkaroundHtmlCachedResponse
     ).as("ssr")
     cy.intercept(
       PATH_PREFIX + "/routes/dsg/static",
-      WorkaroundCachedResponse
+      WorkaroundHtmlCachedResponse
     ).as("dsg")
 
     cy.intercept(
