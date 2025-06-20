@@ -60,6 +60,17 @@ describe("Headers", () => {
     }
 
     cy.wait(routeAlias).then(interception => {
+      console.log("Intercepted", {
+        routeAlias,
+        request: {
+          url: interception.request.url,
+        },
+        response: {
+          status: interception.response.statusCode,
+          headers: interception.response.headers,
+        },
+      })
+
       Object.keys(expectedHeaders).forEach(headerKey => {
         const headers = interception.response.headers[headerKey]
 
