@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.14.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.5/packages/gatsby) (2025-06-20)
+
+#### Bug Fixes
+
+- ensure rendering engine has vendored libvips [#39317](https://github.com/gatsbyjs/gatsby/issues/39317) [#39320](https://github.com/gatsbyjs/gatsby/issues/39320) ([fd04eec](https://github.com/gatsbyjs/gatsby/commit/fd04eecde445a722f387447e7f198ef1df140d65))
+
 ### [5.14.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.4/packages/gatsby) (2025-06-06)
 
 #### Bug Fixes
