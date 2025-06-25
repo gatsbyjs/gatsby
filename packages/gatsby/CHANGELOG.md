@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.14.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.5/packages/gatsby) (2025-06-20)
+
+#### Bug Fixes
+
+- ensure rendering engine has vendored libvips [#39317](https://github.com/gatsbyjs/gatsby/issues/39317) [#39320](https://github.com/gatsbyjs/gatsby/issues/39320) ([fd04eec](https://github.com/gatsbyjs/gatsby/commit/fd04eecde445a722f387447e7f198ef1df140d65))
+
+### [5.14.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.4/packages/gatsby) (2025-06-06)
+
+#### Bug Fixes
+
+- upgrade multer to resolve 3 security vulnerabilities resolve [#39307](https://github.com/gatsbyjs/gatsby/issues/39307) resolve [#39308](https://github.com/gatsbyjs/gatsby/issues/39308) ([e0cdefb](https://github.com/gatsbyjs/gatsby/commit/e0cdefb148accf40605f57ef3cb7e9ece423c826))
+
+### [5.14.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.3/packages/gatsby) (2025-04-09)
+
+#### Bug Fixes
+
+- Align types of rootNodeMap during root node tracking [#39262](https://github.com/gatsbyjs/gatsby/issues/39262) [#39270](https://github.com/gatsbyjs/gatsby/issues/39270) [#39261](https://github.com/gatsbyjs/gatsby/issues/39261) ([e990476](https://github.com/gatsbyjs/gatsby/commit/e990476537942aeab260af2104968d0898f5f90c))
+
 ### [5.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.2/packages/gatsby) (2025-04-07)
 
 #### Bug Fixes
