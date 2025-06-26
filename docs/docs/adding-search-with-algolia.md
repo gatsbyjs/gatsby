@@ -10,7 +10,13 @@ Algolia is a site search hosting platform and API that provides you with the com
 
 Algolia will host the search index. You tell it what pages you have, where they are and how to navigate them, and the Algolia API will return those results to the user based on whatever search terms they use.
 
-Algolia provides a free tier that offers a limited number of monthly searches. A paid plan is required for higher volumes.
+Algolia provides a free tier that offers a limited number of monthly searches, a pay-as-you-go tier that allows you to pay for usage over a free amount, and committed plans for higher volumes.
+
+### DocSearch
+
+If you need search for a public developer-focused technical documentation site (think API/SDK docs, guides, blogs, etc), Algolia provides a completely free product called [DocSearch](https://docsearch.algolia.com/) that simplifies the process further and eliminates the need for indexing via plugin. The crawler will handle updates to your site and you'll be provided with out-of-the-box UI components for your front end.
+
+If you're not building public technical documentation, read on for how to implement Algolia for all other use cases.
 
 ## Indexing and searching
 
@@ -19,8 +25,6 @@ There are two stages to providing search functionality: indexing your pages and 
 The [Gatsby Algolia plugin](https://github.com/algolia/gatsby-plugin-algolia) handles the indexing. It sends your pages to Algolia for indexing every time you run `gatsby build`. You use GraphQL to customize which pages and what information to index.
 
 To build the user interface for searching, this guide will use [React InstantSearch](https://www.algolia.com/doc/guides/building-search-ui/getting-started/react/), which is a library provided by Algolia with ready-made React components. This is the quickest way to get up and running, but you could also build your own custom user interface.
-
-> Note: If you want to build a search for technical documentation, Algolia provides a product called [DocSearch](https://docsearch.algolia.com/) that simplifies the process further and eliminates the need for manual indexing. This is the preferred approach for documentation sites.
 
 ## Setting up the project
 
@@ -601,8 +605,8 @@ The Netlify documentation has more information on [how to configure environment 
 
 ## Additional Resources
 
-If you have any issues or if you want to learn more about using Algolia for search, check out this tutorial from Jason Lengstorf:
+If you have any issues or if you want to learn more about using Algolia for search, join the [Algolia Discord](https://alg.li/discord), or check out this tutorial from Jason Lengstorf: 
 
-https://youtu.be/VSkXyuXzwlc
+- Learn With Jason: https://youtu.be/VSkXyuXzwlc
 
 You can also find stories of companies using Gatsby + Algolia together [in the Algolia section of the blog](/blog/tags/algolia).
