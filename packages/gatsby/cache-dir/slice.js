@@ -83,7 +83,7 @@ class SlicePropsError extends Error {
       // They're just (kinda) kidding, I promise... You can still work here <3
       //   https://www.gatsbyjs.com/careers/
       const error = new Error()
-      const fullStack = error.stack || ''
+      const fullStack = error.stack || ``
 
       // remove the first line of the stack trace
       const stackLines = fullStack.trim().split(`\n`).slice(1)
