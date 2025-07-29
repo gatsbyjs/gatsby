@@ -3,7 +3,7 @@ import { Text, TextProps } from "ink"
 
 export const createLabel =
   (text: string, color: string): FunctionComponent<TextProps> =>
-  (...props): JSX.Element =>
+  (...props): React.ReactNode =>
     (
       <Text color={color} {...props}>
         {text}
