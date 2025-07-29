@@ -66,7 +66,7 @@
     "ink": "^3.2.0",
     "ink-spinner": "^4.0.3",
     "npm-run-all": "4.1.5",
-    "react": "^18.2.0",
+    "react": "^18.2.0 || ^19.0.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.79.2",
     "rollup-plugin-auto-external": "^2.0.0",

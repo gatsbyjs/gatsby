@@ -1,8 +1,11 @@
 import React from "react"
 import { Box, Static } from "ink"
+const StaticComponent = Static as any
 import { isTTY } from "../../../util/is-tty"
 import { Spinner } from "./components/spinner"
 import { ProgressBar } from "./components/progress-bar"
+const SpinnerComponent = Spinner as any
+const ProgressBarComponent = ProgressBar as any
 import { Message, IMessageProps } from "./components/messages"
 import { Error as ErrorComponent } from "./components/error"
 import Develop from "./components/develop"
@@ -79,7 +82,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
     return (
       <Box flexDirection="column">
         <Box flexDirection="column">
-          <Static items={messages}>
+          <StaticComponent items={messages}>
             {(message): React.ReactElement =>
               message.level === `ERROR` ? (
                 <ErrorComponent
@@ -93,15 +96,15 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
                 />
               )
             }
-          </Static>
+          </StaticComponent>
           {showTrees && <Trees />}
 
           {spinners.map(activity => (
-            <Spinner key={activity.id} {...activity} />
+            <SpinnerComponent key={activity.id} {...activity} />
           ))}
 
           {progressBars.map(activity => (
-            <ProgressBar
+            <ProgressBarComponent
               key={activity.id}
               message={activity.text}
               total={activity.total || 0}
