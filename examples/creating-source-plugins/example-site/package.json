@@ -18,8 +18,8 @@
     "gatsby-image": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-transformer-sharp": "next",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "prettier": "2.1.1"

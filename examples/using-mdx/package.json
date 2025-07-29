@@ -15,8 +15,8 @@
     "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
     "mdast-util-to-string": "^3.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "reading-time": "^1.5.0",
     "remark-gfm": "^3.0.1",
     "unist-util-visit": "^4.1.2"

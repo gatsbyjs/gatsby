@@ -22,8 +22,8 @@
     "googleapis": "^73.0.0",
     "node-fetch": "^2.6.1",
     "query-string": "^7.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "sass": "^1.32.13"
   },
   "devDependencies": {

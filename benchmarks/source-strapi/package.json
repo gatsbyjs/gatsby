@@ -12,8 +12,8 @@
     "gatsby-transformer-sharp": "^2.5.12",
     "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "sharp": "^0.32.6"
   },
   "devDependencies": {
