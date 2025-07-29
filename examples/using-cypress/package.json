@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "gatsby": "next",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@testing-library/cypress": "^9.0.0",

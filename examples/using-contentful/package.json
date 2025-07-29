@@ -13,8 +13,8 @@
     "gatsby-source-contentful": "next",
     "gatsby-transformer-remark": "next",
     "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-typography": "^0.16.19",
     "typography": "^0.16.19",
     "typography-breakpoint-constants": "^0.16.19"

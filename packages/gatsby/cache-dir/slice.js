@@ -79,15 +79,18 @@ class SlicePropsError extends Error {
     let message = ``
 
     if (inBrowser) {
+      // Use standard Error stack trace instead of React internals for React 19 compatibility
       // They're just (kinda) kidding, I promise... You can still work here <3
       //   https://www.gatsbyjs.com/careers/
-      const fullStack =
-        React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactDebugCurrentFrame.getCurrentStack()
+      const error = new Error()
+      const fullStack = error.stack || ''
 
       // remove the first line of the stack trace
       const stackLines = fullStack.trim().split(`\n`).slice(1)
-      stackLines[0] = stackLines[0].trim()
-      stack = `\n` + stackLines.join(`\n`)
+      if (stackLines.length > 0) {
+        stackLines[0] = stackLines[0].trim()
+        stack = `\n` + stackLines.join(`\n`)
+      }
 
       message = `Slice "${sliceName}" was passed props that are not serializable (${errors}).`
     } else {

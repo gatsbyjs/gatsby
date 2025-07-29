@@ -10,8 +10,8 @@
     "gatsby-plugin-sitemap": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-remark": "next",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "keywords": [
     "gatsby"
