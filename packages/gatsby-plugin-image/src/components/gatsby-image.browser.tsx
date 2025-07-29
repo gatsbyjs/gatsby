@@ -78,7 +78,7 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
     className: wClass,
     ...wrapperProps
   } = getWrapperProps(width, height, layout)
-  const root = useRef<HTMLElement>()
+  const root = useRef<HTMLElement>(null)
   const cacheKey = useMemo(() => JSON.stringify(image.images), [image.images])
 
   // Preact uses class instead of className so we need to check for both

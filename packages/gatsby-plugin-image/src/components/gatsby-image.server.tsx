@@ -4,7 +4,7 @@ import { Placeholder } from "./placeholder"
 import { MainImage, MainImageProps } from "./main-image"
 import { LayoutWrapper } from "./layout-wrapper"
 import PropTypes from "prop-types"
-import type { FunctionComponent, WeakValidationMap } from "react"
+import type { FunctionComponent } from "react"
 import type { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
 
 const removeNewLines = (str: string): string => str.replace(/\n/g, ``)
@@ -140,4 +140,4 @@ export const altValidator: PropTypes.Validator<string> = (
 export const propTypes = {
   image: PropTypes.object.isRequired,
   alt: altValidator,
-} as WeakValidationMap<GatsbyImageProps>
+}
