@@ -8,7 +8,7 @@ import {
   History,
   createMemorySource,
   createHistory,
-} from "@reach/router"
+} from "@gatsbyjs/reach-router"
 import { render, fireEvent } from "@testing-library/react"
 import { useScrollRestoration } from "../use-scroll-restoration"
 import { ScrollHandler } from "../scroll-handler"
