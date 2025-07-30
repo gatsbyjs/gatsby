@@ -43,5 +43,8 @@
   "author": "Matt Kane <matt@gatsbyjs.com>",
   "dependencies": {
     "@babel/runtime": "^7.20.13"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
