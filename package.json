@@ -129,6 +129,7 @@
     "packages/*"
   ],
   "resolutions": {
-    "@babel/plugin-transform-modules-commonjs": "7.18.6"
+    "@babel/plugin-transform-modules-commonjs": "7.18.6",
+    "minimatch": "^9.0.5"
   }
 }
