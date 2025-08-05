@@ -3825,6 +3825,26 @@
     chrome-trace-event "^1.0.2"
     nullthrows "^1.1.1"
 
+"@pieh/devcert@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@pieh/devcert/-/devcert-1.2.2.tgz#a9502db9f5c63a1daecc92c616551dd197849e3f"
+  integrity sha512-KI//cWCX5IsK/BfOHpJvG3SvYQ1ijbu5Wpkk9DBEOoTdw37KkAmTNiDZQRD65icIMFVUhVmmagq/gqY4nIhRpg==
+  dependencies:
+    application-config-path "^0.1.0"
+    command-exists "^1.2.4"
+    debug "^3.1.0"
+    eol "^0.9.1"
+    get-port "^3.2.0"
+    glob "^7.1.2"
+    is-valid-domain "^0.1.6"
+    lodash "^4.17.4"
+    mkdirp "^0.5.1"
+    password-prompt "^1.0.4"
+    rimraf "^2.6.2"
+    sudo-prompt "^8.2.0"
+    tmp "^0.0.33"
+    tslib "^1.10.0"
+
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
@@ -4632,10 +4652,6 @@
   resolved "https://registry.yarnpkg.com/@types/common-tags/-/common-tags-1.8.1.tgz#a5a49ca5ebbb58e0f8947f3ec98950c8970a68a9"
   integrity sha512-20R/mDpKSPWdJs5TOpz3e7zqbeCNuMCPhV7Yndk9KU2Rbij2r5W4RzwDPkzC+2lzUqXYu9rFzTktCBnDjHuNQg==
 
-"@types/configstore@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@types/configstore/-/configstore-2.1.1.tgz#cd1e8553633ad3185c3f2f239ecff5d2643e92b6"
-
 "@types/configstore@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/configstore/-/configstore-4.0.0.tgz#cb718f9507e9ee73782f40d07aaca1cd747e36fa"
@@ -4659,11 +4675,6 @@
   integrity sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA==
   dependencies:
     "@types/node" "*"
-
-"@types/debug@^0.0.30":
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-0.0.30.tgz#dc1e40f7af3b9c815013a7860e6252f6352a84df"
-  integrity sha512-orGL5LXERPYsLov6CWs3Fh6203+dXzJkR7OnddIr2514Hsecwc8xRpzCapshBbKFImCsvS/mk6+FWiN5LyZJAQ==
 
 "@types/debug@^4.0.0", "@types/debug@^4.1.7":
   version "4.1.7"
@@ -4759,24 +4770,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/get-port@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@types/get-port/-/get-port-3.2.0.tgz#f9e0a11443cc21336470185eae3dfba4495d29bc"
-  integrity sha512-TiNg8R1kjDde5Pub9F9vCwZA/BNW9HeXP5b9j7Qucqncy/McfPZ6xze/EyBdXS5FhMIGN6Fx3vg75l5KHy3V1Q==
-
-"@types/glob@*", "@types/glob@^7.1.1":
+"@types/glob@^7.1.1":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
   integrity sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
-  dependencies:
-    "@types/events" "*"
-    "@types/minimatch" "*"
-    "@types/node" "*"
-
-"@types/glob@^5.0.34":
-  version "5.0.36"
-  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-5.0.36.tgz#0c80a9c8664fc7d19781de229f287077fd622cb2"
-  integrity sha512-KEzSKuP2+3oOjYYjujue6Z3Yqis5HKA1BsIC+jZ1v3lrRNdsqyNNtX0rQf6LSuI4DJJ2z5UV//zBZCcvM0xikg==
   dependencies:
     "@types/events" "*"
     "@types/minimatch" "*"
@@ -4904,7 +4901,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@^4.14.175", "@types/lodash@^4.14.195", "@types/lodash@^4.14.92":
+"@types/lodash@^4.14.175", "@types/lodash@^4.14.195":
   version "4.14.195"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.195.tgz#bafc975b252eb6cea78882ce8a7b6bf22a6de632"
   integrity sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==
@@ -4947,13 +4944,6 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
-"@types/mkdirp@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@types/mkdirp/-/mkdirp-0.5.2.tgz#503aacfe5cc2703d5484326b1b27efa67a339c1f"
-  integrity sha512-U5icWpv7YnZYGsN4/cmh3WD2onMY0aJIiTE6+51TwJCttdHvtCYmkBNOobHlXwrJRL0nkH9jH4kD+1FAdMN4Tg==
-  dependencies:
-    "@types/node" "*"
-
 "@types/ms@*":
   version "0.7.31"
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
@@ -4988,11 +4978,6 @@
   version "17.0.45"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.45.tgz#2c0fafd78705e7a18b7906b5201a522719dc5190"
   integrity sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==
-
-"@types/node@^8.5.7":
-  version "8.10.59"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.59.tgz#9e34261f30183f9777017a13d185dfac6b899e04"
-  integrity sha512-8RkBivJrDCyPpBXhVZcjh7cQxVBSmRk9QM7hOketZzp6Tg79c0N8kkpAIito9bnJ3HCVCHVYz+KHTEbfQNfeVQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -5082,14 +5067,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/rimraf@^2.0.2":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@types/rimraf/-/rimraf-2.0.3.tgz#0199a46af106729ba14213fda7b981278d8c84f2"
-  integrity sha512-dZfyfL/u9l/oi984hEXdmAjX3JHry7TLWw43u1HQ8HhPv6KtfxnrZ3T/bleJ0GEvnk9t5sM7eePkgMqz3yBcGg==
-  dependencies:
-    "@types/glob" "*"
-    "@types/node" "*"
-
 "@types/sax@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@types/sax/-/sax-1.2.1.tgz#e0248be936ece791a82db1a57f3fb5f7c87e8172"
@@ -5158,11 +5135,6 @@
   integrity sha512-JAUw1iXGO1qaWwEOzxTKJZ/5JxVeON9kvGZ/osgZaJImBnyjyn0cjovPsf6FNLmyGY8Vw9DoXZCMlfMkMwHRWg==
   dependencies:
     "@types/estree" "*"
-
-"@types/tmp@^0.0.33":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@types/tmp/-/tmp-0.0.33.tgz#1073c4bc824754ae3d10cfab88ab0237ba964e4d"
-  integrity sha1-EHPEvIJHVK49EM+riKsCN7qWTk0=
 
 "@types/tmp@^0.2.3":
   version "0.2.3"
@@ -9882,35 +9854,6 @@ detective@^5.2.0:
     acorn-node "^1.6.1"
     defined "^1.0.0"
     minimist "^1.1.1"
-
-devcert@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/devcert/-/devcert-1.2.2.tgz#7ebbefeb74991e269ceafcd66f2bb78677c12652"
-  integrity sha512-UsLqvtJGPiGwsIZnJINUnFYaWgK7CroreGRndWHZkRD58tPFr3pVbbSyHR8lbh41+azR4jKvuNZ+eCoBZGA5kA==
-  dependencies:
-    "@types/configstore" "^2.1.1"
-    "@types/debug" "^0.0.30"
-    "@types/get-port" "^3.2.0"
-    "@types/glob" "^5.0.34"
-    "@types/lodash" "^4.14.92"
-    "@types/mkdirp" "^0.5.2"
-    "@types/node" "^8.5.7"
-    "@types/rimraf" "^2.0.2"
-    "@types/tmp" "^0.0.33"
-    application-config-path "^0.1.0"
-    command-exists "^1.2.4"
-    debug "^3.1.0"
-    eol "^0.9.1"
-    get-port "^3.2.0"
-    glob "^7.1.2"
-    is-valid-domain "^0.1.6"
-    lodash "^4.17.4"
-    mkdirp "^0.5.1"
-    password-prompt "^1.0.4"
-    rimraf "^2.6.2"
-    sudo-prompt "^8.2.0"
-    tmp "^0.0.33"
-    tslib "^1.10.0"
 
 devtools-protocol@0.0.854822:
   version "0.0.854822"
