@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.14.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.6/packages/gatsby) (2025-08-06)
+
+#### Bug Fixes
+
+- use forked devcert to avoid pulling transitive deps from its @types/\* deps, handle change in tmp package [#39343](https://github.com/gatsbyjs/gatsby/issues/39343) [#39345](https://github.com/gatsbyjs/gatsby/issues/39345) ([a9eb53c](https://github.com/gatsbyjs/gatsby/commit/a9eb53cb86258799c6a958cc8d02376120a3e270))
+
 ### [5.14.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.5/packages/gatsby) (2025-06-20)
 
 #### Bug Fixes
