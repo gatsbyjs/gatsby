@@ -19,7 +19,7 @@
     "@babel/traverse": "^7.20.13",
     "@babel/types": "^7.20.7",
     "@builder.io/partytown": "^0.7.5",
-    "@gatsbyjs/devcert": "^1.2.3",
+    "@expo/devcert": "^1.2.0",
     "@gatsbyjs/reach-router": "^2.0.1",
     "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
     "@graphql-codegen/add": "^3.2.3",
