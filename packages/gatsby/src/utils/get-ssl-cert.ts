@@ -86,7 +86,7 @@ export async function getSslCert({
       const mkdtemp = fs.mkdtempSync(path.join(os.tmpdir(), `home-`))
       process.env.HOME = mkdtemp
     }
-    const getDevCert = require(`@pieh/devcert`).certificateFor
+    const getDevCert = require(`@gatsbyjs/devcert`).certificateFor
     const { caPath, key, cert } = await getDevCert(name, {
       getCaPath: true,
       skipCertutilInstall: false,

@@ -1663,6 +1663,26 @@
   dependencies:
     "@floating-ui/dom" "^1.3.0"
 
+"@gatsbyjs/devcert@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@gatsbyjs/devcert/-/devcert-1.2.3.tgz#3cb0a0be5503de708eeecd87904528219388ebee"
+  integrity sha512-rWl3zIYkderM93U9u+pubXMPeGETEUZHI9vkoTXCxiSAEyJoOW8Z/032AbQZLBaG/bSnDTKiKo+o+D9+1a9FnA==
+  dependencies:
+    application-config-path "^0.1.0"
+    command-exists "^1.2.4"
+    debug "^3.1.0"
+    eol "^0.9.1"
+    get-port "^3.2.0"
+    glob "^7.1.2"
+    is-valid-domain "^0.1.6"
+    lodash "^4.17.4"
+    mkdirp "^0.5.1"
+    password-prompt "^1.0.4"
+    rimraf "^2.6.2"
+    sudo-prompt "^8.2.0"
+    tmp "^0.0.33"
+    tslib "^1.10.0"
+
 "@gatsbyjs/reach-router@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@gatsbyjs/reach-router/-/reach-router-2.0.1.tgz#8c4ddb6c38589fb4650408430e51220e31d04fca"
@@ -3824,26 +3844,6 @@
     "@parcel/utils" "2.8.3"
     chrome-trace-event "^1.0.2"
     nullthrows "^1.1.1"
-
-"@pieh/devcert@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@pieh/devcert/-/devcert-1.2.2.tgz#a9502db9f5c63a1daecc92c616551dd197849e3f"
-  integrity sha512-KI//cWCX5IsK/BfOHpJvG3SvYQ1ijbu5Wpkk9DBEOoTdw37KkAmTNiDZQRD65icIMFVUhVmmagq/gqY4nIhRpg==
-  dependencies:
-    application-config-path "^0.1.0"
-    command-exists "^1.2.4"
-    debug "^3.1.0"
-    eol "^0.9.1"
-    get-port "^3.2.0"
-    glob "^7.1.2"
-    is-valid-domain "^0.1.6"
-    lodash "^4.17.4"
-    mkdirp "^0.5.1"
-    password-prompt "^1.0.4"
-    rimraf "^2.6.2"
-    sudo-prompt "^8.2.0"
-    tmp "^0.0.33"
-    tslib "^1.10.0"
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
