@@ -11,13 +11,13 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
   }
 })
-jest.mock(`devcert`, () => {
+jest.mock(`@expo/devcert`, () => {
   return {
     certificateFor: jest.fn(),
   }
 })
 
-import { certificateFor as getDevCert } from "devcert"
+import { certificateFor as getDevCert } from "@expo/devcert"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert, IGetSslCertArgs } from "../get-ssl-cert"
 
