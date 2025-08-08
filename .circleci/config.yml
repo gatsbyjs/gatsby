@@ -113,6 +113,8 @@ aliases:
       - lint
       - typecheck
       - unit_tests_node18
+      - unit_tests_node20
+      - unit_tests_node22
 
 commands:
   e2e-test:
@@ -220,6 +222,18 @@ jobs:
     executor:
       name: node
       image: "18.2.0"
+    <<: *test_template
+
+  unit_tests_node20:
+    executor:
+      name: node
+      image: "20.11.0"
+    <<: *test_template
+
+  unit_tests_node22:
+    executor:
+      name: node
+      image: "22.0.0"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -667,7 +681,21 @@ workflows:
             - lint
             - bootstrap
             - unit_tests_node18
+            - unit_tests_node20
+            - unit_tests_node22
       - unit_tests_node18:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - unit_tests_node20:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - unit_tests_node22:
           <<: *ignore_docs
           requires:
             - lint
