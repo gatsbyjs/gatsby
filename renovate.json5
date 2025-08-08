@@ -7340,7 +7340,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-plugin-gatsby-cloud/package.json"
+        "deprecated-packages/gatsby-plugin-gatsby-cloud/package.json"
       ],
       "matchDepTypes": [
         "devDependencies"
@@ -7384,7 +7384,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-plugin-gatsby-cloud/package.json"
+        "deprecated-packages/gatsby-plugin-gatsby-cloud/package.json"
       ],
       "matchDepTypes": [
         "devDependencies"
@@ -7428,7 +7428,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-plugin-gatsby-cloud/package.json"
+        "deprecated-packages/gatsby-plugin-gatsby-cloud/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -7471,7 +7471,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-plugin-gatsby-cloud/package.json"
+        "deprecated-packages/gatsby-plugin-gatsby-cloud/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -7514,7 +7514,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-plugin-gatsby-cloud/package.json"
+        "deprecated-packages/gatsby-plugin-gatsby-cloud/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -7559,7 +7559,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-plugin-gatsby-cloud/package.json"
+        "deprecated-packages/gatsby-plugin-gatsby-cloud/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -23654,7 +23654,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-telemetry/package.json"
+        "deprecated-packages/gatsby-telemetry/package.json"
       ],
       "matchDepTypes": [
         "devDependencies"
@@ -23698,7 +23698,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-telemetry/package.json"
+        "deprecated-packages/gatsby-telemetry/package.json"
       ],
       "matchDepTypes": [
         "devDependencies"
@@ -23742,7 +23742,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-telemetry/package.json"
+        "deprecated-packages/gatsby-telemetry/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -23785,7 +23785,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-telemetry/package.json"
+        "deprecated-packages/gatsby-telemetry/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -23828,7 +23828,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-telemetry/package.json"
+        "deprecated-packages/gatsby-telemetry/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -23873,7 +23873,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-telemetry/package.json"
+        "deprecated-packages/gatsby-telemetry/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -25496,7 +25496,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-transformer-javascript-static-exports/package.json"
+        "deprecated-packages/gatsby-transformer-javascript-static-exports/package.json"
       ],
       "matchDepTypes": [
         "devDependencies"
@@ -25540,7 +25540,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-transformer-javascript-static-exports/package.json"
+        "deprecated-packages/gatsby-transformer-javascript-static-exports/package.json"
       ],
       "matchDepTypes": [
         "devDependencies"
@@ -25584,7 +25584,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-transformer-javascript-static-exports/package.json"
+        "deprecated-packages/gatsby-transformer-javascript-static-exports/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -25627,7 +25627,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-transformer-javascript-static-exports/package.json"
+        "deprecated-packages/gatsby-transformer-javascript-static-exports/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -25670,7 +25670,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-transformer-javascript-static-exports/package.json"
+        "deprecated-packages/gatsby-transformer-javascript-static-exports/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
@@ -25713,7 +25713,7 @@
     },
     {
       "matchPaths": [
-        "packages/gatsby-transformer-javascript-static-exports/package.json"
+        "deprecated-packages/gatsby-transformer-javascript-static-exports/package.json"
       ],
       "matchDepTypes": [
         "dependencies"
