@@ -45,9 +45,7 @@
   <span> · </span>
   <a href="https://www.gatsbyjs.com/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
-  Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>
-  <span> & </span>
-  <a href="https://gatsby.dev/discord">Discord</a>
+  Support: <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
 </h3>
 
 Gatsby is a modern framework for blazing fast websites. This repository is our monorepo for managing all the great GatsbyJS starters for the community.

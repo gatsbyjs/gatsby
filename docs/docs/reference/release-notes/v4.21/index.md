@@ -55,7 +55,7 @@ If you're already using `gatsby-plugin-mdx` v3 and want to migrate, you can foll
 
 We did our best to strike a balance between introducing meaningful breaking changes and keeping old behaviors. For example, while a lot of people use GraphQL nodes like `timeToRead` or `wordCount`, over the years it has become increasingly hard to fulfill every feature request and behavior that users wanted (e.g. correctly providing `timeToRead`/`wordCount` for every language is hard). One the one hand removing default fields like these means that you have to reimplement them on your own, but on the other hand this also means that you can more granularly customize them to your needs. Read [Extending the GraphQL MDX nodes](/plugins/gatsby-plugin-mdx#extending-the-graphql-mdx-nodes) for guidance on how to migrate.
 
-If you have any questions along the way, post them either into the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/25068) or into the [`mdx-v2` channel on Discord](https://gatsby.dev/discord).
+If you have any questions along the way, post them into the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/25068).
 
 The [using-mdx example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-mdx) also showcases some of the necessary migration steps.
 
