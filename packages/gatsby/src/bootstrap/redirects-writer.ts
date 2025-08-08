@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { debounce } from "es-toolkit/compat"
 import fs from "fs-extra"
 import { joinPath, md5 } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
@@ -66,7 +66,7 @@ export const writeRedirects = async (): Promise<void> => {
   )
 }
 
-const debouncedWriteRedirects = _.debounce(() => {
+const debouncedWriteRedirects = debounce(() => {
   // Don't write redirects again until bootstrap has finished.
   if (bootstrapFinished) {
     writeRedirects()

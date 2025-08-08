@@ -17,7 +17,7 @@ import * as nodeApis from "../../utils/api-node-docs"
 import { store } from "../../redux"
 import { PackageJson } from "../../.."
 import { slash } from "gatsby-core-utils/path"
-import { isEqual } from "lodash"
+import { isEqual } from "es-toolkit/compat"
 import {
   IPlatformAndArch,
   getCurrentPlatformAndTarget,

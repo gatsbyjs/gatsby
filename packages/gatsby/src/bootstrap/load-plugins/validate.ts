@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { difference, intersection, toPairs, get } from "es-toolkit/compat"
 import path from "path"
 import * as semver from "semver"
 import * as stringSimilarity from "string-similarity"
@@ -63,7 +63,7 @@ function getBadExports(
   let badExports: Array<IEntry> = []
   // Discover any exports from plugins which are not "known"
   badExports = badExports.concat(
-    _.difference(pluginAPIKeys, apis).map(e => {
+    difference(pluginAPIKeys, apis).map(e => {
       return {
         exportName: e,
         pluginName: plugin.name,
@@ -162,7 +162,7 @@ export async function handleBadExports({
   if (hasBadExports) {
     const latestAPIs = await getLatestAPIs()
     // Output error messages for all bad exports
-    _.toPairs(badExports).forEach(badItem => {
+    toPairs(badExports).forEach(badItem => {
       const [exportType, entries] = badItem
       if (entries.length > 0) {
         const context = getErrorContext(
@@ -473,14 +473,14 @@ export async function collatePluginAPIs({
     )
 
     if (pluginNodeExports.length > 0) {
-      plugin.nodeAPIs = _.intersection(pluginNodeExports, currentAPIs.node)
+      plugin.nodeAPIs = intersection(pluginNodeExports, currentAPIs.node)
       badExports.node = badExports.node.concat(
         getBadExports(plugin, pluginNodeExports, currentAPIs.node)
       ) // Collate any bad exports
     }
 
     if (pluginBrowserExports.length > 0) {
-      plugin.browserAPIs = _.intersection(
+      plugin.browserAPIs = intersection(
         pluginBrowserExports,
         currentAPIs.browser
       )
@@ -490,7 +490,7 @@ export async function collatePluginAPIs({
     }
 
     if (pluginSSRExports.length > 0) {
-      plugin.ssrAPIs = _.intersection(pluginSSRExports, currentAPIs.ssr)
+      plugin.ssrAPIs = intersection(pluginSSRExports, currentAPIs.ssr)
       badExports.ssr = badExports.ssr.concat(
         getBadExports(plugin, pluginSSRExports, currentAPIs.ssr)
       ) // Collate any bad exports
@@ -561,7 +561,7 @@ export function warnOnIncompatiblePeerDependency(
   packageJSON: PackageJson
 ): void {
   // Note: In the future the peer dependency should be enforced for all plugins.
-  const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)
+  const gatsbyPeerDependency = get(packageJSON, `peerDependencies.gatsby`)
   if (
     !isWorker &&
     gatsbyPeerDependency &&

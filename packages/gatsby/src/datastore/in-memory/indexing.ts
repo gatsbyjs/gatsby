@@ -6,7 +6,7 @@ import {
   objectToDottedField,
 } from "../common/query"
 import { getDataStore, getNode } from "../"
-import _ from "lodash"
+import { every } from "es-toolkit/compat"
 import { getValueAt } from "../../utils/get-value-at"
 import { getResolvedFields } from "../../schema/utils"
 
@@ -63,7 +63,7 @@ export const getGatsbyNodePartial = (
     // now check if we have it in memory and it has all the fields we need
     if (
       derefPartial &&
-      _.every(
+      every(
         indexFields.map(field =>
           derefPartial!.gatsbyNodePartialInternalData.indexFields.has(field)
         )

@@ -1,7 +1,7 @@
 import { IPluginInfo, PluginRef } from "./types"
 import { createPluginId } from "./utils/create-id"
 import { resolvePlugin } from "./resolve-plugin"
-import { isString, isEmpty, set, merge } from "lodash"
+import { isString, isEmpty, set, merge } from "es-toolkit/compat"
 
 export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   // Respect the directory that the plugin was sourced from initially

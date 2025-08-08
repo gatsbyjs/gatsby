@@ -1,5 +1,5 @@
 import path from "path"
-import _ from "lodash"
+import { findIndex, merge } from "es-toolkit/compat"
 import Babel, {
   ConfigItem,
   PluginItem,
@@ -233,7 +233,7 @@ export const mergeConfigItemOptions = ({
   type: CreateConfigItemOptions["type"]
   babel: typeof Babel
 }): Array<ConfigItem> => {
-  const index = _.findIndex(
+  const index = findIndex(
     items,
     i => i.file?.resolved === itemToMerge.file?.resolved
   )
@@ -243,7 +243,7 @@ export const mergeConfigItemOptions = ({
     items[index] = babel.createConfigItem(
       [
         itemToMerge.file?.resolved,
-        _.merge({}, items[index].options, itemToMerge.options),
+        merge({}, items[index].options, itemToMerge.options),
       ],
       {
         type,
