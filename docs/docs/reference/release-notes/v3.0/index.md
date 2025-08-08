@@ -211,7 +211,7 @@ Gatsby Cloud now includes Hosting for all your Gatsby projects. `gatsby-plugin-g
 If you're using Gatsby v2 please install `gatsby-plugin-gatsby-cloud@^1.0.0`. For Gatsby v3 we’ve bumped `gatsby-plugin-gatsby-cloud` to `2.0.0`. It should
 be a straight-forward update, no additional changes from you are required.
 
-Read more about `gatsby-plugin-gatsby-cloud` at the [README](/packages/gatsby-plugin-gatsby-cloud/).
+Read more about `gatsby-plugin-gatsby-cloud` at the [README](/deprecated-packages/gatsby-plugin-gatsby-cloud/).
 
 ## Miscellaneous changes in plugins
 
