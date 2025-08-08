@@ -25,7 +25,7 @@ import {
   IQueryStartAction,
 } from "../../types"
 
-import { cloneDeep } from "lodash"
+import { cloneDeep } from "es-toolkit/compat"
 
 type QueriesState = IGatsbyState["queries"]
 

@@ -4,7 +4,7 @@ const fs = require(`fs-extra`)
 import { print, visit, getLocation } from "graphql"
 import { codeFrameColumns } from "@babel/code-frame"
 const { distance: levenshtein } = require(`fastest-levenshtein`)
-import _ from "lodash"
+import { camelCase, upperFirst } from "es-toolkit/compat"
 import report from "gatsby-cli/lib/reporter"
 const { locInGraphQlToLocInFile } = require(`./error-parser`)
 import { getCodeFrame } from "./graphql-errors-codeframe"
@@ -118,9 +118,7 @@ export function multipleRootQueriesError(
   const otherName = otherDef.name.value
   const field = def.selectionSet.selections[0].name.value
   const otherField = otherDef.selectionSet.selections[0].name.value
-  const unifiedName = `${_.camelCase(name)}And${_.upperFirst(
-    _.camelCase(otherName)
-  )}`
+  const unifiedName = `${camelCase(name)}And${upperFirst(camelCase(otherName))}`
 
   // colors are problematic for tests as we can different
   // results depending on platform, so we don't

@@ -1,4 +1,4 @@
-import { debounce, cloneDeep } from "lodash"
+import { debounce, cloneDeep } from "es-toolkit/compat"
 import { emitter, store } from "../redux"
 import { rebuild } from "../schema"
 import { haveEqualFields } from "../schema/infer/inference-metadata"

@@ -1,5 +1,5 @@
 import { ExportType, ICurrentAPIs } from "../validate"
-import { keys } from "lodash"
+import { keys } from "es-toolkit/compat"
 
 export const getAPI = (api: {
   [exportType in ExportType]: { [api: string]: boolean }

@@ -57,7 +57,7 @@ of fields in the node object (including nested fields)
   (still rare edge cases possible when reporting may be confusing, i.e. when node is deleted)
 */
 
-import { isEqual } from "lodash"
+import { isEqual } from "es-toolkit/compat"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 import { looksLikeADate } from "../types/date"
 import { Node } from "../../../index"

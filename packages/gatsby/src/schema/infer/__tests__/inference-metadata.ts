@@ -1,5 +1,5 @@
 // NOTE: Previously `data-tree-utils-test.js`
-import _ from "lodash"
+import { cloneDeep } from "es-toolkit/compat"
 
 import {
   addNode,
@@ -1057,12 +1057,12 @@ describe(`Type change detection`, () => {
   const addOne = (
     node: Record<string, unknown>,
     metadata: ITypeMetadata = initialMetadata
-  ): ITypeMetadata => addNode(_.cloneDeep(metadata), node as Node)
+  ): ITypeMetadata => addNode(cloneDeep(metadata), node as Node)
 
   const deleteOne = (
     node: Record<string, unknown>,
     metadata = initialMetadata
-  ): ITypeMetadata => deleteNode(_.cloneDeep(metadata), node as Node)
+  ): ITypeMetadata => deleteNode(cloneDeep(metadata), node as Node)
 
   beforeEach(() => {
     initialMetadata = addNodes(undefined, nodes() as Array<Node>)

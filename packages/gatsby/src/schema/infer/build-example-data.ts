@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { groupBy } from "lodash"
+import { groupBy } from "es-toolkit/compat"
 import {
   IValueDescriptor,
   ValueType,
