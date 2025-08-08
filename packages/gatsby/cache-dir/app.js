@@ -123,11 +123,19 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       clearTimeout(showIndicatorTimeout)
       if (indicatorMountElement) {
         // If user defined replaceHydrateFunction themselves the cleanupFn return might not be there
-        // So fallback to unmountComponentAtNode for now
+        // So fallback to unmountComponentAtNode if available
         if (cleanupFn && typeof cleanupFn === `function`) {
           cleanupFn()
         } else {
-          ReactDOM.unmountComponentAtNode(indicatorMountElement)
+          if (typeof ReactDOM.unmountComponentAtNode === `function`) {
+            ReactDOM.unmountComponentAtNode(indicatorMountElement)
+          } else {
+            // This was removed in React 19:
+            // https://react.dev/blog/2024/04/25/react-19-upgrade-guide#removed-unmountcomponentatnode.
+            console.warn(
+              `You provided a custom replaceHydrateFunction that does not return a cleanup function.`
+            )
+          }
         }
         indicatorMountElement.remove()
       }
