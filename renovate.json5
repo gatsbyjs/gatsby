@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":widenPeerDependencies", ":disableLockfileMaintenance"],
+  "extends": ["config:recommended", ":widenPeerDependencies", ":disableLockfileMaintenance", ":automergeDisabled"],
   "schedule": ["before 6am"],
   "ignorePaths": [
     "examples/**",
@@ -28,6 +28,7 @@
       "prPriority": 100
     }
   ],
+  "postUpdateOptions": ["yarnDedupeHighest"],
   "vulnerabilityAlerts": {
     "enabled": true
   }
