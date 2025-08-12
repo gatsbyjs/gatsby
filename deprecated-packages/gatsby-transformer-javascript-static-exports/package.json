@@ -18,7 +18,7 @@
     "babel-preset-gatsby-package": "^3.15.0-next.0",
     "cross-env": "^7.0.3"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-static-exports#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/deprecated-packages/gatsby-transformer-javascript-static-exports#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -31,7 +31,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-transformer-javascript-static-exports"
+    "directory": "deprecated-packages/gatsby-transformer-javascript-static-exports"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",
