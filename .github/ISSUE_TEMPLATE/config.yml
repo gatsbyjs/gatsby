@@ -6,6 +6,3 @@ contact_links:
   - name: Gatsby Discussions
     url: https://github.com/gatsbyjs/gatsby/discussions
     about: Ask questions, request features & discuss RFCs
-  - name: AskGatsbyJS Twitter
-    url: https://twitter.com/AskGatsbyJS
-    about: The official Twitter account to ask questions and get help with Gatsby

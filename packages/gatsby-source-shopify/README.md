@@ -18,9 +18,6 @@
   <a href="https://gatsbyjs.com/contributing/how-to-contribute/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
-  <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
-    <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @gatsbyjs" />
-  </a>
 </p>
 
 <br />
@@ -39,7 +36,7 @@
   - 🚥 [Use run-time images](#use-run-time-images)
   - 🖼️ [Displaying images](#displaying-images)
 - 🚨 [Limitations](#limitations)
-- 💾 [V6 to V7 Migration Guide](#v6-to-V7-migration-guide)
+- 💾 [V6 to V7 Migration Guide](#v6-to-v7-migration-guide)
 
 # gatsby-source-shopify
 
