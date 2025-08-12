@@ -1,6 +1,5 @@
 import { GatsbyCLI } from "../test-helpers"
 import * as fs from "fs-extra"
-import execa from "execa"
 import { join } from "path"
 import { getConfigStore } from "gatsby-core-utils"
 
@@ -9,7 +8,14 @@ jest.setTimeout(MAX_TIMEOUT)
 
 const cwd = `execution-folder`
 
-const clean = dir => execa(`yarn`, ["del-cli", dir])
+const clean = async dir => {
+  try {
+    await fs.rmdir(dir, { recursive: true })
+  } catch {
+    // will throw when dir doesn't exist
+    // which is fine, we just want to ensure it's clean
+  }
+}
 
 describe(`gatsby new`, () => {
   // make folder for us to create sites into
