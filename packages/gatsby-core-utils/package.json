@@ -64,7 +64,7 @@
     "@babel/runtime": "^7.20.13",
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
-    "fastq": "^1.15.0",
+    "fastq": "^1.19.1",
     "file-type": "^16.5.4",
     "fs-extra": "^11.2.0",
     "got": "^11.8.6",
