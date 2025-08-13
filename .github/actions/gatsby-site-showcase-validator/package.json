@@ -7,7 +7,7 @@
     "chalk": "^3.0.0",
     "cheerio": "1.0.0-rc.12",
     "js-yaml": "^3.13.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^3.3.2"
   },
   "scripts": {
     "start": "node ./index.js"
