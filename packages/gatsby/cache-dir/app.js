@@ -33,6 +33,9 @@ module.hot.accept(
   }
 )
 
+// Initialize Gatsby events system early for error overlay
+window._gatsbyEvents = window._gatsbyEvents || []
+
 window.___emitter = emitter
 
 const loader = new DevLoader(asyncRequires, matchPaths)
@@ -41,16 +44,50 @@ loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
 
+// React 19 error handlers for development error overlay
+const handleUncaughtError = (error, errorInfo) => {
+  console.error(`Uncaught error:`, error, errorInfo)
+  window._gatsbyEvents.push([
+    `FAST_REFRESH`,
+    {
+      action: `SHOW_RUNTIME_ERRORS`,
+      payload: [error], // Pass the actual Error object
+    },
+  ])
+  apiRunner(`onUncaughtError`, { error, errorInfo })
+}
+
+const handleCaughtError = (error, errorInfo) => {
+  // Also forward caught errors to the overlay system
+  window._gatsbyEvents.push([
+    `FAST_REFRESH`,
+    {
+      action: `SHOW_RUNTIME_ERRORS`,
+      payload: [error],
+    },
+  ])
+  apiRunner(`onCaughtError`, { error, errorInfo })
+}
+
 const reactDomClient = require(`react-dom/client`)
 const reactFirstRenderOrHydrate = (Component, el) => {
   // we will use hydrate if mount element has any content inside
   const useHydrate = el && el.children.length
 
+  // Only pass options if React 19 error handling options are available
+  const errorHandlerOptions =
+    handleUncaughtError || handleCaughtError
+      ? {
+          onUncaughtError: handleUncaughtError,
+          onCaughtError: handleCaughtError,
+        }
+      : undefined
+
   if (useHydrate) {
-    const root = reactDomClient.hydrateRoot(el, Component)
+    const root = reactDomClient.hydrateRoot(el, Component, errorHandlerOptions)
     return () => root.unmount()
   } else {
-    const root = reactDomClient.createRoot(el)
+    const root = reactDomClient.createRoot(el, errorHandlerOptions)
     root.render(Component)
     return () => root.unmount()
   }

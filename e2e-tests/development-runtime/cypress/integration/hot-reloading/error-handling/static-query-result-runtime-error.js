@@ -46,8 +46,7 @@ describe(
       cy.findByTestId(`results`).should(`contain.text`, `"hasError": false`)
     })
 
-    // XXX FIXME(serhalp)
-    it.skip(`displays error with overlay on runtime errors`, () => {
+    it(`displays error with overlay on runtime errors`, () => {
       cy.exec(
         `npm run update -- --file content/error-recovery/static-query.json  --replacements "${errorPlaceholder}:${errorReplacement}" --exact`
       )

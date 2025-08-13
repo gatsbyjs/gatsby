@@ -27,8 +27,7 @@ after(() => {
 const errorPlaceholder = `false`
 const errorReplacement = `true`
 
-// XXX FIXME(serhalp)
-describe.skip(
+describe(
   `testing error overlay and ability to automatically recover runtime errors cause by content changes (page queries variant)`,
   { testIsolation: false },
   () => {

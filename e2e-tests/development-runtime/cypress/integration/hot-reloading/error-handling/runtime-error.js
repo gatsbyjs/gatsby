@@ -39,8 +39,7 @@ describe(
       cy.findByTestId(`hot`).should(`contain.text`, `Working`)
     })
 
-    // XXX FIXME(serhalp)
-    it.skip(`displays error with overlay on runtime errors`, () => {
+    it(`displays error with overlay on runtime errors`, () => {
       cy.exec(
         `npm run update -- --file src/pages/error-handling/runtime-error.js --replacements "${errorPlaceholder}:${errorReplacement}" --exact`
       )
