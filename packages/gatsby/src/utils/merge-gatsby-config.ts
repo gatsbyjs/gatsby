@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { merge, uniq } from "es-toolkit/compat"
 import { Express } from "express"
 import type { TrailingSlash } from "gatsby-page-utils"
 
@@ -39,13 +39,13 @@ const howToMerge = {
    */
   byDefault: (a: ConfigKey, b: ConfigKey): ConfigKey => b || a,
   siteMetadata: (objA: Metadata, objB: Metadata): Metadata =>
-    _.merge({}, objA, objB),
+    merge({}, objA, objB),
   // plugins are concatenated and uniq'd, so we don't get two of the same plugin value
   plugins: (
     a: Array<PluginEntry> = [],
     b: Array<PluginEntry> = []
   ): Array<PluginEntry> => a.concat(b),
-  mapping: (objA: Mapping, objB: Mapping): Mapping => _.merge({}, objA, objB),
+  mapping: (objA: Mapping, objB: Mapping): Mapping => merge({}, objA, objB),
 } as const
 
 /**
@@ -56,7 +56,7 @@ export const mergeGatsbyConfig = (
   b: IGatsbyConfigInput
 ): IGatsbyConfigInput => {
   // a and b are gatsby configs, If they have keys, that means there are values to merge
-  const allGatsbyConfigKeysWithAValue = _.uniq(
+  const allGatsbyConfigKeysWithAValue = uniq(
     Object.keys(a).concat(Object.keys(b))
   ) as Array<ConfigKey>
 

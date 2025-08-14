@@ -1,5 +1,5 @@
 import { store } from "../redux"
-import { memoize } from "lodash"
+import { memoize } from "es-toolkit/compat"
 
 import { createRequireFromPath } from "gatsby-core-utils"
 import { join, dirname } from "path"

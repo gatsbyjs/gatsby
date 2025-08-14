@@ -2,7 +2,14 @@
 import React from "react"
 import fs from "fs-extra"
 import { renderToStaticMarkup, renderToPipeableStream } from "react-dom/server"
-import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
+import {
+  get,
+  merge,
+  isObject,
+  flatten,
+  uniqBy,
+  concat,
+} from "es-toolkit/compat"
 import nodePath from "path"
 import { apiRunner, apiRunnerAsync } from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"

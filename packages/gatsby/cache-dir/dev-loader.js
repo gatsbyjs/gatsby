@@ -5,7 +5,7 @@ import getSocket from "./socketIo"
 import normalizePagePath from "./normalize-page-path"
 
 // TODO move away from lodash
-import isEqual from "lodash/isEqual"
+import { isEqual } from "es-toolkit/compat"
 
 function mergePageEntry(cachedPage, newPageData) {
   return {
