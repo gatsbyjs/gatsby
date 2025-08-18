@@ -30,3 +30,5 @@ wp cache flush && \
 # set path rewrite structure
 wp rewrite structure '/%year%/%monthnum%/%day%/%postname%/' && \
 wp rewrite flush
+
+echo "done" >> /var/www/html/is-ready.txt

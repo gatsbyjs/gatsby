@@ -1,0 +1,44 @@
+{
+  "name": "gatsby-transformer-javascript-static-exports",
+  "description": "Gatsby transformer plugin for JavaScript to extract exports.data statically.",
+  "version": "5.15.0-next.0",
+  "author": "Jacob Bolda <me@jacobbolda.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.20.13",
+    "@babel/runtime": "^7.20.13",
+    "@babel/traverse": "^7.20.13",
+    "bluebird": "^3.7.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "babel-preset-gatsby-package": "^3.15.0-next.0",
+    "cross-env": "^7.0.3"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/deprecated-packages/gatsby-transformer-javascript-static-exports#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "js"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "gatsby": "^5.0.0-next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "deprecated-packages/gatsby-transformer-javascript-static-exports"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

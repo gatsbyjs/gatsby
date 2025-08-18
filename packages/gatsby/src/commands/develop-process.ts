@@ -1,12 +1,10 @@
 import { syncStaticDir } from "../utils/get-static-dir"
 import reporter from "gatsby-cli/lib/reporter"
-import telemetry from "gatsby-telemetry"
 import { isTruthy } from "gatsby-core-utils"
 import express from "express"
 import inspector from "inspector"
 import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
-import onExit from "signal-exit"
 import {
   userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
@@ -14,7 +12,6 @@ import {
   showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
-import { store } from "../redux"
 
 import { IProgram, IDebugInfo } from "./types"
 import { interpret } from "xstate"
@@ -46,30 +43,6 @@ if (process.send) {
     })
   }, 1000)
 }
-
-onExit(() => {
-  let SSGCount = 0
-  let DSGCount = 0
-  let SSRCount = 0
-  for (const page of store.getState().pages.values()) {
-    if (page.mode === `SSR`) {
-      SSRCount++
-    } else if (page.mode === `DSG`) {
-      DSGCount++
-    } else {
-      SSGCount++
-    }
-  }
-
-  telemetry.trackCli(`DEVELOP_STOP`, {
-    siteMeasurements: {
-      totalPagesCount: store.getState().pages.size,
-      SSRCount,
-      DSGCount,
-      SSGCount,
-    },
-  })
-})
 
 process.on(
   `message`,
@@ -133,8 +106,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   )
   markWebpackStatusAsPending()
   reporter.pendingActivity({ id: `webpack-develop` })
-  telemetry.trackCli(`DEVELOP_START`)
-  telemetry.startBackgroundUpdate()
 
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port

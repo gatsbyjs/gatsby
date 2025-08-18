@@ -1,6 +1,6 @@
 {
   "name": "gatsby-graphiql-explorer",
-  "version": "3.14.0-next.2",
+  "version": "3.15.0-next.1",
   "description": "GraphiQL IDE with custom features for Gatsby users",
   "main": "index.js",
   "scripts": {
@@ -43,7 +43,7 @@
     "@graphiql/react": "^0.18.0",
     "@graphiql/toolkit": "^0.8.4",
     "babel-loader": "^9.1.2",
-    "babel-preset-gatsby-package": "^3.14.0-next.2",
+    "babel-preset-gatsby-package": "^3.15.0-next.0",
     "core-js": "^3.31.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
@@ -55,7 +55,7 @@
     "react-dom": "^18.2.0",
     "regenerator-runtime": "^0.13.11",
     "style-loader": "^3.3.3",
-    "webpack": "^5.88.1",
+    "webpack": "~5.98.0",
     "webpack-cli": "^5.1.4"
   },
   "engines": {

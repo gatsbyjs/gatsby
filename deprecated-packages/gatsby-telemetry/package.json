@@ -1,0 +1,51 @@
+{
+  "name": "gatsby-telemetry",
+  "description": "Gatsby Telemetry",
+  "version": "4.15.0-next.0",
+  "author": "Jarmo Isotalo <jarmo@isotalo.fi>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/code-frame": "^7.18.6",
+    "@babel/runtime": "^7.20.13",
+    "fs-extra": "^11.2.0",
+    "gatsby-core-utils": "^4.15.0-next.0",
+    "git-up": "^7.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "babel-preset-gatsby-package": "^3.15.0-next.0",
+    "cross-env": "^7.0.3",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.1.6"
+  },
+  "files": [
+    "lib/",
+    "src/"
+  ],
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/deprecated-packages/gatsby-telemetry#readme",
+  "keywords": [
+    "telemetry"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "deprecated-packages/gatsby-telemetry"
+  },
+  "scripts": {
+    "build": "babel src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\" --extensions \".ts,.js\"",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "typegen": "rimraf --glob \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
+    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\" --extensions \".ts,.js\""
+  },
+  "yargs": {
+    "boolean-negation": false
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

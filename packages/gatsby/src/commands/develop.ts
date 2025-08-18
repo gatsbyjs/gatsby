@@ -11,7 +11,6 @@ import { slash } from "gatsby-core-utils/path"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
 import { IProgram, IDebugInfo } from "./types"
-import { flush as telemetryFlush } from "gatsby-telemetry"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -58,8 +57,11 @@ class ControllableScript {
   }
   start(): void {
     const args: Array<string> = []
+
+    const dotCachePath = path.join(process.cwd(), `.cache`)
+    fs.mkdirpSync(dotCachePath)
     const tmpFileName = tmp.tmpNameSync({
-      tmpdir: path.join(process.cwd(), `.cache`),
+      tmpdir: dotCachePath,
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
@@ -258,11 +260,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   // This needs to be propagated back to the parent process
   developProcess.onExit(
     (code: number | null, signal: NodeJS.Signals | null) => {
-      try {
-        telemetryFlush()
-      } catch (e) {
-        // nop
-      }
       if (isRestarting) return
       if (signal !== null) {
         process.kill(process.pid, signal)
@@ -331,11 +328,6 @@ function shutdownServices(
   { developProcess }: IShutdownServicesOptions,
   signal: NodeJS.Signals
 ): Promise<void> {
-  try {
-    telemetryFlush()
-  } catch (e) {
-    // nop
-  }
   const services = [developProcess.stop(signal)]
 
   return Promise.all(services)
