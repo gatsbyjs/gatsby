@@ -111,7 +111,7 @@ Two of Gatsby’s core strengths are its community and ecosystem.
 
 We’re convinced that the right path forward is to continue working in the open with both trust and support of our community.
 
-Anyone can [open an issue](/contributing/how-to-file-an-issue/) and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can [submit an RFC](/contributing/rfc-process/) to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
+Anyone can [open an issue](/contributing/how-to-file-an-issue/) and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it.
 
 Many of Gatsby's key features emerged from conversation between contributors. If you plumb through Gatsby's old issues, you'll see discussion of many of the core ideas that led to Gatsby -- from our plugin system to performance optimizations and so on.
 

@@ -127,4 +127,3 @@ Your server configuration should handle `GET` requests to `/app/*` e.g. `/app/wh
 
 - [Gatsby repo "simple auth" example](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) - a demo implementing user authentication and restricted client-only routes
 - [Live version of the "simple auth" example](https://simple-auth.netlify.app/)
-- [The Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org) which also implements an authenticated flow

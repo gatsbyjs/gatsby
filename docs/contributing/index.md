@@ -17,7 +17,6 @@ In the interest of fostering an open and welcoming environment, we as contributo
 
 ### Gatsby news
 
-- Read and discuss about [Request for Comment (RFC) proposals](/contributing/rfc-process)
 - Watch videos on [Gatsby's YouTube channel](https://www.youtube.com/c/Gatsbyjs/videos) to see past GatsbyConf presentations and tutorial walkthroughs
 - Follow the [official blog](/blog/)
 
@@ -38,7 +37,7 @@ Read the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to learn more a
 
 ## How to contribute
 
-We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. If you're interested in participating in the Gatsby community, contributions go far beyond pull requests and commits. We are thrilled to receive a variety of other contributions and as our way of saying “thank you” to our contributors, **all contributors are eligible for [free Gatsby swag](/contributing/contributor-swag/)** — whether you’re contributing code, docs, a talk, an article, or something else that helps the Gatsby community. [Learn how to claim free swag for contributors](/contributing/contributor-swag/).
+We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. If you're interested in participating in the Gatsby community, contributions go far beyond pull requests and commits.
 
 ### Help fellow users
 
@@ -56,11 +55,10 @@ Contributing bug fixes or new features are the most direct form of contribution 
 
 There are a few other ways of contributing to the Gatsby ecosystem:
 
-- **Contribute to Gatsby's blog**. Want to write about Gatsby? Read the [blog contributions doc](/contributing/blog-contributions) to get your blog post onto gatsbyjs.com.
 - **Develop learning materials.** Strengthen your expertise by writing a blog post, developing a workshop, creating video tutorials, or present your knowledge as a presentation on meetups and conferences.
-- **Create a plugin.** Learn how to [create a plugin](/docs/how-to/plugins-and-themes/) and [submit it to the Plugin Library](/docs/how-to/plugins-and-themes/submit-to-plugin-library/).
+- **Create a plugin.** Learn how to [create a plugin](/docs/how-to/plugins-and-themes/).
 - **Contribute to the Gatsby User Collective.** Interested in working on plugins that benefit the whole community? You can find them in the [Gatsby User Collective repository](https://github.com/gatsby-uc/plugins).
-- **Create a Gatsby starter.** Created a starter? Share it with the community and [submit it to the Starter Library](/starters/submissions).
+- **Create a Gatsby starter.** Created a starter? Share it with the community.
 
 ### Help triage issues
 
@@ -73,8 +71,6 @@ There are many reasons to contribute to Gatsby and open source software in gener
 - **Growing your community.** Working with Gatsby in open source can connect you with people working on similar things. You can get help or give help, and you might even make an IRL acquaintance! It has happened.
 
 - **Improving your skills.** When you work on a Gatsby issue or pull request, inevitably you'll learn more about how something works in the project; either by asking questions and gathering info or by digging deeper into the code yourself. There's a skill-building benefit to contributing to OSS!
-
-- **Getting free swag!** By participating in the repo on GitHub, you can become eligible for free swag that the Gatsby team offers as a way to say thank you. With 5 contributions, you can advance to a second level with even more swag options! Learn more about this [sweet swag deal](/contributing/contributor-swag/).
 
 - **Becoming an expert.** You might start off totally new to a project like Gatsby or React.js, and by building things and [opening issues](/contributing/how-to-file-an-issue/) when you encounter a new challenge or a bug, you'll learn a ton over time. Staying current with your favorite framework through its open source repo can also give you a leading edge on forthcoming changes. Eventually, you could find your knowledge of said project has grown so much that you've become an expert. Celebrate by updating your résumé!
 

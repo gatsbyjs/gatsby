@@ -75,9 +75,9 @@ More information on build related errors is available in the guide on [debugging
 
 ## Real-world example: Gatsby store
 
-The [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org) is a live application built with Gatsby that implements authentication using Auth0.
+The [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org) was an application built with Gatsby that implemented authentication using Auth0.
 
-[Util functions](https://github.com/gatsbyjs/store.gatsbyjs.org/blob/master/src/utils/auth.js) in the Gatsby Store repo make use of Auth0's APIs to authenticate users with GitHub, and wrap Auth0's APIs to check that [some of the Auth0 code runs only in the browser](https://github.com/gatsbyjs/store.gatsbyjs.org/blob/master/src/utils/auth.js#L3).
+[Utility functions](https://github.com/gatsbyjs/store.gatsbyjs.org/blob/master/src/utils/auth.js) in the Gatsby Store repo made use of Auth0's APIs to authenticate users with GitHub and ensured that some of the Auth0 code ran only in the browser.
 
 In order to protect authenticated content with a private route, a `<Router />` is implemented in the `<PrivateRoute />` component that checks whether a user is authenticated or reroutes them to `/login`.
 
