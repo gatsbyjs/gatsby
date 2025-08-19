@@ -129,7 +129,7 @@ describe(`SSR`, () => {
       it(
         title,
         async () => {
-          const src = path.join(__dirname, `/fixtures/`, fixture)
+          const src = path.join(__dirname, `fixtures`, fixture)
           const dest = getSrcLoc(fixture)
           fs.copySync(src, dest)
 

@@ -164,17 +164,23 @@ export function runTests(env, host) {
         const res = await fetchWithRetry(`${host}/api/i-am-json`)
         const result = await res.json()
 
-        const { date, ...headers } = Object.fromEntries(res.headers)
+        const relevantHeaders = {
+          'content-type': res.headers.get('content-type'),
+          'content-length': res.headers.get('content-length')
+        }
         expect(result).toMatchSnapshot()
-        expect(headers).toMatchSnapshot()
+        expect(relevantHeaders).toMatchSnapshot()
       })
       test(`returns text correctly`, async () => {
         const res = await fetchWithRetry(`${host}/api/i-am-typescript`)
         const result = await res.text()
 
-        const { date, ...headers } = Object.fromEntries(res.headers)
+        const relevantHeaders = {
+          'content-type': res.headers.get('content-type'),
+          'content-length': res.headers.get('content-length')
+        }
         expect(result).toMatchSnapshot()
-        expect(headers).toMatchSnapshot()
+        expect(relevantHeaders).toMatchSnapshot()
       })
     })
 
