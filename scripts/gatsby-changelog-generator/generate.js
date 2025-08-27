@@ -53,6 +53,7 @@ function getAllPackageNames() {
 
         return localPkg.name
       } catch (error) {
+        console.debug(error)
         // fallback to generic one
       }
 
