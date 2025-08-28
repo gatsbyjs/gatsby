@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { isPlainObject, pickBy, isArray, each } from "es-toolkit/compat"
 
 import type { IGatsbyNode } from "../redux/types"
 import type { GatsbyIterable } from "../datastore/common/iterable"
@@ -12,9 +12,9 @@ type OmitUndefined = (data: Data) => Partial<Data>
  * @returns {Object|Array} data without undefined values
  */
 const omitUndefined: OmitUndefined = data => {
-  const isPlainObject = _.isPlainObject(data)
-  if (isPlainObject) {
-    return _.pickBy(data, p => p !== undefined)
+  const isPlainObjectCheck = isPlainObject(data)
+  if (isPlainObjectCheck) {
+    return pickBy(data, p => p !== undefined)
   }
 
   return (data as GatsbyIterable<IGatsbyNode>).filter(p => p !== undefined)
@@ -58,20 +58,20 @@ export const sanitizeNode: sanitizeNode = (
   isNode = true,
   path = new Set()
 ) => {
-  const isPlainObject = _.isPlainObject(data)
-  const isArray = _.isArray(data)
+  const isPlainObjectCheck = isPlainObject(data)
+  const isArrayCheck = isArray(data)
 
-  if (isPlainObject || isArray) {
+  if (isPlainObjectCheck || isArrayCheck) {
     if (path.has(data)) return data
     path.add(data)
 
-    const returnData = isPlainObject
+    const returnData = isPlainObjectCheck
       ? ({} as IGatsbyNode)
       : ([] as Array<IGatsbyNode>)
     let anyFieldChanged = false
 
-    // _.each is a "Collection" method and thus objects with "length" property are iterated as arrays
-    const hasLengthProperty = isPlainObject
+    // each is a "Collection" method and thus objects with "length" property are iterated as arrays
+    const hasLengthProperty = isPlainObjectCheck
       ? Object.prototype.hasOwnProperty.call(data, `length`)
       : false
     let lengthProperty
@@ -80,7 +80,7 @@ export const sanitizeNode: sanitizeNode = (
       delete (data as IGatsbyNode).length
     }
 
-    _.each(data, (value, key) => {
+    each(data, (value, key) => {
       if (isNode && key === `internal`) {
         returnData[key] = value
         return

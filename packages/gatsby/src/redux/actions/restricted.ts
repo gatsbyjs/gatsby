@@ -1,5 +1,4 @@
-import camelCase from "lodash/camelCase"
-import isEqual from "lodash/isEqual"
+import { camelCase, isEqual } from "es-toolkit/compat"
 
 import { GraphQLSchema, GraphQLOutputType } from "graphql"
 import { ActionCreator } from "redux"

@@ -7,7 +7,7 @@ import {
   ReducersMapObject,
   Store,
 } from "redux"
-import _ from "lodash"
+import { pick } from "es-toolkit/compat"
 
 import { mett } from "../utils/mett"
 import thunk, { ThunkMiddleware, ThunkAction, ThunkDispatch } from "redux-thunk"
@@ -140,7 +140,7 @@ export const saveState = (): void => {
 
   const state = store.getState()
 
-  const sliceOfStateToPersist = _.pick(state, persistedReduxKeys)
+  const sliceOfStateToPersist = pick(state, persistedReduxKeys)
 
   return writeToCache(sliceOfStateToPersist)
 }
@@ -151,7 +151,7 @@ export const savePartialStateToDisk = (
   transformState?: <T extends DeepPartial<IGatsbyState>>(state: T) => T
 ): void => {
   const state = store.getState()
-  const contents = _.pick(state, slices)
+  const contents = pick(state, slices)
   const savedContents = transformState ? transformState(contents) : contents
 
   return writeToCache(savedContents, slices, optionalPrefix)

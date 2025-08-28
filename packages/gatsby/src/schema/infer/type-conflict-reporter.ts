@@ -1,4 +1,4 @@
-import sortBy from "lodash/sortBy"
+import { sortBy } from "es-toolkit/compat"
 import report from "gatsby-cli/lib/reporter"
 import typeOf from "type-of"
 import util from "util"
