@@ -553,6 +553,27 @@ jobs:
           test_path: e2e-tests/production-runtime
           test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_REACT_18} yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18} yarn test:offline
 
+  e2e_tests_development_runtime_with_react_19:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+          react_version: "19.1.1"
+
+  e2e_tests_production_runtime_with_react_19:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: yarn test && yarn test:offline
+          react_version: "19.1.1"
+
+  e2e_tests_react_19_compatibility:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/react-19-compatibility
+
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
     steps:
@@ -846,6 +867,12 @@ workflows:
       - e2e_tests_development_runtime_with_react_18:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime_with_react_18:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime_with_react_19:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime_with_react_19:
+          <<: *e2e-test-workflow
+      - e2e_tests_react_19_compatibility:
           <<: *e2e-test-workflow
       - themes_e2e_tests_production_runtime:
           <<: *e2e-test-workflow

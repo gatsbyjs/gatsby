@@ -11,8 +11,7 @@ export default function HeadFunctionHtmlAndBodyAttributes() {
 function Indirection({ children }) {
   return (
     <>
-      <html lang="fr" />
-      <body className="foo" />
+      <body className="foo" data-foo="baz" />
       {children}
     </>
   )
@@ -21,8 +20,7 @@ function Indirection({ children }) {
 export function Head() {
   return (
     <Indirection>
-      <html data-foo="bar" />
-      <body data-foo="baz" />
+      <html data-foo="bar" lang="fr" />
     </Indirection>
   )
 }
