@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.16.0/packages/gatsby-source-wordpress) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+#### Features
+
+- support wp-graphql@2 [#39263](https://github.com/gatsbyjs/gatsby/issues/39263) ([d8cc254](https://github.com/gatsbyjs/gatsby/commit/d8cc2542d2507237c28dbbeac7770a409f13c707))
+
+#### Chores
+
+- remove Gatsby Discord references [#39351](https://github.com/gatsbyjs/gatsby/issues/39351) ([c3708b0](https://github.com/gatsbyjs/gatsby/commit/c3708b068abba3a26e5cf229d6d4dc5813884acd))
+
 ## [7.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.15.0/packages/gatsby-source-wordpress) (2025-04-09)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
