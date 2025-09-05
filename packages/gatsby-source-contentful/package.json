@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.28.4",
     "@contentful/rich-text-react-renderer": "^15.22.11",
     "@hapi/joi": "^15.1.1",
     "@vercel/fetch-retry": "^5.1.3",

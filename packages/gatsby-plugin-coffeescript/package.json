@@ -10,7 +10,7 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.28.4",
     "coffee-loader": "^0.9.0",
     "coffee-react-transform": "^5.0.0",
     "coffeescript": "^2.7.0"

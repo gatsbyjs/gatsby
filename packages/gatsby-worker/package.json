@@ -7,8 +7,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/runtime": "^7.20.13",
+    "@babel/core": "^7.28.4",
+    "@babel/runtime": "^7.28.4",
     "fs-extra": "^11.2.0",
     "signal-exit": "^3.0.7"
   },
