@@ -169,9 +169,11 @@ const App = ({ initialExternalFragments }) => {
       onEditHeaders={onEditHeaders}
       onTabChange={onTabChange}
       toolbar={{
-        additionalContent: refreshState.enableRefresh && (
-          <RefreshDataSourceButton onClick={refreshExternalDataSource} />
-        ),
+        additionalComponent:
+          refreshState.enableRefresh &&
+          (() => (
+            <RefreshDataSourceButton onClick={refreshExternalDataSource} />
+          )),
       }}
       externalFragments={externalFragments}
       plugins={[explorerPlugin, exporterPlugin]}
