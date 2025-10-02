@@ -47,7 +47,10 @@ export class ProductVariantsQuery extends BulkQuery {
                 inventoryLevels {
                   edges {
                     node {
-                      available
+                      quantities(names: ["incoming", "available", "committed", "reserved", "damaged", "safety_stock", "quality_control"]) {
+                        name
+                        quantity
+                      }
                       id
                       location {
                         id
@@ -56,7 +59,16 @@ export class ProductVariantsQuery extends BulkQuery {
                   }
                 }
                 legacyResourceId
-                locationsCount
+                locationsCount {
+                  count
+                  precision
+                }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -106,20 +118,20 @@ export class ProductVariantsQuery extends BulkQuery {
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
               }
-              sellingPlanGroupCount
+              sellingPlanGroupsCount {
+                count
+                precision
+              }
               sku
               storefrontId
               taxCode
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {

@@ -9,6 +9,7 @@ import ids from "./ids.json"
 export function mockGatsbyApi(): NodePluginArgs {
   return {
     actions: {
+      createFieldExtension: jest.fn(),
       createTypes: jest.fn(),
       createNode: jest.fn(),
       touchNode: jest.fn(),
@@ -39,6 +40,18 @@ export function mockGatsbyApi(): NodePluginArgs {
     getNodesByType: jest.fn((type: string) =>
       require(`../fixtures/shopify-nodes/${type}.json`)
     ),
+    getNode: jest.fn((nodeId: string) => {
+      const fixtureFiles = fs.readdirSync(path.join(__dirname, `../fixtures/shopify-nodes`))
+      for (const fixtureFile of fixtureFiles) {
+        const nodes = require(`../fixtures/shopify-nodes/${fixtureFile}`)
+        const node = nodes.find((n: any) => n.id === nodeId)
+        if (node) {
+          return node
+        }
+      }
+
+        return null
+    })
   } as unknown as NodePluginArgs
 }
 

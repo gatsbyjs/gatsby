@@ -18,9 +18,20 @@ const npmScriptToRun = process.argv[2] || "test:netlify"
 // ensure clean build
 await execa(`npm`, [`run`, `clean`], { stdio: `inherit` })
 
+const deployAlias = "gatsby-e2e-tests"
 const deployResults = await execa(
-  "ntl",
-  ["deploy", "--build", "--json", "--cwd=.", "--message", deployTitle],
+  "npx",
+  [
+    "ntl",
+    "deploy",
+    "--build",
+    "--json",
+    "--alias",
+    deployAlias,
+    "--message",
+    deployTitle,
+    process.env.EXTRA_NTL_CLI_ARGS ?? "--cwd=.",
+  ],
   {
     reject: false,
   }
@@ -39,7 +50,9 @@ if (deployResults.exitCode !== 0) {
 
 const deployInfo = JSON.parse(deployResults.stdout)
 
-const deployUrl = deployInfo.deploy_url + (process.env.PATH_PREFIX ?? ``)
+const deployUrl =
+  `https://${deployInfo.deploy_id}--${deployInfo.site_name}.netlify.app` +
+  (process.env.PATH_PREFIX ?? ``)
 process.env.DEPLOY_URL = deployUrl
 
 console.log(`Deployed to ${deployUrl}`)
@@ -49,7 +62,8 @@ try {
 } finally {
   if (!process.env.GATSBY_TEST_SKIP_CLEANUP) {
     console.log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
-    const deleteResponse = await execa("ntl", [
+    const deleteResponse = await execa("npx", [
+      "ntl",
       "api",
       "deleteDeploy",
       "--data",

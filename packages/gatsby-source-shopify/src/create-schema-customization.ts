@@ -49,6 +49,28 @@ export function createSchemaCustomization(
       }
     `)
   }
+  actions.createFieldExtension({
+    name: `selectQuantityByName`,
+    args: {
+      name: `String!`,
+    },
+    extend({ name }, fieldConfig) {
+      return {
+        async resolve(source, args, context, info): Promise<number> {
+          const resolver = fieldConfig.resolve || context.defaultFieldResolver
+          const quantities = await resolver(source, args, context, info)
 
+          if (quantities && Array.isArray(quantities)) {
+            return (
+              quantities.find(quantity => quantity?.name === name)?.quantity ??
+              0
+            )
+          }
+
+          return 0
+        },
+      }
+    },
+  })
   actions.createTypes(typeDefs)
 }

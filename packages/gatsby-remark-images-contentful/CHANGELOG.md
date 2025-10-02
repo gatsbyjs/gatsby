@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images-contentful@6.15.0/packages/gatsby-remark-images-contentful) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images-contentful@6.14.0/packages/gatsby-remark-images-contentful) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- pin cheerio [#39066](https://github.com/gatsbyjs/gatsby/issues/39066) ([e2c3a86](https://github.com/gatsbyjs/gatsby/commit/e2c3a866e438618275a5c2979cb20e47b84fe8dc))
+
+#### Chores
+
+- upgrade axios [#38698](https://github.com/gatsbyjs/gatsby/issues/38698) ([e2b3ea3](https://github.com/gatsbyjs/gatsby/commit/e2b3ea3fbfa70b226f6c5c677efedc83f5386cce))
+
+### [6.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images-contentful@6.13.2/packages/gatsby-remark-images-contentful) (2024-08-26)
+
+#### Bug Fixes
+
+- pin cheerio [#39066](https://github.com/gatsbyjs/gatsby/issues/39066) [#39069](https://github.com/gatsbyjs/gatsby/issues/39069) ([282caaf](https://github.com/gatsbyjs/gatsby/commit/282caafe45ff3f8f4a8bd0d82807ca5b9b742dd1))
+
 ### [6.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images-contentful@6.13.1/packages/gatsby-remark-images-contentful) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful

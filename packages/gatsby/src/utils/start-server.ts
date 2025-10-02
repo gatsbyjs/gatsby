@@ -1,5 +1,5 @@
 import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
-import webpackDevMiddleware from "webpack-dev-middleware"
+import webpackDevMiddleware, { type Watching } from "webpack-dev-middleware"
 import got, { Method } from "got"
 import webpack, { Compilation } from "webpack"
 import express from "express"
@@ -12,7 +12,6 @@ import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
 import cors from "cors"
-import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
 import * as fs from "fs-extra"
@@ -54,18 +53,15 @@ import { isFileInsideCompilations } from "./webpack/utils/is-file-inside-compila
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
+export type WebpackWatching = NonNullable<Watching>
+
 interface IServer {
   compiler: webpack.Compiler
   listener: http.Server | https.Server
   webpackActivity: ActivityTracker
   websocketManager: WebsocketManager
   workerPool: WorkerPool.GatsbyWorkerPool
-  webpackWatching: IWebpackWatchingPauseResume
-}
-
-export interface IWebpackWatchingPauseResume {
-  suspend: () => void
-  resume: () => void
+  webpackWatching: WebpackWatching
 }
 
 export async function startServer(
@@ -156,7 +152,6 @@ export async function startServer(
    * Set up the express app.
    **/
   app.use(compression())
-  app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
     webpackHotMiddleware(compiler, {
       log: false,
@@ -316,14 +311,7 @@ export async function startServer(
           let pageData: IPageDataWithQueryResult
           // TODO move to query-engine
           if (process.env.GATSBY_QUERY_ON_DEMAND) {
-            const start = Date.now()
-
             pageData = await getPageDataExperimental(page.path)
-
-            telemetry.trackCli(`RUN_QUERY_ON_DEMAND`, {
-              name: `getPageData`,
-              duration: Date.now() - start,
-            })
           } else {
             pageData = await readPageData(
               path.join(store.getState().program.directory, `public`),
@@ -658,8 +646,6 @@ export async function startServer(
   // Render an HTML page and serve it.
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     app.get(`*`, async (req, res, next) => {
-      telemetry.trackFeatureIsUsed(`GATSBY_EXPERIMENTAL_DEV_SSR`)
-
       const pathObj = findPageByPath(store.getState(), decodeURI(req.path))
 
       if (!pathObj) {
@@ -895,6 +881,7 @@ export async function startServer(
     webpackActivity,
     websocketManager,
     workerPool,
-    webpackWatching: webpackDevMiddlewareInstance.context.watching,
+    webpackWatching: webpackDevMiddlewareInstance.context
+      .watching as WebpackWatching,
   }
 }

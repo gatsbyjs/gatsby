@@ -6,7 +6,9 @@ Tailwind CSS is a utility-first CSS framework for rapidly building custom user i
 
 ## Installing and configuring Tailwind
 
-Please follow the [official "Install Tailwind CSS with Gatsby" guide](https://tailwindcss.com/docs/guides/gatsby) to install and configure Tailwind CSS with Gatsby. Some important notes when configuring Tailwind with Gatsby:
+### Tailwind v3
+
+Please follow the [official "Install Tailwind CSS with Gatsby" guide](https://v3.tailwindcss.com/docs/guides/gatsby) to install and configure Tailwind CSS with Gatsby. Some important notes when configuring Tailwind with Gatsby:
 
 - It is **not recommended** that you include Gatsby's output directories (`public` and `.cache`) in your `content` array in your `tailwind.config.js`. You should only include your source files to have Tailwind working as expected.
 - If you use [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen/) a file at `src/gatsby-types.d.ts` will be generated and with the default configuration for `content` in `tailwind.config.js` this will trigger an infinite loop. You have two options to fix this:
@@ -21,6 +23,10 @@ Please follow the [official "Install Tailwind CSS with Gatsby" guide](https://ta
        ],
      }
      ```
+
+### Tailwind v4
+
+Currently, there's no official dedicated page for installing Tailwind with Gatsby in the Tailwind v4 documentation. However, the [installation instructions](https://tailwindcss.com/docs/installation/using-postcss) and/or the [Upgrade Guide](https://tailwindcss.com/docs/upgrade-guide) from Tailwind v3 to v4 should suffice.
 
 ## Other resources
 

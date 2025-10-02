@@ -36,6 +36,28 @@ const sharedTypeSettings = {
     exclude: true,
   },
   Post: { excludeFieldNames: [`pinged`] },
+  // Those interfaces sometimes exist and sometimes don't. As those are interfaces and not types, so this flakiness won't remove access to any data.
+  NodeWithEditorBlocks: {
+    exclude: true,
+  },
+  NodeWithPageEditorBlocks: {
+    exclude: true,
+  },
+  NodeWithPostEditorBlocks: {
+    exclude: true,
+  },
+  NodeWithTranslationFilterTestEditorBlocks: {
+    exclude: true,
+  },
+  NodeWithTypeLimit0TestEditorBlocks: {
+    exclude: true,
+  },
+  NodeWithTypeLimitTestEditorBlocks: {
+    exclude: true,
+  },
+  WithAcfAcfPageFields: {
+    exclude: true,
+  },
 }
 
 const debug = {

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@6.15.0/packages/gatsby-plugin-offline) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@6.14.0/packages/gatsby-plugin-offline) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- pin cheerio [#39066](https://github.com/gatsbyjs/gatsby/issues/39066) ([e2c3a86](https://github.com/gatsbyjs/gatsby/commit/e2c3a866e438618275a5c2979cb20e47b84fe8dc))
+- handler generation on windows [#38900](https://github.com/gatsbyjs/gatsby/issues/38900) ([c91ed28](https://github.com/gatsbyjs/gatsby/commit/c91ed287fd319a345c2f27877e20656826767e92))
+
+### [6.13.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@6.13.3/packages/gatsby-plugin-offline) (2024-08-26)
+
+#### Bug Fixes
+
+- pin cheerio [#39066](https://github.com/gatsbyjs/gatsby/issues/39066) [#39069](https://github.com/gatsbyjs/gatsby/issues/39069) ([282caaf](https://github.com/gatsbyjs/gatsby/commit/282caafe45ff3f8f4a8bd0d82807ca5b9b742dd1))
+
 ### [6.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@6.13.2/packages/gatsby-plugin-offline) (2024-04-10)
 
 #### Bug Fixes

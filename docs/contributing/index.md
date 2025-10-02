@@ -17,14 +17,16 @@ In the interest of fostering an open and welcoming environment, we as contributo
 
 ### Gatsby news
 
+ X-(Twitter)
 - Follow [Gatsby](https://twitter.com/gatsbyjs) and [Gatsby Changelog](https://twitter.com/GatsbyChangelog) on X (Twitter)
+=======
+
 - Read and discuss about [Request for Comment (RFC) proposals](/contributing/rfc-process)
 - Watch videos on [Gatsby's YouTube channel](https://www.youtube.com/c/Gatsbyjs/videos) to see past GatsbyConf presentations and tutorial walkthroughs
 - Follow the [official blog](/blog/)
 
 ### Get support
 
-- [Discord Chat](https://gatsby.dev/discord): Real time chat with community & team members. Let's chat!
 - [GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/help): Best place to ask and discuss longer questions about Gatsby and its ecosystem.
   - [Feature Requests](https://github.com/gatsbyjs/gatsby/discussions/categories/ideas-feature-requests): Here's also where you can post your feature requests.
 - [GitHub Issues](https://github.com/gatsbyjs/gatsby/issues/new/choose): Have you found a bug or a problem in our documentation? Open an issue!
@@ -44,7 +46,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 
 ### Help fellow users
 
-Answering questions for fellow Gatsby users on [Discord](https://gatsby.dev/discord) or [GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/help) are valuable contributions. You can also help out users on issues and Pull Requests to contribute or fix their issues.
+Answering questions for fellow Gatsby users on [GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/help) is a valuable contribution. You can also help out users on issues and Pull Requests to contribute or fix their issues.
 
 ### Contribute documentation
 

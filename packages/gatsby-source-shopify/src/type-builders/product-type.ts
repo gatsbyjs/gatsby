@@ -16,7 +16,7 @@ export function productTypeBuilder(prefix: string): string {
         isGiftCard: Boolean!
         legacyResourceId: String!
         media: [${prefix}Media!]! @link(from: "media___NODE", by: "id")
-        mediaCount: Int!
+        mediaCount: Int! @proxy(from: "mediaCount.count")
         metafield(namespace: String! key: String!): ${prefix}Metafield
         metafields: [${prefix}Metafield!]! @link(from: "metafields___NODE", by: "id")
         onlineStorePreviewUrl: String
@@ -27,7 +27,7 @@ export function productTypeBuilder(prefix: string): string {
         productType: String!
         publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
-        sellingPlanGroupCount: Int!
+        sellingPlanGroupCount: Int! @proxy(from: "sellingPlanGroupsCount.count")
         seo: ${prefix}SEO!
         shopifyId: String!
         status: ${prefix}ProductStatus!

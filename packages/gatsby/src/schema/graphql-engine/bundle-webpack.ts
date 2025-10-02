@@ -233,18 +233,24 @@ function checkIfNeedToInstallMissingSharp(
   currentTarget: IPlatformAndArch
 ): IBinaryPackageStatus | undefined {
   try {
-    // check if shapr is resolvable
-    const { version: sharpVersion } = require(`sharp/package.json`)
+    // check if sharp is resolvable
+    const sharp: typeof import("sharp") = require(`sharp`)
 
     if (isEqual(functionsTarget, currentTarget)) {
-      return undefined
+      // if current platform and target is the same as functions target, we need to check if vendored libvips
+      // exists in the current sharp installation as it will be needed in lambda
+      if (sharp.vendor.installed.includes(sharp.vendor.current)) {
+        // vendored libvips is installed, so we can use it
+        return undefined
+      }
     }
 
     return checkIfInstalledInInternalPackagesCache(
       {
         needToInstall: true,
         packageName: `sharp`,
-        packageVersion: sharpVersion,
+        packageVersion:
+          sharp.versions.sharp ?? require(`sharp/package.json`).version,
       },
       functionsTarget
     )
@@ -279,6 +285,10 @@ async function installMissing(
     env: {
       npm_config_arch: functionsTarget.arch,
       npm_config_platform: functionsTarget.platform,
+      // force sharp to download vendored libvips and not skip it if globally installed libvips matches sharp requirements
+      // so that produced function is self-sufficient and doesn't rely on function execution environment having (same)
+      // globally available libvips
+      SHARP_IGNORE_GLOBAL_LIBVIPS: `1`,
     },
   }
 

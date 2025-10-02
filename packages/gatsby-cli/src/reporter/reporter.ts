@@ -1,6 +1,5 @@
 import { stripIndent } from "common-tags"
 import chalk from "chalk"
-import { trackError } from "gatsby-telemetry"
 import { globalTracer, Span, SpanContext } from "opentracing"
 
 import * as reduxReporterActions from "./redux/actions"
@@ -109,8 +108,7 @@ class Reporter {
     error?: Error | Array<Error>,
     pluginName?: string
   ): never => {
-    const reporterError = this.error(errorMeta, error, pluginName)
-    trackError(`GENERAL_PANIC`, { error: reporterError })
+    this.error(errorMeta, error, pluginName)
     prematureEnd()
     return process.exit(1)
   }
@@ -121,7 +119,6 @@ class Reporter {
     pluginName?: string
   ): IStructuredError | Array<IStructuredError> => {
     const reporterError = this.error(errorMeta, error, pluginName)
-    trackError(`BUILD_PANIC`, { error: reporterError })
     if (process.env.gatsby_executing_command === `build`) {
       prematureEnd()
       process.exit(1)
@@ -194,7 +191,6 @@ class Reporter {
 
     if (structuredError) {
       reporterActions.createLog(structuredError)
-      trackError(`GENERIC_ERROR`, { error: structuredError })
     }
 
     // TODO: remove this once Error component can render this info

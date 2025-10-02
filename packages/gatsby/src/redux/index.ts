@@ -8,7 +8,6 @@ import {
   Store,
 } from "redux"
 import _ from "lodash"
-import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
 import thunk, { ThunkMiddleware, ThunkAction, ThunkDispatch } from "redux-thunk"
@@ -74,16 +73,8 @@ export const readState = (): IGatsbyState => {
     // runs gatsby the first time after upgrading.
     delete state[`jsonDataPaths`]
 
-    telemetry.trackCli(`CACHE_STATUS`, {
-      cacheStatus: `WARM`,
-    })
-
     return state
   } catch (e) {
-    telemetry.trackCli(`CACHE_STATUS`, {
-      cacheStatus: `COLD`,
-    })
-
     return {} as IGatsbyState
   }
 }
