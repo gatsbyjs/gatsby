@@ -12,7 +12,7 @@ const introspectionQuery = /* GraphQL */ `
     __schema {
       types {
         name
-        fields {
+        fields(includeDeprecated: true) {
           name
         }
       }

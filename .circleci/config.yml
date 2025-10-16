@@ -6,7 +6,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "18.0.0"
+        default: "22.13"
       gatsby_major:
         type: string
         default: "5"
@@ -16,6 +16,10 @@ executors:
       GATSBY_CPU_COUNT: 2
       COMPILER_OPTIONS: GATSBY_MAJOR=<< parameters.gatsby_major >>
       NODE_NO_WARNINGS: 1
+      # See https://sharp.pixelplumbing.com/install/#custom-libvips
+      # libvips may or may not be installed in the CircleCI images we're using, but we
+      # don't want to use it regardless, for consistency (and because it can cause problems)
+      SHARP_IGNORE_GLOBAL_LIBVIPS: 1
 
 aliases:
   e2e-executor-env: &e2e-executor-env
@@ -27,12 +31,6 @@ aliases:
       - image: cypress/browsers:node18.6.0-chrome105-ff104
     environment:
       <<: *e2e-executor-env
-
-  restore_cache: &restore_cache
-    restore_cache:
-      name: Restore node_modules cache
-      keys:
-        - yarn-cypress-cache-{{ checksum "yarn.lock" }}
 
   install_node_modules: &install_node_modules
     run:
@@ -48,13 +46,6 @@ aliases:
     run:
       name: Validate renovate-config
       command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && (echo "Please run \"node scripts/renovate-config-generator.js\" to update renovate.json5" && exit 1) || npx -p renovate@31.28.5 renovate-config-validator .
-
-  persist_cache: &persist_cache
-    save_cache:
-      name: Save node modules cache
-      key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
-      paths:
-        - ~/.cache
 
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
@@ -110,11 +101,48 @@ aliases:
           - master
           - /docs.+/
     requires:
-      - lint
-      - typecheck
-      - unit_tests_node18
+      - bootstrap-18.2.0
+
+  integration-test-workflow: &integration-test-workflow
+    filters:
+      branches:
+        ignore:
+          - master
+          - /docs.+/
+    matrix:
+      parameters:
+        # TODO(serhalp): We test on 22.13 rather than the latest because there is an issue
+        # introduced in node.js 22.14.0 (not present in 22.13.1) and node.js 20.19.0 (not present in
+        # 20.18.3). It seems almost certainly to be caused by https://github.com/nodejs/node/pull/56106.
+        # I'm not sure yet if this is only a test issue or an actual race condition that could
+        # affect users - AFAICT the only manifestation is causing this test to fail:
+        # https://github.com/gatsbyjs/gatsby/blob/c3708b068abba3a26e5cf229d6d4dc5813884acd/integration-tests/ssr/__tests__/ssr.js#L102.
+        node_version: ["18.2.0", "22.13"]
+    requires:
+      - bootstrap-<< matrix.node_version >>
 
 commands:
+  restore_yarn_cache:
+    parameters:
+      node_version:
+        type: string
+    steps:
+      - restore_cache:
+          name: Restore node_modules cache
+          keys:
+            - yarn-cypress-cache-{{ checksum "yarn.lock" }}-<< parameters.node_version >>
+
+  persist_yarn_cache:
+    parameters:
+      node_version:
+        type: string
+    steps:
+      - save_cache:
+          name: Save node modules cache
+          key: yarn-cypress-cache-{{ checksum "yarn.lock" }}-<< parameters.node_version >>
+          paths:
+            - ~/.cache
+
   e2e-test:
     parameters:
       skip_file_change_test:
@@ -140,9 +168,11 @@ commands:
     steps:
       - checkout
       # In case of failure, add these steps again. Cache probably got deleted
-      #- <<: *restore_cache
+      #- restore_yarn_cache:
+      #    node_version: << parameters.node_version >>
       #- <<: *install_node_modules
-      #- <<: *persist_cache
+      #- persist_yarn_cache:
+      #    node_version: << parameters.node_version >>
       - unless:
           condition: << parameters.skip_file_change_test >>
           steps:
@@ -173,17 +203,24 @@ version: 2.1
 
 jobs:
   bootstrap:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
-      # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: sudo apt-get update && sudo apt-get install python -y
-      - <<: *restore_cache
+      # python is not built in and node-gyp needs it to build lmdb
+      - run: sudo apt-get update && sudo apt-get install -y python3 python-is-python3
+      - restore_yarn_cache:
+          node_version: << parameters.node_version >>
       - <<: *install_node_modules
       - <<: *check_lockfile
       - <<: *validate_renovate
-      - <<: *persist_cache
+      - persist_yarn_cache:
+          node_version: << parameters.node_version >>
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
@@ -222,7 +259,22 @@ jobs:
       image: "18.2.0"
     <<: *test_template
 
+  unit_tests_node20:
+    executor:
+      name: node
+      image: "20.19"
+    <<: *test_template
+
+  unit_tests_node22:
+    executor:
+      name: node
+      image: "22.13"
+    <<: *test_template
+
   integration_tests_gatsby_source_wordpress:
+    parameters:
+      node_version:
+        type: string
     machine:
       image: "ubuntu-2204:2023.02.1"
     steps:
@@ -230,65 +282,105 @@ jobs:
           command: |
             echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-            echo nvm install v18 >> $BASH_ENV
-            echo nvm alias default v18 >> $BASH_ENV
+            echo nvm install v<< parameters.node_version >> >> $BASH_ENV
+            echo nvm alias default v<< parameters.node_version >> >> $BASH_ENV
       - run: |
           node -v
       - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
-  integration_tests_node_manifest:
-    executor: node
-    steps:
-      - e2e-test:
-          test_path: integration-tests/node-manifest
-
   integration_tests_long_term_caching:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/long-term-caching
+          test_command: yarn test
 
   integration_tests_cache_resilience:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/cache-resilience
+          test_command: yarn test
 
   integration_tests_gatsby_pipeline:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
+          test_command: yarn test
 
   integration_tests_gatsby_cli:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli
-          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*|scripts/e2e-test.sh
+          test_command: yarn test
 
   integration_tests_structured_logging:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/structured-logging
+          test_command: yarn test
 
   integration_tests_artifacts:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/artifacts
+          test_command: yarn test
 
   integration_tests_ssr:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/ssr
+          test_command: yarn test
 
   integration_tests_images:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/images
@@ -297,28 +389,48 @@ jobs:
           path: integration-tests/images/__diff_output__
 
   integration_tests_functions:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/functions
           test_command: yarn test
 
   integration_tests_head_function_export:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/head-function-export
           test_command: yarn test
 
   integration_tests_esm_in_gatsby_files:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/esm-in-gatsby-files
           test_command: yarn test
 
   integration_tests_lmdb_regeneration:
-    executor: node
+    parameters:
+      node_version:
+        type: string
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - e2e-test:
           test_path: integration-tests/lmdb-regeneration
@@ -407,7 +519,7 @@ jobs:
           command: rm package-lock.json
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Install pnpm
-          command: npm install -g pnpm
+          command: npm install -g pnpm@9
           working_directory: /tmp/e2e-tests/gatsby-pnpm
       - run: # Install start-server-and-test
           command: npm install -g start-server-and-test@^1.11.0
@@ -535,8 +647,9 @@ jobs:
     steps:
       - checkout
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
-      - run: sudo apt-get update && sudo apt-get install jq python -y
-      - <<: *restore_cache
+      - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
+      - restore_yarn_cache:
+          node_version: 18.0.0
       - <<: *install_node_modules
       - run: yarn markdown
       - run: git config --global user.name "GatsbyJS Bot"
@@ -547,13 +660,16 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install jq python -y
-      - <<: *restore_cache
+      # python is not built in and node-gyp needs it to build lmdb
+      - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
+      - restore_yarn_cache:
+          node_version: 18.0.0
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
 
+  # TODO(serhalp): Test Windows on Node.js 20 and 22?
   windows_unit_tests:
     parallelism: 4
     executor:
@@ -567,8 +683,8 @@ jobs:
       # Restoring cache takes as long as installing node modules, so skipping
       # - restore_cache:
       #     keys:
-      #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
-      #       - yarn-packages-v2-
+      #       - yarn-packages-v2-{{ checksum "yarn.lock" }}-<< parameters.node_version >>
+      #       - yarn-packages-v2-<< parameters.node_version >>
 
       - <<: *attach_to_bootstrap
       - run:
@@ -655,59 +771,60 @@ workflows:
 
   build-test:
     jobs:
-      - bootstrap
+      - bootstrap:
+          name: "bootstrap-<< matrix.node_version >>"
+          matrix:
+            parameters:
+              node_version: ["18.2.0", "20.19", "22.13"]
       - lint
       - typecheck:
           requires:
-            - bootstrap
+            - bootstrap-18.2.0
       - windows_unit_tests:
           <<: *ignore_docs
           requires:
-            - lint
-            - bootstrap
+            - bootstrap-18.2.0
       - windows_adapters_smoke:
           requires:
-            # ideally we wait for windows unit tests here, but because those are flaky
-            # feedback loop would be not practical, so at least wait for linux unit tests
-            # to resemble setup for more robust E2E tests
-            - lint
-            - bootstrap
-            - unit_tests_node18
+            - bootstrap-18.2.0
       - unit_tests_node18:
           <<: *ignore_docs
           requires:
-            - lint
-            - typecheck
-            - bootstrap
-      - integration_tests_gatsby_source_wordpress:
-          <<: *e2e-test-workflow
-      - integration_tests_node_manifest:
-          <<: *e2e-test-workflow
-      - integration_tests_long_term_caching:
-          <<: *e2e-test-workflow
-      - integration_tests_cache_resilience:
-          <<: *e2e-test-workflow
-      - integration_tests_gatsby_pipeline:
-          <<: *e2e-test-workflow
-      - integration_tests_structured_logging:
-          <<: *e2e-test-workflow
-      - integration_tests_artifacts:
-          <<: *e2e-test-workflow
-      - integration_tests_ssr:
-          <<: *e2e-test-workflow
-      - integration_tests_images:
-          <<: *e2e-test-workflow
-      - integration_tests_functions:
-          <<: *e2e-test-workflow
-      - integration_tests_head_function_export:
-          <<: *e2e-test-workflow
-      - integration_tests_esm_in_gatsby_files:
-          <<: *e2e-test-workflow
-      - integration_tests_lmdb_regeneration:
-          <<: *e2e-test-workflow
-      - integration_tests_gatsby_cli:
+            - bootstrap-18.2.0
+      - unit_tests_node20:
+          <<: *ignore_docs
           requires:
-            - bootstrap
+            - bootstrap-20.19
+      - unit_tests_node22:
+          <<: *ignore_docs
+          requires:
+            - bootstrap-22.13
+      - integration_tests_gatsby_source_wordpress:
+          <<: *integration-test-workflow
+      - integration_tests_long_term_caching:
+          <<: *integration-test-workflow
+      - integration_tests_cache_resilience:
+          <<: *integration-test-workflow
+      - integration_tests_gatsby_pipeline:
+          <<: *integration-test-workflow
+      - integration_tests_structured_logging:
+          <<: *integration-test-workflow
+      - integration_tests_artifacts:
+          <<: *integration-test-workflow
+      - integration_tests_ssr:
+          <<: *integration-test-workflow
+      - integration_tests_images:
+          <<: *integration-test-workflow
+      - integration_tests_functions:
+          <<: *integration-test-workflow
+      - integration_tests_head_function_export:
+          <<: *integration-test-workflow
+      - integration_tests_esm_in_gatsby_files:
+          <<: *integration-test-workflow
+      - integration_tests_lmdb_regeneration:
+          <<: *integration-test-workflow
+      - integration_tests_gatsby_cli:
+          <<: *integration-test-workflow
       - e2e_tests_pnp:
           <<: *e2e-test-workflow
       - e2e_tests_pnpm:

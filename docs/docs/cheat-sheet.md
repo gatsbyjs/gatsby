@@ -181,9 +181,6 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
   <p>
     <a href="https://www.gatsbyjs.com/">gatsbyjs.com</a>
   </p>
-  <p>
-    <a href="https://twitter.com/gatsbyjs">twitter.com/gatsbyjs</a>
-  </p>
   <h2>Gatsby CLI Commands</h2>
   <p>
     First, install the global executable:

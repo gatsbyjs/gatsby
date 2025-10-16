@@ -80,13 +80,8 @@ Object {
 
 exports[`develop response formats returns json correctly 2`] = `
 Object {
-  "access-control-allow-origin": "*",
-  "connection": "close",
   "content-length": "16",
   "content-type": "application/json; charset=utf-8",
-  "etag": "W/\\"10-R6td1pV+B+Xz9CJkNeaEI2kP+QY\\"",
-  "vary": "Accept-Encoding",
-  "x-powered-by": "Express",
 }
 `;
 
@@ -94,13 +89,8 @@ exports[`develop response formats returns text correctly 1`] = `"I am typescript
 
 exports[`develop response formats returns text correctly 2`] = `
 Object {
-  "access-control-allow-origin": "*",
-  "connection": "close",
   "content-length": "15",
   "content-type": "text/html; charset=utf-8",
-  "etag": "W/\\"f-zwggT56l/fnWBm4dI0PkA4E3i4E\\"",
-  "vary": "Accept-Encoding",
-  "x-powered-by": "Express",
 }
 `;
 

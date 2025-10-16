@@ -38,7 +38,7 @@ Object {
   },
   "docsUrl": "https://gatsby.dev/issue-how-to",
   "level": "ERROR",
-  "stack": Array [],
+  "stack": Any<Array>,
   "text": "Error created in Jest",
   "type": "UNKNOWN",
 }
@@ -69,80 +69,7 @@ Object {
   "error": [Error: Message from new Error],
   "level": "ERROR",
   "pluginName": "gatsby-plugin-foo-bar",
-  "stack": Array [
-    Object {
-      "columnNumber": 7,
-      "fileName": "<PROJECT_ROOT>/packages/gatsby-cli/src/reporter/__tests__/index.ts",
-      "functionName": null,
-      "lineNumber": 100,
-    },
-    Object {
-      "columnNumber": 28,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/utils.js",
-      "functionName": "Promise.then.completed",
-      "lineNumber": 293,
-    },
-    Object {
-      "columnNumber": 10,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/utils.js",
-      "functionName": "callAsyncCircusFn",
-      "lineNumber": 226,
-    },
-    Object {
-      "columnNumber": 40,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
-      "functionName": "_callCircusTest",
-      "lineNumber": 297,
-    },
-    Object {
-      "columnNumber": 3,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
-      "functionName": "_runTest",
-      "lineNumber": 233,
-    },
-    Object {
-      "columnNumber": 9,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
-      "functionName": "_runTestsForDescribeBlock",
-      "lineNumber": 135,
-    },
-    Object {
-      "columnNumber": 9,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
-      "functionName": "_runTestsForDescribeBlock",
-      "lineNumber": 130,
-    },
-    Object {
-      "columnNumber": 3,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
-      "functionName": "run",
-      "lineNumber": 68,
-    },
-    Object {
-      "columnNumber": 21,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js",
-      "functionName": "runAndTransformResultsToJestFormat",
-      "lineNumber": 122,
-    },
-    Object {
-      "columnNumber": 19,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js",
-      "functionName": "jestAdapter",
-      "lineNumber": 79,
-    },
-    Object {
-      "columnNumber": 16,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-runner/build/runTest.js",
-      "functionName": "runTestInternal",
-      "lineNumber": 367,
-    },
-    Object {
-      "columnNumber": 34,
-      "fileName": "<PROJECT_ROOT>/node_modules/jest-runner/build/runTest.js",
-      "functionName": "runTest",
-      "lineNumber": 444,
-    },
-  ],
+  "stack": Any<Array>,
   "text": "Error string passed to reporter Message from new Error",
   "type": "UNKNOWN",
 }
@@ -157,7 +84,7 @@ Object {
   },
   "docsUrl": "https://gatsby.dev/debug-html",
   "level": "ERROR",
-  "stack": Array [],
+  "stack": Any<Array>,
   "text": "\\"navigator\\" is not available during server-side rendering. Enable \\"DEV_SSR\\" to debug this during \\"gatsby develop\\".",
   "type": "HTML.COMPILATION",
 }
@@ -171,7 +98,7 @@ Object {
   },
   "docsUrl": "https://www.gatsbyjs.com/docs/gatsby-cli/#new",
   "level": "ERROR",
-  "stack": Array [],
+  "stack": Any<Array>,
   "text": "Error text is test123",
   "type": "PLUGIN",
 }
@@ -186,7 +113,7 @@ Object {
   "docsUrl": "https://www.gatsbyjs.com/docs/gatsby-cli/#new",
   "level": "ERROR",
   "pluginName": "gatsby-plugin-foo-bar",
-  "stack": Array [],
+  "stack": Any<Array>,
   "text": "Error text is test123",
   "type": "PLUGIN",
 }

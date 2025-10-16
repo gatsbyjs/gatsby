@@ -25,8 +25,18 @@ it(`Builds cache-dir with minimal config`, done => {
   })
 
   spawn.on(`close`, function () {
-    expect(stderr).toEqual(``)
-    expect(stdout).not.toEqual(``)
+    try {
+      // This is a little weird but this node.js deprecation warning is printed on node 22+ BUT we
+      // fully suppress all node.js warnings in CI for some reason. This pattern allows either
+      // nothing or just this warning to be printed to stderr, allowing it to pass locally and in CI.
+      expect(stderr).toMatch(
+        /^(|\(node:\d+\) \[DEP0180\] DeprecationWarning: fs\.Stats constructor is deprecated\.\s+\(Use `node --trace-deprecation \.\.\.` to show where the warning was created\)[\s\n]*)$/s
+      )
+      expect(stdout).not.toEqual(``)
+    } catch (err) {
+      done(err)
+      return
+    }
     done()
   })
 }, 30000)

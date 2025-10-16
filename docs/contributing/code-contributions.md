@@ -66,7 +66,7 @@ If you're adding e2e tests and want to run them against local changes:
 
 ### Troubleshooting
 
-At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an Discussion on GitHub](https://github.com/gatsbyjs/gatsby/discussions/categories/help). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.
+At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an Discussion on GitHub](https://github.com/gatsbyjs/gatsby/discussions/categories/help).
 
 - When you went through the initial setup some time ago and now want to contribute something new, you should make sure to [sync your fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork) with the latest changes from the primary branch on [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby). Otherwise, you might run into issues where files are not found as they were renamed, moved, or deleted.
 - After syncing your fork, run `yarn run bootstrap` to compile all packages. When files or tests depend on the build output (files in `/dist` directories) they might fail otherwise.
@@ -94,4 +94,4 @@ Check [Debugging the build process](/docs/debugging-the-build-process/) page to 
 
 ## Feedback
 
-At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an Discussion on GitHub](https://github.com/gatsbyjs/gatsby/discussions/categories/help). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.
+At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an Discussion on GitHub](https://github.com/gatsbyjs/gatsby/discussions/categories/help).
