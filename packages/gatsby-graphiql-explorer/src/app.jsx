@@ -5,8 +5,8 @@ import * as React from "react"
 import { createRoot } from "react-dom/client"
 import { GraphiQL } from "graphiql"
 import { getIntrospectionQuery } from "graphql"
-import { useExplorerPlugin } from "@graphiql/plugin-explorer"
-import { useExporterPlugin } from "@graphiql/plugin-code-exporter"
+import { explorerPlugin } from "@graphiql/plugin-explorer"
+import { codeExporterPlugin } from "@graphiql/plugin-code-exporter"
 
 import { snippets } from "./code-exporter/snippets.js"
 import { Logo } from "./logo.jsx"
@@ -72,6 +72,12 @@ function updateURL() {
   history.replaceState(null, null, locationQuery(parameters))
 }
 
+const explorer = explorerPlugin()
+
+const codeExporter = codeExporterPlugin({
+  snippets,
+})
+
 async function graphQLIntrospection() {
   const res = await fetch(GRAPHIQL_URL, {
     method: `POST`,
@@ -113,7 +119,8 @@ const App = ({ initialExternalFragments }) => {
       switch (typeof enableRefresh) {
         case `string`: {
           const lowerCased = enableRefresh.toLowerCase()
-          enableRefresh = lowerCased === `1` || lowerCased === `true`
+          enableRefresh =
+            lowerCased === `1` || lowerCased === `true` || lowerCased === `y`
           break
         }
         case `number`:
@@ -129,16 +136,6 @@ const App = ({ initialExternalFragments }) => {
 
     fetchData()
   }, [])
-
-  const explorerPlugin = useExplorerPlugin({
-    query,
-    onEdit: setQuery,
-  })
-
-  const exporterPlugin = useExporterPlugin({
-    query,
-    snippets,
-  })
 
   const refreshExternalDataSource = () => {
     const options = { method: `POST` }
@@ -176,7 +173,7 @@ const App = ({ initialExternalFragments }) => {
           )),
       }}
       externalFragments={externalFragments}
-      plugins={[explorerPlugin, exporterPlugin]}
+      plugins={[explorer, codeExporter]}
     />
   )
 }

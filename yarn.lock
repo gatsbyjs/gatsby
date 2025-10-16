@@ -1694,17 +1694,17 @@
     html-entities "^2.3.3"
     strip-ansi "^6.0.0"
 
-"@graphiql/plugin-code-exporter@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@graphiql/plugin-code-exporter/-/plugin-code-exporter-0.2.0.tgz#b887b6b6b2d7bc688de7a704a271d4f6dd5cf083"
-  integrity sha512-UmfJ0AR13o3delIOGPxCDQgq9wJUAPiqya0FzTlEaSm2D6xgum1hNTJRcCanhqGsRZHOSrM1SpMaHzHaG63KKw==
+"@graphiql/plugin-code-exporter@^3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@graphiql/plugin-code-exporter/-/plugin-code-exporter-3.1.5.tgz#8e7cfd8651f22e11c5addf70483b4195c55f6593"
+  integrity sha512-YD7GIc10CZ78VTqimbrcFGVbZ7MjUjD6NJWetVEF0T/8cYUWaS9Zc0WSk5zSV5gihX7/Pi4rTtcPBfJ3k/JLkg==
   dependencies:
     graphiql-code-exporter "^3.0.3"
 
-"@graphiql/plugin-explorer@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@graphiql/plugin-explorer/-/plugin-explorer-0.2.0.tgz#e3774eb9697a454d22680cc193a1a00bb48df414"
-  integrity sha512-nDNdR2DiZPEnFwc1FPRo2nfaKSyxcfUIySi9kNmiBUetjIzlNPdKB4RyX9/nLLWM5/HkkjAi5A9xWZ145YFjig==
+"@graphiql/plugin-explorer@^3.2.6":
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/@graphiql/plugin-explorer/-/plugin-explorer-3.2.6.tgz#5c1b0f083510dafbe6438f2589602926ce77558f"
+  integrity sha512-MXzG/zVNzZfes4Em253bHyAbD/lwwAZkPKvxCAQkjz0i3dtcv4uF3D8iqJ7214iu3SCphbORYZZUC93fik1yew==
   dependencies:
     graphiql-explorer "^0.9.0"
 
