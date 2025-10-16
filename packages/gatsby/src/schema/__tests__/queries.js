@@ -12,6 +12,14 @@ const mockActualOrderBy = jest.requireActual(`lodash`).orderBy
 jest.mock(`lodash/orderBy`, () => jest.fn(mockActualOrderBy))
 const orderBySpy = require(`lodash/orderBy`)
 
+// Some tests here rely on triggering garbage collection with `global.gc()`. GC events are not
+// deterministic - there is no guarantee that `WeakRef.prototype.deref()` will trigger a GC
+// immediately and return `undefined`:
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef#notes_on_weakrefs
+// Node.js 20 introduced GC behaviour changes that make these tests unreliable. Only run them on
+// Node < 20 where they've historically passed.
+const shouldTestGC = Number(process.versions.node.split(`.`)[0]) < 20
+
 const getTestNodes = require(`./fixtures/queries`)
 
 const { getDataStore, getNode } = require(`../../datastore`)
@@ -1228,47 +1236,48 @@ describe(`Query schema`, () => {
           }
         `)
       })
+      ;(shouldTestGC ? it : it.skip)(
+        `works correctly if GC happen mid running`,
+        async () => {
+          // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+          const v8 = require(`v8`)
+          const vm = require(`vm`)
+          v8.setFlagsFromString(`--expose_gc`)
+          const gc = vm.runInNewContext(`gc`)
 
-      it(`works correctly if GC happen mid running`, async () => {
-        // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-        const v8 = require(`v8`)
-        const vm = require(`vm`)
-        v8.setFlagsFromString(`--expose_gc`)
-        const gc = vm.runInNewContext(`gc`)
+          const { clearKeptObjects } = require(`lmdb`)
 
-        const { clearKeptObjects } = require(`lmdb`)
+          orderBySpy.mockImplementationOnce((...args) => {
+            // eslint thinks that WeakRef is not defined for some reason :shrug:
+            // eslint-disable-next-line no-undef
+            const weakNode = new WeakRef(getNode(`md1`))
 
-        orderBySpy.mockImplementationOnce((...args) => {
-          // eslint thinks that WeakRef is not defined for some reason :shrug:
-          // eslint-disable-next-line no-undef
-          const weakNode = new WeakRef(getNode(`md1`))
+            // spy is keeping nodes in memory due to `.calls` array
+            apiRunnerNode.mockClear()
+            // very implementation specific case:
+            // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+            // GCed mid execution of query. For this test we force all weakly held nodes to be
+            // dropped
+            clearKeptObjects()
+            gc()
 
-          // spy is keeping nodes in memory due to `.calls` array
-          apiRunnerNode.mockClear()
-          // very implementation specific case:
-          // We don't hold full nodes strongly in gatsby anymore so they can be potentially
-          // GCed mid execution of query. For this test we force all weakly held nodes to be
-          // dropped
-          clearKeptObjects()
-          gc()
+            // now we shouldn't have that node in memory
+            if (weakNode.deref()) {
+              throw new Error(
+                `Test setup is broken, something is keeping a node in memory`
+              )
+            }
 
-          // now we shouldn't have that node in memory
-          if (weakNode.deref()) {
-            throw new Error(
-              `Test setup is broken, something is keeping a node in memory`
-            )
-          }
+            return mockActualOrderBy(...args)
+          })
 
-          return mockActualOrderBy(...args)
-        })
+          expect(orderBySpy).not.toBeCalled()
 
-        expect(orderBySpy).not.toBeCalled()
-
-        // sort added only to hit code path using `orderBy`,
-        // which we use to force GC to simulate node "randomly"
-        // releasing nodes from memory as they shouldn't be strongly
-        // held
-        const query = `
+          // sort added only to hit code path using `orderBy`,
+          // which we use to force GC to simulate node "randomly"
+          // releasing nodes from memory as they shouldn't be strongly
+          // held
+          const query = `
           {
             allMarkdown(sort: { fields: id }) {
               group(field: frontmatter___authors___name) {
@@ -1285,54 +1294,55 @@ describe(`Query schema`, () => {
             }
           }
         `
-        const results = await runQuery(query)
+          const results = await runQuery(query)
 
-        // make sure we released all nodes from memory in middle of the run
-        expect(orderBySpy).toBeCalled()
+          // make sure we released all nodes from memory in middle of the run
+          expect(orderBySpy).toBeCalled()
 
-        const expected = {
-          allMarkdown: {
-            group: [
-              {
-                fieldValue: `Author 1`,
-                edges: [
-                  {
-                    node: {
-                      frontmatter: {
-                        title: `Markdown File 1`,
-                        date: `2019-01-01`,
+          const expected = {
+            allMarkdown: {
+              group: [
+                {
+                  fieldValue: `Author 1`,
+                  edges: [
+                    {
+                      node: {
+                        frontmatter: {
+                          title: `Markdown File 1`,
+                          date: `2019-01-01`,
+                        },
                       },
                     },
-                  },
-                  {
-                    node: {
-                      frontmatter: {
-                        title: `Markdown File 2`,
-                        date: null,
+                    {
+                      node: {
+                        frontmatter: {
+                          title: `Markdown File 2`,
+                          date: null,
+                        },
                       },
                     },
-                  },
-                ],
-              },
-              {
-                fieldValue: `Author 2`,
-                edges: [
-                  {
-                    node: {
-                      frontmatter: {
-                        title: `Markdown File 1`,
-                        date: `2019-01-01`,
+                  ],
+                },
+                {
+                  fieldValue: `Author 2`,
+                  edges: [
+                    {
+                      node: {
+                        frontmatter: {
+                          title: `Markdown File 1`,
+                          date: `2019-01-01`,
+                        },
                       },
                     },
-                  },
-                ],
-              },
-            ],
-          },
+                  ],
+                },
+              ],
+            },
+          }
+          expect(results.errors).toBeUndefined()
+          expect(results.data).toEqual(expected)
         }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
+      )
     })
 
     describe(`distinct field`, () => {
@@ -1415,66 +1425,68 @@ describe(`Query schema`, () => {
           }
         `)
       })
+      ;(shouldTestGC ? it : it.skip)(
+        `works correctly if GC happen mid running`,
+        async () => {
+          // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+          const v8 = require(`v8`)
+          const vm = require(`vm`)
+          v8.setFlagsFromString(`--expose_gc`)
+          const gc = vm.runInNewContext(`gc`)
 
-      it(`works correctly if GC happen mid running`, async () => {
-        // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-        const v8 = require(`v8`)
-        const vm = require(`vm`)
-        v8.setFlagsFromString(`--expose_gc`)
-        const gc = vm.runInNewContext(`gc`)
+          const { clearKeptObjects } = require(`lmdb`)
 
-        const { clearKeptObjects } = require(`lmdb`)
+          orderBySpy.mockImplementationOnce((...args) => {
+            // eslint thinks that WeakRef is not defined for some reason :shrug:
+            // eslint-disable-next-line no-undef
+            const weakNode = new WeakRef(getNode(`md1`))
 
-        orderBySpy.mockImplementationOnce((...args) => {
-          // eslint thinks that WeakRef is not defined for some reason :shrug:
-          // eslint-disable-next-line no-undef
-          const weakNode = new WeakRef(getNode(`md1`))
+            // spy is keeping nodes in memory due to `.calls` array
+            apiRunnerNode.mockClear()
+            // very implementation specific case:
+            // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+            // GCed mid execution of query. For this test we force all weakly held nodes to be
+            // dropped
+            clearKeptObjects()
+            gc()
 
-          // spy is keeping nodes in memory due to `.calls` array
-          apiRunnerNode.mockClear()
-          // very implementation specific case:
-          // We don't hold full nodes strongly in gatsby anymore so they can be potentially
-          // GCed mid execution of query. For this test we force all weakly held nodes to be
-          // dropped
-          clearKeptObjects()
-          gc()
+            // now we shouldn't have that node in memory
+            if (weakNode.deref()) {
+              throw new Error(
+                `Test setup is broken, something is keeping a node in memory`
+              )
+            }
 
-          // now we shouldn't have that node in memory
-          if (weakNode.deref()) {
-            throw new Error(
-              `Test setup is broken, something is keeping a node in memory`
-            )
-          }
+            return mockActualOrderBy(...args)
+          })
 
-          return mockActualOrderBy(...args)
-        })
+          expect(orderBySpy).not.toBeCalled()
 
-        expect(orderBySpy).not.toBeCalled()
-
-        // sort added only to hit code path using `orderBy`,
-        // which we use to force GC to simulate node "randomly"
-        // releasing nodes from memory as they shouldn't be strongly
-        // held
-        const query = `
+          // sort added only to hit code path using `orderBy`,
+          // which we use to force GC to simulate node "randomly"
+          // releasing nodes from memory as they shouldn't be strongly
+          // held
+          const query = `
           {
             allMarkdown(sort: { fields: id }) {
               distinct(field: frontmatter___authors___name)
             }
           }
         `
-        const results = await runQuery(query)
+          const results = await runQuery(query)
 
-        // make sure we released all nodes from memory in middle of the run
-        expect(orderBySpy).toBeCalled()
+          // make sure we released all nodes from memory in middle of the run
+          expect(orderBySpy).toBeCalled()
 
-        const expected = {
-          allMarkdown: {
-            distinct: [`Author 1`, `Author 2`],
-          },
+          const expected = {
+            allMarkdown: {
+              distinct: [`Author 1`, `Author 2`],
+            },
+          }
+          expect(results.errors).toBeUndefined()
+          expect(results.data).toEqual(expected)
         }
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toEqual(expected)
-      })
+      )
     })
 
     describe(`aggregation fields`, () => {
@@ -1517,61 +1529,63 @@ describe(`Query schema`, () => {
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.max).toBeNull()
         })
+        ;(shouldTestGC ? it : it.skip)(
+          `works correctly on fields with resolver if GC happen mid running`,
+          async () => {
+            // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+            const v8 = require(`v8`)
+            const vm = require(`vm`)
+            v8.setFlagsFromString(`--expose_gc`)
+            const gc = vm.runInNewContext(`gc`)
 
-        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
-          // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-          const v8 = require(`v8`)
-          const vm = require(`vm`)
-          v8.setFlagsFromString(`--expose_gc`)
-          const gc = vm.runInNewContext(`gc`)
+            const { clearKeptObjects } = require(`lmdb`)
 
-          const { clearKeptObjects } = require(`lmdb`)
+            orderBySpy.mockImplementationOnce((...args) => {
+              // eslint thinks that WeakRef is not defined for some reason :shrug:
+              // eslint-disable-next-line no-undef
+              const weakNode = new WeakRef(getNode(`md1`))
 
-          orderBySpy.mockImplementationOnce((...args) => {
-            // eslint thinks that WeakRef is not defined for some reason :shrug:
-            // eslint-disable-next-line no-undef
-            const weakNode = new WeakRef(getNode(`md1`))
+              // spy is keeping nodes in memory due to `.calls` array
+              apiRunnerNode.mockClear()
+              // very implementation specific case:
+              // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+              // GCed mid execution of query. For this test we force all weakly held nodes to be
+              // dropped
+              clearKeptObjects()
+              gc()
 
-            // spy is keeping nodes in memory due to `.calls` array
-            apiRunnerNode.mockClear()
-            // very implementation specific case:
-            // We don't hold full nodes strongly in gatsby anymore so they can be potentially
-            // GCed mid execution of query. For this test we force all weakly held nodes to be
-            // dropped
-            clearKeptObjects()
-            gc()
+              // now we shouldn't have that node in memory
+              if (weakNode.deref()) {
+                throw new Error(
+                  `Test setup is broken, something is keeping a node in memory`
+                )
+              }
 
-            // now we shouldn't have that node in memory
-            if (weakNode.deref()) {
-              throw new Error(
-                `Test setup is broken, something is keeping a node in memory`
-              )
-            }
+              return mockActualOrderBy(...args)
+            })
 
-            return mockActualOrderBy(...args)
-          })
+            expect(orderBySpy).not.toBeCalled()
 
-          expect(orderBySpy).not.toBeCalled()
-
-          // sort added only to hit code path using `orderBy`,
-          // which we use to force GC to simulate node "randomly"
-          // releasing nodes from memory as they shouldn't be strongly
-          // held
-          const query = `
+            // sort added only to hit code path using `orderBy`,
+            // which we use to force GC to simulate node "randomly"
+            // releasing nodes from memory as they shouldn't be strongly
+            // held
+            const query = `
           {
             allMarkdown(sort: { fields: id }) {
               max(field: frontmatter___priceInCents)
             }
           }
         `
-          const results = await runQuery(query)
+            const results = await runQuery(query)
 
-          // make sure we released all nodes from memory in middle of the run
-          expect(orderBySpy).toBeCalled()
+            // make sure we released all nodes from memory in middle of the run
+            expect(orderBySpy).toBeCalled()
 
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.max).toEqual(399)
-        })
+            expect(results.errors).toBeUndefined()
+            expect(results.data.allMarkdown.max).toEqual(399)
+          }
+        )
       })
 
       describe(`min`, () => {
@@ -1613,61 +1627,63 @@ describe(`Query schema`, () => {
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.min).toBeNull()
         })
+        ;(shouldTestGC ? it : it.skip)(
+          `works correctly on fields with resolver if GC happen mid running`,
+          async () => {
+            // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+            const v8 = require(`v8`)
+            const vm = require(`vm`)
+            v8.setFlagsFromString(`--expose_gc`)
+            const gc = vm.runInNewContext(`gc`)
 
-        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
-          // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-          const v8 = require(`v8`)
-          const vm = require(`vm`)
-          v8.setFlagsFromString(`--expose_gc`)
-          const gc = vm.runInNewContext(`gc`)
+            const { clearKeptObjects } = require(`lmdb`)
 
-          const { clearKeptObjects } = require(`lmdb`)
+            orderBySpy.mockImplementationOnce((...args) => {
+              // eslint thinks that WeakRef is not defined for some reason :shrug:
+              // eslint-disable-next-line no-undef
+              const weakNode = new WeakRef(getNode(`md1`))
 
-          orderBySpy.mockImplementationOnce((...args) => {
-            // eslint thinks that WeakRef is not defined for some reason :shrug:
-            // eslint-disable-next-line no-undef
-            const weakNode = new WeakRef(getNode(`md1`))
+              // spy is keeping nodes in memory due to `.calls` array
+              apiRunnerNode.mockClear()
+              // very implementation specific case:
+              // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+              // GCed mid execution of query. For this test we force all weakly held nodes to be
+              // dropped
+              clearKeptObjects()
+              gc()
 
-            // spy is keeping nodes in memory due to `.calls` array
-            apiRunnerNode.mockClear()
-            // very implementation specific case:
-            // We don't hold full nodes strongly in gatsby anymore so they can be potentially
-            // GCed mid execution of query. For this test we force all weakly held nodes to be
-            // dropped
-            clearKeptObjects()
-            gc()
+              // now we shouldn't have that node in memory
+              if (weakNode.deref()) {
+                throw new Error(
+                  `Test setup is broken, something is keeping a node in memory`
+                )
+              }
 
-            // now we shouldn't have that node in memory
-            if (weakNode.deref()) {
-              throw new Error(
-                `Test setup is broken, something is keeping a node in memory`
-              )
-            }
+              return mockActualOrderBy(...args)
+            })
 
-            return mockActualOrderBy(...args)
-          })
+            expect(orderBySpy).not.toBeCalled()
 
-          expect(orderBySpy).not.toBeCalled()
-
-          // sort added only to hit code path using `orderBy`,
-          // which we use to force GC to simulate node "randomly"
-          // releasing nodes from memory as they shouldn't be strongly
-          // held
-          const query = `
+            // sort added only to hit code path using `orderBy`,
+            // which we use to force GC to simulate node "randomly"
+            // releasing nodes from memory as they shouldn't be strongly
+            // held
+            const query = `
           {
             allMarkdown(sort: { fields: id }) {
               min(field: frontmatter___priceInCents)
             }
           }
         `
-          const results = await runQuery(query)
+            const results = await runQuery(query)
 
-          // make sure we released all nodes from memory in middle of the run
-          expect(orderBySpy).toBeCalled()
+            // make sure we released all nodes from memory in middle of the run
+            expect(orderBySpy).toBeCalled()
 
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.min).toEqual(199)
-        })
+            expect(results.errors).toBeUndefined()
+            expect(results.data.allMarkdown.min).toEqual(199)
+          }
+        )
       })
 
       describe(`sum`, () => {
@@ -1708,61 +1724,63 @@ describe(`Query schema`, () => {
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.sum).toBeNull()
         })
+        ;(shouldTestGC ? it : it.skip)(
+          `works correctly on fields with resolver if GC happen mid running`,
+          async () => {
+            // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+            const v8 = require(`v8`)
+            const vm = require(`vm`)
+            v8.setFlagsFromString(`--expose_gc`)
+            const gc = vm.runInNewContext(`gc`)
 
-        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
-          // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
-          const v8 = require(`v8`)
-          const vm = require(`vm`)
-          v8.setFlagsFromString(`--expose_gc`)
-          const gc = vm.runInNewContext(`gc`)
+            const { clearKeptObjects } = require(`lmdb`)
 
-          const { clearKeptObjects } = require(`lmdb`)
+            orderBySpy.mockImplementationOnce((...args) => {
+              // eslint thinks that WeakRef is not defined for some reason :shrug:
+              // eslint-disable-next-line no-undef
+              const weakNode = new WeakRef(getNode(`md1`))
 
-          orderBySpy.mockImplementationOnce((...args) => {
-            // eslint thinks that WeakRef is not defined for some reason :shrug:
-            // eslint-disable-next-line no-undef
-            const weakNode = new WeakRef(getNode(`md1`))
+              // spy is keeping nodes in memory due to `.calls` array
+              apiRunnerNode.mockClear()
+              // very implementation specific case:
+              // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+              // GCed mid execution of query. For this test we force all weakly held nodes to be
+              // dropped
+              clearKeptObjects()
+              gc()
 
-            // spy is keeping nodes in memory due to `.calls` array
-            apiRunnerNode.mockClear()
-            // very implementation specific case:
-            // We don't hold full nodes strongly in gatsby anymore so they can be potentially
-            // GCed mid execution of query. For this test we force all weakly held nodes to be
-            // dropped
-            clearKeptObjects()
-            gc()
+              // now we shouldn't have that node in memory
+              if (weakNode.deref()) {
+                throw new Error(
+                  `Test setup is broken, something is keeping a node in memory`
+                )
+              }
 
-            // now we shouldn't have that node in memory
-            if (weakNode.deref()) {
-              throw new Error(
-                `Test setup is broken, something is keeping a node in memory`
-              )
-            }
+              return mockActualOrderBy(...args)
+            })
 
-            return mockActualOrderBy(...args)
-          })
+            expect(orderBySpy).not.toBeCalled()
 
-          expect(orderBySpy).not.toBeCalled()
-
-          // sort added only to hit code path using `orderBy`,
-          // which we use to force GC to simulate node "randomly"
-          // releasing nodes from memory as they shouldn't be strongly
-          // held
-          const query = `
+            // sort added only to hit code path using `orderBy`,
+            // which we use to force GC to simulate node "randomly"
+            // releasing nodes from memory as they shouldn't be strongly
+            // held
+            const query = `
           {
             allMarkdown(sort: { fields: id }) {
               sum(field: frontmatter___priceInCents)
             }
           }
         `
-          const results = await runQuery(query)
+            const results = await runQuery(query)
 
-          // make sure we released all nodes from memory in middle of the run
-          expect(orderBySpy).toBeCalled()
+            // make sure we released all nodes from memory in middle of the run
+            expect(orderBySpy).toBeCalled()
 
-          expect(results.errors).toBeUndefined()
-          expect(results.data.allMarkdown.sum).toEqual(199 + 399)
-        })
+            expect(results.errors).toBeUndefined()
+            expect(results.data.allMarkdown.sum).toEqual(199 + 399)
+          }
+        )
       })
 
       it(`calculates aggregation in recursively grouped query results`, async () => {

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@5.15.0/packages/gatsby-design-tokens) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
 ## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@5.14.0/packages/gatsby-design-tokens) (2024-11-06)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)

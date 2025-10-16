@@ -8,6 +8,7 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
+    "postinstall": "npm rebuild --build-from-source lmdb",
     "test": "jest --runInBand"
   },
   "dependencies": {

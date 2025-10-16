@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.15.0/packages/gatsby-plugin-page-creator) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+#### Bug Fixes
+
+- update dependency chokidar to ^3.6.0 [#39174](https://github.com/gatsbyjs/gatsby/issues/39174) ([5717252](https://github.com/gatsbyjs/gatsby/commit/571725239b77f2b0604b43be3e1aaaf9cda4a5d8))
+
 ## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@5.14.0/packages/gatsby-plugin-page-creator) (2024-11-06)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)

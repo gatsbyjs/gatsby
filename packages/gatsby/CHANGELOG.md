@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.15.0/packages/gatsby) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+#### Bug Fixes
+
+- support node 22 [#39349](https://github.com/gatsbyjs/gatsby/issues/39349) ([7451d2f](https://github.com/gatsbyjs/gatsby/commit/7451d2ff56c46b4d9ceebbb6e830fa83fcd29e5b))
+- update socket.io to address vulnerable subdeps [#39352](https://github.com/gatsbyjs/gatsby/issues/39352) ([6ba3b68](https://github.com/gatsbyjs/gatsby/commit/6ba3b68c216eead13e0f12d3dcf459e22e6cc8be))
+- use forked devcert to avoid pulling transitive deps from its @types/\* deps, handle change in tmp package [#39343](https://github.com/gatsbyjs/gatsby/issues/39343) ([4b1be67](https://github.com/gatsbyjs/gatsby/commit/4b1be67c4c3b4469600ea367d14e92a2e68cf67b))
+- bump adapter version in adapters manifest [#39342](https://github.com/gatsbyjs/gatsby/issues/39342) ([f4879c6](https://github.com/gatsbyjs/gatsby/commit/f4879c62d412609996aecf0b37a5735a3adfe573))
+- ensure rendering engine has vendored libvips [#39317](https://github.com/gatsbyjs/gatsby/issues/39317) ([1371440](https://github.com/gatsbyjs/gatsby/commit/13714407ad836e1cde7099d80e61b6682ffc42ad))
+- upgrade multer to resolve 3 security vulnerabilities resolve [#39307](https://github.com/gatsbyjs/gatsby/issues/39307) ([9708d4d](https://github.com/gatsbyjs/gatsby/commit/9708d4d4e76fbe4c832e22486bcc335f11c47adb))
+- Align types of rootNodeMap during root node tracking [#39262](https://github.com/gatsbyjs/gatsby/issues/39262) [#39261](https://github.com/gatsbyjs/gatsby/issues/39261) ([1825669](https://github.com/gatsbyjs/gatsby/commit/18256695bf4e349332318a841669f983ef92070c))
+- pin webpack [#39264](https://github.com/gatsbyjs/gatsby/issues/39264) ([dae8081](https://github.com/gatsbyjs/gatsby/commit/dae80818db95d2923ce40fc4292d6d91fbe1d75a))
+- update dependency chokidar to ^3.6.0 [#39174](https://github.com/gatsbyjs/gatsby/issues/39174) ([5717252](https://github.com/gatsbyjs/gatsby/commit/571725239b77f2b0604b43be3e1aaaf9cda4a5d8))
+
+#### Chores
+
+- remove Gatsby Discord references [#39351](https://github.com/gatsbyjs/gatsby/issues/39351) ([c3708b0](https://github.com/gatsbyjs/gatsby/commit/c3708b068abba3a26e5cf229d6d4dc5813884acd))
+- relocate deprecated packages [#39350](https://github.com/gatsbyjs/gatsby/issues/39350) ([1711f91](https://github.com/gatsbyjs/gatsby/commit/1711f91c703e3de1c5166d75ec4033631007b09e))
+- bump path-to-regexp from 0.1.10 to 0.1.12 in /packages/gatsby [#39179](https://github.com/gatsbyjs/gatsby/issues/39179) ([4cedf13](https://github.com/gatsbyjs/gatsby/commit/4cedf13b6db7e4faada605123cb116134670a298))
+
+### [5.14.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.6/packages/gatsby) (2025-08-06)
+
+#### Bug Fixes
+
+- use forked devcert to avoid pulling transitive deps from its @types/\* deps, handle change in tmp package [#39343](https://github.com/gatsbyjs/gatsby/issues/39343) [#39345](https://github.com/gatsbyjs/gatsby/issues/39345) ([a9eb53c](https://github.com/gatsbyjs/gatsby/commit/a9eb53cb86258799c6a958cc8d02376120a3e270))
+
 ### [5.14.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.5/packages/gatsby) (2025-06-20)
 
 #### Bug Fixes
