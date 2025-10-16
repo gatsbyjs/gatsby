@@ -39,7 +39,40 @@ title: Deploying to Firebase Hosting
 
    When prompted to select your public directory, press <kbd>enter</kbd>. It will default to `public`, which is also Gatsby's default public directory.
 
-4. Update the `firebase.json` with the following cache settings
+4. Configure Firebase Hosting
+
+   Depending on your Gatsby version, follow one of the two methods below.
+
+   #### For Gatsby 5.12 and above
+
+   Gatsby 5.12 introduced [adapters](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/adapters/), which automatically configure deployment targets.  
+   To use Firebase Hosting with full support for **SSR**, **DSG**, and **Gatsby Functions**, install [Gatsby Firebase Adapter](https://github.com/mohatt/gatsby-adapter-firebase):
+
+   ```shell
+   npm install gatsby-adapter-firebase
+   ```
+   
+   Then add it to your `gatsby-config.js`:
+   
+   ```js
+   // gatsby-config.js
+   const firebaseAdapter = require('gatsby-adapter-firebase')
+    
+   module.exports = {
+     adapter: firebaseAdapter(),
+   }
+   ```
+   During gatsby build, the adapter will automatically:
+
+    - Generate or update your firebase.json
+    - Configure redirects, headers, and caching rules
+    - Package SSR, DSG, and API routes into Cloud Functions
+   
+   See [gatsby-adapter-firebase](https://github.com/mohatt/gatsby-adapter-firebase) on GitHub for advanced options and local emulator setup.
+  
+   #### For Gatsby versions below 5.12
+
+   Update the `firebase.json` with the following cache settings
 
    ```json
    {
