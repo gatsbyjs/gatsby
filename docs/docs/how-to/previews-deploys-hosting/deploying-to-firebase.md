@@ -33,6 +33,7 @@ title: Deploying to Firebase Hosting
    ```
 
    This command will prompt you to:
+
    - select the Firebase products you wish to set up. Be sure to select **Firebase Hosting**.
    - select the Firebase project you wish to use or create a new one, if you haven't done it previously.
 
@@ -63,6 +64,7 @@ title: Deploying to Firebase Hosting
    ```
 
    During gatsby build, the adapter will automatically:
+
    - Generate or update your firebase.json
    - Configure redirects, headers, and caching rules
    - Package SSR, DSG, and API routes into Cloud Functions
