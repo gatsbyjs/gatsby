@@ -33,7 +33,6 @@ title: Deploying to Firebase Hosting
    ```
 
    This command will prompt you to:
-
    - select the Firebase products you wish to set up. Be sure to select **Firebase Hosting**.
    - select the Firebase project you wish to use or create a new one, if you haven't done it previously.
 
@@ -51,25 +50,25 @@ title: Deploying to Firebase Hosting
    ```shell
    npm install gatsby-adapter-firebase
    ```
-   
+
    Then add it to your `gatsby-config.js`:
-   
+
    ```js
    // gatsby-config.js
    const firebaseAdapter = require('gatsby-adapter-firebase')
-    
+
    module.exports = {
      adapter: firebaseAdapter(),
    }
    ```
-   During gatsby build, the adapter will automatically:
 
-    - Generate or update your firebase.json
-    - Configure redirects, headers, and caching rules
-    - Package SSR, DSG, and API routes into Cloud Functions
-   
+   During gatsby build, the adapter will automatically:
+   - Generate or update your firebase.json
+   - Configure redirects, headers, and caching rules
+   - Package SSR, DSG, and API routes into Cloud Functions
+
    See [gatsby-adapter-firebase](https://github.com/mohatt/gatsby-adapter-firebase) on GitHub for advanced options and local emulator setup.
-  
+
    #### For Gatsby versions below 5.12
 
    Update the `firebase.json` with the following cache settings
@@ -142,9 +141,7 @@ All done! Once the deployment concludes, you can access your website using `fire
 
 Check the [Firebase Docs](https://firebase.google.com/docs/hosting/full-config) for information about how to customize your deployment further. Remember that each time you wish to redeploy your site, you will need to rerun `gatsby build` first.
 
-<CloudCallout>
-  For automatic setup of builds that are deployed straight to Firebase:
-</CloudCallout>
+<CloudCallout>For automatic setup of builds that are deployed straight to Firebase:</CloudCallout>
 
 ## Limitations
 
