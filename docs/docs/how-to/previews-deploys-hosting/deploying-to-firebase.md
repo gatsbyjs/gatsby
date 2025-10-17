@@ -55,7 +55,7 @@ title: Deploying to Firebase Hosting
 
    ```js
    // gatsby-config.js
-   const firebaseAdapter = require('gatsby-adapter-firebase')
+   const firebaseAdapter = require("gatsby-adapter-firebase")
 
    module.exports = {
      adapter: firebaseAdapter(),
@@ -141,7 +141,9 @@ All done! Once the deployment concludes, you can access your website using `fire
 
 Check the [Firebase Docs](https://firebase.google.com/docs/hosting/full-config) for information about how to customize your deployment further. Remember that each time you wish to redeploy your site, you will need to rerun `gatsby build` first.
 
-<CloudCallout>For automatic setup of builds that are deployed straight to Firebase:</CloudCallout>
+<CloudCallout>
+  For automatic setup of builds that are deployed straight to Firebase:
+</CloudCallout>
 
 ## Limitations
 
