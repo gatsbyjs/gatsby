@@ -24,15 +24,13 @@ const processingInstructions = [
   },
 ]
 
-class Example extends React.Component {
-  render() {
-    const html = parser.parseWithInstructions(
-      this.props.html,
-      isValidNode,
-      processingInstructions
-    )
-    return <div>{React.Children.toArray(html)}</div>
-  }
+function Example({html}) {
+  const html = parser.parseWithInstructions(
+html,
+isValidNode,
+processingInstructions
+)
+return <div>{React.Children.toArray(html)}</div>;
 }
 
 Example.propTypes = {

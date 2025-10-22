@@ -14,12 +14,10 @@ const foo: number = 1 as const
 /**
  * General component description.
  */
-export default class MyComponent extends Component<Props, void> {
+export default function MyComponent() {
   props: Props
 
-  render(): ReactElement {
-    // ...
-  }
+  // ...;
 }
 
 export function Foo(props: Props) {

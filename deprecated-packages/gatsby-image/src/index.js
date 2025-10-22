@@ -332,73 +332,43 @@ Img.propTypes = {
   onLoad: PropTypes.func,
 }
 
-class Image extends React.Component {
-  constructor(props) {
-    super(props)
+function Image({onStartLoad, onLoad, crossOrigin, onError, loading, critical, fadeIn, placeholderRef}) {
+  const [imgLoaded, setImgLoaded] = React.useState(false);
+  const [imgCached, setImgCached] = React.useState(false);
+  const [fadeIn, setFadeIn] = React.useState(!this.seenBefore && fadeIn);
+  const [isHydrated, setIsHydrated] = React.useState(false);
+  const imageRef = React.useRef(null);
+  React.useEffect(() => {
+    let onStartLoad;
+    let img;
+    setIsHydrated(isBrowser)
 
-    // If this image has already been loaded before then we can assume it's
-    // already in the browser cache so it's cheap to just show directly.
-    this.seenBefore = isBrowser && inImageCache(props)
-
-    this.isCritical = props.loading === `eager` || props.critical
-
-    this.addNoScript = !(this.isCritical && !props.fadeIn)
-    this.useIOSupport =
-      !hasNativeLazyLoadSupport &&
-      hasIOSupport &&
-      !this.isCritical &&
-      !this.seenBefore
-
-    const isVisible =
-      this.isCritical ||
-      (isBrowser && (hasNativeLazyLoadSupport || !this.useIOSupport))
-
-    this.state = {
-      isVisible,
-      imgLoaded: false,
-      imgCached: false,
-      fadeIn: !this.seenBefore && props.fadeIn,
-      isHydrated: false,
+    if (this.state.isVisible && typeof onStartLoad === `function`) {
+      onStartLoad({ wasCached: inImageCache(props) })
     }
-
-    this.imageRef = React.createRef()
-    this.placeholderRef = props.placeholderRef || React.createRef()
-    this.handleImageLoaded = this.handleImageLoaded.bind(this)
-    this.handleRef = this.handleRef.bind(this)
-  }
-
-  componentDidMount() {
-    this.setState({
-      isHydrated: isBrowser,
-    })
-
-    if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
-      this.props.onStartLoad({ wasCached: inImageCache(this.props) })
-    }
-    if (this.isCritical) {
-      const img = this.imageRef.current
+    if (isCritical) {
+      const img = imageRef.current
       if (img && img.complete) {
-        this.handleImageLoaded()
+        handleImageLoaded()
       }
     }
-  }
-
-  componentWillUnmount() {
-    if (this.cleanUpListeners) {
-      this.cleanUpListeners()
+    
+    return () => {
+      if (cleanUpListeners) {
+      cleanUpListeners()
     }
-  }
+    };
+  }, []);
 
-  // Specific to IntersectionObserver based lazy-load support
-  handleRef(ref) {
-    if (this.useIOSupport && ref) {
-      this.cleanUpListeners = listenToIntersections(ref, () => {
+  function handleRef(ref) {
+    if (useIOSupport && ref) {
+      cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
         if (
-          !this.state.isVisible &&
-          typeof this.props.onStartLoad === `function`
+          !isVisible &&
+          typeof onStartLoad === `function`
         ) {
-          this.props.onStartLoad({ wasCached: imageInCache })
+          onStartLoad({ wasCached: imageInCache })
         }
 
         // imgCached and imgLoaded must update after isVisible,
@@ -413,7 +383,7 @@ class Image extends React.Component {
             // for lazyloaded components this might be null
             // TODO fix imgCached behaviour as it's now false when it's lazyloaded
             imgCached: !!(
-              this.imageRef.current && this.imageRef.current.currentSrc
+              imageRef.current && imageRef.current.currentSrc
             ),
           })
         })
@@ -421,288 +391,286 @@ class Image extends React.Component {
     }
   }
 
-  handleImageLoaded() {
+  function handleImageLoaded() {
     activateCacheForImage(this.props)
 
     this.setState({ imgLoaded: true })
 
-    if (this.props.onLoad) {
-      this.props.onLoad()
+    if (onLoad) {
+      onLoad()
     }
   }
 
-  render() {
-    const {
-      title,
-      alt,
-      className,
-      style = {},
-      imgStyle = {},
-      placeholderStyle = {},
-      placeholderClassName,
-      fluid,
-      fixed,
-      backgroundColor,
-      durationFadeIn,
-      Tag,
-      itemProp,
-      loading,
-      draggable,
-    } = convertProps(this.props)
+  const {
+title,
+alt,
+className,
+style = {},
+imgStyle = {},
+placeholderStyle = {},
+placeholderClassName,
+fluid,
+fixed,
+backgroundColor,
+durationFadeIn,
+Tag,
+itemProp,
+loading,
+draggable,
+} = convertProps(props)
 
-    const imageVariants = fluid || fixed
-    // Abort early if missing image data (#25371)
-    if (!imageVariants) {
-      return null
-    }
+const imageVariants = fluid || fixed
+// Abort early if missing image data (#25371)
+if (!imageVariants) {
+return null
+}
 
-    const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
-    const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
+const shouldReveal = fadeIn === false || imgLoaded
+const shouldFadeIn = fadeIn === true && !imgCached
 
-    const imageStyle = {
-      opacity: shouldReveal ? 1 : 0,
-      transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
-      ...imgStyle,
-    }
+const imageStyle = {
+opacity: shouldReveal ? 1 : 0,
+transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
+...imgStyle,
+}
 
-    const bgColor =
-      typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
+const bgColor =
+typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    const delayHideStyle = {
-      transitionDelay: `${durationFadeIn}ms`,
-    }
+const delayHideStyle = {
+transitionDelay: `${durationFadeIn}ms`,
+}
 
-    const imagePlaceholderStyle = {
-      opacity: this.state.imgLoaded ? 0 : 1,
-      ...(shouldFadeIn && delayHideStyle),
-      ...imgStyle,
-      ...placeholderStyle,
-    }
+const imagePlaceholderStyle = {
+opacity: imgLoaded ? 0 : 1,
+...(shouldFadeIn && delayHideStyle),
+...imgStyle,
+...placeholderStyle,
+}
 
-    const placeholderImageProps = {
-      title,
-      alt: !this.state.isVisible ? alt : ``,
-      style: imagePlaceholderStyle,
-      className: placeholderClassName,
-      itemProp,
-    }
+const placeholderImageProps = {
+title,
+alt: !this.state.isVisible ? alt : ``,
+style: imagePlaceholderStyle,
+className: placeholderClassName,
+itemProp,
+}
 
-    // Initial client render state needs to match SSR until hydration finishes.
-    // Once hydration completes, render again to update to the correct image.
-    // `imageVariants` is always an Array type at this point due to `convertProps()`
-    const image = !this.state.isHydrated
-      ? imageVariants[0]
-      : getCurrentSrcData(imageVariants)
+// Initial client render state needs to match SSR until hydration finishes.
+// Once hydration completes, render again to update to the correct image.
+// `imageVariants` is always an Array type at this point due to `convertProps()`
+const image = !isHydrated
+? imageVariants[0]
+: getCurrentSrcData(imageVariants)
 
-    if (fluid) {
-      return (
-        <Tag
-          className={`${className ? className : ``} gatsby-image-wrapper`}
-          style={{
-            position: `relative`,
-            overflow: `hidden`,
-            maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
-            maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
-            ...style,
-          }}
-          ref={this.handleRef}
-          key={`fluid-${JSON.stringify(image.srcSet)}`}
-        >
-          {/* Preserve the aspect ratio. */}
-          <Tag
-            aria-hidden
-            style={{
-              width: `100%`,
-              paddingBottom: `${100 / image.aspectRatio}%`,
-            }}
-          />
+if (fluid) {
+return (
+<Tag
+className={`${className ? className : ``} gatsby-image-wrapper`}
+style={{
+position: `relative`,
+overflow: `hidden`,
+maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
+maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
+...style,
+}}
+ref={handleRef}
+key={`fluid-${JSON.stringify(image.srcSet)}`}
+>
+{/* Preserve the aspect ratio. */}
+<Tag
+aria-hidden
+style={{
+width: `100%`,
+paddingBottom: `${100 / image.aspectRatio}%`,
+}}
+/>
 
-          {/* Show a solid background color. */}
-          {bgColor && (
-            <Tag
-              aria-hidden
-              title={title}
-              style={{
-                backgroundColor: bgColor,
-                position: `absolute`,
-                top: 0,
-                bottom: 0,
-                opacity: !this.state.imgLoaded ? 1 : 0,
-                right: 0,
-                left: 0,
-                ...(shouldFadeIn && delayHideStyle),
-              }}
-            />
-          )}
+{/* Show a solid background color. */}
+{bgColor && (
+<Tag
+aria-hidden
+title={title}
+style={{
+backgroundColor: bgColor,
+position: `absolute`,
+top: 0,
+bottom: 0,
+opacity: !imgLoaded ? 1 : 0,
+right: 0,
+left: 0,
+...(shouldFadeIn && delayHideStyle),
+}}
+/>
+)}
 
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Placeholder
-              ariaHidden
-              ref={this.placeholderRef}
-              src={image.base64}
-              spreadProps={placeholderImageProps}
-              imageVariants={imageVariants}
-              generateSources={generateBase64Sources}
-            />
-          )}
+{/* Show the blurry base64 image. */}
+{image.base64 && (
+<Placeholder
+ariaHidden
+ref={placeholderRef}
+src={image.base64}
+spreadProps={placeholderImageProps}
+imageVariants={imageVariants}
+generateSources={generateBase64Sources}
+/>
+)}
 
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Placeholder
-              ariaHidden
-              ref={this.placeholderRef}
-              src={image.tracedSVG}
-              spreadProps={placeholderImageProps}
-              imageVariants={imageVariants}
-              generateSources={generateTracedSVGSources}
-            />
-          )}
+{/* Show the traced SVG image. */}
+{image.tracedSVG && (
+<Placeholder
+ariaHidden
+ref={placeholderRef}
+src={image.tracedSVG}
+spreadProps={placeholderImageProps}
+imageVariants={imageVariants}
+generateSources={generateTracedSVGSources}
+/>
+)}
 
-          {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
-          {this.state.isVisible && (
-            <picture>
-              {generateImageSources(imageVariants)}
-              <Img
-                alt={alt}
-                title={title}
-                sizes={image.sizes}
-                src={image.src}
-                crossOrigin={this.props.crossOrigin}
-                srcSet={image.srcSet}
-                style={imageStyle}
-                ref={this.imageRef}
-                onLoad={this.handleImageLoaded}
-                onError={this.props.onError}
-                itemProp={itemProp}
-                loading={loading}
-                draggable={draggable}
-              />
-            </picture>
-          )}
+{/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
+{this.state.isVisible && (
+<picture>
+{generateImageSources(imageVariants)}
+<Img
+alt={alt}
+title={title}
+sizes={image.sizes}
+src={image.src}
+crossOrigin={crossOrigin}
+srcSet={image.srcSet}
+style={imageStyle}
+ref={imageRef}
+onLoad={handleImageLoaded}
+onError={onError}
+itemProp={itemProp}
+loading={loading}
+draggable={draggable}
+/>
+</picture>
+)}
 
-          {/* Show the original image during server-side rendering if JavaScript is disabled */}
-          {this.addNoScript && (
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: noscriptImg({
-                  alt,
-                  title,
-                  loading,
-                  ...image,
-                  imageVariants,
-                }),
-              }}
-            />
-          )}
-        </Tag>
-      )
-    }
+{/* Show the original image during server-side rendering if JavaScript is disabled */}
+{addNoScript && (
+<noscript
+dangerouslySetInnerHTML={{
+__html: noscriptImg({
+alt,
+title,
+loading,
+...image,
+imageVariants,
+}),
+}}
+/>
+)}
+</Tag>
+)
+}
 
-    if (fixed) {
-      const divStyle = {
-        position: `relative`,
-        overflow: `hidden`,
-        display: `inline-block`,
-        width: image.width,
-        height: image.height,
-        ...style,
-      }
+if (fixed) {
+const divStyle = {
+position: `relative`,
+overflow: `hidden`,
+display: `inline-block`,
+width: image.width,
+height: image.height,
+...style,
+}
 
-      if (style.display === `inherit`) {
-        delete divStyle.display
-      }
+if (style.display === `inherit`) {
+delete divStyle.display
+}
 
-      return (
-        <Tag
-          className={`${className ? className : ``} gatsby-image-wrapper`}
-          style={divStyle}
-          ref={this.handleRef}
-          key={`fixed-${JSON.stringify(image.srcSet)}`}
-        >
-          {/* Show a solid background color. */}
-          {bgColor && (
-            <Tag
-              aria-hidden
-              title={title}
-              style={{
-                backgroundColor: bgColor,
-                width: image.width,
-                opacity: !this.state.imgLoaded ? 1 : 0,
-                height: image.height,
-                ...(shouldFadeIn && delayHideStyle),
-              }}
-            />
-          )}
+return (
+<Tag
+className={`${className ? className : ``} gatsby-image-wrapper`}
+style={divStyle}
+ref={handleRef}
+key={`fixed-${JSON.stringify(image.srcSet)}`}
+>
+{/* Show a solid background color. */}
+{bgColor && (
+<Tag
+aria-hidden
+title={title}
+style={{
+backgroundColor: bgColor,
+width: image.width,
+opacity: !imgLoaded ? 1 : 0,
+height: image.height,
+...(shouldFadeIn && delayHideStyle),
+}}
+/>
+)}
 
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Placeholder
-              ariaHidden
-              ref={this.placeholderRef}
-              src={image.base64}
-              spreadProps={placeholderImageProps}
-              imageVariants={imageVariants}
-              generateSources={generateBase64Sources}
-            />
-          )}
+{/* Show the blurry base64 image. */}
+{image.base64 && (
+<Placeholder
+ariaHidden
+ref={placeholderRef}
+src={image.base64}
+spreadProps={placeholderImageProps}
+imageVariants={imageVariants}
+generateSources={generateBase64Sources}
+/>
+)}
 
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Placeholder
-              ariaHidden
-              ref={this.placeholderRef}
-              src={image.tracedSVG}
-              spreadProps={placeholderImageProps}
-              imageVariants={imageVariants}
-              generateSources={generateTracedSVGSources}
-            />
-          )}
+{/* Show the traced SVG image. */}
+{image.tracedSVG && (
+<Placeholder
+ariaHidden
+ref={placeholderRef}
+src={image.tracedSVG}
+spreadProps={placeholderImageProps}
+imageVariants={imageVariants}
+generateSources={generateTracedSVGSources}
+/>
+)}
 
-          {/* Once the image is visible, start downloading the image */}
-          {this.state.isVisible && (
-            <picture>
-              {generateImageSources(imageVariants)}
-              <Img
-                alt={alt}
-                title={title}
-                width={image.width}
-                height={image.height}
-                sizes={image.sizes}
-                src={image.src}
-                crossOrigin={this.props.crossOrigin}
-                srcSet={image.srcSet}
-                style={imageStyle}
-                ref={this.imageRef}
-                onLoad={this.handleImageLoaded}
-                onError={this.props.onError}
-                itemProp={itemProp}
-                loading={loading}
-                draggable={draggable}
-              />
-            </picture>
-          )}
+{/* Once the image is visible, start downloading the image */}
+{this.state.isVisible && (
+<picture>
+{generateImageSources(imageVariants)}
+<Img
+alt={alt}
+title={title}
+width={image.width}
+height={image.height}
+sizes={image.sizes}
+src={image.src}
+crossOrigin={crossOrigin}
+srcSet={image.srcSet}
+style={imageStyle}
+ref={imageRef}
+onLoad={handleImageLoaded}
+onError={onError}
+itemProp={itemProp}
+loading={loading}
+draggable={draggable}
+/>
+</picture>
+)}
 
-          {/* Show the original image during server-side rendering if JavaScript is disabled */}
-          {this.addNoScript && (
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: noscriptImg({
-                  alt,
-                  title,
-                  loading,
-                  ...image,
-                  imageVariants,
-                }),
-              }}
-            />
-          )}
-        </Tag>
-      )
-    }
+{/* Show the original image during server-side rendering if JavaScript is disabled */}
+{addNoScript && (
+<noscript
+dangerouslySetInnerHTML={{
+__html: noscriptImg({
+alt,
+title,
+loading,
+...image,
+imageVariants,
+}),
+}}
+/>
+)}
+</Tag>
+)
+}
 
-    return null
-  }
+return null;
 }
 
 Image.defaultProps = {

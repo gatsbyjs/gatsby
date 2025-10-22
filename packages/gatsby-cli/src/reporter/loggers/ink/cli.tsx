@@ -25,96 +25,82 @@ interface ICLIState {
   error?: Error
 }
 
-class CLI extends React.Component<ICLIProps, ICLIState> {
-  readonly state: ICLIState = {
-    hasError: false,
-  }
+function CLI({logs, messages, showStatusBar, showTrees}) {
   memoizedReactElementsForMessages: Array<React.ReactElement> = []
 
-  componentDidCatch(): void {}
+  function componentDidCatch() {}
 
-  static getDerivedStateFromError(error: Error): ICLIState {
+  function getDerivedStateFromError(error: Error) {
     return { hasError: true, error }
   }
 
-  render(): React.ReactElement {
-    const {
-      logs: { activities },
-      messages,
-      showStatusBar,
-      showTrees,
-    } = this.props
+  if (hasError && error) {
+// You can render any custom fallback UI
+return (
+<Box flexDirection="row">
+<Message
+level={ActivityLogLevels.Failed}
+text={`We've encountered an error: ${error.message}`}
+/>
+</Box>
+)
+}
 
-    const { hasError, error } = this.state
+const spinners: Array<IActivity> = []
+const progressBars: Array<IActivity> = []
+if (showProgress) {
+Object.keys(activities).forEach(activityName => {
+const activity = activities[activityName]
+if (activity.status !== `IN_PROGRESS`) {
+return
+}
+if (activity.type === `spinner`) {
+spinners.push(activity)
+}
+if (activity.type === `progress` && activity.startTime) {
+progressBars.push(activity)
+}
+})
+}
 
-    if (hasError && error) {
-      // You can render any custom fallback UI
-      return (
-        <Box flexDirection="row">
-          <Message
-            level={ActivityLogLevels.Failed}
-            text={`We've encountered an error: ${error.message}`}
-          />
-        </Box>
-      )
-    }
+return (
+<Box flexDirection="column">
+<Box flexDirection="column">
+<Static items={messages}>
+{(message): React.ReactElement =>
+message.level === `ERROR` ? (
+<ErrorComponent
+details={message as IStructuredError}
+key={messages.indexOf(message)}
+/>
+) : (
+<Message
+key={messages.indexOf(message)}
+{...(message as IMessageProps)}
+/>
+)
+}
+</Static>
+{showTrees && <Trees />}
 
-    const spinners: Array<IActivity> = []
-    const progressBars: Array<IActivity> = []
-    if (showProgress) {
-      Object.keys(activities).forEach(activityName => {
-        const activity = activities[activityName]
-        if (activity.status !== `IN_PROGRESS`) {
-          return
-        }
-        if (activity.type === `spinner`) {
-          spinners.push(activity)
-        }
-        if (activity.type === `progress` && activity.startTime) {
-          progressBars.push(activity)
-        }
-      })
-    }
+{spinners.map(activity => (
+<Spinner key={activity.id} {...activity} />
+))}
 
-    return (
-      <Box flexDirection="column">
-        <Box flexDirection="column">
-          <Static items={messages}>
-            {(message): React.ReactElement =>
-              message.level === `ERROR` ? (
-                <ErrorComponent
-                  details={message as IStructuredError}
-                  key={messages.indexOf(message)}
-                />
-              ) : (
-                <Message
-                  key={messages.indexOf(message)}
-                  {...(message as IMessageProps)}
-                />
-              )
-            }
-          </Static>
-          {showTrees && <Trees />}
+{progressBars.map(activity => (
+<ProgressBar
+key={activity.id}
+message={activity.text}
+total={activity.total || 0}
+current={activity.current || 0}
+startTime={activity.startTime || [0, 0]}
+/>
+))}
+</Box>
 
-          {spinners.map(activity => (
-            <Spinner key={activity.id} {...activity} />
-          ))}
-
-          {progressBars.map(activity => (
-            <ProgressBar
-              key={activity.id}
-              message={activity.text}
-              total={activity.total || 0}
-              current={activity.current || 0}
-              startTime={activity.startTime || [0, 0]}
-            />
-          ))}
-        </Box>
-
-        {showStatusBar && <Develop />}
-      </Box>
-    )
-  }
+{showStatusBar && <Develop />}
+</Box>
+);
 }
 
 export default CLI

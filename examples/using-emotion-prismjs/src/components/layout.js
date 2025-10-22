@@ -20,33 +20,31 @@ const link = css`
 `
 
 // TODO(v6): Refactor this to a function component
-class PureLayout extends React.Component {
-  render() {
-    const HeadingTag = this.props.isIndex ? `h1` : `h3`
-    const { siteTitle, pageTitle } = this.props
-    const title = pageTitle ? `${pageTitle} — ${siteTitle}` : `${siteTitle}`
+function PureLayout({isIndex, children, siteTitle, pageTitle}) {
+  const HeadingTag = isIndex ? `h1` : `h3`
 
-    return (
-      <Fragment>
-        <Helmet>
-          <title>{title}</title>
-          <meta
-            name="description"
-            content="Gatsby example site using Emotion and PrismJS"
-          />
-          <meta name="referrer" content="origin" />
-        </Helmet>
-        <div className={indexContainer}>
-          <HeadingTag>
-            <Link className={link} to={`/`}>
-              Using Gatsby with Emotion and PrismJS
-            </Link>
-          </HeadingTag>
-          {this.props.children}
-        </div>
-      </Fragment>
-    )
-  }
+const title = pageTitle ? `${pageTitle} — ${siteTitle}` : `${siteTitle}`
+
+return (
+<Fragment>
+<Helmet>
+<title>{title}</title>
+<meta
+name="description"
+content="Gatsby example site using Emotion and PrismJS"
+/>
+<meta name="referrer" content="origin" />
+</Helmet>
+<div className={indexContainer}>
+<HeadingTag>
+<Link className={link} to={`/`}>
+Using Gatsby with Emotion and PrismJS
+</Link>
+</HeadingTag>
+{children}
+</div>
+</Fragment>
+);
 }
 
 PureLayout.propTypes = {

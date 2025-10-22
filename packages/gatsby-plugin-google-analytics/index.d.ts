@@ -7,10 +7,9 @@ interface OutboundLinkProps {
   eventLabel?: string
 }
 
-export class OutboundLink extends React.Component<
-  OutboundLinkProps & React.HTMLProps<HTMLAnchorElement>,
-  any
-> {}
+export function OutboundLink() {
+  
+}
 
 export interface CustomEventArgs {
   category: string

@@ -294,7 +294,9 @@ export interface PageRendererProps {
  *
  * @see https://www.gatsbyjs.com/docs/production-app/#page-rendering
  */
-export class PageRenderer extends React.Component<PageRendererProps> {}
+export function PageRenderer() {
+  
+}
 
 type RenderCallback<T = any> = (data: T) => React.ReactNode
 

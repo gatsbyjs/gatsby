@@ -20,7 +20,7 @@ Baz.Foo = () => <div />
  * @property {Foo} foo
  * @property {Bar} bar
  */
-class Bar extends React.Component {
+function Bar() {
   static propTypes = {
     /**
      * An object hash of field (fix this @mention?) errors for the form.
@@ -70,9 +70,8 @@ class Bar extends React.Component {
 
     customCallExpression: someValidator(),
   }
-  render() {
-    return <Foo />
-  }
+
+  return <Foo />;
 }
 
 const Qux = React.createClass({

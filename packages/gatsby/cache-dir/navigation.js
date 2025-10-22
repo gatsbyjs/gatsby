@@ -172,15 +172,11 @@ function init() {
   window.___navigate = (to, options) => navigate(to, options)
 }
 
-class RouteAnnouncer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.announcementRef = React.createRef()
-  }
-
-  componentDidUpdate(prevProps, nextProps) {
+function RouteAnnouncer({location}) {
+  const announcementRef = React.useRef(null);
+  React.useEffect(() => {
     requestAnimationFrame(() => {
-      let pageName = `new page at ${this.props.location.pathname}`
+      let pageName = `new page at ${location.pathname}`
       if (document.title) {
         pageName = document.title
       }
@@ -189,18 +185,16 @@ class RouteAnnouncer extends React.Component {
         pageName = pageHeadings[0].textContent
       }
       const newAnnouncement = `Navigated to ${pageName}`
-      if (this.announcementRef.current) {
-        const oldAnnouncement = this.announcementRef.current.innerText
+      if (announcementRef.current) {
+        const oldAnnouncement = announcementRef.current.innerText
         if (oldAnnouncement !== newAnnouncement) {
-          this.announcementRef.current.innerText = newAnnouncement
+          announcementRef.current.innerText = newAnnouncement
         }
       }
     })
-  }
+  }, [location]);
 
-  render() {
-    return <div {...RouteAnnouncerProps} ref={this.announcementRef}></div>
-  }
+  return <div {...RouteAnnouncerProps} ref={announcementRef}></div>;
 }
 
 const compareLocationProps = (prevLocation, nextLocation) => {
@@ -216,38 +210,30 @@ const compareLocationProps = (prevLocation, nextLocation) => {
 }
 
 // Fire on(Pre)RouteUpdate APIs
-class RouteUpdates extends React.Component {
-  constructor(props) {
-    super(props)
-    onPreRouteUpdate(props.location, null)
-  }
+function RouteUpdates({location, children}) {
+  React.useEffect(() => {
+    onRouteUpdate(location, null)
+  }, []);
+  React.useEffect(() => {
+    if (compareLocationProps(location, location)) {
+      onRouteUpdate(location, location)
+    }
+  }, [location, children]);
 
-  componentDidMount() {
-    onRouteUpdate(this.props.location, null)
-  }
-
-  shouldComponentUpdate(nextProps) {
-    if (compareLocationProps(this.props.location, nextProps.location)) {
-      onPreRouteUpdate(nextProps.location, this.props.location)
+  function shouldComponentUpdate(nextProps) {
+    if (compareLocationProps(location, nextProps.location)) {
+      onPreRouteUpdate(nextProps.location, location)
       return true
     }
     return false
   }
 
-  componentDidUpdate(prevProps) {
-    if (compareLocationProps(prevProps.location, this.props.location)) {
-      onRouteUpdate(this.props.location, prevProps.location)
-    }
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        {this.props.children}
-        <RouteAnnouncer location={location} />
-      </React.Fragment>
-    )
-  }
+  return (
+<React.Fragment>
+{children}
+<RouteAnnouncer location={location} />
+</React.Fragment>
+);
 }
 
 RouteUpdates.propTypes = {

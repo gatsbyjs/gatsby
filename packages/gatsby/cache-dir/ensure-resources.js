@@ -2,21 +2,14 @@ import React from "react"
 import loader, { PageResourceStatus } from "./loader"
 import shallowCompare from "shallow-compare"
 
-class EnsureResources extends React.Component {
-  constructor(props) {
-    super()
-    const { location, pageResources } = props
-    this.state = {
-      location: { ...location },
-      pageResources:
-        pageResources ||
+function EnsureResources({location, children, pageResources}) {
+  const [location, setLocation] = React.useState({ ...location });
+  const [pageResources, setPageResources] = React.useState(pageResources ||
         loader.loadPageSync(location.pathname + location.search, {
           withErrorDetails: true,
-        }),
-    }
-  }
+        }));
 
-  static getDerivedStateFromProps({ location }, prevState) {
+  function getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location.href !== location.href) {
       const pageResources = loader.loadPageSync(
         location.pathname + location.search,
@@ -36,7 +29,7 @@ class EnsureResources extends React.Component {
     }
   }
 
-  loadResources(rawPath) {
+  function loadResources(rawPath) {
     loader.loadPage(rawPath).then(pageResources => {
       if (pageResources && pageResources.status !== PageResourceStatus.Error) {
         this.setState({
@@ -50,10 +43,10 @@ class EnsureResources extends React.Component {
     })
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  function shouldComponentUpdate(nextProps, nextState) {
     // Always return false if we're missing resources.
     if (!nextState.pageResources) {
-      this.loadResources(
+      loadResources(
         nextProps.location.pathname + nextProps.location.search
       )
       return false
@@ -63,29 +56,29 @@ class EnsureResources extends React.Component {
       process.env.BUILD_STAGE === `develop` &&
       nextState.pageResources.stale
     ) {
-      this.loadResources(
+      loadResources(
         nextProps.location.pathname + nextProps.location.search
       )
       return false
     }
 
     // Check if the component or json have changed.
-    if (this.state.pageResources !== nextState.pageResources) {
+    if (pageResources !== nextState.pageResources) {
       return true
     }
     if (
-      this.state.pageResources.component !== nextState.pageResources.component
+      pageResources.component !== nextState.pageResources.component
     ) {
       return true
     }
 
-    if (this.state.pageResources.json !== nextState.pageResources.json) {
+    if (pageResources.json !== nextState.pageResources.json) {
       return true
     }
     // Check if location has changed on a page using internal routing
     // via matchPath configuration.
     if (
-      this.state.location.key !== nextState.location.key &&
+      location.key !== nextState.location.key &&
       nextState.pageResources.page &&
       (nextState.pageResources.page.matchPath ||
         nextState.pageResources.page.path)
@@ -95,25 +88,23 @@ class EnsureResources extends React.Component {
     return shallowCompare(this, nextProps, nextState)
   }
 
-  render() {
-    if (
-      process.env.NODE_ENV !== `production` &&
-      (!this.state.pageResources ||
-        this.state.pageResources.status === PageResourceStatus.Error)
-    ) {
-      const message = `EnsureResources was not able to find resources for path: "${this.props.location.pathname}"
+  if (
+process.env.NODE_ENV !== `production` &&
+(!pageResources ||
+pageResources.status === PageResourceStatus.Error)
+) {
+const message = `EnsureResources was not able to find resources for path: "${location.pathname}"
 This typically means that an issue occurred building components for that path.
 Run \`gatsby clean\` to remove any cached elements.`
-      if (this.state.pageResources?.error) {
-        console.error(message)
-        throw this.state.pageResources.error
-      }
+if (pageResources?.error) {
+console.error(message)
+throw pageResources.error
+}
 
-      throw new Error(message)
-    }
+throw new Error(message)
+}
 
-    return this.props.children(this.state)
-  }
+return children(this.state);
 }
 
 export default EnsureResources

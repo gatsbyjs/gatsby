@@ -23,23 +23,21 @@ const Wrapper = styled(`div`, {
   background: `#f5f3f7`,
 })
 
-class IndexPage extends React.Component {
-  render() {
-    return (
-      <Container>
-        <Wrapper>
-          <Title>
-            Hello World, this is my first component styled with Styletron!
-          </Title>
-          <p>
-            <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-styletron/">
-              gatsby-plugin-styletron docs
-            </a>
-          </p>
-        </Wrapper>
-      </Container>
-    )
-  }
+function IndexPage() {
+  return (
+<Container>
+<Wrapper>
+<Title>
+Hello World, this is my first component styled with Styletron!
+</Title>
+<p>
+<a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-styletron/">
+gatsby-plugin-styletron docs
+</a>
+</p>
+</Wrapper>
+</Container>
+);
 }
 
 export default IndexPage

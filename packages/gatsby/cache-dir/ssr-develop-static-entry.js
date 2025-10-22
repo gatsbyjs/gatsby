@@ -230,35 +230,33 @@ export default async function staticPage({
           />
         )
       })
-    class RouteHandler extends React.Component {
-      render() {
-        const props = {
-          ...this.props,
-          ...pageData.result,
-          serverData,
-          params: {
-            ...grabMatchParams(this.props.location.pathname),
-            ...(pageData.result?.pageContext?.__params || {}),
-          },
-        }
+    function RouteHandler({location}) {
+  const props = {
+...props,
+...pageData.result,
+serverData,
+params: {
+...grabMatchParams(location.pathname),
+...(pageData.result?.pageContext?.__params || {}),
+},
+}
 
-        const pageElement = React.createElement(
-          preferDefault(syncRequires.ssrComponents[componentChunkName]),
-          props
-        )
+const pageElement = React.createElement(
+preferDefault(syncRequires.ssrComponents[componentChunkName]),
+props
+)
 
-        const wrappedPage = apiRunner(
-          `wrapPageElement`,
-          { element: pageElement, props },
-          pageElement,
-          ({ result }) => {
-            return { element: result, props }
-          }
-        ).pop()
+const wrappedPage = apiRunner(
+`wrapPageElement`,
+{ element: pageElement, props },
+pageElement,
+({ result }) => {
+return { element: result, props }
+}
+).pop()
 
-        return wrappedPage
-      }
-    }
+return wrappedPage;
+}
 
     const routerElement =
       syncRequires.ssrComponents[componentChunkName] && !isClientOnlyPage ? (

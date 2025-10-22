@@ -36,61 +36,59 @@ const GET_POST = gql`
   }
 `
 
-class IndexPage extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Multiple provider-example</h1>
-        <h2>Redux component:</h2>
-        <Counter>
-          ReduxState:
-          <pre>{JSON.stringify(this.props.reduxState)}</pre>
-        </Counter>
-        <h2>Apollo</h2>
-        <h3>List (click on something)</h3>
-        <Query query={GET_POSTS}>
-          {({ loading, error, data }) => {
-            if (loading) return <div>Loading...</div>
-            if (error) return <div>Error :(</div>
+function IndexPage({reduxState, classes, setBlogPost}) {
+  return (
+<div>
+<h1>Multiple provider-example</h1>
+<h2>Redux component:</h2>
+<Counter>
+ReduxState:
+<pre>{JSON.stringify(reduxState)}</pre>
+</Counter>
+<h2>Apollo</h2>
+<h3>List (click on something)</h3>
+<Query query={GET_POSTS}>
+{({ loading, error, data }) => {
+if (loading) return <div>Loading...</div>
+if (error) return <div>Error :(</div>
 
-            return (
-              <ul>
-                {data.blogPosts.map(data => {
-                  const { id, title } = data
-                  return (
-                    <li
-                      className={this.props.classes.listItem}
-                      onClick={() => {
-                        this.props.setBlogPost(data)
-                      }}
-                      key={id}
-                    >
-                      {title}
-                    </li>
-                  )
-                })}
-              </ul>
-            )
-          }}
-        </Query>
-        {this.props.reduxState.id && (
-          <Query query={GET_POST} variables={{ id: this.props.reduxState.id }}>
-            {({ loading, error, data }) => {
-              if (loading) return <div>Loading...</div>
-              if (error) return <div>Error :(</div>
+return (
+<ul>
+{data.blogPosts.map(data => {
+const { id, title } = data
+return (
+<li
+className={classes.listItem}
+onClick={() => {
+setBlogPost(data)
+}}
+key={id}
+>
+{title}
+</li>
+)
+})}
+</ul>
+)
+}}
+</Query>
+{reduxState.id && (
+<Query query={GET_POST} variables={{ id: reduxState.id }}>
+{({ loading, error, data }) => {
+if (loading) return <div>Loading...</div>
+if (error) return <div>Error :(</div>
 
-              return (
-                <Fragment>
-                  <h3>Details {data.blogPost.title}</h3>
-                  <div>{data.blogPost.post}</div>` `
-                </Fragment>
-              )
-            }}
-          </Query>
-        )}
-      </div>
-    )
-  }
+return (
+<Fragment>
+<h3>Details {data.blogPost.title}</h3>
+<div>{data.blogPost.post}</div>` `
+</Fragment>
+)
+}}
+</Query>
+)}
+</div>
+);
 }
 
 const mapStateToProps = state => {

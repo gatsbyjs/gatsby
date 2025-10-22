@@ -3,23 +3,21 @@ import { graphql } from "gatsby"
 import SiteSidebar from "../SiteSidebar"
 import MasterLayout from "./master"
 
-class InsetPageLayout extends React.Component {
-  render() {
-    return (
-      <div className="PageTemplate">
-        <MasterLayout {...this.props}>
-          <div className="section">
-            <div className="columns">
-              <div className="column is-one-quarter">
-                <SiteSidebar {...this.props} />
-              </div>
-              <div className="column">{this.props.children}</div>
-            </div>
-          </div>
-        </MasterLayout>
-      </div>
-    )
-  }
+function InsetPageLayout({children}) {
+  return (
+<div className="PageTemplate">
+<MasterLayout {...props}>
+<div className="section">
+<div className="columns">
+<div className="column is-one-quarter">
+<SiteSidebar {...props} />
+</div>
+<div className="column">{children}</div>
+</div>
+</div>
+</MasterLayout>
+</div>
+);
 }
 
 export default InsetPageLayout

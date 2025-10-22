@@ -18,21 +18,19 @@ const postDate = css`
   margin-top: ${rhythm(-1)};
 `
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = this.props.data.markdownRemark
+function BlogPostTemplate({data}) {
+  const post = data.markdownRemark
 
-    return (
-      <Layout pageTitle={post.frontmatter.title}>
-        <div className={postContainer}>
-          <h1>{post.frontmatter.title}</h1>
-          <p className={postDate}>{post.frontmatter.date}</p>
-          <div dangerouslySetInnerHTML={{ __html: post.html }} />
-          <hr />
-        </div>
-      </Layout>
-    )
-  }
+return (
+<Layout pageTitle={post.frontmatter.title}>
+<div className={postContainer}>
+<h1>{post.frontmatter.title}</h1>
+<p className={postDate}>{post.frontmatter.date}</p>
+<div dangerouslySetInnerHTML={{ __html: post.html }} />
+<hr />
+</div>
+</Layout>
+);
 }
 
 export default BlogPostTemplate

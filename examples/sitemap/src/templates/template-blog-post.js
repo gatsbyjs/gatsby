@@ -1,18 +1,16 @@
 import React from "react"
 import { graphql } from "gatsby"
 
-class BlogPost extends React.Component {
-  render() {
-    const { html, frontmatter } = this.props.data.markdownRemark
-    return (
-      <div>
-        <h1>{frontmatter.title}</h1>
-        <div className="container content">
-          <div dangerouslySetInnerHTML={{ __html: html }} />
-        </div>
-      </div>
-    )
-  }
+function BlogPost({data}) {
+  const { html, frontmatter } = data.markdownRemark
+return (
+<div>
+<h1>{frontmatter.title}</h1>
+<div className="container content">
+<div dangerouslySetInnerHTML={{ __html: html }} />
+</div>
+</div>
+);
 }
 
 export default BlogPost

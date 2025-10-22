@@ -2,49 +2,50 @@ import React, { Component, createRef, forwardRef } from "react"
 import PropTypes from "prop-types"
 import Image from "../index"
 
-class ImageWithIEPolyfill extends Component {
-  imageRef = this.props.innerRef || createRef()
-  placeholderRef = createRef()
-
-  // Load object-fit/position polyfill if required (e.g. in IE)
-  componentDidMount() {
+function ImageWithIEPolyfill({innerRef, imgStyle, placeholderStyle, objectFit, objectPosition, ...props}) {
+  const imageRef = React.useRef(null);
+  const placeholderRef = React.useRef(null);
+  React.useEffect(() => {
+    let testImg;
+    let objectFit;
+    let objectPosition;
     const testImg = document.createElement(`img`)
     if (
       typeof testImg.style.objectFit === `undefined` ||
       typeof testImg.style.objectPosition === `undefined`
     ) {
       import(`object-fit-images`).then(({ default: ObjectFitImages }) => {
-        ObjectFitImages(this.imageRef.current.imageRef.current)
-        ObjectFitImages(this.placeholderRef.current)
+        ObjectFitImages(imageRef.current.imageRef.current)
+        ObjectFitImages(placeholderRef.current)
       })
     }
-  }
+  }, []);
 
-  render() {
-    const { objectFit, objectPosition, ...props } = this.props
+  imageRef = innerRef || createRef()
 
-    const polyfillStyle = {
-      objectFit: objectFit,
-      objectPosition: objectPosition,
-      fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
-    }
+  placeholderRef = createRef()
 
-    return (
-      <Image
-        ref={this.imageRef}
-        placeholderRef={this.placeholderRef}
-        {...props}
-        imgStyle={{
-          ...props.imgStyle,
-          ...polyfillStyle,
-        }}
-        placeholderStyle={{
-          ...props.placeholderStyle,
-          ...polyfillStyle,
-        }}
-      />
-    )
-  }
+  const polyfillStyle = {
+objectFit: objectFit,
+objectPosition: objectPosition,
+fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
+}
+
+return (
+<Image
+ref={imageRef}
+placeholderRef={placeholderRef}
+{...props}
+imgStyle={{
+...props.imgStyle,
+...polyfillStyle,
+}}
+placeholderStyle={{
+...props.placeholderStyle,
+...polyfillStyle,
+}}
+/>
+);
 }
 
 // If you modify these propTypes, please don't forget to update following files as well:

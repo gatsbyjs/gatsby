@@ -2,18 +2,16 @@ import React from "react"
 import { graphql } from "gatsby"
 import InsetPageLayout from "../components/Layouts/insetPage"
 
-class mdInsetPage extends React.Component {
-  render() {
-    const { html } = this.props.data.markdownRemark
+function mdInsetPage({data}) {
+  const { html } = data.markdownRemark
 
-    return (
-      <InsetPageLayout {...this.props}>
-        <div className="box container content">
-          <div dangerouslySetInnerHTML={{ __html: html }} />
-        </div>
-      </InsetPageLayout>
-    )
-  }
+return (
+<InsetPageLayout {...props}>
+<div className="box container content">
+<div dangerouslySetInnerHTML={{ __html: html }} />
+</div>
+</InsetPageLayout>
+);
 }
 
 export default mdInsetPage

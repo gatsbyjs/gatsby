@@ -26,30 +26,28 @@ const Wrapper = styled.section`
   max-width: 800px;
 `
 
-class IndexPage extends React.Component {
-  render() {
-    return (
-      <Fragment>
-        <Helmet>
-          <title>Gatsby Styled Components</title>
-          <meta
-            name="description"
-            content="Gatsby example site using Styled Components"
-          />
-          <meta name="referrer" content="origin" />
-        </Helmet>
-        <GlobalStyle />
-        <Wrapper>
-          <Title>Hello World, this is my first styled component!</Title>
-          <p>
-            <ExternalLink href="https://www.gatsbyjs.com/plugins/gatsby-plugin-styled-components/">
-              gatsby-plugin-styled-component docs
-            </ExternalLink>
-          </p>
-        </Wrapper>
-      </Fragment>
-    )
-  }
+function IndexPage() {
+  return (
+<Fragment>
+<Helmet>
+<title>Gatsby Styled Components</title>
+<meta
+name="description"
+content="Gatsby example site using Styled Components"
+/>
+<meta name="referrer" content="origin" />
+</Helmet>
+<GlobalStyle />
+<Wrapper>
+<Title>Hello World, this is my first styled component!</Title>
+<p>
+<ExternalLink href="https://www.gatsbyjs.com/plugins/gatsby-plugin-styled-components/">
+gatsby-plugin-styled-component docs
+</ExternalLink>
+</p>
+</Wrapper>
+</Fragment>
+);
 }
 
 export default IndexPage

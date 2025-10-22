@@ -3,42 +3,40 @@ import { Link, graphql } from "gatsby"
 
 import MasterLayout from "./master"
 
-class BlogPostLayout extends React.Component {
-  render() {
-    let siteMetadata = this.props.siteMetadata
+function BlogPostLayout({siteMetadata, children}) {
+  let siteMetadata = siteMetadata
 
-    const home = (
-      <div className="nav">
-        <div className="container">
-          <div className="nav-left">
-            <Link className="nav-item is-tab is-active" to={`/`}>
-              Home
-            </Link>
-          </div>
-        </div>
-      </div>
-    )
+const home = (
+<div className="nav">
+<div className="container">
+<div className="nav-left">
+<Link className="nav-item is-tab is-active" to={`/`}>
+Home
+</Link>
+</div>
+</div>
+</div>
+)
 
-    return (
-      <div>
-        <MasterLayout
-          {...{ data: { site: { siteMetadata: this.props.siteMetadata } } }}
-        >
-          {home}
-          <div className="container">{this.props.children}</div>
-          <div className="footer container">
-            <hr />
-            <p>
-              {siteMetadata.siteDescr}
-              <a href={siteMetadata.siteTwitterUrl}>
-                <br /> <strong>{siteMetadata.siteAuthor}</strong> on Twitter
-              </a>
-            </p>
-          </div>
-        </MasterLayout>
-      </div>
-    )
-  }
+return (
+<div>
+<MasterLayout
+{...{ data: { site: { siteMetadata: siteMetadata } } }}
+>
+{home}
+<div className="container">{children}</div>
+<div className="footer container">
+<hr />
+<p>
+{siteMetadata.siteDescr}
+<a href={siteMetadata.siteTwitterUrl}>
+<br /> <strong>{siteMetadata.siteAuthor}</strong> on Twitter
+</a>
+</p>
+</div>
+</MasterLayout>
+</div>
+);
 }
 
 export default BlogPostLayout

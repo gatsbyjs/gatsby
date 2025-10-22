@@ -1,4 +1,3 @@
-
 /**
  * @typedef {import('@babel/core').NodePath} NodePath
  * @typedef {import('@babel/core').PluginObj} PluginObj

@@ -3,33 +3,31 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
-class GatsbyRemarkCodeReplsRedirect extends Component {
-  componentDidMount() {
-    this.form.submit()
-  }
+function GatsbyRemarkCodeReplsRedirect({pageContext}) {
+  React.useEffect(() => {
+    form.submit()
+  }, []);
 
-  render() {
-    const { action, payload } = this.props.pageContext
+  const { action, payload } = pageContext
 
-    return (
-      <form
-        style={{ paddingBottom: `50px` }}
-        ref={form => {
-          this.form = form
-        }}
-        action={action}
-        method="POST"
-      >
-        <input type="hidden" name="data" value={payload} />
+return (
+<form
+style={{ paddingBottom: `50px` }}
+ref={form => {
+form = form
+}}
+action={action}
+method="POST"
+>
+<input type="hidden" name="data" value={payload} />
 
-        <p>Not automatically redirecting?</p>
+<p>Not automatically redirecting?</p>
 
-        <p>
-          <input type="submit" value="Click here" />
-        </p>
-      </form>
-    )
-  }
+<p>
+<input type="submit" value="Click here" />
+</p>
+</form>
+);
 }
 
 GatsbyRemarkCodeReplsRedirect.propTypes = {

@@ -14,14 +14,20 @@ export const frontmatter = {
   description: `Things about the choropleth.`,
 }
 
-class choroplethBase extends React.Component {
-  componentDidMount() {
-    this.d3Node = d3.select(`div#states`)
+function choroplethBase({data}) {
+  React.useEffect(() => {
+    let d3Node;
+    let measurements;
+    let space;
+    let states;
+    let stats;
+    let mergedData;
+    d3Node = d3.select(`div#states`)
     let measurements = {
-      width: this.d3Node._groups[0][0].clientWidth,
-      height: this.d3Node._groups[0][0].clientHeight,
+      width: d3Node._groups[0][0].clientWidth,
+      height: d3Node._groups[0][0].clientHeight,
     }
-    let space = graph.setup(this.d3Node, measurements)
+    let space = graph.setup(d3Node, measurements)
 
     /*
        we begin drawing here, grab the data and use it to draw
@@ -36,37 +42,35 @@ class choroplethBase extends React.Component {
         let mergedData = mergeData(states, `abbrev`, stats, `Abbreviation`)
         graph.draw(space, mergedData, measurements)
       })
-  }
+    
+    return () => {
+      d3.select(`svg`).remove()
+    };
+  }, []);
 
-  componentWillUnmount() {
-    d3.select(`svg`).remove()
-  }
+  let data = data.markdownRemark
+let html = data.html
 
-  render() {
-    let data = this.props.data.markdownRemark
-    let html = data.html
-
-    return (
-      <BlogPostChrome
-        {...{
-          frontmatter: this.props.data.javascriptFrontmatter.frontmatter,
-          site: this.props.data.site,
-        }}
-      >
-        <div className="section">
-          <div className="container">
-            <div id="states" />
-            <div id="tooltip" />
-          </div>
-        </div>
-        <div className="section">
-          <div className="container">
-            <div dangerouslySetInnerHTML={{ __html: html }} />
-          </div>
-        </div>
-      </BlogPostChrome>
-    )
-  }
+return (
+<BlogPostChrome
+{...{
+frontmatter: data.javascriptFrontmatter.frontmatter,
+site: data.site,
+}}
+>
+<div className="section">
+<div className="container">
+<div id="states" />
+<div id="tooltip" />
+</div>
+</div>
+<div className="section">
+<div className="container">
+<div dangerouslySetInnerHTML={{ __html: html }} />
+</div>
+</div>
+</BlogPostChrome>
+);
 }
 
 export default choroplethBase

@@ -33,89 +33,85 @@ const RouteHandler = props => (
   </BaseContext.Provider>
 )
 
-class LocationHandler extends React.Component {
-  render() {
-    const { location } = this.props
+function LocationHandler({location}) {
+  const slicesContext = {
+renderEnvironment: `browser`,
+}
 
-    const slicesContext = {
-      renderEnvironment: `browser`,
-    }
+if (!loader.isPageNotFound(location.pathname + location.search)) {
+return (
+<EnsureResources location={location}>
+{locationAndPageResources => (
+<SlicesContext.Provider value={slicesContext}>
+<SlicesMapContext.Provider
+value={locationAndPageResources.pageResources.page.slicesMap}
+>
+<RouteUpdates location={location}>
+<ScrollContext
+location={location}
+shouldUpdateScroll={shouldUpdateScroll}
+>
+<Router
+basepath={__BASE_PATH__}
+location={location}
+id="gatsby-focus-wrapper"
+>
+<RouteHandler
+path={encodeURI(
+(
+locationAndPageResources.pageResources.page
+.matchPath ||
+locationAndPageResources.pageResources.page.path
+).split(`?`)[0]
+)}
+{...props}
+{...locationAndPageResources}
+/>
+</Router>
+</ScrollContext>
+</RouteUpdates>
+</SlicesMapContext.Provider>
+</SlicesContext.Provider>
+)}
+</EnsureResources>
+)
+}
 
-    if (!loader.isPageNotFound(location.pathname + location.search)) {
-      return (
-        <EnsureResources location={location}>
-          {locationAndPageResources => (
-            <SlicesContext.Provider value={slicesContext}>
-              <SlicesMapContext.Provider
-                value={locationAndPageResources.pageResources.page.slicesMap}
-              >
-                <RouteUpdates location={location}>
-                  <ScrollContext
-                    location={location}
-                    shouldUpdateScroll={shouldUpdateScroll}
-                  >
-                    <Router
-                      basepath={__BASE_PATH__}
-                      location={location}
-                      id="gatsby-focus-wrapper"
-                    >
-                      <RouteHandler
-                        path={encodeURI(
-                          (
-                            locationAndPageResources.pageResources.page
-                              .matchPath ||
-                            locationAndPageResources.pageResources.page.path
-                          ).split(`?`)[0]
-                        )}
-                        {...this.props}
-                        {...locationAndPageResources}
-                      />
-                    </Router>
-                  </ScrollContext>
-                </RouteUpdates>
-              </SlicesMapContext.Provider>
-            </SlicesContext.Provider>
-          )}
-        </EnsureResources>
-      )
-    }
+const dev404PageResources = loader.loadPageSync(`/dev-404-page`)
+const real404PageResources = loader.loadPageSync(`/404.html`)
+let custom404
+if (real404PageResources) {
+custom404 = (
+<PageQueryStore {...props} pageResources={real404PageResources} />
+)
+}
 
-    const dev404PageResources = loader.loadPageSync(`/dev-404-page`)
-    const real404PageResources = loader.loadPageSync(`/404.html`)
-    let custom404
-    if (real404PageResources) {
-      custom404 = (
-        <PageQueryStore {...this.props} pageResources={real404PageResources} />
-      )
-    }
-
-    return (
-      <EnsureResources location={location}>
-        {locationAndPageResources => (
-          <SlicesContext.Provider value={slicesContext}>
-            <SlicesMapContext.Provider
-              value={locationAndPageResources.pageResources.page.slicesMap}
-            >
-              <RouteUpdates location={location}>
-                <Router
-                  basepath={__BASE_PATH__}
-                  location={location}
-                  id="gatsby-focus-wrapper"
-                >
-                  <RouteHandler
-                    path={location.pathname}
-                    location={location}
-                    pageResources={dev404PageResources}
-                    custom404={custom404}
-                  />
-                </Router>
-              </RouteUpdates>
-            </SlicesMapContext.Provider>
-          </SlicesContext.Provider>
-        )}
-      </EnsureResources>
-    )
-  }
+return (
+<EnsureResources location={location}>
+{locationAndPageResources => (
+<SlicesContext.Provider value={slicesContext}>
+<SlicesMapContext.Provider
+value={locationAndPageResources.pageResources.page.slicesMap}
+>
+<RouteUpdates location={location}>
+<Router
+basepath={__BASE_PATH__}
+location={location}
+id="gatsby-focus-wrapper"
+>
+<RouteHandler
+path={location.pathname}
+location={location}
+pageResources={dev404PageResources}
+custom404={custom404}
+/>
+</Router>
+</RouteUpdates>
+</SlicesMapContext.Provider>
+</SlicesContext.Provider>
+)}
+</EnsureResources>
+);
 }
 
 const Root = () => (

@@ -1,18 +1,16 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 
-class StoryItem extends React.Component {
-  render() {
-    const item = this.props.item
-    return (
-      <li>
-        <div>
-          <a href={item.url}>{item.name}</a> —{` `}
-          <Link to={`/item/${item.id}/`}>more details</Link>
-        </div>
-      </li>
-    )
-  }
+function StoryItem({item}) {
+  const item = item
+return (
+<li>
+<div>
+<a href={item.url}>{item.name}</a> —{` `}
+<Link to={`/item/${item.id}/`}>more details</Link>
+</div>
+</li>
+);
 }
 
 export default StoryItem

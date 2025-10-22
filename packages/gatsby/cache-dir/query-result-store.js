@@ -25,16 +25,41 @@ const getPathFromProps = props =>
     ? normalizePagePath(props.pageResources.page.path)
     : undefined
 
-export class PageQueryStore extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      pageData: null,
-      path: null,
-    }
-  }
+export function PageQueryStore({location}) {
+  const [pageData, setPageData] = React.useState(null);
+  const [path, setPath] = React.useState(null);
+  React.useEffect(() => {
+    socketRegisterPath(getPathFromProps(props))
+    ___emitter.on(`pageQueryResult`, handleMittEvent)
+    ___emitter.on(`serverDataResult`, handleMittEvent)
+    ___emitter.on(`onPostLoadPageResources`, handleMittEvent)
 
-  handleMittEvent = () => {
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      {
+        action: `SHOW_GETSERVERDATA_ERROR`,
+        payload: this.state?.page?.page?.getServerDataError,
+      },
+    ])
+    
+    return () => {
+      socketUnregisterPath(path)
+    ___emitter.off(`pageQueryResult`, handleMittEvent)
+    ___emitter.off(`serverDataResult`, handleMittEvent)
+    ___emitter.off(`onPostLoadPageResources`, handleMittEvent)
+    };
+  }, []);
+  React.useEffect(() => {
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      {
+        action: `SHOW_GETSERVERDATA_ERROR`,
+        payload: this.state?.page?.page?.getServerDataError,
+      },
+    ])
+  }, [location]);
+
+  const handleMittEvent = () => {
     this.setState(state => {
       return {
         page: state.path
@@ -42,41 +67,9 @@ export class PageQueryStore extends React.Component {
           : null,
       }
     })
-  }
+  };
 
-  componentDidMount() {
-    socketRegisterPath(getPathFromProps(this.props))
-    ___emitter.on(`pageQueryResult`, this.handleMittEvent)
-    ___emitter.on(`serverDataResult`, this.handleMittEvent)
-    ___emitter.on(`onPostLoadPageResources`, this.handleMittEvent)
-
-    window._gatsbyEvents.push([
-      `FAST_REFRESH`,
-      {
-        action: `SHOW_GETSERVERDATA_ERROR`,
-        payload: this.state?.page?.page?.getServerDataError,
-      },
-    ])
-  }
-
-  componentDidUpdate() {
-    window._gatsbyEvents.push([
-      `FAST_REFRESH`,
-      {
-        action: `SHOW_GETSERVERDATA_ERROR`,
-        payload: this.state?.page?.page?.getServerDataError,
-      },
-    ])
-  }
-
-  componentWillUnmount() {
-    socketUnregisterPath(this.state.path)
-    ___emitter.off(`pageQueryResult`, this.handleMittEvent)
-    ___emitter.off(`serverDataResult`, this.handleMittEvent)
-    ___emitter.off(`onPostLoadPageResources`, this.handleMittEvent)
-  }
-
-  static getDerivedStateFromProps(props, state) {
+  function getDerivedStateFromProps(props, state) {
     const newPath = getPathFromProps(props)
     if (newPath !== state.path) {
       socketUnregisterPath(state.path)
@@ -90,108 +83,86 @@ export class PageQueryStore extends React.Component {
     return null
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  function shouldComponentUpdate(nextProps, nextState) {
     // We want to update this component when:
     // - location changed
     // - page data for path changed
 
     return (
-      this.props.location !== nextProps.location ||
-      this.state.path !== nextState.path ||
-      this.state.page !== nextState.page
+      location !== nextProps.location ||
+      path !== nextState.path ||
+      page !== nextState.page
     )
   }
 
-  render() {
-    // eslint-disable-next-line
-    if (!this.state.page) {
-      return <div />
-    }
-
-    if (this.state.page.page.getServerDataError) {
-      return <div />
-    }
-
-    return <PageRenderer {...this.props} {...this.state.page.json} />
-  }
+  // eslint-disable-next-line
+if (!this.state.page) {
+return <div />
 }
 
-export class StaticQueryStore extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      staticQueryData: { ...getStaticQueryResults() },
-    }
-  }
+if (this.state.page.page.getServerDataError) {
+return <div />
+}
 
-  handleMittEvent = () => {
-    this.setState({
-      staticQueryData: { ...getStaticQueryResults() },
-    })
-  }
+return <PageRenderer {...props} {...this.state.page.json} />;
+}
 
-  componentDidMount() {
-    ___emitter.on(`staticQueryResult`, this.handleMittEvent)
-    ___emitter.on(`onPostLoadPageResources`, this.handleMittEvent)
-  }
+export function StaticQueryStore({children}) {
+  const [staticQueryData, setStaticQueryData] = React.useState({ ...getStaticQueryResults() });
+  React.useEffect(() => {
+    ___emitter.on(`staticQueryResult`, handleMittEvent)
+    ___emitter.on(`onPostLoadPageResources`, handleMittEvent)
+    
+    return () => {
+      ___emitter.off(`staticQueryResult`, handleMittEvent)
+    ___emitter.off(`onPostLoadPageResources`, handleMittEvent)
+    };
+  }, []);
 
-  componentWillUnmount() {
-    ___emitter.off(`staticQueryResult`, this.handleMittEvent)
-    ___emitter.off(`onPostLoadPageResources`, this.handleMittEvent)
-  }
+  const handleMittEvent = () => {
+    setStaticQueryData({ ...getStaticQueryResults() })
+  };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  function shouldComponentUpdate(nextProps, nextState) {
     // We want to update this component when:
     // - static query results changed
 
-    return this.state.staticQueryData !== nextState.staticQueryData
+    return staticQueryData !== nextState.staticQueryData
   }
 
-  render() {
-    return (
-      <StaticQueryContext.Provider value={this.state.staticQueryData}>
-        {this.props.children}
-      </StaticQueryContext.Provider>
-    )
-  }
+  return (
+<StaticQueryContext.Provider value={staticQueryData}>
+{children}
+</StaticQueryContext.Provider>
+);
 }
 
-export class SliceDataStore extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      slicesData: new Map(getSliceResults()),
-    }
-  }
+export function SliceDataStore({children}) {
+  const [slicesData, setSlicesData] = React.useState(new Map(getSliceResults()));
+  React.useEffect(() => {
+    ___emitter.on(`sliceQueryResult`, handleMittEvent)
+    ___emitter.on(`onPostLoadPageResources`, handleMittEvent)
+    
+    return () => {
+      ___emitter.off(`sliceQueryResult`, handleMittEvent)
+    ___emitter.off(`onPostLoadPageResources`, handleMittEvent)
+    };
+  }, []);
 
-  handleMittEvent = () => {
-    this.setState({
-      slicesData: new Map(getSliceResults()),
-    })
-  }
+  const handleMittEvent = () => {
+    setSlicesData(new Map(getSliceResults()))
+  };
 
-  componentDidMount() {
-    ___emitter.on(`sliceQueryResult`, this.handleMittEvent)
-    ___emitter.on(`onPostLoadPageResources`, this.handleMittEvent)
-  }
-
-  componentWillUnmount() {
-    ___emitter.off(`sliceQueryResult`, this.handleMittEvent)
-    ___emitter.off(`onPostLoadPageResources`, this.handleMittEvent)
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
+  function shouldComponentUpdate(nextProps, nextState) {
     // We want to update this component when:
     // - slice results changed
 
-    return this.state.slicesData !== nextState.slicesData
+    return slicesData !== nextState.slicesData
   }
 
-  render() {
-    return (
-      <SlicesResultsContext.Provider value={this.state.slicesData}>
-        {this.props.children}
-      </SlicesResultsContext.Provider>
-    )
-  }
+  return (
+<SlicesResultsContext.Provider value={slicesData}>
+{children}
+</SlicesResultsContext.Provider>
+);
 }

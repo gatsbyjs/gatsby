@@ -2,23 +2,21 @@ import React from "react"
 import { graphql } from "gatsby"
 import BlogPostChrome from "../components/BlogPostChrome"
 
-class mdBlogPost extends React.Component {
-  render() {
-    const { html } = this.props.data.markdownRemark
+function mdBlogPost({data}) {
+  const { html } = data.markdownRemark
 
-    return (
-      <BlogPostChrome
-        {...{
-          frontmatter: this.props.data.markdownRemark.frontmatter,
-          site: this.props.data.site,
-        }}
-      >
-        <div className="container content">
-          <div dangerouslySetInnerHTML={{ __html: html }} />
-        </div>
-      </BlogPostChrome>
-    )
-  }
+return (
+<BlogPostChrome
+{...{
+frontmatter: data.markdownRemark.frontmatter,
+site: data.site,
+}}
+>
+<div className="container content">
+<div dangerouslySetInnerHTML={{ __html: html }} />
+</div>
+</BlogPostChrome>
+);
 }
 
 export default mdBlogPost

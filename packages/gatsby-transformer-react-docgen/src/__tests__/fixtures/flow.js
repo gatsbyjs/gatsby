@@ -19,10 +19,8 @@ type Props = {
 /**
  * General component description.
  */
-export default class MyComponent extends Component<void, Props, void> {
+export default function MyComponent() {
   props: Props
 
-  render(): ?ReactElement {
-    // ...
-  }
+  // ...;
 }

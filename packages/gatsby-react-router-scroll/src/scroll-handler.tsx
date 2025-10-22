@@ -14,71 +14,36 @@ type ShouldUpdateScrollFn = (
 ) => boolean
 type ShouldUpdateScroll = undefined | ShouldUpdateScrollFn
 
-export class ScrollHandler extends React.Component<
-  LocationContext & { shouldUpdateScroll: ShouldUpdateScroll }
-> {
-  static propTypes = {
-    shouldUpdateScroll: PropTypes.func,
-    children: PropTypes.element.isRequired,
-    location: PropTypes.object.isRequired,
-  }
-
-  _stateStorage: SessionStorage = new SessionStorage()
-
-  // @see https://www.html5rocks.com/en/tutorials/speed/animations/
-  _isTicking = false
-  _latestKnownScrollY = 0
-  scrollListener = (): void => {
-    this._latestKnownScrollY = window.scrollY
-
-    if (!this._isTicking) {
-      this._isTicking = true
-      requestAnimationFrame(this._saveScroll.bind(this))
-    }
-  }
-
-  _saveScroll(): void {
-    const key = this.props.location.key || null
-
-    if (key) {
-      this._stateStorage.save(
-        this.props.location,
-        key,
-        this._latestKnownScrollY
-      )
-    }
-    this._isTicking = false
-  }
-
-  componentDidMount(): void {
-    window.addEventListener(`scroll`, this.scrollListener)
+export function ScrollHandler({location, children, shouldUpdateScroll}) {
+  React.useEffect(() => {
+    let scrollPosition;
+    window.addEventListener(`scroll`, scrollListener)
     let scrollPosition
-    const { key, hash } = this.props.location
+    const { key, hash } = location
 
     if (key) {
-      scrollPosition = this._stateStorage.read(this.props.location, key)
+      scrollPosition = _stateStorage.read(location, key)
     }
 
     /** If a hash is present in the browser url as the component mounts (i.e. the user is navigating
      * from an external website) then scroll to the hash instead of any previously stored scroll
      * position. */
     if (hash) {
-      this.scrollToHash(decodeURI(hash), undefined)
+      scrollToHash(decodeURI(hash), undefined)
     } else if (scrollPosition) {
-      this.windowScroll(scrollPosition, undefined)
+      windowScroll(scrollPosition, undefined)
     }
-  }
-
-  componentWillUnmount(): void {
-    window.removeEventListener(`scroll`, this.scrollListener)
-  }
-
-  componentDidUpdate(prevProps: LocationContext): void {
-    const { hash, key } = this.props.location
+    
+    return () => {
+      window.removeEventListener(`scroll`, scrollListener)
+    };
+  }, []);
+  React.useEffect(() => {
+    const { hash, key } = location
     let scrollPosition
 
     if (key) {
-      scrollPosition = this._stateStorage.read(this.props.location, key)
+      scrollPosition = _stateStorage.read(location, key)
     }
 
     /**  There are two pieces of state: the browser url and
@@ -91,36 +56,70 @@ export class ScrollHandler extends React.Component<
      */
 
     if (hash) {
-      this.scrollToHash(decodeURI(hash), prevProps)
+      scrollToHash(decodeURI(hash), prevProps)
     } else {
-      this.windowScroll(scrollPosition, prevProps)
+      windowScroll(scrollPosition, prevProps)
     }
+  }, [location, children, shouldUpdateScroll]);
+
+  static propTypes = {
+    shouldUpdateScroll: PropTypes.func,
+    children: PropTypes.element.isRequired,
+    location: PropTypes.object.isRequired,
   }
 
-  windowScroll = (
+  _stateStorage: SessionStorage = new SessionStorage()
+
+  _isTicking = false
+
+  _latestKnownScrollY = 0
+
+  const scrollListener = () => {
+    _latestKnownScrollY = window.scrollY
+
+    if (!_isTicking) {
+      _isTicking = true
+      requestAnimationFrame(_saveScroll.bind(this))
+    }
+  };
+
+  function _saveScroll() {
+    const key = location.key || null
+
+    if (key) {
+      _stateStorage.save(
+        location,
+        key,
+        _latestKnownScrollY
+      )
+    }
+    _isTicking = false
+  }
+
+  const windowScroll = (
     position: number,
     prevProps: LocationContext | undefined
-  ): void => {
-    if (this.shouldUpdateScroll(prevProps, this.props)) {
+  ) => {
+    if (shouldUpdateScroll(prevProps, this.props)) {
       window.scrollTo(0, position)
     }
-  }
+  };
 
-  scrollToHash = (
+  const scrollToHash = (
     hash: string,
     prevProps: LocationContext | undefined
-  ): void => {
+  ) => {
     const node = document.getElementById(hash.substring(1))
 
-    if (node && this.shouldUpdateScroll(prevProps, this.props)) {
+    if (node && shouldUpdateScroll(prevProps, this.props)) {
       node.scrollIntoView()
     }
-  }
+  };
 
-  shouldUpdateScroll = (
+  const shouldUpdateScroll = (
     prevRouterProps: LocationContext | undefined,
     routerProps: LocationContext
-  ): boolean => {
+  ) => {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true
@@ -128,13 +127,11 @@ export class ScrollHandler extends React.Component<
 
     // Hack to allow accessing this._stateStorage.
     return shouldUpdateScroll.call(this, prevRouterProps, routerProps)
-  }
+  };
 
-  render(): React.ReactNode {
-    return (
-      <ScrollContext.Provider value={this._stateStorage}>
-        {this.props.children}
-      </ScrollContext.Provider>
-    )
-  }
+  return (
+<ScrollContext.Provider value={_stateStorage}>
+{children}
+</ScrollContext.Provider>
+);
 }

@@ -77,82 +77,80 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     renderEnvironment: `browser`,
   }
 
-  class GatsbyRoot extends React.Component {
-    render() {
-      const { children } = this.props
-      return (
-        <Location>
-          {({ location }) => (
-            <EnsureResources location={location}>
-              {({ pageResources, location }) => {
-                const staticQueryResults = getStaticQueryResults()
-                const sliceResults = getSliceResults()
+  function GatsbyRoot({children}) {
+  return (
+<Location>
+{({ location }) => (
+<EnsureResources location={location}>
+{({ pageResources, location }) => {
+const staticQueryResults = getStaticQueryResults()
+const sliceResults = getSliceResults()
 
-                return (
-                  <StaticQueryContext.Provider value={staticQueryResults}>
-                    <SlicesContext.Provider value={slicesContext}>
-                      <SlicesResultsContext.Provider value={sliceResults}>
-                        <SlicesMapContext.Provider
-                          value={pageResources.page.slicesMap}
-                        >
-                          <DataContext.Provider
-                            value={{ pageResources, location }}
-                          >
-                            {children}
-                          </DataContext.Provider>
-                        </SlicesMapContext.Provider>
-                      </SlicesResultsContext.Provider>
-                    </SlicesContext.Provider>
-                  </StaticQueryContext.Provider>
-                )
-              }}
-            </EnsureResources>
-          )}
-        </Location>
-      )
-    }
-  }
+return (
+<StaticQueryContext.Provider value={staticQueryResults}>
+<SlicesContext.Provider value={slicesContext}>
+<SlicesResultsContext.Provider value={sliceResults}>
+<SlicesMapContext.Provider
+value={pageResources.page.slicesMap}
+>
+<DataContext.Provider
+value={{ pageResources, location }}
+>
+{children}
+</DataContext.Provider>
+</SlicesMapContext.Provider>
+</SlicesResultsContext.Provider>
+</SlicesContext.Provider>
+</StaticQueryContext.Provider>
+)
+}}
+</EnsureResources>
+)}
+</Location>
+);
+}
 
-  class LocationHandler extends React.Component {
-    render() {
-      return (
-        <DataContext.Consumer>
-          {({ pageResources, location }) => (
-            <RouteUpdates location={location}>
-              <ScrollContext
-                location={location}
-                shouldUpdateScroll={shouldUpdateScroll}
-              >
-                <Router
-                  basepath={__BASE_PATH__}
-                  location={location}
-                  id="gatsby-focus-wrapper"
-                >
-                  <RouteHandler
-                    path={
-                      pageResources.page.path === `/404.html` ||
-                      pageResources.page.path === `/500.html`
-                        ? stripPrefix(location.pathname, __BASE_PATH__)
-                        : encodeURI(
-                            (
-                              pageResources.page.matchPath ||
-                              pageResources.page.path
-                            ).split(`?`)[0]
-                          )
-                    }
-                    {...this.props}
-                    location={location}
-                    pageResources={pageResources}
-                    {...pageResources.json}
-                  />
-                </Router>
-              </ScrollContext>
-            </RouteUpdates>
-          )}
-        </DataContext.Consumer>
-      )
-    }
-  }
+  function LocationHandler() {
+  const contextValue = React.useContext(DataContext);
+  const contextValue = React.useContext(DataContext);
+
+  return (
+<DataContext.Consumer>
+{({ pageResources, location }) => (
+<RouteUpdates location={location}>
+<ScrollContext
+location={location}
+shouldUpdateScroll={shouldUpdateScroll}
+>
+<Router
+basepath={__BASE_PATH__}
+location={location}
+id="gatsby-focus-wrapper"
+>
+<RouteHandler
+path={
+pageResources.page.path === `/404.html` ||
+pageResources.page.path === `/500.html`
+? stripPrefix(location.pathname, __BASE_PATH__)
+: encodeURI(
+(
+pageResources.page.matchPath ||
+pageResources.page.path
+).split(`?`)[0]
+)
+}
+{...props}
+location={location}
+pageResources={pageResources}
+{...pageResources.json}
+/>
+</Router>
+</ScrollContext>
+</RouteUpdates>
+)}
+</DataContext.Consumer>
+);
+}
 
   const { pagePath, location: browserLoc } = window
 

@@ -44,31 +44,18 @@ function GatsbyLinkLocationWrapper(props) {
   )
 }
 
-class GatsbyLink extends React.Component {
-  constructor(props) {
-    super(props)
-    // Default to no support for IntersectionObserver
-    let IOSupported = false
-    if (typeof window !== `undefined` && window.IntersectionObserver) {
-      IOSupported = true
-    }
-
-    this.state = {
-      IOSupported,
-    }
-    this.abortPrefetch = null
-    this.handleRef = this.handleRef.bind(this)
-  }
-
-  _prefetch() {
+function GatsbyLink({_location, to, innerRef, partiallyActive, className, activeClassName, style, activeStyle, target, getProps, onClick, onMouseEnter, /* eslint-disable no-unused-vars */
+      activeClassName, state, replace, /* eslint-enable no-unused-vars */
+      ...rest}) {
+  function _prefetch() {
     let currentPath = window.location.pathname + window.location.search
 
     // reach router should have the correct state
-    if (this.props._location && this.props._location.pathname) {
-      currentPath = this.props._location.pathname + this.props._location.search
+    if (_location && _location.pathname) {
+      currentPath = _location.pathname + _location.search
     }
 
-    const rewrittenPath = rewriteLinkPath(this.props.to, currentPath)
+    const rewrittenPath = rewriteLinkPath(to, currentPath)
     const parsed = parsePath(rewrittenPath)
 
     const newPathName = parsed.pathname + parsed.search
@@ -82,134 +69,101 @@ class GatsbyLink extends React.Component {
     return undefined
   }
 
-  componentWillUnmount() {
-    if (!this.io) {
-      return
-    }
-    const { instance, el } = this.io
-
-    if (this.abortPrefetch) {
-      this.abortPrefetch.abort()
-    }
-
-    instance.unobserve(el)
-    instance.disconnect()
-  }
-
-  handleRef(ref) {
+  function handleRef(ref) {
     if (
-      this.props.innerRef &&
-      Object.prototype.hasOwnProperty.call(this.props.innerRef, `current`)
+      innerRef &&
+      Object.prototype.hasOwnProperty.call(innerRef, `current`)
     ) {
-      this.props.innerRef.current = ref
-    } else if (this.props.innerRef) {
-      this.props.innerRef(ref)
+      innerRef.current = ref
+    } else if (innerRef) {
+      innerRef(ref)
     }
 
-    if (this.state.IOSupported && ref) {
+    if (IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
-      this.io = createIntersectionObserver(ref, inViewPort => {
+      io = createIntersectionObserver(ref, inViewPort => {
         if (inViewPort) {
-          this.abortPrefetch = this._prefetch()
+          abortPrefetch = _prefetch()
         } else {
-          if (this.abortPrefetch) {
-            this.abortPrefetch.abort()
+          if (abortPrefetch) {
+            abortPrefetch.abort()
           }
         }
       })
     }
   }
 
-  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
-    if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
+  const defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
+    if (partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
-        className: [this.props.className, this.props.activeClassName]
+        className: [className, activeClassName]
           .filter(Boolean)
           .join(` `),
-        style: { ...this.props.style, ...this.props.activeStyle },
+        style: { ...style, ...activeStyle },
       }
     }
     return null
-  }
+  };
 
-  render() {
-    const {
-      to,
-      getProps = this.defaultGetProps,
-      onClick,
-      onMouseEnter,
-      /* eslint-disable no-unused-vars */
-      activeClassName: $activeClassName,
-      activeStyle: $activeStyle,
-      innerRef: $innerRef,
-      partiallyActive,
-      state,
-      replace,
-      _location,
-      /* eslint-enable no-unused-vars */
-      ...rest
-    } = this.props
+  if (process.env.NODE_ENV !== `production` && !isLocalLink(to)) {
+console.warn(
+`External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
+)
+}
 
-    if (process.env.NODE_ENV !== `production` && !isLocalLink(to)) {
-      console.warn(
-        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
-      )
-    }
+const prefixedTo = rewriteLinkPath(to, _location.pathname)
+if (!isLocalLink(prefixedTo)) {
+return <a href={prefixedTo} {...rest} />
+}
 
-    const prefixedTo = rewriteLinkPath(to, _location.pathname)
-    if (!isLocalLink(prefixedTo)) {
-      return <a href={prefixedTo} {...rest} />
-    }
+return (
+<ReachRouterLink
+to={prefixedTo}
+state={state}
+getProps={getProps}
+innerRef={handleRef}
+onMouseEnter={e => {
+if (onMouseEnter) {
+onMouseEnter(e)
+}
+const parsed = parsePath(prefixedTo)
+___loader.hovering(parsed.pathname + parsed.search)
+}}
+onClick={e => {
+if (onClick) {
+onClick(e)
+}
 
-    return (
-      <ReachRouterLink
-        to={prefixedTo}
-        state={state}
-        getProps={getProps}
-        innerRef={this.handleRef}
-        onMouseEnter={e => {
-          if (onMouseEnter) {
-            onMouseEnter(e)
-          }
-          const parsed = parsePath(prefixedTo)
-          ___loader.hovering(parsed.pathname + parsed.search)
-        }}
-        onClick={e => {
-          if (onClick) {
-            onClick(e)
-          }
+if (
+e.button === 0 && // ignore right clicks
+!target && // let browser handle "target=_blank"
+!e.defaultPrevented && // onClick prevented default
+!e.metaKey && // ignore clicks with modifier keys...
+!e.altKey &&
+!e.ctrlKey &&
+!e.shiftKey
+) {
+e.preventDefault()
 
-          if (
-            e.button === 0 && // ignore right clicks
-            !this.props.target && // let browser handle "target=_blank"
-            !e.defaultPrevented && // onClick prevented default
-            !e.metaKey && // ignore clicks with modifier keys...
-            !e.altKey &&
-            !e.ctrlKey &&
-            !e.shiftKey
-          ) {
-            e.preventDefault()
+let shouldReplace = replace
+const isCurrent = encodeURI(prefixedTo) === _location.pathname
 
-            let shouldReplace = replace
-            const isCurrent = encodeURI(prefixedTo) === _location.pathname
+if (typeof replace !== `boolean` && isCurrent) {
+shouldReplace = true
+}
+// Make sure the necessary scripts and data are
+// loaded before continuing.
+window.___navigate(prefixedTo, {
+state,
+replace: shouldReplace,
+})
+}
 
-            if (typeof replace !== `boolean` && isCurrent) {
-              shouldReplace = true
-            }
-            // Make sure the necessary scripts and data are
-            // loaded before continuing.
-            window.___navigate(prefixedTo, {
-              state,
-              replace: shouldReplace,
-            })
-          }
-
-          return true
-        }}
-        {...rest}
-      />
-    )
-  }
+return true
+}}
+{...rest}
+/>
+);
 }
 
 GatsbyLink.propTypes = {

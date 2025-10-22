@@ -64,7 +64,6 @@ interface GatsbyImageFixedProps extends GatsbyImageOptionalProps {
 
 export type GatsbyImageProps = GatsbyImageFluidProps | GatsbyImageFixedProps
 
-export default class GatsbyImage extends React.Component<
-  GatsbyImageProps,
-  any
-> {}
+export default function GatsbyImage() {
+  
+}
