@@ -38,8 +38,8 @@
     "serve": "gatsby serve",
     "cy:open:develop": "cypress open --browser chrome --e2e --config-file cypress/configs/develop.ts",
     "cy:open:build": "cypress open --browser chrome --e2e --config-file cypress/configs/build.ts",
-    "cy:run:build": "CYPRESS_GROUP_NAME=production node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file cypress/configs/build.ts",
-    "cy:run:develop": "CYPRESS_GROUP_NAME=development node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file cypress/configs/develop.ts",
+    "cy:run:build": "CYPRESS_GROUP_NAME=production:$E2E_NODE_VERSION node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file cypress/configs/build.ts",
+    "cy:run:develop": "CYPRESS_GROUP_NAME=development:$E2E_NODE_VERSION node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file cypress/configs/develop.ts",
     "reset": "node scripts/reset.js",
     "update": "node scripts/update.js"
   },
