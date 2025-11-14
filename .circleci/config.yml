@@ -638,9 +638,9 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/visual-regression
       - store_artifacts:
-          path: e2e-tests/visual-regression/<< parameters.e2e_executor_suffix >>/__diff_output__
+          path: e2e-tests/visual-regression/__diff_output__
       - store_test_results:
-          path: e2e-tests/visual-regression/cypress/<< parameters.e2e_executor_suffix >>/results
+          path: e2e-tests/visual-regression/cypress/results
 
   e2e_tests_contentful:
     parameters:
@@ -658,9 +658,9 @@ jobs:
           test_path: e2e-tests/contentful
           test_command: yarn build
       - store_artifacts:
-          path: e2e-tests/contentful/<< parameters.e2e_executor_suffix >>/__diff_output__
+          path: e2e-tests/contentful/__diff_output__
       - store_test_results:
-          path: e2e-tests/contentful/cypress/<< parameters.e2e_executor_suffix >>/results
+          path: e2e-tests/contentful/cypress/results
 
   e2e_tests_trailing-slash:
     parameters:
@@ -674,7 +674,7 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/trailing-slash
       - store_test_results:
-          path: e2e-tests/trailing-slash/cypress/<< parameters.e2e_executor_suffix >>/results
+          path: e2e-tests/trailing-slash/cypress/results
 
   e2e_tests_adapters:
     parameters:
@@ -688,7 +688,7 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/adapters
       - store_test_results:
-          path: e2e-tests/adapters/cypress/<< parameters.e2e_executor_suffix >>/results
+          path: e2e-tests/adapters/cypress/results
 
   e2e_tests_adapters_monorepo:
     parameters:
@@ -704,7 +704,7 @@ jobs:
           test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
           pre_gatsby_dev_command: ./make-monorepo.sh
       - store_test_results:
-          path: e2e-tests/adapters/cypress/<< parameters.e2e_executor_suffix >>/results
+          path: e2e-tests/adapters/cypress/results
 
   starters_validate:
     executor: node
