@@ -35,7 +35,7 @@
     "serve:site": "gatsby serve --prefix-paths",
     "serve:assets": "node scripts/serve.js",
     "cy:open": "cypress open --browser chrome --e2e",
-    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e"
+    "cy:run": "cypress run --browser chrome --e2e"
   },
   "devDependencies": {
     "cpy-cli": "^4.2.0",
