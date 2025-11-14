@@ -50,7 +50,7 @@
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 serve-static-files http://localhost:8888 combined",
     "start-server-and-test:locally": "start-server-and-test develop http://localhost:8000 serve-static-files http://localhost:8888 cy:open",
     "cy:open": "cypress open --browser chrome --e2e",
-    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e",
+    "cy:run": "cypress run --browser chrome --e2e",
     "playwright": "playwright test --project=chromium",
     "playwright:debug": "playwright test --project=chromium --debug",
     "start-server-and-test:playwright": "start-server-and-test develop http://localhost:8000 serve-static-files http://localhost:8888 playwright",
