@@ -90,38 +90,58 @@ export function headHandlerForBrowser({
   pageComponentProps,
 }) {
   useEffect(() => {
-    if (pageComponent?.Head) {
-      headExportValidator(pageComponent.Head)
+  const { render } = reactDOMUtils()
 
-      const { render } = reactDOMUtils()
-
-      const HeadElement = (
-        <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
-      )
-
-      const WrapHeadElement = apiRunner(
-        `wrapRootElement`,
-        { element: HeadElement },
-        HeadElement,
-        ({ result }) => {
-          return { element: result }
-        }
-      ).pop()
-
-      render(
-        // just a hack to call the callback after react has done first render
-        // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
-        // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
-        <FireCallbackInEffect callback={onHeadRendered}>
-          <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>{WrapHeadElement}</LocationProvider>
-          </StaticQueryContext.Provider>
-        </FireCallbackInEffect>,
-        hiddenRoot
-      )
+  if (!pageComponent?.Head) {
+    // Unmount any previously rendered Head tree so React removes hoisted head nodes
+    if (hasRenderedHead) {
+      render(null, hiddenRoot)
+      hasRenderedHead = false
     }
+    prepassHtmlAndBodyAttributes = { html: {}, body: {} }
+    removePrevHeadElements()
+    removeHtmlAndBodyAttributes(keysOfHtmlAndBodyAttributes)
+    return
+  }
+
+    headExportValidator(pageComponent.Head)
+
+    const HeadElement = (
+      <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+  )
+
+  const WrapHeadElement = apiRunner(
+    `wrapRootElement`,
+    { element: HeadElement },
+    HeadElement,
+    ({ result }) => {
+      return { element: result }
+    }
+  ).pop()
+
+  prepassHtmlAndBodyAttributes = { html: {}, body: {} }
+  const headElementForRender = normalizeElement(
+    extractHtmlAndBodyAttributes(WrapHeadElement, prepassHtmlAndBodyAttributes)
+  )
+
+  render(
+    // just a hack to call the callback after react has done first render
+    // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
+    // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
+    <FireCallbackInEffect callback={onHeadRendered}>
+      <StaticQueryContext.Provider value={staticQueryResults}>
+        <LocationProvider>{headElementForRender}</LocationProvider>
+      </StaticQueryContext.Provider>
+    </FireCallbackInEffect>,
+    hiddenRoot
+  )
+  hasRenderedHead = true
 
     return () => {
+      if (hasRenderedHead) {
+        render(null, hiddenRoot)
+        hasRenderedHead = false
+      }
       removePrevHeadElements()
       removeHtmlAndBodyAttributes(keysOfHtmlAndBodyAttributes)
     }
