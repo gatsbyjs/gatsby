@@ -27,8 +27,7 @@ Cypress.on("uncaught:exception", err => {
   }
 })
 
-// XXX FIXME(serhalp): Temporarily skipping to de-noise CI.
-describe.skip(
+describe(
   `gatsby-plugin-image`,
   {
     retries: {
