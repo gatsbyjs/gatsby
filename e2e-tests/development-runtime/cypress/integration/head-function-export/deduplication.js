@@ -1,7 +1,6 @@
 import headFunctionExportSharedData from "../../../shared-data/head-function-export.js"
 
-// XXX FIXME(serhalp)
-it.skip(`Deduplicates multiple tags with same id`, () => {
+it(`Deduplicates multiple tags with same id`, () => {
   cy.visit(headFunctionExportSharedData.page.deduplication).waitForRouteChange()
 
   // deduplication link has id and should be deduplicated
