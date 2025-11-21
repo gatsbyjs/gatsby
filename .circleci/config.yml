@@ -580,7 +580,7 @@ jobs:
       - run: apt-get update && apt-get install -y curl
       - e2e-test:
           test_path: e2e-tests/development-runtime
-          react_version: "19.1.1"
+          react_version: "19.2.0"
 
   e2e_tests_production_runtime_with_react_18:
     parameters:
@@ -605,7 +605,7 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/production-runtime
           test_command: yarn test && yarn test:offline
-          react_version: "19.1.1"
+          react_version: "19.2.0"
 
   e2e_tests_react_19_compatibility:
     parameters:
