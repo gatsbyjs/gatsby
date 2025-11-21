@@ -119,7 +119,9 @@ export function getValidHeadNodesAndAttributes(
 
   // Filter out non-element nodes before looping since we don't care about them
   for (const node of rootNode.childNodes) {
-    const nodeName = node.nodeName.toLowerCase()
+    const nodeName =
+      node.attributes?.getNamedItem(`data-original-tag`)?.value ??
+      node.nodeName.toLowerCase()
     const id = node.attributes?.id?.value
 
     if (!isElementType(node)) continue
@@ -128,6 +130,8 @@ export function getValidHeadNodesAndAttributes(
       // <html> and <body> tags are treated differently, in that we don't render them, we only extract the attributes and apply them separetely
       if (nodeName === `html` || nodeName === `body`) {
         for (const attribute of node.attributes) {
+          if (attribute.name === `data-original-tag`) continue
+
           const isStyleAttribute = attribute.name === `style`
 
           // Merge attributes for same nodeName from previous loop iteration
@@ -174,7 +178,9 @@ export function getValidHeadNodesAndAttributes(
           validHeadNodes.push(clonedNode)
         }
       }
-    } else {
+    } else if (
+      !node.attributes.getNamedItem(`data-gatsby-head-react-19-workaround`)
+    ) {
       warnForInvalidTag(nodeName)
     }
 
