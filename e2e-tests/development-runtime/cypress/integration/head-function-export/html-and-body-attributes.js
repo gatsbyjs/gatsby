@@ -1,5 +1,6 @@
 import headFunctionExportSharedData from "../../../shared-data/head-function-export.js"
 
+// XXX FIXME(serhalp): AssertionError: Timed out retrying after 30000ms: expected '<body>' to have attribute 'class'
 describe(`Html and body attributes`, () => {
   it(`Page has body and html attributes on direct visit`, () => {
     cy.visit(

@@ -1,5 +1,6 @@
 import headFunctionExportSharedData from "../../../shared-data/head-function-export.js"
 
+// XXX FIXME(serhalp): AssertionError: Timed out retrying after 30000ms: Too many elements found. Found '2', expected '1'.
 it(`Deduplicates multiple tags with same id`, () => {
   cy.visit(headFunctionExportSharedData.page.deduplication).waitForRouteChange()
 

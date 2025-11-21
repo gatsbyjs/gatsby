@@ -14,16 +14,25 @@ import {
   removeHtmlAndBodyAttributes,
 } from "./utils"
 import { apiRunner } from "../api-runner-browser"
+import styleToObject from "style-to-object"
 
 const hiddenRoot = document.createElement(`div`)
 const keysOfHtmlAndBodyAttributes = {
   html: [],
   body: [],
 }
+let hasRenderedHead = false
+let prepassHtmlAndBodyAttributes = {
+  html: {},
+  body: {},
+}
 
 const onHeadRendered = () => {
   const { validHeadNodes, htmlAndBodyAttributes } =
-    getValidHeadNodesAndAttributes(hiddenRoot)
+    getValidHeadNodesAndAttributes(hiddenRoot, {
+      html: { ...prepassHtmlAndBodyAttributes.html },
+      body: { ...prepassHtmlAndBodyAttributes.body },
+    })
 
   keysOfHtmlAndBodyAttributes.html = Object.keys(htmlAndBodyAttributes.html)
   keysOfHtmlAndBodyAttributes.body = Object.keys(htmlAndBodyAttributes.body)
@@ -89,53 +98,92 @@ export function headHandlerForBrowser({
   staticQueryResults,
   pageComponentProps,
 }) {
-  useEffect(() => {
-  const { render } = reactDOMUtils()
-
-  if (!pageComponent?.Head) {
-    // Unmount any previously rendered Head tree so React removes hoisted head nodes
-    if (hasRenderedHead) {
-      render(null, hiddenRoot)
-      hasRenderedHead = false
+  const mergeAttributes = (target, props = {}) => {
+    for (const [key, value] of Object.entries(props)) {
+      if (key === `children` || key === `dangerouslySetInnerHTML`) continue
+      if (key === `style`) {
+        if (typeof value === `string`) {
+          try {
+            Object.assign(
+              target.style ?? (target.style = {}),
+              styleToObject(value)
+            )
+          } catch {
+            // ignore malformed style strings
+          }
+        } else if (value && typeof value === `object`) {
+          Object.assign(target.style ?? (target.style = {}), value)
+        }
+        continue
+      }
+      target[key] = value
     }
-    prepassHtmlAndBodyAttributes = { html: {}, body: {} }
-    removePrevHeadElements()
-    removeHtmlAndBodyAttributes(keysOfHtmlAndBodyAttributes)
-    return
   }
+
+  const withPatchedCreateElement = (fn, attributesAcc) => {
+    const originalCreateElement = React.createElement
+    React.createElement = (type, props, ...children) => {
+      if (type === `html`) {
+        mergeAttributes(attributesAcc.html, props)
+        return originalCreateElement(React.Fragment, null, ...children)
+      }
+      if (type === `body`) {
+        mergeAttributes(attributesAcc.body, props)
+        return originalCreateElement(React.Fragment, null, ...children)
+      }
+      return originalCreateElement(type, props, ...children)
+    }
+    try {
+      return fn()
+    } finally {
+      React.createElement = originalCreateElement
+    }
+  }
+
+  useEffect(() => {
+    const { render } = reactDOMUtils()
+
+    if (!pageComponent?.Head) {
+      if (hasRenderedHead) {
+        render(null, hiddenRoot)
+        hasRenderedHead = false
+      }
+      prepassHtmlAndBodyAttributes = { html: {}, body: {} }
+      removePrevHeadElements()
+      removeHtmlAndBodyAttributes(keysOfHtmlAndBodyAttributes)
+      return () => {}
+    }
 
     headExportValidator(pageComponent.Head)
 
     const HeadElement = (
       <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
-  )
+    )
 
-  const WrapHeadElement = apiRunner(
-    `wrapRootElement`,
-    { element: HeadElement },
-    HeadElement,
-    ({ result }) => {
-      return { element: result }
-    }
-  ).pop()
+    const WrapHeadElement = apiRunner(
+      `wrapRootElement`,
+      { element: HeadElement },
+      HeadElement,
+      ({ result }) => {
+        return { element: result }
+      }
+    ).pop()
 
-  prepassHtmlAndBodyAttributes = { html: {}, body: {} }
-  const headElementForRender = normalizeElement(
-    extractHtmlAndBodyAttributes(WrapHeadElement, prepassHtmlAndBodyAttributes)
-  )
+    prepassHtmlAndBodyAttributes = { html: {}, body: {} }
 
-  render(
-    // just a hack to call the callback after react has done first render
-    // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
-    // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
-    <FireCallbackInEffect callback={onHeadRendered}>
-      <StaticQueryContext.Provider value={staticQueryResults}>
-        <LocationProvider>{headElementForRender}</LocationProvider>
-      </StaticQueryContext.Provider>
-    </FireCallbackInEffect>,
-    hiddenRoot
-  )
-  hasRenderedHead = true
+    withPatchedCreateElement(
+      () =>
+        render(
+          <FireCallbackInEffect callback={onHeadRendered}>
+            <StaticQueryContext.Provider value={staticQueryResults}>
+              <LocationProvider>{WrapHeadElement}</LocationProvider>
+            </StaticQueryContext.Provider>
+          </FireCallbackInEffect>,
+          hiddenRoot
+        ),
+      prepassHtmlAndBodyAttributes
+    )
+    hasRenderedHead = true
 
     return () => {
       if (hasRenderedHead) {

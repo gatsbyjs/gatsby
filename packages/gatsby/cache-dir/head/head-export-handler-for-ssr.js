@@ -14,6 +14,28 @@ const { parse } = require(`node-html-parser`)
 const styleToOjbect = require(`style-to-object`)
 import { apiRunner } from "../api-runner-ssr"
 
+function mergeAttributes(target, props = {}) {
+  for (const [key, value] of Object.entries(props)) {
+    if (key === `children` || key === `dangerouslySetInnerHTML`) continue
+    if (key === `style`) {
+      if (typeof value === `string`) {
+        try {
+          Object.assign(
+            target.style ?? (target.style = {}),
+            styleToOjbect(value)
+          )
+        } catch {
+          // ignore malformed style strings
+        }
+      } else if (value && typeof value === `object`) {
+        Object.assign(target.style ?? (target.style = {}), value)
+      }
+      continue
+    }
+    target[key] = value
+  }
+}
+
 export function applyHtmlAndBodyAttributesSSR(
   htmlAndBodyAttributes,
   { setHtmlAttributes, setBodyAttributes }
@@ -159,10 +181,31 @@ export function headHandlerForSSR({
       </StaticQueryContext.Provider>
     )
 
-    const rawString = renderToString(routerElement)
+    const attributesAcc = { html: {}, body: {} }
+
+    const originalCreateElement = React.createElement
+    React.createElement = (type, props, ...children) => {
+      if (type === `html`) {
+        mergeAttributes(attributesAcc.html, props)
+        return originalCreateElement(React.Fragment, null, ...children)
+      }
+      if (type === `body`) {
+        mergeAttributes(attributesAcc.body, props)
+        return originalCreateElement(React.Fragment, null, ...children)
+      }
+      return originalCreateElement(type, props, ...children)
+    }
+
+    let rawString
+    try {
+      rawString = renderToString(routerElement)
+    } finally {
+      React.createElement = originalCreateElement
+    }
+
     const rootNode = parse(rawString)
     const { validHeadNodes, htmlAndBodyAttributes } =
-      getValidHeadNodesAndAttributesSSR(rootNode)
+      getValidHeadNodesAndAttributesSSR(rootNode, attributesAcc)
 
     applyHtmlAndBodyAttributesSSR(htmlAndBodyAttributes, {
       setHtmlAttributes,
