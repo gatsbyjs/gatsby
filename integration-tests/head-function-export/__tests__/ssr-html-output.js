@@ -115,7 +115,7 @@ describe(`Head function export SSR'ed HTML output`, () => {
       {
         "data-foo": "bar",
         "lang": "fr",
-        "style": "color:black;background:white",
+        "style": "background:white;color:black",
       }
     `)
 
