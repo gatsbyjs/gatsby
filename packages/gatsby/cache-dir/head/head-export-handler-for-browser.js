@@ -84,6 +84,23 @@ if (process.env.BUILD_STAGE === `develop`) {
   })
 }
 
+const IsHeadRenderContext = React.createContext(false)
+function Html(props) {
+  return <div data-original-tag="html" {...props} />
+}
+function Body(props) {
+  return <div data-original-tag="body" {...props} />
+}
+
+const originalCreateElement = React.createElement
+React.createElement = (type, props, ...children) => {
+  if (type === `html` || type === `body`) {
+    const contextValue = React.useContext(IsHeadRenderContext)
+    type = type === `html` ? Html : Body
+  }
+  return originalCreateElement(type, props, ...children)
+}
+
 export function headHandlerForBrowser({
   pageComponent,
   staticQueryResults,
@@ -96,7 +113,11 @@ export function headHandlerForBrowser({
       const { render } = reactDOMUtils()
 
       const HeadElement = (
-        <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+        <IsHeadRenderContext.Provider value={true}>
+          <svg data-gatsby-head-react-19-workaround="true">
+            <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+          </svg>
+        </IsHeadRenderContext.Provider>
       )
 
       const WrapHeadElement = apiRunner(
