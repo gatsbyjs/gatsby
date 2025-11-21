@@ -19,6 +19,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -96,6 +97,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -173,6 +175,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -250,6 +253,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -323,6 +327,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -400,6 +405,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -473,6 +479,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -550,6 +557,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -623,6 +631,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -700,6 +709,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -777,6 +787,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "FragmentDefinition",
             "loc": Object {
@@ -836,6 +847,7 @@ global-static-query-hooks.js",
             },
           },
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "FragmentDefinition",
             "loc": Object {
@@ -926,6 +938,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "FragmentDefinition",
             "loc": Object {
@@ -1016,6 +1029,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -1143,6 +1157,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -1297,6 +1312,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -1451,6 +1467,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -1528,6 +1545,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -1605,6 +1623,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -1682,6 +1701,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -1759,6 +1779,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -1913,6 +1934,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -1986,6 +2008,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -2059,6 +2082,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -2136,6 +2160,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -2213,6 +2238,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -2290,6 +2316,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -2367,6 +2394,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
@@ -2444,6 +2472,7 @@ global-static-query-hooks.js",
       "doc": Object {
         "definitions": Array [
           Object {
+            "description": undefined,
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
