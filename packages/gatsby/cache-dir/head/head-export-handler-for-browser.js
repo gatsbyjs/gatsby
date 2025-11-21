@@ -95,8 +95,9 @@ function Body(props) {
 const originalCreateElement = React.createElement
 React.createElement = (type, props, ...children) => {
   if (type === `html` || type === `body`) {
-    const contextValue = React.useContext(IsHeadRenderContext)
-    type = type === `html` ? Html : Body
+    if (React.useContext(IsHeadRenderContext)) {
+      type = type === `html` ? Html : Body
+    }
   }
   return originalCreateElement(type, props, ...children)
 }
@@ -113,11 +114,9 @@ export function headHandlerForBrowser({
       const { render } = reactDOMUtils()
 
       const HeadElement = (
-        <IsHeadRenderContext.Provider value={true}>
-          <svg data-gatsby-head-react-19-workaround="true">
-            <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
-          </svg>
-        </IsHeadRenderContext.Provider>
+        <svg data-gatsby-head-react-19-workaround="true">
+          <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+        </svg>
       )
 
       const WrapHeadElement = apiRunner(
@@ -134,9 +133,11 @@ export function headHandlerForBrowser({
         // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
-          <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>{WrapHeadElement}</LocationProvider>
-          </StaticQueryContext.Provider>
+          <IsHeadRenderContext.Provider value={true}>
+            <StaticQueryContext.Provider value={staticQueryResults}>
+              <LocationProvider>{WrapHeadElement}</LocationProvider>
+            </StaticQueryContext.Provider>
+          </IsHeadRenderContext.Provider>
         </FireCallbackInEffect>,
         hiddenRoot
       )

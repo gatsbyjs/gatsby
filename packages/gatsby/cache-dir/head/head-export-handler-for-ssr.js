@@ -132,7 +132,11 @@ export function headHandlerForSSR({
         },
       }
 
-      const HeadElement = <pageComponent.Head {...filterHeadProps(_props)} />
+      const HeadElement = (
+        <svg data-gatsby-head-react-19-workaround="true">
+          <pageComponent.Head {...filterHeadProps(_props)} />
+        </svg>
+      )
 
       const headWithWrapRootElement = apiRunner(
         `wrapRootElement`,
