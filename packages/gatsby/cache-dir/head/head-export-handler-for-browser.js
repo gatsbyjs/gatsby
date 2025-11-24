@@ -1,6 +1,5 @@
 import React from "react"
 import { useEffect } from "react"
-import semver from "semver"
 import { StaticQueryContext } from "gatsby"
 import { LocationProvider } from "@gatsbyjs/reach-router"
 
@@ -106,8 +105,9 @@ function Body(props) {
 // `data-original-tag` attribute. We can then use this attribute later to apply
 // attributes to the real `<html>` and `<body>` elements.
 const IsHeadRenderContext = React.createContext(false)
-// De-risk monkey patch by only applying it when needed
-if (semver.gte(React.version, `19.0.0`)) {
+// De-risk monkey patch by only applying it when needed (React 19+, not React 18)
+const reactMajor = parseInt(React.version.split(`.`)[0], 10)
+if (reactMajor !== 18) {
   const originalCreateElement = React.createElement
   React.createElement = (type, ...rest) => {
     if (type === `html` || type === `body`) {
