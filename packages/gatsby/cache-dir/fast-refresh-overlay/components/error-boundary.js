@@ -9,24 +9,13 @@ export class ErrorBoundary extends React.Component {
     // Forward component errors to Fast Refresh overlay system
     if (
       window._gatsbyEvents &&
-      Array.isArray(window._gatsbyEvents.push ? [] : window._gatsbyEvents)
-    ) {
-      window._gatsbyEvents.push([
-        `FAST_REFRESH`,
-        {
-          action: `SHOW_RUNTIME_ERRORS`,
-          payload: [error], // Pass the actual Error object
-        },
-      ])
-    } else if (
-      window._gatsbyEvents &&
       typeof window._gatsbyEvents.push === `function`
     ) {
       window._gatsbyEvents.push([
         `FAST_REFRESH`,
         {
           action: `SHOW_RUNTIME_ERRORS`,
-          payload: [error], // Pass the actual Error object
+          payload: [error],
         },
       ])
     }
