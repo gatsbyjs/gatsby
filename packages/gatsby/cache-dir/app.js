@@ -74,14 +74,11 @@ const reactFirstRenderOrHydrate = (Component, el) => {
   // we will use hydrate if mount element has any content inside
   const useHydrate = el && el.children.length
 
-  // Only pass options if React 19 error handling options are available
-  const errorHandlerOptions =
-    handleUncaughtError || handleCaughtError
-      ? {
-          onUncaughtError: handleUncaughtError,
-          onCaughtError: handleCaughtError,
-        }
-      : undefined
+  // Pass error handler options for React 19+ (React 18 will ignore these options)
+  const errorHandlerOptions = {
+    onUncaughtError: handleUncaughtError,
+    onCaughtError: handleCaughtError,
+  }
 
   if (useHydrate) {
     const root = reactDomClient.hydrateRoot(el, Component, errorHandlerOptions)
