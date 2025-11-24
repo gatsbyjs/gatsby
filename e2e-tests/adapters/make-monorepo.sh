@@ -17,8 +17,5 @@ echo '{ "workspaces": ["workspace"], "scripts": { "test": "EXTRA_NTL_CLI_ARGS=\"
 # update netlify.toml build command and publish dir
 sed -i.bak -e 's/npm run build/npm run build -w workspace/g' -e 's/public/workspace\/public/g' workspace/netlify.toml
 
-# update workspace's package.json to have correct path to helper script after moving site fixture into subdirectory
-sed -i.bak -e 's/..\/..\/scripts\/cypress-run-with-conditional-record-flag.js/..\/..\/..\/scripts\/cypress-run-with-conditional-record-flag.js/g' workspace/package.json
-
 git init
 

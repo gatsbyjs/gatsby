@@ -45,8 +45,8 @@
     "cy:open:offline": "npm run cy:open -- --env TEST_PLUGIN_OFFLINE=y",
     "cy:run": "npm run cy:run:normal && npm run cy:run:bot",
     "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y",
-    "cy:run:normal": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e",
-    "cy:run:bot": "cross-env CYPRESS_CONNECTION_TYPE=bot node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config specPattern=\"cypress/integration/prefetching.js\"",
+    "cy:run:normal": "cypress run --browser chrome --e2e",
+    "cy:run:bot": "cross-env CYPRESS_CONNECTION_TYPE=bot cypress run --browser chrome --e2e --config specPattern=\"cypress/integration/prefetching.js\"",
     "playwright": "playwright test --project=chromium",
     "playwright:debug": "playwright test --project=chromium --debug",
     "start-server-and-test:playwright": "start-server-and-test serve http://localhost:9000 serve-static-files http://localhost:8888 playwright",
@@ -62,7 +62,7 @@
     "gatsby-core-utils": "next",
     "is-ci": "^3.0.1",
     "prettier": "^2.8.8",
-    "start-server-and-test": "^2.0.3",
+    "start-server-and-test": "2.1.1",
     "typescript": "^5.3.3"
   },
   "repository": {

@@ -21,17 +21,21 @@ executors:
       # don't want to use it regardless, for consistency (and because it can cause problems)
       SHARP_IGNORE_GLOBAL_LIBVIPS: 1
 
-aliases:
-  e2e-executor-env: &e2e-executor-env
-    GATSBY_CPU_COUNT: 2
-    VERBOSE: 1
-
-  e2e-executor: &e2e-executor
+  e2e18:
     docker:
-      - image: cypress/browsers:node18.6.0-chrome105-ff104
+      - image: "cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1"
     environment:
-      <<: *e2e-executor-env
+      GATSBY_CPU_COUNT: 2
+      VERBOSE: 1
 
+  e2e22:
+    docker:
+      - image: "cypress/browsers:node-22.13.1-chrome-133.0.6943.53-1-ff-135.0-edge-132.0.2957.140-1"
+    environment:
+      GATSBY_CPU_COUNT: 2
+      VERBOSE: 1
+
+aliases:
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
@@ -78,11 +82,6 @@ aliases:
           steps:
             - run: npm rebuild
       - run:
-          name: Step debug info
-          command: |
-            yarn list react
-            yarn why lmdb-store
-      - run:
           name: Run tests
           command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
@@ -100,8 +99,17 @@ aliases:
         ignore:
           - master
           - /docs.+/
+    matrix:
+      parameters:
+        node_version: ["18.2.0", "22.13"]
+        e2e_executor_suffix: ["18", "22"]
+      exclude:
+        - node_version: "18.2.0"
+          e2e_executor_suffix: "22"
+        - node_version: "22.13"
+          e2e_executor_suffix: "18"
     requires:
-      - bootstrap-18.2.0
+      - bootstrap-<< matrix.node_version >>
 
   integration-test-workflow: &integration-test-workflow
     filters:
@@ -437,16 +445,23 @@ jobs:
           test_command: yarn test
 
   e2e_tests_path-prefix:
-    <<: *e2e-executor
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_PATH_PREFIX}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_pnp:
-    executor:
-      name: node
-      image: "18.12.0"
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -499,9 +514,12 @@ jobs:
           working_directory: /tmp/e2e-tests/gatsby-pnp
 
   e2e_tests_pnpm:
-    executor:
-      name: node
-      image: "18.12.0"
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -538,48 +556,73 @@ jobs:
           working_directory: /tmp/e2e-tests/gatsby-pnpm
 
   e2e_tests_development_runtime_with_react_18:
-    <<: *e2e-executor
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_DEV_RUNTIME_REACT_18}"' >> "$BASH_ENV"
+      # We use curl in this test suite but it isn't available in all images we use
+      - run: apt-get update && apt-get install -y curl
       - e2e-test:
           test_path: e2e-tests/development-runtime
 
   e2e_tests_production_runtime_with_react_18:
-    <<: *e2e-executor
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18="${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18}"' >> "$BASH_ENV"
-      - run: echo 'export CY_CLOUD_PROD_RUNTIME_REACT_18="${CY_CLOUD_PROD_RUNTIME_REACT_18}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_REACT_18} yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=${CY_CLOUD_PROD_RUNTIME_OFFLINE_REACT_18} yarn test:offline
+          test_command: yarn test && yarn test:offline
 
   themes_e2e_tests_development_runtime:
-    <<: *e2e-executor
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_DEV_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
           test_command: cd development-runtime; gatsby-dev --force-install --scan-once; yarn test
 
   themes_e2e_tests_production_runtime:
-    <<: *e2e-executor
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_THEMES_PROD_RUNTIME}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/themes
           test_command: cd production-runtime; gatsby-dev --force-install --scan-once; yarn test
 
   e2e_tests_mdx:
-    <<: *e2e-executor
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_MDX}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/mdx
 
   e2e_tests_visual-regression:
-    <<: *e2e-executor
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_VISUAL_REGRESSION}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/visual-regression
       - store_artifacts:
@@ -588,9 +631,13 @@ jobs:
           path: e2e-tests/visual-regression/cypress/results
 
   e2e_tests_contentful:
-    <<: *e2e-executor
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_CONTENTFUL}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/contentful
       # we build a second time to see if warm/cached builds are successful
@@ -603,31 +650,39 @@ jobs:
           path: e2e-tests/contentful/cypress/results
 
   e2e_tests_trailing-slash:
-    <<: *e2e-executor
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_TRAILING_SLASH}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/trailing-slash
       - store_test_results:
           path: e2e-tests/trailing-slash/cypress/results
 
   e2e_tests_adapters:
-    <<: *e2e-executor
-    docker:
-      - image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_ADAPTERS}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/adapters
       - store_test_results:
           path: e2e-tests/adapters/cypress/results
 
   e2e_tests_adapters_monorepo:
-    <<: *e2e-executor
-    docker:
-      - image: cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1
+    parameters:
+      node_version:
+        type: string
+      e2e_executor_suffix:
+        type: string
+    executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
-      - run: echo 'export CYPRESS_RECORD_KEY="${CY_CLOUD_ADAPTERS}"' >> "$BASH_ENV"
       - e2e-test:
           test_path: e2e-tests/adapters
           test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
