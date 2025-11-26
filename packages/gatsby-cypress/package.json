@@ -32,7 +32,7 @@
   ],
   "peerDependencies": {
     "cypress": "^9.0.0 || ^10.0.0",
-    "gatsby": "^5.0.0"
+    "gatsby": "^5.18.0-react19.0"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",

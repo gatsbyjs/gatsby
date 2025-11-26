@@ -26,7 +26,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.0.0"
+    "gatsby": "^5.18.0-react19.0"
   },
   "repository": {
     "type": "git",

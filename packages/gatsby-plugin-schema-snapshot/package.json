@@ -20,6 +20,6 @@
     "@babel/runtime": "^7.20.13"
   },
   "peerDependencies": {
-    "gatsby": "^5.0.0"
+    "gatsby": "^5.18.0-react19.0"
   }
 }

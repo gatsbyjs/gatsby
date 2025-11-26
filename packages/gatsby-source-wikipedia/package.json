@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wikipedia#readme",
   "peerDependencies": {
-    "gatsby": "^5.0.0"
+    "gatsby": "^5.18.0-react19.0"
   },
   "repository": {
     "type": "git",
