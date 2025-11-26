@@ -31,7 +31,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next"
+    "gatsby": "^5.0.0"
   },
   "private": false,
   "repository": {

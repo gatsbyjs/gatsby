@@ -23,7 +23,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next",
+    "gatsby": "^5.0.0",
     "gatsby-source-filesystem": "^5.0.0-next"
   },
   "repository": {

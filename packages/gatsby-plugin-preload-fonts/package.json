@@ -37,7 +37,7 @@
   ],
   "license": "ISC",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next"
+    "gatsby": "^5.0.0"
   },
   "repository": {
     "type": "git",
