@@ -1,6 +1,6 @@
 {
   "name": "gatsby-cypress",
-  "version": "3.17.0-react19.0",
+  "version": "3.17.0-react19.1",
   "description": "Cypress tools for Gatsby projects",
   "main": "index.js",
   "types": "index.d.ts",
