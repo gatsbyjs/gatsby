@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-styled-components",
   "description": "Gatsby plugin to add support for styled components",
-  "version": "6.17.0-react19.0",
+  "version": "6.18.0-react19.0",
   "author": "Guten Ye <ywzhaifei@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

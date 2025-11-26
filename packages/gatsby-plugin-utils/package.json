@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "4.16.0-next.0",
+  "version": "4.17.0-react19.0",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "exports": {
