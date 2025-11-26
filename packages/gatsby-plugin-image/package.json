@@ -68,8 +68,8 @@
   "peerDependencies": {
     "@babel/core": "^7.12.3",
     "gatsby": "^5.18.0-react19.0",
-    "gatsby-plugin-sharp": "^5.0.0-next",
-    "gatsby-source-filesystem": "^5.0.0-next",
+    "gatsby-plugin-sharp": "^5.0.0-react19.1",
+    "gatsby-source-filesystem": "^5.0.0-react19.1",
     "react": "^18.0.0 || ^19.0.0 || ^0.0.0",
     "react-dom": "^18.0.0 || ^19.0.0 || ^0.0.0"
   },

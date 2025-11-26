@@ -41,8 +41,8 @@
   "license": "MIT",
   "peerDependencies": {
     "gatsby": "^5.18.0-react19.0",
-    "gatsby-plugin-image": "^3.0.0-next",
-    "gatsby-plugin-sharp": "^5.0.0-next",
+    "gatsby-plugin-image": "^3.0.0-react19.1",
+    "gatsby-plugin-sharp": "^5.0.0-react19.1",
     "sharp": "^0.32.6"
   },
   "repository": {

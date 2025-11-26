@@ -43,7 +43,7 @@
     "typescript": "^5.1.6"
   },
   "peerDependencies": {
-    "gatsby-plugin-image": "^3.0.0-next"
+    "gatsby-plugin-image": "^3.0.0-react19.1"
   },
   "keywords": [
     "gatsby",

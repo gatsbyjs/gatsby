@@ -25,8 +25,8 @@
   },
   "peerDependencies": {
     "gatsby": "^5.18.0-react19.0",
-    "gatsby-source-contentful": "^8.0.0-next",
-    "gatsby-transformer-sharp": "^5.0.0-next"
+    "gatsby-source-contentful": "^8.0.0-react19.1",
+    "gatsby-transformer-sharp": "^5.0.0-react19.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip#readme",
   "keywords": [

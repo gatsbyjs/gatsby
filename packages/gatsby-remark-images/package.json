@@ -40,7 +40,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^5.18.0-react19.0",
-    "gatsby-plugin-sharp": "^5.0.0-next"
+    "gatsby-plugin-sharp": "^5.0.0-react19.1"
   },
   "repository": {
     "type": "git",

@@ -27,7 +27,7 @@
   ],
   "peerDependencies": {
     "gatsby": "^5.18.0-react19.0",
-    "gatsby-remark-prismjs": "^7.0.0-next"
+    "gatsby-remark-prismjs": "^7.0.0-react19.1"
   },
   "license": "MIT",
   "main": "index.js",
