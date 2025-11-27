@@ -14,7 +14,7 @@ import {
   ObjectTypeComposer,
   SchemaComposer,
 } from "graphql-compose"
-import isPlainObject from "lodash/isPlainObject"
+import { isPlainObject } from "es-toolkit/compat"
 
 import type { IGatsbyNodePartial } from "../datastore/in-memory/indexing"
 import { IGatsbyNode } from "../internal"

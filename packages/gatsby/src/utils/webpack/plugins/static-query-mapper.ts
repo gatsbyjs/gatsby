@@ -1,7 +1,7 @@
 import path from "path"
 import { Store } from "redux"
 import { Compiler, NormalModule } from "webpack"
-import { isEqual, cloneDeep } from "lodash"
+import { isEqual, cloneDeep } from "es-toolkit/compat"
 import { enqueueFlush } from "../../page-data"
 import type { IGatsbyState, IGatsbyPageComponent } from "../../../redux/types"
 import {

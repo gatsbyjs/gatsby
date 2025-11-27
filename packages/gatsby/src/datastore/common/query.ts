@@ -1,4 +1,4 @@
-import * as _ from "lodash"
+import * as _ from "es-toolkit/compat"
 import { prepareRegex } from "../../utils/prepare-regex"
 import { makeRe } from "micromatch"
 

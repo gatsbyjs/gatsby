@@ -1,5 +1,5 @@
 import { WorkerPool } from "gatsby-worker"
-import { chunk } from "lodash"
+import { chunk } from "es-toolkit/compat"
 import reporter from "gatsby-cli/lib/reporter"
 import { cpuCoreCount } from "gatsby-core-utils"
 import { Span } from "opentracing"

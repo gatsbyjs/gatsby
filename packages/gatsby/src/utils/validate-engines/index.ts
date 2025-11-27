@@ -1,6 +1,6 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { WorkerPool } from "gatsby-worker"
-import { isEqual } from "lodash"
+import { isEqual } from "es-toolkit/compat"
 import type { Span } from "opentracing"
 import {
   getCurrentPlatformAndTarget,

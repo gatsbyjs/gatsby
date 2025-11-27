@@ -1,5 +1,5 @@
 import { slash } from "gatsby-core-utils"
-import { uniqWith, isEqual } from "lodash"
+import { uniqWith, isEqual } from "es-toolkit/compat"
 import path from "path"
 import { store } from "../../redux"
 import {

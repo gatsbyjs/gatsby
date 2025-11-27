@@ -7,7 +7,7 @@ import {
   IPluginEntryWithParentDir,
 } from "../../utils/merge-gatsby-config"
 import { mapSeries } from "bluebird"
-import { flattenDeep, isEqual, isFunction, uniqWith } from "lodash"
+import { flattenDeep, isEqual, isFunction, uniqWith } from "es-toolkit/compat"
 import DebugCtor from "debug"
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"

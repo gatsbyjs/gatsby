@@ -1,5 +1,3 @@
-import _ from "lodash"
-
 import handleFlags from "../handle-flags"
 import { IFlag, satisfiesSemvers, fitnessEnum } from "../flags"
 

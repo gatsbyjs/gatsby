@@ -1,7 +1,7 @@
 /* global BROWSER_ESM_ONLY */
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
-import { merge } from "lodash"
+import { merge } from "es-toolkit/compat"
 import { apiRunner } from "./api-runner-ssr"
 import asyncRequires from "$virtual/async-requires"
 

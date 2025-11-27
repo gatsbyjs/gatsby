@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { flattenDeep } from "es-toolkit/compat"
 import { slash, isCI } from "gatsby-core-utils"
 import * as fs from "fs-extra"
 import { releaseAllMutexes } from "gatsby-core-utils/mutex"
@@ -617,7 +617,7 @@ export async function initialize({
 
   store.dispatch({
     type: `SET_PROGRAM_EXTENSIONS`,
-    payload: _.flattenDeep([extensions, apiResults]),
+    payload: flattenDeep([extensions, apiResults]),
   })
 
   const workerPool = WorkerPool.create()

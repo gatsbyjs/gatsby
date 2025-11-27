@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { findIndex, merge } from "es-toolkit/compat"
 
 import { IGatsbyState, ActionsUnion, IPlugin } from "../types"
 
@@ -48,7 +48,7 @@ export const babelrcReducer = (
           return
         }
 
-        const index = _.findIndex(
+        const index = findIndex(
           state.stages[stage].plugins,
           (plugin: IPlugin) => plugin.name === action.payload.name
         )
@@ -58,7 +58,7 @@ export const babelrcReducer = (
           const plugin = state.stages[stage].plugins[index]
           state.stages[stage].plugins[index] = {
             name: plugin.name,
-            options: _.merge(plugin.options, action.payload.options),
+            options: merge(plugin.options, action.payload.options),
           }
         } else {
           state.stages[stage].plugins = [
@@ -76,7 +76,7 @@ export const babelrcReducer = (
           return
         }
 
-        const index = _.findIndex(
+        const index = findIndex(
           state.stages[stage].presets,
           (plugin: IPlugin) => plugin.name === action.payload.name
         )
@@ -86,7 +86,7 @@ export const babelrcReducer = (
           const plugin = state.stages[stage].presets[index]
           state.stages[stage].presets[index] = {
             name: plugin.name,
-            options: _.merge(plugin.options, action.payload.options),
+            options: merge(plugin.options, action.payload.options),
           }
         } else {
           state.stages[stage].presets = [

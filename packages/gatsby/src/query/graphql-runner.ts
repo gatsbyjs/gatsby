@@ -11,7 +11,7 @@ import {
   NoDeprecatedCustomRule,
   print,
 } from "graphql"
-import { debounce } from "lodash"
+import { debounce } from "es-toolkit/compat"
 import reporter from "gatsby-cli/lib/reporter"
 import { sha1 } from "gatsby-core-utils/hash"
 

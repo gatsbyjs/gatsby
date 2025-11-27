@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { uniq } from "es-toolkit/compat"
 import { isCI } from "gatsby-core-utils"
 import { IFlag } from "./flags"
 import chalk from "chalk"
@@ -156,7 +156,7 @@ const handleFlags = (
     addIncluded(flag)
   })
 
-  enabledConfigFlags = _.uniq(enabledConfigFlags)
+  enabledConfigFlags = uniq(enabledConfigFlags)
 
   // TODO remove flags that longer exist.
   //  w/ message of thanks
