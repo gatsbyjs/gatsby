@@ -1694,26 +1694,26 @@
     html-entities "^2.3.3"
     strip-ansi "^6.0.0"
 
-"@graphiql/plugin-code-exporter@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@graphiql/plugin-code-exporter/-/plugin-code-exporter-0.2.0.tgz#b887b6b6b2d7bc688de7a704a271d4f6dd5cf083"
-  integrity sha512-UmfJ0AR13o3delIOGPxCDQgq9wJUAPiqya0FzTlEaSm2D6xgum1hNTJRcCanhqGsRZHOSrM1SpMaHzHaG63KKw==
+"@graphiql/plugin-code-exporter@^3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@graphiql/plugin-code-exporter/-/plugin-code-exporter-3.1.5.tgz#8e7cfd8651f22e11c5addf70483b4195c55f6593"
+  integrity sha512-YD7GIc10CZ78VTqimbrcFGVbZ7MjUjD6NJWetVEF0T/8cYUWaS9Zc0WSk5zSV5gihX7/Pi4rTtcPBfJ3k/JLkg==
   dependencies:
     graphiql-code-exporter "^3.0.3"
 
-"@graphiql/plugin-explorer@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@graphiql/plugin-explorer/-/plugin-explorer-0.2.0.tgz#e3774eb9697a454d22680cc193a1a00bb48df414"
-  integrity sha512-nDNdR2DiZPEnFwc1FPRo2nfaKSyxcfUIySi9kNmiBUetjIzlNPdKB4RyX9/nLLWM5/HkkjAi5A9xWZ145YFjig==
+"@graphiql/plugin-explorer@^3.2.6":
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/@graphiql/plugin-explorer/-/plugin-explorer-3.2.6.tgz#5c1b0f083510dafbe6438f2589602926ce77558f"
+  integrity sha512-MXzG/zVNzZfes4Em253bHyAbD/lwwAZkPKvxCAQkjz0i3dtcv4uF3D8iqJ7214iu3SCphbORYZZUC93fik1yew==
   dependencies:
     graphiql-explorer "^0.9.0"
 
-"@graphiql/react@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.18.0.tgz#7ddff7c664385c1a05f0eac1d69cd9147d38006e"
-  integrity sha512-OIzUjnxBM4k9DY0DXBMRfU+fTak2tbnmY2o6J5t/vKvqGaa4opRUhgIZEvrerjnktjCxj2dJY706gCwnUZQsNg==
+"@graphiql/react@^0.29.0":
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.29.0.tgz#0ac1b8655ef0d0e0bd5a3cc580dd51e06beeb6e6"
+  integrity sha512-4Zd57+DeK5t1KYiqy9hnuaQhR8fnZ1CkKUkmZqINpAe0OlpbszOE661zwNGuW5NjbXgepfI89ICnh1ZVinSJvg==
   dependencies:
-    "@graphiql/toolkit" "^0.8.4"
+    "@graphiql/toolkit" "^0.11.2"
     "@headlessui/react" "^1.7.15"
     "@radix-ui/react-dialog" "^1.0.4"
     "@radix-ui/react-dropdown-menu" "^2.0.5"
@@ -1722,17 +1722,19 @@
     "@types/codemirror" "^5.60.8"
     clsx "^1.2.1"
     codemirror "^5.65.3"
-    codemirror-graphql "^2.0.9"
+    codemirror-graphql "^2.2.1"
     copy-to-clipboard "^3.2.0"
     framer-motion "^6.5.1"
-    graphql-language-service "^5.1.7"
-    markdown-it "^12.2.0"
+    get-value "^3.0.1"
+    graphql-language-service "^5.3.1"
+    markdown-it "^14.1.0"
+    react-compiler-runtime "19.1.0-rc.1"
     set-value "^4.1.0"
 
-"@graphiql/toolkit@^0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@graphiql/toolkit/-/toolkit-0.8.4.tgz#8b697d140a3e96a6702428cbb8da4e8eb29162b3"
-  integrity sha512-cFUGqh3Dau+SD3Vq9EFlZrhzYfaHKyOJveFtaCR+U5Cn/S68p7oy+vQBIdwtO6J2J58FncnwBbVRfr+IvVfZqQ==
+"@graphiql/toolkit@^0.11.2":
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/@graphiql/toolkit/-/toolkit-0.11.3.tgz#7f08352779b316fc6436820e11329ac3e6af9f9c"
+  integrity sha512-Glf0fK1cdHLNq52UWPzfSrYIJuNxy8h4451Pw1ZVpJ7dtU+tm7GVVC64UjEDQ/v2j3fnG4cX8jvR75IvfL6nzQ==
   dependencies:
     "@n1ru4l/push-pull-async-iterable-iterator" "^3.1.0"
     meros "^1.1.4"
@@ -4641,6 +4643,13 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/ci-info/-/ci-info-2.0.0.tgz#51848cc0f5c30c064f4b25f7f688bf35825b3971"
   integrity sha512-5R2/MHILQLDCzTuhs1j4Qqq8AaKUf7Ma4KSSkCtc12+fMs47zfa34qhto9goxpyX00tQK1zxB885VCiawZ5Qhg==
+
+"@types/codemirror@^0.0.90":
+  version "0.0.90"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.90.tgz#9c5edafce2a780b4f8bc5e3b699fe1f4727c8f17"
+  integrity sha512-8Z9+tSg27NPRGubbUPUCrt5DDG/OWzLph5BvcDykwR5D7RyZh5mhHG0uS1ePKV1YFCA+/cwc4Ey2AJAEFfV3IA==
+  dependencies:
+    "@types/tern" "*"
 
 "@types/codemirror@^5.60.8":
   version "5.60.8"
@@ -8086,12 +8095,13 @@ codegen.macro@^4.1.0:
   dependencies:
     babel-plugin-codegen "^4.1.0"
 
-codemirror-graphql@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-2.0.9.tgz#eafb50a7f9e460a473b5887ea73c1c7e66147e82"
-  integrity sha512-gl1LR6XSBgZtl7Dr2q4jjRNfhxMF8vn+rnjZTZPf/l+VrQgavY8l3G//hW7s3hWy73iiqkq5LZ4KE1tdaxB/vQ==
+codemirror-graphql@^2.2.1:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-2.2.4.tgz#e0a0e48795d0c6e5d441439526e457ea6c608dc7"
+  integrity sha512-VW4rpbAqgAIEWKXwE3nDFz2QEaY5Cme0CnKET43ZE3RSKAAeOaUcecR6wBf3LYfxWwOyyzeCzqxRoUj+HNAEQA==
   dependencies:
-    graphql-language-service "5.1.7"
+    "@types/codemirror" "^0.0.90"
+    graphql-language-service "5.5.0"
 
 codemirror@^5.65.3:
   version "5.65.8"
@@ -9500,6 +9510,11 @@ de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
 
+debounce-promise@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/debounce-promise/-/debounce-promise-3.1.2.tgz#320fb8c7d15a344455cd33cee5ab63530b6dc7c5"
+  integrity sha512-rZHcgBkbYavBeD9ej6sP56XfG53d51CD4dnaw989YX/nZ/ZJfgRx/9ePKmTNiUiyQvh4mtrMoS3OAWW+yoYtpg==
+
 debug@2, debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -10394,7 +10409,7 @@ enquirer@^2.3.5, enquirer@^2.3.6:
   dependencies:
     ansi-colors "^4.1.1"
 
-entities@^2.0.0, entities@~2.1.0:
+entities@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.1.0.tgz#992d3129cf7df6870b96c57858c249a120f8b8b5"
   integrity sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==
@@ -12383,6 +12398,13 @@ get-value@^2.0.3, get-value@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/get-value/-/get-value-2.0.6.tgz#dc15ca1c672387ca76bd37ac0a395ba2042a2c28"
 
+get-value@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/get-value/-/get-value-3.0.1.tgz#5efd2a157f1d6a516d7524e124ac52d0a39ef5a8"
+  integrity sha512-mKZj9JLQrwMBtj5wxi6MH8Z5eSKaERpAwjg43dPtlGI1ZVEgH/qC7T8/6R2OBSUA+zzHBZgICsVJaEIV2tKTDA==
+  dependencies:
+    isobject "^3.0.1"
+
 getpass@^0.1.1:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/getpass/-/getpass-0.1.7.tgz#5eff8e3e684d569ae4cb2b1282604e8ba62149fa"
@@ -12815,15 +12837,13 @@ graphiql-explorer@^0.9.0:
   resolved "https://registry.yarnpkg.com/graphiql-explorer/-/graphiql-explorer-0.9.0.tgz#25f6b990bfc3e04e88c0cf419e28d12abe2c4fbe"
   integrity sha512-fZC/wsuatqiQDO2otchxriFO0LaWIo/ovF/CQJ1yOudmY0P7pzDiP+l9CEHUiWbizk3e99x6DQG4XG1VxA+d6A==
 
-graphiql@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-3.0.0.tgz#9ea10cb552759ae69a14c72bf219e9f425a607d7"
-  integrity sha512-MmXcEIcku4gLc+wk23yAe07B0ZHTgRFNsPCnRJXBVkO5sgdfvtJ98J0zczz0GA52DG5XTQ6mKXPJHNysj4ePQw==
+graphiql@^3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-3.9.0.tgz#2cc1a3f783e2d27a08cfeba0a937816b2f366e90"
+  integrity sha512-rJYFlHdBbug9+YbFSwRVvgfPjCayC7wHecZkx/qB4XLuQPFQZw/yB9pmHFtOJV6RiNBBHro3u1GdocKa3YcGRA==
   dependencies:
-    "@graphiql/react" "^0.18.0"
-    "@graphiql/toolkit" "^0.8.4"
-    graphql-language-service "^5.1.7"
-    markdown-it "^12.2.0"
+    "@graphiql/react" "^0.29.0"
+    react-compiler-runtime "19.1.0-rc.1"
 
 graphql-compose@^9.0.10:
   version "9.0.10"
@@ -12837,11 +12857,12 @@ graphql-http@^1.19.0:
   resolved "https://registry.yarnpkg.com/graphql-http/-/graphql-http-1.19.0.tgz#6f0fff0dbd9a8e797c99b5ac0ca160566e7927da"
   integrity sha512-fOD3hfp/G+Lhx2FWW5HsfmtJSsw6CikcpOboG7/mFo/pPUzn3yOwKdTFRnJ8MVY4ru69MT1nSPr/1gI/iuGNlw==
 
-graphql-language-service@5.1.7, graphql-language-service@^5.1.7:
-  version "5.1.7"
-  resolved "https://registry.yarnpkg.com/graphql-language-service/-/graphql-language-service-5.1.7.tgz#2b35df573de265eb2623843721702f07ff9ee130"
-  integrity sha512-xkawYMJeoNYGhT+SpSH3c2qf6HpGHQ/duDmrseVHBpVCrXAiGnliXGSCC4jyMGgZQ05GytsZ12p0nUo7s6lSSw==
+graphql-language-service@5.5.0, graphql-language-service@^5.3.1:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/graphql-language-service/-/graphql-language-service-5.5.0.tgz#2e68b23bd5384f2fbf1e9391e907106e8246d025"
+  integrity sha512-9EvWrLLkF6Y5e29/2cmFoAO6hBPPAZlCyjznmpR11iFtRydfkss+9m6x+htA8h7YznGam+TtJwS6JuwoWWgb2Q==
   dependencies:
+    debounce-promise "^3.1.2"
     nullthrows "^1.0.0"
     vscode-languageserver-types "^3.17.1"
 
@@ -15821,12 +15842,12 @@ linkfs@^2.1.0:
   resolved "https://registry.yarnpkg.com/linkfs/-/linkfs-2.1.0.tgz#5cc774ad8ed6b0aae5a858bd67e3334cc300a917"
   integrity sha512-kmsGcmpvjStZ0ATjuHycBujtNnXiZR28BTivEu0gAMDTT7GEyodcK6zSRtu6xsrdorrPZEIN380x7BD7xEYkew==
 
-linkify-it@^3.0.1:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-3.0.3.tgz#a98baf44ce45a550efb4d49c769d07524cc2fa2e"
-  integrity sha512-ynTsyrFSdE5oZ/O9GEf00kPngmOfVwazR5GKDq6EYfhlpFug3J2zybX56a2PRRpc9P+FuSoGNAwjlbDs9jJBPQ==
+linkify-it@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-5.0.0.tgz#9ef238bfa6dc70bd8e7f9572b52d369af569b421"
+  integrity sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==
   dependencies:
-    uc.micro "^1.0.1"
+    uc.micro "^2.0.0"
 
 lint-staged@^10.5.4:
   version "10.5.4"
@@ -16516,16 +16537,17 @@ markdown-extensions@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-extensions/-/markdown-extensions-1.1.1.tgz#fea03b539faeaee9b4ef02a3769b455b189f7fc3"
   integrity sha512-WWC0ZuMzCyDHYCasEGs4IPvLyTGftYwh6wIEOULOF0HXcqZlhwRzrK0w2VUlxWA98xnvb/jszw4ZSkJ6ADpM6Q==
 
-markdown-it@^12.2.0:
-  version "12.3.2"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.3.2.tgz#bf92ac92283fe983fe4de8ff8abfb5ad72cd0c90"
-  integrity sha512-TchMembfxfNVpHkbtriWltGWc+m3xszaRD0CZup7GFFhzIgQqxIfn3eGj1yZpfuflzPvfkt611B2Q/Bsk1YnGg==
+markdown-it@^14.1.0:
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-14.1.0.tgz#3c3c5992883c633db4714ccb4d7b5935d98b7d45"
+  integrity sha512-a54IwgWPaeBCAAsv13YgmALOF1elABB08FxO9i+r4VFk5Vl4pKokRPeX8u5TCgSsPi6ec1otfLjdOpVcgbpshg==
   dependencies:
     argparse "^2.0.1"
-    entities "~2.1.0"
-    linkify-it "^3.0.1"
-    mdurl "^1.0.1"
-    uc.micro "^1.0.5"
+    entities "^4.4.0"
+    linkify-it "^5.0.0"
+    mdurl "^2.0.0"
+    punycode.js "^2.3.1"
+    uc.micro "^2.1.0"
 
 markdown-link@^0.1.1:
   version "0.1.1"
@@ -16882,9 +16904,14 @@ mdn-data@2.0.4:
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.4.tgz#699b3c38ac6f1d728091a64650b65d388502fd5b"
   integrity sha512-iV3XNKw06j5Q7mi6h+9vbx23Tv7JkjEVgKHW4pimwyDGWm0OIQntJJ+u1C6mg6mK1EaTv42XQ7w76yuzH7M2cA==
 
-mdurl@^1.0.0, mdurl@^1.0.1:
+mdurl@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
+
+mdurl@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-2.0.0.tgz#80676ec0433025dd3e17ee983d0fe8de5a2237e0"
+  integrity sha512-Lf+9+2r+Tdp5wXDXC4PcIBjTDtq4UKjCPMQhKIuzpJNW0b96kVqSwW0bT7FhRSfmAiFYgP+SCRvdrDozfh0U5w==
 
 meant@^1.0.3:
   version "1.0.3"
@@ -20523,6 +20550,11 @@ pumpify@^1.3.3, pumpify@^1.3.5:
     inherits "^2.0.3"
     pump "^2.0.0"
 
+punycode.js@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/punycode.js/-/punycode.js-2.3.1.tgz#6b53e56ad75588234e79f4affa90972c7dd8cdb7"
+  integrity sha512-uxFIHU0YlHYhDQtV4R9J6a52SLx28BCjT+4ieh7IGbgwVJWO+km431c4yRlREUAsAmt/uMjQUyQHNEPf0M39CA==
+
 punycode@2.x.x, punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
@@ -20715,6 +20747,11 @@ rc@1.2.8, rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-compiler-runtime@19.1.0-rc.1:
+  version "19.1.0-rc.1"
+  resolved "https://registry.yarnpkg.com/react-compiler-runtime/-/react-compiler-runtime-19.1.0-rc.1.tgz#2535efd2e9fc9fc7d5ad47e970061dfbe38fb3f6"
+  integrity sha512-wCt6g+cRh8g32QT18/9blfQHywGjYu+4FlEc3CW1mx3pPxYzZZl1y+VtqxRgnKKBCFLIGUYxog4j4rs5YS86hw==
 
 react-dev-utils@^12.0.1:
   version "12.0.1"
@@ -24532,9 +24569,10 @@ ua-parser-js@^0.7.30:
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.31.tgz#649a656b191dffab4f21d5e053e27ca17cbff5c6"
   integrity sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==
 
-uc.micro@^1.0.1, uc.micro@^1.0.5:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"
+uc.micro@^2.0.0, uc.micro@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-2.1.0.tgz#f8d3f7d0ec4c3dea35a7e3c8efa4cb8b45c9e7ee"
+  integrity sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==
 
 uglify-js@^3.1.4, uglify-js@^3.5.1:
   version "3.6.0"
