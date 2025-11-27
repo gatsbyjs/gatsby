@@ -6,7 +6,10 @@ In this tutorial, you'll learn how to use Gatsby themes by creating a new site u
 
 ## Pre-requisites
 
+> 💡 Tip: If you're new to Gatsby, make sure you have Node.js (version 18 or later) and the Gatsby CLI installed globally using `npm install -g gatsby-cli` before starting this tutorial.
+
 - A Gatsby site
+
 
 > Note: This tutorial assumes you already have a Gatsby site to install your theme in. If you'd prefer to start with an entirely new site you can run `gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme` to set up a starter with the blog theme already installed.
 
