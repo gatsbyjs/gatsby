@@ -86,7 +86,7 @@ Inside it you'll find:
 
 ## Publishing a Theme
 
-After building your theme, you may want to publish it for the Gatsby community. To do so, please [publish your theme plugin to the plugin library](/docs/how-to/plugins-and-themes/submit-to-plugin-library/#publishing-a-plugin-to-the-library).
+After building your theme, you may want to publish it for the Gatsby community by releasing it on npm.
 
 ## Further resources
 

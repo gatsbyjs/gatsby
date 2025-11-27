@@ -35,7 +35,7 @@ We accept all types of contributions to [`packages`](https://github.com/gatsbyjs
 - [`gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby)
 - [`gatsby-core-utils/remote-file-utils`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils/src/remote-file-utils)
 
-For these two packages, we ask you to open a [feature request](#feature-requests) (or for larger changes an [RFC](/contributing/rfc-process/)) before opening PRs for features. Contributions, such as bug fixes and documentation updates, can be made without any prior interaction with the team and don't require a feature request/RFC.
+For these two packages, we ask you to open a [feature request](#feature-requests) before opening PRs for features. Contributions, such as bug fixes and documentation updates, can be made without any prior interaction with the team.
 
 ## Contributor levels
 
@@ -54,7 +54,7 @@ Have you done something (big or small) to contribute to the health, success, or 
 #### Recognized contributions
 
 - **GitHub:** Submitting a merged pull request
-- **GitHub:** Sending in a detailed feature request or RFC
+- **GitHub:** Sending in a detailed feature request
 - **GitHub:** Updating documentation
 - Helping people on GitHub and other platforms.
 - Answering questions on Stack Overflow, Twitter, etc.
@@ -63,7 +63,7 @@ Have you done something (big or small) to contribute to the health, success, or 
 
 #### Privileges
 
-At this time we have no specific privileges for this role except that you can claim yourself [free Gatsby swag](/contributing/contributor-swag/). If you have ideas here please let us know!
+At this time we have no specific privileges for this role. If you have ideas here please let us know!
 
 #### Responsibilities
 
@@ -87,8 +87,8 @@ The Maintainer role is critical to the long-term health of Gatsby. Maintainers s
 
 There is no strict minimum number of contributions needed to reach this level, as long as you can show **sustained** involvement over some amount of time (at least a couple of weeks).
 
-- **GitHub:** Submitting non-trivial pull requests and RFCs
-- **GitHub:** Reviewing non-trivial pull requests and RFCs
+- **GitHub:** Submitting non-trivial pull requests
+- **GitHub:** Reviewing non-trivial pull requests
 - Supporting users and participating in community events
 - **GitHub:** Triaging and confirming user issues
 - This list is incomplete! Similar contributions are also recognized.
@@ -174,11 +174,7 @@ If you’d like to learn more about how we approach the relationship between our
 
 ### Feature requests
 
-Please open a [feature request on GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/ideas-feature-requests) to voice your ideas. For larger changes please consider opening an [RFC](/contributing/rfc-process/). The **Team** will review incoming requests and give a first assessment.
-
-### RFCs
-
-Please see the dedicated [RFC Process document](/contributing/rfc-process/) for more details.
+Please open a [feature request on GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/ideas-feature-requests) to voice your ideas. The **Team** will review incoming requests and give a first assessment.
 
 ## Voting
 

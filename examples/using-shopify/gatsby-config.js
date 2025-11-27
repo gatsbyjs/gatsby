@@ -34,7 +34,7 @@ module.exports = {
     {
       resolve: `gatsby-source-shopify`,
       options: {
-        shopName: `gatsby-swag`,
+        shopName: `example-shop`,
         accessToken: process.env.SHOPIFY_ACCESS_TOKEN,
       },
     },

@@ -91,5 +91,4 @@ Learn [how to make a starter](/docs/creating-a-starter/) in the Gatsby docs. Sta
 
 Community starters are created and maintained by Gatsby community members.
 
-- Looking for a starter for a particular use case? Browse starters that have been submitted to the [Starter Library](/starters/#Community).
-- Have you built your own starter? [Submit it](/starters/submissions) for review to share it with the community by having it featured in the Gatsby Starter Library.
+- Looking for a starter for a particular use case? Browse starters in the [Starter Library](/starters/#Community).

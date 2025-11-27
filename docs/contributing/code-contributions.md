@@ -104,7 +104,7 @@ If you create a loader or plugin, we would love for you to open source it and pu
 
 Gatsby's policy is that "Using" example sites (like those in the [examples part of the repo](https://github.com/gatsbyjs/gatsby/tree/master/examples)) should only be around plugins that are maintained by the core team as it's hard to keep things up to date otherwise.
 
-To contribute example sites, it is recommended to create your own GitHub repo and link to it from your source plugin, etc. You can also create a starter project and submit it to the [starter showcase](/starters/submissions).
+To contribute example sites, it is recommended to create your own GitHub repo and link to it from your source plugin, etc.
 
 ## Debugging the build process
 
