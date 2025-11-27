@@ -62,7 +62,7 @@ export async function prepareFunction(
         slash(file).replace(/\[/g, `*`).replace(/]/g, `*`)
       ),
       includedFilesBasePath: process.cwd(),
-      externalNodeModules: [`msgpackr-extract`],
+      externalNodeModules: [`msgpackr-extract`, `sharp`],
     },
     version: 1,
   }

@@ -38,7 +38,7 @@ test(`produced handler is correct`, async () => {
         name: `test`,
         generator: expect.stringContaining(`gatsby-adapter-netlify`),
         includedFiles: [slash(requiredFile)],
-        externalNodeModules: [`msgpackr-extract`],
+        externalNodeModules: [`msgpackr-extract`, `sharp`],
       }),
       version: 1,
     })
