@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "3.15.0-next.1",
+  "version": "3.17.0-next.0",
   "scripts": {
     "build": "npm-run-all --npm-path npm -s clean -p build:*",
     "postbuild": "prepend-directive --files=dist/gatsby-image.browser.js,dist/gatsby-image.browser.modern.js --directive=\"use client\"",
@@ -70,8 +70,8 @@
     "gatsby": "^5.0.0-next",
     "gatsby-plugin-sharp": "^5.0.0-next",
     "gatsby-source-filesystem": "^5.0.0-next",
-    "react": "^18.0.0 || ^0.0.0",
-    "react-dom": "^18.0.0 || ^0.0.0"
+    "react": "^18.0.0 || ^19.0.0 || ^0.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0 || ^0.0.0"
   },
   "peerDependenciesMeta": {
     "gatsby-plugin-sharp": {
@@ -87,13 +87,13 @@
     "@babel/runtime": "^7.20.13",
     "@babel/traverse": "^7.20.13",
     "babel-jsx-utils": "^1.1.0",
-    "babel-plugin-remove-graphql-queries": "^5.15.0-next.0",
+    "babel-plugin-remove-graphql-queries": "^5.17.0-next.0",
     "camelcase": "^6.3.0",
     "chokidar": "^3.6.0",
     "common-tags": "^1.8.2",
     "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "^4.15.0-next.0",
-    "gatsby-plugin-utils": "^4.15.0-next.0",
+    "gatsby-core-utils": "^4.17.0-next.0",
+    "gatsby-plugin-utils": "^4.17.0-next.0",
     "objectFitPolyfill": "^2.3.5",
     "prop-types": "^15.8.1"
   },

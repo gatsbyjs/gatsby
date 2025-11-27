@@ -14,7 +14,7 @@ export default function HeadFunctionExportBasic() {
       </Link>
       <Link
         data-testid="navigate-to-page-without-head-export"
-        to="/without-head"
+        to="/head-function-export/without-head"
       >
         Navigate to without head export
       </Link>

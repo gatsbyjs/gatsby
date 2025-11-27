@@ -5,6 +5,20 @@ export class ErrorBoundary extends React.Component {
 
   componentDidCatch(error) {
     this.setState({ error })
+
+    // Forward component errors to Fast Refresh overlay system
+    if (
+      window._gatsbyEvents &&
+      typeof window._gatsbyEvents.push === `function`
+    ) {
+      window._gatsbyEvents.push([
+        `FAST_REFRESH`,
+        {
+          action: `SHOW_RUNTIME_ERRORS`,
+          payload: [error],
+        },
+      ])
+    }
   }
 
   render() {

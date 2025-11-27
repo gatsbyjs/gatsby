@@ -143,7 +143,7 @@ const config = {
     `<rootDir>/examples/`,
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
-    `<rootDir>/packages/gatsby-plugin-gatsby-cloud/src/__tests__/mocks/`,
+    `<rootDir>/deprecated-packages/gatsby-plugin-gatsby-cloud/src/__tests__/mocks/`,
     `<rootDir>/packages/gatsby/src/utils/worker/__tests__/test-helpers/`,
     `<rootDir>/deprecated-packages/`,
     `__tests__/fixtures`,

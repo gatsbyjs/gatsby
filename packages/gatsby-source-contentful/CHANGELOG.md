@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.16.0/packages/gatsby-source-contentful) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+#### Features
+
+- update to ESM compatible version of CTF library [#39178](https://github.com/gatsbyjs/gatsby/issues/39178) [#39182](https://github.com/gatsbyjs/gatsby/issues/39182) ([3ccd1d8](https://github.com/gatsbyjs/gatsby/commit/3ccd1d8483b42387bccedf96e320d60719d1d147))
+
+#### Bug Fixes
+
+- support node 22 [#39349](https://github.com/gatsbyjs/gatsby/issues/39349) ([7451d2f](https://github.com/gatsbyjs/gatsby/commit/7451d2ff56c46b4d9ceebbb6e830fa83fcd29e5b))
+
 ## [8.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.15.0/packages/gatsby-source-contentful) (2024-12-13)
 
 #### Features

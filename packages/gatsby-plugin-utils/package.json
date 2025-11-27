@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "4.15.0-next.0",
+  "version": "4.17.0-next.0",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "exports": {
@@ -49,8 +49,8 @@
     "@babel/runtime": "^7.20.13",
     "fastq": "^1.16.0",
     "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "^4.15.0-next.0",
-    "gatsby-sharp": "^1.15.0-next.0",
+    "gatsby-core-utils": "^4.17.0-next.0",
+    "gatsby-sharp": "^1.17.0-next.0",
     "graphql-compose": "^9.0.10",
     "import-from": "^4.0.0",
     "joi": "^17.11.0",
@@ -59,7 +59,7 @@
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
-    "babel-preset-gatsby-package": "^3.15.0-next.0",
+    "babel-preset-gatsby-package": "^3.17.0-next.0",
     "cross-env": "^7.0.3",
     "msw": "^1.2.2",
     "rimraf": "^5.0.1",

@@ -4,8 +4,10 @@ describe(`queries in packages`, () => {
   })
 
   it(`Should extract and run query from gatsby component`, () => {
-    cy.title().should(
-      `eq`,
+    // Note: in dev this may take a few ms to be populated due to the way the Gatsby Head API is
+    // implemented
+    cy.get("head > title").should(
+      `have.text`,
       `Testing queries in packages | Gatsby Default Starter`
     )
   })

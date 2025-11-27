@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "5.15.0-next.1",
+  "version": "5.17.0-next.0",
   "description": "MDX integration for Gatsby",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,8 +23,8 @@
     "@mdx-js/react": "^2.0.0",
     "gatsby": "^5.0.0-next",
     "gatsby-source-filesystem": "^5.0.0-next",
-    "react": "^18.0.0 || ^0.0.0",
-    "react-dom": "^18.0.0 || ^0.0.0"
+    "react": "^18.0.0 || ^19.0.0 || ^0.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0 || ^0.0.0"
   },
   "dependencies": {
     "@mdx-js/mdx": "^2.3.0",
@@ -34,8 +34,8 @@
     "deepmerge": "^4.3.1",
     "estree-util-build-jsx": "^2.2.2",
     "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "^4.15.0-next.0",
-    "gatsby-plugin-utils": "^4.15.0-next.0",
+    "gatsby-core-utils": "^4.17.0-next.0",
+    "gatsby-plugin-utils": "^4.17.0-next.0",
     "gray-matter": "^4.0.3",
     "mdast-util-mdx": "^2.0.1",
     "mdast-util-to-hast": "^10.2.0",
@@ -53,7 +53,7 @@
     "@types/estree": "^1.0.1",
     "@types/mdast": "^3.0.11",
     "@types/unist": "^2.0.6",
-    "babel-preset-gatsby-package": "^3.15.0-next.0",
+    "babel-preset-gatsby-package": "^3.17.0-next.0",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "opentracing": "^0.14.7",

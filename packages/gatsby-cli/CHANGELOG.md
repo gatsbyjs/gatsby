@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.15.0/packages/gatsby-cli) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+#### Bug Fixes
+
+- support node 22 [#39349](https://github.com/gatsbyjs/gatsby/issues/39349) ([7451d2f](https://github.com/gatsbyjs/gatsby/commit/7451d2ff56c46b4d9ceebbb6e830fa83fcd29e5b))
+
+#### Chores
+
+- remove Gatsby Discord references [#39351](https://github.com/gatsbyjs/gatsby/issues/39351) ([c3708b0](https://github.com/gatsbyjs/gatsby/commit/c3708b068abba3a26e5cf229d6d4dc5813884acd))
+
 ## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.14.0/packages/gatsby-cli) (2024-11-06)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)

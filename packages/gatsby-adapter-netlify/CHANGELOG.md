@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-adapter-netlify@1.3.0/packages/gatsby-adapter-netlify) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+#### Bug Fixes
+
+- don't treat timestamps as dynamic paths [#39340](https://github.com/gatsbyjs/gatsby/issues/39340) ([485fd85](https://github.com/gatsbyjs/gatsby/commit/485fd858d2ed096ab2a39a744b46fa6cdf7dee41))
+
+### [1.2.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-adapter-netlify@1.2.1/packages/gatsby-adapter-netlify) (2025-08-05)
+
+#### Bug Fixes
+
+- don't treat timestamps as dynamic paths [#39340](https://github.com/gatsbyjs/gatsby/issues/39340) [#39341](https://github.com/gatsbyjs/gatsby/issues/39341) ([d00bf5e](https://github.com/gatsbyjs/gatsby/commit/d00bf5e47361a08cf9741f3c458c74c32b58f5f2))
+
 ## [1.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-adapter-netlify@1.2.0/packages/gatsby-adapter-netlify) (2024-11-06)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)

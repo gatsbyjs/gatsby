@@ -13,8 +13,8 @@
     "cy:open": "cypress open --browser chrome --e2e",
     "develop:debug": "start-server-and-test develop http://localhost:8000 'npm run cy:open -- --config baseUrl=http://localhost:8000'",
     "ssat:debug": "start-server-and-test serve http://localhost:9000 cy:open",
-    "test:template": "cross-env-shell CYPRESS_GROUP_NAME=\"adapter:$ADAPTER / trailingSlash:${TRAILING_SLASH:-always} / pathPrefix:${PATH_PREFIX:--}  / excludeDatastoreFromBundle:${GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE:-false} / monorepo:${E2E_MONOREPO:-false}\" TRAILING_SLASH=$TRAILING_SLASH PATH_PREFIX=$PATH_PREFIX node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --e2e --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH,PATH_PREFIX=$PATH_PREFIX",
-    "test:template:debug": "cross-env-shell CYPRESS_GROUP_NAME=\"adapter:$ADAPTER / trailingSlash:${TRAILING_SLASH:-always} / pathPrefix:${PATH_PREFIX:--} / excludeDatastoreFromBundle:${GATSBY_EXCLUDE_DATASTORE_FROM_BUNDLE:-false} / monorepo:${E2E_MONOREPO:-false}\" TRAILING_SLASH=$TRAILING_SLASH PATH_PREFIX=$PATH_PREFIX npm run cy:open -- --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH,PATH_PREFIX=$PATH_PREFIX",
+    "test:template": "cross-env-shell TRAILING_SLASH=$TRAILING_SLASH PATH_PREFIX=$PATH_PREFIX cypress run --browser chrome --e2e --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH,PATH_PREFIX=$PATH_PREFIX",
+    "test:template:debug": "cross-env-shell TRAILING_SLASH=$TRAILING_SLASH PATH_PREFIX=$PATH_PREFIX npm run cy:open -- --config-file \"cypress/configs/$ADAPTER.ts\" --env TRAILING_SLASH=$TRAILING_SLASH,PATH_PREFIX=$PATH_PREFIX",
     "test:debug": "npm-run-all -s build:debug ssat:debug",
     "test:netlify": "cross-env TRAILING_SLASH=always node scripts/deploy-and-run/netlify.mjs test:template",
     "test:smoke": "node smoke-test.mjs",
@@ -40,7 +40,7 @@
     "gatsby-cypress": "^3.13.1",
     "netlify-cli": "^17.25.0",
     "npm-run-all": "^4.1.5",
-    "start-server-and-test": "^2.0.3",
+    "start-server-and-test": "2.1.1",
     "typescript": "^5.3.3"
   }
 }
