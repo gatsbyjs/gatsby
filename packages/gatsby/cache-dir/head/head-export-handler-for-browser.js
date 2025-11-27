@@ -2,6 +2,7 @@ import React from "react"
 import { useEffect } from "react"
 import { StaticQueryContext } from "gatsby"
 import { LocationProvider } from "@gatsbyjs/reach-router"
+
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
 import {
@@ -32,7 +33,7 @@ const onHeadRendered = () => {
 
   /**
    * The rest of the code block below is a diffing mechanism to ensure that
-   * the head elements aren't duplicted on every re-render.
+   * the head elements aren't duplicated on every re-render.
    */
   const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
 
@@ -84,6 +85,41 @@ if (process.env.BUILD_STAGE === `develop`) {
   })
 }
 
+// TODO(serhalp): Expose these as a new public API to allows us to gradually phase out
+// the existing `<html>` and `<body>` features in the Head API, allowing us to remove
+// the various workounds we have in place for React 19.
+function Html(props) {
+  return <div data-original-tag="html" {...props} />
+}
+function Body(props) {
+  return <div data-original-tag="body" {...props} />
+}
+
+// React 19 does not allow rendering a second `<html>` or `<body>` anywhere in the tree:
+// https://github.com/facebook/react/blob/50e7ec8a694072fd6fcd52182df8a75211bf084d/packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js#L3739
+// Unfortunately, our Head API relies on users being able to render these elements, which we then
+// render in a hidden `<div>` to extract attributes to apply to the real `<html>` and `<body>`.
+// We explored several alternatives, but none were viable given React's constraints.
+// To work around this, we intercept attempts to render these elements inside of
+// Head and replace them with custom components that render as `<div>`s with a
+// `data-original-tag` attribute. We can then use this attribute later to apply
+// attributes to the real `<html>` and `<body>` elements.
+const IsHeadRenderContext = React.createContext(false)
+// De-risk monkey patch by only applying it when needed (React 19+, not React 18)
+const reactMajor = parseInt(React.version.split(`.`)[0], 10)
+if (reactMajor !== 18) {
+  const originalCreateElement = React.createElement
+  React.createElement = (type, ...rest) => {
+    if (type === `html` || type === `body`) {
+      const isHeadRender = React.useContext(IsHeadRenderContext)
+      // De-risk monkey patch by only applying it within a `Head()` render.
+      if (isHeadRender) {
+        type = type === `html` ? Html : Body
+      }
+    }
+    return originalCreateElement(type, ...rest)
+  }
+}
 export function headHandlerForBrowser({
   pageComponent,
   staticQueryResults,
@@ -96,7 +132,13 @@ export function headHandlerForBrowser({
       const { render } = reactDOMUtils()
 
       const HeadElement = (
-        <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+        // Wrap in an SVG to work around conflict between React 19's new document metadata tag
+        // hoisting and Gatsby's own preexisting Head API. React will leave metadata tags (like
+        // `<title>`) with an `<svg>` ancestor intact, letting Gatsby process them as usual. See
+        // https://github.com/facebook/react/blob/fd524fe02a86c3e92a207d90da970941320f337f/packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js#L765-L779.
+        <svg data-gatsby-head-react-19-workaround="true">
+          <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
+        </svg>
       )
 
       const WrapHeadElement = apiRunner(
@@ -113,9 +155,11 @@ export function headHandlerForBrowser({
         // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
-          <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>{WrapHeadElement}</LocationProvider>
-          </StaticQueryContext.Provider>
+          <IsHeadRenderContext.Provider value={true}>
+            <StaticQueryContext.Provider value={staticQueryResults}>
+              <LocationProvider>{WrapHeadElement}</LocationProvider>
+            </StaticQueryContext.Provider>
+          </IsHeadRenderContext.Provider>
         </FireCallbackInEffect>,
         hiddenRoot
       )

@@ -132,7 +132,16 @@ export function headHandlerForSSR({
         },
       }
 
-      const HeadElement = <pageComponent.Head {...filterHeadProps(_props)} />
+      const HeadElement = (
+        // Wrap in an SVG to work around conflict between React 19's new document metadata tag
+        // hoisting and Gatsby's own preexisting Head API. React will leave metadata tags (like
+        // `<title>`) with an `<svg>` ancestor intact, letting Gatsby process them as usual.
+        // See
+        // https://github.com/facebook/react/blob/fd524fe02a86c3e92a207d90da970941320f337f/packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js#L765-L779.
+        <svg data-gatsby-head-react-19-workaround="true">
+          <pageComponent.Head {...filterHeadProps(_props)} />
+        </svg>
+      )
 
       const headWithWrapRootElement = apiRunner(
         `wrapRootElement`,
