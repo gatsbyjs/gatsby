@@ -129,7 +129,7 @@
     "mitt": "^1.2.0",
     "moment": "^2.29.4",
     "multer": "^2.0.1",
-    "node-fetch": "^2.6.11",
+    "node-fetch": "^3.3.2",
     "node-html-parser": "^5.4.2",
     "normalize-path": "^3.0.0",
     "null-loader": "^4.0.1",
