@@ -6,7 +6,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "22.13"
+        default: "24.11.1"
       gatsby_major:
         type: string
         default: "5"
@@ -28,9 +28,9 @@ executors:
       GATSBY_CPU_COUNT: 2
       VERBOSE: 1
 
-  e2e22:
+  e2e24:
     docker:
-      - image: "cypress/browsers:node-22.13.1-chrome-133.0.6943.53-1-ff-135.0-edge-132.0.2957.140-1"
+      - image: "cypress/browsers:node-24.11.1-chrome-142.0.7444.175-1-ff-145.0.1-edge-142.0.3595.90-1"
     environment:
       GATSBY_CPU_COUNT: 2
       VERBOSE: 1
@@ -101,12 +101,12 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["18.2.0", "22.13"]
-        e2e_executor_suffix: ["18", "22"]
+        node_version: ["18.2.0", "24.11.1"]
+        e2e_executor_suffix: ["18", "24"]
       exclude:
         - node_version: "18.2.0"
-          e2e_executor_suffix: "22"
-        - node_version: "22.13"
+          e2e_executor_suffix: "24"
+        - node_version: "24.11.1"
           e2e_executor_suffix: "18"
     requires:
       - bootstrap-<< matrix.node_version >>
@@ -119,13 +119,7 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        # TODO(serhalp): We test on 22.13 rather than the latest because there is an issue
-        # introduced in node.js 22.14.0 (not present in 22.13.1) and node.js 20.19.0 (not present in
-        # 20.18.3). It seems almost certainly to be caused by https://github.com/nodejs/node/pull/56106.
-        # I'm not sure yet if this is only a test issue or an actual race condition that could
-        # affect users - AFAICT the only manifestation is causing this test to fail:
-        # https://github.com/gatsbyjs/gatsby/blob/c3708b068abba3a26e5cf229d6d4dc5813884acd/integration-tests/ssr/__tests__/ssr.js#L102.
-        node_version: ["18.2.0", "22.13"]
+        node_version: ["18.2.0", "24.11.1"]
     requires:
       - bootstrap-<< matrix.node_version >>
 
@@ -273,10 +267,10 @@ jobs:
       image: "20.19"
     <<: *test_template
 
-  unit_tests_node22:
+  unit_tests_node24:
     executor:
       name: node
-      image: "22.13"
+      image: "24.11.1"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -762,7 +756,7 @@ jobs:
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
 
-  # TODO(serhalp): Test Windows on Node.js 20 and 22?
+  # TODO(serhalp): Test Windows on Node.js 20 and 24?
   windows_unit_tests:
     parallelism: 4
     executor:
@@ -868,7 +862,7 @@ workflows:
           name: "bootstrap-<< matrix.node_version >>"
           matrix:
             parameters:
-              node_version: ["18.2.0", "20.19", "22.13"]
+              node_version: ["18.2.0", "20.19", "24.11.1"]
       - lint
       - typecheck:
           requires:
@@ -888,10 +882,10 @@ workflows:
           <<: *ignore_docs
           requires:
             - bootstrap-20.19
-      - unit_tests_node22:
+      - unit_tests_node24:
           <<: *ignore_docs
           requires:
-            - bootstrap-22.13
+            - bootstrap-24.11.1
       - integration_tests_gatsby_source_wordpress:
           <<: *integration-test-workflow
       - integration_tests_long_term_caching:
