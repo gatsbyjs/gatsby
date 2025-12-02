@@ -2,9 +2,9 @@
  * @jest-environment jsdom
  */
 
-import mock from "xhr-mock"
-import { ProdLoader } from "../loader"
-import emitter from "../emitter"
+import mock from `xhr-mock`
+import { ProdLoader } from `../loader`
+import emitter from `../emitter`
 
 jest.mock(`../emitter`)
 
@@ -21,8 +21,8 @@ describe(`Reproduction of Issue #32142`, () => {
     // Mock window.location
     delete window.location
     window.location = {
-        href: "http://localhost:8000/blog/missing",
-        pathname: "/blog/missing"
+        href: `http://localhost:8000/blog/missing`,
+        pathname: `/blog/missing`
     }
   })
 
