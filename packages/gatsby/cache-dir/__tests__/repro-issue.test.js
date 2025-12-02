@@ -5,7 +5,7 @@
 import mock from "xhr-mock"
 import { ProdLoader } from "../loader"
 
-jest.mock("../emitter")
+jest.mock(`../emitter`)
 
 describe(`Reproduction of Issue #32142`, () => {
   let originalBasePath
@@ -16,7 +16,7 @@ describe(`Reproduction of Issue #32142`, () => {
     originalPathPrefix = global.__PATH_PREFIX__
     global.__BASE_PATH__ = `/blog`
     global.__PATH_PREFIX__ = `/blog`
-    
+
     // Mock window.location
     delete window.location
     window.location = {
@@ -39,11 +39,13 @@ describe(`Reproduction of Issue #32142`, () => {
       if (json) {
         res.header(`content-type`, `application/json`)
       }
-      return res.status(status).body(
-        typeof responseText === `string`
-          ? responseText
-          : JSON.stringify(responseText)
-      )
+      return res
+        .status(status)
+        .body(
+          typeof responseText === `string`
+            ? responseText
+            : JSON.stringify(responseText)
+        )
     })
   }
 
@@ -66,10 +68,12 @@ describe(`Reproduction of Issue #32142`, () => {
     // The input to loadPage is the full path including prefix
     const result = await prodLoader.loadPage(`/blog/missing`)
 
-    expect(result).toEqual(expect.objectContaining({
-      status: `success`,
-      page: payload404,
-    }))
+    expect(result).toEqual(
+      expect.objectContaining({
+        status: `success`,
+        page: payload404,
+      })
+    )
     expect(result.notFound).toBe(true)
   })
 })
