@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 
-import mock from `xhr-mock`
-import { ProdLoader } from `../loader`
+import mock from "xhr-mock"
+import { ProdLoader } from "../loader"
 
-jest.mock(`../emitter`)
+jest.mock("../emitter")
 
 describe(`Reproduction of Issue #32142`, () => {
   let originalBasePath
