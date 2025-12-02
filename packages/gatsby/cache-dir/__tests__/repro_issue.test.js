@@ -4,7 +4,6 @@
 
 import mock from `xhr-mock`
 import { ProdLoader } from `../loader`
-import emitter from `../emitter`
 
 jest.mock(`../emitter`)
 
