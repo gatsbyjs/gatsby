@@ -21,8 +21,8 @@ describe(`Reproduction of Issue #32142`, () => {
     // Mock window.location
     delete window.location
     window.location = {
-        href: `http://localhost:8000/blog/missing`,
-        pathname: `/blog/missing`
+      href: `http://localhost:8000/blog/missing`,
+      pathname: `/blog/missing`,
     }
   })
 
@@ -59,7 +59,7 @@ describe(`Reproduction of Issue #32142`, () => {
     const payload404 = {
       path: `/404.html`,
       componentChunkName: `component---src-pages-404-js`,
-      result: { pageContext: {} }
+      result: { pageContext: {} },
     }
     mockPageData(`/404.html`, 200, payload404, true)
 
@@ -68,8 +68,8 @@ describe(`Reproduction of Issue #32142`, () => {
     const result = await prodLoader.loadPage(`/blog/missing`)
 
     expect(result).toEqual(expect.objectContaining({
-        status: `success`,
-        page: payload404
+      status: `success`,
+      page: payload404,
     }))
     expect(result.notFound).toBe(true)
   })
