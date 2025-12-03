@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator#readme",
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
-    "@babel/traverse": "^7.20.13",
+    "@babel/runtime": "^7.28.4",
+    "@babel/traverse": "^7.28.5",
     "@sindresorhus/slugify": "^1.1.2",
     "chokidar": "^3.6.0",
     "fs-exists-cached": "^1.0.0",

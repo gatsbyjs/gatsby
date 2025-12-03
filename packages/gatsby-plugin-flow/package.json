@@ -24,8 +24,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/preset-flow": "^7.18.6",
-    "@babel/runtime": "^7.20.13"
+    "@babel/preset-flow": "^7.27.1",
+    "@babel/runtime": "^7.28.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

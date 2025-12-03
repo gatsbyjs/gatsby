@@ -82,10 +82,10 @@
     }
   },
   "dependencies": {
-    "@babel/code-frame": "^7.18.6",
-    "@babel/parser": "^7.20.13",
-    "@babel/runtime": "^7.20.13",
-    "@babel/traverse": "^7.20.13",
+    "@babel/code-frame": "^7.27.1",
+    "@babel/parser": "^7.28.5",
+    "@babel/runtime": "^7.28.4",
+    "@babel/traverse": "^7.28.5",
     "babel-jsx-utils": "^1.1.0",
     "babel-plugin-remove-graphql-queries": "^5.17.0-next.0",
     "camelcase": "^6.3.0",
