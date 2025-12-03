@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.28.4",
     "cheerio": "1.0.0-rc.12",
     "common-tags": "^1.8.2",
     "lodash": "^4.17.21",

@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify#readme",
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.28.4",
     "@netlify/cache-utils": "^5.1.5",
     "@netlify/config": "^20.10.0",
     "@netlify/functions": "^1.6.0",

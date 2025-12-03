@@ -19,7 +19,7 @@
     "babel-preset-gatsby-package": "^3.17.0-next.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.28.4",
     "fast-glob": "^3.2.12",
     "gatsby-core-utils": "^4.17.0-next.0",
     "node-fetch": "^2.6.11"
