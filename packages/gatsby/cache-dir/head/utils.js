@@ -117,14 +117,14 @@ export function getValidHeadNodesAndAttributes(
   const seenIds = new Map()
   const validHeadNodes = []
 
-  // Filter out non-element nodes before looping since we don't care about them
   for (const node of rootNode.childNodes) {
+    // Filter out non-element nodes before looping since we don't care about them
+    if (!isElementType(node)) continue
+
     const nodeName =
       node.attributes?.getNamedItem(`data-original-tag`)?.value ??
       node.nodeName.toLowerCase()
     const id = node.attributes?.id?.value
-
-    if (!isElementType(node)) continue
 
     if (isValidNodeName(nodeName)) {
       // <html> and <body> tags are treated differently, in that we don't render them, we only extract the attributes and apply them separetely
