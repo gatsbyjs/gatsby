@@ -16,6 +16,7 @@ executors:
       GATSBY_CPU_COUNT: 2
       COMPILER_OPTIONS: GATSBY_MAJOR=<< parameters.gatsby_major >>
       NODE_NO_WARNINGS: 1
+      BROWSERSLIST_IGNORE_OLD_DATA: true
       # See https://sharp.pixelplumbing.com/install/#custom-libvips
       # libvips may or may not be installed in the CircleCI images we're using, but we
       # don't want to use it regardless, for consistency (and because it can cause problems)
@@ -798,6 +799,8 @@ jobs:
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
+            NODE_NO_WARNINGS: 1
+            BROWSERSLIST_IGNORE_OLD_DATA: true
             GENERATE_JEST_REPORT: "true"
             COMPILER_OPTIONS: GATSBY_MAJOR=5
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
