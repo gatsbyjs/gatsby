@@ -39,6 +39,14 @@ describe(`Head with wrapRootElement`, () => {
     cy.getTestElement(`jsonLD`).should(`have.text`, data.static.jsonLD)
   })
 
+  it(`updates document title`, () => {
+    cy.visit(
+      headFunctionExportSharedData.page.headWithWrapRooElement
+    ).waitForRouteChange()
+
+    cy.title().should(`eq`, contextValue.posts[0].title)
+  })
+
   it(`can use context values provided in wrapRootElement`, () => {
     cy.visit(
       headFunctionExportSharedData.page.headWithWrapRooElement
