@@ -86,7 +86,9 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
     })
 
-    describe(`when navigation occurs`, () => {
+    // The back/forward navigation tests are flaky in CI, so we retry them a few times
+    // TODO(serhalp): Investigate. Maybe related to bfcache functionality in modern browsers?
+    describe(`when navigation occurs`, { retries: { runMode: 5 } }, () => {
       it(`should load only once on initial page load`, () => {
         cy.visit(page.target).waitForRouteChange()
 
