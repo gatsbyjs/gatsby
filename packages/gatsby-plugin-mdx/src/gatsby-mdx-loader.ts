@@ -1,5 +1,5 @@
 /* eslint-disable @babel/no-invalid-this */
-import type { ProcessorOptions } from "@mdx-js/mdx"
+import type { CompileOptions } from "@mdx-js/mdx"
 import type { NodePluginArgs } from "gatsby"
 import type { LoaderDefinition } from "webpack"
 import { slash } from "gatsby-core-utils/path"
@@ -7,7 +7,7 @@ import { createFileToMdxCacheKey } from "./cache-helpers"
 import { compileMDX } from "./compile-mdx"
 
 export interface IGatsbyMDXLoaderOptions {
-  options: ProcessorOptions
+  options: CompileOptions
   getNode: NodePluginArgs["getNode"]
   cache: NodePluginArgs["cache"]
   reporter: NodePluginArgs["reporter"]
