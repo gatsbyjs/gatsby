@@ -10,6 +10,9 @@ export default function HeadFunctionExportPageQuery() {
       <Link data-testid="gatsby-link" to="/head-function-export/basic">
         Navigate to basic via Gatsby Link
       </Link>
+      <p data-testid="linked-css-paragraph">
+        Just some paragraph to test if linked css properly applies
+      </p>
     </>
   )
 }

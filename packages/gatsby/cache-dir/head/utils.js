@@ -1,4 +1,9 @@
-import { VALID_NODE_NAMES } from "./constants"
+import {
+  ITEM_PROP_WORKAROUND_KEY,
+  ITEM_PROP_WORKAROUND_VALUE,
+  HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY,
+  VALID_NODE_NAMES,
+} from "./constants"
 
 /**
  * Filter the props coming from a page down to just the ones that are relevant for head.
@@ -122,15 +127,15 @@ export function getValidHeadNodesAndAttributes(
     if (!isElementType(node)) continue
 
     const nodeName =
-      node.attributes?.getNamedItem(`data-original-tag`)?.value ??
-      node.nodeName.toLowerCase()
+      node.attributes?.getNamedItem(HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY)
+        ?.value ?? node.nodeName.toLowerCase()
     const id = node.attributes?.id?.value
 
     if (isValidNodeName(nodeName)) {
       // <html> and <body> tags are treated differently, in that we don't render them, we only extract the attributes and apply them separetely
       if (nodeName === `html` || nodeName === `body`) {
         for (const attribute of node.attributes) {
-          if (attribute.name === `data-original-tag`) continue
+          if (attribute.name === HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY) continue
 
           const isStyleAttribute = attribute.name === `style`
 
@@ -156,15 +161,16 @@ export function getValidHeadNodesAndAttributes(
         let clonedNode = node.cloneNode(true)
         clonedNode.setAttribute(`data-gatsby-head`, true)
 
+        if (
+          clonedNode.getAttribute(ITEM_PROP_WORKAROUND_KEY) ===
+          ITEM_PROP_WORKAROUND_VALUE
+        ) {
+          clonedNode.removeAttribute(ITEM_PROP_WORKAROUND_KEY)
+        }
+
         // This is a hack to make script tags work
         // TODO(serhalp): Explain what this is solving
         if (clonedNode.nodeName.toLowerCase() === `script`) {
-          clonedNode = cloneNodeWithoutNS(clonedNode)
-        }
-        // Recreate <title> elements in the HTML namespace to ensure `document.title` updates. When
-        // rendered inside an SVG (React 19 workaround), <title> elements inherit the SVG namespace
-        // (immutable on DOM nodes) and won't trigger an update of `document.title` when inserted in <head>.
-        if (clonedNode.nodeName.toLowerCase() === `title`) {
           clonedNode = cloneNodeWithoutNS(clonedNode)
         }
         // Duplicate ids are not allowed in the head, so we need to dedupe them
@@ -185,9 +191,7 @@ export function getValidHeadNodesAndAttributes(
           validHeadNodes.push(clonedNode)
         }
       }
-    } else if (
-      !node.attributes.getNamedItem(`data-gatsby-head-react-19-workaround`)
-    ) {
+    } else {
       warnForInvalidTag(nodeName)
     }
 

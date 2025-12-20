@@ -18,21 +18,16 @@ export default function HeadFunctionExportBasic() {
       >
         Navigate to without head export
       </Link>
+      <p data-testid="linked-css-paragraph">
+        Just some paragraph to test if linked css properly applies
+      </p>
     </>
   )
 }
 
 export function Head() {
-  const {
-    base,
-    title,
-    meta,
-    noscript,
-    style,
-    link,
-    extraMeta,
-    jsonLD,
-  } = data.static
+  const { base, title, meta, noscript, style, link, extraMeta, jsonLD } =
+    data.static
 
   return (
     <>
