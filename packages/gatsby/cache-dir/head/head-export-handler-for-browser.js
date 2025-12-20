@@ -3,14 +3,12 @@ import { useEffect } from "react"
 import { StaticQueryContext } from "gatsby"
 import { LocationProvider } from "@gatsbyjs/reach-router"
 
-import {
-  ITEM_PROP_WORKAROUND_KEY,
-  ITEM_PROP_WORKAROUND_VALUE,
-  VALID_NODE_NAMES,
-} from "./constants"
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
-import { Html, Body } from "./components/head-components"
+import {
+  IsHeadRenderContext,
+  getValidHeadComponentReplacements,
+} from "./components/head-components"
 import {
   headExportValidator,
   filterHeadProps,
@@ -105,29 +103,25 @@ if (process.env.BUILD_STAGE === `develop`) {
 // which prevents React from hoisting those elements:
 // https://github.com/facebook/react/blob/50e7ec8a694072fd6fcd52182df8a75211bf084d/packages/react-dom-bindings/src/client/ReactFiberConfigDOM.js#L5824
 // we later will remove this attribute if it has our custom value before appending to real head.
-const IsHeadRenderContext = React.createContext(false)
+
 // De-risk monkey patch by only applying it when needed (React 19+, not React 18)
 const reactMajor = parseInt(React.version.split(`.`)[0], 10)
-if (reactMajor !== 18) {
+if (reactMajor !== 18 && !React.createElement.headPatched) {
   const originalCreateElement = React.createElement
+  const validHeadComponentReplacements = getValidHeadComponentReplacements(
+    originalCreateElement,
+    false
+  )
   React.createElement = function patchedCreateElement(type, props, ...rest) {
-    if (VALID_NODE_NAMES.includes(type)) {
-      const isHeadRender = React.useContext(IsHeadRenderContext)
-      // De-risk monkey patch by only applying it within a `Head()` render.
-      if (isHeadRender) {
-        if (type === `html` || type === `body`) {
-          type = type === `html` ? Html : Body
-        } else {
-          props = {
-            [ITEM_PROP_WORKAROUND_KEY]: ITEM_PROP_WORKAROUND_VALUE,
-            ...props,
-          }
-        }
-      }
+    const headReplacement = validHeadComponentReplacements.get(type)
+    if (headReplacement) {
+      type = headReplacement
     }
 
     return originalCreateElement.call(React, type, props, ...rest)
   }
+
+  React.createElement.headPatched = true
 }
 export function headHandlerForBrowser({
   pageComponent,

@@ -17,9 +17,8 @@ import {
   ITEM_PROP_WORKAROUND_KEY,
   ITEM_PROP_WORKAROUND_VALUE,
   HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY,
-  VALID_NODE_NAMES,
 } from "./constants"
-import { Html, Body } from "./components/head-components"
+import { getValidHeadComponentReplacements } from "./components/head-components"
 import { apiRunner } from "../api-runner-ssr"
 
 export function applyHtmlAndBodyAttributesSSR(
@@ -133,17 +132,15 @@ let needToRevertCreateElementPatch = false
 const reactMajor = parseInt(React.version.split(`.`)[0], 10)
 if (reactMajor !== 18) {
   const originalCreateElement = React.createElement
+  const validHeadComponentReplacements = getValidHeadComponentReplacements(
+    originalCreateElement,
+    true
+  )
 
   function patchedCreateElement(type, props, ...rest) {
-    if (VALID_NODE_NAMES.includes(type)) {
-      if (type === `html` || type === `body`) {
-        type = type === `html` ? Html : Body
-      } else {
-        props = {
-          [ITEM_PROP_WORKAROUND_KEY]: ITEM_PROP_WORKAROUND_VALUE,
-          ...props,
-        }
-      }
+    const headReplacement = validHeadComponentReplacements.get(type)
+    if (headReplacement) {
+      type = headReplacement
     }
 
     return originalCreateElement.call(React, type, props, ...rest)
