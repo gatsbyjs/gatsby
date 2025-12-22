@@ -6,6 +6,10 @@ import { LocationProvider } from "@gatsbyjs/reach-router"
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
 import {
+  IsHeadRenderContext,
+  getValidHeadComponentReplacements,
+} from "./components/head-components"
+import {
   headExportValidator,
   filterHeadProps,
   diffNodes,
@@ -85,16 +89,6 @@ if (process.env.BUILD_STAGE === `develop`) {
   })
 }
 
-// TODO(serhalp): Expose these as a new public API to allows us to gradually phase out
-// the existing `<html>` and `<body>` features in the Head API, allowing us to remove
-// the various workounds we have in place for React 19.
-function Html(props) {
-  return <div data-original-tag="html" {...props} />
-}
-function Body(props) {
-  return <div data-original-tag="body" {...props} />
-}
-
 // React 19 does not allow rendering a second `<html>` or `<body>` anywhere in the tree:
 // https://github.com/facebook/react/blob/50e7ec8a694072fd6fcd52182df8a75211bf084d/packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js#L3739
 // Unfortunately, our Head API relies on users being able to render these elements, which we then
@@ -104,21 +98,30 @@ function Body(props) {
 // Head and replace them with custom components that render as `<div>`s with a
 // `data-original-tag` attribute. We can then use this attribute later to apply
 // attributes to the real `<html>` and `<body>` elements.
-const IsHeadRenderContext = React.createContext(false)
+// Additionally other head elements are subject to React's new hoisting behavior,
+// which has some differences from how Gatsby Head API works, so we do append `itemProp`
+// which prevents React from hoisting those elements:
+// https://github.com/facebook/react/blob/50e7ec8a694072fd6fcd52182df8a75211bf084d/packages/react-dom-bindings/src/client/ReactFiberConfigDOM.js#L5824
+// we later will remove this attribute if it has our custom value before appending to real head.
+
 // De-risk monkey patch by only applying it when needed (React 19+, not React 18)
 const reactMajor = parseInt(React.version.split(`.`)[0], 10)
-if (reactMajor !== 18) {
+if (reactMajor !== 18 && !React.createElement.headPatched) {
   const originalCreateElement = React.createElement
-  React.createElement = (type, ...rest) => {
-    if (type === `html` || type === `body`) {
-      const isHeadRender = React.useContext(IsHeadRenderContext)
-      // De-risk monkey patch by only applying it within a `Head()` render.
-      if (isHeadRender) {
-        type = type === `html` ? Html : Body
-      }
+  const validHeadComponentReplacements = getValidHeadComponentReplacements(
+    originalCreateElement,
+    false
+  )
+  React.createElement = function patchedCreateElement(type, props, ...rest) {
+    const headReplacement = validHeadComponentReplacements.get(type)
+    if (headReplacement) {
+      type = headReplacement
     }
-    return originalCreateElement(type, ...rest)
+
+    return originalCreateElement.call(React, type, props, ...rest)
   }
+
+  React.createElement.headPatched = true
 }
 export function headHandlerForBrowser({
   pageComponent,
@@ -132,13 +135,7 @@ export function headHandlerForBrowser({
       const { render } = reactDOMUtils()
 
       const HeadElement = (
-        // Wrap in an SVG to work around conflict between React 19's new document metadata tag
-        // hoisting and Gatsby's own preexisting Head API. React will leave metadata tags (like
-        // `<title>`) with an `<svg>` ancestor intact, letting Gatsby process them as usual. See
-        // https://github.com/facebook/react/blob/fd524fe02a86c3e92a207d90da970941320f337f/packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js#L765-L779.
-        <svg data-gatsby-head-react-19-workaround="true">
-          <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
-        </svg>
+        <pageComponent.Head {...filterHeadProps(pageComponentProps)} />
       )
 
       const WrapHeadElement = apiRunner(

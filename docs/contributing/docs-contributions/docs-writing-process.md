@@ -26,8 +26,6 @@ A GitHub issue for new learning material should indicate the format. Is it a Ref
 
 Does docs coverage exist anywhere on `gatsbyjs.com`? If so, would an alternative format help provide information for Gatsby learners of different skill and experience levels? For example, if a tutorial exists but there is no coverage in Reference Guides, adding more content in a different format would benefit users.
 
-Please follow the [Gatsby blog post guidelines](/contributing/blog-contributions/) and do not suggest blog posts when what is needed is user documentation.
-
 ## Gathering and validating supporting information
 
 Writing an effective doc that meets the needs of Gatsby users requires gathering information from various sources and applying those concepts to your original writing. You must digest and validate the details you uncover and understand them enough to describe them in a way that users of multiple skill levels can learn.
@@ -71,6 +69,5 @@ Apply feedback from pull request reviews in order for them to be accepted. Furth
 - [How to File an Issue](/contributing/how-to-file-an-issue/)
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/)
 - [Markdown Syntax Doc](/docs/reference/markdown-syntax/)
-- [Blog Post Guidelines](/contributing/blog-contributions/)
 - [Docs site setup instructions](/contributing/docs-contributions/#docs-site-setup-instructions)
 - [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)
