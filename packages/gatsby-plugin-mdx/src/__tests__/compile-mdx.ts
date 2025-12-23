@@ -3,7 +3,7 @@ import path from "path"
 import { mockGatsbyApi } from "../__fixtures__/test-utils"
 
 import { compileMDX, compileMDXWithCustomOptions } from "../compile-mdx"
-import { CompileOptions } from "@mdx-js/mdx"
+import type { CompileOptions } from "@mdx-js/mdx"
 
 const exampleMdxPath = path.resolve(
   __dirname,
