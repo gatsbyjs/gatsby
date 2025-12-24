@@ -12,6 +12,13 @@ const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
 const { parse } = require(`node-html-parser`)
 const styleToOjbect = require(`style-to-object`)
+
+import {
+  ITEM_PROP_WORKAROUND_KEY,
+  ITEM_PROP_WORKAROUND_VALUE,
+  HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY,
+} from "./constants"
+import { getValidHeadComponentReplacements } from "./components/head-components"
 import { apiRunner } from "../api-runner-ssr"
 
 export function applyHtmlAndBodyAttributesSSR(
@@ -43,19 +50,22 @@ export function getValidHeadNodesAndAttributesSSR(
 
     if (!isElementType(node)) continue
 
-    if (isValidNodeName(rawTagName)) {
-      if (rawTagName === `html` || rawTagName === `body`) {
+    const NodeName =
+      node.attributes?.[HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY] ?? rawTagName
+
+    if (isValidNodeName(NodeName)) {
+      if (NodeName === `html` || NodeName === `body`) {
         const { style, ...nonStyleAttributes } = node.attributes
 
-        htmlAndBodyAttributes[rawTagName] = {
-          ...htmlAndBodyAttributes[rawTagName],
+        htmlAndBodyAttributes[NodeName] = {
+          ...htmlAndBodyAttributes[NodeName],
           ...nonStyleAttributes,
         }
 
         // Unfortunately renderToString converts inline styles to a string, so we have to convert them back to an object
         if (style) {
-          htmlAndBodyAttributes[rawTagName].style = {
-            ...htmlAndBodyAttributes[rawTagName]?.style,
+          htmlAndBodyAttributes[NodeName].style = {
+            ...htmlAndBodyAttributes[NodeName]?.style,
             ...styleToOjbect(style),
           }
         }
@@ -63,9 +73,15 @@ export function getValidHeadNodesAndAttributesSSR(
         let element
         const attributes = { ...node.attributes, "data-gatsby-head": true }
 
-        if (rawTagName === `script` || rawTagName === `style`) {
+        if (
+          attributes[ITEM_PROP_WORKAROUND_KEY] === ITEM_PROP_WORKAROUND_VALUE
+        ) {
+          delete attributes[ITEM_PROP_WORKAROUND_KEY]
+        }
+
+        if (NodeName === `script` || NodeName === `style`) {
           element = (
-            <node.rawTagName
+            <NodeName
               {...attributes}
               dangerouslySetInnerHTML={{
                 __html: node.text,
@@ -75,11 +91,9 @@ export function getValidHeadNodesAndAttributesSSR(
         } else {
           element =
             node.textContent.length > 0 ? (
-              <node.rawTagName {...attributes}>
-                {node.textContent}
-              </node.rawTagName>
+              <NodeName {...attributes}>{node.textContent}</NodeName>
             ) : (
-              <node.rawTagName {...attributes} />
+              <NodeName {...attributes} />
             )
         }
 
@@ -110,6 +124,44 @@ export function getValidHeadNodesAndAttributesSSR(
   return { validHeadNodes, htmlAndBodyAttributes }
 }
 
+// see explanation in "head-export-handler-for-browser.js" module for reasons behind this patching
+let applyCreateElementPatch = undefined
+let revertCreateElementPatch = undefined
+let needToRevertCreateElementPatch = false
+
+const reactMajor = parseInt(React.version.split(`.`)[0], 10)
+if (reactMajor !== 18) {
+  const originalCreateElement = React.createElement
+  const validHeadComponentReplacements = getValidHeadComponentReplacements(
+    originalCreateElement,
+    true
+  )
+
+  function patchedCreateElement(type, props, ...rest) {
+    const headReplacement = validHeadComponentReplacements.get(type)
+    if (headReplacement) {
+      type = headReplacement
+    }
+
+    return originalCreateElement.call(React, type, props, ...rest)
+  }
+
+  applyCreateElementPatch = () => {
+    needToRevertCreateElementPatch = true
+    React.createElement = patchedCreateElement
+  }
+
+  revertCreateElementPatch = () => {
+    if (needToRevertCreateElementPatch) {
+      React.createElement = originalCreateElement
+      needToRevertCreateElementPatch = false
+    }
+  }
+}
+
+// if this sync function is changed to async one, make sure to cover potential React.createElement patching as
+// current handling relies on it being sync and we can just modify React.createElement temporarily without checking context of render
+// (check how it's done in "head-export-handler-for-browser.js" module for potential solution)
 export function headHandlerForSSR({
   pageComponent,
   setHeadComponents,
@@ -120,64 +172,66 @@ export function headHandlerForSSR({
   pagePath,
 }) {
   if (pageComponent?.Head) {
-    headExportValidator(pageComponent.Head)
+    try {
+      headExportValidator(pageComponent.Head)
 
-    function HeadRouteHandler(props) {
-      const _props = {
-        ...props,
-        ...pageData.result,
-        params: {
-          ...grabMatchParams(props.location.pathname),
-          ...(pageData.result?.pageContext?.__params || {}),
-        },
+      function HeadRouteHandler(props) {
+        const _props = {
+          ...props,
+          ...pageData.result,
+          params: {
+            ...grabMatchParams(props.location.pathname),
+            ...(pageData.result?.pageContext?.__params || {}),
+          },
+        }
+
+        const HeadElement = <pageComponent.Head {...filterHeadProps(_props)} />
+
+        const headWithWrapRootElement = apiRunner(
+          `wrapRootElement`,
+          { element: HeadElement },
+          HeadElement,
+          ({ result }) => {
+            return { element: result }
+          }
+        ).pop()
+
+        return headWithWrapRootElement
       }
 
-      const HeadElement = (
-        // Wrap in an SVG to work around conflict between React 19's new document metadata tag
-        // hoisting and Gatsby's own preexisting Head API. React will leave metadata tags (like
-        // `<title>`) with an `<svg>` ancestor intact, letting Gatsby process them as usual.
-        // See
-        // https://github.com/facebook/react/blob/fd524fe02a86c3e92a207d90da970941320f337f/packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js#L765-L779.
-        <svg data-gatsby-head-react-19-workaround="true">
-          <pageComponent.Head {...filterHeadProps(_props)} />
-        </svg>
+      const routerElement = (
+        <StaticQueryContext.Provider value={staticQueryContext}>
+          <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+            <Router
+              baseuri={__BASE_PATH__}
+              component={({ children }) => <>{children}</>}
+            >
+              <HeadRouteHandler path="/*" />
+            </Router>
+          </ServerLocation>
+        </StaticQueryContext.Provider>
       )
 
-      const headWithWrapRootElement = apiRunner(
-        `wrapRootElement`,
-        { element: HeadElement },
-        HeadElement,
-        ({ result }) => {
-          return { element: result }
-        }
-      ).pop()
+      applyCreateElementPatch?.()
 
-      return headWithWrapRootElement
+      const rawString = renderToString(routerElement)
+
+      revertCreateElementPatch?.()
+
+      const rootNode = parse(rawString)
+      const { validHeadNodes, htmlAndBodyAttributes } =
+        getValidHeadNodesAndAttributesSSR(rootNode)
+
+      applyHtmlAndBodyAttributesSSR(htmlAndBodyAttributes, {
+        setHtmlAttributes,
+        setBodyAttributes,
+      })
+
+      setHeadComponents(validHeadNodes)
+    } catch (e) {
+      // make sure that we don't leave this function without reverting the patch
+      revertCreateElementPatch?.()
+      throw e
     }
-
-    const routerElement = (
-      <StaticQueryContext.Provider value={staticQueryContext}>
-        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-          <Router
-            baseuri={__BASE_PATH__}
-            component={({ children }) => <>{children}</>}
-          >
-            <HeadRouteHandler path="/*" />
-          </Router>
-        </ServerLocation>
-      </StaticQueryContext.Provider>
-    )
-
-    const rawString = renderToString(routerElement)
-    const rootNode = parse(rawString)
-    const { validHeadNodes, htmlAndBodyAttributes } =
-      getValidHeadNodesAndAttributesSSR(rootNode)
-
-    applyHtmlAndBodyAttributesSSR(htmlAndBodyAttributes, {
-      setHtmlAttributes,
-      setBodyAttributes,
-    })
-
-    setHeadComponents(validHeadNodes)
   }
 }
