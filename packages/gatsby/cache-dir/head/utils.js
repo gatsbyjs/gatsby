@@ -1,4 +1,9 @@
-import { VALID_NODE_NAMES } from "./constants"
+import {
+  ITEM_PROP_WORKAROUND_KEY,
+  ITEM_PROP_WORKAROUND_VALUE,
+  HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY,
+  VALID_NODE_NAMES,
+} from "./constants"
 
 /**
  * Filter the props coming from a page down to just the ones that are relevant for head.
@@ -117,20 +122,20 @@ export function getValidHeadNodesAndAttributes(
   const seenIds = new Map()
   const validHeadNodes = []
 
-  // Filter out non-element nodes before looping since we don't care about them
   for (const node of rootNode.childNodes) {
-    const nodeName =
-      node.attributes?.getNamedItem(`data-original-tag`)?.value ??
-      node.nodeName.toLowerCase()
-    const id = node.attributes?.id?.value
-
+    // Filter out non-element nodes before looping since we don't care about them
     if (!isElementType(node)) continue
+
+    const nodeName =
+      node.attributes?.getNamedItem(HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY)
+        ?.value ?? node.nodeName.toLowerCase()
+    const id = node.attributes?.id?.value
 
     if (isValidNodeName(nodeName)) {
       // <html> and <body> tags are treated differently, in that we don't render them, we only extract the attributes and apply them separetely
       if (nodeName === `html` || nodeName === `body`) {
         for (const attribute of node.attributes) {
-          if (attribute.name === `data-original-tag`) continue
+          if (attribute.name === HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY) continue
 
           const isStyleAttribute = attribute.name === `style`
 
@@ -156,9 +161,17 @@ export function getValidHeadNodesAndAttributes(
         let clonedNode = node.cloneNode(true)
         clonedNode.setAttribute(`data-gatsby-head`, true)
 
-        // // This is hack to make script tags work
+        if (
+          clonedNode.getAttribute(ITEM_PROP_WORKAROUND_KEY) ===
+          ITEM_PROP_WORKAROUND_VALUE
+        ) {
+          clonedNode.removeAttribute(ITEM_PROP_WORKAROUND_KEY)
+        }
+
+        // This is a hack to make script tags work
+        // TODO(serhalp): Explain what this is solving
         if (clonedNode.nodeName.toLowerCase() === `script`) {
-          clonedNode = massageScript(clonedNode)
+          clonedNode = cloneNodeWithoutNS(clonedNode)
         }
         // Duplicate ids are not allowed in the head, so we need to dedupe them
         if (id) {
@@ -178,9 +191,7 @@ export function getValidHeadNodesAndAttributes(
           validHeadNodes.push(clonedNode)
         }
       }
-    } else if (
-      !node.attributes.getNamedItem(`data-gatsby-head-react-19-workaround`)
-    ) {
+    } else {
       warnForInvalidTag(nodeName)
     }
 
@@ -195,14 +206,19 @@ export function getValidHeadNodesAndAttributes(
   return { validHeadNodes, htmlAndBodyAttributes }
 }
 
-function massageScript(node) {
-  const script = document.createElement(`script`)
+/**
+ * Recreate an element in the HTML namespace.
+ *
+ * This is similar to `cloneNode()` but reinitializes immutable properties like the namespace.
+ */
+function cloneNodeWithoutNS(node) {
+  const clonedNode = document.createElement(node.nodeName)
   for (const attr of node.attributes) {
-    script.setAttribute(attr.name, attr.value)
+    clonedNode.setAttribute(attr.name, attr.value)
   }
-  script.innerHTML = node.innerHTML
+  clonedNode.innerHTML = node.innerHTML
 
-  return script
+  return clonedNode
 }
 
 export function isValidNodeName(nodeName) {

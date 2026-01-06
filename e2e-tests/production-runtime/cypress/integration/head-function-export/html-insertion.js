@@ -14,10 +14,12 @@ Cypress.on("uncaught:exception", err => {
 describe(`Head function export html insertion`, () => {
   it(`should work with static data`, () => {
     cy.visit(page.basic).waitForRouteChange()
+
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.static.base)
     cy.getTestElement(`title`).should(`have.text`, data.static.title)
+    cy.title().should(`eq`, data.static.title)
     cy.getTestElement(`meta`)
       .invoke(`attr`, `content`)
       .should(`equal`, data.static.meta)
@@ -31,10 +33,12 @@ describe(`Head function export html insertion`, () => {
 
   it(`should work with data from a page query`, () => {
     cy.visit(page.pageQuery).waitForRouteChange()
+
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.queried.base)
     cy.getTestElement(`title`).should(`have.text`, data.queried.title)
+    cy.title().should(`eq`, data.queried.title)
     cy.getTestElement(`meta`)
       .invoke(`attr`, `content`)
       .should(`equal`, data.queried.meta)
@@ -47,10 +51,12 @@ describe(`Head function export html insertion`, () => {
 
   it(`should work when a Head function with static data is re-exported from the page`, () => {
     cy.visit(page.reExport).waitForRouteChange()
+
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.static.base)
     cy.getTestElement(`title`).should(`have.text`, data.static.title)
+    cy.title().should(`eq`, data.static.title)
     cy.getTestElement(`meta`)
       .invoke(`attr`, `content`)
       .should(`equal`, data.static.meta)
@@ -64,10 +70,12 @@ describe(`Head function export html insertion`, () => {
 
   it(`should work when an imported Head component with queried data is used`, () => {
     cy.visit(page.staticQuery).waitForRouteChange()
+
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.queried.base)
     cy.getTestElement(`title`).should(`have.text`, data.queried.title)
+    cy.title().should(`eq`, data.queried.title)
     cy.getTestElement(`meta`)
       .invoke(`attr`, `content`)
       .should(`equal`, data.queried.meta)
@@ -80,10 +88,12 @@ describe(`Head function export html insertion`, () => {
 
   it(`should work in a DSG page (exporting function named config)`, () => {
     cy.visit(page.dsg).waitForRouteChange()
+
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.dsg.base)
     cy.getTestElement(`title`).should(`have.text`, data.dsg.title)
+    cy.title().should(`eq`, data.dsg.title)
     cy.getTestElement(`meta`)
       .invoke(`attr`, `content`)
       .should(`equal`, data.dsg.meta)
@@ -96,10 +106,12 @@ describe(`Head function export html insertion`, () => {
 
   it(`should work in an SSR page (exporting function named getServerData)`, () => {
     cy.visit(page.ssr).waitForRouteChange()
+
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.ssr.base)
     cy.getTestElement(`title`).should(`have.text`, data.ssr.title)
+    cy.title().should(`eq`, data.ssr.title)
     cy.getTestElement(`meta`)
       .invoke(`attr`, `content`)
       .should(`equal`, data.ssr.meta)

@@ -54,7 +54,7 @@ Please share your feedback and any issues you encounter directly into the [corre
 
 We've seen a handful of sites struggling with long `schema building` and `createPages` steps. In this release, we've upgraded our external [`graphql-compose`](https://graphql-compose.github.io/) dependency to v9 to improve these steps by at least 30-50% for schemas/queries with many relationships. For example, one of our customers has seen improvements for `createPages` of 786s to 20s. This update is recommended to everyone and doesn't necessitate any changes on your end.
 
-More information can be found in the [PR #34504](https://github.com/gatsbyjs/gatsby/pull/3504).
+More information can be found in the [PR #34504](https://github.com/gatsbyjs/gatsby/pull/34504).
 
 ## Notable Bugfixes & Improvements
 

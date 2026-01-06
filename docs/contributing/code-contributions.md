@@ -12,7 +12,7 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 
 ### Install Node and Yarn
 
-- Ensure you have the latest **LTS** version of Node installed (`>= 18`) by executing `node --version`
+- Ensure you're on a supported Node version (18, 20, 22, or 24) by executing `node --version`
 - [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
 - Ensure you have the version 1 of Yarn installed (`^1`) by executing `yarn --version`. The Gatsby monorepo does not yet support later versions of Yarn.
 
@@ -104,7 +104,7 @@ If you create a loader or plugin, we would love for you to open source it and pu
 
 Gatsby's policy is that "Using" example sites (like those in the [examples part of the repo](https://github.com/gatsbyjs/gatsby/tree/master/examples)) should only be around plugins that are maintained by the core team as it's hard to keep things up to date otherwise.
 
-To contribute example sites, it is recommended to create your own GitHub repo and link to it from your source plugin, etc. You can also create a starter project and submit it to the [starter showcase](/starters/submissions).
+To contribute example sites, it is recommended to create your own GitHub repo and link to it from your source plugin, etc.
 
 ## Debugging the build process
 

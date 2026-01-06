@@ -23,6 +23,6 @@ This is a Gatsby e-commerce example based on https://www.gatsbyjs.com/tutorial/e
 - run `npm install`
 - run `gatsby develop`
 
-### 💫 Build, Preview, and Deploy to Gatsby Cloud
+### 💫 Build, Preview, and Deploy to Netlify
 
 [![Deploy to Gatsby](https://www.gatsbyjs.com/deploynow.png "Deploy to Gatsby")](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial)

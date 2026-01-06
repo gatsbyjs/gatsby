@@ -7,6 +7,9 @@ export default function HeadFunctionExportPageQuery() {
     <>
       <h1>I test usage for the Head function export with a page query</h1>
       <p>Some other words</p>
+      <p data-testid="linked-css-paragraph">
+        Just some paragraph to test if linked css properly applies
+      </p>
       <Link data-testid="gatsby-link" to="/head-function-export/basic">
         Navigate to basic via Gatsby Link
       </Link>
