@@ -48,7 +48,7 @@ Take a project powered by Shopify as an example. You have your listing of all pr
 
 ![Side-by-side view of a Shopify store instance on the left, and the preview on the right. At the bottom the terminal shows that after the change only one page was rebuilt](./incremental-builds-in-oss.jpg)
 
-The screenshot is taken from a talk about Gatsby v3 at [GatsbyConf](https://gatsbyconf.com/). You can view the video showcasing this feature on [YouTube](https://www.youtube.com/watch?v=tO-5qFa_hH8).
+The screenshot is taken from a talk about Gatsby v3 at GatsbyConf. You can view the video showcasing this feature on [YouTube](https://www.youtube.com/watch?v=tO-5qFa_hH8).
 
 ### How does it work?
 
