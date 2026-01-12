@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.16",
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.28.4",
     "@graphql-tools/links": "^8.3.36",
     "@graphql-tools/utils": "^8.13.1",
     "@graphql-tools/wrap": "^8.5.1",

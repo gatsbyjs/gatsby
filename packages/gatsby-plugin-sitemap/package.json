@@ -10,7 +10,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.28.4",
     "common-tags": "^1.8.2",
     "minimatch": "^3.1.2",
     "sitemap": "^7.1.1"
