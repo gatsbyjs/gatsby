@@ -11,7 +11,7 @@
     "@opentelemetry/semantic-conventions": "0.26.0",
     "agentkeepalive": "^4.5.0",
     "bluebird": "^3.7.2",
-    "body-parser": "^1.20.3",
+    "body-parser": "^2.2.2",
     "fastq": "^1.17.1",
     "gatsby-plugin-utils": "^4.17.0-next.0",
     "gatsby-source-filesystem": "^5.17.0-next.0",
