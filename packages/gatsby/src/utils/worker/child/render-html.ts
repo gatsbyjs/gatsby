@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 import fs from "fs-extra"
-import Bluebird from "bluebird"
 import * as path from "path"
+import { mapWithConcurrency } from "../../async-utils"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
 
@@ -384,7 +384,7 @@ export const renderHTMLProd = async ({
     }
   }
 
-  await Bluebird.map(
+  await mapWithConcurrency(
     paths,
     async pagePath => {
       try {
@@ -442,7 +442,7 @@ export const renderHTMLProd = async ({
         }
       }
     },
-    { concurrency: 2 }
+    2
   )
 
   return {
@@ -480,7 +480,7 @@ export const renderHTMLDev = async ({
     lastSessionId = sessionId
   }
 
-  return Bluebird.map(
+  return mapWithConcurrency(
     paths,
     async pagePath => {
       try {
@@ -499,7 +499,7 @@ export const renderHTMLDev = async ({
         throw e
       }
     },
-    { concurrency: 2 }
+    2
   )
 }
 

@@ -6,7 +6,7 @@ import {
   PluginEntry,
   IPluginEntryWithParentDir,
 } from "../../utils/merge-gatsby-config"
-import { mapSeries } from "bluebird"
+import { mapSeries } from "../../utils/async-utils"
 import { flattenDeep, isEqual, isFunction, uniqWith } from "lodash"
 import DebugCtor from "debug"
 import { preferDefault } from "../prefer-default"
@@ -158,7 +158,7 @@ export async function loadThemes(
   config: IGatsbyConfigInput
   themes: Array<IThemeObj>
 }> {
-  const themesA = await mapSeries(
+  const themesNested = await mapSeries(
     config.plugins || [],
     async (themeSpec: PluginEntry) => {
       const themeObj = await resolveTheme(
@@ -169,7 +169,8 @@ export async function loadThemes(
       )
       return processTheme(themeObj, { rootDir })
     }
-  ).then(arr => flattenDeep(arr))
+  )
+  const themesA = flattenDeep(themesNested)
 
   // log out flattened themes list to aid in debugging
   debug(themesA)
@@ -177,49 +178,45 @@ export async function loadThemes(
   // map over each theme, adding the theme itself to the plugins
   // list in the config for the theme. This enables the usage of
   // gatsby-node, etc in themes.
-  return (
-    mapSeries(
-      themesA,
-      ({ themeName, themeConfig = {}, themeSpec, themeDir, parentDir }) => {
-        return {
-          ...themeConfig,
-          plugins: [
-            ...(themeConfig.plugins || []).map(plugin =>
-              normalizePluginEntry(plugin, themeDir)
-            ),
-            // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
-            {
-              resolve: themeName,
-              options: typeof themeSpec === `string` ? {} : themeSpec.options,
-              parentDir,
-            },
-          ],
-        }
+  const themeConfigs = themesA.map(
+    ({ themeName, themeConfig = {}, themeSpec, themeDir, parentDir }) => {
+      return {
+        ...themeConfig,
+        plugins: [
+          ...(themeConfig.plugins || []).map(plugin =>
+            normalizePluginEntry(plugin, themeDir)
+          ),
+          // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
+          {
+            resolve: themeName,
+            options: typeof themeSpec === `string` ? {} : themeSpec.options,
+            parentDir,
+          },
+        ],
       }
-    )
-      /**
-       * themes resolve to a gatsby-config, so here we merge all of the configs
-       * into a single config, making sure to maintain the order in which
-       * they were defined so that later configs, like the user's site and
-       * children, can override functionality in earlier themes.
-       */
-      .reduce(mergeGatsbyConfig, {})
-      .then(newConfig => {
-        const mergedConfig = mergeGatsbyConfig(newConfig, {
-          ...config,
-          plugins: [
-            ...(config.plugins || []).map(plugin =>
-              normalizePluginEntry(plugin, rootDir)
-            ),
-          ],
-        })
-
-        mergedConfig.plugins = uniqWith(mergedConfig.plugins, isEqual)
-
-        return {
-          config: mergedConfig,
-          themes: themesA,
-        }
-      })
+    }
   )
+
+  /**
+   * themes resolve to a gatsby-config, so here we merge all of the configs
+   * into a single config, making sure to maintain the order in which
+   * they were defined so that later configs, like the user's site and
+   * children, can override functionality in earlier themes.
+   */
+  const newConfig = themeConfigs.reduce(mergeGatsbyConfig, {})
+  const mergedConfig = mergeGatsbyConfig(newConfig, {
+    ...config,
+    plugins: [
+      ...(config.plugins || []).map(plugin =>
+        normalizePluginEntry(plugin, rootDir)
+      ),
+    ],
+  })
+
+  mergedConfig.plugins = uniqWith(mergedConfig.plugins, isEqual)
+
+  return {
+    config: mergedConfig,
+    themes: themesA,
+  }
 }
