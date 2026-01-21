@@ -32,6 +32,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
+  "resolutions": {
+    "chokidar": "^3.6.0"
+  },
   "devDependencies": {
     "cross-env": "^7.0.3",
     "cypress": "^12.14.0",
