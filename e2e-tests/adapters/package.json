@@ -33,7 +33,8 @@
     "react-dom": "^18.2.0"
   },
   "resolutions": {
-    "chokidar": "^3.6.0"
+    "chokidar": "^3.6.0",
+    "lru-cache": "^10.4.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
