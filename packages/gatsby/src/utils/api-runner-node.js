@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const { bindActionCreators: origBindActionCreators } = require(`redux`)
@@ -55,15 +54,6 @@ function createContentDigest(node) {
     },
     fields: undefined,
   })
-}
-
-if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
-  // Unless specified - disable longStackTraces
-  // as this have severe perf penalty ( http://bluebirdjs.com/docs/api/promise.longstacktraces.html )
-  // This is mainly for `gatsby develop` due to NODE_ENV being set to development
-  // which cause bluebird to enable longStackTraces
-  // `gatsby build` (with NODE_ENV=production) already doesn't enable longStackTraces
-  Promise.config({ longStackTraces: false })
 }
 
 const nodeMutationsWrappers = {
