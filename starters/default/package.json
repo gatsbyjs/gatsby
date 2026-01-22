@@ -36,9 +36,5 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
-  },
-  "resolutions": {
-    "chokidar": "^3.6.0",
-    "lru-cache": "^10.4.3"
   }
 }
