@@ -13,6 +13,9 @@
     "react-dom": "^18.2.0",
     "tailwindcss": "^1.0.0"
   },
+  "resolutions": {
+    "chokidar": "^3.6.0"
+  },
   "devDependencies": {
     "cheerio": "1.0.0-rc.12",
     "cross-env": "^7.0.3",
