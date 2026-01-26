@@ -21,8 +21,7 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ## React 19
 
-> [!NOTE]
-> Note that, as of January 26 2026, **none of the React 19 security vulnerabilities** affect Gatsby.
+> 🔐 Note that, as of January 26 2026, **none of the React 19 security vulnerabilities** affect Gatsby.
 
 🚀 React 19 is here!
 
@@ -34,18 +33,15 @@ All packages' peer dependencies on `react` and `react-dom` have been extended fr
 
 All existing **stable** Gatsby functionality is intended to now work with React 19.
 
-by @serhalp in <https://github.com/gatsbyjs/gatsby/pull/39306>
+PR: <https://github.com/gatsbyjs/gatsby/pull/39306>
 
 ### Upgrade Guide
 
-> [!NOTE]
->
-> **Community** plugins may not have been updated yet to support React 19, so please check their repository for the current status. All plugins managed by the Gatsby team (in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository) have been updated.
+> ⚠️ **Community** plugins may not have been updated yet to support React 19, so please check their repository for the current status. All plugins managed by the Gatsby team (in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository) have been updated.
 
 To upgrade to React 19, first upgrade `gatsby` and all your dependencies that start with `gatsby-` to the latest version. (Check out [this guide](https://www.gatsbyjs.com/docs/reference/release-notes/upgrade-gatsby-and-dependencies/) if you need help with that.)
 
-> [!TIP]
-> If you use npm 7 or higher you’ll want to use the `--legacy-peer-deps` option. For example, if you use `gatsby` and `gatsby-plugin-postcss`:
+> 💬 If you use npm 7 or higher you’ll want to use the `--legacy-peer-deps` option. For example, if you use `gatsby` and `gatsby-plugin-postcss`:
 >
 > ```sh
 > npm install --legacy-peer-deps gatsby@latest gatsby-plugin-postcss@latest
@@ -85,7 +81,7 @@ In development, these errors also appear in Gatsby's Fast Refresh error overlay.
 
 Node.js 24 is now officially supported by Gatsby.
 
-by @serhalp in <https://github.com/gatsbyjs/gatsby/pull/39380> and <https://github.com/gatsbyjs/gatsby/pull/39398>
+PR: <https://github.com/gatsbyjs/gatsby/pull/39380> and <https://github.com/gatsbyjs/gatsby/pull/39398>
 
 ## Notable bugfixes & improvements
 
