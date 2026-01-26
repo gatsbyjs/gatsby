@@ -24,8 +24,9 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 > [!NOTE]
 > Note that, as of January 26 2026, **none of the React 19 security vulnerabilities** affect Gatsby.
 
-Better late than never? React 19 is now officially supported by Gatsby and all `gatsby-` packages
-maintained by the Gatsby team.
+🚀 React 19 is here!
+
+React 19 is now officially supported by Gatsby and all `gatsby-` packages maintained by the Gatsby team.
 
 This is not a breaking change. You can safely upgrade to this release while staying on React 18.
 
