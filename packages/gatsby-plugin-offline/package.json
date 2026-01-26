@@ -52,6 +52,6 @@
     "watch": "npm run build:sw-append -- --watch & npm run build:src -- --watch"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0 <26"
   }
 }

@@ -39,6 +39,6 @@
     "typegen": "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0 <26"
   }
 }

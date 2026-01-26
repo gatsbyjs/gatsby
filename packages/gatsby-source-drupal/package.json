@@ -31,7 +31,7 @@
     "cross-env": "^7.0.3"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0 <26"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
   "keywords": [
