@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.16.0/packages/create-gatsby) (2026-01-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)
+
+#### Other Changes
+
+- Revert "chore(release): Publish next pre-minor" ([3539ec8](https://github.com/gatsbyjs/gatsby/commit/3539ec8d8973e8eabbeb10734e3bb54bd831ac6c))
+
 ## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.15.0/packages/create-gatsby) (2025-08-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
