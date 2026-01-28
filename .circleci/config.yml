@@ -716,6 +716,8 @@ jobs:
         type: string
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
+      # used in e2e-tests/adapters/make-monorepo.sh
+      - run: apt-get update && apt-get install -y jq
       - e2e-test:
           test_path: e2e-tests/adapters
           test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test

@@ -11,7 +11,7 @@
     "directory": "packages/gatsby-parcel-namer-relative-to-cwd"
   },
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=18.0.0 <26",
     "parcel": "2.x"
   },
   "license": "MIT",
