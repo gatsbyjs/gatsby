@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@10.1.0/packages/gatsby-source-shopify) (2026-01-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)
+
+#### Features
+
+- update to ESM compatible version of CTF library [#39178](https://github.com/gatsbyjs/gatsby/issues/39178) [#39182](https://github.com/gatsbyjs/gatsby/issues/39182) ([3ccd1d8](https://github.com/gatsbyjs/gatsby/commit/3ccd1d8483b42387bccedf96e320d60719d1d147))
+
+#### Chores
+
+- remove Gatsby Discord references [#39351](https://github.com/gatsbyjs/gatsby/issues/39351) ([c3708b0](https://github.com/gatsbyjs/gatsby/commit/c3708b068abba3a26e5cf229d6d4dc5813884acd))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next pre-minor" ([3539ec8](https://github.com/gatsbyjs/gatsby/commit/3539ec8d8973e8eabbeb10734e3bb54bd831ac6c))
+- feat!(gatsby-source-shopify): upgrade from Shopify API version 2024-04 to 2025-01 [#39247](https://github.com/gatsbyjs/gatsby/issues/39247) ([132013c](https://github.com/gatsbyjs/gatsby/commit/132013cdd4d6dc5360c80a1ea814bcab2f748f88))
+- feat!(gatsby-source-shopify): upgrade from Shopify API version 2022-04 to 2024-04 [#39082](https://github.com/gatsbyjs/gatsby/issues/39082) ([8252e82](https://github.com/gatsbyjs/gatsby/commit/8252e826a25535de032fc3cbc685d9476e4474ce))
+
 ## [10.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@10.0.0/packages/gatsby-source-shopify) (2025-03-28)
 
 #### Other Changes
