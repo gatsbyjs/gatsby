@@ -158,7 +158,11 @@ export function getValidHeadNodesAndAttributes(
           }
         }
       } else {
-        let clonedNode = node.cloneNode(true)
+        // With React 19, elements may be created in the wrong namespace (e.g., SVG namespace
+        // instead of HTML namespace). Using cloneNode(true) preserves the incorrect namespace.
+        // We must recreate them in the HTML namespace so they work correctly (e.g.,
+        // HTMLMetaElement.name returns a string instead of undefined, which Lighthouse requires).
+        const clonedNode = cloneNodeWithoutNS(node)
         clonedNode.setAttribute(`data-gatsby-head`, true)
 
         if (
@@ -166,12 +170,6 @@ export function getValidHeadNodesAndAttributes(
           ITEM_PROP_WORKAROUND_VALUE
         ) {
           clonedNode.removeAttribute(ITEM_PROP_WORKAROUND_KEY)
-        }
-
-        // This is a hack to make script tags work
-        // TODO(serhalp): Explain what this is solving
-        if (clonedNode.nodeName.toLowerCase() === `script`) {
-          clonedNode = cloneNodeWithoutNS(clonedNode)
         }
         // Duplicate ids are not allowed in the head, so we need to dedupe them
         if (id) {
