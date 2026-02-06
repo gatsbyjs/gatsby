@@ -48,6 +48,6 @@
     "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0 <26"
   }
 }

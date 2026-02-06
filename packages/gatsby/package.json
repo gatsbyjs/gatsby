@@ -213,7 +213,7 @@
     "gatsby-sharp": "^1.17.0-next.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0 <26"
   },
   "files": [
     "adapters.js",
