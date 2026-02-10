@@ -27,7 +27,7 @@ In case you have missed the news, [Gatsby is joining Netlify](https://www.gatsby
 
 **Gatsby as a framework will continue to evolve and grow.** We’ve always shared with Netlify a mutual commitment to open-source and have never been more excited about Gatsby’s future. Many of Gatsby’s core contributors will join Netlify and continue to maintain the Gatsby framework.
 
-Be sure to join [our Discord](https://gatsby.dev/discord), follow [Gatsby](https://twitter.com/gatsbyjs) and [Netlify](https://twitter.com/Netlify) on Twitter or continue to read these release notes to know when we share our plans for the future.
+Follow [Gatsby](https://twitter.com/gatsbyjs) and [Netlify](https://twitter.com/Netlify) on Twitter or continue to read these release notes to know when we share our plans for the future.
 
 ## Head API supports context providers from `wrapRootElement`
 

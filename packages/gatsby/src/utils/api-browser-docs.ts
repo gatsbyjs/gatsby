@@ -261,3 +261,33 @@ export const onServiceWorkerActive = true
  * @param {pluginOptions} pluginOptions
  */
 export const onServiceWorkerRedundant = true
+
+/**
+ * Called when React catches an error during rendering, in a lifecycle method, or in the constructor of the whole tree.
+ * This corresponds to React 19's `onCaughtError` root option.
+ * @param {object} $0
+ * @param {Error} $0.error The error that was caught.
+ * @param {object} $0.errorInfo Additional error information containing componentStack.
+ * @param {pluginOptions} pluginOptions
+ * @example
+ * exports.onCaughtError = ({ error, errorInfo }) => {
+ *   console.log('Caught error:', error.message)
+ *   // Log to external error reporting service
+ * }
+ */
+export const onCaughtError = true
+
+/**
+ * Called when React receives an error that was thrown by an asynchronous event (e.g., setTimeout, requestIdleCallback, etc).
+ * This corresponds to React 19's `onUncaughtError` root option.
+ * @param {object} $0
+ * @param {Error} $0.error The error that was thrown.
+ * @param {object} $0.errorInfo Additional error information containing componentStack.
+ * @param {pluginOptions} pluginOptions
+ * @example
+ * exports.onUncaughtError = ({ error, errorInfo }) => {
+ *   console.error('Uncaught error:', error.message)
+ *   // Log to external error reporting service
+ * }
+ */
+export const onUncaughtError = true

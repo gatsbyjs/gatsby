@@ -93,7 +93,7 @@ Drupal now has Image CDN support. Enable it in your site by following the offici
 
 We updated our [default Starter template `gatsby-starter-default`](https://www.gatsbyjs.com/starters/gatsbyjs/gatsby-starter-default/) to contain references to documentation, tutorial, our monorepo examples folder, and more – and aligned its look-and-feel to that of our `gatsby new`/`npm init gatsby` experience. It shows you how to use TypeScript, Server Side Rendering, and Deferred Static Generation in your Gatsby application.
 
-![Preview of the new landing page. At the top it says "Welcome to Gatsby", below that it links to the separate subpages like "TypeScript" or "Server Side Rendering". Then four blocks linking out to sections like the tutorial or examples are shown. The footer contains links to Discord, Documentation, and more.](https://user-images.githubusercontent.com/16143594/167383192-e33e7b23-fa70-4a3f-8238-97f6273cecdc.png)
+![Preview of the new landing page. At the top it says "Welcome to Gatsby", below that it links to the separate subpages like "TypeScript" or "Server Side Rendering". Then four blocks linking out to sections like the tutorial or examples are shown. The footer contains links to Documentation and more.](https://user-images.githubusercontent.com/16143594/167383192-e33e7b23-fa70-4a3f-8238-97f6273cecdc.png)
 
 ## Notable bugfixes & improvements
 

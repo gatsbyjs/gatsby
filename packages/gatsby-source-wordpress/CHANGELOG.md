@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.17.0/packages/gatsby-source-wordpress) (2026-01-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)
+
+#### Bug Fixes
+
+- use more explicit node.js version range [#39398](https://github.com/gatsbyjs/gatsby/issues/39398) ([c355640](https://github.com/gatsbyjs/gatsby/commit/c35564071466681951402a04fb33ae34cc673a2b))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next pre-minor" ([3539ec8](https://github.com/gatsbyjs/gatsby/commit/3539ec8d8973e8eabbeb10734e3bb54bd831ac6c))
+
+## [7.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.16.0/packages/gatsby-source-wordpress) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+#### Features
+
+- support wp-graphql@2 [#39263](https://github.com/gatsbyjs/gatsby/issues/39263) ([d8cc254](https://github.com/gatsbyjs/gatsby/commit/d8cc2542d2507237c28dbbeac7770a409f13c707))
+
+#### Chores
+
+- remove Gatsby Discord references [#39351](https://github.com/gatsbyjs/gatsby/issues/39351) ([c3708b0](https://github.com/gatsbyjs/gatsby/commit/c3708b068abba3a26e5cf229d6d4dc5813884acd))
+
+## [7.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.15.0/packages/gatsby-source-wordpress) (2025-04-09)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Features
+
+- support wp-graphql@2 [#39263](https://github.com/gatsbyjs/gatsby/issues/39263) [#39269](https://github.com/gatsbyjs/gatsby/issues/39269) ([4c327b5](https://github.com/gatsbyjs/gatsby/commit/4c327b5c7724d851b2d495565002715a766405d3))
+
 ## [7.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.14.0/packages/gatsby-source-wordpress) (2024-11-06)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)

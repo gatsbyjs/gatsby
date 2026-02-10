@@ -88,6 +88,14 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
 
   const sizer = getSizer(layout, width, height)
 
+  // Memoize this { __html } object to work around an undocumented behavioral change in React 19:
+  // https://github.com/facebook/react/issues/31660.
+  const dangerouslySetInnerHTML = useMemo(() => {
+    return {
+      __html: sizer,
+    }
+  }, [sizer])
+
   useEffect(() => {
     if (!renderImageToStringPromise) {
       renderImageToStringPromise = import(`./lazy-hydrate`).then(
@@ -222,9 +230,7 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
     },
     className: `${wClass}${className ? ` ${className}` : ``}`,
     ref: root,
-    dangerouslySetInnerHTML: {
-      __html: sizer,
-    },
+    dangerouslySetInnerHTML,
     suppressHydrationWarning: true,
   })
 }

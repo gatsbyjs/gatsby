@@ -13,7 +13,7 @@
   </strong>
 </p>
 <p align="center">
-  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps. </br> It combines the control and scalability of dynamically rendered sites with the speed of static-site generation, creating a whole new web of possibilities.
+  Gatsby is a free and open-source framework based on React that helps developers build blazing fast websites and apps. <br /> It combines the control and scalability of dynamically rendered sites with the speed of static-site generation, creating a whole new web of possibilities.
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
@@ -34,9 +34,6 @@
   <a href="https://gatsbyjs.com/contributing/how-to-contribute/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
-  <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
-    <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @GatsbyJS" />
-  </a>
 </p>
 
 <h2 align="center">
@@ -52,9 +49,7 @@
   <span> · </span>
   <a href="https://www.gatsbyjs.com/contributing/how-to-contribute/">Contribute</a>
   <br />
-  Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>, <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
-  <span> & </span>
-  <a href="https://gatsby.dev/discord">Discord</a>
+  Support: <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
 </h2>
 
 Gatsby helps professional developers efficiently create maintainable, highly-performant, content-rich websites.
@@ -160,6 +155,6 @@ Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks
 
-Thanks go out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on Discord and GitHub Discussions.
+Thanks go out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on GitHub Discussions.
 
 A big part of what makes Gatsby great is each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.

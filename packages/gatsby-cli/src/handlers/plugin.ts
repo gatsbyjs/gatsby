@@ -18,9 +18,7 @@ Creating a plugin:
 - Creating a Local Plugin (https://www.gatsbyjs.com/docs/creating-a-local-plugin/)
 - Creating a Source Plugin (https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/creating-a-source-plugin/)
 - Creating a Transformer Plugin (https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/creating-a-transformer-plugin/)
-- Submit to Plugin Library (https://www.gatsbyjs.com/contributing/submit-to-plugin-library/)
 - Maintaining a Plugin (https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/maintaining-a-plugin/)
-- Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
 `)
       return
     case `ls`: {

@@ -35,7 +35,7 @@ We accept all types of contributions to [`packages`](https://github.com/gatsbyjs
 - [`gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby)
 - [`gatsby-core-utils/remote-file-utils`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils/src/remote-file-utils)
 
-For these two packages, we ask you to open a [feature request](#feature-requests) (or for larger changes an [RFC](/contributing/rfc-process/)) before opening PRs for features. Contributions, such as bug fixes and documentation updates, can be made without any prior interaction with the team and don't require a feature request/RFC.
+For these two packages, we ask you to open a [feature request](#feature-requests) before opening PRs for features. Contributions, such as bug fixes and documentation updates, can be made without any prior interaction with the team.
 
 ## Contributor levels
 
@@ -43,9 +43,9 @@ We recognize different degrees of contribution as levels, and most levels can be
 
 - **Being here** - Everyone's time is valuable, and the fact that you're here and contributing to Gatsby is amazing! Thank you for being a part of this journey with us.
 
-- **Being a positive member of our community** - Go above and beyond our Code of Conduct, and commit to healthy communication in pull requests, issue discussions, Discord conversations, and interactions outside of our community.
+- **Being a positive member of our community** - Go above and beyond our Code of Conduct, and commit to healthy communication in pull requests, issue discussions, and interactions outside of our community.
 
-Each level unlocks new privileges and responsibilities on Discord and GitHub. Below is a summary of each contributor level.
+Each level unlocks new privileges and responsibilities on GitHub. Below is a summary of each contributor level.
 
 ### Level 1 (L1) - Contributor
 
@@ -54,16 +54,16 @@ Have you done something (big or small) to contribute to the health, success, or 
 #### Recognized contributions
 
 - **GitHub:** Submitting a merged pull request
-- **GitHub:** Sending in a detailed feature request or RFC
+- **GitHub:** Sending in a detailed feature request
 - **GitHub:** Updating documentation
-- Helping people on GitHub, Discord, etc.
+- Helping people on GitHub and other platforms.
 - Answering questions on Stack Overflow, Twitter, etc.
 - Blogging, Vlogging, Podcasting, and Livestreaming about Gatsby
 - This list is incomplete! Similar contributions are also recognized.
 
 #### Privileges
 
-At this time we have no specific privileges for this role except that you can claim yourself [free Gatsby swag](/contributing/contributor-swag/). If you have ideas here please let us know!
+At this time we have no specific privileges for this role. If you have ideas here please let us know!
 
 #### Responsibilities
 
@@ -79,30 +79,24 @@ n/a
 
 The **Maintainer** role is available to any contributor who wants to join the team and take part in the long-term maintenance of Gatsby.
 
-The Maintainer role is critical to the long-term health of Gatsby. Maintainers support the **Team** members and together they act as the first line of defense when it comes to new issues, pull requests and Discord activity. Maintainers are most likely the first people that a user will interact with on Discord or GitHub.
+The Maintainer role is critical to the long-term health of Gatsby. Maintainers support the **Team** members and together they act as the first line of defense when it comes to new issues and pull requests. Maintainers are most likely the first people that a user will interact with on GitHub.
 
-**A Maintainer is not required to write code!** Some Maintainers spend most of their time inside of Discord, maintaining a healthy community there. Maintainers can also be thought of as **Moderators** on Discord and carry special privileges for moderation.
+**A Maintainer is not required to write code!** Some Maintainers focus on community support and can also be thought of as **Moderators** who carry special privileges for moderation.
 
 #### Recognized contributions
 
 There is no strict minimum number of contributions needed to reach this level, as long as you can show **sustained** involvement over some amount of time (at least a couple of weeks).
 
-- **GitHub:** Submitting non-trivial pull requests and RFCs
-- **GitHub:** Reviewing non-trivial pull requests and RFCs
-- **Discord:** Supporting users in Discord, especially in the "Help" category
-- **Discord:** Active participation in RFC calls and other events
-- **GitHub + Discord:** Triaging and confirming user issues
+- **GitHub:** Submitting non-trivial pull requests
+- **GitHub:** Reviewing non-trivial pull requests
+- Supporting users and participating in community events
+- **GitHub:** Triaging and confirming user issues
 - This list is incomplete! Similar contributions are also recognized.
 
 #### Privileges
 
 - All privileges of the [Contributor role](#level-1-l1---contributor), plus...
-- Invitation to the `@Maintainer` role on [Discord](https://gatsby.dev/discord)
 - Invitation to the `Maintainers` team on GitHub.
-- New name color on Discord: **Blue**.
-- Invitation to the private `#maintainers` channel on Discord.
-- Ability to moderate Discord to remove spam, harmful speech, etc.
-- Ability to join the `@Moderator` role on Discord (optional, opt-in).
 - Ability to review GitHub PRs.
 - Ability to vote on _some_ initiatives (see [Voting](#voting) below).
 
@@ -110,7 +104,6 @@ There is no strict minimum number of contributions needed to reach this level, a
 
 - Participate in the project as a team player.
 - Bring a friendly, welcoming voice to the Gatsby community.
-- Be active on Discord, especially in the "Help" category.
 - Triage new issues.
 - Review pull requests.
 - Merge some, non-trivial community pull requests.
@@ -118,7 +111,7 @@ There is no strict minimum number of contributions needed to reach this level, a
 
 #### Nomination
 
-To be nominated, a nominee is expected to already be performing some of the responsibilities of a Maintainer over the course of at least a couple of weeks. You can apply through contacting one of the `@Team` members on Discord who then in turn will trigger a [Voting](#voting) process.
+To be nominated, a nominee is expected to already be performing some of the responsibilities of a Maintainer over the course of at least a couple of weeks. You can apply through contacting one of the `@Team` members who then in turn will trigger a [Voting](#voting) process.
 
 In some rare cases, this role may be revoked by an **Admin**. However, under normal circumstances this role is granted for as long as the contributor wishes to engage with the project.
 
@@ -131,8 +124,6 @@ Team is a special designation for employees of [Gatsby, Inc.](https://www.gatsby
 #### Privileges
 
 - All privileges of the [Maintainer role](#level-2-l2---maintainer), plus...
-- `@Team` role on [Discord](https://gatsby.dev/discord)
-- New name color on Discord: **Purple**.
 - `Team` on GitHub.
 - Ability to merge all GitHub PRs.
 - Ability to vote on all initiatives (see [Voting](#voting) below).
@@ -165,9 +156,7 @@ Admin is an additional privilege inside the **Team** and is mainly an administra
 #### Privileges
 
 - All privileges of the [Team](#team), plus...
-- `@Admin` role on [Discord](https://gatsby.dev/discord)
 - Administration privileges on GitHub.
-- Administration privileges on Discord (optional).
 
 #### Responsibilities
 
@@ -185,11 +174,7 @@ If you’d like to learn more about how we approach the relationship between our
 
 ### Feature requests
 
-Please open a [feature request on GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/ideas-feature-requests) to voice your ideas. For larger changes please consider opening an [RFC](/contributing/rfc-process/). The **Team** will review incoming requests and give a first assessment.
-
-### RFCs
-
-Please see the dedicated [RFC Process document](/contributing/rfc-process/) for more details.
+Please open a [feature request on GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/ideas-feature-requests) to voice your ideas. The **Team** will review incoming requests and give a first assessment.
 
 ## Voting
 
@@ -210,7 +195,7 @@ This process kicks off once a valid nomination has been made.
 
 **Who can vote:** All Maintainers (L2 and above).
 
-1. A vote thread should be created in Discord #maintainers channel (the private channel for all maintainers).
+1. A vote thread should be created in the private #maintainers channel.
 2. A vote thread can be created by any maintainer, team member, or Admin.
 3. Once a vote thread is created, existing Maintainers can discuss the nomination in private.
 4. The normal 3 day voting & discussion window begins with the thread creation.
@@ -229,9 +214,8 @@ Outlined below is the process for Code of Conduct violation reviews.
 Anyone may report a violation. Violations can be reported in the following ways:
 
 - In private, via email to [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com).
-- In private, via direct message to a team member on Discord.
+- In private, via direct message to a team member.
 - In public, via a GitHub comment (mentioning `@gatsbyjs/team`).
-- In public, via the project Discord server.
 
 ### Who gets involved?
 
@@ -261,7 +245,7 @@ Responses will be determined by the reviewers on the basis of the information ga
 - taking no further action
 - issuing a reprimand (private or public)
 - asking for an apology (private or public)
-- permanent ban from the GitHub org and Discord server
+- permanent ban from the GitHub org
 - revoked contributor status
 
 ---

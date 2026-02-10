@@ -18,7 +18,7 @@ const adaptersManifest = [
     versions: [
       {
         gatsbyVersion: `^5.12.10`,
-        moduleVersion: `^1.0.4`,
+        moduleVersion: `^1.2.1`,
       },
       {
         gatsbyVersion: `>=5.0.0 <5.12.10`,

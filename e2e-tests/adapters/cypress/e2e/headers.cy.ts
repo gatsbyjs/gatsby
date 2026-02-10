@@ -1,5 +1,7 @@
+import { applyTrailingSlashOption } from "../../utils"
 import { WorkaroundCachedResponse } from "../utils/dont-cache-responses-in-browser"
 
+const TRAILING_SLASH = Cypress.env(`TRAILING_SLASH`) || `never`
 const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
 
 describe("Headers", () => {
@@ -75,7 +77,10 @@ describe("Headers", () => {
   }
 
   beforeEach(() => {
-    cy.intercept(PATH_PREFIX + "/", WorkaroundCachedResponse).as("index")
+    cy.intercept(
+      applyTrailingSlashOption(PATH_PREFIX, TRAILING_SLASH),
+      WorkaroundCachedResponse
+    ).as("index")
     cy.intercept(
       PATH_PREFIX + "/routes/ssg/static",
       WorkaroundCachedResponse
@@ -114,7 +119,9 @@ describe("Headers", () => {
   })
 
   it("should contain correct headers for index page", () => {
-    cy.visit("/").waitForRouteChange()
+    cy.visit(
+      applyTrailingSlashOption(Cypress.config().baseUrl, TRAILING_SLASH)
+    ).waitForRouteChange()
 
     checkHeaders("@index", {
       ...defaultHeaders,
@@ -133,7 +140,12 @@ describe("Headers", () => {
   })
 
   it("should contain correct headers for ssg page", () => {
-    cy.visit("routes/ssg/static").waitForRouteChange()
+    cy.visit(
+      applyTrailingSlashOption(
+        Cypress.config().baseUrl + "/routes/ssg/static",
+        TRAILING_SLASH
+      )
+    ).waitForRouteChange()
 
     checkHeaders("@ssg", {
       ...defaultHeaders,

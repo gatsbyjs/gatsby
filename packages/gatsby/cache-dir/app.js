@@ -33,6 +33,9 @@ module.hot.accept(
   }
 )
 
+// Initialize Gatsby events system early for error overlay
+window._gatsbyEvents = window._gatsbyEvents || []
+
 window.___emitter = emitter
 
 const loader = new DevLoader(asyncRequires, matchPaths)
@@ -41,16 +44,47 @@ loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
 
+// React 19 error handlers for development error overlay
+const handleUncaughtError = (error, errorInfo) => {
+  console.error(`Uncaught error:`, error, errorInfo)
+  window._gatsbyEvents.push([
+    `FAST_REFRESH`,
+    {
+      action: `SHOW_RUNTIME_ERRORS`,
+      payload: [error], // Pass the actual Error object
+    },
+  ])
+  apiRunner(`onUncaughtError`, { error, errorInfo })
+}
+
+const handleCaughtError = (error, errorInfo) => {
+  // Also forward caught errors to the overlay system
+  window._gatsbyEvents.push([
+    `FAST_REFRESH`,
+    {
+      action: `SHOW_RUNTIME_ERRORS`,
+      payload: [error],
+    },
+  ])
+  apiRunner(`onCaughtError`, { error, errorInfo })
+}
+
 const reactDomClient = require(`react-dom/client`)
 const reactFirstRenderOrHydrate = (Component, el) => {
   // we will use hydrate if mount element has any content inside
   const useHydrate = el && el.children.length
 
+  // Pass error handler options for React 19+ (React 18 will ignore these options)
+  const errorHandlerOptions = {
+    onUncaughtError: handleUncaughtError,
+    onCaughtError: handleCaughtError,
+  }
+
   if (useHydrate) {
-    const root = reactDomClient.hydrateRoot(el, Component)
+    const root = reactDomClient.hydrateRoot(el, Component, errorHandlerOptions)
     return () => root.unmount()
   } else {
-    const root = reactDomClient.createRoot(el)
+    const root = reactDomClient.createRoot(el, errorHandlerOptions)
     root.render(Component)
     return () => root.unmount()
   }
@@ -123,11 +157,19 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       clearTimeout(showIndicatorTimeout)
       if (indicatorMountElement) {
         // If user defined replaceHydrateFunction themselves the cleanupFn return might not be there
-        // So fallback to unmountComponentAtNode for now
+        // So fallback to unmountComponentAtNode if available
         if (cleanupFn && typeof cleanupFn === `function`) {
           cleanupFn()
         } else {
-          ReactDOM.unmountComponentAtNode(indicatorMountElement)
+          if (typeof ReactDOM.unmountComponentAtNode === `function`) {
+            ReactDOM.unmountComponentAtNode(indicatorMountElement)
+          } else {
+            // This was removed in React 19:
+            // https://react.dev/blog/2024/04/25/react-19-upgrade-guide#removed-unmountcomponentatnode.
+            console.warn(
+              `You provided a custom replaceHydrateFunction that does not return a cleanup function.`
+            )
+          }
         }
         indicatorMountElement.remove()
       }
