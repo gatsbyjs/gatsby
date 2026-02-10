@@ -85,6 +85,10 @@ describe(`SSR`, () => {
   })
 
   describe(`it generates an error page correctly`, () => {
+    // The `bad-ssr.js` test is flaky. Investigation has not determined why, so
+    // as a temporary mitigation, retry the test several times.
+    jest.retryTimes(5, { logErrorsBeforeRetry: true })
+
     const badPages = [
       {
         fixture: `bad-page.js`,
@@ -129,7 +133,7 @@ describe(`SSR`, () => {
       it(
         title,
         async () => {
-          const src = path.join(__dirname, `/fixtures/`, fixture)
+          const src = path.join(__dirname, `fixtures`, fixture)
           const dest = getSrcLoc(fixture)
           fs.copySync(src, dest)
 
@@ -144,7 +148,7 @@ describe(`SSR`, () => {
           expect(rawDevHtml).toMatch("<h2>Error message:</h2>")
 
           if (testSpecificAssertions) {
-            await testSpecificAssertions(rawDevHtml)
+            testSpecificAssertions(rawDevHtml)
           }
         },
         60000

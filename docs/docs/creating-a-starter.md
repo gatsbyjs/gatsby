@@ -75,10 +75,6 @@ For more accessibility help, check out the [A11y Project checklist](https://a11y
 
 Since starters are Gatsby projects, you can run `gatsby develop` or `gatsby build` and then `gatsby serve` in order to ensure your starter is working. If you'd like to be extra thorough and make sure the `gatsby new` command works with your starter, you can run `gatsby new project-name ../relative/path/to/your/starter`, replacing the final part of that command with the appropriate relative path.
 
-## Add your starter to the Gatsby Starter Library
-
-To make sure your starter is easily discoverable, you are welcome (but not required) to add it to the [Gatsby Starter Library](/starters/submissions). Add tags to your starter by first checking for existing ones (like `contentful`, `csv`, etc.), and adding more if needed!
-
 ## Further reading:
 
 - [How to create a Gatsby Starter](https://dev.to/emasuriano/how-to-create-a-gatsby-starter-42m8) by Emanuel Suriano

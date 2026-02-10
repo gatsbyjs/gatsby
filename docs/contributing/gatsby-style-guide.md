@@ -39,7 +39,7 @@ Possible sources of great research materials:
 - blogposts (on gatsbyjs.com and other sites)
 - docs (on gatsbyjs.com and other sites)
 - video tutorials
-- Discord or Twitter conversations
+- Twitter conversations
 - search engine results
 - presentations you or others have given
 - textbooks
@@ -53,8 +53,7 @@ because it requires you to take a technical (usually abstract) topic and explain
 it in a clear, accurate, and objective manner. You'll likely go through several
 rounds of proofreading and editing before you're happy with your writing.
 
-Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
-[Gatsby Discord](https://gatsby.dev/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
+Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
 
 ## Word choice
 

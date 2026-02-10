@@ -8,7 +8,7 @@ import _ from "lodash"
 import { resolve } from "path"
 import { setFieldsOnGraphQLNodeType } from "../extend-node-type"
 import { generateImageSource } from "../gatsby-plugin-image"
-import * as gatsbyCoreUtils from "gatsby-core-utils"
+import * as fetchRemoteFileModule from "gatsby-core-utils/fetch-remote-file"
 import * as pluginSharp from "gatsby-plugin-sharp"
 
 const FIXTURES = resolve(__dirname, `..`, `__fixtures__`)
@@ -20,7 +20,7 @@ jest
   .spyOn(pluginSharp, `getDominantColor`)
   .mockImplementation(() => Promise.resolve(`#mocked`))
 jest
-  .spyOn(gatsbyCoreUtils, `fetchRemoteFile`)
+  .spyOn(fetchRemoteFileModule, `fetchRemoteFile`)
   .mockImplementation(() =>
     Promise.resolve(`${FIXTURES}/contentful-logo-256.png`)
   )

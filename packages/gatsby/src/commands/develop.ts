@@ -57,8 +57,11 @@ class ControllableScript {
   }
   start(): void {
     const args: Array<string> = []
+
+    const dotCachePath = path.join(process.cwd(), `.cache`)
+    fs.mkdirpSync(dotCachePath)
     const tmpFileName = tmp.tmpNameSync({
-      tmpdir: path.join(process.cwd(), `.cache`),
+      tmpdir: dotCachePath,
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true

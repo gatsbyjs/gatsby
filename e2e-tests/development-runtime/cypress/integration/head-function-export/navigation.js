@@ -44,6 +44,14 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
       .should(`equal`, data.static.link)
     cy.getTestElement(`jsonLD`).should(`have.text`, data.static.jsonLD)
 
+    // ensure that effects are applied
+    cy.title().should(`eq`, data.static.title)
+    cy.getTestElement(`linked-css-paragraph`).should(
+      "have.css",
+      "color",
+      "rgb(102, 51, 153)"
+    )
+
     cy.getTestElement(`navigate-to-page-without-head-export`)
       .click()
       .waitForRouteChange()
@@ -55,6 +63,14 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
     cy.getTestElement(`style`).should(`not.exist`)
     cy.getTestElement(`link`).should(`not.exist`)
     cy.getTestElement(`jsonLD`).should(`not.exist`)
+
+    // ensure that effects are applied
+    cy.title().should(`eq`, ``)
+    cy.getTestElement(`linked-css-paragraph`).should(
+      "have.css",
+      "color",
+      "rgba(0, 0, 0, 0.8)"
+    )
   })
 
   /**
@@ -79,6 +95,14 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
       .invoke(`attr`, `href`)
       .should(`equal`, data.static.link)
 
+    // ensure that effects are applied
+    cy.title().should(`eq`, data.static.title)
+    cy.getTestElement(`linked-css-paragraph`).should(
+      "have.css",
+      "color",
+      "rgb(102, 51, 153)"
+    )
+
     // Navigate to a different page via Gatsby Link
     cy.getTestElement(`gatsby-link`).click()
 
@@ -96,6 +120,14 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
       .invoke(`attr`, `href`)
       .should(`equal`, data.queried.link)
 
+    // ensure that effects are applied
+    cy.title().should(`eq`, data.queried.title)
+    cy.getTestElement(`linked-css-paragraph`).should(
+      "have.css",
+      "color",
+      "rgb(0, 0, 255)"
+    )
+
     // Navigate back to original page via Gatsby Link
     cy.getTestElement(`gatsby-link`).click().waitForRouteChange()
 
@@ -112,5 +144,13 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
     cy.getTestElement(`link`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.static.link)
+
+    // ensure that effects are applied
+    cy.title().should(`eq`, data.static.title)
+    cy.getTestElement(`linked-css-paragraph`).should(
+      "have.css",
+      "color",
+      "rgb(102, 51, 153)"
+    )
   })
 })

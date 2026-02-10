@@ -3,6 +3,7 @@ describe(`Tsx Pages`, () => {
     cy.visit(`/head-function-export/tsx-page`)
 
     cy.getTestElement(`title`).should(`contain`, `TypeScript`)
+    cy.title().should(`eq`, `TypeScript`)
 
     cy.getTestElement(`name`)
       .invoke(`attr`, `content`)

@@ -7,7 +7,6 @@ const EventEmitter = require(`events`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const cpy = require(`cpy`)
 const { first, last } = require(`lodash`)
 // const { groupBy, filter } = require(`lodash`)
 const joi = require(`joi`)
@@ -380,7 +379,7 @@ describe(`develop`, () => {
 
     describe(`code change`, () => {
       beforeAll(() => {
-        return cpy(
+        return fs.cp(
           path.join(__dirname, "../src/pages/index.js"),
           path.join(__dirname, "../original/"),
           {
@@ -428,12 +427,12 @@ describe(`develop`, () => {
         commonAssertionsForFailure(events)
       })
       describe(`valid`, () => {
-        beforeAll(done => {
+        beforeAll(async done => {
           clearEvents()
 
-          cpy(
+          await fs.cp(
             path.join(__dirname, "../original/index.js"),
-            path.join(__dirname, "../src/pages/"),
+            path.join(__dirname, "../src/pages/index.js"),
             {
               overwrite: true,
             }

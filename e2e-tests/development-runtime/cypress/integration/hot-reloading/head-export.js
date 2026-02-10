@@ -7,6 +7,12 @@ describe(`hot reloading Head export`, () => {
     cy.visit(`/head-function-export/basic`).waitForRouteChange()
   })
 
+  after(() => {
+    cy.exec(
+      `npm run update -- --file src/pages/head-function-export/basic.js --restore`
+    )
+  })
+
   it(`displays placeholder content on launch`, () => {
     cy.getTestElement(TEST_ID)
       .invoke(`attr`, `content`)
