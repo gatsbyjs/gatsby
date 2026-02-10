@@ -65,7 +65,11 @@ const IndexPage = ({ data }) => (
     <ul>
       {data.posts.edges.map(({ node }) => (
         <li key={node.id}>
-          <Link to={node.fields.slug}>{node.frontmatter.title}</Link>
+          {node.fields?.slug ? (
+            <Link to={node.fields.slug}>{node.frontmatter.title}</Link>
+          ) : (
+            <span>{node.frontmatter.title} (no slug)</span>
+          )}
         </li>
       ))}
     </ul>

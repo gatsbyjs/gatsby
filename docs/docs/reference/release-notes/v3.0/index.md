@@ -48,7 +48,7 @@ Take a project powered by Shopify as an example. You have your listing of all pr
 
 ![Side-by-side view of a Shopify store instance on the left, and the preview on the right. At the bottom the terminal shows that after the change only one page was rebuilt](./incremental-builds-in-oss.jpg)
 
-The screenshot is taken from a talk about Gatsby v3 at [GatsbyConf](https://gatsbyconf.com/). You can view the video showcasing this feature on [YouTube](https://www.youtube.com/watch?v=tO-5qFa_hH8).
+The screenshot is taken from a talk about Gatsby v3 at GatsbyConf. You can view the video showcasing this feature on [YouTube](https://www.youtube.com/watch?v=tO-5qFa_hH8).
 
 ### How does it work?
 
@@ -211,7 +211,7 @@ Gatsby Cloud now includes Hosting for all your Gatsby projects. `gatsby-plugin-g
 If you're using Gatsby v2 please install `gatsby-plugin-gatsby-cloud@^1.0.0`. For Gatsby v3 we’ve bumped `gatsby-plugin-gatsby-cloud` to `2.0.0`. It should
 be a straight-forward update, no additional changes from you are required.
 
-Read more about `gatsby-plugin-gatsby-cloud` at the [README](/packages/gatsby-plugin-gatsby-cloud/).
+Read more about `gatsby-plugin-gatsby-cloud` at the [README](/deprecated-packages/gatsby-plugin-gatsby-cloud/).
 
 ## Miscellaneous changes in plugins
 
