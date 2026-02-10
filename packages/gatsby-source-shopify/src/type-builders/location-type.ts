@@ -2,12 +2,10 @@ export function locationTypeBuilder(prefix: string): string {
   return `
       type ${prefix}FulfillmentService {
         callbackUrl: String
-        fulfillmentOrdersOptIn: Boolean!
+        fulfillmentOrdersOptIn: Boolean! @deprecated(reason: "Property is always set to true on correctly functioning fulfillment services.")
         handle: String!
         inventoryManagement: Boolean!
-        productBased: Boolean! @deprecated(reason: "\`productBased\` will be removed in version 2024-07, non-product based fulfillment services are no longer supported")
         serviceName: String!
-        shippingMethods: [${prefix}ShippingMethod!]!
         shopifyId: String!
         type: ${prefix}FulfillmentServiceType!
       }
@@ -27,6 +25,7 @@ export function locationTypeBuilder(prefix: string): string {
         inventoryLevels: [${prefix}InventoryLevel!]! @link(by: "id") @proxy(from: "inventoryLevels___NODE", fromNode: true)
         legacyResourceId: String!
         locationsCount: Int! @proxy(from: "locationsCount.count")
+        measurement: ${prefix}InventoryItemMeasurement!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -38,6 +37,10 @@ export function locationTypeBuilder(prefix: string): string {
         variant: ${prefix}ProductVariantConnection!
       }
 
+      type ${prefix}InventoryItemMeasurement {
+        weight: ${prefix}Weight
+      }
+
       type ${prefix}InventoryQuantity {
         name: String!
         quantity: Int!
@@ -46,13 +49,13 @@ export function locationTypeBuilder(prefix: string): string {
       type ${prefix}InventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
         quantities: [${prefix}InventoryQuantity!]!
-        available: Int! @proxy(from: "quantities") @selectQuantityByName(name: "available")
-        incoming: Int! @proxy(from: "quantities") @selectQuantityByName(name: "incoming")
-        committed: Int! @proxy(from: "quantities") @selectQuantityByName(name: "committed")
-        reserved: Int! @proxy(from: "quantities") @selectQuantityByName(name: "reserved")
-        damaged: Int! @proxy(from: "quantities") @selectQuantityByName(name: "damaged")
-        safety_stock: Int! @proxy(from: "quantities") @selectQuantityByName(name: "safety_stock")
-        quality_control: Int! @proxy(from: "quantities") @selectQuantityByName(name: "quality_control")
+        available: Int! @proxy(from: "quantities") @selectQuantityByName(name: "available") @deprecated(reason: "Query \`quantities\` field directly")
+        incoming: Int! @proxy(from: "quantities") @selectQuantityByName(name: "incoming") @deprecated(reason: "Query \`quantities\` field directly")
+        committed: Int! @proxy(from: "quantities") @selectQuantityByName(name: "committed") @deprecated(reason: "Query \`quantities\` field directly")
+        reserved: Int! @proxy(from: "quantities") @selectQuantityByName(name: "reserved") @deprecated(reason: "Query \`quantities\` field directly")
+        damaged: Int! @proxy(from: "quantities") @selectQuantityByName(name: "damaged") @deprecated(reason: "Query \`quantities\` field directly")
+        safety_stock: Int! @proxy(from: "quantities") @selectQuantityByName(name: "safety_stock") @deprecated(reason: "Query \`quantities\` field directly")
+        quality_control: Int! @proxy(from: "quantities") @selectQuantityByName(name: "quality_control") @deprecated(reason: "Query \`quantities\` field directly")
         id: ID!
         location: ${prefix}Location! @link(from: "_location", by: "id")
         shopifyId: String!
@@ -92,13 +95,15 @@ export function locationTypeBuilder(prefix: string): string {
         zip: String
       }
 
-      type ${prefix}ShippingMethod {
-        code: String!
-        label: String!
+      type ${prefix}Weight {
+        unit: ${prefix}WeightUnit!
+        value: Float!
       }
 
       extend type ${prefix}ProductVariant {
         inventoryItem: ${prefix}InventoryItem!
+        weight: Float @proxy(from: "inventoryItem.measurement.weight.value") @deprecated(reason: "Query \`inventoryItem.measurement.weight.value\` directly")
+        weightUnit: ${prefix}WeightUnit! @proxy(from: "inventoryItem.measurement.weight.unit") @deprecated(reason: "Query \`inventoryItem.measurement.weight.unit\` directly")
       }
     `
 }

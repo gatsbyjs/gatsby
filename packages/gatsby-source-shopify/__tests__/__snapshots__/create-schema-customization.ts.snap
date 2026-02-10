@@ -783,23 +783,20 @@ Array [
         presentmentPrices: [__PREFIX__ShopifyProductVariantPricePair!]!
         price: Float!
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
-        requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
         sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
-        sku: String
         shopifyId: String!
+        sku: String
         storefrontId: String!
-        taxCode: String
         taxable: Boolean!
+        taxCode: String
         title: String!
         updatedAt: Date! @dateformat
-        weight: Float
-        weightUnit: __PREFIX__ShopifyWeightUnit!
       }
 
       enum __PREFIX__ShopifyProductVariantInventoryPolicy {
-        DENY
         CONTINUE
+        DENY
       }
 
       type __PREFIX__ShopifyProductVariantPricePair {
@@ -890,12 +887,10 @@ Array [
       "
       type __PREFIX__ShopifyFulfillmentService {
         callbackUrl: String
-        fulfillmentOrdersOptIn: Boolean!
+        fulfillmentOrdersOptIn: Boolean! @deprecated(reason: \\"Property is always set to true on correctly functioning fulfillment services.\\")
         handle: String!
         inventoryManagement: Boolean!
-        productBased: Boolean! @deprecated(reason: \\"\`productBased\` will be removed in version 2024-07, non-product based fulfillment services are no longer supported\\")
         serviceName: String!
-        shippingMethods: [__PREFIX__ShopifyShippingMethod!]!
         shopifyId: String!
         type: __PREFIX__ShopifyFulfillmentServiceType!
       }
@@ -915,6 +910,7 @@ Array [
         inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(by: \\"id\\") @proxy(from: \\"inventoryLevels___NODE\\", fromNode: true)
         legacyResourceId: String!
         locationsCount: Int! @proxy(from: \\"locationsCount.count\\")
+        measurement: __PREFIX__ShopifyInventoryItemMeasurement!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -926,6 +922,10 @@ Array [
         variant: __PREFIX__ShopifyProductVariantConnection!
       }
 
+      type __PREFIX__ShopifyInventoryItemMeasurement {
+        weight: __PREFIX__ShopifyWeight
+      }
+
       type __PREFIX__ShopifyInventoryQuantity {
         name: String!
         quantity: Int!
@@ -934,13 +934,13 @@ Array [
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
         quantities: [__PREFIX__ShopifyInventoryQuantity!]!
-        available: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"available\\")
-        incoming: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"incoming\\")
-        committed: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"committed\\")
-        reserved: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"reserved\\")
-        damaged: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"damaged\\")
-        safety_stock: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"safety_stock\\")
-        quality_control: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"quality_control\\")
+        available: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"available\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        incoming: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"incoming\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        committed: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"committed\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        reserved: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"reserved\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        damaged: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"damaged\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        safety_stock: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"safety_stock\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        quality_control: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"quality_control\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
         id: ID!
         location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
@@ -980,13 +980,15 @@ Array [
         zip: String
       }
 
-      type __PREFIX__ShopifyShippingMethod {
-        code: String!
-        label: String!
+      type __PREFIX__ShopifyWeight {
+        unit: __PREFIX__ShopifyWeightUnit!
+        value: Float!
       }
 
       extend type __PREFIX__ShopifyProductVariant {
         inventoryItem: __PREFIX__ShopifyInventoryItem!
+        weight: Float @proxy(from: \\"inventoryItem.measurement.weight.value\\") @deprecated(reason: \\"Query \`inventoryItem.measurement.weight.value\` directly\\")
+        weightUnit: __PREFIX__ShopifyWeightUnit! @proxy(from: \\"inventoryItem.measurement.weight.unit\\") @deprecated(reason: \\"Query \`inventoryItem.measurement.weight.unit\` directly\\")
       }
     ",
       "
@@ -1805,23 +1807,20 @@ Array [
         presentmentPrices: [__PREFIX__ShopifyProductVariantPricePair!]!
         price: Float!
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
-        requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
         sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
-        sku: String
         shopifyId: String!
+        sku: String
         storefrontId: String!
-        taxCode: String
         taxable: Boolean!
+        taxCode: String
         title: String!
         updatedAt: Date! @dateformat
-        weight: Float
-        weightUnit: __PREFIX__ShopifyWeightUnit!
       }
 
       enum __PREFIX__ShopifyProductVariantInventoryPolicy {
-        DENY
         CONTINUE
+        DENY
       }
 
       type __PREFIX__ShopifyProductVariantPricePair {
@@ -2627,23 +2626,20 @@ Array [
         presentmentPrices: [__PREFIX__ShopifyProductVariantPricePair!]!
         price: Float!
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
-        requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
         sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
-        sku: String
         shopifyId: String!
+        sku: String
         storefrontId: String!
-        taxCode: String
         taxable: Boolean!
+        taxCode: String
         title: String!
         updatedAt: Date! @dateformat
-        weight: Float
-        weightUnit: __PREFIX__ShopifyWeightUnit!
       }
 
       enum __PREFIX__ShopifyProductVariantInventoryPolicy {
-        DENY
         CONTINUE
+        DENY
       }
 
       type __PREFIX__ShopifyProductVariantPricePair {
@@ -2734,12 +2730,10 @@ Array [
       "
       type __PREFIX__ShopifyFulfillmentService {
         callbackUrl: String
-        fulfillmentOrdersOptIn: Boolean!
+        fulfillmentOrdersOptIn: Boolean! @deprecated(reason: \\"Property is always set to true on correctly functioning fulfillment services.\\")
         handle: String!
         inventoryManagement: Boolean!
-        productBased: Boolean! @deprecated(reason: \\"\`productBased\` will be removed in version 2024-07, non-product based fulfillment services are no longer supported\\")
         serviceName: String!
-        shippingMethods: [__PREFIX__ShopifyShippingMethod!]!
         shopifyId: String!
         type: __PREFIX__ShopifyFulfillmentServiceType!
       }
@@ -2759,6 +2753,7 @@ Array [
         inventoryLevels: [__PREFIX__ShopifyInventoryLevel!]! @link(by: \\"id\\") @proxy(from: \\"inventoryLevels___NODE\\", fromNode: true)
         legacyResourceId: String!
         locationsCount: Int! @proxy(from: \\"locationsCount.count\\")
+        measurement: __PREFIX__ShopifyInventoryItemMeasurement!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
         shopifyId: String!
@@ -2770,6 +2765,10 @@ Array [
         variant: __PREFIX__ShopifyProductVariantConnection!
       }
 
+      type __PREFIX__ShopifyInventoryItemMeasurement {
+        weight: __PREFIX__ShopifyWeight
+      }
+
       type __PREFIX__ShopifyInventoryQuantity {
         name: String!
         quantity: Int!
@@ -2778,13 +2777,13 @@ Array [
       type __PREFIX__ShopifyInventoryLevel implements Node @dontInfer {
         _location: String! # Temporary field so we don't break existing users
         quantities: [__PREFIX__ShopifyInventoryQuantity!]!
-        available: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"available\\")
-        incoming: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"incoming\\")
-        committed: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"committed\\")
-        reserved: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"reserved\\")
-        damaged: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"damaged\\")
-        safety_stock: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"safety_stock\\")
-        quality_control: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"quality_control\\")
+        available: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"available\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        incoming: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"incoming\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        committed: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"committed\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        reserved: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"reserved\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        damaged: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"damaged\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        safety_stock: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"safety_stock\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
+        quality_control: Int! @proxy(from: \\"quantities\\") @selectQuantityByName(name: \\"quality_control\\") @deprecated(reason: \\"Query \`quantities\` field directly\\")
         id: ID!
         location: __PREFIX__ShopifyLocation! @link(from: \\"_location\\", by: \\"id\\")
         shopifyId: String!
@@ -2824,13 +2823,15 @@ Array [
         zip: String
       }
 
-      type __PREFIX__ShopifyShippingMethod {
-        code: String!
-        label: String!
+      type __PREFIX__ShopifyWeight {
+        unit: __PREFIX__ShopifyWeightUnit!
+        value: Float!
       }
 
       extend type __PREFIX__ShopifyProductVariant {
         inventoryItem: __PREFIX__ShopifyInventoryItem!
+        weight: Float @proxy(from: \\"inventoryItem.measurement.weight.value\\") @deprecated(reason: \\"Query \`inventoryItem.measurement.weight.value\` directly\\")
+        weightUnit: __PREFIX__ShopifyWeightUnit! @proxy(from: \\"inventoryItem.measurement.weight.unit\\") @deprecated(reason: \\"Query \`inventoryItem.measurement.weight.unit\` directly\\")
       }
     ",
       "
@@ -3644,23 +3645,20 @@ Array [
         presentmentPrices: [__PREFIX__ShopifyProductVariantPricePair!]!
         price: Float!
         product: __PREFIX__ShopifyProduct! @link(from: \\"_product\\", by: \\"id\\")
-        requiresShipping: Boolean! @deprecated(reason: \\"Use \`InventoryItem.requiresShipping\` instead.\\")
         selectedOptions: [__PREFIX__ShopifySelectedOption!]!
         sellingPlanGroupCount: Int! @proxy(from: \\"sellingPlanGroupsCount.count\\")
-        sku: String
         shopifyId: String!
+        sku: String
         storefrontId: String!
-        taxCode: String
         taxable: Boolean!
+        taxCode: String
         title: String!
         updatedAt: Date! @dateformat
-        weight: Float
-        weightUnit: __PREFIX__ShopifyWeightUnit!
       }
 
       enum __PREFIX__ShopifyProductVariantInventoryPolicy {
-        DENY
         CONTINUE
+        DENY
       }
 
       type __PREFIX__ShopifyProductVariantPricePair {

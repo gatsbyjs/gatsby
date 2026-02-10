@@ -1,7 +1,6 @@
 import { slash } from "gatsby-core-utils"
 import { uniqWith, isEqual } from "lodash"
 import path from "path"
-import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
 import {
   IPluginInfo,
@@ -12,13 +11,6 @@ import {
 import { processPlugin } from "./process-plugin"
 import { createPluginId } from "./utils/create-id"
 import { createFileContentHash } from "./utils/create-hash"
-import {
-  addGatsbyPluginCloudPluginWhenInstalled,
-  addGatsbyPluginPreviewWhenInstalled,
-  incompatibleGatsbyCloudPlugin,
-  GATSBY_CLOUD_PLUGIN_NAME,
-  GATSBY_PLUGIN_PREVIEW_NAME,
-} from "./utils/handle-gatsby-cloud"
 import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-files"
 
 const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
@@ -75,29 +67,6 @@ export function loadInternalPlugins(
       )
     )
   })
-
-  if (
-    configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
-    incompatibleGatsbyCloudPlugin(plugins)
-  ) {
-    reporter.panic(
-      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@next`
-    )
-  }
-
-  if (
-    !configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
-    (process.env.GATSBY_CLOUD === `true` || process.env.GATSBY_CLOUD === `1`)
-  ) {
-    addGatsbyPluginCloudPluginWhenInstalled(plugins, rootDir)
-  }
-
-  if (
-    !configuredPluginNames.has(GATSBY_PLUGIN_PREVIEW_NAME) &&
-    (process.env.GATSBY_CLOUD === `true` || process.env.GATSBY_CLOUD === `1`)
-  ) {
-    addGatsbyPluginPreviewWhenInstalled(plugins, rootDir)
-  }
 
   // Support Typescript by default but allow users to override it
   if (!configuredPluginNames.has(TYPESCRIPT_PLUGIN_NAME)) {

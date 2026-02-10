@@ -2,8 +2,13 @@ import React from "react"
 import { useEffect } from "react"
 import { StaticQueryContext } from "gatsby"
 import { LocationProvider } from "@gatsbyjs/reach-router"
+
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
+import {
+  IsHeadRenderContext,
+  getValidHeadComponentReplacements,
+} from "./components/head-components"
 import {
   headExportValidator,
   filterHeadProps,
@@ -32,7 +37,7 @@ const onHeadRendered = () => {
 
   /**
    * The rest of the code block below is a diffing mechanism to ensure that
-   * the head elements aren't duplicted on every re-render.
+   * the head elements aren't duplicated on every re-render.
    */
   const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
 
@@ -84,6 +89,40 @@ if (process.env.BUILD_STAGE === `develop`) {
   })
 }
 
+// React 19 does not allow rendering a second `<html>` or `<body>` anywhere in the tree:
+// https://github.com/facebook/react/blob/50e7ec8a694072fd6fcd52182df8a75211bf084d/packages/react-dom-bindings/src/server/ReactFizzConfigDOM.js#L3739
+// Unfortunately, our Head API relies on users being able to render these elements, which we then
+// render in a hidden `<div>` to extract attributes to apply to the real `<html>` and `<body>`.
+// We explored several alternatives, but none were viable given React's constraints.
+// To work around this, we intercept attempts to render these elements inside of
+// Head and replace them with custom components that render as `<div>`s with a
+// `data-original-tag` attribute. We can then use this attribute later to apply
+// attributes to the real `<html>` and `<body>` elements.
+// Additionally other head elements are subject to React's new hoisting behavior,
+// which has some differences from how Gatsby Head API works, so we do append `itemProp`
+// which prevents React from hoisting those elements:
+// https://github.com/facebook/react/blob/50e7ec8a694072fd6fcd52182df8a75211bf084d/packages/react-dom-bindings/src/client/ReactFiberConfigDOM.js#L5824
+// we later will remove this attribute if it has our custom value before appending to real head.
+
+// De-risk monkey patch by only applying it when needed (React 19+, not React 18)
+const reactMajor = parseInt(React.version.split(`.`)[0], 10)
+if (reactMajor !== 18 && !React.createElement.headPatched) {
+  const originalCreateElement = React.createElement
+  const validHeadComponentReplacements = getValidHeadComponentReplacements(
+    originalCreateElement,
+    false
+  )
+  React.createElement = function patchedCreateElement(type, props, ...rest) {
+    const headReplacement = validHeadComponentReplacements.get(type)
+    if (headReplacement) {
+      type = headReplacement
+    }
+
+    return originalCreateElement.call(React, type, props, ...rest)
+  }
+
+  React.createElement.headPatched = true
+}
 export function headHandlerForBrowser({
   pageComponent,
   staticQueryResults,
@@ -113,9 +152,11 @@ export function headHandlerForBrowser({
         // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
-          <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>{WrapHeadElement}</LocationProvider>
-          </StaticQueryContext.Provider>
+          <IsHeadRenderContext.Provider value={true}>
+            <StaticQueryContext.Provider value={staticQueryResults}>
+              <LocationProvider>{WrapHeadElement}</LocationProvider>
+            </StaticQueryContext.Provider>
+          </IsHeadRenderContext.Provider>
         </FireCallbackInEffect>,
         hiddenRoot
       )

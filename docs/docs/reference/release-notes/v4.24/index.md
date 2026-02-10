@@ -27,7 +27,7 @@ You probably noticed that in the last couple of releases we mostly focused on bu
 
 For the Alpha the big new feature you'll be able to test out is [Partial Hydration](https://github.com/gatsbyjs/gatsby/discussions/36608). With Partial Hydration you gain the ability to mark specific parts of your site/application as “interactive”, while the rest of your site is static by default. This will result in shipping less JavaScript to your users and improved Lighthouse scores. For a quick preview of these great features, you can [watch the showcase on YouTube](https://www.youtube.com/watch?v=C-WrnfUm33k)
 
-Please take part in the [Gatsby 5 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609), **try it out**, and let us know what works and doesn't work. If Discord is more your jam, you can also join the [`gatsby-5` Discord channel](https://discord.gg/MhfpnT4cNg).
+Please take part in the [Gatsby 5 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609), **try it out**, and let us know what works and doesn't work.
 
 ## Updating File System Routes on data changes
 

@@ -2,55 +2,85 @@ const { authedWPGQLRequest } = require("./authed-wpgql-request")
 
 exports.resetSchema = async () => {
   console.log(`unmutating remote api`)
-  return authedWPGQLRequest(/* GraphQL */ `
-    mutation {
-      updatePage(
-        input: {
-          id: "cG9zdDoy"
-          title: "Sample Page"
-          clientMutationId: "de-increment-test"
-        }
+  const results = await authedWPGQLRequest(/* GraphQL */ `
+    {
+      pageToDelete: page(
+        id: "/inc-page-with-full-static-file-url/"
+        idType: URI
       ) {
-        clientMutationId
-      }
-
-      updatePost(
-        input: {
-          clientMutationId: "post-test"
-          id: "cG9zdDox"
-          title: "Hello world!"
-        }
-      ) {
-        clientMutationId
-      }
-
-      updateUser(
-        input: {
-          clientMutationId: "user-test"
-          firstName: "admin"
-          id: "dXNlcjo0"
-        }
-      ) {
-        clientMutationId
-      }
-
-      removeFeaturedImageFromNodeById(
-        input: { clientMutationId: "remove-featured-image", postId: 94 }
-      ) {
-        clientMutationId
-      }
-
-      updateMediaItemPost: updatePost(
-        input: {
-          clientMutationId: "post-test"
-          id: "cG9zdDo5NA=="
-          title: "Gutenberg: Common Blocks"
-        }
-      ) {
-        clientMutationId
+        id
       }
     }
   `)
+
+  const pageIdToRemove = results?.pageToDelete?.id
+
+  return authedWPGQLRequest(
+    /* GraphQL */ `
+      mutation ($shouldRemoveAPage: Boolean!, $pageIdToRemove: ID!) {
+        updatePage(
+          input: {
+            id: "cG9zdDoy"
+            title: "Sample Page"
+            clientMutationId: "de-increment-test"
+          }
+        ) {
+          clientMutationId
+        }
+
+        updatePost(
+          input: {
+            clientMutationId: "post-test"
+            id: "cG9zdDox"
+            title: "Hello world!"
+          }
+        ) {
+          clientMutationId
+        }
+
+        updateUser(
+          input: {
+            clientMutationId: "user-test"
+            firstName: "admin"
+            id: "dXNlcjo0"
+          }
+        ) {
+          clientMutationId
+        }
+
+        removeFeaturedImageFromNodeById(
+          input: { clientMutationId: "remove-featured-image", postId: 94 }
+        ) {
+          clientMutationId
+        }
+
+        updateMediaItemPost: updatePost(
+          input: {
+            clientMutationId: "post-test"
+            id: "cG9zdDo5NA=="
+            title: "Gutenberg: Common Blocks"
+          }
+        ) {
+          clientMutationId
+        }
+
+        deletePage(
+          input: {
+            clientMutationId: "remove-page-with-full-static-file-url"
+            id: $pageIdToRemove
+          }
+        ) @include(if: $shouldRemoveAPage) {
+          clientMutationId
+        }
+      }
+    `,
+    {
+      variables: {
+        pageIdToRemove: pageIdToRemove ?? "",
+        shouldRemoveAPage: !!pageIdToRemove,
+      },
+    }
+  )
 }
 
 exports.mutateSchema = async () => {

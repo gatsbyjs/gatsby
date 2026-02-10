@@ -55,7 +55,7 @@ export function createStaticAssetsPathHandler(): {
     let isDynamic = false
     // dynamic routes syntax use characters that are reserved in a lot of filesystems
     // so if route is dynamic we should normalize filepath
-    if (routePath.includes(`:`) || routePath.includes(`*`)) {
+    if (routePath.includes(`/:`) || routePath.includes(`/*`)) {
       routePath = normalizeDynamicRoutePath(routePath)
       isDynamic = true
     }

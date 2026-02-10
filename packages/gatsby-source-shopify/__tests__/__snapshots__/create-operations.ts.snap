@@ -298,6 +298,12 @@ Array [
                   count
                   precision
                 }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -347,7 +353,6 @@ Array [
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
@@ -362,8 +367,6 @@ Array [
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {
@@ -596,12 +599,7 @@ Array [
                 handle
                 id
                 inventoryManagement
-                productBased
                 serviceName
-                shippingMethods {
-                  code
-                  label
-                }
                 type
               }
               fulfillsOnlineOrders
@@ -962,6 +960,12 @@ Array [
                   count
                   precision
                 }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -1011,7 +1015,6 @@ Array [
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
@@ -1026,8 +1029,6 @@ Array [
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {
@@ -1260,12 +1261,7 @@ Array [
                 handle
                 id
                 inventoryManagement
-                productBased
                 serviceName
-                shippingMethods {
-                  code
-                  label
-                }
                 type
               }
               fulfillsOnlineOrders
@@ -1626,6 +1622,12 @@ Array [
                   count
                   precision
                 }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -1675,7 +1677,6 @@ Array [
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
@@ -1690,8 +1691,6 @@ Array [
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {
@@ -1924,12 +1923,7 @@ Array [
                 handle
                 id
                 inventoryManagement
-                productBased
                 serviceName
-                shippingMethods {
-                  code
-                  label
-                }
                 type
               }
               fulfillsOnlineOrders
@@ -2290,6 +2284,12 @@ Array [
                   count
                   precision
                 }
+                measurement {
+                  weight {
+                    unit
+                    value
+                  }
+                }
                 provinceCodeOfOrigin
                 requiresShipping
                 sku
@@ -2339,7 +2339,6 @@ Array [
               product {
                 id
               }
-              requiresShipping
               selectedOptions {
                 name
                 value
@@ -2354,8 +2353,6 @@ Array [
               taxable
               title
               updatedAt
-              weight
-              weightUnit
               metafields {
                 edges {
                   node {
@@ -2588,12 +2585,7 @@ Array [
                 handle
                 id
                 inventoryManagement
-                productBased
                 serviceName
-                shippingMethods {
-                  code
-                  label
-                }
                 type
               }
               fulfillsOnlineOrders

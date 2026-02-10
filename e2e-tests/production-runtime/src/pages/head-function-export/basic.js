@@ -10,15 +10,22 @@ export default function HeadFunctionExportBasic() {
       <Link data-testid="gatsby-link" to="/head-function-export/page-query">
         Navigate to page-query via Gatsby Link
       </Link>
-      <Link data-testid="navigate-to-page-without-head-export" to="/without-head">
+      <Link
+        data-testid="navigate-to-page-without-head-export"
+        to="/head-function-export/without-head"
+      >
         Navigate to without head export
       </Link>
+      <p data-testid="linked-css-paragraph">
+        Just some paragraph to test if linked css properly applies
+      </p>
     </>
   )
 }
 
 export function Head() {
-  const { base, title, meta, noscript, style, link, extraMeta, jsonLD } = data.static
+  const { base, title, meta, noscript, style, link, extraMeta, jsonLD } =
+    data.static
 
   return (
     <>

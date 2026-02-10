@@ -22,11 +22,13 @@ const { fetchGraphql } = require("../test-fns/test-utils/graphql")
 
 jest.setTimeout(100000)
 
-const pluginsAreReady = async () => {
+const arePluginsReady = async () => {
   let pluginsAreReady = false
   let tryCount = 0
+  const maxTryCount = 100
+  let lastError = null
 
-  while (!pluginsAreReady && tryCount < 20) {
+  while (!pluginsAreReady && tryCount < maxTryCount) {
     try {
       tryCount++
 
@@ -47,12 +49,12 @@ const pluginsAreReady = async () => {
         pluginsAreReady = true
       }
     } catch (e) {
-      console.error(e)
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      lastError = e
+      await new Promise(resolve => setTimeout(resolve, 2500))
     }
   }
 
-  return pluginsAreReady
+  return { pluginsAreReady, lastError }
 }
 
 // we run these tests twice in a row
@@ -64,21 +66,31 @@ const isWarmCache = process.env.WARM_CACHE
 const testOnColdCacheOnly = isWarmCache ? test.skip : test
 
 describe(`[gatsby-source-wordpress] Build default options`, () => {
-  beforeAll(done => {
-    ;(async () => {
-      console.log(`Waiting for WPGraphQL to be ready...`)
-      await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
-      console.log(`WPGraphQL is ready`)
-      console.log(`Waiting for plugins to be ready...`)
-      await pluginsAreReady()
-      console.log(`Plugins are ready`)
-
-      if (isWarmCache) {
-        done()
+  beforeAll(async () => {
+    console.log(`Waiting for WP-CLI script to be finished ...`)
+    await urling({ url: `http://localhost:8001/is-ready.txt`, retry: 100 })
+    console.log(`WP-CLI script finished`)
+    console.log(`Waiting for WPGraphQL to be ready...`)
+    await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
+    console.log(`WPGraphQL is ready`)
+    console.log(`Waiting for plugins to be ready...`)
+    const { pluginsAreReady, lastError } = await arePluginsReady()
+    if (!pluginsAreReady) {
+      if (lastError) {
+        console.error(`Plugins are not ready`)
+        console.error(lastError)
       } else {
-        gatsbyCleanBeforeAll(done)
+        console.error(
+          `Plugins are not ready, but no error was thrown, check pluginsAreReady() setup`
+        )
       }
-    })()
+      process.exit(1)
+    }
+    console.log(`Plugins are ready`)
+
+    if (!isWarmCache) {
+      await gatsbyCleanBeforeAll()
+    }
   })
 
   testOnColdCacheOnly(`Default options build succeeded`, async () => {

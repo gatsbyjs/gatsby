@@ -29,7 +29,7 @@ const links = [
     text: "Build and Host",
     url: "https://www.gatsbyjs.com/cloud",
     description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
+      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Netlify. Get started for free!",
   },
 ]
 
@@ -47,7 +47,6 @@ const samplePageLinks = [
 ]
 
 const moreLinks = [
-  { text: "Join us on Discord", url: "https://gatsby.dev/discord" },
   {
     text: "Documentation",
     url: "https://gatsbyjs.com/docs/",

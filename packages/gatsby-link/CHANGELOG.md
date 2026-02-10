@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.16.0/packages/gatsby-link) (2026-01-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)
+
+#### Features
+
+- support React 19 [#39306](https://github.com/gatsbyjs/gatsby/issues/39306) ([9e39c05](https://github.com/gatsbyjs/gatsby/commit/9e39c05f2c48aedfc495421367e67ee4bcbf1c4a))
+
+#### Bug Fixes
+
+- use more explicit node.js version range [#39398](https://github.com/gatsbyjs/gatsby/issues/39398) ([c355640](https://github.com/gatsbyjs/gatsby/commit/c35564071466681951402a04fb33ae34cc673a2b))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next pre-minor" ([3539ec8](https://github.com/gatsbyjs/gatsby/commit/3539ec8d8973e8eabbeb10734e3bb54bd831ac6c))
+
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.15.0/packages/gatsby-link) (2025-08-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
+
+#### Bug Fixes
+
+- fix navigate method type ([cddc252](https://github.com/gatsbyjs/gatsby/commit/cddc252bf4cac57486ed5f5b544d50e4a92ce769))
+
 ### [5.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.14.1/packages/gatsby-link) (2024-12-20)
 
 #### Bug Fixes

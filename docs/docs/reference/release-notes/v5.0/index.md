@@ -98,7 +98,7 @@ Across the board we can see at least a 20% decrease in build time when using Sli
 
 For more information, read the [Using Slices How-To Guide](/docs/how-to/performance/using-slices/) or the [Slice API Reference Documentation](/docs/reference/built-in-components/gatsby-slice).
 
-If you have any questions about the Slice API, you can comment on the [Gatsby 5 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609) or [`gatsby-5` Discord channel](https://discord.gg/MhfpnT4cNg).
+If you have any questions about the Slice API, you can comment on the [Gatsby 5 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
 
 ## Partial Hydration (Beta)
 
@@ -128,7 +128,7 @@ As a quick start, here's how you can use Partial Hydration in Gatsby 5 today:
   ```
 - Add the `"use client"` directive to any component that needs to be a client component. You can see an example in the [gatsby-partial-hydration-starter](https://github.com/gatsbyjs/gatsby-partial-hydration-starter/blob/main/src/components/demo.js)
 
-If you have any questions about Partial Hydration, you can comment on the [RFC: Partial Hydration](https://github.com/gatsbyjs/gatsby/discussions/36608) or [`partial-hydration` Discord channel](https://discord.gg/KEVcg3rup2).
+If you have any questions about Partial Hydration, you can comment on the [RFC: Partial Hydration](https://github.com/gatsbyjs/gatsby/discussions/36608).
 
 ## GraphiQL v2
 

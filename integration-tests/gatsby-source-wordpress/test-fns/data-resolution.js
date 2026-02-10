@@ -45,7 +45,7 @@ describe(`data resolution`, () => {
     expect(data[`allWpMenu`].totalCount).toBe(3)
     expect(data[`allWpMenuItem`].totalCount).toBe(4)
     expect(data[`allWpPostFormat`].totalCount).toBe(0)
-    expect(data[`allWpContentType`].totalCount).toBe(9)
+    expect(data[`allWpContentType`].totalCount).toBe(7)
   })
 
   testResolvedData({

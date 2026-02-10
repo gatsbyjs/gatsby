@@ -14,6 +14,7 @@ const page = {
   deduplication: `${path}/deduplication/`,
   htmlAndBodyAttributes: `${path}/html-and-body-attributes/`,
   headWithWrapRooElement: `${path}/head-with-wrap-root-element/`,
+  withoutHead: `${path}/without-head/`,
 }
 
 const data = {
