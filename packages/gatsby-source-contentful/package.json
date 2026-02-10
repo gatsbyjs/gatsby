@@ -56,7 +56,7 @@
     "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/__fixtures__"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0 <26"
   },
   "types": "index.d.ts"
 }

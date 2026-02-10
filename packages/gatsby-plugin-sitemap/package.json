@@ -47,6 +47,6 @@
     "test:watch": "jest --watch"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0 <26"
   }
 }
