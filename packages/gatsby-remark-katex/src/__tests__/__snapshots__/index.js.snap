@@ -1,197 +1,197 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
-Object {
-  "children": Array [
-    Object {
-      "children": Array [
-        Object {
-          "data": Object {
-            "hChildren": Array [
-              Object {
-                "children": Array [
-                  Object {
-                    "children": Array [
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
+{
+  "children": [
+    {
+      "children": [
+        {
+          "data": {
+            "hChildren": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "a",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
+                                  {
+                                    "children": [
+                                      {
                                         "type": "text",
                                         "value": "+",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "b",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
+                                  {
+                                    "children": [
+                                      {
                                         "type": "text",
                                         "value": "=",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "c",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {},
+                                "properties": {},
                                 "tagName": "mrow",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "a^2 + b^2 = c^2",
                                   },
                                 ],
-                                "properties": Object {
+                                "properties": {
                                   "encoding": "application/x-tex",
                                 },
                                 "tagName": "annotation",
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {},
+                            "properties": {},
                             "tagName": "semantics",
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
+                        "properties": {
                           "xmlns": "http://www.w3.org/1998/Math/MathML",
                         },
                         "tagName": "math",
                         "type": "element",
                       },
                     ],
-                    "properties": Object {
-                      "className": Array [
+                    "properties": {
+                      "className": [
                         "katex-mathml",
                       ],
                     },
                     "tagName": "span",
                     "type": "element",
                   },
-                  Object {
-                    "children": Array [
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "strut",
                               ],
-                              "style": "height:0.897438em;vertical-align:-0.08333em;",
+                              "style": "height:0.8974em;vertical-align:-0.0833em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "a",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -199,20 +199,20 @@ Object {
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "children": Array [
-                                              Object {
-                                                "children": Array [
-                                                  Object {
-                                                    "children": Array [],
-                                                    "properties": Object {
-                                                      "className": Array [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "properties": {
+                                                      "className": [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -220,17 +220,17 @@ Object {
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  Object {
-                                                    "children": Array [
-                                                      Object {
-                                                        "children": Array [
-                                                          Object {
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": Object {
-                                                          "className": Array [
+                                                        "properties": {
+                                                          "className": [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -239,8 +239,8 @@ Object {
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": Object {
-                                                      "className": Array [
+                                                    "properties": {
+                                                      "className": [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -251,25 +251,25 @@ Object {
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": Object {
+                                                "properties": {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": Object {
-                                              "className": Array [
+                                            "properties": {
+                                              "className": [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": Object {
-                                          "className": Array [
+                                        "properties": {
+                                          "className": [
                                             "vlist-r",
                                           ],
                                         },
@@ -277,8 +277,8 @@ Object {
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {
-                                      "className": Array [
+                                    "properties": {
+                                      "className": [
                                         "vlist-t",
                                       ],
                                     },
@@ -286,8 +286,8 @@ Object {
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "msupsub",
                                   ],
                                 },
@@ -295,84 +295,84 @@ Object {
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
+                          {
+                            "children": [
+                              {
                                 "type": "text",
                                 "value": "+",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mbin",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
-                          "className": Array [
+                        "properties": {
+                          "className": [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "strut",
                               ],
-                              "style": "height:0.8141079999999999em;vertical-align:0em;",
+                              "style": "height:0.8141em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "b",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -380,20 +380,20 @@ Object {
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "children": Array [
-                                              Object {
-                                                "children": Array [
-                                                  Object {
-                                                    "children": Array [],
-                                                    "properties": Object {
-                                                      "className": Array [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "properties": {
+                                                      "className": [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -401,17 +401,17 @@ Object {
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  Object {
-                                                    "children": Array [
-                                                      Object {
-                                                        "children": Array [
-                                                          Object {
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": Object {
-                                                          "className": Array [
+                                                        "properties": {
+                                                          "className": [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -420,8 +420,8 @@ Object {
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": Object {
-                                                      "className": Array [
+                                                    "properties": {
+                                                      "className": [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -432,25 +432,25 @@ Object {
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": Object {
+                                                "properties": {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": Object {
-                                              "className": Array [
+                                            "properties": {
+                                              "className": [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": Object {
-                                          "className": Array [
+                                        "properties": {
+                                          "className": [
                                             "vlist-r",
                                           ],
                                         },
@@ -458,8 +458,8 @@ Object {
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {
-                                      "className": Array [
+                                    "properties": {
+                                      "className": [
                                         "vlist-t",
                                       ],
                                     },
@@ -467,8 +467,8 @@ Object {
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "msupsub",
                                   ],
                                 },
@@ -476,84 +476,84 @@ Object {
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
+                          {
+                            "children": [
+                              {
                                 "type": "text",
                                 "value": "=",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mrel",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
-                          "className": Array [
+                        "properties": {
+                          "className": [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "strut",
                               ],
-                              "style": "height:0.8141079999999999em;vertical-align:0em;",
+                              "style": "height:0.8141em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "c",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -561,20 +561,20 @@ Object {
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "children": Array [
-                                              Object {
-                                                "children": Array [
-                                                  Object {
-                                                    "children": Array [],
-                                                    "properties": Object {
-                                                      "className": Array [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "properties": {
+                                                      "className": [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -582,17 +582,17 @@ Object {
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  Object {
-                                                    "children": Array [
-                                                      Object {
-                                                        "children": Array [
-                                                          Object {
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": Object {
-                                                          "className": Array [
+                                                        "properties": {
+                                                          "className": [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -601,8 +601,8 @@ Object {
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": Object {
-                                                      "className": Array [
+                                                    "properties": {
+                                                      "className": [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -613,25 +613,25 @@ Object {
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": Object {
+                                                "properties": {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": Object {
-                                              "className": Array [
+                                            "properties": {
+                                              "className": [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": Object {
-                                          "className": Array [
+                                        "properties": {
+                                          "className": [
                                             "vlist-r",
                                           ],
                                         },
@@ -639,8 +639,8 @@ Object {
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {
-                                      "className": Array [
+                                    "properties": {
+                                      "className": [
                                         "vlist-t",
                                       ],
                                     },
@@ -648,8 +648,8 @@ Object {
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "msupsub",
                                   ],
                                 },
@@ -657,8 +657,8 @@ Object {
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mord",
                               ],
                             },
@@ -666,8 +666,8 @@ Object {
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
-                          "className": Array [
+                        "properties": {
+                          "className": [
                             "base",
                           ],
                         },
@@ -675,9 +675,9 @@ Object {
                         "type": "element",
                       },
                     ],
-                    "properties": Object {
+                    "properties": {
                       "ariaHidden": "true",
-                      "className": Array [
+                      "className": [
                         "katex-html",
                       ],
                     },
@@ -685,8 +685,8 @@ Object {
                     "type": "element",
                   },
                 ],
-                "properties": Object {
-                  "className": Array [
+                "properties": {
+                  "className": [
                     "katex",
                   ],
                 },
@@ -695,20 +695,20 @@ Object {
               },
             ],
             "hName": "span",
-            "hProperties": Object {
-              "className": Array [
+            "hProperties": {
+              "className": [
                 "math",
                 "math-inline",
               ],
             },
           },
-          "position": Object {
-            "end": Object {
+          "position": {
+            "end": {
               "column": 20,
               "line": 1,
               "offset": 19,
             },
-            "start": Object {
+            "start": {
               "column": 1,
               "line": 1,
               "offset": 0,
@@ -718,13 +718,13 @@ Object {
           "value": "a^2 + b^2 = c^2",
         },
       ],
-      "position": Object {
-        "end": Object {
+      "position": {
+        "end": {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "start": Object {
+        "start": {
           "column": 1,
           "line": 1,
           "offset": 0,
@@ -733,13 +733,13 @@ Object {
       "type": "paragraph",
     },
   ],
-  "position": Object {
-    "end": Object {
+  "position": {
+    "end": {
       "column": 20,
       "line": 1,
       "offset": 19,
     },
-    "start": Object {
+    "start": {
       "column": 1,
       "line": 1,
       "offset": 0,
@@ -750,197 +750,197 @@ Object {
 `;
 
 exports[`remark katex plugin renders inlineMath node properly 1`] = `
-Object {
-  "children": Array [
-    Object {
-      "children": Array [
-        Object {
-          "data": Object {
-            "hChildren": Array [
-              Object {
-                "children": Array [
-                  Object {
-                    "children": Array [
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
+{
+  "children": [
+    {
+      "children": [
+        {
+          "data": {
+            "hChildren": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "a",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
+                                  {
+                                    "children": [
+                                      {
                                         "type": "text",
                                         "value": "+",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "b",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
+                                  {
+                                    "children": [
+                                      {
                                         "type": "text",
                                         "value": "=",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "c",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {},
+                                "properties": {},
                                 "tagName": "mrow",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "a^2 + b^2 = c^2",
                                   },
                                 ],
-                                "properties": Object {
+                                "properties": {
                                   "encoding": "application/x-tex",
                                 },
                                 "tagName": "annotation",
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {},
+                            "properties": {},
                             "tagName": "semantics",
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
+                        "properties": {
                           "xmlns": "http://www.w3.org/1998/Math/MathML",
                         },
                         "tagName": "math",
                         "type": "element",
                       },
                     ],
-                    "properties": Object {
-                      "className": Array [
+                    "properties": {
+                      "className": [
                         "katex-mathml",
                       ],
                     },
                     "tagName": "span",
                     "type": "element",
                   },
-                  Object {
-                    "children": Array [
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "strut",
                               ],
-                              "style": "height:0.897438em;vertical-align:-0.08333em;",
+                              "style": "height:0.8974em;vertical-align:-0.0833em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "a",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -948,20 +948,20 @@ Object {
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "children": Array [
-                                              Object {
-                                                "children": Array [
-                                                  Object {
-                                                    "children": Array [],
-                                                    "properties": Object {
-                                                      "className": Array [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "properties": {
+                                                      "className": [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -969,17 +969,17 @@ Object {
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  Object {
-                                                    "children": Array [
-                                                      Object {
-                                                        "children": Array [
-                                                          Object {
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": Object {
-                                                          "className": Array [
+                                                        "properties": {
+                                                          "className": [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -988,8 +988,8 @@ Object {
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": Object {
-                                                      "className": Array [
+                                                    "properties": {
+                                                      "className": [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1000,25 +1000,25 @@ Object {
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": Object {
+                                                "properties": {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": Object {
-                                              "className": Array [
+                                            "properties": {
+                                              "className": [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": Object {
-                                          "className": Array [
+                                        "properties": {
+                                          "className": [
                                             "vlist-r",
                                           ],
                                         },
@@ -1026,8 +1026,8 @@ Object {
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {
-                                      "className": Array [
+                                    "properties": {
+                                      "className": [
                                         "vlist-t",
                                       ],
                                     },
@@ -1035,8 +1035,8 @@ Object {
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "msupsub",
                                   ],
                                 },
@@ -1044,84 +1044,84 @@ Object {
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
+                          {
+                            "children": [
+                              {
                                 "type": "text",
                                 "value": "+",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mbin",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
-                          "className": Array [
+                        "properties": {
+                          "className": [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "strut",
                               ],
-                              "style": "height:0.8141079999999999em;vertical-align:0em;",
+                              "style": "height:0.8141em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "b",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -1129,20 +1129,20 @@ Object {
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "children": Array [
-                                              Object {
-                                                "children": Array [
-                                                  Object {
-                                                    "children": Array [],
-                                                    "properties": Object {
-                                                      "className": Array [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "properties": {
+                                                      "className": [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -1150,17 +1150,17 @@ Object {
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  Object {
-                                                    "children": Array [
-                                                      Object {
-                                                        "children": Array [
-                                                          Object {
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": Object {
-                                                          "className": Array [
+                                                        "properties": {
+                                                          "className": [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -1169,8 +1169,8 @@ Object {
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": Object {
-                                                      "className": Array [
+                                                    "properties": {
+                                                      "className": [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1181,25 +1181,25 @@ Object {
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": Object {
+                                                "properties": {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": Object {
-                                              "className": Array [
+                                            "properties": {
+                                              "className": [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": Object {
-                                          "className": Array [
+                                        "properties": {
+                                          "className": [
                                             "vlist-r",
                                           ],
                                         },
@@ -1207,8 +1207,8 @@ Object {
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {
-                                      "className": Array [
+                                    "properties": {
+                                      "className": [
                                         "vlist-t",
                                       ],
                                     },
@@ -1216,8 +1216,8 @@ Object {
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "msupsub",
                                   ],
                                 },
@@ -1225,84 +1225,84 @@ Object {
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
+                          {
+                            "children": [
+                              {
                                 "type": "text",
                                 "value": "=",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mrel",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
-                          "className": Array [
+                        "properties": {
+                          "className": [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "strut",
                               ],
-                              "style": "height:0.8141079999999999em;vertical-align:0em;",
+                              "style": "height:0.8141em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "c",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -1310,20 +1310,20 @@ Object {
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "children": Array [
-                                              Object {
-                                                "children": Array [
-                                                  Object {
-                                                    "children": Array [],
-                                                    "properties": Object {
-                                                      "className": Array [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "properties": {
+                                                      "className": [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -1331,17 +1331,17 @@ Object {
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  Object {
-                                                    "children": Array [
-                                                      Object {
-                                                        "children": Array [
-                                                          Object {
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": Object {
-                                                          "className": Array [
+                                                        "properties": {
+                                                          "className": [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -1350,8 +1350,8 @@ Object {
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": Object {
-                                                      "className": Array [
+                                                    "properties": {
+                                                      "className": [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1362,25 +1362,25 @@ Object {
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": Object {
+                                                "properties": {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": Object {
-                                              "className": Array [
+                                            "properties": {
+                                              "className": [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": Object {
-                                          "className": Array [
+                                        "properties": {
+                                          "className": [
                                             "vlist-r",
                                           ],
                                         },
@@ -1388,8 +1388,8 @@ Object {
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {
-                                      "className": Array [
+                                    "properties": {
+                                      "className": [
                                         "vlist-t",
                                       ],
                                     },
@@ -1397,8 +1397,8 @@ Object {
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "msupsub",
                                   ],
                                 },
@@ -1406,8 +1406,8 @@ Object {
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mord",
                               ],
                             },
@@ -1415,8 +1415,8 @@ Object {
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
-                          "className": Array [
+                        "properties": {
+                          "className": [
                             "base",
                           ],
                         },
@@ -1424,9 +1424,9 @@ Object {
                         "type": "element",
                       },
                     ],
-                    "properties": Object {
+                    "properties": {
                       "ariaHidden": "true",
-                      "className": Array [
+                      "className": [
                         "katex-html",
                       ],
                     },
@@ -1434,8 +1434,8 @@ Object {
                     "type": "element",
                   },
                 ],
-                "properties": Object {
-                  "className": Array [
+                "properties": {
+                  "className": [
                     "katex",
                   ],
                 },
@@ -1444,20 +1444,20 @@ Object {
               },
             ],
             "hName": "span",
-            "hProperties": Object {
-              "className": Array [
+            "hProperties": {
+              "className": [
                 "math",
                 "math-inline",
               ],
             },
           },
-          "position": Object {
-            "end": Object {
+          "position": {
+            "end": {
               "column": 18,
               "line": 1,
               "offset": 17,
             },
-            "start": Object {
+            "start": {
               "column": 1,
               "line": 1,
               "offset": 0,
@@ -1467,13 +1467,13 @@ Object {
           "value": "a^2 + b^2 = c^2",
         },
       ],
-      "position": Object {
-        "end": Object {
+      "position": {
+        "end": {
           "column": 18,
           "line": 1,
           "offset": 17,
         },
-        "start": Object {
+        "start": {
           "column": 1,
           "line": 1,
           "offset": 0,
@@ -1482,13 +1482,13 @@ Object {
       "type": "paragraph",
     },
   ],
-  "position": Object {
-    "end": Object {
+  "position": {
+    "end": {
       "column": 18,
       "line": 1,
       "offset": 17,
     },
-    "start": Object {
+    "start": {
       "column": 1,
       "line": 1,
       "offset": 0,
@@ -1499,157 +1499,157 @@ Object {
 `;
 
 exports[`remark katex plugin renders math node properly 1`] = `
-Object {
-  "children": Array [
-    Object {
-      "data": Object {
-        "hChildren": Array [
-          Object {
-            "children": Array [
-              Object {
-                "children": Array [
-                  Object {
-                    "children": Array [
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
+{
+  "children": [
+    {
+      "data": {
+        "hChildren": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "a",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
+                                  {
+                                    "children": [
+                                      {
                                         "type": "text",
                                         "value": "+",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "b",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
+                                  {
+                                    "children": [
+                                      {
                                         "type": "text",
                                         "value": "=",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "c",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      Object {
-                                        "children": Array [
-                                          Object {
+                                      {
+                                        "children": [
+                                          {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": Object {},
+                                        "properties": {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {},
+                                    "properties": {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {},
+                                "properties": {},
                                 "tagName": "mrow",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "a^2 + b^2 = c^2",
                                   },
                                 ],
-                                "properties": Object {
+                                "properties": {
                                   "encoding": "application/x-tex",
                                 },
                                 "tagName": "annotation",
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {},
+                            "properties": {},
                             "tagName": "semantics",
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
+                        "properties": {
                           "display": "block",
                           "xmlns": "http://www.w3.org/1998/Math/MathML",
                         },
@@ -1657,40 +1657,40 @@ Object {
                         "type": "element",
                       },
                     ],
-                    "properties": Object {
-                      "className": Array [
+                    "properties": {
+                      "className": [
                         "katex-mathml",
                       ],
                     },
                     "tagName": "span",
                     "type": "element",
                   },
-                  Object {
-                    "children": Array [
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "strut",
                               ],
-                              "style": "height:0.9474379999999999em;vertical-align:-0.08333em;",
+                              "style": "height:0.9474em;vertical-align:-0.0833em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "a",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -1698,20 +1698,20 @@ Object {
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "children": Array [
-                                              Object {
-                                                "children": Array [
-                                                  Object {
-                                                    "children": Array [],
-                                                    "properties": Object {
-                                                      "className": Array [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "properties": {
+                                                      "className": [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -1719,17 +1719,17 @@ Object {
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  Object {
-                                                    "children": Array [
-                                                      Object {
-                                                        "children": Array [
-                                                          Object {
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": Object {
-                                                          "className": Array [
+                                                        "properties": {
+                                                          "className": [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -1738,8 +1738,8 @@ Object {
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": Object {
-                                                      "className": Array [
+                                                    "properties": {
+                                                      "className": [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1750,25 +1750,25 @@ Object {
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": Object {
+                                                "properties": {
                                                   "style": "top:-3.113em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": Object {
-                                              "className": Array [
+                                            "properties": {
+                                              "className": [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8641079999999999em;",
+                                              "style": "height:0.8641em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": Object {
-                                          "className": Array [
+                                        "properties": {
+                                          "className": [
                                             "vlist-r",
                                           ],
                                         },
@@ -1776,8 +1776,8 @@ Object {
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {
-                                      "className": Array [
+                                    "properties": {
+                                      "className": [
                                         "vlist-t",
                                       ],
                                     },
@@ -1785,8 +1785,8 @@ Object {
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "msupsub",
                                   ],
                                 },
@@ -1794,84 +1794,84 @@ Object {
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
+                          {
+                            "children": [
+                              {
                                 "type": "text",
                                 "value": "+",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mbin",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
-                          "className": Array [
+                        "properties": {
+                          "className": [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "strut",
                               ],
-                              "style": "height:0.8641079999999999em;vertical-align:0em;",
+                              "style": "height:0.8641em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "b",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -1879,20 +1879,20 @@ Object {
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "children": Array [
-                                              Object {
-                                                "children": Array [
-                                                  Object {
-                                                    "children": Array [],
-                                                    "properties": Object {
-                                                      "className": Array [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "properties": {
+                                                      "className": [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -1900,17 +1900,17 @@ Object {
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  Object {
-                                                    "children": Array [
-                                                      Object {
-                                                        "children": Array [
-                                                          Object {
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": Object {
-                                                          "className": Array [
+                                                        "properties": {
+                                                          "className": [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -1919,8 +1919,8 @@ Object {
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": Object {
-                                                      "className": Array [
+                                                    "properties": {
+                                                      "className": [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1931,25 +1931,25 @@ Object {
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": Object {
+                                                "properties": {
                                                   "style": "top:-3.113em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": Object {
-                                              "className": Array [
+                                            "properties": {
+                                              "className": [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8641079999999999em;",
+                                              "style": "height:0.8641em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": Object {
-                                          "className": Array [
+                                        "properties": {
+                                          "className": [
                                             "vlist-r",
                                           ],
                                         },
@@ -1957,8 +1957,8 @@ Object {
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {
-                                      "className": Array [
+                                    "properties": {
+                                      "className": [
                                         "vlist-t",
                                       ],
                                     },
@@ -1966,8 +1966,8 @@ Object {
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "msupsub",
                                   ],
                                 },
@@ -1975,84 +1975,84 @@ Object {
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
+                          {
+                            "children": [
+                              {
                                 "type": "text",
                                 "value": "=",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mrel",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
-                          "className": Array [
+                        "properties": {
+                          "className": [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [],
-                            "properties": Object {
-                              "className": Array [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "properties": {
+                              "className": [
                                 "strut",
                               ],
-                              "style": "height:0.8641079999999999em;vertical-align:0em;",
+                              "style": "height:0.8641em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
                                     "type": "text",
                                     "value": "c",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -2060,20 +2060,20 @@ Object {
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "children": Array [
-                                      Object {
-                                        "children": Array [
-                                          Object {
-                                            "children": Array [
-                                              Object {
-                                                "children": Array [
-                                                  Object {
-                                                    "children": Array [],
-                                                    "properties": Object {
-                                                      "className": Array [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [],
+                                                    "properties": {
+                                                      "className": [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -2081,17 +2081,17 @@ Object {
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  Object {
-                                                    "children": Array [
-                                                      Object {
-                                                        "children": Array [
-                                                          Object {
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": Object {
-                                                          "className": Array [
+                                                        "properties": {
+                                                          "className": [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -2100,8 +2100,8 @@ Object {
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": Object {
-                                                      "className": Array [
+                                                    "properties": {
+                                                      "className": [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -2112,25 +2112,25 @@ Object {
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": Object {
+                                                "properties": {
                                                   "style": "top:-3.113em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": Object {
-                                              "className": Array [
+                                            "properties": {
+                                              "className": [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8641079999999999em;",
+                                              "style": "height:0.8641em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": Object {
-                                          "className": Array [
+                                        "properties": {
+                                          "className": [
                                             "vlist-r",
                                           ],
                                         },
@@ -2138,8 +2138,8 @@ Object {
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": Object {
-                                      "className": Array [
+                                    "properties": {
+                                      "className": [
                                         "vlist-t",
                                       ],
                                     },
@@ -2147,8 +2147,8 @@ Object {
                                     "type": "element",
                                   },
                                 ],
-                                "properties": Object {
-                                  "className": Array [
+                                "properties": {
+                                  "className": [
                                     "msupsub",
                                   ],
                                 },
@@ -2156,8 +2156,8 @@ Object {
                                 "type": "element",
                               },
                             ],
-                            "properties": Object {
-                              "className": Array [
+                            "properties": {
+                              "className": [
                                 "mord",
                               ],
                             },
@@ -2165,8 +2165,8 @@ Object {
                             "type": "element",
                           },
                         ],
-                        "properties": Object {
-                          "className": Array [
+                        "properties": {
+                          "className": [
                             "base",
                           ],
                         },
@@ -2174,9 +2174,9 @@ Object {
                         "type": "element",
                       },
                     ],
-                    "properties": Object {
+                    "properties": {
                       "ariaHidden": "true",
-                      "className": Array [
+                      "className": [
                         "katex-html",
                       ],
                     },
@@ -2184,8 +2184,8 @@ Object {
                     "type": "element",
                   },
                 ],
-                "properties": Object {
-                  "className": Array [
+                "properties": {
+                  "className": [
                     "katex",
                   ],
                 },
@@ -2193,8 +2193,8 @@ Object {
                 "type": "element",
               },
             ],
-            "properties": Object {
-              "className": Array [
+            "properties": {
+              "className": [
                 "katex-display",
               ],
             },
@@ -2203,21 +2203,21 @@ Object {
           },
         ],
         "hName": "div",
-        "hProperties": Object {
-          "className": Array [
+        "hProperties": {
+          "className": [
             "math",
             "math-display",
           ],
         },
       },
       "meta": null,
-      "position": Object {
-        "end": Object {
+      "position": {
+        "end": {
           "column": 3,
           "line": 3,
           "offset": 21,
         },
-        "start": Object {
+        "start": {
           "column": 1,
           "line": 1,
           "offset": 0,
@@ -2227,13 +2227,13 @@ Object {
       "value": "a^2 + b^2 = c^2",
     },
   ],
-  "position": Object {
-    "end": Object {
+  "position": {
+    "end": {
       "column": 3,
       "line": 3,
       "offset": 21,
     },
-    "start": Object {
+    "start": {
       "column": 1,
       "line": 1,
       "offset": 0,
