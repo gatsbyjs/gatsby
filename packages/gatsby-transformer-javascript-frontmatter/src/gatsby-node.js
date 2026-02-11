@@ -81,19 +81,24 @@ async function onCreateNode({
           })
         }
       },
-      ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
-        const { declaration } = astPath.node
-        if (declaration && declaration.type === `VariableDeclaration`) {
-          const dataVariableDeclarator = _.find(
-            declaration.declarations,
-            d => d.id.name === `frontmatter`
-          )
+      VariableDeclaration: function VariableDeclaration(astPath) {
+        if (
+          astPath.parent.type !== `Program` &&
+          astPath.parent.type !== `ExportNamedDeclaration`
+        ) {
+          return
+        }
 
-          if (dataVariableDeclarator && dataVariableDeclarator.init) {
-            dataVariableDeclarator.init.properties.forEach(node => {
-              frontmatter[node.key.name] = parseData(node.value)
-            })
-          }
+        const { declarations } = astPath.node
+        const dataVariableDeclarator = _.find(
+          declarations,
+          d => d.id.name === `frontmatter`
+        )
+
+        if (dataVariableDeclarator && dataVariableDeclarator.init) {
+          dataVariableDeclarator.init.properties.forEach(node => {
+            frontmatter[node.key.name] = parseData(node.value)
+          })
         }
       },
     })

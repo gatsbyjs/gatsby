@@ -144,5 +144,30 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
         node.absolutePath
       )
     })
+
+    it(`should load frontmatter data from non-exported variable`, async () => {
+      loadNodeContent = jest.fn().mockReturnValue(`
+          const frontmatter = {
+            title: "Choropleth on d3v4",
+            written: "2017-05-04",
+            layoutType: "post",
+            path: "choropleth-on-d3v4",
+            category: "data science",
+            description: "Things about the choropleth.",
+          }
+        `)
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
+      expect(actions.createNode).toBeCalled()
+      expect(actions.createNode.mock.calls[0]).toMatchSnapshot()
+    })
   })
 })
