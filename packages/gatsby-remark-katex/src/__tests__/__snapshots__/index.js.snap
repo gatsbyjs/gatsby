@@ -1,197 +1,197 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
-{
-  "children": [
-    {
-      "children": [
-        {
-          "data": {
-            "hChildren": [
-              {
-                "children": [
-                  {
-                    "children": [
-                      {
-                        "children": [
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "data": Object {
+            "hChildren": Array [
+              Object {
+                "children": Array [
+                  Object {
+                    "children": Array [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "a",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      {
-                                        "children": [
-                                          {
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
+                                  Object {
+                                    "children": Array [
+                                      Object {
                                         "type": "text",
                                         "value": "+",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "b",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      {
-                                        "children": [
-                                          {
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
+                                  Object {
+                                    "children": Array [
+                                      Object {
                                         "type": "text",
                                         "value": "=",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "c",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      {
-                                        "children": [
-                                          {
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {},
+                                "properties": Object {},
                                 "tagName": "mrow",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "a^2 + b^2 = c^2",
                                   },
                                 ],
-                                "properties": {
+                                "properties": Object {
                                   "encoding": "application/x-tex",
                                 },
                                 "tagName": "annotation",
                                 "type": "element",
                               },
                             ],
-                            "properties": {},
+                            "properties": Object {},
                             "tagName": "semantics",
                             "type": "element",
                           },
                         ],
-                        "properties": {
+                        "properties": Object {
                           "xmlns": "http://www.w3.org/1998/Math/MathML",
                         },
                         "tagName": "math",
                         "type": "element",
                       },
                     ],
-                    "properties": {
-                      "className": [
+                    "properties": Object {
+                      "className": Array [
                         "katex-mathml",
                       ],
                     },
                     "tagName": "span",
                     "type": "element",
                   },
-                  {
-                    "children": [
-                      {
-                        "children": [
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                  Object {
+                    "children": Array [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8974em;vertical-align:-0.0833em;",
+                              "style": "height:0.8974em;vertical-align:-0.08333em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "a",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -199,20 +199,20 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "children": [
-                                              {
-                                                "children": [
-                                                  {
-                                                    "children": [],
-                                                    "properties": {
-                                                      "className": [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "children": Array [
+                                              Object {
+                                                "children": Array [
+                                                  Object {
+                                                    "children": Array [],
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -220,17 +220,17 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  {
-                                                    "children": [
-                                                      {
-                                                        "children": [
-                                                          {
+                                                  Object {
+                                                    "children": Array [
+                                                      Object {
+                                                        "children": Array [
+                                                          Object {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": {
-                                                          "className": [
+                                                        "properties": Object {
+                                                          "className": Array [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -239,8 +239,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": {
-                                                      "className": [
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -251,15 +251,15 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": {
+                                                "properties": Object {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": {
-                                              "className": [
+                                            "properties": Object {
+                                              "className": Array [
                                                 "vlist",
                                               ],
                                               "style": "height:0.8141em;",
@@ -268,8 +268,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": {
-                                          "className": [
+                                        "properties": Object {
+                                          "className": Array [
                                             "vlist-r",
                                           ],
                                         },
@@ -277,8 +277,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {
-                                      "className": [
+                                    "properties": Object {
+                                      "className": Array [
                                         "vlist-t",
                                       ],
                                     },
@@ -286,8 +286,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "msupsub",
                                   ],
                                 },
@@ -295,18 +295,18 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                 "type": "element",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2222em;",
@@ -314,25 +314,25 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
+                          Object {
+                            "children": Array [
+                              Object {
                                 "type": "text",
                                 "value": "+",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mbin",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2222em;",
@@ -341,38 +341,38 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                             "type": "element",
                           },
                         ],
-                        "properties": {
-                          "className": [
+                        "properties": Object {
+                          "className": Array [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      {
-                        "children": [
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8141em;",
+                              "style": "height:0.8141em;vertical-align:0em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "b",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -380,20 +380,20 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "children": [
-                                              {
-                                                "children": [
-                                                  {
-                                                    "children": [],
-                                                    "properties": {
-                                                      "className": [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "children": Array [
+                                              Object {
+                                                "children": Array [
+                                                  Object {
+                                                    "children": Array [],
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -401,17 +401,17 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  {
-                                                    "children": [
-                                                      {
-                                                        "children": [
-                                                          {
+                                                  Object {
+                                                    "children": Array [
+                                                      Object {
+                                                        "children": Array [
+                                                          Object {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": {
-                                                          "className": [
+                                                        "properties": Object {
+                                                          "className": Array [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -420,8 +420,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": {
-                                                      "className": [
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -432,15 +432,15 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": {
+                                                "properties": Object {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": {
-                                              "className": [
+                                            "properties": Object {
+                                              "className": Array [
                                                 "vlist",
                                               ],
                                               "style": "height:0.8141em;",
@@ -449,8 +449,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": {
-                                          "className": [
+                                        "properties": Object {
+                                          "className": Array [
                                             "vlist-r",
                                           ],
                                         },
@@ -458,8 +458,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {
-                                      "className": [
+                                    "properties": Object {
+                                      "className": Array [
                                         "vlist-t",
                                       ],
                                     },
@@ -467,8 +467,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "msupsub",
                                   ],
                                 },
@@ -476,18 +476,18 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                 "type": "element",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2778em;",
@@ -495,25 +495,25 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
+                          Object {
+                            "children": Array [
+                              Object {
                                 "type": "text",
                                 "value": "=",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mrel",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2778em;",
@@ -522,38 +522,38 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                             "type": "element",
                           },
                         ],
-                        "properties": {
-                          "className": [
+                        "properties": Object {
+                          "className": Array [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      {
-                        "children": [
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8141em;",
+                              "style": "height:0.8141em;vertical-align:0em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "c",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -561,20 +561,20 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "children": [
-                                              {
-                                                "children": [
-                                                  {
-                                                    "children": [],
-                                                    "properties": {
-                                                      "className": [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "children": Array [
+                                              Object {
+                                                "children": Array [
+                                                  Object {
+                                                    "children": Array [],
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -582,17 +582,17 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  {
-                                                    "children": [
-                                                      {
-                                                        "children": [
-                                                          {
+                                                  Object {
+                                                    "children": Array [
+                                                      Object {
+                                                        "children": Array [
+                                                          Object {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": {
-                                                          "className": [
+                                                        "properties": Object {
+                                                          "className": Array [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -601,8 +601,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": {
-                                                      "className": [
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -613,15 +613,15 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": {
+                                                "properties": Object {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": {
-                                              "className": [
+                                            "properties": Object {
+                                              "className": Array [
                                                 "vlist",
                                               ],
                                               "style": "height:0.8141em;",
@@ -630,8 +630,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": {
-                                          "className": [
+                                        "properties": Object {
+                                          "className": Array [
                                             "vlist-r",
                                           ],
                                         },
@@ -639,8 +639,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {
-                                      "className": [
+                                    "properties": Object {
+                                      "className": Array [
                                         "vlist-t",
                                       ],
                                     },
@@ -648,8 +648,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "msupsub",
                                   ],
                                 },
@@ -657,8 +657,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                                 "type": "element",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mord",
                               ],
                             },
@@ -666,8 +666,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                             "type": "element",
                           },
                         ],
-                        "properties": {
-                          "className": [
+                        "properties": Object {
+                          "className": Array [
                             "base",
                           ],
                         },
@@ -675,9 +675,9 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                         "type": "element",
                       },
                     ],
-                    "properties": {
+                    "properties": Object {
                       "ariaHidden": "true",
-                      "className": [
+                      "className": Array [
                         "katex-html",
                       ],
                     },
@@ -685,8 +685,8 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
                     "type": "element",
                   },
                 ],
-                "properties": {
-                  "className": [
+                "properties": Object {
+                  "className": Array [
                     "katex",
                   ],
                 },
@@ -695,20 +695,20 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
               },
             ],
             "hName": "span",
-            "hProperties": {
-              "className": [
+            "hProperties": Object {
+              "className": Array [
                 "math",
                 "math-inline",
               ],
             },
           },
-          "position": {
-            "end": {
+          "position": Object {
+            "end": Object {
               "column": 20,
               "line": 1,
               "offset": 19,
             },
-            "start": {
+            "start": Object {
               "column": 1,
               "line": 1,
               "offset": 0,
@@ -718,13 +718,13 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
           "value": "a^2 + b^2 = c^2",
         },
       ],
-      "position": {
-        "end": {
+      "position": Object {
+        "end": Object {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "start": {
+        "start": Object {
           "column": 1,
           "line": 1,
           "offset": 0,
@@ -733,13 +733,13 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
       "type": "paragraph",
     },
   ],
-  "position": {
-    "end": {
+  "position": Object {
+    "end": Object {
       "column": 20,
       "line": 1,
       "offset": 19,
     },
-    "start": {
+    "start": Object {
       "column": 1,
       "line": 1,
       "offset": 0,
@@ -750,197 +750,197 @@ exports[`remark katex plugin renders double $ inlineMath node properly 1`] = `
 `;
 
 exports[`remark katex plugin renders inlineMath node properly 1`] = `
-{
-  "children": [
-    {
-      "children": [
-        {
-          "data": {
-            "hChildren": [
-              {
-                "children": [
-                  {
-                    "children": [
-                      {
-                        "children": [
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "data": Object {
+            "hChildren": Array [
+              Object {
+                "children": Array [
+                  Object {
+                    "children": Array [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "a",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      {
-                                        "children": [
-                                          {
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
+                                  Object {
+                                    "children": Array [
+                                      Object {
                                         "type": "text",
                                         "value": "+",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "b",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      {
-                                        "children": [
-                                          {
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
+                                  Object {
+                                    "children": Array [
+                                      Object {
                                         "type": "text",
                                         "value": "=",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "c",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      {
-                                        "children": [
-                                          {
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {},
+                                "properties": Object {},
                                 "tagName": "mrow",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "a^2 + b^2 = c^2",
                                   },
                                 ],
-                                "properties": {
+                                "properties": Object {
                                   "encoding": "application/x-tex",
                                 },
                                 "tagName": "annotation",
                                 "type": "element",
                               },
                             ],
-                            "properties": {},
+                            "properties": Object {},
                             "tagName": "semantics",
                             "type": "element",
                           },
                         ],
-                        "properties": {
+                        "properties": Object {
                           "xmlns": "http://www.w3.org/1998/Math/MathML",
                         },
                         "tagName": "math",
                         "type": "element",
                       },
                     ],
-                    "properties": {
-                      "className": [
+                    "properties": Object {
+                      "className": Array [
                         "katex-mathml",
                       ],
                     },
                     "tagName": "span",
                     "type": "element",
                   },
-                  {
-                    "children": [
-                      {
-                        "children": [
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                  Object {
+                    "children": Array [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8974em;vertical-align:-0.0833em;",
+                              "style": "height:0.8974em;vertical-align:-0.08333em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "a",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -948,20 +948,20 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "children": [
-                                              {
-                                                "children": [
-                                                  {
-                                                    "children": [],
-                                                    "properties": {
-                                                      "className": [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "children": Array [
+                                              Object {
+                                                "children": Array [
+                                                  Object {
+                                                    "children": Array [],
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -969,17 +969,17 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  {
-                                                    "children": [
-                                                      {
-                                                        "children": [
-                                                          {
+                                                  Object {
+                                                    "children": Array [
+                                                      Object {
+                                                        "children": Array [
+                                                          Object {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": {
-                                                          "className": [
+                                                        "properties": Object {
+                                                          "className": Array [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -988,8 +988,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": {
-                                                      "className": [
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1000,15 +1000,15 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": {
+                                                "properties": Object {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": {
-                                              "className": [
+                                            "properties": Object {
+                                              "className": Array [
                                                 "vlist",
                                               ],
                                               "style": "height:0.8141em;",
@@ -1017,8 +1017,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": {
-                                          "className": [
+                                        "properties": Object {
+                                          "className": Array [
                                             "vlist-r",
                                           ],
                                         },
@@ -1026,8 +1026,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {
-                                      "className": [
+                                    "properties": Object {
+                                      "className": Array [
                                         "vlist-t",
                                       ],
                                     },
@@ -1035,8 +1035,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "msupsub",
                                   ],
                                 },
@@ -1044,18 +1044,18 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                 "type": "element",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2222em;",
@@ -1063,25 +1063,25 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
+                          Object {
+                            "children": Array [
+                              Object {
                                 "type": "text",
                                 "value": "+",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mbin",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2222em;",
@@ -1090,38 +1090,38 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                             "type": "element",
                           },
                         ],
-                        "properties": {
-                          "className": [
+                        "properties": Object {
+                          "className": Array [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      {
-                        "children": [
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8141em;",
+                              "style": "height:0.8141em;vertical-align:0em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "b",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -1129,20 +1129,20 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "children": [
-                                              {
-                                                "children": [
-                                                  {
-                                                    "children": [],
-                                                    "properties": {
-                                                      "className": [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "children": Array [
+                                              Object {
+                                                "children": Array [
+                                                  Object {
+                                                    "children": Array [],
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -1150,17 +1150,17 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  {
-                                                    "children": [
-                                                      {
-                                                        "children": [
-                                                          {
+                                                  Object {
+                                                    "children": Array [
+                                                      Object {
+                                                        "children": Array [
+                                                          Object {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": {
-                                                          "className": [
+                                                        "properties": Object {
+                                                          "className": Array [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -1169,8 +1169,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": {
-                                                      "className": [
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1181,15 +1181,15 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": {
+                                                "properties": Object {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": {
-                                              "className": [
+                                            "properties": Object {
+                                              "className": Array [
                                                 "vlist",
                                               ],
                                               "style": "height:0.8141em;",
@@ -1198,8 +1198,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": {
-                                          "className": [
+                                        "properties": Object {
+                                          "className": Array [
                                             "vlist-r",
                                           ],
                                         },
@@ -1207,8 +1207,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {
-                                      "className": [
+                                    "properties": Object {
+                                      "className": Array [
                                         "vlist-t",
                                       ],
                                     },
@@ -1216,8 +1216,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "msupsub",
                                   ],
                                 },
@@ -1225,18 +1225,18 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                 "type": "element",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2778em;",
@@ -1244,25 +1244,25 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
+                          Object {
+                            "children": Array [
+                              Object {
                                 "type": "text",
                                 "value": "=",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mrel",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2778em;",
@@ -1271,38 +1271,38 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                             "type": "element",
                           },
                         ],
-                        "properties": {
-                          "className": [
+                        "properties": Object {
+                          "className": Array [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      {
-                        "children": [
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8141em;",
+                              "style": "height:0.8141em;vertical-align:0em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "c",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -1310,20 +1310,20 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "children": [
-                                              {
-                                                "children": [
-                                                  {
-                                                    "children": [],
-                                                    "properties": {
-                                                      "className": [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "children": Array [
+                                              Object {
+                                                "children": Array [
+                                                  Object {
+                                                    "children": Array [],
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -1331,17 +1331,17 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  {
-                                                    "children": [
-                                                      {
-                                                        "children": [
-                                                          {
+                                                  Object {
+                                                    "children": Array [
+                                                      Object {
+                                                        "children": Array [
+                                                          Object {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": {
-                                                          "className": [
+                                                        "properties": Object {
+                                                          "className": Array [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -1350,8 +1350,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": {
-                                                      "className": [
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1362,15 +1362,15 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": {
+                                                "properties": Object {
                                                   "style": "top:-3.063em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": {
-                                              "className": [
+                                            "properties": Object {
+                                              "className": Array [
                                                 "vlist",
                                               ],
                                               "style": "height:0.8141em;",
@@ -1379,8 +1379,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": {
-                                          "className": [
+                                        "properties": Object {
+                                          "className": Array [
                                             "vlist-r",
                                           ],
                                         },
@@ -1388,8 +1388,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {
-                                      "className": [
+                                    "properties": Object {
+                                      "className": Array [
                                         "vlist-t",
                                       ],
                                     },
@@ -1397,8 +1397,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "msupsub",
                                   ],
                                 },
@@ -1406,8 +1406,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                                 "type": "element",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mord",
                               ],
                             },
@@ -1415,8 +1415,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                             "type": "element",
                           },
                         ],
-                        "properties": {
-                          "className": [
+                        "properties": Object {
+                          "className": Array [
                             "base",
                           ],
                         },
@@ -1424,9 +1424,9 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                         "type": "element",
                       },
                     ],
-                    "properties": {
+                    "properties": Object {
                       "ariaHidden": "true",
-                      "className": [
+                      "className": Array [
                         "katex-html",
                       ],
                     },
@@ -1434,8 +1434,8 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
                     "type": "element",
                   },
                 ],
-                "properties": {
-                  "className": [
+                "properties": Object {
+                  "className": Array [
                     "katex",
                   ],
                 },
@@ -1444,20 +1444,20 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
               },
             ],
             "hName": "span",
-            "hProperties": {
-              "className": [
+            "hProperties": Object {
+              "className": Array [
                 "math",
                 "math-inline",
               ],
             },
           },
-          "position": {
-            "end": {
+          "position": Object {
+            "end": Object {
               "column": 18,
               "line": 1,
               "offset": 17,
             },
-            "start": {
+            "start": Object {
               "column": 1,
               "line": 1,
               "offset": 0,
@@ -1467,13 +1467,13 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
           "value": "a^2 + b^2 = c^2",
         },
       ],
-      "position": {
-        "end": {
+      "position": Object {
+        "end": Object {
           "column": 18,
           "line": 1,
           "offset": 17,
         },
-        "start": {
+        "start": Object {
           "column": 1,
           "line": 1,
           "offset": 0,
@@ -1482,13 +1482,13 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
       "type": "paragraph",
     },
   ],
-  "position": {
-    "end": {
+  "position": Object {
+    "end": Object {
       "column": 18,
       "line": 1,
       "offset": 17,
     },
-    "start": {
+    "start": Object {
       "column": 1,
       "line": 1,
       "offset": 0,
@@ -1499,157 +1499,157 @@ exports[`remark katex plugin renders inlineMath node properly 1`] = `
 `;
 
 exports[`remark katex plugin renders math node properly 1`] = `
-{
-  "children": [
-    {
-      "data": {
-        "hChildren": [
-          {
-            "children": [
-              {
-                "children": [
-                  {
-                    "children": [
-                      {
-                        "children": [
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
+Object {
+  "children": Array [
+    Object {
+      "data": Object {
+        "hChildren": Array [
+          Object {
+            "children": Array [
+              Object {
+                "children": Array [
+                  Object {
+                    "children": Array [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "a",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      {
-                                        "children": [
-                                          {
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
+                                  Object {
+                                    "children": Array [
+                                      Object {
                                         "type": "text",
                                         "value": "+",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "b",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      {
-                                        "children": [
-                                          {
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
+                                  Object {
+                                    "children": Array [
+                                      Object {
                                         "type": "text",
                                         "value": "=",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "mo",
                                     "type": "element",
                                   },
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "c",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mi",
                                         "type": "element",
                                       },
-                                      {
-                                        "children": [
-                                          {
+                                      Object {
+                                        "children": Array [
+                                          Object {
                                             "type": "text",
                                             "value": "2",
                                           },
                                         ],
-                                        "properties": {},
+                                        "properties": Object {},
                                         "tagName": "mn",
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {},
+                                    "properties": Object {},
                                     "tagName": "msup",
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {},
+                                "properties": Object {},
                                 "tagName": "mrow",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "a^2 + b^2 = c^2",
                                   },
                                 ],
-                                "properties": {
+                                "properties": Object {
                                   "encoding": "application/x-tex",
                                 },
                                 "tagName": "annotation",
                                 "type": "element",
                               },
                             ],
-                            "properties": {},
+                            "properties": Object {},
                             "tagName": "semantics",
                             "type": "element",
                           },
                         ],
-                        "properties": {
+                        "properties": Object {
                           "display": "block",
                           "xmlns": "http://www.w3.org/1998/Math/MathML",
                         },
@@ -1657,40 +1657,40 @@ exports[`remark katex plugin renders math node properly 1`] = `
                         "type": "element",
                       },
                     ],
-                    "properties": {
-                      "className": [
+                    "properties": Object {
+                      "className": Array [
                         "katex-mathml",
                       ],
                     },
                     "tagName": "span",
                     "type": "element",
                   },
-                  {
-                    "children": [
-                      {
-                        "children": [
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                  Object {
+                    "children": Array [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.9474em;vertical-align:-0.0833em;",
+                              "style": "height:0.9474em;vertical-align:-0.08333em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "a",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -1698,20 +1698,20 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "children": [
-                                              {
-                                                "children": [
-                                                  {
-                                                    "children": [],
-                                                    "properties": {
-                                                      "className": [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "children": Array [
+                                              Object {
+                                                "children": Array [
+                                                  Object {
+                                                    "children": Array [],
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -1719,17 +1719,17 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  {
-                                                    "children": [
-                                                      {
-                                                        "children": [
-                                                          {
+                                                  Object {
+                                                    "children": Array [
+                                                      Object {
+                                                        "children": Array [
+                                                          Object {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": {
-                                                          "className": [
+                                                        "properties": Object {
+                                                          "className": Array [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -1738,8 +1738,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": {
-                                                      "className": [
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1750,15 +1750,15 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": {
+                                                "properties": Object {
                                                   "style": "top:-3.113em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": {
-                                              "className": [
+                                            "properties": Object {
+                                              "className": Array [
                                                 "vlist",
                                               ],
                                               "style": "height:0.8641em;",
@@ -1767,8 +1767,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": {
-                                          "className": [
+                                        "properties": Object {
+                                          "className": Array [
                                             "vlist-r",
                                           ],
                                         },
@@ -1776,8 +1776,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {
-                                      "className": [
+                                    "properties": Object {
+                                      "className": Array [
                                         "vlist-t",
                                       ],
                                     },
@@ -1785,8 +1785,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "msupsub",
                                   ],
                                 },
@@ -1794,18 +1794,18 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                 "type": "element",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2222em;",
@@ -1813,25 +1813,25 @@ exports[`remark katex plugin renders math node properly 1`] = `
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
+                          Object {
+                            "children": Array [
+                              Object {
                                 "type": "text",
                                 "value": "+",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mbin",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2222em;",
@@ -1840,38 +1840,38 @@ exports[`remark katex plugin renders math node properly 1`] = `
                             "type": "element",
                           },
                         ],
-                        "properties": {
-                          "className": [
+                        "properties": Object {
+                          "className": Array [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      {
-                        "children": [
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8641em;",
+                              "style": "height:0.8641em;vertical-align:0em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "b",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -1879,20 +1879,20 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "children": [
-                                              {
-                                                "children": [
-                                                  {
-                                                    "children": [],
-                                                    "properties": {
-                                                      "className": [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "children": Array [
+                                              Object {
+                                                "children": Array [
+                                                  Object {
+                                                    "children": Array [],
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -1900,17 +1900,17 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  {
-                                                    "children": [
-                                                      {
-                                                        "children": [
-                                                          {
+                                                  Object {
+                                                    "children": Array [
+                                                      Object {
+                                                        "children": Array [
+                                                          Object {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": {
-                                                          "className": [
+                                                        "properties": Object {
+                                                          "className": Array [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -1919,8 +1919,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": {
-                                                      "className": [
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -1931,15 +1931,15 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": {
+                                                "properties": Object {
                                                   "style": "top:-3.113em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": {
-                                              "className": [
+                                            "properties": Object {
+                                              "className": Array [
                                                 "vlist",
                                               ],
                                               "style": "height:0.8641em;",
@@ -1948,8 +1948,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": {
-                                          "className": [
+                                        "properties": Object {
+                                          "className": Array [
                                             "vlist-r",
                                           ],
                                         },
@@ -1957,8 +1957,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {
-                                      "className": [
+                                    "properties": Object {
+                                      "className": Array [
                                         "vlist-t",
                                       ],
                                     },
@@ -1966,8 +1966,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "msupsub",
                                   ],
                                 },
@@ -1975,18 +1975,18 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                 "type": "element",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mord",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2778em;",
@@ -1994,25 +1994,25 @@ exports[`remark katex plugin renders math node properly 1`] = `
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
+                          Object {
+                            "children": Array [
+                              Object {
                                 "type": "text",
                                 "value": "=",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mrel",
                               ],
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "mspace",
                               ],
                               "style": "margin-right:0.2778em;",
@@ -2021,38 +2021,38 @@ exports[`remark katex plugin renders math node properly 1`] = `
                             "type": "element",
                           },
                         ],
-                        "properties": {
-                          "className": [
+                        "properties": Object {
+                          "className": Array [
                             "base",
                           ],
                         },
                         "tagName": "span",
                         "type": "element",
                       },
-                      {
-                        "children": [
-                          {
-                            "children": [],
-                            "properties": {
-                              "className": [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [],
+                            "properties": Object {
+                              "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8641em;",
+                              "style": "height:0.8641em;vertical-align:0em;",
                             },
                             "tagName": "span",
                             "type": "element",
                           },
-                          {
-                            "children": [
-                              {
-                                "children": [
-                                  {
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [
+                                  Object {
                                     "type": "text",
                                     "value": "c",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "mord",
                                     "mathnormal",
                                   ],
@@ -2060,20 +2060,20 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                 "tagName": "span",
                                 "type": "element",
                               },
-                              {
-                                "children": [
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "children": [
-                                              {
-                                                "children": [
-                                                  {
-                                                    "children": [],
-                                                    "properties": {
-                                                      "className": [
+                              Object {
+                                "children": Array [
+                                  Object {
+                                    "children": Array [
+                                      Object {
+                                        "children": Array [
+                                          Object {
+                                            "children": Array [
+                                              Object {
+                                                "children": Array [
+                                                  Object {
+                                                    "children": Array [],
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "pstrut",
                                                       ],
                                                       "style": "height:2.7em;",
@@ -2081,17 +2081,17 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                                     "tagName": "span",
                                                     "type": "element",
                                                   },
-                                                  {
-                                                    "children": [
-                                                      {
-                                                        "children": [
-                                                          {
+                                                  Object {
+                                                    "children": Array [
+                                                      Object {
+                                                        "children": Array [
+                                                          Object {
                                                             "type": "text",
                                                             "value": "2",
                                                           },
                                                         ],
-                                                        "properties": {
-                                                          "className": [
+                                                        "properties": Object {
+                                                          "className": Array [
                                                             "mord",
                                                             "mtight",
                                                           ],
@@ -2100,8 +2100,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                                         "type": "element",
                                                       },
                                                     ],
-                                                    "properties": {
-                                                      "className": [
+                                                    "properties": Object {
+                                                      "className": Array [
                                                         "sizing",
                                                         "reset-size6",
                                                         "size3",
@@ -2112,15 +2112,15 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                                     "type": "element",
                                                   },
                                                 ],
-                                                "properties": {
+                                                "properties": Object {
                                                   "style": "top:-3.113em;margin-right:0.05em;",
                                                 },
                                                 "tagName": "span",
                                                 "type": "element",
                                               },
                                             ],
-                                            "properties": {
-                                              "className": [
+                                            "properties": Object {
+                                              "className": Array [
                                                 "vlist",
                                               ],
                                               "style": "height:0.8641em;",
@@ -2129,8 +2129,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                             "type": "element",
                                           },
                                         ],
-                                        "properties": {
-                                          "className": [
+                                        "properties": Object {
+                                          "className": Array [
                                             "vlist-r",
                                           ],
                                         },
@@ -2138,8 +2138,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                         "type": "element",
                                       },
                                     ],
-                                    "properties": {
-                                      "className": [
+                                    "properties": Object {
+                                      "className": Array [
                                         "vlist-t",
                                       ],
                                     },
@@ -2147,8 +2147,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                     "type": "element",
                                   },
                                 ],
-                                "properties": {
-                                  "className": [
+                                "properties": Object {
+                                  "className": Array [
                                     "msupsub",
                                   ],
                                 },
@@ -2156,8 +2156,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                                 "type": "element",
                               },
                             ],
-                            "properties": {
-                              "className": [
+                            "properties": Object {
+                              "className": Array [
                                 "mord",
                               ],
                             },
@@ -2165,8 +2165,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                             "type": "element",
                           },
                         ],
-                        "properties": {
-                          "className": [
+                        "properties": Object {
+                          "className": Array [
                             "base",
                           ],
                         },
@@ -2174,9 +2174,9 @@ exports[`remark katex plugin renders math node properly 1`] = `
                         "type": "element",
                       },
                     ],
-                    "properties": {
+                    "properties": Object {
                       "ariaHidden": "true",
-                      "className": [
+                      "className": Array [
                         "katex-html",
                       ],
                     },
@@ -2184,8 +2184,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                     "type": "element",
                   },
                 ],
-                "properties": {
-                  "className": [
+                "properties": Object {
+                  "className": Array [
                     "katex",
                   ],
                 },
@@ -2193,8 +2193,8 @@ exports[`remark katex plugin renders math node properly 1`] = `
                 "type": "element",
               },
             ],
-            "properties": {
-              "className": [
+            "properties": Object {
+              "className": Array [
                 "katex-display",
               ],
             },
@@ -2203,21 +2203,21 @@ exports[`remark katex plugin renders math node properly 1`] = `
           },
         ],
         "hName": "div",
-        "hProperties": {
-          "className": [
+        "hProperties": Object {
+          "className": Array [
             "math",
             "math-display",
           ],
         },
       },
       "meta": null,
-      "position": {
-        "end": {
+      "position": Object {
+        "end": Object {
           "column": 3,
           "line": 3,
           "offset": 21,
         },
-        "start": {
+        "start": Object {
           "column": 1,
           "line": 1,
           "offset": 0,
@@ -2227,13 +2227,13 @@ exports[`remark katex plugin renders math node properly 1`] = `
       "value": "a^2 + b^2 = c^2",
     },
   ],
-  "position": {
-    "end": {
+  "position": Object {
+    "end": Object {
       "column": 3,
       "line": 3,
       "offset": 21,
     },
-    "start": {
+    "start": Object {
       "column": 1,
       "line": 1,
       "offset": 0,
