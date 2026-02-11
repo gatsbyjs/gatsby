@@ -2,7 +2,7 @@ import semverMaxSatisfying from "semver/ranges/max-satisfying"
 
 import { getAdapterInit, getAdaptersCacheDir } from "../init"
 import { AdapterInit, IAdapter, IAdapterManifestEntry } from "../types"
-import execa from "execa"
+import { x } from "tinyexec"
 
 let mockAdaptersManifest: Array<IAdapterManifestEntry> = []
 
@@ -130,20 +130,22 @@ const getMockedPackage = (
   }
 }
 
-jest.mock(`execa`, () =>
-  jest.fn((command, args) => {
-    if (command === `npm`) {
-      const [, range] = args
-        .find(arg => arg.includes(`gatsby-adapter-test`))
-        .split(`@`)
+jest.mock(`x`, () => {
+  return {
+    x: jest.fn((command, args) => {
+      if (command === `npm`) {
+        const [, range] = args
+          .find(arg => arg.includes(`gatsby-adapter-test`))
+          .split(`@`)
 
-      // set mock adapter as installed in cache
-      mockInstalledInCacheAdapter = getMockedPackage(range)
-      return
-    }
-    throw new Error(`not expected execa command: "${command}`)
-  })
-)
+        // set mock adapter as installed in cache
+        mockInstalledInCacheAdapter = getMockedPackage(range)
+        return
+      }
+      throw new Error(`not expected tinyexec command: "${command}`)
+    }),
+  }
+})
 
 const mockSiteAdapterModule = jest.fn(() => {
   if (mockInstalledInSiteAdapter) {
@@ -203,7 +205,7 @@ describe(`getAdapterInit`, () => {
 
   describe(`matching adapter module for current environment`, () => {
     beforeEach(() => {
-      execa.mockClear()
+      x.mockClear()
       mockInstalledInSiteAdapter = undefined
       mockInstalledInCacheAdapter = undefined
       delete process.env.GATSBY_CONTINUE_BUILD_ON_ADAPTER_MISMATCH
@@ -282,7 +284,7 @@ describe(`getAdapterInit`, () => {
       expect(adapterInit?.().name).toMatchInlineSnapshot(
         `"gatsby-adapter-test@1.0.3"`
       )
-      expect(execa).toMatchInlineSnapshot(`
+      expect(x).toMatchInlineSnapshot(`
         [MockFunction] {
           "calls": Array [
             Array [
@@ -322,7 +324,7 @@ describe(`getAdapterInit`, () => {
     })
 
     it(`panics if automatic installation of correct version of adapter fails`, async () => {
-      execa.mockImplementationOnce(() => {
+      x.mockImplementationOnce(() => {
         throw new Error(`npm install failed`)
       })
       mockAdaptersManifest = [
@@ -346,7 +348,7 @@ describe(`getAdapterInit`, () => {
       const adapterInit = await getAdapterInit(`5.12.0`)
       expect(adapterInit).toBeUndefined()
       expect(mockLogs.find(log => log.level === `spinner-panic`)).toBeTruthy()
-      expect(execa).toMatchInlineSnapshot(`
+      expect(x).toMatchInlineSnapshot(`
         [MockFunction] {
           "calls": Array [
             Array [
@@ -409,7 +411,7 @@ describe(`getAdapterInit`, () => {
       expect(adapterInit?.().name).toMatchInlineSnapshot(
         `"gatsby-adapter-test@1.0.4"`
       )
-      expect(execa).not.toHaveBeenCalled()
+      expect(x).not.toHaveBeenCalled()
       expect(getLogsForSnapshot()).toMatchInlineSnapshot(
         `"verbose       \\"Using previously adapter previously installed by gatsby /\\"gatsby-adapter-test@1.0.4/\\"\\""`
       )
@@ -440,7 +442,7 @@ describe(`getAdapterInit`, () => {
       expect(adapterInit?.().name).toMatchInlineSnapshot(
         `"gatsby-adapter-test@1.0.4"`
       )
-      expect(execa).toMatchInlineSnapshot(`
+      expect(x).toMatchInlineSnapshot(`
         [MockFunction] {
           "calls": Array [
             Array [
