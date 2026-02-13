@@ -1,1 +1,0 @@
-console.log(`gatsby-node is working`)

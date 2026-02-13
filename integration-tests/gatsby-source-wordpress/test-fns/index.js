@@ -1,7 +1,0 @@
-require(`./data-resolution`)
-require(`./filtered-type-defs`)
-require(`./gatsby-image`)
-require(`./integrity`)
-require(`./plugin-options`)
-require(`./query-generation`)
-require(`./static-file-transformation`)

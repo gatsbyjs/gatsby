@@ -1,4 +1,0 @@
-type Metadata {
-  publishedAt: Date
-  updatedAt: Date
-}

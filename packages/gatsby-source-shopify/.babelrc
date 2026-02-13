@@ -1,9 +1,0 @@
-{
-  "presets": [["babel-preset-gatsby-package"]],
-  "overrides": [
-    {
-      "test": [],
-      "presets": [["babel-preset-gatsby-package", { "browser": true, "esm": true }]]
-    }
-  ]
-}

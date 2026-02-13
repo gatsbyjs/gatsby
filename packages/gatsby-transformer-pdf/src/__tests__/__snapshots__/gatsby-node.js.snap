@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`gatsby-transformer-pdf should create node base on pdf data 1`] = `
-"Dummy PDF file
-----------------Page (0) Break----------------
-"
-`;
