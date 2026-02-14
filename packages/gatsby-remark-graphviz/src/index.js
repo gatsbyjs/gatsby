@@ -11,7 +11,6 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
   const codeNodes = []
 
   visit(markdownAST, `code`, node => {
-    console.log({ lang: node.lang, meta: node.meta })
     // Only act on languages supported by graphviz
     if (validLanguages.includes(node.lang)) {
       codeNodes.push({ node, attrString: node.meta })
