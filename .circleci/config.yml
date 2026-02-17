@@ -146,6 +146,15 @@ commands:
           paths:
             - ~/.cache
 
+  fix_chrome_signing_key:
+    # See https://www.google.com/linuxrepositories/.
+    # This is needed for Cypress Chrome images. The node 18 versions are no longer receiving updates.
+    description: "Refresh the Google Chrome apt signing key"
+    steps:
+      - run:
+          name: Fix Google Chrome apt signing key
+          command: wget -q -O /etc/apt/trusted.gpg.d/google-chrome.asc https://dl.google.com/linux/linux_signing_key.pub
+
   e2e-test:
     parameters:
       skip_file_change_test:
@@ -559,6 +568,7 @@ jobs:
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
       # We use curl in this test suite but it isn't available in all images we use
+      - fix_chrome_signing_key
       - run: apt-get update && apt-get install -y curl
       - e2e-test:
           test_path: e2e-tests/development-runtime
@@ -572,6 +582,7 @@ jobs:
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
       # We use curl in this test suite but it isn't available in all images we use
+      - fix_chrome_signing_key
       - run: apt-get update && apt-get install -y curl
       - e2e-test:
           test_path: e2e-tests/development-runtime
@@ -717,6 +728,7 @@ jobs:
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
       # used in e2e-tests/adapters/make-monorepo.sh
+      - fix_chrome_signing_key
       - run: apt-get update && apt-get install -y jq
       - e2e-test:
           test_path: e2e-tests/adapters
