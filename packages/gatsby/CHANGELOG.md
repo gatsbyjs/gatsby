@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.16.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.16.1/packages/gatsby) (2026-02-10)
+
+#### Bug Fixes
+
+- ensure inserting `<title>` in `<head>` updates `document.title` [#39382](https://github.com/gatsbyjs/gatsby/issues/39382) [#39385](https://github.com/gatsbyjs/gatsby/issues/39385) ([2023c31](https://github.com/gatsbyjs/gatsby/commit/2023c318cbbab2d2445cbb2b40a8684ee48bc866))
+
 ## [5.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.16.0/packages/gatsby) (2026-01-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)
