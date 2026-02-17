@@ -153,7 +153,7 @@ commands:
     steps:
       - run:
           name: Fix Google Chrome apt signing key
-          command: curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /etc/apt/trusted.gpg.d/google-chrome.gpg
+          command: wget -q -O /etc/apt/trusted.gpg.d/google-chrome.asc https://dl.google.com/linux/linux_signing_key.pub
 
   e2e-test:
     parameters:
