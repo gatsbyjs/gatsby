@@ -32,7 +32,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^5.0.0-next",
-    "katex": "^0.13.3"
+    "katex": "^0.16.10"
   },
   "repository": {
     "type": "git",
