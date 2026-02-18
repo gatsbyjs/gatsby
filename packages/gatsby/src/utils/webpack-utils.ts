@@ -357,7 +357,7 @@ export const createWebpackUtils = (
             })
 
             postCSSPlugins.unshift(autoprefixerPlugin)
-            postCSSPlugins.unshift(flexbugs)
+            postCSSPlugins.unshift(flexbugs as PostCSSPlugin)
 
             return {
               plugins: postCSSPlugins,
