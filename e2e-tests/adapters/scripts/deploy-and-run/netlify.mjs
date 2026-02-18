@@ -1,6 +1,24 @@
 // @ts-check
 import { execa } from "execa"
 
+if (!process.env.NETLIFY_AUTH_TOKEN) {
+  console.error(``)
+  console.error(`============================================================`)
+  console.error(``)
+  console.error(`  SKIPPING: NETLIFY_AUTH_TOKEN is not set.`)
+  console.error(``)
+  console.error(`  This is expected for pull requests from forks.`)
+  console.error(`  The adapter e2e tests deploy to Netlify and cannot`)
+  console.error(`  run without credentials.`)
+  console.error(``)
+  console.error(`  Maintainers: to run these tests, push this branch`)
+  console.error(`  to the main repository and re-run CI.`)
+  console.error(``)
+  console.error(`============================================================`)
+  console.error(``)
+  process.exit(0)
+}
+
 // only set NETLIFY_SITE_ID from E2E_ADAPTERS_NETLIFY_SITE_ID if it's set
 if (process.env.E2E_ADAPTERS_NETLIFY_SITE_ID) {
   process.env.NETLIFY_SITE_ID = process.env.E2E_ADAPTERS_NETLIFY_SITE_ID
