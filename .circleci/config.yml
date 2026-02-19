@@ -146,6 +146,33 @@ commands:
           paths:
             - ~/.cache
 
+  # Netlify adapter e2e tests require NETLIFY_AUTH_TOKEN which is unavailable
+  # for PRs from forks (CircleCI withholds secrets from fork builds). Detect
+  # this early and halt the job with a clear message so maintainers know to
+  # re-run these tests from the main repo.
+  check_netlify_credentials:
+    steps:
+      - run:
+          name: "SKIP CHECK: Netlify credentials (unavailable for fork PRs)"
+          command: |
+            if [ -z "$NETLIFY_AUTH_TOKEN" ]; then
+              echo ""
+              echo "============================================================"
+              echo ""
+              echo "  SKIPPING: Netlify credentials are not available."
+              echo ""
+              echo "  This is expected for pull requests from forks."
+              echo "  The adapter e2e tests deploy to Netlify and cannot"
+              echo "  run without credentials."
+              echo ""
+              echo "  Maintainers: to run these tests, push this branch"
+              echo "  to the main repository and re-run CI."
+              echo ""
+              echo "============================================================"
+              echo ""
+              circleci-agent step halt
+            fi
+
   fix_chrome_signing_key:
     # See https://www.google.com/linuxrepositories/.
     # This is needed for Cypress Chrome images. The node 18 versions are no longer receiving updates.
@@ -714,6 +741,7 @@ jobs:
         type: string
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
+      - check_netlify_credentials
       - e2e-test:
           test_path: e2e-tests/adapters
       - store_test_results:
@@ -727,6 +755,7 @@ jobs:
         type: string
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
+      - check_netlify_credentials
       # used in e2e-tests/adapters/make-monorepo.sh
       - fix_chrome_signing_key
       - run: apt-get update && apt-get install -y jq
@@ -822,6 +851,7 @@ jobs:
       name: win/default
       shell: bash.exe
     steps:
+      - check_netlify_credentials
       - checkout
       - run:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
