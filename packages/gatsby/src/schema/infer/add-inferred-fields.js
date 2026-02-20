@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
 const { GraphQLList } = require(`graphql`)
-const invariant = require(`invariant`)
+const invariant = require(`tiny-invariant`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 import { isFile } from "./is-file"

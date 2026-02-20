@@ -1189,7 +1189,7 @@ Object {
         ])
       } catch (e) {
         expect(e.message).toEqual(
-          `Encountered an error trying to infer a GraphQL type ` +
+          `Invariant failed: Encountered an error trying to infer a GraphQL type ` +
             `for: \`linked___NODE\`. There is no corresponding node with the \`id\` ` +
             `field matching: "baz".`
         )

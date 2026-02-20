@@ -10,7 +10,7 @@ const {
   getNullableType,
   isCompositeType,
 } = require(`graphql`)
-const invariant = require(`invariant`)
+const invariant = require(`tiny-invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 import { store } from "../redux"
 import { getDataStore, getNode, getTypes } from "../datastore"

@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const invariant = require(`invariant`)
+const invariant = require(`tiny-invariant`)
 const {
   isSpecifiedScalarType,
   isIntrospectionType,
