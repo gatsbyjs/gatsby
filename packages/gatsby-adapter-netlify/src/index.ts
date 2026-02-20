@@ -6,9 +6,15 @@ import { handleRoutesManifest } from "./route-handler"
 import packageJson from "gatsby-adapter-netlify/package.json"
 import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 
+interface INetlifyCacheUtilsOptions {
+  ttl?: number
+  digests?: string[]
+  cwd?: string
+}
+
 interface INetlifyCacheUtils {
-  restore: (paths: Array<string>, options?: Record<string, unknown>) => Promise<boolean>
-  save: (paths: Array<string>, options?: Record<string, unknown>) => Promise<boolean>
+  restore: (paths: Array<string>, options?: INetlifyCacheUtilsOptions) => Promise<boolean>
+  save: (paths: Array<string>, options?: INetlifyCacheUtilsOptions) => Promise<boolean>
 }
 
 interface INetlifyAdapterOptions {
