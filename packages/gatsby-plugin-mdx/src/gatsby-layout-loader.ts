@@ -99,6 +99,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
         type: `Literal`,
         value: slash(mdxPath),
       },
+      attributes: [],
     })
 
     let hasClassicReactImport = false
