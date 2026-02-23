@@ -13,8 +13,14 @@ interface INetlifyCacheUtilsOptions {
 }
 
 interface INetlifyCacheUtils {
-  restore: (paths: Array<string>, options?: INetlifyCacheUtilsOptions) => Promise<boolean>
-  save: (paths: Array<string>, options?: INetlifyCacheUtilsOptions) => Promise<boolean>
+  restore: (
+    paths: Array<string>,
+    options?: INetlifyCacheUtilsOptions
+  ) => Promise<boolean>
+  save: (
+    paths: Array<string>,
+    options?: INetlifyCacheUtilsOptions
+  ) => Promise<boolean>
 }
 
 interface INetlifyAdapterOptions {
