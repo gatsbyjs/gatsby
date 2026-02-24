@@ -17,7 +17,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Other Changes
 
-- Revert "chore(release): Publish next pre-minor" ([3539ec8](https://github.com/gatsbyjs/gatsby/commit/3539ec8d8973e8eabbeb10734e3bb54bd831ac6c))
 - feat!(gatsby-source-shopify): upgrade from Shopify API version 2024-04 to 2025-01 [#39247](https://github.com/gatsbyjs/gatsby/issues/39247) ([132013c](https://github.com/gatsbyjs/gatsby/commit/132013cdd4d6dc5360c80a1ea814bcab2f748f88))
 - feat!(gatsby-source-shopify): upgrade from Shopify API version 2022-04 to 2024-04 [#39082](https://github.com/gatsbyjs/gatsby/issues/39082) ([8252e82](https://github.com/gatsbyjs/gatsby/commit/8252e826a25535de032fc3cbc685d9476e4474ce))
 

@@ -16,10 +16,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - use more explicit node.js version range [#39398](https://github.com/gatsbyjs/gatsby/issues/39398) ([c355640](https://github.com/gatsbyjs/gatsby/commit/c35564071466681951402a04fb33ae34cc673a2b))
 - bump `body-parser` to resolve `qs` vulnerability warning resolve [#39396](https://github.com/gatsbyjs/gatsby/issues/39396) ([2569b3a](https://github.com/gatsbyjs/gatsby/commit/2569b3a7b5fde48b64bfa554d15b401bd8575efd))
 
-#### Other Changes
-
-- Revert "chore(release): Publish next pre-minor" ([3539ec8](https://github.com/gatsbyjs/gatsby/commit/3539ec8d8973e8eabbeb10734e3bb54bd831ac6c))
-
 ## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.15.0/packages/gatsby) (2025-08-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.15)
