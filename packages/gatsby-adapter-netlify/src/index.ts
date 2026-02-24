@@ -8,7 +8,7 @@ import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 
 interface INetlifyCacheUtilsOptions {
   ttl?: number
-  digests?: string[]
+  digests?: Array<string>
   cwd?: string
 }
 
