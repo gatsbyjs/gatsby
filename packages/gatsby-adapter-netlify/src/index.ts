@@ -6,9 +6,21 @@ import { handleRoutesManifest } from "./route-handler"
 import packageJson from "gatsby-adapter-netlify/package.json"
 import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 
+interface INetlifyCacheUtilsOptions {
+  ttl?: number
+  digests?: Array<string>
+  cwd?: string
+}
+
 interface INetlifyCacheUtils {
-  restore: (paths: Array<string>) => Promise<boolean>
-  save: (paths: Array<string>) => Promise<boolean>
+  restore: (
+    paths: Array<string>,
+    options?: INetlifyCacheUtilsOptions
+  ) => Promise<boolean>
+  save: (
+    paths: Array<string>,
+    options?: INetlifyCacheUtilsOptions
+  ) => Promise<boolean>
 }
 
 interface INetlifyAdapterOptions {
@@ -56,7 +68,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           reporter.verbose(
             `[gatsby-adapter-netlify] using @netlify/cache-utils restore`
           )
-          const didRestore = await utils.restore(directories)
+          const didRestore = await utils.restore(directories, {})
           if (didRestore) {
             reporter.info(
               `[gatsby-adapter-netlify] Found a Gatsby cache. We're about to go FAST. ⚡`
@@ -73,7 +85,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
           reporter.verbose(
             `[gatsby-adapter-netlify] using @netlify/cache-utils save`
           )
-          await utils.save(directories)
+          await utils.save(directories, {})
           reporter.info(
             `[gatsby-adapter-netlify] Stored the Gatsby cache to speed up future builds. 🔥`
           )
