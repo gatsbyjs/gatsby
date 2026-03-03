@@ -20,7 +20,7 @@
     "chalk": "^4.1.2",
     "cheerio": "1.0.0-rc.12",
     "clipboardy": "^4.0.0",
-    "diff": "^5.1.0",
+    "diff": "^5.2.2",
     "dumper.js": "^1.3.1",
     "execall": "^2.0.0",
     "fast-json-stable-stringify": "^2.1.0",
