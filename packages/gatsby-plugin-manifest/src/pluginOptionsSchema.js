@@ -26,6 +26,14 @@ export default function pluginOptionSchema({ Joi }) {
     ) // https://w3c.github.io/manifest-app-info/#platform-member
     .description(`The platform on which the application can be found.`)
 
+  const formFactor = Joi.string()
+    .optional()
+    .empty(``)
+    .valid(`narrow`, `wide`) // https://w3c.github.io/manifest-app-info/#form_factor-member
+    .description(
+      `The form factor of the platform represents the screen shape of a broad class of devices for which a given screenshot applies.`
+    )
+
   const FingerPrint = Joi.object().keys({
     type: Joi.string()
       .required()
@@ -246,6 +254,7 @@ export default function pluginOptionSchema({ Joi }) {
               `The label member is a string that serves as the accessible name of that screenshots object.`
             ),
           platform: platform,
+          form_factor: formFactor,
         })
       )
       .description(
