@@ -15,7 +15,7 @@
     "fastq": "^1.17.1",
     "gatsby-plugin-utils": "^4.17.0-next.0",
     "gatsby-source-filesystem": "^5.17.0-next.0",
-    "got": "^11.8.6",
+    "got": "^14.6.6",
     "http2-wrapper": "^2.2.1",
     "lodash": "^4.17.21",
     "opentracing": "^0.14.7",
