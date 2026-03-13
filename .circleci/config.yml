@@ -325,7 +325,7 @@ jobs:
             echo nvm alias default v<< parameters.node_version >> >> $BASH_ENV
       - run: |
           node -v
-      - run: npm i -g yarn@1.22.11
+      - run: npm i -g yarn@1.22.22
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
