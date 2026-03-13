@@ -62,7 +62,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "ci-info": "2.0.0",
+    "ci-info": "4.4.0",
     "configstore": "^5.0.1",
     "fastq": "^1.15.0",
     "file-type": "^16.5.4",
