@@ -527,7 +527,7 @@ export const createWebpackUtils = (
         `gatsby-link`,
         `gatsby-script`,
         `gatsby-react-router-scroll`,
-        `invariant`,
+        `tiny-invariant`,
         `lodash`,
         `mitt`,
         `prop-types`,

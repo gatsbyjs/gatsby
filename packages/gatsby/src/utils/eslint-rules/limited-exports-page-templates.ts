@@ -59,7 +59,9 @@ function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
     // re-exports
     if (
       node.source &&
-      node.specifiers.some(specifier => specifier.exported.name === name)
+      node.specifiers.some(
+        specifier => (specifier.exported as Identifier).name === name
+      )
     ) {
       return true
     }
@@ -81,8 +83,9 @@ function hasOneValidNamedDeclaration(
     // It will ignore any { default } declarations since these are allowed
     const nonQueryExports = node.specifiers.some(e =>
       varName
-        ? e.exported.name !== varName && e.exported.name !== `default`
-        : e.exported.name !== `default`
+        ? (e.exported as Identifier).name !== varName &&
+          (e.exported as Identifier).name !== `default`
+        : (e.exported as Identifier).name !== `default`
     )
     return !nonQueryExports
   }
@@ -204,7 +207,9 @@ const limitedExports: Rule.RuleModule = {
             // Not import graphql from "gatsby"
             if (el.type === `ImportSpecifier`) {
               // Only get the specifier with the original name of "graphql"
-              return el.imported.name === DEFAULT_GRAPHQL_TAG_NAME
+              return (
+                (el.imported as Identifier).name === DEFAULT_GRAPHQL_TAG_NAME
+              )
             }
             // import * as Gatsby from "gatsby"
             if (el.type === `ImportNamespaceSpecifier`) {

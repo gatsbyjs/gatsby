@@ -1232,7 +1232,7 @@ describe(`Build schema`, () => {
           store.dispatch({ type: `DELETE_CACHE` })
           createTypes(def)
           return expect(buildSchema()).rejects.toThrow(
-            `The GraphQL type \`Node\` is reserved for internal use.`
+            `Invariant failed: The GraphQL type \`Node\` is reserved for internal use.`
           )
         })
       )
@@ -1262,7 +1262,7 @@ describe(`Build schema`, () => {
           await buildSchema()
         } catch (error) {
           expect(error.message).toBe(
-            `GraphQL type names ending with "FilterInput" or "SortInput" are ` +
+            `Invariant failed: GraphQL type names ending with "FilterInput" or "SortInput" are ` +
               `reserved for internal use. Please rename \`${name}\`.`
           )
         }
@@ -1283,7 +1283,7 @@ describe(`Build schema`, () => {
           await buildSchema()
         } catch (error) {
           expect(error.message).toBe(
-            `The GraphQL type \`${name}\` is reserved for internal use by ` +
+            `Invariant failed: The GraphQL type \`${name}\` is reserved for internal use by ` +
               `built-in scalar types.`
           )
         }

@@ -8,7 +8,7 @@ export async function handleAllowedRemoteUrlsNetlifyConfig({
   reporter: Reporter
 }): Promise<void> {
   const { resolveConfig } = await import(`@netlify/config`)
-  const cfg = await resolveConfig()
+  const cfg = await resolveConfig({})
 
   if (cfg?.config) {
     const allowedUrlsInNetlifyToml: Array<string> =
