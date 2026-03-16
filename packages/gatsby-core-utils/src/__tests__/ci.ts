@@ -47,9 +47,11 @@ describe(`CI detection`, () => {
   })
 
   it(`Detects Heroku`, () => {
-    process.env.NODE = `/tmp/build_8a43526a8849e690a3b67906d404e434/.heroku/node/bin/node`
-    const { isCI, getCIName } = require(`../ci`)
+    const ciInfo = require(`ci-info`)
+    ciInfo.setIsCI(true)
+    ciInfo.setName(`Heroku`)
 
+    const { isCI, getCIName } = require(`../ci`)
     expect(isCI()).toBeTruthy()
     expect(getCIName()).toEqual(`Heroku`)
   })
