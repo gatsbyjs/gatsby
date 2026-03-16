@@ -234,9 +234,15 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
             _imageCdnAllowedUrls = Array.from(
               store.getState().remoteFileAllowedUrls
             ).map(urlPattern => {
+              // path-to-regexp 0.2.x removed standalone `*` wildcard support.
+              // Convert `*` to `:__wildcard*` which matches zero or more path segments.
+              const normalizedPattern = urlPattern.replace(
+                /(?<![:\w])\*/g,
+                `:__wildcard*`
+              )
               return {
                 urlPattern,
-                regexSource: pathToRegexp(urlPattern).source,
+                regexSource: pathToRegexp(normalizedPattern).source,
               }
             })
           }
