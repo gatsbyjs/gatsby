@@ -14817,9 +14817,9 @@ is-wsl@^2.1.1, is-wsl@^2.2.0:
     is-docker "^2.0.0"
 
 is-wsl@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-3.1.0.tgz#e1c657e39c10090afcbedec61720f6b924c3cbd2"
-  integrity sha512-UcVfVfaK4Sc4m7X3dUSoHoozQGBEFeDC+zVo06t98xe8CzHSZZBekNXH+tu0NalHolcJ/QAGqS46Hef7QXBIMw==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-3.1.1.tgz#327897b26832a3eb117da6c27492d04ca132594f"
+  integrity sha512-e6rvdUCiQCAuumZslxRJWR/Doq4VpPR82kqclvcS0efgt430SlGIk05vdCN58+VrzgtIcfNODjozVielycD4Sw==
   dependencies:
     is-inside-container "^1.0.0"
 
@@ -24252,6 +24252,11 @@ tiny-spin@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/tiny-spin/-/tiny-spin-1.0.2.tgz#a30ab6ef3b0b534fef9becc99874b49fb4115d23"
   integrity sha512-w+LQXNFIrts+pOjuf1/UivYCd4znPiH/c5X8500Qv6n7FpUDaaB5Q1JSuZN3MIj65qQHzoXcKT9QAz3Tg/djFQ==
+
+tinyclip@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/tinyclip/-/tinyclip-0.1.12.tgz#f3e91243f50c1a336103539b941782b417b9f1c0"
+  integrity sha512-Ae3OVUqifDw0wBriIBS7yVaW44Dp6eSHQcyq4Igc7eN2TJH/2YsicswaW+J/OuMvhpDPOKEgpAZCjkb4hpoyeA==
 
 title-case@^3.0.3:
   version "3.0.3"
