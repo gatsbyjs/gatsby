@@ -9,6 +9,7 @@ export const resolveModule: ModuleResolver = modulePath => {
 
   try {
     resolve = enhancedResolve.create.sync({
+      // @ts-expect-error - `@types/node` includes encoding values that `enhanced-resolve`'s `BaseFileSystem` type doesn't accept
       fileSystem: new CachedInputFileSystem(fs, 5000),
       extensions: [`.ts`, `.tsx`, `.js`, `.jsx`],
     })
