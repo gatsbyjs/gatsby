@@ -358,9 +358,9 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
             console.log(envinfoOutput)
 
             if (copyToClipboard) {
-              // clipboardy is ESM-only package
-              import(`clipboardy`).then(({ default: clipboardy }) => {
-                clipboardy.writeSync(envinfoOutput)
+              // tinyclip is ESM-only package
+              import(`tinyclip`).then(({ writeText }) => {
+                writeText(envinfoOutput)
               })
             }
           })
