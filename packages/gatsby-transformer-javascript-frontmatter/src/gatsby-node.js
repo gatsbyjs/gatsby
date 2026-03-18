@@ -56,8 +56,13 @@ async function onCreateNode({
         value = node.quasis.map(quasi => quasi.value.cooked).join(``)
       } else if (node.type === `ObjectExpression`) {
         value = {}
-        node.properties.forEach(elem => {
-          value[elem.key.name] = parseData(elem.value)
+        node.properties.forEach(property => {
+          if (property.type === `ObjectProperty`) {
+            const key = property.key.name || property.key.value
+            if (key) {
+              value[key] = parseData(property.value)
+            }
+          }
         })
       } else if (node.type === `ArrayExpression`) {
         value = node.elements.map(elem => parseData(elem))
@@ -77,8 +82,13 @@ async function onCreateNode({
           astPath.node.left.property.name === `frontmatter` &&
           astPath.node.right.type === `ObjectExpression`
         ) {
-          astPath.node.right.properties.forEach(node => {
-            frontmatter[node.key.name] = parseData(node.value)
+          astPath.node.right.properties.forEach(property => {
+            if (property.type === `ObjectProperty`) {
+              const key = property.key.name || property.key.value
+              if (key) {
+                frontmatter[key] = parseData(property.value)
+              }
+            }
           })
         }
       },
@@ -101,8 +111,13 @@ async function onCreateNode({
           dataVariableDeclarator.init &&
           dataVariableDeclarator.init.type === `ObjectExpression`
         ) {
-          dataVariableDeclarator.init.properties.forEach(node => {
-            frontmatter[node.key.name] = parseData(node.value)
+          dataVariableDeclarator.init.properties.forEach(property => {
+            if (property.type === `ObjectProperty`) {
+              const key = property.key.name || property.key.value
+              if (key) {
+                frontmatter[key] = parseData(property.value)
+              }
+            }
           })
         }
       },

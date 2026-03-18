@@ -215,5 +215,59 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
         })
       )
     })
+
+    it(`should safely ignore spread element and extract other keys`, async () => {
+      loadNodeContent = jest.fn().mockReturnValue(`
+          const other = { a: 1 }
+          const frontmatter = {
+            title: "Spread test",
+            ...other,
+            author: "John Doe"
+          }
+        `)
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
+      expect(actions.createNode).toBeCalled()
+      expect(actions.createNode.mock.calls[0][0].frontmatter).toEqual(
+        expect.objectContaining({
+          title: `Spread test`,
+          author: `John Doe`,
+        })
+      )
+    })
+
+    it(`should support string literal keys`, async () => {
+      loadNodeContent = jest.fn().mockReturnValue(`
+          const frontmatter = {
+            "title": "Literal key",
+            'author': "Jane Doe"
+          }
+        `)
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
+      expect(actions.createNode).toBeCalled()
+      expect(actions.createNode.mock.calls[0][0].frontmatter).toEqual(
+        expect.objectContaining({
+          title: `Literal key`,
+          author: `Jane Doe`,
+        })
+      )
+    })
   })
 })
