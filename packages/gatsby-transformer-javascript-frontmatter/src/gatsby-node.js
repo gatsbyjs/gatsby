@@ -74,7 +74,8 @@ async function onCreateNode({
       AssignmentExpression: function AssignmentExpression(astPath) {
         if (
           astPath.node.left.type === `MemberExpression` &&
-          astPath.node.left.property.name === `frontmatter`
+          astPath.node.left.property.name === `frontmatter` &&
+          astPath.node.right.type === `ObjectExpression`
         ) {
           astPath.node.right.properties.forEach(node => {
             frontmatter[node.key.name] = parseData(node.value)
@@ -95,7 +96,11 @@ async function onCreateNode({
           d => d.id.name === `frontmatter`
         )
 
-        if (dataVariableDeclarator && dataVariableDeclarator.init) {
+        if (
+          dataVariableDeclarator &&
+          dataVariableDeclarator.init &&
+          dataVariableDeclarator.init.type === `ObjectExpression`
+        ) {
           dataVariableDeclarator.init.properties.forEach(node => {
             frontmatter[node.key.name] = parseData(node.value)
           })
