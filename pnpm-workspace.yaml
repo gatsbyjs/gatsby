@@ -1,0 +1,15 @@
+packages:
+  - "packages/*"
+
+allowBuilds:
+  "@parcel/watcher": true
+  core-js: true
+  core-js-pure: true
+  cypress: true
+  husky: true
+  lmdb: true
+  msw: true
+  msgpackr-extract: true
+  nx: true
+  puppeteer: true
+  sharp: true

@@ -1,9 +1,9 @@
 // @ts-check
 const path = require(`path`)
 const fs = require(`fs`)
-const { getPackages } = require(`@lerna/project`)
 const yargs = require(`yargs`)
 const _ = require(`lodash`)
+const { getWorkspacePackages } = require(`./utils/workspace`)
 
 const GIT_REPO_URL = `https://github.com/gatsbyjs/gatsby`
 const MAIN_PKG_NAME = `gatsby`
@@ -39,7 +39,7 @@ async function main() {
 
   const rootDir = process.cwd()
 
-  const packages = await getPackages(rootDir)
+  const packages = getWorkspacePackages(rootDir)
 
   let warned = false
 
@@ -51,7 +51,7 @@ async function main() {
         return Promise.resolve()
       }
 
-      let pkgJson = pkg.toJSON()
+      let pkgJson = JSON.parse(JSON.stringify(pkg.packageJson))
       const relativeLocation = path.relative(rootDir, pkg.location)
 
       pkgJson = insertKeyAvoidMergeConflict(pkgJson, `repository`, {
@@ -79,12 +79,12 @@ async function main() {
           )
         })
       } else {
-        if (!_.isEqual(pkg.toJSON(), pkgJson)) {
+        if (!_.isEqual(pkg.packageJson, pkgJson)) {
           warned = true
           console.error(
             `[${pkg.name}]` +
               ` repository and/or homepage field in package.json are out of date.` +
-              `Run "yarn run check-repo-fields -- --fix" to update.`
+              `Run "pnpm run check-repo-fields -- --fix" to update.`
           )
         }
         // eslint complains if we don't consistently return the same type

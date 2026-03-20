@@ -1,11 +1,13 @@
-const { writeFileSync } = require(`fs`)
-const yargs = require(`yargs`)
-const { getPackages } = require(`@lerna/project`)
-const PackageGraph = require(`@lerna/package-graph`)
 const semver = require(`semver`)
+const {
+  getWorkspacePackages,
+  getWorkspacePackageMap,
+  restoreWorkspaceProtocol,
+  stripWorkspaceProtocol,
+  writeJson,
+} = require(`./utils/workspace`)
 
-let warned = false
-const argv = yargs
+const argv = require(`yargs`)
   .option(`fix`, {
     default: false,
     describe: `Fixes outdated dependencies`,
@@ -15,52 +17,80 @@ const argv = yargs
     describe: `Allow using "next" versions. Use this only for alpha/beta releases`,
   }).argv
 
-getPackages(process.cwd()).then(packages => {
-  const graph = new PackageGraph(packages, `allDependencies`, true)
+const packages = getWorkspacePackages()
+const packageMap = getWorkspacePackageMap(packages)
+let warned = false
 
-  graph.forEach((pkgNode, name) => {
-    let outdated = Array.from(pkgNode.localDependencies.values()).filter(
-      localDep =>
-        !semver.satisfies(graph.get(localDep.name).version, localDep.fetchSpec)
-    )
+for (const pkg of packages) {
+  const outdated = []
 
-    if (argv[`allow-next`]) {
-      outdated = outdated.filter(localDep => localDep.fetchSpec !== `next`)
-    }
+  for (const field of [
+    `dependencies`,
+    `devDependencies`,
+    `peerDependencies`,
+    `optionalDependencies`,
+  ]) {
+    for (const [depName, depRange] of Object.entries(
+      pkg.packageJson[field] || {}
+    )) {
+      const localDependency = packageMap.get(depName)
+      if (!localDependency) {
+        continue
+      }
 
-    if (!outdated.length) return
+      const normalizedRange = stripWorkspaceProtocol(depRange)
 
-    const msg = outdated
-      .map(
-        p =>
-          `  Depends on "${p.name}@${p.fetchSpec}" \n` +
-          `  instead of "${p.name}@${graph.get(p.name).version}". \n`
-      )
-      .join(`\n`)
-
-    console.error(`${pkgNode.name}: \n${msg}`)
-    warned = true
-
-    if (argv.fix) {
-      const pkg = pkgNode.pkg
-      const next = pkg.toJSON()
-      const depTypes = [`dependencies`, `devDependencies`, `peerDependencies`]
-      outdated.forEach(p => {
-        depTypes.forEach(depKey => {
-          if (pkg[depKey] && pkg[depKey][p.name]) {
-            next[depKey][p.name] = `^${graph.get(p.name).version}`
-          }
+      if (
+        !semver.satisfies(localDependency.version, normalizedRange, {
+          includePrerelease: true,
         })
-      })
+      ) {
+        if (argv[`allow-next`] && normalizedRange === `next`) {
+          continue
+        }
 
-      writeFileSync(
-        `${pkg.location}/package.json`,
-        JSON.stringify(next, null, 2)
-      )
+        outdated.push({
+          field,
+          name: depName,
+          fetchSpec: depRange,
+          normalizedRange,
+          version: localDependency.version,
+        })
+      }
     }
-  })
-
-  if (warned) {
-    process.exit(1)
   }
-})
+
+  if (outdated.length === 0) {
+    continue
+  }
+
+  const message = outdated
+    .map(
+      dependency =>
+        `  Depends on "${dependency.name}@${dependency.fetchSpec}" \n` +
+        `  instead of "${dependency.name}@${dependency.version}". \n`
+    )
+    .join(`\n`)
+
+  console.error(`${pkg.name}: \n${message}`)
+  warned = true
+
+  if (argv.fix) {
+    const nextPackageJson = JSON.parse(JSON.stringify(pkg.packageJson))
+    for (const dependency of outdated) {
+      if (nextPackageJson[dependency.field]?.[dependency.name]) {
+        nextPackageJson[dependency.field][dependency.name] =
+          restoreWorkspaceProtocol(
+            dependency.fetchSpec,
+            `^${dependency.version}`
+          )
+      }
+    }
+
+    writeJson(pkg.packageJsonPath, nextPackageJson)
+  }
+}
+
+if (warned) {
+  process.exit(1)
+}

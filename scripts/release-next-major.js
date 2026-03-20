@@ -8,7 +8,7 @@
  * - it cleans all non git files to make sure we have clean directory
  * - run patches in patches/v5
  * - commits the patches so lerna can publish
- * - run full boostrap
+ * - run full bootstrap
  * - Publish premajor
  * - cleanup patch commit
  */
@@ -159,7 +159,7 @@ let currentGitHash = null
 
     console.log(` `)
     console.log(`=== BUILDING V${nextMajor} ALPHA ===`)
-    await promiseSpawn(`yarn`, [`bootstrap`], {
+    await promiseSpawn(`pnpm`, [`bootstrap`, `--skip-install`], {
       shell: true,
       env: {
         ...process.env,
@@ -171,7 +171,12 @@ let currentGitHash = null
     try {
       await promiseSpawn(
         `git`,
-        [`commit`, `-am`, `Comitting yarn changes`, `--no-verify`],
+        [
+          `commit`,
+          `-am`,
+          `Comitting pnpm + lerna release changes`,
+          `--no-verify`,
+        ],
         {
           cwd: path.resolve(__dirname, `../`),
           stdio: [`inherit`, `inherit`, `inherit`],
@@ -185,16 +190,16 @@ let currentGitHash = null
     console.log(` `)
     console.log(`=== PUBLISHING V${nextMajor} ALPHA ===`)
     await promiseSpawn(
-      process.execPath,
+      `pnpm`,
       [
-        `./node_modules/lerna/cli.js`,
+        `exec`,
+        `lerna`,
         `publish`,
-        `--canary`,
         `premajor`,
         `--ignore-scripts`,
-        `--exact`,
         `--preid`,
         preId,
+        `--canary`,
         `--pre-dist-tag`,
         tagName,
         `--force-publish`, // publish all

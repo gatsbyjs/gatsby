@@ -30,7 +30,7 @@ for folder in $GLOB; do
 
   # check both npm and yarn, sometimes yarn registry lags behind
   rm -rf node_modules &&
-  yarn &&
+  env COREPACK_ENABLE_STRICT=0 yarn &&
   npm run build ||
   exit 1
 

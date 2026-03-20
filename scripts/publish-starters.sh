@@ -39,7 +39,7 @@ for folder in $GLOB; do
   if [ "$IS_WORKSPACE" = null ]; then
     rm -f yarn.lock
     if [[ "$MINIMAL_STARTER" != "$NAME" || "$MINIMAL_STARTER_TS" != "$NAME" ]]; then # ignore minimal starter (ts) because we don't want any lock files for create-gatsby
-      yarn import # generate a new yarn.lock file based on package-lock.json, gatsby new does this is new CLI versions but will ignore if file exists
+      env COREPACK_ENABLE_STRICT=0 yarn import # generate a new yarn.lock file based on package-lock.json, gatsby new does this in new CLI versions but will ignore if file exists
     fi
   fi
 

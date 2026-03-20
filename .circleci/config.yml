@@ -40,7 +40,7 @@ aliases:
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
-      command: yarn
+      command: corepack enable && pnpm install --frozen-lockfile
 
   check_lockfile: &check_lockfile
     run:
@@ -84,7 +84,7 @@ aliases:
             - run: npm rebuild
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
+          command: pnpm jest --ci --runInBand $(pnpm -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: "true"
@@ -125,7 +125,7 @@ aliases:
       - bootstrap-<< matrix.node_version >>
 
 commands:
-  restore_yarn_cache:
+  restore_pnpm_cache:
     parameters:
       node_version:
         type: string
@@ -133,18 +133,19 @@ commands:
       - restore_cache:
           name: Restore node_modules cache
           keys:
-            - yarn-cypress-cache-{{ checksum "yarn.lock" }}-<< parameters.node_version >>
+            - pnpm-cache-{{ checksum "pnpm-lock.yaml" }}-<< parameters.node_version >>
 
-  persist_yarn_cache:
+  persist_pnpm_cache:
     parameters:
       node_version:
         type: string
     steps:
       - save_cache:
           name: Save node modules cache
-          key: yarn-cypress-cache-{{ checksum "yarn.lock" }}-<< parameters.node_version >>
+          key: pnpm-cache-{{ checksum "pnpm-lock.yaml" }}-<< parameters.node_version >>
           paths:
             - ~/.cache
+            - ~/.local/share/pnpm/store
 
   # Netlify adapter e2e tests require NETLIFY_AUTH_TOKEN which is unavailable
   # for PRs from forks (CircleCI withholds secrets from fork builds). Detect
@@ -250,17 +251,17 @@ jobs:
       image: << parameters.node_version >>
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|pnpm-lock.yaml"
       # python is not built in and node-gyp needs it to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y python3 python-is-python3
-      - restore_yarn_cache:
+      - restore_pnpm_cache:
           node_version: << parameters.node_version >>
       - <<: *install_node_modules
       - <<: *check_lockfile
       - <<: *validate_renovate
-      - persist_yarn_cache:
+      - persist_pnpm_cache:
           node_version: << parameters.node_version >>
-      - run: yarn bootstrap -- concurrency=2
+      - run: pnpm bootstrap --skip-install --concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
@@ -272,25 +273,19 @@ jobs:
     executor: node
     steps:
       - checkout
-      # installation of dependencies takes a while because of the 100 packages we have inside the monorepo
-      # Linting only needs the root packages, we remove the workspace and only install root packages
-      - run:
-          name: "remove workspaces from package.json"
-          command: |
-            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
-      - <<: *install_node_modules
-      - run: yarn lint:code
-      - run: yarn lint:other
+      - run: corepack enable && pnpm install --ignore-workspace --frozen-lockfile
+      - run: pnpm lint:code
+      - run: pnpm lint:other
 
   typecheck:
     executor: node
     steps:
       - checkout
       # We should always assert on master
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|yarn.lock"
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|pnpm-lock.yaml"
       - <<: *attach_to_bootstrap
-      - run: yarn typecheck
-      - run: yarn check-repo-fields
+      - run: pnpm typecheck
+      - run: pnpm check-repo-fields
 
   unit_tests_node18:
     executor:
@@ -779,10 +774,10 @@ jobs:
       - checkout
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
-      - restore_yarn_cache:
+      - restore_pnpm_cache:
           node_version: 18.0.0
       - <<: *install_node_modules
-      - run: yarn markdown
+      - run: pnpm markdown
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
@@ -793,7 +788,7 @@ jobs:
       - checkout
       # python is not built in and node-gyp needs it to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
-      - restore_yarn_cache:
+      - restore_pnpm_cache:
           node_version: 18.0.0
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
@@ -809,30 +804,30 @@ jobs:
     steps:
       - checkout
       - run:
-          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|pnpm-lock.yaml"
           shell: bash.exe
       # Restoring cache takes as long as installing node modules, so skipping
       # - restore_cache:
       #     keys:
-      #       - yarn-packages-v2-{{ checksum "yarn.lock" }}-<< parameters.node_version >>
-      #       - yarn-packages-v2-<< parameters.node_version >>
+      #       - pnpm-cache-{{ checksum "pnpm-lock.yaml" }}-<< parameters.node_version >>
+      #       - pnpm-cache-<< parameters.node_version >>
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.0.0 and yarn
+          name: Install node 18.0.0 and pnpm
           command: |
             nvm install 18.0.0
             nvm alias default 18.0.0
             nvm use 18.0.0
-            choco install yarn -y
+            corepack enable
       - run:
           name: Rebuild packages for windows
           command: |
             Remove-Item -Recurse -Force -Path "node_modules/sharp/"
-            yarn
+            pnpm install --frozen-lockfile
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
+          command: pnpm jest --ci --runInBand ((pnpm jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
@@ -854,22 +849,23 @@ jobs:
       - check_netlify_credentials
       - checkout
       - run:
-          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|pnpm-lock.yaml"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.19.0, yarn and netlify-cli
+          name: Install node 18.19.0, pnpm and netlify-cli
           command: |
             nvm install 18.19.0
             nvm alias default 18.19.0
             nvm use 18.19.0
-            npm install -g yarn netlify-cli
+            corepack enable
+            npm install -g netlify-cli
       - run:
           name: Clear out sharp
           command: |
             Remove-Item -Recurse -Force -Path "node_modules/sharp/"
           shell: powershell.exe
       - run:
-          command: yarn
+          command: pnpm install --frozen-lockfile
       - run:
           command: mkdir -p /tmp/e2e-tests/
       - run:

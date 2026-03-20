@@ -2,15 +2,15 @@
 
 status=""
 
-yarn bootstrap && cd examples &&
+pnpm bootstrap && cd examples &&
 
 for example in *; do
   if [ -d "$example" ]; then
     cd "$example" &&
     rm -f yarn.lock &&
-    yarn &&
+    env COREPACK_ENABLE_STRICT=0 yarn &&
     gatsby-dev -s &&
-    yarn build &&
+    env COREPACK_ENABLE_STRICT=0 yarn build &&
     status="${status}[success] building $example"$'\n' ||
     status="${status}[failure] building $example"$'\n'
     cd ..

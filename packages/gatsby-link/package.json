@@ -18,12 +18,12 @@
     "build": "microbundle -i src/index.js -f cjs,modern --jsx React.createElement --generateTypes false",
     "postbuild": "prepend-directive --files=dist/index.js,dist/index.modern.mjs --directive=\"use client\"",
     "watch": "npm run build watch --no-compress",
-    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
+    "prepack": "cross-env NODE_ENV=production npm run clean && npm run build",
     "clean": "del-cli dist/*"
   },
   "dependencies": {
     "@types/reach__router": "^1.3.10",
-    "gatsby-page-utils": "^3.17.0-next.0",
+    "gatsby-page-utils": "workspace:^3.17.0-next.0",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {

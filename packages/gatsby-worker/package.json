@@ -15,7 +15,7 @@
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/register": "^7.18.9",
-    "babel-preset-gatsby-package": "^3.17.0-next.0",
+    "babel-preset-gatsby-package": "workspace:^3.17.0-next.0",
     "cross-env": "^7.0.3",
     "rimraf": "^5.0.5",
     "typescript": "^5.1.6"
@@ -34,7 +34,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
-    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "prepack": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\"  --extensions \".ts,.js\"",
     "typegen": "rimraf --glob \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
   },
