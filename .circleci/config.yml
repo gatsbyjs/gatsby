@@ -267,7 +267,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: corepack enable && pnpm install --ignore-workspace --frozen-lockfile
+      - <<: *install_node_modules
       - run: pnpm lint:code
       - run: pnpm lint:other
 

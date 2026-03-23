@@ -4,7 +4,9 @@ tasks:
   - init: >
       pnpm run bootstrap &&
       cd ./examples/using-typescript &&
-      env COREPACK_ENABLE_STRICT=0 yarn install &&
+      # Pin Yarn 1 explicitly so this nested example does not inherit the repo
+      # root pnpm packageManager metadata.
+      env COREPACK_ENABLE_STRICT=0 corepack yarn@1.22.22 install &&
       gatsby-dev --set-path-to-repo ../.. &&
       gatsby-dev --scan-once &&
       npx gatsby build &&

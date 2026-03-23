@@ -1,6 +1,21 @@
 #!/usr/bin/env node
 const { spawn } = require(`child_process`)
 
+// These packages must be prepacked before the general workspace pass because
+// `gatsby` consumes their generated lib/dist JS and declaration outputs during
+// its own build. Lerna detects cycles in this part of the graph, so on a clean
+// checkout it can otherwise schedule `gatsby` before these artifacts exist.
+const bootstrapPrepackSeedPackages = [
+  `gatsby-core-utils`,
+  `gatsby-page-utils`,
+  `gatsby-worker`,
+  `gatsby-sharp`,
+  `gatsby-plugin-utils`,
+  `gatsby-script`,
+  `create-gatsby`,
+  `gatsby-cli`,
+]
+
 function run(command, args, { env = process.env } = {}) {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
@@ -81,6 +96,19 @@ async function main() {
 
     await run(`pnpm`, installArgs)
   }
+
+  // Run this seed phase serially so the cyclic packages above are fully built
+  // before the normal concurrent prepack phase fans out across the workspace.
+  await run(`pnpm`, [
+    `exec`,
+    `lerna`,
+    `run`,
+    `prepack`,
+    `--concurrency`,
+    `1`,
+    `--stream`,
+    ...bootstrapPrepackSeedPackages.flatMap(pkg => [`--scope`, pkg]),
+  ])
 
   await run(`pnpm`, [
     `exec`,
