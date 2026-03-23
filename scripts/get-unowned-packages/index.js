@@ -1,7 +1,7 @@
 const util = require(`util`)
 const path = require(`path`)
 const { exec, execSync } = require(`child_process`)
-const { getWorkspacePackages } = require(`../utils/workspace`)
+const { detectProjects } = require(`lerna/utils`)
 
 const execP = util.promisify(exec)
 
@@ -34,8 +34,13 @@ module.exports = async function getUnownedPackages({
       })
   }
 
-  return Promise.resolve(getWorkspacePackages(rootPath)).then(
-    async packages => {
+  return detectProjects(rootPath)
+    .then(({ projectGraph }) =>
+      Object.values(projectGraph.nodes)
+        .map(node => node.package)
+        .filter(Boolean)
+    )
+    .then(async packages => {
       const publicGatsbyPackages = packages.filter(pkg => !pkg.private)
 
       const alreadyOwnedPackages = await getPackagesWithReadWriteAccess(user)
@@ -59,6 +64,5 @@ module.exports = async function getUnownedPackages({
         packages: publicGatsbyPackagesWithoutAccess,
         user,
       }
-    }
-  )
+    })
 }

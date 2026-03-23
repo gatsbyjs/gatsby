@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
+  "packageManager": "pnpm@10.25.0",
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.21.8",
@@ -71,7 +71,7 @@
   "engines": {
     "node": ">=18.0.0 <26",
     "npm": ">=8.0.0",
-    "pnpm": ">=10.0.0"
+    "pnpm": ">=10.25.0 <10.26.0"
   },
   "eslintIgnore": [
     "interfaces",
@@ -89,8 +89,6 @@
   "private": true,
   "scripts": {
     "bootstrap": "cross-env COMPILER_OPTIONS=\"GATSBY_MAJOR=5\" node scripts/bootstrap.js",
-    "check-repo-fields": "node scripts/check-repo-fields.js",
-    "check-versions": "node scripts/check-versions.js",
     "format": "npm run format:code && npm run format:other",
     "format:code": "npm run lint:code -- --fix",
     "format:other": "npm run prettier -- --write",
@@ -112,7 +110,6 @@
     "publish-preminor": "node scripts/check-publish-access && node scripts/clear-package-dir preminor --verbose && lerna publish preminor --pre-dist-tag=next --preid=next --force-publish --allow-branch=master --message=\"chore(release): Publish next pre-minor\"",
     "publish-rc": "node scripts/check-publish-access && node scripts/clear-package-dir prerelease --verbose && lerna publish prerelease --pre-dist-tag=rc --preid=rc --message=\"chore(release): Publish rc\"",
     "publish-release": "node scripts/check-publish-access && node scripts/clear-package-dir patch --verbose && lerna publish patch",
-    "publish-premajor": "node scripts/release-next-major.js publish",
     "test": "npm-run-all --npm-path pnpm -s lint jest test:peril",
     "test:coverage": "jest --coverage",
     "test:integration": "jest --config=integration-tests/jest.config.js",

@@ -6,11 +6,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const packlist = require(`npm-packlist`)
 const readline = require(`readline/promises`)
-const { execSync } = require(`child_process`)
-const {
-  getChangedWorkspacePackages,
-  getWorkspacePackages,
-} = require(`./utils/workspace`)
+const { execFileSync, execSync } = require(`child_process`)
 
 const argv = yargs
   .command(
@@ -44,7 +40,9 @@ const argv = yargs
     describe: `Force deletion of file without prompting user to confirm`,
   }).argv
 
-const verbose = argv[`dry-run`] || argv[`verbose`]
+const isDryRun =
+  process.argv.includes(`--dry-run`) || Boolean(argv[`dry-run`] || argv.dryRun)
+const verbose = isDryRun || argv[`verbose`]
 
 const buildIgnoreArray = str =>
   str
@@ -121,13 +119,37 @@ async function confirm(message) {
   }
 }
 
+function getChangedPackages() {
+  try {
+    const output = execFileSync(
+      process.execPath,
+      [
+        path.join(__dirname, `..`, `node_modules`, `lerna`, `dist`, `cli.js`),
+        `changed`,
+        `--json`,
+        `--all`,
+        `--loglevel`,
+        `silent`,
+      ],
+      { encoding: `utf8` }
+    )
+    return JSON.parse(output)
+  } catch (error) {
+    if (error.status === 1 && !String(error.stdout || ``).trim()) {
+      return []
+    }
+
+    throw error
+  }
+}
+
 async function run() {
-  const changedPackages = getChangedWorkspacePackages(getWorkspacePackages())
+  const changedPackages = getChangedPackages()
   const filesToDelete = _.flatten(
     await Promise.all(changedPackages.map(getListOfFilesToClear))
   )
 
-  if (argv[`dry-run`] || filesToDelete.length === 0) {
+  if (isDryRun || filesToDelete.length === 0) {
     return
   }
 

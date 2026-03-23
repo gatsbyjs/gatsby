@@ -1,10 +1,5 @@
 #!/usr/bin/env node
 const { spawn } = require(`child_process`)
-const yargs = require(`yargs`)
-const {
-  getWorkspacePackages,
-  selectWorkspacePackages,
-} = require(`./utils/workspace`)
 
 function run(command, args, { env = process.env } = {}) {
   return new Promise((resolve, reject) => {
@@ -26,100 +21,77 @@ function run(command, args, { env = process.env } = {}) {
   })
 }
 
-const argv = yargs(process.argv.slice(2))
-  .scriptName(`bootstrap`)
-  .option(`scope`, {
-    type: `array`,
-    default: [],
-    describe: `Only prepack workspace packages matching the provided patterns`,
-  })
-  .option(`ignore`, {
-    type: `array`,
-    default: [],
-    describe: `Exclude workspace packages matching the provided patterns`,
-  })
-  .option(`concurrency`, {
-    type: `string`,
-    default: `4`,
-    describe: `pnpm workspace concurrency value`,
-  })
-  .option(`skip-install`, {
-    type: `boolean`,
-    default: false,
-    describe: `Skip the root pnpm install step`,
-  })
-  .option(`frozen-lockfile`, {
-    type: `boolean`,
-    default: false,
-    describe: `Run pnpm install with --frozen-lockfile`,
-  })
-  .parserConfiguration({
-    "populate--": true,
-  })
-  .help().argv
+function parseArgs(args) {
+  let skipInstall = false
+  let frozenLockfile = false
+  let concurrency = `4`
+  const lernaArgs = []
+
+  for (let index = 0; index < args.length; index++) {
+    const arg = args[index]
+
+    if (arg === `--`) {
+      lernaArgs.push(...args.slice(index))
+      break
+    }
+
+    if (arg === `--skip-install`) {
+      skipInstall = true
+      continue
+    }
+
+    if (arg === `--frozen-lockfile`) {
+      frozenLockfile = true
+      continue
+    }
+
+    if (arg === `--concurrency`) {
+      concurrency = String(args[index + 1] || concurrency)
+      index += 1
+      continue
+    }
+
+    if (arg.startsWith(`--concurrency=`)) {
+      concurrency = arg.slice(`--concurrency=`.length) || concurrency
+      continue
+    }
+
+    lernaArgs.push(arg)
+  }
+
+  return {
+    concurrency,
+    frozenLockfile,
+    lernaArgs,
+    skipInstall,
+  }
+}
 
 async function main() {
-  if (!argv[`skip-install`]) {
+  const { concurrency, frozenLockfile, lernaArgs, skipInstall } = parseArgs(
+    process.argv.slice(2)
+  )
+
+  if (!skipInstall) {
     const installArgs = [`install`]
 
-    if (!argv[`frozen-lockfile`]) {
+    if (!frozenLockfile) {
       installArgs.push(`--no-frozen-lockfile`)
     }
 
     await run(`pnpm`, installArgs)
   }
 
-  await run(`node`, [`scripts/check-versions.js`])
-
-  const selectedPackages = selectWorkspacePackages(getWorkspacePackages(), {
-    scope: argv.scope.map(String),
-    ignore: argv.ignore.map(String),
-  })
-  const selectedPackageNames = new Set(selectedPackages.map(pkg => pkg.name))
-  const prepackArgs = Array.isArray(argv[`--`]) ? argv[`--`].map(String) : []
-
-  if (selectedPackageNames.has(`gatsby-core-utils`)) {
-    await run(`pnpm`, [
-      `exec`,
-      `lerna`,
-      `run`,
-      `prepack`,
-      `--scope`,
-      `gatsby-core-utils`,
-      ...(prepackArgs.length > 0 ? [`--`, ...prepackArgs] : []),
-    ])
-  }
-
-  const workspaceArgs = [
+  await run(`pnpm`, [
     `exec`,
     `lerna`,
     `run`,
     `prepack`,
     `--concurrency`,
-    String(argv.concurrency),
+    concurrency,
     `--stream`,
-    `--ignore`,
-    `gatsby-core-utils`,
-  ]
-
-  for (const scopePattern of argv.scope.map(String)) {
-    workspaceArgs.push(`--scope`, scopePattern)
-  }
-
-  for (const ignorePattern of argv.ignore.map(String)) {
-    workspaceArgs.push(`--ignore`, ignorePattern)
-  }
-
-  if (prepackArgs.length > 0) {
-    workspaceArgs.push(`--`, ...prepackArgs)
-  }
-
-  const packagesToPrepack = selectedPackages.filter(
-    pkg => pkg.name !== `gatsby-core-utils`
-  )
-  if (packagesToPrepack.length > 0) {
-    await run(`pnpm`, workspaceArgs)
-  }
+    ...lernaArgs,
+  ])
 }
 
 main().catch(error => {

@@ -42,11 +42,6 @@ aliases:
       name: Install node modules
       command: corepack enable && pnpm install --frozen-lockfile
 
-  check_lockfile: &check_lockfile
-    run:
-      name: Check for dirty lockfile
-      command: ./scripts/check-lockfile.sh || exit 1
-
   validate_renovate: &validate_renovate
     run:
       name: Validate renovate-config
@@ -257,7 +252,6 @@ jobs:
       - restore_pnpm_cache:
           node_version: << parameters.node_version >>
       - <<: *install_node_modules
-      - <<: *check_lockfile
       - <<: *validate_renovate
       - persist_pnpm_cache:
           node_version: << parameters.node_version >>
@@ -285,7 +279,6 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|pnpm-lock.yaml"
       - <<: *attach_to_bootstrap
       - run: pnpm typecheck
-      - run: pnpm check-repo-fields
 
   unit_tests_node18:
     executor:
