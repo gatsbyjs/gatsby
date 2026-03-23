@@ -8,7 +8,6 @@
     "e2e-tests/**",
     "integration-tests/**",
     "benchmarks/**",
-    "deprecated-packages/**",
     "**/fixtures/**",
     "**/__fixtures__/**",
     "**/test/**",
