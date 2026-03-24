@@ -37,17 +37,31 @@ executors:
       VERBOSE: 1
 
 aliases:
+  setup_pnpm: &setup_pnpm
+    run:
+      name: Set up pnpm
+      command: |
+        mkdir -p "$HOME/.local/bin" "$HOME/.local/share/pnpm"
+        corepack enable --install-directory "$HOME/.local/bin"
+        echo 'export PNPM_HOME="$HOME/.local/share/pnpm"' >> "$BASH_ENV"
+        echo 'export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"' >> "$BASH_ENV"
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"
+
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
       command: |
         # CircleCI images already ship a root-owned /usr/local/bin/pnpm.
         # Install Corepack shims into a user-writable directory instead of
-        # trying to replace the system binary.
-        mkdir -p "$HOME/.local/bin"
+        # trying to replace the system binary, and define PNPM_HOME so
+        # follow-up global installs can add binaries to PATH.
+        mkdir -p "$HOME/.local/bin" "$HOME/.local/share/pnpm"
         corepack enable --install-directory "$HOME/.local/bin"
-        echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$BASH_ENV"
-        export PATH="$HOME/.local/bin:$PATH"
+        echo 'export PNPM_HOME="$HOME/.local/share/pnpm"' >> "$BASH_ENV"
+        echo 'export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"' >> "$BASH_ENV"
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"
         pnpm install --frozen-lockfile
 
   validate_renovate: &validate_renovate
@@ -227,6 +241,7 @@ commands:
             - run: echo 'export GATSBY_SLICES="true"' >> "$BASH_ENV"
 
       - <<: *attach_to_bootstrap
+      - <<: *setup_pnpm
       - when:
           condition:
             not:
