@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@10.25.0",
+  "packageManager": "pnpm@10.32.1",
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.21.8",
@@ -69,9 +69,9 @@
     "yargs": "^15.4.1"
   },
   "engines": {
-    "node": ">=18.0.0 <26",
+    "node": ">=18.12.0 <26",
     "npm": ">=8.0.0",
-    "pnpm": ">=10.25.0 <10.26.0"
+    "pnpm": ">=10.32.1 <11"
   },
   "eslintIgnore": [
     "interfaces",

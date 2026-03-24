@@ -97,10 +97,10 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["18.2.0", "24.11.1"]
+        node_version: ["18.12.1", "24.11.1"]
         e2e_executor_suffix: ["18", "24"]
       exclude:
-        - node_version: "18.2.0"
+        - node_version: "18.12.1"
           e2e_executor_suffix: "24"
         - node_version: "24.11.1"
           e2e_executor_suffix: "18"
@@ -115,7 +115,7 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["18.2.0", "24.11.1"]
+        node_version: ["18.12.1", "24.11.1"]
     requires:
       - bootstrap-<< matrix.node_version >>
 
@@ -283,7 +283,7 @@ jobs:
   unit_tests_node18:
     executor:
       name: node
-      image: "18.2.0"
+      image: "18.12.1"
     <<: *test_template
 
   unit_tests_node20:
@@ -765,7 +765,7 @@ jobs:
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
       - restore_pnpm_cache:
-          node_version: 18.0.0
+          node_version: 18.12.1
       - <<: *install_node_modules
       - run: pnpm markdown
       - run: git config --global user.name "GatsbyJS Bot"
@@ -779,7 +779,7 @@ jobs:
       # python is not built in and node-gyp needs it to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
       - restore_pnpm_cache:
-          node_version: 18.0.0
+          node_version: 18.12.1
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
@@ -804,11 +804,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.0.0 and pnpm
+          name: Install node 18.12.1 and pnpm
           command: |
-            nvm install 18.0.0
-            nvm alias default 18.0.0
-            nvm use 18.0.0
+            nvm install 18.12.1
+            nvm alias default 18.12.1
+            nvm use 18.12.1
             corepack enable
       - run:
           name: Rebuild packages for windows
@@ -895,22 +895,24 @@ workflows:
           name: "bootstrap-<< matrix.node_version >>"
           matrix:
             parameters:
-              node_version: ["18.2.0", "20.19", "24.11.1"]
+              # pnpm 9+ requires Node >=18.12, so keep the Node 18 lane on the
+              # first compatible patch release instead of the older 18.2 image.
+              node_version: ["18.12.1", "20.19", "24.11.1"]
       - lint
       - typecheck:
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-18.12.1
       - windows_unit_tests:
           <<: *ignore_docs
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-18.12.1
       - windows_adapters_smoke:
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-18.12.1
       - unit_tests_node18:
           <<: *ignore_docs
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-18.12.1
       - unit_tests_node20:
           <<: *ignore_docs
           requires:
