@@ -190,7 +190,7 @@ commands:
         type: string
       test_command:
         type: string
-        default: "yarn test"
+        default: "pnpm test"
       react_version:
         type: string
         default: ""
@@ -203,10 +203,10 @@ commands:
     steps:
       - checkout
       # In case of failure, add these steps again. Cache probably got deleted
-      #- restore_yarn_cache:
+      #- restore_pnpm_cache:
       #    node_version: << parameters.node_version >>
       #- <<: *install_node_modules
-      #- persist_yarn_cache:
+      #- persist_pnpm_cache:
       #    node_version: << parameters.node_version >>
       - unless:
           condition: << parameters.skip_file_change_test >>
@@ -229,7 +229,7 @@ commands:
                 command: "REACT_VERSION=<< parameters.react_version >> TEST_PATH=<< parameters.test_path >> node ./scripts/upgrade-react"
       - run:
           name: Install gatsby-dev@next
-          command: yarn global add gatsby-dev-cli@next --ignore-engines
+          command: pnpm add -g gatsby-dev-cli@next
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>" "<< parameters.pre_gatsby_dev_command >>"
@@ -311,9 +311,6 @@ jobs:
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
             echo nvm install v<< parameters.node_version >> >> $BASH_ENV
             echo nvm alias default v<< parameters.node_version >> >> $BASH_ENV
-      - run: |
-          node -v
-      - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
@@ -327,7 +324,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/long-term-caching
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_cache_resilience:
     parameters:
@@ -339,7 +336,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/cache-resilience
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_gatsby_pipeline:
     parameters:
@@ -351,7 +348,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_gatsby_cli:
     parameters:
@@ -363,7 +360,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_structured_logging:
     parameters:
@@ -375,7 +372,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/structured-logging
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_artifacts:
     parameters:
@@ -387,7 +384,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/artifacts
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_ssr:
     parameters:
@@ -399,7 +396,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/ssr
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_images:
     parameters:
@@ -411,7 +408,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/images
-          test_command: yarn build-and-test
+          test_command: pnpm build-and-test
       - store_artifacts:
           path: integration-tests/images/__diff_output__
 
@@ -425,7 +422,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/functions
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_head_function_export:
     parameters:
@@ -437,7 +434,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/head-function-export
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_esm_in_gatsby_files:
     parameters:
@@ -449,7 +446,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/esm-in-gatsby-files
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_lmdb_regeneration:
     parameters:
@@ -461,7 +458,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/lmdb-regeneration
-          test_command: yarn test
+          test_command: pnpm test
 
   e2e_tests_path-prefix:
     parameters:
@@ -613,7 +610,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: yarn test && yarn test:offline
+          test_command: pnpm test && pnpm test:offline
 
   e2e_tests_production_runtime_with_react_19:
     parameters:
@@ -625,7 +622,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: yarn test && yarn test:offline
+          test_command: pnpm test && pnpm test:offline
           react_version: "19.1.1"
 
   e2e_tests_react_19:
@@ -649,7 +646,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd development-runtime; gatsby-dev --force-install --scan-once; yarn test
+          test_command: cd development-runtime; gatsby-dev --force-install --scan-once; pnpm test
 
   themes_e2e_tests_production_runtime:
     parameters:
@@ -661,7 +658,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd production-runtime; gatsby-dev --force-install --scan-once; yarn test
+          test_command: cd production-runtime; gatsby-dev --force-install --scan-once; pnpm test
 
   e2e_tests_mdx:
     parameters:
@@ -702,7 +699,7 @@ jobs:
       # we build a second time to see if warm/cached builds are successful
       - e2e-test:
           test_path: e2e-tests/contentful
-          test_command: yarn build
+          test_command: pnpm build
       - store_artifacts:
           path: e2e-tests/contentful/__diff_output__
       - store_test_results:
@@ -749,7 +746,7 @@ jobs:
       - run: apt-get update && apt-get install -y jq
       - e2e-test:
           test_path: e2e-tests/adapters
-          test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
+          test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; pnpm test
           pre_gatsby_dev_command: ./make-monorepo.sh
       - store_test_results:
           path: e2e-tests/adapters/cypress/results
