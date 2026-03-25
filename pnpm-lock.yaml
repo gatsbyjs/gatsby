@@ -3495,6 +3495,9 @@ importers:
       unist-util-map:
         specifier: ^2.0.1
         version: 2.0.1
+      unist-util-visit:
+        specifier: ^2.0.3
+        version: 2.0.3
     devDependencies:
       "@babel/cli":
         specifier: ^7.20.7
