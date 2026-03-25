@@ -40,26 +40,36 @@ const adjustPackageJson = ({
   const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
 
   monorepoPKGjson.version = `${monorepoPKGjson.version}-dev-${versionPostFix}`
-  packagesToPublish.forEach(packageThatWillBePublished => {
-    if (
-      monorepoPKGjson.dependencies &&
-      monorepoPKGjson.dependencies[packageThatWillBePublished]
-    ) {
-      const currentVersion = JSON.parse(
-        fs.readFileSync(
-          getMonorepoPackageJsonPath({
-            packageName: packageThatWillBePublished,
-            packageNameToPath,
-          }),
-          `utf-8`
-        )
-      ).version
-
-      monorepoPKGjson.dependencies[
-        packageThatWillBePublished
-      ] = `${currentVersion}-dev-${versionPostFix}`
+  const replaceLocalPublishedDependencyVersion = deps => {
+    if (!deps) {
+      return
     }
-  })
+
+    packagesToPublish.forEach(packageThatWillBePublished => {
+      if (deps[packageThatWillBePublished]) {
+        const currentVersion = JSON.parse(
+          fs.readFileSync(
+            getMonorepoPackageJsonPath({
+              packageName: packageThatWillBePublished,
+              packageNameToPath,
+            }),
+            `utf-8`
+          )
+        ).version
+
+        deps[
+          packageThatWillBePublished
+        ] = `${currentVersion}-dev-${versionPostFix}`
+      }
+    })
+  }
+
+  // The local registry flow publishes only temporary `-dev-*` versions, so any
+  // relationships between the packages being published need to point at those
+  // temporary versions instead of the normal workspace ranges.
+  replaceLocalPublishedDependencyVersion(monorepoPKGjson.dependencies)
+  replaceLocalPublishedDependencyVersion(monorepoPKGjson.optionalDependencies)
+  replaceLocalPublishedDependencyVersion(monorepoPKGjson.peerDependencies)
 
   const temporaryMonorepoPKGjsonString = JSON.stringify(monorepoPKGjson)
 
