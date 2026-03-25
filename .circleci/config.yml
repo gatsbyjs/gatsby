@@ -95,6 +95,7 @@ aliases:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
+      - <<: *setup_pnpm
       - when:
           condition: << parameters.npm_rebuild >>
           steps:
@@ -301,6 +302,7 @@ jobs:
       # We should always assert on master
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|pnpm-lock.yaml"
       - <<: *attach_to_bootstrap
+      - <<: *setup_pnpm
       - run: pnpm typecheck
 
   unit_tests_node18:
@@ -840,7 +842,11 @@ jobs:
             pnpm install --frozen-lockfile
       - run:
           name: Run tests
-          command: pnpm jest --ci --runInBand ((pnpm jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
+          command: |
+            # `pnpm jest --listTests` prints the underlying script banner on
+            # Windows unless `-s` is used, and that banner gets piped into
+            # `circleci tests split` as a bogus Jest pattern.
+            pnpm jest --ci --runInBand $((pnpm -s jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
