@@ -1,6 +1,6 @@
 import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
-import * as pathSerializer from "./utils/path-serializer"
+import * as pathSerializer from "../../test-utils/path-serializer"
 
 expect.addSnapshotSerializer(pathSerializer)
 

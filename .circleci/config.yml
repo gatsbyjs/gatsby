@@ -843,10 +843,10 @@ jobs:
       - run:
           name: Run tests
           command: |
-            # `pnpm jest --listTests` prints the underlying script banner on
-            # Windows unless `-s` is used, and that banner gets piped into
-            # `circleci tests split` as a bogus Jest pattern.
-            pnpm jest --ci --runInBand $((pnpm -s jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
+            # Keep the split output as an array; inlining the subexpression
+            # passes one giant quoted argument to Jest on Windows.
+            $tests = @((pnpm -s jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
+            pnpm exec jest --ci --runInBand $tests
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048

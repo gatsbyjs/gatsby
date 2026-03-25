@@ -38,28 +38,69 @@ const adjustPackageJson = ({
     `utf-8`
   )
   const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
+  const packageVersionCache = new Map()
 
   monorepoPKGjson.version = `${monorepoPKGjson.version}-dev-${versionPostFix}`
+  const getCurrentVersion = dependencyName => {
+    if (!packageVersionCache.has(dependencyName)) {
+      const currentVersion = JSON.parse(
+        fs.readFileSync(
+          getMonorepoPackageJsonPath({
+            packageName: dependencyName,
+            packageNameToPath,
+          }),
+          `utf-8`
+        )
+      ).version
+
+      packageVersionCache.set(dependencyName, currentVersion)
+    }
+
+    return packageVersionCache.get(dependencyName)
+  }
+
+  const normalizeWorkspaceProtocol = (workspaceSpec, currentVersion) => {
+    const normalizedWorkspaceSpec = workspaceSpec.slice(`workspace:`.length)
+
+    if (normalizedWorkspaceSpec === `*`) {
+      return currentVersion
+    }
+
+    if (normalizedWorkspaceSpec === `^` || normalizedWorkspaceSpec === `~`) {
+      return `${normalizedWorkspaceSpec}${currentVersion}`
+    }
+
+    return normalizedWorkspaceSpec
+  }
+
   const replaceLocalPublishedDependencyVersion = deps => {
     if (!deps) {
       return
     }
 
-    packagesToPublish.forEach(packageThatWillBePublished => {
-      if (deps[packageThatWillBePublished]) {
-        const currentVersion = JSON.parse(
-          fs.readFileSync(
-            getMonorepoPackageJsonPath({
-              packageName: packageThatWillBePublished,
-              packageNameToPath,
-            }),
-            `utf-8`
-          )
-        ).version
+    Object.keys(deps).forEach(dependencyName => {
+      if (!packageNameToPath.has(dependencyName)) {
+        return
+      }
 
-        deps[
-          packageThatWillBePublished
-        ] = `${currentVersion}-dev-${versionPostFix}`
+      const currentVersion = getCurrentVersion(dependencyName)
+
+      if (packagesToPublish.includes(dependencyName)) {
+        deps[dependencyName] = `${currentVersion}-dev-${versionPostFix}`
+        return
+      }
+
+      // npm publish doesn't normalize `workspace:` ranges for us, so any
+      // internal dependency that isn't being rewritten to a local `-dev-*`
+      // version still needs to be converted back to a plain semver spec.
+      if (
+        typeof deps[dependencyName] === `string` &&
+        deps[dependencyName].startsWith(`workspace:`)
+      ) {
+        deps[dependencyName] = normalizeWorkspaceProtocol(
+          deps[dependencyName],
+          currentVersion
+        )
       }
     })
   }
