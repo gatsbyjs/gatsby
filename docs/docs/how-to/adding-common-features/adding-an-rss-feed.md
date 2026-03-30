@@ -133,7 +133,7 @@ The `output` field in your feed object allows you to customize the filename for 
 
 By default, feed is referenced in every page. You can customize this behavior by providing an extra field `match` of type `string`. This string will be used to build a `RegExp`, and this regular expression will be used to test the `pathname` of current page. Only pages that satisfied the regular expression will have feed reference included.
 
-If your site has none-English link (or none-ASCII link), you may need to encode URI in advance. You can use the build-in function `encodeURI(string)` for your link:
+If your site has none-English link (or none-ASCII link), you may need to encode URI in advance. You can use the built-in function `encodeURI(string)` for your link:
 
 ```js:title=gatsby-config.js
 serialize: ({ query: { site, allMarkdownRemark } }) => {

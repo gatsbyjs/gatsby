@@ -20,7 +20,7 @@ describe(`gatsby-plugin-fullstory`, () => {
         process.env.NODE_ENV = `production`
       })
 
-      afterAll(() => {
+      after all(() => {
         process.env.NODE_ENV = env
       })
 

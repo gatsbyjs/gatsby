@@ -123,7 +123,7 @@ export function makeMockEnvironment(): (
     jest.resetModules()
   })
 
-  afterAll(() => {
+  after all(() => {
     process.env = { ...OLD_ENV }
   })
 

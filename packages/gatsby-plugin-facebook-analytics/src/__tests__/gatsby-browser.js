@@ -26,7 +26,7 @@ describe(`gatsby-plugin-facebook-analytics`, () => {
         process.env.NODE_ENV = `production`
       })
 
-      afterAll(() => {
+      after all(() => {
         process.env.NODE_ENV = env
       })
 

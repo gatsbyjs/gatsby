@@ -68,7 +68,7 @@ In the PR [feat(gatsby-worker): Show original stack trace](https://github.com/ga
 
 ### Improve readability of errors & warnings
 
-When you saw the error "Building static HTML failed for path ..." or the warning "This query took more than 15s to run..." Gatsby printed the complete contents of the page data to the terminal. The intentation behind that was to give you enough context to fix the error yourself. But since this also included the GraphQL results those logs could get verbose really quickly. In the [PR #37220](https://github.com/gatsbyjs/gatsby/pull/37220) this was fixed by removing properties from the page data, including the GraphQL results before printing them out. In normal circumstances the errors thrown by GraphQL or Gatsby itself will give you enough details to solve your error.
+When you saw the error "Building static HTML failed for path ..." or the warning "This query took more than 15s to run..." Gatsby printed the complete contents of the page data to the terminal. The indentation behind that was to give you enough context to fix the error yourself. But since this also included the GraphQL results those logs could get verbose really quickly. In the [PR #37220](https://github.com/gatsbyjs/gatsby/pull/37220) this was fixed by removing properties from the page data, including the GraphQL results before printing them out. In normal circumstances the errors thrown by GraphQL or Gatsby itself will give you enough details to solve your error.
 
 ### Improved error during Gatsby Preview
 

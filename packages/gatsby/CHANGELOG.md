@@ -703,7 +703,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
 - provide slice rendering context to <HTML> [#36799](https://github.com/gatsbyjs/gatsby/issues/36799) ([93e0257](https://github.com/gatsbyjs/gatsby/commit/93e02574f013993b0f2286d42a5b8cc88da20c22))
 - Deprecate static query component [#36784](https://github.com/gatsbyjs/gatsby/issues/36784) ([eb8cf8d](https://github.com/gatsbyjs/gatsby/commit/eb8cf8d37976162ef4afc919c002f698a1305642))
-- setup circleci to run unit tests againt v5 [#36714](https://github.com/gatsbyjs/gatsby/issues/36714) ([ba146fd](https://github.com/gatsbyjs/gatsby/commit/ba146fd3b7ee1f18c1c695bc654890151d2cc0b3))
+- setup circleci to run unit tests against v5 [#36714](https://github.com/gatsbyjs/gatsby/issues/36714) ([ba146fd](https://github.com/gatsbyjs/gatsby/commit/ba146fd3b7ee1f18c1c695bc654890151d2cc0b3))
 
 #### Other Changes
 
@@ -2464,7 +2464,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update readme [#29837](https://github.com/gatsbyjs/gatsby/issues/29837) ([69f538a](https://github.com/gatsbyjs/gatsby/commit/69f538a870fcf75223916fdf074177966119a22b))
 - move to latest joi [#29792](https://github.com/gatsbyjs/gatsby/issues/29792) ([86b8b26](https://github.com/gatsbyjs/gatsby/commit/86b8b2643be554496178426c8ba8466411ce56f7))
 - update core-js [#29791](https://github.com/gatsbyjs/gatsby/issues/29791) ([2758329](https://github.com/gatsbyjs/gatsby/commit/27583295f7d5d82deed4bf324bc0233ff49944cd))
-- upgarde postcss & plugins [#29793](https://github.com/gatsbyjs/gatsby/issues/29793) ([95f452c](https://github.com/gatsbyjs/gatsby/commit/95f452c9300490bbf961fa65f11fdf89825acd26))
+- upgrade postcss & plugins [#29793](https://github.com/gatsbyjs/gatsby/issues/29793) ([95f452c](https://github.com/gatsbyjs/gatsby/commit/95f452c9300490bbf961fa65f11fdf89825acd26))
 - Fix our internal eslint config for monorepo Fix [#29795](https://github.com/gatsbyjs/gatsby/issues/29795) ([0b4664e](https://github.com/gatsbyjs/gatsby/commit/0b4664e52c22902f9fb85b208a63da388ddd0470))
 
 ### [3.0.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.0.4/packages/gatsby) (2021-03-10)
@@ -2795,7 +2795,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - remove redundant dispatch of query extraction error [#28676](https://github.com/gatsbyjs/gatsby/issues/28676) ([1d7dc76](https://github.com/gatsbyjs/gatsby/commit/1d7dc76a18de379e0004bd62a26d7630e0a060fe))
 - Do not activate inspect if already active [#28643](https://github.com/gatsbyjs/gatsby/issues/28643) ([f4e90b6](https://github.com/gatsbyjs/gatsby/commit/f4e90b61c8826dca7f9e07727c8cd7179c51a8a0))
 - require gatsby-config.js before accessing process.env [#28572](https://github.com/gatsbyjs/gatsby/issues/28572) ([b3f11ed](https://github.com/gatsbyjs/gatsby/commit/b3f11ed1b48113142333ccb57124fd5dc625aac5))
-- Only set auto optin flags if not in config [#28627](https://github.com/gatsbyjs/gatsby/issues/28627) ([b81e6bd](https://github.com/gatsbyjs/gatsby/commit/b81e6bdb70fbda4f02739728f79b12c166b1a188))
+- Only set auto option flags if not in config [#28627](https://github.com/gatsbyjs/gatsby/issues/28627) ([b81e6bd](https://github.com/gatsbyjs/gatsby/commit/b81e6bdb70fbda4f02739728f79b12c166b1a188))
 - correct opt-in percentage for QUERY_ON_DEMAND and LAZY_IMAGES [#28579](https://github.com/gatsbyjs/gatsby/issues/28579) ([c21dac9](https://github.com/gatsbyjs/gatsby/commit/c21dac9e8cf97093e00889e850c5a441aef46bda))
 
 #### Chores
@@ -2848,7 +2848,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Bug Fixes
 
-- Only set auto optin flags if not in config [#28627](https://github.com/gatsbyjs/gatsby/issues/28627) [#28634](https://github.com/gatsbyjs/gatsby/issues/28634) ([9cd252f](https://github.com/gatsbyjs/gatsby/commit/9cd252f4fa2adf81bc6ad3b29b14b45392b05d28))
+- Only set auto option flags if not in config [#28627](https://github.com/gatsbyjs/gatsby/issues/28627) [#28634](https://github.com/gatsbyjs/gatsby/issues/28634) ([9cd252f](https://github.com/gatsbyjs/gatsby/commit/9cd252f4fa2adf81bc6ad3b29b14b45392b05d28))
 - correct opt-in percentage for QUERY_ON_DEMAND and LAZY_IMAGES [#28579](https://github.com/gatsbyjs/gatsby/issues/28579) [#28622](https://github.com/gatsbyjs/gatsby/issues/28622) ([15cf4a2](https://github.com/gatsbyjs/gatsby/commit/15cf4a27d36842fc37565f61a4cf69d0c6376140))
 - correct GraphQL warning text [#28563](https://github.com/gatsbyjs/gatsby/issues/28563) ([2bb4214](https://github.com/gatsbyjs/gatsby/commit/2bb4214d36616ae593a8a82d63102dca2d5e44e6))
 - Avoid undefined object errors [#28554](https://github.com/gatsbyjs/gatsby/issues/28554) ([39995ae](https://github.com/gatsbyjs/gatsby/commit/39995ae008d72ff17ab57bb91cbb625ed64e39f5))
@@ -4517,7 +4517,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby:** Resolve linked interfaces consistently with objec… ([#21936](https://github.com/gatsbyjs/gatsby/issues/21936)) ([bd5bdd1](https://github.com/gatsbyjs/gatsby/commit/bd5bdd1))
+- **gatsby:** Resolve linked interfaces consistently with object… ([#21936](https://github.com/gatsbyjs/gatsby/issues/21936)) ([bd5bdd1](https://github.com/gatsbyjs/gatsby/commit/bd5bdd1))
 
 ## [2.19.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.26...gatsby@2.19.27) (2020-03-03)
 
@@ -4946,7 +4946,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - **gatsby:** controlled search input component on dev-404-page ([#19168](https://github.com/gatsbyjs/gatsby/issues/19168)) ([d65183b](https://github.com/gatsbyjs/gatsby/commit/d65183b))
 - **gatsby:** Ensure inferred types do not conflict with types created via schema customization ([#19338](https://github.com/gatsbyjs/gatsby/issues/19338)) ([3565d5a](https://github.com/gatsbyjs/gatsby/commit/3565d5a))
 - **gatsby:** non-latin hash link ([#19376](https://github.com/gatsbyjs/gatsby/issues/19376)) ([8938c95](https://github.com/gatsbyjs/gatsby/commit/8938c95))
-- **gatsby:** Re-use plugin resolution logic for theme dir resolution ([#19470](https://github.com/gatsbyjs/gatsby/issues/19470)) ([52be765](https://github.com/gatsbyjs/gatsby/commit/52be765))
+- **gatsby:** Reuse plugin resolution logic for theme dir resolution ([#19470](https://github.com/gatsbyjs/gatsby/issues/19470)) ([52be765](https://github.com/gatsbyjs/gatsby/commit/52be765))
 - update minor updates in packages ([#19423](https://github.com/gatsbyjs/gatsby/issues/19423)) ([9935376](https://github.com/gatsbyjs/gatsby/commit/9935376))
 
 ## [2.17.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.10...gatsby@2.17.11) (2019-11-10)
@@ -8954,7 +8954,7 @@ Our first beta!!! 🎉
 - RSS Feed plugin #1073 @nicholaswyoung
 - Contentful source plugin #1084 @mericsson
 - MVP part 1 of new community Gatsby tutorial #1107 @kyleamathews
-- Debuggin help when building HTML fails #1109 @kyleamathews
+- Debugging help when building HTML fails #1109 @kyleamathews
 - Default `html.js` component #1107 @kyleamathews
 - Can now highlight specific line numbers in markdown code blocks #1107
   @kyleamathews
@@ -9151,7 +9151,7 @@ export const pageQuery = graphql`
 
 ### Added
 
-- Did the intitial build of the new gatsbyjs.org! It's in the `www` subdirectory
+- Did the initial build of the new gatsbyjs.org! It's in the `www` subdirectory
   on the 1.0 branch and is built on each push! That's my kind of integration
   testing :-) You can see the early version of the site at
   https://gatsbyjs.netlify.app/. PRs welcome!

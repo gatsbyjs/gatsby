@@ -183,7 +183,7 @@ describe(`websocket-manager`, () => {
     done()
   })
 
-  afterAll(done => {
+  after all(done => {
     if (websocketManager.websocket) {
       websocketManager.websocket.close()
     }
@@ -449,7 +449,7 @@ describe(`websocket-manager`, () => {
           })
         })
 
-        afterAll(() => {
+        after all(() => {
           store.dispatch({
             type: `DELETE_PAGE`,
             payload: {
@@ -502,7 +502,7 @@ describe(`websocket-manager`, () => {
     beforeEach(() => {
       websocketManager.staticQueryResults.clear()
     })
-    afterAll(() => {
+    after all(() => {
       websocketManager.staticQueryResults.clear()
     })
 

@@ -62,7 +62,7 @@ describe(`worker (schema)`, () => {
     stateFromWorker = await worker.single.getState()
   })
 
-  afterAll(async () => {
+  after all(async () => {
     if (worker) {
       await Promise.all(worker.end())
       worker = undefined

@@ -202,7 +202,7 @@ If you want to quickly prototype an adapter, you can also author your file(s) di
 
 ## Testing
 
-You should test your adapter code to improve code quality and reliablity. We recommend using [Jest](https://jestjs.io/) or [Vitest](https://vitest.dev/) for unit testing and [Cypress](https://www.cypress.io/) or [Playwright](https://playwright.dev/) for end-to-end testing.
+You should test your adapter code to improve code quality and reliability. We recommend using [Jest](https://jestjs.io/) or [Vitest](https://vitest.dev/) for unit testing and [Cypress](https://www.cypress.io/) or [Playwright](https://playwright.dev/) for end-to-end testing.
 
 You can copy Gatsby's complete [adapter end-to-end testing suite](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests/adapters) and use it for your own adapter.
 

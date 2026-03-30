@@ -7,7 +7,7 @@ describe(`gatsby recipes`, () => {
   const cwd = `gatsby-sites/gatsby-develop`
 
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
-  afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
+  after all(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   xit(`begins running the jest recipe`, async () => {
     // 1. Start the `gatsby recipes` command

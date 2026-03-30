@@ -16,7 +16,7 @@ npm install gatsby-plugin-feed
 module.exports = {
   siteMetadata: {
     title: `Your site title`,
-    description: `Your site desccription`,
+    description: `Your site description`,
     site_url: `https://your-site-url.com`,
   }
 }
@@ -28,7 +28,7 @@ Afterwards, you should configure `gatsby-plugin-feed` inside your `gatsby-config
 module.exports = {
   siteMetadata: {
     title: `Your site title`,
-    description: `Your site desccription`,
+    description: `Your site description`,
     site_url: `https://your-site-url.com`,
   },
   plugins: [

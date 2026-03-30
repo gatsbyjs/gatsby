@@ -381,7 +381,7 @@ The following breaking schema changes must be updated in your site in order to u
 
 Previous versions of this plugin exposed the `ShopifyProduct.images` field on products. Although it made the plugin easier to interact with, it made it impossible to add videos or 3D renderings to your products. The new version of the plugin exposes the `ShopifyProduct.media` field directly, allowing you to query for all of the images, videos and 3D renderings that Shopify supports.
 
-It was previoulsy supported to query for videos or 3D models. In order to add support for these, the `ShopifyProduct` `images` field has been replaced by the `media` field.
+It was previously supported to query for videos or 3D models. In order to add support for these, the `ShopifyProduct` `images` field has been replaced by the `media` field.
 
 Instead of doing this:
 

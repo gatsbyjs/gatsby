@@ -3,7 +3,7 @@ import { render, cleanup, fireEvent } from "@testing-library/react"
 import MatchMediaMock from "jest-matchmedia-mock"
 import Image from "../"
 
-afterAll(cleanup)
+after all(cleanup)
 
 const fixedShapeMock = {
   width: 100,

@@ -8,9 +8,9 @@ jest.mock(`gatsby/reporter`, () => {
   }
 })
 
-// windows and mac have different seperators, all code is written with unix-like
+// windows and mac have different separators, all code is written with unix-like
 // file systems, but the underlying code uses `path.sep`. So when running tests
-// on windows, they would fail without us swapping the seperators.
+// on windows, they would fail without us swapping the separators.
 const compatiblePath = (filepath: string): string =>
   filepath.replace(/\//g, syspath.sep)
 
@@ -62,7 +62,7 @@ describe(`isValidCollectionPathImplementation`, () => {
     `/products/{Model_bar}.js`,
     `/products/{123Model.bar}.js`,
     `/products/{Model.123bar}.js`,
-    `/produts/Model}.js`,
+    `/products/Model}.js`,
     `/products/{Model.js`,
     `/products/{Model.foo.bar}.js`,
     `/products/prefix-{Model.foo.bar}.js`,

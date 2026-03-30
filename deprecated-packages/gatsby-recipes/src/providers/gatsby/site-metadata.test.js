@@ -28,7 +28,7 @@ describe(`gatsby-plugin resource`, () => {
     await fs.ensureDir(starterBlogRoot)
     await fs.copy(STARTER_BLOG_FIXTURE, starterBlogRoot)
   })
-  afterAll(async () => {
+  after all(async () => {
     if (tmpDir) {
       await tmpDir.cleanup()
     }

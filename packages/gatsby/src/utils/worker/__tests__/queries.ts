@@ -175,7 +175,7 @@ describe(`worker (queries)`, () => {
     await Promise.all(worker.all.buildSchema())
   })
 
-  afterAll(async () => {
+  after all(async () => {
     if (worker) {
       await Promise.all(worker.end())
       worker = undefined

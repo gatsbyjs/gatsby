@@ -286,7 +286,7 @@ describe(`fetch-remote-file`, () => {
     storage.getDatabaseDir.mockReturnValue(cacheRoot)
   })
 
-  afterAll(async () => {
+  after all(async () => {
     await storage.closeDatabase()
     await fs.remove(cacheRoot)
     delete global.__GATSBY

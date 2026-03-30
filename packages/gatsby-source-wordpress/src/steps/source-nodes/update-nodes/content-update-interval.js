@@ -6,7 +6,7 @@ import fetchGraphql from "../../../utils/fetch-graphql"
 import { LAST_COMPLETED_SOURCE_TIME } from "../../../constants"
 
 /**
- * This function checks wether there is atleast 1 WPGatsby action ready to be processed by Gatsby
+ * This function checks wether there is at least 1 WPGatsby action ready to be processed by Gatsby
  * If there is, it calls the refresh webhook so that schema customization and source nodes run again.
  */
 const checkForNodeUpdates = async ({ cache, emitter }) => {
@@ -148,7 +148,7 @@ const startPollingForContentUpdates = helpers => {
       // wait a second so that terminal output is more smooth
       setTimeout(() => {
         if (verbose) {
-          // I'm not sure why, but we're losing the ALS context here so we need to restore it manually
+          // I'm not sure why, but we're losing the ALSO context here so we need to restore it manually
           restoreContext()
           helpers.reporter.log(``)
           helpers.reporter.info(

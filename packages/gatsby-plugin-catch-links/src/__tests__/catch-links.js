@@ -13,7 +13,7 @@ beforeAll(() => {
   window.history.pushState({}, `APP Url`, `${pathPrefix}`)
 })
 
-afterAll(() => {
+after all(() => {
   // Set history back to http://localhost:8000
   window.history.back()
 })
@@ -27,7 +27,7 @@ describe(`catchLinks`, () => {
     mockedAEH.mockImplementation((_, eventHandler) => (handler = eventHandler))
   })
 
-  afterAll(() => {
+  after all(() => {
     mockedAEH.mockRestore()
   })
 
@@ -37,7 +37,7 @@ describe(`catchLinks`, () => {
     eventDestroyer = catchLinks.default(window, href => {})
   })
 
-  afterAll(() => {
+  after all(() => {
     eventDestroyer()
   })
 
@@ -183,7 +183,7 @@ describe(`the author might be forcing navigation`, () => {
         document.createElement(`iframe`)
       )
     })
-    afterAll(() => {
+    after all(() => {
       separateBrowsingContext.remove()
     })
 
@@ -218,7 +218,7 @@ describe(`anchor target attribute looks like _self if`, () => {
       document.createElement(`iframe`)
     )
   })
-  afterAll(() => {
+  after all(() => {
     separateBrowsingContext.remove()
   })
 
@@ -267,7 +267,7 @@ describe(`navigation is routed through Gatsby if the destination href`, () => {
     eventDestroyer = catchLinks.default(window, {}, hrefHandler)
   })
 
-  afterAll(() => {
+  after all(() => {
     eventDestroyer()
   })
 
@@ -368,7 +368,7 @@ describe(`navigation is routed through browser if resources have failed and the 
     global.___failedResources = true
   })
 
-  afterAll(() => {
+  after all(() => {
     eventDestroyer()
     global.___failedResources = false
   })
@@ -411,7 +411,7 @@ describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigate
     eventDestroyer = catchLinks.default(window, {}, hrefHandler)
   })
 
-  afterAll(() => {
+  after all(() => {
     global.__BASE_PATH__ = ``
     eventDestroyer()
   })
@@ -502,7 +502,7 @@ describe(`navigation is routed through browser without SVGAnimatedString support
     delete global.SVGAnimatedString
   })
 
-  afterAll(() => {
+  after all(() => {
     eventDestroyer()
     global.SVGAnimatedString = oldSVGAnimatedString
   })

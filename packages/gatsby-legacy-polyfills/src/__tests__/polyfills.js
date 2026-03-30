@@ -28,7 +28,7 @@ describe(`polyfills`, () => {
     )
   })
 
-  afterAll(() => fs.remove(path.join(packageRoot, tmpDir)))
+  after all(() => fs.remove(path.join(packageRoot, tmpDir)))
 
   it(`has the correct polyfills`, () => {
     const polyfills = require(`../exclude`).LEGACY_POLYFILLS

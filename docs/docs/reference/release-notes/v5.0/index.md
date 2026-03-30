@@ -102,13 +102,13 @@ If you have any questions about the Slice API, you can comment on the [Gatsby 5 
 
 ## Partial Hydration (Beta)
 
-Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React server components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
+Partial Hydration enables you to selectively add interactivity to your otherwise completely static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React server components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
 
 [Hydration](/docs/conceptual/react-hydration/) (or often referred to as re-hydration) is the process of using client-side JavaScript to add application state and interactivity to server-rendered HTML. Since the initial release of Gatsby, apps built with Gatsby were always fully hydrated on the client. With Gatsby 5 you now can also use Partial Hydration inside Gatsby. Here's a visualization showing how Full Hydration and Partial Hydration differ conceptually:
 
 ![Two stylized browser windows on the left and right side. The left one has the title "Full Hydration", the right one "Partial Hydration". Both browser windows have a stylized web page (with header, content, footer, etc.) with mostly static content except for an interactive gallery. The left window has its complete window marked blue (as the full page hydrates), the right one only the interactive gallery (because of Partial Hydration).](../../../images/full-partial-hydration.png)
 
-Partial Hydration is in **Beta** and not enabled by default. You have to opt-in to try it out. The reason for this is that React server components are still quite new (the ecosystem as a whole hasn't caught up, e.g. CSS-in-JS libraries) and you are currently required to use an experimental version of `react`/`react-dom`. Therefore we don't recommend using Partial Hydration in production just yet. Once things have stabilized we'll announce the general availablity release of Partial Hydration and adjust the documentation.
+Partial Hydration is in **Beta** and not enabled by default. You have to opt-in to try it out. The reason for this is that React server components are still quite new (the ecosystem as a whole hasn't caught up, e.g. CSS-in-JS libraries) and you are currently required to use an experimental version of `react`/`react-dom`. Therefore we don't recommend using Partial Hydration in production just yet. Once things have stabilized we'll announce the general availability release of Partial Hydration and adjust the documentation.
 
 Read the [Partial Hydration How-To Guide](/docs/how-to/performance/partial-hydration/) for detailed instructions. We also recommend reading the [Partial Hydration Conceptual Guide](/docs/conceptual/partial-hydration/) to understand why Gatsby chose React server components and how Partial Hydration works on a high-level.
 
@@ -178,11 +178,11 @@ A big **Thank You** to [our community who contributed][full-changelog] to this r
 
 - [mattmuroya](https://github.com/mattmuroya): chore(gatsby-source-contentful): Correct image embed code sample [PR #36670](https://github.com/gatsbyjs/gatsby/pull/36670)
 - [yasell](https://github.com/yasell): fix(gatsby): remove unused console.log [PR #36713](https://github.com/gatsbyjs/gatsby/pull/36713)
-- [ashhitch](https://github.com/ashhitch): chore(docs): Update storybook main.js examples to be consistant [PR #36702](https://github.com/gatsbyjs/gatsby/pull/36702)
+- [ashhitch](https://github.com/ashhitch): chore(docs): Update storybook main.js examples to be consistent [PR #36702](https://github.com/gatsbyjs/gatsby/pull/36702)
 - [joshterrill](https://github.com/joshterrill): chore: Update old placehold.it URLs [PR #36731](https://github.com/gatsbyjs/gatsby/pull/36731)
 - [Toxillo](https://github.com/Toxillo): chore(docs): Update tutorial part 5 with a better fitting screenshot [PR #36741](https://github.com/gatsbyjs/gatsby/pull/36741)
 - [ShaunDychko](https://github.com/ShaunDychko): chore(gatsby-plugin-sitemap): Document `excludes` glob matching [PR #36690](https://github.com/gatsbyjs/gatsby/pull/36690)
-- [Lightwight](https://github.com/Lightwight): fix(gatsby-page-utils): path creation on windows filesystem [PR #36766](https://github.com/gatsbyjs/gatsby/pull/36766)
+- [Lightweight](https://github.com/Lightweight): fix(gatsby-page-utils): path creation on windows filesystem [PR #36766](https://github.com/gatsbyjs/gatsby/pull/36766)
 - [kentmz](https://github.com/kentmz): chore(docs): added Dialoguewise to headless cms list [PR #36651](https://github.com/gatsbyjs/gatsby/pull/36651)
 - [muescha](https://github.com/muescha)
   - chore(docs): TypeScript and Gatsby: add info for CSS Modules [PR #36820](https://github.com/gatsbyjs/gatsby/pull/36820)

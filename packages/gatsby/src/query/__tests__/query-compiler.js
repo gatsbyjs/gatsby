@@ -712,7 +712,7 @@ describe(`actual compiling`, () => {
     expect(result).toEqual(new Map())
   })
 
-  it(`advices on similarly named fragment`, async () => {
+  it(`advice on similarly named fragment`, async () => {
     const nodes = [
       createGatsbyDoc(
         `mockFile`,

@@ -29,7 +29,7 @@ We're excited to announce [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx) v4! 
 - Per-file tree shaking and chunking (No more `app.js` bundle bloat or global scope problems)
 - Simplified usage in pages
 - Simplified plugin options
-- You can configure the underyling [`@mdx-js/mdx` compile](https://mdxjs.com/packages/mdx/#compilefile-options), e.g. to add `remark` or `rehype` plugins
+- You can configure the underlying [`@mdx-js/mdx` compile](https://mdxjs.com/packages/mdx/#compilefile-options), e.g. to add `remark` or `rehype` plugins
 
 Over the last couple of months we've been hard at work building a new version of `gatsby-plugin-mdx`. The PRs [#35650](https://github.com/gatsbyjs/gatsby/pull/35650) and [#35893](https://github.com/gatsbyjs/gatsby/pull/35893) are the culmination of these efforts.
 

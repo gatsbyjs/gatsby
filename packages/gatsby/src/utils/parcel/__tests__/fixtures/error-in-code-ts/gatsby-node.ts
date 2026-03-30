@@ -2,7 +2,7 @@ import { GatsbyNode } from "gatsby"
 import { working } from "../utils/say-what-ts"
 import { createPages } from "../utils/create-pages-ts"
 
-this is wrong syntax that should't compile
+this is wrong syntax that shouldn't compile
 
 export const onPreInit: GatsbyNode["onPreInit"] = ({ reporter }) => {
   reporter.info(working)

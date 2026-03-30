@@ -45,6 +45,6 @@ describe(`DevPageRenderer`, () => {
   })
 })
 
-afterAll(cleanup)
+after all(cleanup)
 
-afterAll(jest.clearAllMocks)
+after all(jest.clearAllMocks)

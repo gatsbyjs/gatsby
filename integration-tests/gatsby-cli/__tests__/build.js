@@ -7,7 +7,7 @@ describe(`gatsby build`, () => {
   const cwd = `gatsby-sites/gatsby-build`
 
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
-  afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
+  after all(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   it(`creates a built gatsby site`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`build`)

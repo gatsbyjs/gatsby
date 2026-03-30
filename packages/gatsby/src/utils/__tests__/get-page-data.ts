@@ -333,7 +333,7 @@ describe(`get-page-data-util`, () => {
         },
       })
     })
-    afterAll(() => {
+    after all(() => {
       delete process.env.GATSBY_QUERY_ON_DEMAND
       store.dispatch({
         type: `SET_PROGRAM`,

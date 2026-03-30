@@ -63,7 +63,7 @@ describe(`worker (jobs)`, () => {
     workerStateAfter = await Promise.all(worker.all.getReduxJobs())
   })
 
-  afterAll(async () => {
+  after all(async () => {
     if (worker) {
       await Promise.all(worker.end())
       worker = undefined
@@ -91,7 +91,7 @@ describe(`worker (jobs)`, () => {
           jobDescriptionsCreatedByTheWorker.includes(`.then() job`) &&
           jobDescriptionsCreatedByTheWorker.includes(`.catch() job`) &&
           jobDescriptionsCreatedByTheWorker.includes(`Awaited job`) &&
-          jobDescriptionsCreatedByTheWorker.includes(`try/catched awaited job`)
+          jobDescriptionsCreatedByTheWorker.includes(`try/caught awaited job`)
       )
 
       // we expect worker specific jobs
@@ -132,7 +132,7 @@ describe(`worker (jobs)`, () => {
       it(`error is caught when awaited job fails`, () => {
         expect(workersJobsMeta).toSatisfyAll(
           ({ awaitThrewWith }: (typeof workersJobsMeta)[0]) =>
-            awaitThrewWith === `ERRORED: try/catched awaited job`
+            awaitThrewWith === `ERRORED: try/caught awaited job`
         )
       })
     })
@@ -163,7 +163,7 @@ describe(`worker (jobs)`, () => {
               "Different job created in all workers (worker #2)",
               "Different job created in all workers (worker #3)",
               "Same job created in all workers",
-              "try/catched awaited job",
+              "try/caught awaited job",
             ]
         `)
     })

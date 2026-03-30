@@ -85,7 +85,7 @@ export function Head() {
   - fix `pluginOptionsSchema` not being called for local plugins with `gatsby-node.ts`, via [PR #37443](https://github.com/gatsbyjs/gatsby/pull/37443)
   - support updated `sort` argument syntax in `nodeModel.findAll` function, via [PR #37477](https://github.com/gatsbyjs/gatsby/pull/37477)
 - `gatsby-source-contentful`:
-  - fix back reference fields disapearing after some content updates, via [PR #37442](https://github.com/gatsbyjs/gatsby/pull/37442)
+  - fix back reference fields disappearing after some content updates, via [PR #37442](https://github.com/gatsbyjs/gatsby/pull/37442)
 
 ## Contributors
 

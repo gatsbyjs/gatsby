@@ -85,7 +85,7 @@ exports.createSchemaCustomization = async ({ actions }, pluginOptions) => {
 
   try {
     const tryCatchedAwaitedJobArgs = {
-      description: `try/catched awaited job`,
+      description: `try/caught awaited job`,
       throw: true
     }
     global.jobs.createdInThisProcess.push(tryCatchedAwaitedJobArgs)

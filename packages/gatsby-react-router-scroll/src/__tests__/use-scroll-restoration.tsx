@@ -61,7 +61,7 @@ describe(`useScrollRestoration`, () => {
     sessionStorage.clear()
   })
 
-  afterAll(() => {
+  after all(() => {
     if (fakedScrollTo && htmlElementPrototype.scrollTo) {
       // @ts-ignore
       delete htmlElementPrototype.scrollTo

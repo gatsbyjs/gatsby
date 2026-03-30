@@ -34,8 +34,8 @@ const makeNodesUneven = () => [
       blue: 100,
     },
     anObjectArray: [
-      { aString: `some string`, aNumber: 2, aBoolean: true },
-      { aString: `some string`, aNumber: 2, anArray: [1, 2] },
+      { aString: `some string`, a number: 2, aBoolean: true },
+      { aString: `some string`, a number: 2, anArray: [1, 2] },
     ],
     boolean: true,
     nil: `not null`,

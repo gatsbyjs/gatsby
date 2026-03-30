@@ -18,7 +18,7 @@ describe(`IPC Send`, () => {
     })
   })
 
-  afterAll(() => {
+  after all(() => {
     gatsbyProcess.kill()
   })
 

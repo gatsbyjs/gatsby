@@ -742,7 +742,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 #### Bug Fixes
 
 - force base64 previews to be formatted as JPEG [#32155](https://github.com/gatsbyjs/gatsby/issues/32155) ([7c343ff](https://github.com/gatsbyjs/gatsby/commit/7c343ffd803c6ada0602678b9a6e6d164a58a4fb))
-- reenable support for gif images [#31986](https://github.com/gatsbyjs/gatsby/issues/31986) ([a30aa0b](https://github.com/gatsbyjs/gatsby/commit/a30aa0b5c8e45e2634eb939e7533230b072eb9bd))
+- re-enable support for gif images [#31986](https://github.com/gatsbyjs/gatsby/issues/31986) ([a30aa0b](https://github.com/gatsbyjs/gatsby/commit/a30aa0b5c8e45e2634eb939e7533230b072eb9bd))
 - Don't ignore errors thrown when fetching assets [#24288](https://github.com/gatsbyjs/gatsby/issues/24288) ([2d4a791](https://github.com/gatsbyjs/gatsby/commit/2d4a791810a7f4baaff8d047324ddbe252db952b))
 
 ## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@5.8.0/packages/gatsby-source-contentful) (2021-06-23)
@@ -751,7 +751,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Bug Fixes
 
-- reenable support for gif images [#31986](https://github.com/gatsbyjs/gatsby/issues/31986) [#32029](https://github.com/gatsbyjs/gatsby/issues/32029) ([f795be3](https://github.com/gatsbyjs/gatsby/commit/f795be3e451594a0962a147c82073a47c976d73b))
+- re-enable support for gif images [#31986](https://github.com/gatsbyjs/gatsby/issues/31986) [#32029](https://github.com/gatsbyjs/gatsby/issues/32029) ([f795be3](https://github.com/gatsbyjs/gatsby/commit/f795be3e451594a0962a147c82073a47c976d73b))
 - improve error message when dominant color can't be generated [#31879](https://github.com/gatsbyjs/gatsby/issues/31879) ([1f89646](https://github.com/gatsbyjs/gatsby/commit/1f89646707c338b1ee93a4c5cf0ee36cb89c2037))
 
 #### Chores
@@ -1464,7 +1464,7 @@ If you were relying on the `id` property in the `sys` object, you should be awar
 
 ### Performance Improvements
 
-- **gatsby-source-contentful:** Add cache for remote thumnails ([#22551](https://github.com/gatsbyjs/gatsby/issues/22551)) ([7abf4d7](https://github.com/gatsbyjs/gatsby/commit/7abf4d7))
+- **gatsby-source-contentful:** Add cache for remote thumbnails ([#22551](https://github.com/gatsbyjs/gatsby/issues/22551)) ([7abf4d7](https://github.com/gatsbyjs/gatsby/commit/7abf4d7))
 
 ## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.2.3...gatsby-source-contentful@2.2.4) (2020-03-24)
 

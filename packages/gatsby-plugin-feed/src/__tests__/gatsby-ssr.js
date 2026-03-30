@@ -7,7 +7,7 @@ describe(`Adds <Link> for feed to head`, () => {
     global.__PATH_PREFIX__ = ``
   })
 
-  afterAll(() => {
+  after all(() => {
     global.__BASE_PATH__ = prefix
   })
 

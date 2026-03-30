@@ -24,7 +24,7 @@ describe(`Slices`, () => {
       .should(`contain`, `Built with`)
   })
 
-  it(`Slice recieves context passed via createSlice`, () => {
+  it(`Slice receives context passed via createSlice`, () => {
     cy.getTestElement(`footer-slice-context-value`)
       .invoke(`text`)
       .should(`contain`, `Gatsby`)

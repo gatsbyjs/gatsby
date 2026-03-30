@@ -22,7 +22,7 @@ const server = setupServer(
 
 describe(`gatsby-worker`, () => {
   beforeAll(() => server.listen())
-  afterAll(() => server.close())
+  after all(() => server.close())
 
   describe(`IMAGE_CDN`, () => {
     // TODO msw is failing on weird error during CI but not locally

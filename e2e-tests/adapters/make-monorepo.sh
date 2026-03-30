@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # this script will make checked out files move around and make git working directory dirty
-# this is primarly for setting up monorepo structure for e2e tests that run in CI to avoid
+# this is primarily for setting up monorepo structure for e2e tests that run in CI to avoid
 # having to maintain additional fixture as we want to test all the same things as in single repo
 # case
 

@@ -387,7 +387,7 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
 
-    it(`uses correct slice when a slice is changed in createPage mappping`, () => {
+    it(`uses correct slice when a slice is changed in createPage mapping`, () => {
       expect(htmlContent).toContain(
         runNumber < 2 ? `Josh Johnson` : `Kyle Mathews`
       )
@@ -453,7 +453,7 @@ beforeAll(done => {
 
 const teardownFns = []
 
-afterAll(async () => {
+after all(async () => {
   Object.entries(filesToRevert).forEach(([filePath, fileContent]) => {
     fs.writeFileSync(filePath, fileContent)
   })

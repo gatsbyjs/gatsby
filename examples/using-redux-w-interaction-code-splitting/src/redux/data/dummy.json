@@ -1447,10 +1447,10 @@
     "picture": "https://via.placeholder.com/32x32",
     "age": 29,
     "eyeColor": "green",
-    "name": "Shepard Gonzalez",
+    "name": "Shepherd Gonzalez",
     "gender": "male",
-    "company": "DIGIAL",
-    "email": "shepardgonzalez@digial.com",
+    "company": "DIGITAL",
+    "email": "shepardgonzalez@digital.com",
     "phone": "+1 (991) 451-2610",
     "address": "353 Meserole Street, Jennings, Hawaii, 3511",
     "about": "Nisi anim aliquip pariatur ullamco eiusmod consequat esse exercitation. Sit duis enim quis tempor ut commodo voluptate laborum qui anim amet aliquip. Incididunt ex cillum Lorem velit culpa magna amet aliqua velit. Ut proident officia exercitation et minim Lorem nisi ex. Veniam aute ullamco consequat quis ea ipsum occaecat aute qui. Reprehenderit quis quis minim officia ea occaecat irure.\r\n",
@@ -1480,7 +1480,7 @@
         "name": "Kelly Crosby"
       }
     ],
-    "greeting": "Hello, Shepard Gonzalez! You have 1 unread messages.",
+    "greeting": "Hello, Shepherd Gonzalez! You have 1 unread messages.",
     "favoriteFruit": "strawberry"
   },
   {
@@ -2670,7 +2670,7 @@
       },
       {
         "id": 2,
-        "name": "Elvira Shepard"
+        "name": "Elvira Shepherd"
       }
     ],
     "greeting": "Hello, Vaughan Mendoza! You have 10 unread messages.",

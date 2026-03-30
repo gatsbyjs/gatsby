@@ -9,8 +9,8 @@ et, dictum eget sem. Suspendisse tellus mauris, elementum placerat commodo sit
 amet, iaculis vitae justo. Fusce sed orci feugiat, cursus ante consectetur,
 vulputate urna. Duis pharetra magna sed semper auctor. Nullam et nunc nulla.
 Donec nibh nibh, ornare a ipsum quis, condimentum faucibus nibh. Etiam venenatis
-nec nibh vitae porta. Aliquam erat volutpat. Orci varius natoque penatibus et
-magnis dis parturient montes, nascetur ridiculus mus. Sed auctor semper dolor eu
+nec nibh vitae porta. Aliquam erat volutpat. Orci various natoque penatibus et
+magnis dis parturient montes, nascetur ridiculous mus. Sed auctor semper dolor eu
 rhoncus. Mauris sit amet lacus pulvinar nunc vehicula vulputate. Ut quis nisl
 hendrerit, elementum ante quis, maximus mi.
 
@@ -21,7 +21,7 @@ sodales viverra quam vitae interdum. Maecenas volutpat congue massa. Suspendisse
 congue massa lorem, vitae luctus mi semper quis.
 
 Etiam sodales felis at magna condimentum, eu placerat arcu pulvinar. Nulla
-facilisi. Mauris bibendum felis in ex sagittis ornare. Mauris varius luctus
+facilisi. Mauris bibendum felis in ex sagittis ornare. Mauris various luctus
 magna, sed mattis lorem blandit id. Fusce condimentum odio non dui semper, quis
 finibus diam vehicula. Pellentesque ac aliquam lorem. Aliquam ac neque augue.
 Phasellus tempus faucibus blandit. Nulla iaculis tortor felis, et luctus libero
@@ -39,7 +39,7 @@ vestibulum nulla sed turpis congue elementum. Sed nunc nibh, lacinia non
 venenatis eget, mattis at libero. Praesent venenatis nulla vitae magna
 ullamcorper fringilla. Mauris vestibulum nec nunc at elementum.
 
-Praesent neque lorem, auctor ut commodo ut, condimentum in justo. Nam metus
+Praesent neque lorem, auctor ut commodo ut, condimentum in justo. Name metus
 odio, bibendum dignissim neque vel, finibus dapibus nisi. In hac habitasse
 platea dictumst. Ut viverra magna rhoncus neque placerat finibus. Aenean
 vestibulum, quam non congue vulputate, risus felis convallis magna, sit amet

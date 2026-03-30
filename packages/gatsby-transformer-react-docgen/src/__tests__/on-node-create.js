@@ -65,7 +65,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     }
   })
 
-  afterAll(() => {
+  after all(() => {
     global.console.error = consoleError
   })
 

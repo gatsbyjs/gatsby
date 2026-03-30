@@ -113,7 +113,7 @@ describe(`gatsby-plugin resource`, () => {
     await fs.ensureDir(nopeRoot)
     await fs.copy(NOPE_FIXTURE, nopeRoot)
   })
-  afterAll(async () => {
+  after all(async () => {
     if (tmpDir) {
       await tmpDir.cleanup()
     }

@@ -6,7 +6,7 @@ jest.mock(`../index`, () => {
     store: {
       getState: jest.fn(),
     },
-    dispath: (): void => {},
+    dispatch: (): void => {},
     emitter: {
       on: jest.fn(),
     },

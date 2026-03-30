@@ -207,7 +207,7 @@ describe(`watching`, () => {
       }
     })
 
-    afterAll(() => {
+    after all(() => {
       global.process = realProcess
     })
 
@@ -452,7 +452,7 @@ describe(`dependency changes`, () => {
     promisifiedSpawn.mockClear()
   })
 
-  afterAll(() => {
+  after all(() => {
     global.process = realProcess
   })
 

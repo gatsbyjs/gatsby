@@ -8,7 +8,7 @@ Welcome to `gatsby@${VERSION}.0` release (${MONTH} ${YEAR} #${INDEX})
 
 Key highlights of this release:
 
-- [Hightlight Name](#highlight-name)
+- [Highlight Name](#highlight-name)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -20,7 +20,7 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ---
 
-## Hightlight Name
+## Highlight Name
 
 TODO
 

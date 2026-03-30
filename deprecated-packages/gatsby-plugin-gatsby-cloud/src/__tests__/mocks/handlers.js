@@ -32,7 +32,7 @@ export const handlers = [
       })
     )
   ),
-  rest.get(`https://test.com/uptodate`, async (req, res, ctx) =>
+  rest.get(`https://test.com/up-to-date`, async (req, res, ctx) =>
     res(
       ctx.json({
         currentBuild: {

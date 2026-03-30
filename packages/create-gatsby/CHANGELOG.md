@@ -148,7 +148,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Bug Fixes
 
-- Update questionare [#37148](https://github.com/gatsbyjs/gatsby/issues/37148) ([1c84345](https://github.com/gatsbyjs/gatsby/commit/1c843453e5fd4e53df6768844032011971af782e))
+- Update questionnaire [#37148](https://github.com/gatsbyjs/gatsby/issues/37148) ([1c84345](https://github.com/gatsbyjs/gatsby/commit/1c843453e5fd4e53df6768844032011971af782e))
 
 ## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@3.2.0/packages/create-gatsby) (2022-11-25)
 

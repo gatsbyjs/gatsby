@@ -11,8 +11,8 @@ sapien lacus, sit amet imperdiet nibh pulvinar non. Phasellus sagittis tempor
 dui, non condimentum nunc posuere eu. Etiam cursus ornare blandit. Mauris ligula
 dui, imperdiet at lobortis et, volutpat eget est. Vestibulum at nulla vulputate,
 consequat erat laoreet, cursus diam. Fusce nec mollis dui. Morbi sit amet est
-erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur
-ridiculus mus. Nam lorem augue, semper ut laoreet non, semper mattis nunc. Sed
+erat. Orci various natoque penatibus et magnis dis parturient montes, nascetur
+ridiculous mus. Name lorem augue, semper ut laoreet non, semper mattis nunc. Sed
 iaculis lacinia purus eu condimentum.
 
 Fusce vel nunc ut enim tempus pretium. Curabitur efficitur mauris vel mi
@@ -36,11 +36,11 @@ Aenean a ipsum pretium, ultricies nunc a, facilisis nulla. Nullam id libero in
 ligula convallis gravida. Fusce metus purus, eleifend non tempor in, volutpat
 sed ligula. Fusce erat felis, mollis vel leo at, efficitur aliquam ante. Duis ac
 risus porttitor, tristique nisl eu, fermentum libero. Fusce est lorem, aliquet
-sed lectus eget, varius congue nunc. Nunc id erat eget nisl fringilla maximus a
+sed lectus eget, various congue nunc. Nunc id erat eget nisl fringilla maximus a
 nec mauris. Morbi in eros non metus hendrerit sagittis vel in tortor. Maecenas
 interdum ut erat ut ornare.
 
-Curabitur et neque dictum, sollicitudin dolor et, varius leo. Aenean velit
+Curabitur et neque dictum, sollicitudin dolor et, various leo. Aenean velit
 tellus, pharetra et efficitur sed, dignissim in augue. Mauris est odio, aliquam
 non nunc eu, finibus vehicula erat. Praesent consectetur sollicitudin blandit.
 Nulla malesuada est dolor, et scelerisque justo tincidunt non. Proin maximus,

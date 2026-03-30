@@ -23,7 +23,7 @@ afterEach(() => {
   server.resetHandlers()
 })
 
-afterAll(() => {
+after all(() => {
   server.close()
 })
 

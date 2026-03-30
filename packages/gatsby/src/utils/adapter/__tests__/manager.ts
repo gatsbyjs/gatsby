@@ -40,7 +40,7 @@ beforeAll(() => {
   cwdToRestore = process.cwd()
 })
 
-afterAll(() => {
+after all(() => {
   process.chdir(cwdToRestore)
 })
 

@@ -22,7 +22,7 @@ describe(`gatsby-plugin-manifest`, () => {
     document.head.innerHTML = `<link rel="manifest" href="/manifest.webmanifest">`
   })
 
-  afterAll(() => {
+  after all(() => {
     delete global.__MANIFEST_PLUGIN_HAS_LOCALISATION__
   })
 

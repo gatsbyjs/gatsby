@@ -11,7 +11,7 @@ jest.setTimeout(MAX_TIMEOUT)
 describe(`gatsby develop`, () => {
   const cwd = `gatsby-sites/gatsby-develop`
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
-  afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
+  after all(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   it(`starts a gatsby site on port 8000`, async () => {
     // 1. Start the `gatsby develop` command
@@ -56,7 +56,7 @@ describe(`gatsby develop`, () => {
   })
 
   it.skip(`starts a gatsby site on port 9000 with -p 9000`, () => {})
-  it.skip(`starts a gatsby site at a diffent host with -h`, () => {})
+  it.skip(`starts a gatsby site at a different host with -h`, () => {})
   it.skip(`starts a gatsby site with ssl using -S`, () => {})
   it.skip(`starts a gatsby site with cert file using -c`, () => {})
   it.skip(`starts a gatsby site with key file using -k`, () => {})

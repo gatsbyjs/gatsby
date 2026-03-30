@@ -8,7 +8,7 @@ describe(`gatsby plugin`, () => {
   const cwd = `gatsby-sites/gatsby-plugin`
 
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
-  afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
+  after all(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   it(`lists plugins`, async () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([`plugin`, `ls`])

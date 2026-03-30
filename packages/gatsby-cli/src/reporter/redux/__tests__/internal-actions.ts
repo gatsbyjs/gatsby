@@ -41,7 +41,7 @@ describe(`setStatus action creator`, () => {
     setStatus = (await import(`../internal-actions`)).setStatus
   })
 
-  afterAll(() => {
+  after all(() => {
     jest.unmock(`../`)
   })
 

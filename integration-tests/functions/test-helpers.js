@@ -983,7 +983,7 @@ export function runTests(env, host) {
     // // We delete to be sure it's not there.
     // }
     // })
-    // afterAll(() => {
+    // after all(() => {
     // fs.unlinkSync(path.join(apiDir, `function-a.js`))
     // })
 
