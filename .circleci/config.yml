@@ -252,9 +252,6 @@ commands:
                 name: Upgrade React to << parameters.react_version >>
                 command: "REACT_VERSION=<< parameters.react_version >> TEST_PATH=<< parameters.test_path >> node ./scripts/upgrade-react"
       - run:
-          name: Install gatsby-dev@next
-          command: pnpm add -g gatsby-dev-cli@next
-      - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>" "<< parameters.pre_gatsby_dev_command >>"
 
@@ -838,15 +835,25 @@ jobs:
       - run:
           name: Rebuild packages for windows
           command: |
-            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
+            # pnpm installs sharp behind a Windows reparse point here, and
+            # PowerShell Remove-Item -Recurse can fail on that layout. Prefer
+            # cmd's rmdir for the link itself, then fall back to Remove-Item.
+            if (Test-Path "node_modules/sharp") {
+              cmd /c rmdir /s /q "node_modules\\sharp" 2>$null
+              if (Test-Path "node_modules/sharp") {
+                Remove-Item -Recurse -Force -LiteralPath "node_modules/sharp"
+              }
+            }
             pnpm install --frozen-lockfile
       - run:
           name: Run tests
           command: |
-            # Keep the split output as an array; inlining the subexpression
-            # passes one giant quoted argument to Jest on Windows.
-            $tests = @((pnpm -s jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
-            pnpm exec jest --ci --runInBand $tests
+            # circleci tests split returns a single space-delimited line on
+            # Windows here, so split it ourselves and build the native command
+            # args explicitly instead of passing one giant quoted pattern.
+            $tests = (((pnpm -s jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split) -join ' ') -split '\s+' | Where-Object { $_ }
+            $jestArgs = @('exec', 'jest', '--ci', '--runInBand') + $tests
+            & pnpm $jestArgs
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
@@ -881,7 +888,15 @@ jobs:
       - run:
           name: Clear out sharp
           command: |
-            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
+            # pnpm installs sharp behind a Windows reparse point here, and
+            # PowerShell Remove-Item -Recurse can fail on that layout. Prefer
+            # cmd's rmdir for the link itself, then fall back to Remove-Item.
+            if (Test-Path "node_modules/sharp") {
+              cmd /c rmdir /s /q "node_modules\\sharp" 2>$null
+              if (Test-Path "node_modules/sharp") {
+                Remove-Item -Recurse -Force -LiteralPath "node_modules/sharp"
+              }
+            }
           shell: powershell.exe
       - run:
           command: pnpm install --frozen-lockfile

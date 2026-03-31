@@ -107,8 +107,11 @@ const adjustPackageJson = ({
 
   // The local registry flow publishes only temporary `-dev-*` versions, so any
   // relationships between the packages being published need to point at those
-  // temporary versions instead of the normal workspace ranges.
+  // temporary versions instead of the normal workspace ranges. We also need to
+  // normalize devDependencies so npm publish itself doesn't trip over leftover
+  // workspace specs while packing the temporary tarball.
   replaceLocalPublishedDependencyVersion(monorepoPKGjson.dependencies)
+  replaceLocalPublishedDependencyVersion(monorepoPKGjson.devDependencies)
   replaceLocalPublishedDependencyVersion(monorepoPKGjson.optionalDependencies)
   replaceLocalPublishedDependencyVersion(monorepoPKGjson.peerDependencies)
 
