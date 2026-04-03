@@ -21,4 +21,18 @@ describe(`create remote file node`, () => {
       expect(getRemoteFileExtension(url)).toBe(ext)
     })
   })
+
+  it(`does not throw on URLs where pathname is null`, () => {
+    const edgeCases = [`mailto:user@example.com`, ``]
+
+    edgeCases.forEach(url => {
+      expect(() => getRemoteFileName(url)).not.toThrow()
+      expect(() => getRemoteFileExtension(url)).not.toThrow()
+    })
+  })
+
+  it(`returns empty strings for URLs with null pathname`, () => {
+    expect(getRemoteFileName(`mailto:user@example.com`)).toBe(``)
+    expect(getRemoteFileExtension(`mailto:user@example.com`)).toBe(``)
+  })
 })
