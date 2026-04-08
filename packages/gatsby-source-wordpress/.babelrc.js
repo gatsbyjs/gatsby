@@ -42,10 +42,6 @@ module.exports = {
           moduleName: `dumper.js`,
           exportName: `dump`,
         },
-        clipboardy: {
-          moduleName: `clipboardy`,
-          exportName: `default`,
-        },
       },
     ],
   ],
