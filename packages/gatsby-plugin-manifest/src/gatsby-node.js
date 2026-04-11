@@ -8,6 +8,16 @@ import { doesIconExist } from "./node-helpers"
 
 import pluginOptionsSchema from "./pluginOptionsSchema"
 
+const trimSlashes = part => part.replace(/(^\/)|(\/$)/g, ``)
+
+const getPublicPath = ({ pathPrefix, prefixPaths }) => {
+  if (prefixPaths && pathPrefix) {
+    const normalized = trimSlashes(pathPrefix)
+    return `/${normalized}`
+  }
+  return ``
+}
+
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)
 
@@ -72,7 +82,7 @@ exports.onPreInit = (_, pluginOptions) => {
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan, basePath },
+  { reporter, parentSpan, basePath, store },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -82,8 +92,16 @@ exports.onPostBootstrap = async (
   activity.start()
 
   const cache = new Map()
+  const { pathPrefix } = store?.getState()?.config || {}
+  const publicPath = getPublicPath({ pathPrefix, prefixPaths: true })
 
-  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
+  await makeManifest({
+    cache,
+    reporter,
+    pluginOptions: manifest,
+    basePath,
+    publicPath,
+  })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
@@ -109,6 +127,7 @@ exports.onPostBootstrap = async (
           },
           shouldLocalize: true,
           basePath,
+          publicPath,
         })
       })
     )
@@ -136,6 +155,7 @@ const makeManifest = async ({
   pluginOptions,
   shouldLocalize = false,
   basePath = ``,
+  publicPath = ``,
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
@@ -255,15 +275,20 @@ const makeManifest = async ({
   }
 
   // Fix #18497 by prefixing paths
+  // Fix #25207: Use publicPath which includes both assetPrefix and pathPrefix
   manifest.icons = manifest.icons.map(icon => {
     return {
       ...icon,
-      src: slash(path.join(basePath, icon.src)),
+      src: slash(path.join(publicPath, basePath, icon.src)),
     }
   })
 
   if (manifest.start_url) {
-    manifest.start_url = path.posix.join(basePath, manifest.start_url)
+    manifest.start_url = path.posix.join(
+      publicPath,
+      basePath,
+      manifest.start_url
+    )
   }
 
   // Write manifest
