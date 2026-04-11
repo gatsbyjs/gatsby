@@ -82,15 +82,19 @@ exports.onPostBootstrap = async (
   activity.start()
 
   const cache = new Map()
-  // Use pathPrefix from gatsby config (store) if available, otherwise use basePath from plugin options
-  const { pathPrefix } = store?.getState()?.config || {}
-  const prefixPath = pathPrefix || basePath
+  // Use assetPrefix and pathPrefix from gatsby config
+  const { assetPrefix, pathPrefix } = store?.getState()?.config || {}
+  // Combine assetPrefix and pathPrefix: assetPrefix + pathPrefix
+  const prefixPath =
+    [assetPrefix, pathPrefix].filter(Boolean).join(``) || basePath
 
   await makeManifest({
     cache,
     reporter,
     pluginOptions: manifest,
-    basePath: prefixPath,
+    basePath: basePath,
+    assetPrefix,
+    pathPrefix,
   })
 
   if (Array.isArray(localize)) {
@@ -117,6 +121,8 @@ exports.onPostBootstrap = async (
           },
           shouldLocalize: true,
           basePath,
+          assetPrefix,
+          pathPrefix,
         })
       })
     )
@@ -144,6 +150,8 @@ const makeManifest = async ({
   pluginOptions,
   shouldLocalize = false,
   basePath = ``,
+  assetPrefix = ``,
+  pathPrefix = ``,
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
@@ -263,16 +271,23 @@ const makeManifest = async ({
   }
 
   // Fix #18497 by prefixing paths
-  // Fix #25207: Use pathPrefix from config
+  // Fix #25207: Use assetPrefix and pathPrefix from config
   manifest.icons = manifest.icons.map(icon => {
+    const iconSrc =
+      assetPrefix && pathPrefix
+        ? `${assetPrefix}${pathPrefix}/${icon.src}`
+        : slash(path.join(basePath, icon.src))
     return {
       ...icon,
-      src: slash(path.join(basePath, icon.src)),
+      src: iconSrc,
     }
   })
 
   if (manifest.start_url) {
-    manifest.start_url = path.posix.join(basePath, manifest.start_url)
+    manifest.start_url =
+      assetPrefix && pathPrefix
+        ? `${assetPrefix}${pathPrefix}${manifest.start_url}`
+        : path.posix.join(basePath, manifest.start_url)
   }
 
   // Write manifest

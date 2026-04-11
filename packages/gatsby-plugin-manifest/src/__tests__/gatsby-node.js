@@ -367,17 +367,20 @@ describe(`Test plugin manifest options`, () => {
     expect(contents).toMatchSnapshot()
   })
 
-  // Test for issue #25207 - pathPrefix from gatsby config should be used
-  it(`correctly uses pathPrefix from gatsby config`, async () => {
+  // Test for issue #25207 - assetPrefix + pathPrefix should be used
+  it(`correctly uses assetPrefix and pathPrefix from gatsby config`, async () => {
     const store = {
       getState: () => {
         return {
-          config: { pathPrefix: `/blog` },
+          config: {
+            pathPrefix: `/blog`,
+            assetPrefix: `https://cdn.example.com`,
+          },
         }
       },
     }
     await onPostBootstrap(
-      // Note: basePath is empty - pathPrefix from store should be used
+      // Note: basePath is empty - assetPrefix + pathPrefix from store should be used
       { ...apiArgs, basePath: ``, store },
       {
         name: `GatsbyJS`,
@@ -397,10 +400,12 @@ describe(`Test plugin manifest options`, () => {
     )
     const contents = fs.writeFileSync.mock.calls[0][1]
     const manifest = JSON.parse(contents)
-    // Verify icon URLs include pathPrefix from config
-    expect(manifest.icons[0].src).toBe(`/blog/icons/icon-48x48.png`)
-    // Verify start_url includes pathPrefix from config
-    expect(manifest.start_url).toBe(`/blog/`)
+    // Verify icon URLs include assetPrefix + pathPrefix
+    expect(manifest.icons[0].src).toBe(
+      `https://cdn.example.com/blog/icons/icon-48x48.png`
+    )
+    // Verify start_url includes assetPrefix + pathPrefix
+    expect(manifest.start_url).toBe(`https://cdn.example.com/blog/`)
   })
 
   it(`generates all language versions`, async () => {
