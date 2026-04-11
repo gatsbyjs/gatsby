@@ -367,8 +367,8 @@ describe(`Test plugin manifest options`, () => {
     expect(contents).toMatchSnapshot()
   })
 
-  // Test for issue #25207 - assetPrefix should be included in manifest icon URLs
-  it(`correctly includes assetPrefix and pathPrefix in manifest icon URLs`, async () => {
+  // Test for issue #25207 - pathPrefix from gatsby config should be used
+  it(`correctly uses pathPrefix from gatsby config`, async () => {
     const store = {
       getState: () => {
         return {
@@ -377,7 +377,8 @@ describe(`Test plugin manifest options`, () => {
       },
     }
     await onPostBootstrap(
-      { ...apiArgs, basePath: `/blog`, store },
+      // Note: basePath is empty - pathPrefix from store should be used
+      { ...apiArgs, basePath: ``, store },
       {
         name: `GatsbyJS`,
         short_name: `GatsbyJS`,
@@ -396,9 +397,9 @@ describe(`Test plugin manifest options`, () => {
     )
     const contents = fs.writeFileSync.mock.calls[0][1]
     const manifest = JSON.parse(contents)
-    // Verify icon URLs include pathPrefix
+    // Verify icon URLs include pathPrefix from config
     expect(manifest.icons[0].src).toBe(`/blog/icons/icon-48x48.png`)
-    // Verify start_url includes pathPrefix
+    // Verify start_url includes pathPrefix from config
     expect(manifest.start_url).toBe(`/blog/`)
   })
 
