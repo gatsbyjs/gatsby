@@ -123,7 +123,7 @@ export const findPath = rawPathname => {
     return pathCache.get(trimmedPathname)
   }
 
-  const redirect = maybeGetBrowserRedirect(rawPathname)
+  const redirect = maybeGetBrowserRedirect(trimmedPathname)
   if (redirect) {
     return findPath(redirect.toPath)
   }
