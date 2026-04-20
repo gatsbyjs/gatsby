@@ -12,7 +12,7 @@ const { createFilePath } = require(`gatsby-core-utils`)
  * @return {Object}          path
  */
 function getParsedPath(url) {
-  return path.parse(Url.parse(url).pathname)
+  return path.parse(Url.parse(url).pathname || '')
 }
 
 /**
