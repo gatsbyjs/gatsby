@@ -44,7 +44,7 @@ export function GetServerDataError({ error }) {
         )}
         <CodeFrame decoded={res.decoded} />
         <Footer id="gatsby-overlay-describedby">
-          This error occured in the getServerData function and can only be
+          This error occurred in the getServerData function and can only be
           dismissed by fixing the error or adding error handling.
         </Footer>
       </Body>
