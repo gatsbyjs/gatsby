@@ -20,7 +20,7 @@ describe(`onRenderBody`, () => {
     return api
   }
 
-  after all(() => {
+  afterAll(() => {
     delete process.env.BUILD_STAGE
   })
 

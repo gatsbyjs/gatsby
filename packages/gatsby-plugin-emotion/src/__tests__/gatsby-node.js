@@ -99,7 +99,7 @@ describe(`gatsby-plugin-emotion`, () => {
         process.env.NODE_ENV = `production`
       })
 
-      after all(() => {
+      afterAll(() => {
         process.env.NODE_ENV = env
       })
 

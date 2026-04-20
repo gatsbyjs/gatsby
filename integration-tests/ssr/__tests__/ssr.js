@@ -115,7 +115,7 @@ describe(`SSR`, () => {
       return path.join(__dirname, `../src/pages`, fixture)
     }
 
-    after all(() => {
+    afterAll(() => {
       for (const { fixture } of badPages) {
         const dest = getSrcLoc(fixture)
         if (fs.existsSync(dest)) {

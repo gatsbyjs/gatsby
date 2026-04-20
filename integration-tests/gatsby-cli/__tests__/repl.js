@@ -7,7 +7,7 @@ describe(`gatsby repl`, () => {
   const cwd = `gatsby-sites/gatsby-repl`
 
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
-  after all(() => GatsbyCLI.from(cwd).invoke(`clean`))
+  afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   it(`starts a gatsby site on port 8000`, async () => {
     // 1. Start the `gatsby develop` command

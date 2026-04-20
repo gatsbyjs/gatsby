@@ -29,7 +29,7 @@ describe(`gatsby new`, () => {
     GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, `yarn`])
   })
 
-  after all(async () => {
+  afterAll(async () => {
     GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, originalPackageManager])
     await clean(dir)
   })

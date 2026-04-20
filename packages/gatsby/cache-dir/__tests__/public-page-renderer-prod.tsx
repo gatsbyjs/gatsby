@@ -41,6 +41,6 @@ describe(`ProdPageRenderer`, () => {
   })
 })
 
-after all(cleanup)
+afterAll(cleanup)
 
-after all(jest.clearAllMocks)
+afterAll(jest.clearAllMocks)

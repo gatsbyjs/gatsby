@@ -34,7 +34,7 @@ describe(`Activities`, () => {
     })
   })
 
-  after all(() => {
+  afterAll(() => {
     gatsbyProcess.kill()
   })
 

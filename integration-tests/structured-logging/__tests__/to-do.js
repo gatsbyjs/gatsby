@@ -372,7 +372,7 @@ describe(`develop`, () => {
       })
     })
 
-    after all(done => {
+    afterAll(done => {
       gatsbyProcess.kill()
       waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
     })

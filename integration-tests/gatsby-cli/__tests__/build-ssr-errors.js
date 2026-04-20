@@ -7,7 +7,7 @@ describe(`gatsby build (SSR errors)`, () => {
   const cwd = `gatsby-sites/gatsby-build-ssr-errors`
 
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
-  after all(() => GatsbyCLI.from(cwd).invoke(`clean`))
+  afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
   it(`should log build errors with useful outputs`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`build`)

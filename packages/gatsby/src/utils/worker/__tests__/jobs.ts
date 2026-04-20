@@ -63,7 +63,7 @@ describe(`worker (jobs)`, () => {
     workerStateAfter = await Promise.all(worker.all.getReduxJobs())
   })
 
-  after all(async () => {
+  afterAll(async () => {
     if (worker) {
       await Promise.all(worker.end())
       worker = undefined

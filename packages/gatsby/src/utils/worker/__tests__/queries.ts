@@ -25,7 +25,7 @@ let worker: GatsbyTestWorkerPool | undefined
 // when we load config and run sourceNodes on "main process" we start file watchers
 // because of default `gatsby-plugin-page-creator` which would prevent test process from
 // exiting gracefully without forcing exit
-// to prevent that we keep track of created watchers and close them after all tests are done
+// to prevent that we keep track of created watchers and close them afterAll tests are done
 const mockWatchersToClose = new Set<ReturnType<typeof ChokidarWatchType>>()
 jest.mock(`chokidar`, () => {
   const chokidar = jest.requireActual(`chokidar`)
@@ -175,7 +175,7 @@ describe(`worker (queries)`, () => {
     await Promise.all(worker.all.buildSchema())
   })
 
-  after all(async () => {
+  afterAll(async () => {
     if (worker) {
       await Promise.all(worker.end())
       worker = undefined

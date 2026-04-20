@@ -63,7 +63,7 @@ describe(`gatsbyImageData`, () => {
       }),
     })
   })
-  after all(() => remove(cacheDir))
+  afterAll(() => remove(cacheDir))
 
   beforeEach(() => {
     dispatchers.shouldDispatchLocalImageServiceJob.mockClear()

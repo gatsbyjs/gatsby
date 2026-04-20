@@ -9,7 +9,7 @@ describe(`gatsby-plugin-catch-links`, () => {
   beforeAll(() => {
     mockedCatchLinks = jest.spyOn(catchLinks, `default`)
   })
-  after all(() => {
+  afterAll(() => {
     mockedCatchLinks.mockRestore()
   })
   it(`calls catchLinks in gatsby-browser's onClientEntry API`, () => {

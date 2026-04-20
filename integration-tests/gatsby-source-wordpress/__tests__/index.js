@@ -155,7 +155,7 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
 
   require(`../test-fns/index`)
 
-  after all(done => {
+  afterAll(done => {
     if (gatsbyDevelopProcess) {
       gatsbyDevelopProcess.kill()
     }

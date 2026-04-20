@@ -101,7 +101,7 @@ describe(`createPages service cleans up not recreated pages`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
   })
 
-  after all(() => {
+  afterAll(() => {
     Date.now = RealDateNow
     mockAPIs = {}
     emitter.off(`DELETE_PAGE`, onDeletePage)

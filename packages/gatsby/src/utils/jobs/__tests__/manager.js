@@ -410,7 +410,7 @@ describe(`Jobs manager`, () => {
       jest.runOnlyPendingTimers()
     })
 
-    after all(() => {
+    afterAll(() => {
       delete process.env.ENABLE_GATSBY_EXTERNAL_JOBS
       jest.useRealTimers()
       process.on = originalProcessOn

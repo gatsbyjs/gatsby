@@ -453,7 +453,7 @@ beforeAll(done => {
 
 const teardownFns = []
 
-after all(async () => {
+afterAll(async () => {
   Object.entries(filesToRevert).forEach(([filePath, fileContent]) => {
     fs.writeFileSync(filePath, fileContent)
   })

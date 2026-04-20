@@ -31,7 +31,7 @@ describe(`mutex`, () => {
     storage.getDatabaseDir.mockReturnValue(cachePath)
   })
 
-  after all(async () => {
+  afterAll(async () => {
     await storage.closeDatabase()
     globalThis.__GATSBY_OPEN_LMDBS.delete(storage.getDatabaseDir())
     await remove(cachePath)

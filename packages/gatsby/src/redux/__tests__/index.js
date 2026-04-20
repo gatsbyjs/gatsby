@@ -194,7 +194,7 @@ describe(`redux db`, () => {
       process.env.GATSBY_DISABLE_CACHE_PERSISTENCE = `truthy`
     })
 
-    after all(() => {
+    afterAll(() => {
       delete process.env.GATSBY_DISABLE_CACHE_PERSISTENCE
     })
     it(`shouldn't write redux cache to disk when GATSBY_DISABLE_CACHE_PERSISTENCE env var is used`, async () => {
@@ -209,7 +209,7 @@ describe(`redux db`, () => {
   })
 
   describe(`Sharding`, () => {
-    after all(() => {
+    afterAll(() => {
       v8Serialize.mockRestore()
       v8Deserialize.mockRestore()
     })

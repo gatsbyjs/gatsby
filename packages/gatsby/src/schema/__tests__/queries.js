@@ -2411,7 +2411,7 @@ describe(`Query schema`, () => {
       datastoreRunQuerySpy.mockClear()
     })
 
-    after all(() => {
+    afterAll(() => {
       datastoreRunQuerySpy.mockRestore()
     })
 

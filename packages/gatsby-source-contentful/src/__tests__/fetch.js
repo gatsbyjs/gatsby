@@ -121,7 +121,7 @@ beforeEach(() => {
   createClient.mockClear()
 })
 
-after all(() => {
+afterAll(() => {
   global.process = realProcess
 })
 

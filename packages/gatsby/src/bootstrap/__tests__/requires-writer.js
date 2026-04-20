@@ -46,7 +46,7 @@ describe(`requires-writer`, () => {
     requiresWriter.resetLastHash()
   })
 
-  after all(() => {
+  afterAll(() => {
     global.Date.now = originalDateNow
   })
 

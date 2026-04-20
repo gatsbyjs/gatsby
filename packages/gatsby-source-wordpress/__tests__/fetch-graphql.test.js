@@ -112,7 +112,7 @@ describe(`fetchGraphQL helper`, () => {
     ).toInclude(`Unable to connect to WPGraphQL.`)
   }))
 
-  after all(withGlobalStore(() => {
+  afterAll(withGlobalStore(() => {
     mock.mockRestore()
   }))
 })

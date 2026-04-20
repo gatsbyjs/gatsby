@@ -130,7 +130,7 @@ describe(`long term caching`, () => {
     await createPublic5()
   }, 1000000)
 
-  after all(async () => {
+  afterAll(async () => {
     await remove(basePath)
   })
 

@@ -862,7 +862,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Hashing and pluginOptions [#36387](https://github.com/gatsbyjs/gatsby/issues/36387) [#36395](https://github.com/gatsbyjs/gatsby/issues/36395) ([3253a38](https://github.com/gatsbyjs/gatsby/commit/3253a3860c9c74bce23c8c2fd1df651e549566b9))
 - Make runtime error overlay work in non-v8 browsers [#36365](https://github.com/gatsbyjs/gatsby/issues/36365) ([2b4ff76](https://github.com/gatsbyjs/gatsby/commit/2b4ff76976aef0eac0e042ede14cc4cff3aa1846))
-- clear and close lmdb after each test suite close [#36343](https://github.com/gatsbyjs/gatsby/issues/36343) ([f990e08](https://github.com/gatsbyjs/gatsby/commit/f990e082b0713db46c92d2ed8f70bdfb24c100f1))
+- clear and close lmdb afterEach test suite close [#36343](https://github.com/gatsbyjs/gatsby/issues/36343) ([f990e08](https://github.com/gatsbyjs/gatsby/commit/f990e082b0713db46c92d2ed8f70bdfb24c100f1))
 - e.remove() is not a function when using Gatsby Head API [#36338](https://github.com/gatsbyjs/gatsby/issues/36338) ([7fcf580](https://github.com/gatsbyjs/gatsby/commit/7fcf58069958dc3abe988ef624f04ef7a5eb2073))
 - Panic on gatsby-node.jsx/gatsby-node.tsx [#36308](https://github.com/gatsbyjs/gatsby/issues/36308) ([0ee492c](https://github.com/gatsbyjs/gatsby/commit/0ee492c8bf11917dc08b16acebe92bb752bdc3b7))
 - update dependency eslint-webpack-plugin to ^2.7.0 [#36041](https://github.com/gatsbyjs/gatsby/issues/36041) ([0d649a8](https://github.com/gatsbyjs/gatsby/commit/0d649a81c7befbd39870959166fd77d25514eef7))
@@ -2022,7 +2022,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - freeze the schema in workers [#32352](https://github.com/gatsbyjs/gatsby/issues/32352) ([8c9afc6](https://github.com/gatsbyjs/gatsby/commit/8c9afc648bda3770a06a6d5d440b15149c112bf1))
 - Pass search/hash to location after swUpdated [#32323](https://github.com/gatsbyjs/gatsby/issues/32323) ([636df42](https://github.com/gatsbyjs/gatsby/commit/636df42c8cc73c234c979aadfcd0265eb3a08174))
 - delay 'unstable_onPluginInit' lifecycle to after cache is initialized [#32307](https://github.com/gatsbyjs/gatsby/issues/32307) ([b348b7c](https://github.com/gatsbyjs/gatsby/commit/b348b7cb830be148af7d5bb9921d8e5bee3d498f))
-- Delete `.cache/worker` before each run [#32304](https://github.com/gatsbyjs/gatsby/issues/32304) ([8c9eb29](https://github.com/gatsbyjs/gatsby/commit/8c9eb292bdbb95f6bd2c60a1cc1526249366ebbe))
+- Delete `.cache/worker` beforeEach run [#32304](https://github.com/gatsbyjs/gatsby/issues/32304) ([8c9eb29](https://github.com/gatsbyjs/gatsby/commit/8c9eb292bdbb95f6bd2c60a1cc1526249366ebbe))
 - update dependency execa to v5 [#32232](https://github.com/gatsbyjs/gatsby/issues/32232) ([8a13969](https://github.com/gatsbyjs/gatsby/commit/8a1396995c02d45f00f241e22c626a20086fa955))
 - update dependency chalk to ^4.1.1 [#32250](https://github.com/gatsbyjs/gatsby/issues/32250) ([bd03035](https://github.com/gatsbyjs/gatsby/commit/bd03035b35d4e2f69e86b9ff3bbcfb8bd3eece4a))
 - update typescript [#31152](https://github.com/gatsbyjs/gatsby/issues/31152) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
@@ -9317,7 +9317,7 @@ export const pageQuery = graphql`
   scripts and styles in your html.js,
 - Validate at runtime gatsby-config.js and page objects.
 - Start of new plugin system.
-- New extension API: `onPostCreatePages` — called with pages after all pages are
+- New extension API: `onPostCreatePages` — called with pages afterAll pages are
   created. Useful for programmatically modifying pages created in plugins.
 
 ### Changed

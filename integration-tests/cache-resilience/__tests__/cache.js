@@ -109,7 +109,7 @@ beforeAll(async () => {
   selectConfiguration(1)
 })
 
-after all(() => {
+afterAll(() => {
   // go back to initial
   selectConfiguration(1)
 

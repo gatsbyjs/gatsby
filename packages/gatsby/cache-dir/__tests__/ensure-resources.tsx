@@ -20,7 +20,7 @@ jest.mock(`../loader`, () => {
   }
 })
 
-after all(cleanup)
+afterAll(cleanup)
 
 describe(`EnsureResources`, () => {
   it(`loads pages synchronously`, () => {

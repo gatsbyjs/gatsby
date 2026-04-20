@@ -30,7 +30,7 @@ describe(`gatsby-plugin-typography`, () => {
     process.env.BUILD_STAGE = `develop`
   })
 
-  after all(() => {
+  afterAll(() => {
     delete process.env.BUILD_STAGE
   })
 

@@ -111,7 +111,7 @@ const IndexPage = () => <div>Hello world!</div>
     })
   })
 
-  after all(async () => {
+  afterAll(async () => {
     fs.writeFileSync(
       path.join(`src`, `pages`, `index.js`),
       `import React from "react"
