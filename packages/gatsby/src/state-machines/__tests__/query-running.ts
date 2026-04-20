@@ -199,4 +199,33 @@ describe(`query-running state machine`, () => {
       expect.anything()
     )
   })
+
+  it(`handles errors during query extraction gracefully`, async () => {
+    const errorServices = {
+      ...services,
+      extractQueries: jest.fn(async () => {
+        throw new Error(`Schema validation error`)
+      }),
+    }
+
+    const errorMachine = queryRunningMachine.withConfig(
+      {
+        actions: queryActions,
+        services: errorServices,
+      },
+      {
+        program: {} as IProgram,
+        store,
+        reporter,
+        pendingQueryRuns: new Set([`/`]),
+      }
+    )
+
+    const service = interpret(errorMachine)
+    service.start()
+
+    await finished(service)
+
+    expect(service.state.value).toBe(`done`)
+  })
 })
