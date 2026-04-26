@@ -4,7 +4,7 @@ import type {
   types as BabelTypes,
 } from "@babel/core"
 import { hashOptions, evaluateImageAttributes } from "./babel-helpers"
-import fs from "fs-extra"
+import fs from "fs"
 import path from "path"
 import { slash } from "gatsby-core-utils"
 
@@ -69,11 +69,11 @@ export default function attrs({
         // If there's no src prop there's no point in checking if it exists
         if (!unresolvedProps.includes(`src`)) {
           try {
-            data = fs.readJSONSync(filename)
+            data = JSON.parse(fs.readFileSync(filename, `utf8`))
           } catch (e) {
             // TODO add info about minimum Gatsby version once this is merged
             const msg = stripIndent`
-            Could not read image data file "${filename}". 
+            Could not read image data file "${filename}".
             This may mean that the images in "${this.filename}" were not processed.
             Please ensure that your gatsby version is at least 2.24.78.`
             error += msg

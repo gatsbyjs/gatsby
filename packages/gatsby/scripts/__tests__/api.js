@@ -1,4 +1,4 @@
-import fs from "fs-extra"
+import fs from "fs/promises"
 import childProcess from "child_process"
 import systemPath from "path"
 
@@ -6,7 +6,7 @@ const apiPath = systemPath.join(__dirname, "../../apis.json")
 
 it("generates the expected api output", done => {
   childProcess.exec("node ../output-api-file.js", async () => {
-    const json = await fs.readJSON(apiPath)
+    const json = await fs.readFile(apiPath, `utf8`).then(JSON.parse)
 
     expect(json).toMatchInlineSnapshot(`
       Object {

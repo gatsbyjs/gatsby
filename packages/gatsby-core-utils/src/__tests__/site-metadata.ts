@@ -1,12 +1,12 @@
 import * as path from "path"
-import * as fs from "fs-extra"
+import fs from "fs/promises"
 import { addFieldToMinimalSiteMetadata } from "../site-metadata"
 
 const name = `title`
 const value = `Arrakis`
 
-jest.mock(`fs-extra`, () => {
-  const fs = jest.requireActual(`fs-extra`)
+jest.mock(`fs/promises`, () => {
+  const fs = jest.requireActual(`fs/promises`)
   return { ...fs, writeFile: jest.fn() }
 })
 

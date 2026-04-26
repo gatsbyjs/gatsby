@@ -1,5 +1,5 @@
 import path from "path"
-import fs from "fs-extra"
+import fs from "fs"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { hasFeature } from "../has-feature"
 import { ImageCDNUrlKeys } from "./utils/url-generator"

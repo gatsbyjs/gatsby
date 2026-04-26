@@ -1,5 +1,5 @@
 import path from "path"
-import { readFile, writeFile, pathExists, mkdirp } from "fs-extra"
+import { readFile, writeFile, access, mkdir } from "fs/promises"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import getSharpInstance from "gatsby-sharp"
@@ -41,7 +41,13 @@ export async function transformImage({
   const digest = createContentDigest({ url, filename, contentDigest, args })
   const cacheKey = `image-cdn:` + digest + `:transform`
   const cachedValue = (await cache.get(cacheKey)) as string | undefined
-  if (cachedValue && (await pathExists(cachedValue))) {
+  if (
+    cachedValue &&
+    (await access(cachedValue).then(
+      () => true,
+      () => false
+    ))
+  ) {
     return cachedValue
   }
 
@@ -57,7 +63,7 @@ export async function transformImage({
   })
 
   const outputPath = path.join(outputDir, filename)
-  await mkdirp(path.dirname(outputPath))
+  await mkdir(path.dirname(outputPath), { recursive: true })
 
   // if the queue already contains the url, we're going to add it to queue so, we can batch the transforms together.
   // We use setImmediate to not block the event loop so the queue can fill up.

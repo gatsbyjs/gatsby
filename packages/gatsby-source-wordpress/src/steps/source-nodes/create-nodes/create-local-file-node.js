@@ -1,4 +1,4 @@
-import fs from "fs-extra"
+import fs from "fs/promises"
 import path from "path"
 import url from "url"
 import { bold } from "chalk"
@@ -360,7 +360,7 @@ export const createLocalFileNode = async ({
   if (hardCacheMediaFiles) {
     try {
       // make sure the directory exists
-      await fs.ensureDir(path.dirname(hardCachedFilePath))
+      await fs.mkdir(path.dirname(hardCachedFilePath), { recursive: true })
       // copy our downloaded file to our existing directory
       await fs.copyFile(remoteFileNode.absolutePath, hardCachedFilePath)
     } catch (e) {

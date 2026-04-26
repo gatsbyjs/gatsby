@@ -1,6 +1,6 @@
 import path from "path"
 import url from "url"
-import { ensureDir, remove } from "fs-extra"
+import { mkdir, rm } from "fs/promises"
 import importFrom from "import-from"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { gatsbyImageResolver } from "../index"
@@ -51,7 +51,7 @@ describe(`gatsbyImageData`, () => {
   const cacheDir = path.join(__dirname, `.cache`)
 
   beforeAll(async () => {
-    await ensureDir(cacheDir)
+    await mkdir(cacheDir, { recursive: true })
 
     importFrom.mockReturnValue({
       getCache: jest.fn(() => {
@@ -63,7 +63,7 @@ describe(`gatsbyImageData`, () => {
       }),
     })
   })
-  afterAll(() => remove(cacheDir))
+  afterAll(() => rm(cacheDir, { recursive: true, force: true }))
 
   beforeEach(() => {
     dispatchers.shouldDispatchLocalImageServiceJob.mockClear()

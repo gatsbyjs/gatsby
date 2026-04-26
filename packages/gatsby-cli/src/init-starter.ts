@@ -2,7 +2,7 @@ import opn from "better-opn"
 import { execSync } from "child_process"
 import execa from "execa"
 import { sync as existsSync } from "fs-exists-cached"
-import fs from "fs-extra"
+import fs from "fs"
 import hostedGitInfo from "hosted-git-info"
 import isValid from "is-valid-path"
 import sysPath from "path"
@@ -11,7 +11,6 @@ import url from "url"
 import { updateInternalSiteMetadata } from "gatsby-core-utils"
 import report from "./reporter"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
-import reporter from "./reporter"
 
 const spawnWithArgs = (
   file: string,
@@ -66,7 +65,7 @@ const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
   }
 
   report.info(`Creating minimal .gitignore in ${rootPath}`)
-  await fs.writeFile(
+  await fs.promises.writeFile(
     sysPath.join(rootPath, `.gitignore`),
     `.cache\nnode_modules\npublic\n`
   )
@@ -89,7 +88,7 @@ const createInitialGitCommit = async (
   } catch {
     // Remove git support if initial commit fails
     report.info(`Initial git commit failed - removing git support\n`)
-    fs.removeSync(sysPath.join(rootPath, `.git`))
+    fs.rmSync(sysPath.join(rootPath, `.git`), { recursive: true, force: true })
   }
 }
 
@@ -111,10 +110,13 @@ const install = async (rootPath: string): Promise<void> => {
       }
     }
     if (getPackageManager() === `yarn` && checkForYarn()) {
-      await fs.remove(`package-lock.json`)
+      await fs.promises.rm(`package-lock.json`, {
+        recursive: true,
+        force: true,
+      })
       await spawn(`yarnpkg`)
     } else {
-      await fs.remove(`yarn.lock`)
+      await fs.promises.rm(`yarn.lock`, { recursive: true, force: true })
       await spawn(
         `npm install --loglevel error --color always --legacy-peer-deps --no-audit`
       )
@@ -133,8 +135,7 @@ const copy = async (
   rootPath: string
 ): Promise<boolean> => {
   // Chmod with 755.
-  // 493 = parseInt('755', 8)
-  await fs.ensureDir(rootPath, { mode: 493 })
+  await fs.promises.mkdir(rootPath, { recursive: true, mode: 0o755 })
 
   if (!existsSync(starterPath)) {
     throw new Error(`starter ${starterPath} doesn't exist`)
@@ -153,7 +154,10 @@ const copy = async (
 
   report.log(`Copying local starter to ${rootPath} ...`)
 
-  await fs.copy(starterPath, rootPath, { filter: ignored })
+  await fs.promises.cp(starterPath, rootPath, {
+    recursive: true,
+    filter: ignored,
+  })
 
   report.success(`Created starter directory layout`)
 
@@ -193,7 +197,10 @@ const clone = async (
 
   report.success(`Created starter directory layout`)
 
-  await fs.remove(sysPath.join(rootPath, `.git`))
+  await fs.promises.rm(sysPath.join(rootPath, `.git`), {
+    recursive: true,
+    force: true,
+  })
 
   await install(rootPath)
   const isGit = await isAlreadyGitRepository()
@@ -341,10 +348,11 @@ export async function initStarter(
 
   const sitePath = sysPath.resolve(rootPath)
 
-  const sitePackageJson = await fs
-    .readJSON(sysPath.join(sitePath, `package.json`))
+  const sitePackageJson = await fs.promises
+    .readFile(sysPath.join(sitePath, `package.json`), `utf8`)
+    .then(JSON.parse)
     .catch(() => {
-      reporter.verbose(
+      report.verbose(
         `Could not read "${sysPath.join(sitePath, `package.json`)}"`
       )
     })

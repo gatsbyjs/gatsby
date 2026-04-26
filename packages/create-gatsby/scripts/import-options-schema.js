@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 
 const path = require("path")
-const fs = require("fs-extra")
+const fs = require("fs")
 const pluginPath= process.argv[2]
-const Joi  = require("gatsby-plugin-utils")
+const Joi = require("gatsby-plugin-utils")
 async function run() {
     if(!pluginPath) {
         console.error("Please pass a path to the plugin directory")
         return
     }
-    
 
     const rootDir = path.resolve(pluginPath)
     if(!fs.existsSync(rootDir)) {
@@ -17,7 +16,7 @@ async function run() {
         return
     }
 
-    const stat = await fs.stat(rootDir)
+    const stat = await fs.promises.stat(rootDir)
 
     if(!stat.isDirectory()) {
         console.error(`The plugin path ${rootDir} is not a directory`)
@@ -59,10 +58,10 @@ async function run() {
 
     if(!pluginOptionsSchema) {
         console.error("The plugin does not include a pluginOptionsSchema")
-        return 
+        return
     }
 
-    let optionsSchema 
+    let optionsSchema
 
     try {
         const schema = pluginOptionsSchema({ Joi })
@@ -77,17 +76,15 @@ async function run() {
 
     if(!fs.existsSync(schemataPath)) {
         console.error("Could not find output file")
-        return 
+        return
     }
 
-    const json = await fs.readJSON(schemataPath) 
+    const json = await fs.promises.readFile(schemataPath, `utf8`).then(JSON.parse)
 
     json[pluginName] = optionsSchema
 
     console.log(`Writing "${pluginName} to schemataPath`)
-    await fs.writeJSON(schemataPath, json)
-
-
+    await fs.promises.writeFile(schemataPath, JSON.stringify(json))
 }
 
-run() 
+run()
