@@ -1,7 +1,7 @@
 import path from "path"
 import os from "os"
 import Cache from "../cache"
-import fs from "fs-extra"
+import fs from "fs"
 import manager from "cache-manager"
 
 const mockErrorValue = jest.fn()
@@ -22,15 +22,17 @@ jest.mock(`cache-manager`, () => {
     }),
   }
 })
-jest.mock(`fs-extra`, () => {
+jest.mock(`fs`, () => {
+  const fs = jest.requireActual(`fs`)
   return {
-    ensureDirSync: jest.fn(),
+    ...fs,
+    mkdirSync: jest.fn(),
   }
 })
 
 beforeEach(() => {
   ;(manager.caching as jest.Mock).mockReset()
-  ;(fs.ensureDirSync as jest.Mock).mockReset()
+  ;(fs.mkdirSync as jest.Mock).mockReset()
 })
 
 const getCache = (options = { name: `__test__` }): Cache =>
@@ -85,9 +87,9 @@ describe(`cache`, () => {
       const name = `__TEST_CACHE_NAME__`
       getCache({ name })
 
-      expect(fs.ensureDirSync).toHaveBeenCalledWith(
-        expect.stringContaining(name)
-      )
+      expect(fs.mkdirSync).toHaveBeenCalledWith(expect.stringContaining(name), {
+        recursive: true,
+      })
     })
 
     it(`it returns cache instance with get/set methods`, () => {
@@ -103,8 +105,9 @@ describe(`cache`, () => {
       getCache({ name })
       delete global.__GATSBY
 
-      expect(fs.ensureDirSync).toHaveBeenCalledWith(
-        path.join(os.tmpdir(), `.cache`, `caches`, name)
+      expect(fs.mkdirSync).toHaveBeenCalledWith(
+        path.join(os.tmpdir(), `.cache`, `caches`, name),
+        { recursive: true }
       )
     })
   })

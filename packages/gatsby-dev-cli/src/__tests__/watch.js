@@ -3,14 +3,18 @@ jest.mock(`chokidar`, () => {
     watch: jest.fn(),
   }
 })
-jest.mock(`fs-extra`, () => {
+jest.mock(`fs`, () => {
   return {
-    copy: jest.fn(),
+    cp: jest.fn(),
     existsSync: jest.fn(),
-    removeSync: jest.fn(),
+    rmSync: jest.fn(),
     readdirSync: jest.fn((...args) => {
-      const realFs = jest.requireActual(`fs-extra`)
+      const realFs = jest.requireActual(`fs`)
       return realFs.readdirSync(...args)
+    }),
+    readFileSync: jest.fn((...args) => {
+      const realFs = jest.requireActual(`fs`)
+      return realFs.readFileSync(...args)
     }),
   }
 })
@@ -48,13 +52,13 @@ jest.mock(
 )
 
 const chokidar = require(`chokidar`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const path = require(`path`)
 const watch = require(`../watch`)
 
 let on
 beforeEach(() => {
-  fs.copy.mockReset()
+  fs.cp.mockReset()
   fs.existsSync.mockImplementation(() => true)
   chokidar.watch.mockImplementation(() => {
     const mock = {
@@ -132,7 +136,7 @@ describe(`watching`, () => {
 
       callEventCallback(`test`)
 
-      expect(fs.copy).not.toHaveBeenCalled()
+      expect(fs.cp).not.toHaveBeenCalled()
     })
 
     it(`it doesn't copy files before ready event`, async () => {
@@ -140,7 +144,7 @@ describe(`watching`, () => {
       watch(...args)
       await callEventCallback(`add`, filePath)
 
-      expect(fs.copy).toHaveBeenCalledTimes(0)
+      expect(fs.cp).toHaveBeenCalledTimes(0)
     })
 
     it(`copies files after ready event`, async () => {
@@ -149,10 +153,11 @@ describe(`watching`, () => {
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
 
-      expect(fs.copy).toHaveBeenCalledTimes(1)
-      expect(fs.copy).toHaveBeenCalledWith(
+      expect(fs.cp).toHaveBeenCalledTimes(1)
+      expect(fs.cp).toHaveBeenCalledWith(
         filePath,
         path.join(`node_modules`, `gatsby`, `dist`, `index.js`),
+        { recursive: true },
         expect.any(Function)
       )
     })
@@ -167,10 +172,11 @@ describe(`watching`, () => {
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
 
-      expect(fs.copy).toHaveBeenCalledTimes(2)
-      expect(fs.copy).toHaveBeenLastCalledWith(
+      expect(fs.cp).toHaveBeenCalledTimes(2)
+      expect(fs.cp).toHaveBeenLastCalledWith(
         filePath,
         path.join(`.cache`, `register-service-worker.js`),
+        { recursive: true },
         expect.any(Function)
       )
     })
@@ -427,9 +433,10 @@ describe(`dependency changes`, () => {
 
   const assertCopy = packages => {
     packages.forEach(pkgName => {
-      expect(fs.copy).toBeCalledWith(
+      expect(fs.cp).toBeCalledWith(
         expect.stringContaining(path.join(`packages`, pkgName)),
         expect.stringContaining(path.join(`node_modules`, pkgName)),
+        { recursive: true },
         expect.anything()
       )
     })
@@ -741,14 +748,14 @@ describe(`dependency changes`, () => {
       let lastOp = null
       let installWasCalledAfterFsCopy = false
       installPackages.mockImplementation(() => {
-        if (lastOp === fs.copy) {
+        if (lastOp === fs.cp) {
           installWasCalledAfterFsCopy = true
         }
         lastOp = installPackages
       })
 
-      fs.copy.mockImplementation(() => {
-        lastOp = fs.copy
+      fs.cp.mockImplementation(() => {
+        lastOp = fs.cp
       })
 
       checkDepsChanges.mockImplementationOnce(mockDepsChanges([`gatsby`]))
@@ -772,21 +779,21 @@ describe(`dependency changes`, () => {
 
       expect(installWasCalledAfterFsCopy).toBe(false)
       expect(installPackages).toBeCalled()
-      expect(fs.copy).toBeCalled()
+      expect(fs.cp).toBeCalled()
     })
 
     it(`installs from npm before copying files`, async () => {
       let lastOp = null
       let installWasCalledAfterFsCopy = false
       promisifiedSpawn.mockImplementation(() => {
-        if (lastOp === fs.copy) {
+        if (lastOp === fs.cp) {
           installWasCalledAfterFsCopy = true
         }
         lastOp = promisifiedSpawn
       })
 
-      fs.copy.mockImplementation(() => {
-        lastOp = fs.copy
+      fs.cp.mockImplementation(() => {
+        lastOp = fs.cp
       })
 
       checkDepsChanges.mockImplementationOnce(() =>
@@ -815,7 +822,7 @@ describe(`dependency changes`, () => {
 
       expect(installWasCalledAfterFsCopy).toBe(false)
       expect(promisifiedSpawn).toBeCalled()
-      expect(fs.copy).toBeCalled()
+      expect(fs.cp).toBeCalled()
     })
   })
 })

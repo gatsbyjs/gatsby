@@ -1,5 +1,5 @@
 import { createMD5 } from "hash-wasm"
-import * as fs from "fs-extra"
+import fs from "fs"
 
 /**
  * Create a MD5 hash from a given filePath
