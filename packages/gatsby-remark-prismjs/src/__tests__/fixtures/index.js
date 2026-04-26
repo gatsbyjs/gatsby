@@ -1,4 +1,4 @@
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const path = require(`path`)
 const base = __dirname
 module.exports = fs.readdirSync(base).reduce((lookup, file) => {

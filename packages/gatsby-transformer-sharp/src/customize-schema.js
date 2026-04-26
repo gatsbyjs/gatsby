@@ -19,7 +19,7 @@ const {
 const { hasFeature } = require(`gatsby-plugin-utils`)
 
 const sharp = require(`./safe-sharp`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const imageSize = require(`probe-image-size`)
 const path = require(`path`)
 
@@ -554,7 +554,7 @@ const imageNodeType = ({
 
 /**
  * Keeps track of asynchronous file copy to prevent sequence errors in the
- * underlying fs-extra module during parallel copies of the same file
+ * underlying fs library during parallel copies of the same file
  */
 const inProgressCopy = new Set()
 
@@ -608,10 +608,10 @@ const createFields = ({
           // keep track of in progress copy, we should rely on `existsSync` but
           // a race condition exists between the exists check and the copy
           inProgressCopy.add(publicPath)
-          fs.copy(
+          fs.cp(
             details.absolutePath,
             publicPath,
-            { dereference: true },
+            { recursive: true, dereference: true },
             err => {
               // this is no longer in progress
               inProgressCopy.delete(publicPath)

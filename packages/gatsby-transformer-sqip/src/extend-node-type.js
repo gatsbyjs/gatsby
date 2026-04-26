@@ -1,7 +1,7 @@
 const path = require(`path`)
 
 const Debug = require(`debug`)
-const fs = require(`fs-extra`)
+const fs = require(`fs/promises`)
 const sharp = require(`sharp`)
 const md5File = require(`md5-file`)
 
@@ -45,7 +45,7 @@ module.exports = async args => {
 async function sqipSharp({ cache, getNodeAndSavePathDependency }) {
   const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`)
 
-  await fs.ensureDir(cacheDir)
+  await fs.mkdir(cacheDir, { recursive: true })
 
   return {
     sqip: {
@@ -111,7 +111,12 @@ async function sqipSharp({ cache, getNodeAndSavePathDependency }) {
 
         const job = await queueImageResizing({ file, args: sharpArgs })
 
-        if (!(await fs.exists(job.absolutePath))) {
+        if (
+          !(await fs.access(job.absolutePath``).then(
+            () => true,
+            () => false
+          ))
+        ) {
           debug(`Preparing ${file.name}`)
           await job.finishedPromise
         }
@@ -139,7 +144,7 @@ async function sqipContentful({ cache }) {
 
   const cacheDir = path.resolve(`${cache.directory}/intermediate-files/`)
 
-  await fs.ensureDir(cacheDir)
+  await fs.mkdir(cacheDir, { recursive: true })
 
   return {
     sqip: {

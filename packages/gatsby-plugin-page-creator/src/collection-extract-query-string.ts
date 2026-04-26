@@ -1,5 +1,5 @@
 import { generateQueryFromString } from "./extract-query"
-import fs from "fs-extra"
+import fs from "fs"
 import { Reporter } from "gatsby/reporter"
 import { extractModel } from "./path-utils"
 import { CODES, prefixId } from "./error-utils"

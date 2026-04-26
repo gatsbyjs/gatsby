@@ -1,5 +1,5 @@
 import { fork } from "child_process"
-import fs from "fs-extra"
+import fs from "fs"
 import os from "os"
 import path from "path"
 
@@ -311,15 +311,25 @@ export class WorkerPool<
 
       worker.on(`message`, workerProcessMessageHandler)
       worker.on(`exit`, async (code, signal) => {
-        if (await fs.pathExists(workerInFlightsDumpLocation)) {
-          const pendingMessages = await fs.readJSON(workerInFlightsDumpLocation)
+        if (
+          await fs.promises.access(workerInFlightsDumpLocation).then(
+            () => true,
+            () => false
+          )
+        ) {
+          const pendingMessages = await fs.promises
+            .readFile(workerInFlightsDumpLocation, `utf8`)
+            .then(JSON.parse)
           if (Array.isArray(pendingMessages)) {
             for (const msg of pendingMessages) {
               workerProcessMessageHandler(msg)
             }
           }
           try {
-            await fs.remove(workerInFlightsDumpLocation)
+            await fs.promises.rm(workerInFlightsDumpLocation, {
+              recursive: true,
+              force: true,
+            })
           } catch {
             // this is just cleanup, failing to delete this file
             // won't cause

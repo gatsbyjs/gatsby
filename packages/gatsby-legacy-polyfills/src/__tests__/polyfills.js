@@ -1,7 +1,7 @@
 const path = require(`path`)
 const { TraceMap } = require(`@jridgewell/trace-mapping`)
 const execa = require(`execa`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 
 jest.setTimeout(60000)
 
@@ -28,7 +28,12 @@ describe(`polyfills`, () => {
     )
   })
 
-  afterAll(() => fs.remove(path.join(packageRoot, tmpDir)))
+  afterAll(() =>
+    fs.promises.rm(path.join(packageRoot, tmpDir), {
+      recursive: true,
+      force: true,
+    })
+  )
 
   it(`has the correct polyfills`, () => {
     const polyfills = require(`../exclude`).LEGACY_POLYFILLS

@@ -4,7 +4,8 @@ import path from "path"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
 import { WorkerPool } from "gatsby-worker"
-import { ensureDir, emptyDir, existsSync, remove, readdir } from "fs-extra"
+import { mkdir, rm, readdir } from "fs/promises"
+import { existsSync } from "fs"
 import { isNearMatch } from "../is-near-match"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
@@ -137,8 +138,8 @@ export async function compileGatsbyFiles(
     )
 
     const distDir = `${siteRoot}/${COMPILED_CACHE_DIR}`
-    await ensureDir(distDir)
-    await emptyDir(distDir)
+    await rm(distDir, { recursive: true, force: true })
+    await mkdir(distDir, { recursive: true })
 
     await exponentialBackoff(retry)
 
@@ -168,7 +169,7 @@ export async function compileGatsbyFiles(
       } else {
         await exponentialBackoff(retry)
         try {
-          await remove(getCacheDir(siteRoot))
+          await rm(getCacheDir(siteRoot), { recursive: true, force: true })
         } catch {
           // in windows we might get "EBUSY" errors if LMDB failed to close, so this try/catch is
           // to prevent EBUSY errors from potentially hiding real import errors
@@ -214,7 +215,7 @@ export async function compileGatsbyFiles(
         }
 
         try {
-          await remove(getCacheDir(siteRoot))
+          await rm(getCacheDir(siteRoot), { recursive: true, force: true })
         } catch {
           // in windows we might get "EBUSY" errors if LMDB failed to close, so this try/catch is
           // to prevent EBUSY errors from potentially hiding real import errors
