@@ -31,7 +31,7 @@
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.17.0-next.0",
-    "hosted-git-info": "^3.0.8",
+    "hosted-git-info": "^9.0.3",
     "is-valid-path": "^0.1.1",
     "joi": "^17.9.2",
     "lodash": "^4.17.21",
