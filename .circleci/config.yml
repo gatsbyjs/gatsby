@@ -37,15 +37,32 @@ executors:
       VERBOSE: 1
 
 aliases:
+  setup_pnpm: &setup_pnpm
+    run:
+      name: Set up pnpm
+      command: |
+        mkdir -p "$HOME/.local/bin" "$HOME/.local/share/pnpm"
+        corepack enable --install-directory "$HOME/.local/bin"
+        echo 'export PNPM_HOME="$HOME/.local/share/pnpm"' >> "$BASH_ENV"
+        echo 'export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"' >> "$BASH_ENV"
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"
+
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
-      command: yarn
-
-  check_lockfile: &check_lockfile
-    run:
-      name: Check for dirty lockfile
-      command: ./scripts/check-lockfile.sh || exit 1
+      command: |
+        # CircleCI images already ship a root-owned /usr/local/bin/pnpm.
+        # Install Corepack shims into a user-writable directory instead of
+        # trying to replace the system binary, and define PNPM_HOME so
+        # follow-up global installs can add binaries to PATH.
+        mkdir -p "$HOME/.local/bin" "$HOME/.local/share/pnpm"
+        corepack enable --install-directory "$HOME/.local/bin"
+        echo 'export PNPM_HOME="$HOME/.local/share/pnpm"' >> "$BASH_ENV"
+        echo 'export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"' >> "$BASH_ENV"
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"
+        pnpm install --frozen-lockfile
 
   validate_renovate: &validate_renovate
     run:
@@ -78,13 +95,14 @@ aliases:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
+      - <<: *setup_pnpm
       - when:
           condition: << parameters.npm_rebuild >>
           steps:
             - run: npm rebuild
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
+          command: pnpm jest --ci --runInBand $(pnpm -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: "true"
@@ -102,10 +120,10 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["18.2.0", "24.11.1"]
+        node_version: ["18.12.1", "24.11.1"]
         e2e_executor_suffix: ["18", "24"]
       exclude:
-        - node_version: "18.2.0"
+        - node_version: "18.12.1"
           e2e_executor_suffix: "24"
         - node_version: "24.11.1"
           e2e_executor_suffix: "18"
@@ -120,12 +138,12 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["18.2.0", "24.11.1"]
+        node_version: ["18.12.1", "24.11.1"]
     requires:
       - bootstrap-<< matrix.node_version >>
 
 commands:
-  restore_yarn_cache:
+  restore_pnpm_cache:
     parameters:
       node_version:
         type: string
@@ -133,18 +151,19 @@ commands:
       - restore_cache:
           name: Restore node_modules cache
           keys:
-            - yarn-cypress-cache-{{ checksum "yarn.lock" }}-<< parameters.node_version >>
+            - pnpm-cache-{{ checksum "pnpm-lock.yaml" }}-<< parameters.node_version >>
 
-  persist_yarn_cache:
+  persist_pnpm_cache:
     parameters:
       node_version:
         type: string
     steps:
       - save_cache:
           name: Save node modules cache
-          key: yarn-cypress-cache-{{ checksum "yarn.lock" }}-<< parameters.node_version >>
+          key: pnpm-cache-{{ checksum "pnpm-lock.yaml" }}-<< parameters.node_version >>
           paths:
             - ~/.cache
+            - ~/.local/share/pnpm/store
 
   # Netlify adapter e2e tests require NETLIFY_AUTH_TOKEN which is unavailable
   # for PRs from forks (CircleCI withholds secrets from fork builds). Detect
@@ -194,7 +213,7 @@ commands:
         type: string
       test_command:
         type: string
-        default: "yarn test"
+        default: "pnpm test"
       react_version:
         type: string
         default: ""
@@ -207,10 +226,10 @@ commands:
     steps:
       - checkout
       # In case of failure, add these steps again. Cache probably got deleted
-      #- restore_yarn_cache:
+      #- restore_pnpm_cache:
       #    node_version: << parameters.node_version >>
       #- <<: *install_node_modules
-      #- persist_yarn_cache:
+      #- persist_pnpm_cache:
       #    node_version: << parameters.node_version >>
       - unless:
           condition: << parameters.skip_file_change_test >>
@@ -223,6 +242,7 @@ commands:
             - run: echo 'export GATSBY_SLICES="true"' >> "$BASH_ENV"
 
       - <<: *attach_to_bootstrap
+      - <<: *setup_pnpm
       - when:
           condition:
             not:
@@ -231,9 +251,6 @@ commands:
             - run:
                 name: Upgrade React to << parameters.react_version >>
                 command: "REACT_VERSION=<< parameters.react_version >> TEST_PATH=<< parameters.test_path >> node ./scripts/upgrade-react"
-      - run:
-          name: Install gatsby-dev@next
-          command: yarn global add gatsby-dev-cli@next --ignore-engines
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>" "<< parameters.pre_gatsby_dev_command >>"
@@ -250,17 +267,16 @@ jobs:
       image: << parameters.node_version >>
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|pnpm-lock.yaml"
       # python is not built in and node-gyp needs it to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y python3 python-is-python3
-      - restore_yarn_cache:
+      - restore_pnpm_cache:
           node_version: << parameters.node_version >>
       - <<: *install_node_modules
-      - <<: *check_lockfile
       - <<: *validate_renovate
-      - persist_yarn_cache:
+      - persist_pnpm_cache:
           node_version: << parameters.node_version >>
-      - run: yarn bootstrap -- concurrency=2
+      - run: pnpm bootstrap --skip-install --concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
@@ -272,30 +288,24 @@ jobs:
     executor: node
     steps:
       - checkout
-      # installation of dependencies takes a while because of the 100 packages we have inside the monorepo
-      # Linting only needs the root packages, we remove the workspace and only install root packages
-      - run:
-          name: "remove workspaces from package.json"
-          command: |
-            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
       - <<: *install_node_modules
-      - run: yarn lint:code
-      - run: yarn lint:other
+      - run: pnpm lint:code
+      - run: pnpm lint:other
 
   typecheck:
     executor: node
     steps:
       - checkout
       # We should always assert on master
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|yarn.lock"
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*|pnpm-lock.yaml"
       - <<: *attach_to_bootstrap
-      - run: yarn typecheck
-      - run: yarn check-repo-fields
+      - <<: *setup_pnpm
+      - run: pnpm typecheck
 
   unit_tests_node18:
     executor:
       name: node
-      image: "18.2.0"
+      image: "18.12.1"
     <<: *test_template
 
   unit_tests_node20:
@@ -323,9 +333,6 @@ jobs:
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
             echo nvm install v<< parameters.node_version >> >> $BASH_ENV
             echo nvm alias default v<< parameters.node_version >> >> $BASH_ENV
-      - run: |
-          node -v
-      - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
@@ -339,7 +346,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/long-term-caching
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_cache_resilience:
     parameters:
@@ -351,7 +358,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/cache-resilience
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_gatsby_pipeline:
     parameters:
@@ -363,7 +370,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_gatsby_cli:
     parameters:
@@ -375,7 +382,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_structured_logging:
     parameters:
@@ -387,7 +394,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/structured-logging
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_artifacts:
     parameters:
@@ -399,7 +406,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/artifacts
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_ssr:
     parameters:
@@ -411,7 +418,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/ssr
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_images:
     parameters:
@@ -423,7 +430,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/images
-          test_command: yarn build-and-test
+          test_command: pnpm build-and-test
       - store_artifacts:
           path: integration-tests/images/__diff_output__
 
@@ -437,7 +444,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/functions
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_head_function_export:
     parameters:
@@ -449,7 +456,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/head-function-export
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_esm_in_gatsby_files:
     parameters:
@@ -461,7 +468,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/esm-in-gatsby-files
-          test_command: yarn test
+          test_command: pnpm test
 
   integration_tests_lmdb_regeneration:
     parameters:
@@ -473,7 +480,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/lmdb-regeneration
-          test_command: yarn test
+          test_command: pnpm test
 
   e2e_tests_path-prefix:
     parameters:
@@ -625,7 +632,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: yarn test && yarn test:offline
+          test_command: pnpm test && pnpm test:offline
 
   e2e_tests_production_runtime_with_react_19:
     parameters:
@@ -637,7 +644,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: yarn test && yarn test:offline
+          test_command: pnpm test && pnpm test:offline
           react_version: "19.1.1"
 
   e2e_tests_react_19:
@@ -661,7 +668,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd development-runtime; gatsby-dev --force-install --scan-once; yarn test
+          test_command: cd development-runtime; gatsby-dev --force-install --scan-once; pnpm test
 
   themes_e2e_tests_production_runtime:
     parameters:
@@ -673,7 +680,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd production-runtime; gatsby-dev --force-install --scan-once; yarn test
+          test_command: cd production-runtime; gatsby-dev --force-install --scan-once; pnpm test
 
   e2e_tests_mdx:
     parameters:
@@ -714,7 +721,7 @@ jobs:
       # we build a second time to see if warm/cached builds are successful
       - e2e-test:
           test_path: e2e-tests/contentful
-          test_command: yarn build
+          test_command: pnpm build
       - store_artifacts:
           path: e2e-tests/contentful/__diff_output__
       - store_test_results:
@@ -761,7 +768,7 @@ jobs:
       - run: apt-get update && apt-get install -y jq
       - e2e-test:
           test_path: e2e-tests/adapters
-          test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
+          test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; pnpm test
           pre_gatsby_dev_command: ./make-monorepo.sh
       - store_test_results:
           path: e2e-tests/adapters/cypress/results
@@ -779,10 +786,10 @@ jobs:
       - checkout
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
-      - restore_yarn_cache:
-          node_version: 18.0.0
+      - restore_pnpm_cache:
+          node_version: 18.12.1
       - <<: *install_node_modules
-      - run: yarn markdown
+      - run: pnpm markdown
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
@@ -793,8 +800,8 @@ jobs:
       - checkout
       # python is not built in and node-gyp needs it to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
-      - restore_yarn_cache:
-          node_version: 18.0.0
+      - restore_pnpm_cache:
+          node_version: 18.12.1
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
@@ -809,30 +816,44 @@ jobs:
     steps:
       - checkout
       - run:
-          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|pnpm-lock.yaml"
           shell: bash.exe
       # Restoring cache takes as long as installing node modules, so skipping
       # - restore_cache:
       #     keys:
-      #       - yarn-packages-v2-{{ checksum "yarn.lock" }}-<< parameters.node_version >>
-      #       - yarn-packages-v2-<< parameters.node_version >>
+      #       - pnpm-cache-{{ checksum "pnpm-lock.yaml" }}-<< parameters.node_version >>
+      #       - pnpm-cache-<< parameters.node_version >>
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.0.0 and yarn
+          name: Install node 18.12.1 and pnpm
           command: |
-            nvm install 18.0.0
-            nvm alias default 18.0.0
-            nvm use 18.0.0
-            choco install yarn -y
+            nvm install 18.12.1
+            nvm alias default 18.12.1
+            nvm use 18.12.1
+            corepack enable
       - run:
           name: Rebuild packages for windows
           command: |
-            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
-            yarn
+            # pnpm installs sharp behind a Windows reparse point here, and
+            # PowerShell Remove-Item -Recurse can fail on that layout. Prefer
+            # cmd's rmdir for the link itself, then fall back to Remove-Item.
+            if (Test-Path "node_modules/sharp") {
+              cmd /c rmdir /s /q "node_modules\\sharp" 2>$null
+              if (Test-Path "node_modules/sharp") {
+                Remove-Item -Recurse -Force -LiteralPath "node_modules/sharp"
+              }
+            }
+            pnpm install --frozen-lockfile
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
+          command: |
+            # circleci tests split returns a single space-delimited line on
+            # Windows here, so split it ourselves and build the native command
+            # args explicitly instead of passing one giant quoted pattern.
+            $tests = (((pnpm -s jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split) -join ' ') -split '\s+' | Where-Object { $_ }
+            $jestArgs = @('exec', 'jest', '--ci', '--runInBand') + $tests
+            & pnpm $jestArgs
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
@@ -854,22 +875,31 @@ jobs:
       - check_netlify_credentials
       - checkout
       - run:
-          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|pnpm-lock.yaml"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.19.0, yarn and netlify-cli
+          name: Install node 18.19.0, pnpm and netlify-cli
           command: |
             nvm install 18.19.0
             nvm alias default 18.19.0
             nvm use 18.19.0
-            npm install -g yarn netlify-cli
+            corepack enable
+            npm install -g netlify-cli
       - run:
           name: Clear out sharp
           command: |
-            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
+            # pnpm installs sharp behind a Windows reparse point here, and
+            # PowerShell Remove-Item -Recurse can fail on that layout. Prefer
+            # cmd's rmdir for the link itself, then fall back to Remove-Item.
+            if (Test-Path "node_modules/sharp") {
+              cmd /c rmdir /s /q "node_modules\\sharp" 2>$null
+              if (Test-Path "node_modules/sharp") {
+                Remove-Item -Recurse -Force -LiteralPath "node_modules/sharp"
+              }
+            }
           shell: powershell.exe
       - run:
-          command: yarn
+          command: pnpm install --frozen-lockfile
       - run:
           command: mkdir -p /tmp/e2e-tests/
       - run:
@@ -909,22 +939,24 @@ workflows:
           name: "bootstrap-<< matrix.node_version >>"
           matrix:
             parameters:
-              node_version: ["18.2.0", "20.19", "24.11.1"]
+              # pnpm 9+ requires Node >=18.12, so keep the Node 18 lane on the
+              # first compatible patch release instead of the older 18.2 image.
+              node_version: ["18.12.1", "20.19", "24.11.1"]
       - lint
       - typecheck:
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-18.12.1
       - windows_unit_tests:
           <<: *ignore_docs
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-18.12.1
       - windows_adapters_smoke:
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-18.12.1
       - unit_tests_node18:
           <<: *ignore_docs
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-18.12.1
       - unit_tests_node20:
           <<: *ignore_docs
           requires:

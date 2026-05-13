@@ -1,5 +1,5 @@
 import preset from "../dependencies"
-import * as pathSerializer from "../utils/path-serializer"
+import * as pathSerializer from "../../test-utils/path-serializer"
 
 // @ts-ignore pathSerializer type is not available
 expect.addSnapshotSerializer(pathSerializer)

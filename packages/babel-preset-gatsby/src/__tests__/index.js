@@ -1,6 +1,6 @@
 import * as path from "path"
 import preset from "../index"
-import * as pathSerializer from "../utils/path-serializer"
+import * as pathSerializer from "../../test-utils/path-serializer"
 
 expect.addSnapshotSerializer(pathSerializer)
 

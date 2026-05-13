@@ -1,5 +1,6 @@
 *.min.js
 **/node_modules/**
+pnpm-lock.yaml
 flow-typed
 deprecated-packages
 

@@ -14,9 +14,9 @@
   "packages": ["packages/*"],
   "loglevel": "success",
   "version": "independent",
-  "npmClient": "yarn",
+  "useNx": false,
+  "npmClient": "pnpm",
   "registry": "https://registry.npmjs.org/",
-  "useWorkspaces": true,
   "ignoreChanges": [
     "CHANGELOG.md",
     "**/__tests__/**",

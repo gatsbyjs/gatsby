@@ -1,0 +1,15 @@
+packages:
+  - "packages/*"
+
+onlyBuiltDependencies:
+  - "@parcel/watcher"
+  - core-js
+  - core-js-pure
+  - cypress
+  - husky
+  - lmdb
+  - msw
+  - msgpackr-extract
+  - nx
+  - puppeteer
+  - sharp

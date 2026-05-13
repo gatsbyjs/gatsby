@@ -5,7 +5,7 @@
   "scripts": {
     "watch": "tsc-watch --outDir .",
     "build": "tsc --outDir .",
-    "prepare": "cross-env NODE_ENV=production npm run build"
+    "prepack": "cross-env NODE_ENV=production npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,9 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "gatsby-core-utils": "^4.17.0-next.0",
-    "gatsby-plugin-utils": "^4.17.0-next.0",
-    "gatsby-source-filesystem": "^5.17.0-next.0",
+    "gatsby-core-utils": "workspace:^4.17.0-next.0",
+    "gatsby-plugin-utils": "workspace:^4.17.0-next.0",
+    "gatsby-source-filesystem": "workspace:^5.17.0-next.0",
     "node-fetch": "^2.6.11",
     "sharp": "^0.32.6",
     "shift-left": "^0.1.5"
@@ -35,7 +35,7 @@
     "@types/node": "^18.17.19",
     "@types/node-fetch": "^2.6.4",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "^3.17.0-next.0",
+    "gatsby-plugin-image": "workspace:^3.17.0-next.0",
     "msw": "^1.2.2",
     "prettier": "^2.8.8",
     "prettier-check": "^2.0.0",
@@ -43,7 +43,7 @@
     "typescript": "^5.1.6"
   },
   "peerDependencies": {
-    "gatsby-plugin-image": "^3.0.0-next"
+    "gatsby-plugin-image": "workspace:^3.0.0-next"
   },
   "keywords": [
     "gatsby",
