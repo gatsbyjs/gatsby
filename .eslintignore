@@ -9,7 +9,6 @@ packages/*/scripts/**
 **/public/*
 **/__testfixtures__/**
 **/__tests__/fixtures/**
-peril
 docs
 starters
 benchmarks
