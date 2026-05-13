@@ -232,7 +232,7 @@ export function writeToCache(
   }
 
   // Note: this should be a transactional operation. So work in a tmp dir and
-  // make sure the cache cannot be left in a corruptable state due to errors.
+  // make sure the cache cannot be left in a corruptible state due to errors.
 
   const tmpDir = mkdtempSync(path.join(os.tmpdir(), `reduxcache`)) // linux / windows
 

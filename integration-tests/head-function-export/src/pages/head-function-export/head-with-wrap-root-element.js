@@ -1,6 +1,6 @@
 import * as React from "react"
 import { data } from "../../../shared-data/head-function-export"
-import { ContextA, ContextB } from "../../contexts"
+import { context, ContextB } from "../../contexts"
 
 export default function HeadWithWrapRootElement() {
   return (
@@ -21,7 +21,7 @@ export default function HeadWithWrapRootElement() {
 // wrapRootElement introduces further nesting on top of this, making it more deeply nested.
 export function Head() {
   const { base, noscript, style, link, jsonLD } = data.static
-  const contextValueA = React.useContext(ContextA)
+  const contextValueA = React.useContext(context)
   const contextValueB = React.useContext(ContextB)
 
   return (

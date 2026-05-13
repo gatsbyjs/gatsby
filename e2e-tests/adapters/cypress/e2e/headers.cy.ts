@@ -12,7 +12,7 @@ describe("Headers", () => {
     "x-frame-options": "DENY",
   }
 
-  // DRY for repeated assertions in multple tests
+  // DRY for repeated assertions in multiple tests
   const expectedHeadersByRouteAlias = {
     "@app-data": {
       ...defaultHeaders,

@@ -57,12 +57,12 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
 
 it(`should not accept any options`, async () => {
-  const expectedErrors = [`"optionA" is not allowed`]
+  const expectedErrors = [`"optional" is not allowed`]
 
   const { errors } = await testPluginOptionsSchema(
     pluginOptionsSchema,
     {
-      optionA: `This options shouldn't exist`,
+      optional: `This options shouldn't exist`,
     }
   )
 
@@ -77,12 +77,12 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
 
 it(`should not accept any options`, async () => {
-  const expectedWarnings = [`"optionA" is not allowed`]
+  const expectedWarnings = [`"optional" is not allowed`]
 
   const { warnings, isValid, hasWarnings } = await testPluginOptionsSchema(
     pluginOptionsSchema,
     {
-      optionA: `This options shouldn't exist`,
+      optional: `This options shouldn't exist`,
     }
   )
   expect(isValid).toBe(true)

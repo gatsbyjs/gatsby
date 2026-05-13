@@ -43,7 +43,7 @@ yarn bootstrap
 node packages/create-gatsby/cli.js
 ```
 
-Note that if you use the `bootstrap` script, you'll have to rebuild after each change. Alternatively, you can use the `watch` script to automatically rebuild after local changes:
+Note that if you use the `bootstrap` script, you'll have to rebuild afterEach change. Alternatively, you can use the `watch` script to automatically rebuild after local changes:
 
 ```sh
 # Move into the monorepo

@@ -2,7 +2,7 @@ const {
   data: headFunctionExportData,
 } = require(`./shared-data/head-function-export.js`)
 
-// If you change the file extension of this file, you'll also need to udpate
+// If you change the file extension of this file, you'll also need to update
 // the cypress/utils/gatsby-config.ts to point to the correct file
 
 /**

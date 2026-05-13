@@ -648,7 +648,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-plugin-manifest:** re-use domain connection ([#26946](https://github.com/gatsbyjs/gatsby/issues/26946)) ([6d0d2ef](https://github.com/gatsbyjs/gatsby/commit/6d0d2ef069977cec2b0c82bcbc1f24496c2a3d37))
+- **gatsby-plugin-manifest:** reuse domain connection ([#26946](https://github.com/gatsbyjs/gatsby/issues/26946)) ([6d0d2ef](https://github.com/gatsbyjs/gatsby/commit/6d0d2ef069977cec2b0c82bcbc1f24496c2a3d37))
 
 ## [2.4.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.30...gatsby-plugin-manifest@2.4.31) (2020-09-23)
 

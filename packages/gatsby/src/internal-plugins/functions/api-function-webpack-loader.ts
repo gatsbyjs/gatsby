@@ -33,7 +33,7 @@ const APIFunctionLoader: LoaderDefinition = async function () {
       if (matchResult) {
         req.params = matchResult.params
         if (req.params['*']) {
-          // TODO(v6): Remove this backwards compatability for v3
+          // TODO(v6): Remove this backwards compatibility for v3
           req.params['0'] = req.params['*']
         }
       }

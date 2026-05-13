@@ -15,7 +15,7 @@ This guide covers how to add local fonts to your Gatsby site.
 
 When you downloaded your font file(s), e.g. from [Inter](https://rsms.me/inter/) you will most likely have a bunch of different files available (this can differ a lot between fonts). You'll want to use the "Web" versions or [Variable Fonts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide) versions of your font. They are optimized for the usage on the web.
 
-Furthermore, in this next step you should only choose the font styles and weights you absolutely must, as it's benefitial for performance to limit the number of fonts.
+Furthermore, in this next step you should only choose the font styles and weights you absolutely must, as it's beneficial for performance to limit the number of fonts.
 
 Place your font(s) into a `static/fonts` directory. For the sake of this guide the `Inter/Inter Web/Inter-roman.var.woff2` file is used. It's a web optimized, variable, subset font file of Inter.
 

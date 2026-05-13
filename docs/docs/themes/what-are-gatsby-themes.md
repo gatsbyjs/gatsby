@@ -41,7 +41,7 @@ Themes solve the problems that traditional starters experience:
 
 **Consider building a theme if:**
 
-- You plan on re-using similar functionality across multiple Gatsby sites
+- You plan on reusing similar functionality across multiple Gatsby sites
 - You would like to share new Gatsby functionality to the community
 
 ## What's next?

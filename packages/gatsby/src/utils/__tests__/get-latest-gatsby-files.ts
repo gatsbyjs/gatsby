@@ -163,10 +163,10 @@ describe(`default behavior: has network connectivity`, () => {
       process.env.GATSBY_ADAPTERS_MANIFEST = `custom_manifest`
 
       axios.get.mockRejectedValueOnce(
-        new Error(`does not matter and should't be called`)
+        new Error(`does not matter and shouldn't be called`)
       )
       axios.get.mockRejectedValueOnce(
-        new Error(`does not matter and should't be called`)
+        new Error(`does not matter and shouldn't be called`)
       )
 
       const data = await getLatestAdapters()

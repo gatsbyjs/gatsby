@@ -57,7 +57,7 @@ const executeInstalls = async root => {
   const types = _.groupBy(installs, c => c.resource.dependencyType)
 
   // Grab the key of the first install & delete off installs these packages
-  // then run intall
+  // then run install
   // when done, check again & call executeInstalls again.
   const depType = installs[0].resource.dependencyType
   const packagesToInstall = types[depType]

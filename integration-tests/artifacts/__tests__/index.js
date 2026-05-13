@@ -387,7 +387,7 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
 
-    it(`uses correct slice when a slice is changed in createPage mappping`, () => {
+    it(`uses correct slice when a slice is changed in createPage mapping`, () => {
       expect(htmlContent).toContain(
         runNumber < 2 ? `Josh Johnson` : `Kyle Mathews`
       )

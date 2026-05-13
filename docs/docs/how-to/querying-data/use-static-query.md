@@ -39,9 +39,9 @@ export default function Header() {
 
 ### Composing custom `useStaticQuery` hooks
 
-One of the most compelling features of hooks is the ability to compose and re-use these blocks of functionality. `useStaticQuery` is a hook. Therefore, using `useStaticQuery` allows us to compose and re-use blocks of reusable functionality. Perfect!
+One of the most compelling features of hooks is the ability to compose and reuse these blocks of functionality. `useStaticQuery` is a hook. Therefore, using `useStaticQuery` allows us to compose and reuse blocks of reusable functionality. Perfect!
 
-A classic example is to create a `useSiteMetadata` hook which will provide the `siteMetadata` to be re-used in any component. It looks something like:
+A classic example is to create a `useSiteMetadata` hook which will provide the `siteMetadata` to be reused in any component. It looks something like:
 
 ```jsx:title=src/hooks/use-site-metadata.js
 import { useStaticQuery, graphql } from "gatsby"

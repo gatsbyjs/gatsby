@@ -51,11 +51,11 @@ const NODE_MANIFEST_FILE_LIMIT = getNodeManifestFileLimit()
 /**
  * Finds a final built page by nodeId or by node.slug as a fallback.
  *
- * Note that this function wont work properly in `gatsby develop`
+ * Note that this function won't work properly in `gatsby develop`
  * since develop no longer runs all page queries when creating pages.
  * We use the node id to query mapping to find the right page but
  * this mapping only exists once you've visited a page in your browser.
- * When this fn is being used for routing to previews the user wont necessarily have
+ * When this fn is being used for routing to previews the user won't necessarily have
  * visited the page in the browser yet.
  */
 async function findPageOwnedByNode({

@@ -74,7 +74,7 @@ A compiler is a program that translates code written in one language to another 
 
 ### Component
 
-Components are independent and re-usable chunks of code powered by [React](#react) that, when combined, make up your website or app.
+Components are independent and reusable chunks of code powered by [React](#react) that, when combined, make up your website or app.
 
 A component can include components within it. In fact, [pages](#page) and [templates](#template) are examples of components.
 

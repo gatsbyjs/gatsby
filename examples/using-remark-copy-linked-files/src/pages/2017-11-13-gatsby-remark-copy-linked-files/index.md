@@ -88,7 +88,7 @@ marked._</small>
 
 ### Markdown Images containing a space
 
-<!-- if the image name contains a space, markdown images wont be copied -->
+<!-- if the image name contains a space, markdown images won't be copied -->
 
 Here's a <span class="fail">Markdown image with space in filename</span>:
 

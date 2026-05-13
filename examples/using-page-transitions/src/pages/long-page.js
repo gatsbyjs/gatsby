@@ -6,7 +6,7 @@ export default () => (
   <div>
     <h1>Links at bottom of page</h1>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
@@ -19,7 +19,7 @@ export default () => (
       Ut felis.
     </p>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
@@ -32,7 +32,7 @@ export default () => (
       Ut felis.
     </p>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
@@ -45,7 +45,7 @@ export default () => (
       Ut felis.
     </p>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
@@ -58,7 +58,7 @@ export default () => (
       Ut felis.
     </p>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
@@ -71,7 +71,7 @@ export default () => (
       Ut felis.
     </p>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
@@ -84,7 +84,7 @@ export default () => (
       Ut felis.
     </p>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
@@ -97,7 +97,7 @@ export default () => (
       Ut felis.
     </p>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
@@ -110,7 +110,7 @@ export default () => (
       Ut felis.
     </p>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris
@@ -123,7 +123,7 @@ export default () => (
       Ut felis.
     </p>
     <p>
-      <strong>Pellentesque habitant morbi tristique</strong> senectus et netus
+      <strong>Pellentesque inhabitant morbi tristique</strong> senectus et netus
       et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
       vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet
       quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris

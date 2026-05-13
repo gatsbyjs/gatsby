@@ -49,7 +49,7 @@ module.exports = {
 - **typePrefix**: the prefix you want to add to your entity types (dbName by default)
 - **collection**: the collection name within Mongodb, this can also be an array
   for multiple collections
-- **query**: add a query when retriving a collection. This is a key value object where key's are collection names, and value is the query object. Defaults to {} (i.e. the whole collection)
+- **query**: add a query when retrieving a collection. This is a key value object where key's are collection names, and value is the query object. Defaults to {} (i.e. the whole collection)
 - **server**: contains the server info, with sub properties address and port ex.
   server: { address: `ds143532.mlab.com`, port: 43532 }. Defaults to a server
   running locally on the default port.

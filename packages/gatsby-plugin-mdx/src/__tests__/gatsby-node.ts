@@ -26,7 +26,7 @@ actions.createTypes = jest.fn()
 describe(`Gatsby Node API`, () => {
   it(`createSchemaCustomization`, async () => {
     if (!createSchemaCustomization) {
-      throw new Error(`createSchemaCustomization shoudl exist`)
+      throw new Error(`createSchemaCustomization should exist`)
     }
     await createSchemaCustomization(
       {

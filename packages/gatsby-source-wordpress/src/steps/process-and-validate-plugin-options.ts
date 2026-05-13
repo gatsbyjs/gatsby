@@ -28,14 +28,14 @@ const optionsProcessors: Array<IOptionsProcessor> = [
       if (usingGatsbyV4OrGreater) {
         helpers.reporter.panic(
           formatLogMessage(
-            `The type.MediaItem.lazyNodes option isn't supported in Gatsby v4+ due to query running using JS workers in PQR (Parallell Query Running). lazyNodes creates nodes in GraphQL resolvers and PQR doesn't support that.\n\nIf you would like to prevent gatsby-source-wordpress from fetching File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false.`
+            `The type.MediaItem.lazyNodes option isn't supported in Gatsby v4+ due to query running using JS workers in PQR (Parallel Query Running). lazyNodes creates nodes in GraphQL resolvers and PQR doesn't support that.\n\nIf you would like to prevent gatsby-source-wordpress from fetching File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false.`
           )
         )
       } else if (!warnedAboutMediaItemLazyNodes) {
         warnedAboutMediaItemLazyNodes = true
         helpers.reporter.warn(
           formatLogMessage(
-            `\nThe type.MediaItem.lazyNodes option wont be supported in Gatsby v4+ due to query running using JS workers in PQR (Parallell Query Running). lazyNodes creates nodes in GraphQL resolvers and PQR doesn't support that.\n\nThis option works with your current version of Gatsby but will stop working in Gatsby v4+.\n\nIf you would like to prevent gatsby-source-wordpress from fetching File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false instead.\n`
+            `\nThe type.MediaItem.lazyNodes option won't be supported in Gatsby v4+ due to query running using JS workers in PQR (Parallel Query Running). lazyNodes creates nodes in GraphQL resolvers and PQR doesn't support that.\n\nThis option works with your current version of Gatsby but will stop working in Gatsby v4+.\n\nIf you would like to prevent gatsby-source-wordpress from fetching File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false instead.\n`
           )
         )
       }

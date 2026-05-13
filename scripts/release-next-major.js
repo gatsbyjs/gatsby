@@ -4,11 +4,11 @@
  *
  * What does this file do?
  * - it checks if you have publish access
- * - it checks if we have any uncommited files -- if so, we exit
+ * - it checks if we have any uncommitted files -- if so, we exit
  * - it cleans all non git files to make sure we have clean directory
  * - run patches in patches/v5
  * - commits the patches so lerna can publish
- * - run full boostrap
+ * - run full bootstrap
  * - Publish premajor
  * - cleanup patch commit
  */
@@ -133,7 +133,7 @@ let currentGitHash = null
       }
     })
 
-    console.log(`=== COMMITING PATCH FILES ===`)
+    console.log(`=== COMMITTING PATCH FILES ===`)
     currentGitHash = execSync(`git rev-parse HEAD`)
       .toString()
       .replace(/[\r\n]/, ``)
@@ -144,7 +144,7 @@ let currentGitHash = null
     try {
       await promiseSpawn(
         `git`,
-        [`commit`, `-am`, `Comitting patch files changes`, `--no-verify`],
+        [`commit`, `-am`, `Committing patch files changes`, `--no-verify`],
         {
           cwd: path.resolve(__dirname, `../`),
           stdio: [`inherit`, `inherit`, `inherit`],
@@ -171,7 +171,7 @@ let currentGitHash = null
     try {
       await promiseSpawn(
         `git`,
-        [`commit`, `-am`, `Comitting yarn changes`, `--no-verify`],
+        [`commit`, `-am`, `Committing yarn changes`, `--no-verify`],
         {
           cwd: path.resolve(__dirname, `../`),
           stdio: [`inherit`, `inherit`, `inherit`],

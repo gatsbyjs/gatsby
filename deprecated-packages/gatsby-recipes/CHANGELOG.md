@@ -302,7 +302,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - remove trailing comments when parsing name [#28015](https://github.com/gatsbyjs/gatsby/issues/28015) ([4865ea7](https://github.com/gatsbyjs/gatsby/commit/4865ea7cb4ac721b60d52ed6bd9cd0e4dc74b387))
 - add snipcart to list of recipes ([e4aeff5](https://github.com/gatsbyjs/gatsby/commit/e4aeff59751207c04c1fe13a4fbfef2661ffedf8))
-- Fixed typo and formating in snipcart.mdx recipe file ([6ad8120](https://github.com/gatsbyjs/gatsby/commit/6ad81204bddbe3f8a9c5dc657b631aa403885903))
+- Fixed typo and formatting in snipcart.mdx recipe file ([6ad8120](https://github.com/gatsbyjs/gatsby/commit/6ad81204bddbe3f8a9c5dc657b631aa403885903))
 - Added snipcart recipe to gatsby-recipes package ([642876d](https://github.com/gatsbyjs/gatsby/commit/642876de0110c2022e3c427a22ac2ab6532f0d1c))
 
 ### [0.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.3.1/packages/gatsby-recipes) (2020-11-14)
@@ -381,7 +381,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-recipes:** renable e2e test for npm package resource & fix dev/prod resource bug ([#26699](https://github.com/gatsbyjs/gatsby/issues/26699)) ([6d963af](https://github.com/gatsbyjs/gatsby/commit/6d963af6d86cd5e9acf4db0d4be6b1ef37fb8dcf))
+- **gatsby-recipes:** re-enable e2e test for npm package resource & fix dev/prod resource bug ([#26699](https://github.com/gatsbyjs/gatsby/issues/26699)) ([6d963af](https://github.com/gatsbyjs/gatsby/commit/6d963af6d86cd5e9acf4db0d4be6b1ef37fb8dcf))
 
 ## [0.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.22...gatsby-recipes@0.2.23) (2020-09-09)
 
@@ -612,7 +612,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **recipes:** add github pages deployement with travis ([#23669](https://github.com/gatsbyjs/gatsby/issues/23669)) ([9b2a804](https://github.com/gatsbyjs/gatsby/commit/9b2a804))
+- **recipes:** add github pages deployment with travis ([#23669](https://github.com/gatsbyjs/gatsby/issues/23669)) ([9b2a804](https://github.com/gatsbyjs/gatsby/commit/9b2a804))
 - **recipes:** add gitlab-ci-cd recipe to cli list ([#24501](https://github.com/gatsbyjs/gatsby/issues/24501)) ([99da774](https://github.com/gatsbyjs/gatsby/commit/99da774))
 
 ## [0.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.38...gatsby-recipes@0.1.39) (2020-06-09)

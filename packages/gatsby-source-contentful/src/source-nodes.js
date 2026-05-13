@@ -136,7 +136,7 @@ export async function sourceNodes(
    * In some cases, especially when using rich-text fields, there can be data
    * missing from referenced entries. This breaks the reference matching.
    *
-   * To workround this, we cache the initial sync data and merge it
+   * To workaround this, we cache the initial sync data and merge it
    * with all data from subsequent syncs. Afterwards the references get
    * resolved via the Contentful JS SDK.
    */

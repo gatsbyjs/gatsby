@@ -60,13 +60,13 @@ describe(`Dev loader`, () => {
       path: `/mypage/`,
     }
 
-    // replace the real XHR object with the mock XHR object before each test
+    // replace the real XHR object with the mock XHR object beforeEach test
     beforeEach(() => {
       xhrCount = 0
       mock.setup()
     })
 
-    // put the real XHR object back and clear the mocks after each test
+    // put the real XHR object back and clear the mocks afterEach test
     afterEach(() => {
       mock.teardown()
     })

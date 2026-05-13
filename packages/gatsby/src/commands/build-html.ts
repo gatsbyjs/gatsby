@@ -756,7 +756,7 @@ export async function buildSlices({
 }): Promise<void> {
   const state = store.getState()
 
-  // for now we always render everything, everytime
+  // for now we always render everything, every time
   const slicesProps: Array<ISlicePropsEntry> = []
   for (const [
     sliceId,

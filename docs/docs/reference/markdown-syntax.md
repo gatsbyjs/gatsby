@@ -131,7 +131,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 
 - Use `>` to declare a blockquote
 - Adding multiple `>` will create nested blockquotes
-- It is recommended to place `>` before each line
+- It is recommended to place `>` beforeEach line
 - You can use other Markdown syntax inside blockquotes
 
 ```markdown

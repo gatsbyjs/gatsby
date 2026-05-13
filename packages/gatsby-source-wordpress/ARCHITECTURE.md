@@ -55,7 +55,7 @@ See `src/steps/ingest-remote-schema`.
 
 ### Good to know
 
-- As we're aware of what will be a future Gatsby node, the queries can be generated to only fetch data we wont already have. Connections from one node to other nodes only fetch the id(s).
+- As we're aware of what will be a future Gatsby node, the queries can be generated to only fetch data we won't already have. Connections from one node to other nodes only fetch the id(s).
 - When a field with a selection set is queried more than 1 time, a fragment is automatically generated for it to keep query size smaller.
 - Currently we fetch connection id's on both sides (for example `User.posts[].id` as well as `Post.author.id`) which can result in some amount of overfetching.
 - In the future we should add an API to mark some field as being able to be resolved entirely via Gatsby without fetching any data. Since we have `Post.author.id` we don't need to fetch `User.posts[].id` since we can query for all posts that have the current user node id as the author.
@@ -65,7 +65,7 @@ See `src/steps/ingest-remote-schema`.
 
 ## Schema Customization
 
-Using the same introspection query we used in query generation, we use the remote schema to generate the WP/Gatsby schema to work with the Gatsby node model and within the parameters of any related plugin options. For many different types of fields, we have a field transformer (`src/steps/create-schema-customization/transform-fields`) which transforms the remote schema introspection for those fields into type/field definitions that Gatsby's schema customization layer understands. All resolvers happen on the Gatsby side as an automatic replication of what the resolvers in WPGraphQL are doing. This is only for fields with no input arguments. We currently don't (and probably always wont) have a way to automatically carry over input arguments from WPGraphQL.
+Using the same introspection query we used in query generation, we use the remote schema to generate the WP/Gatsby schema to work with the Gatsby node model and within the parameters of any related plugin options. For many different types of fields, we have a field transformer (`src/steps/create-schema-customization/transform-fields`) which transforms the remote schema introspection for those fields into type/field definitions that Gatsby's schema customization layer understands. All resolvers happen on the Gatsby side as an automatic replication of what the resolvers in WPGraphQL are doing. This is only for fields with no input arguments. We currently don't (and probably always won't) have a way to automatically carry over input arguments from WPGraphQL.
 
 This logic runs during the Gatsby Node API `createSchemaCustomization`.
 
@@ -167,9 +167,9 @@ In this plugin we have 2 related node types for files, the `MediaItem` node type
 
 Local `File` nodes are fetched as a side effect of fetching `MediaItem` nodes via the `beforeChangeNode` plugin option. See the `WpMediaItem` default option in `src/models/gatsby-api.ts` (currently on line 218).
 
-Since we have a list of all media item's that are in use by WPGraphQL ID's, we don't need to paginate through media items to fetch them. This allows us to retry failed requests on the end of the request queue (which increases the success rate during failures vs retrying in place) and it also allows us to parellelize data and file requests at any concurrency level we want. See `src/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js`.
+Since we have a list of all media item's that are in use by WPGraphQL ID's, we don't need to paginate through media items to fetch them. This allows us to retry failed requests on the end of the request queue (which increases the success rate during failures vs retrying in place) and it also allows us to parallelize data and file requests at any concurrency level we want. See `src/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js`.
 
-In some cases it's not desireable to fetch all local `File` nodes on `MediaItem` nodes. A user might only want to fetch some or none of them so there is a `lazyNodes` option which causes `File` nodes to be fetched in GraphQL resolvers instead of during the source nodes api. See `src/models/gatsby-api.ts` (currently on line 226) and `src/steps/create-schema-customization/transform-fields/transform-object.js` (currently on line 73).
+In some cases it's not desirable to fetch all local `File` nodes on `MediaItem` nodes. A user might only want to fetch some or none of them so there is a `lazyNodes` option which causes `File` nodes to be fetched in GraphQL resolvers instead of during the source nodes api. See `src/models/gatsby-api.ts` (currently on line 226) and `src/steps/create-schema-customization/transform-fields/transform-object.js` (currently on line 73).
 
 ## HTML processing
 

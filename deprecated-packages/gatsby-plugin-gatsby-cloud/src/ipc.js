@@ -9,7 +9,7 @@ function sendOrPromise(msg) {
     reject = rej
   })
   // `process.send` can buffer messages and delay their delivery. In this case it returns false.
-  //  if process exists before all messages in the buffer are processed - remaining messages will be lost.
+  //  if process exists beforeAll messages in the buffer are processed - remaining messages will be lost.
   //
   //  The function returns sync `true` when message is handled immediately and Promise when
   //  it is buffered (this is essentially a backpressure for lots of sync calls to `process.send`).

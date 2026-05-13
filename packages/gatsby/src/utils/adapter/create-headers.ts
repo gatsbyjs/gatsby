@@ -55,7 +55,7 @@ export const createHeadersMatcher = (
   }
 
   // Sort the dynamic headers by score, moving the ones with the highest specificity to the end of the array
-  // If the score is the same, do a lexigraphic comparison of the source
+  // If the score is the same, do a lexicographic comparison of the source
   dynamicHeaders = dynamicHeaders.sort((a, b) => {
     const order = a.score - b.score
     if (order !== 0) {

@@ -108,7 +108,7 @@ Go over the content of this configuration file:
 
 - There's one more global that you need to set, but as it's a function you can't
   set it here in the JSON. The `setupFiles` array lets you list files that will be
-  included before all tests are run, so it's perfect for this.
+  included beforeAll tests are run, so it's perfect for this.
 
   ```js:title=loadershim.js
   global.___loader = {

@@ -18,7 +18,7 @@ async function onCreateNode({
 
   const code = await loadNodeContent(node)
   const options = {
-    sourceType: `unambigious`,
+    sourceType: `unambiguous`,
     allowImportExportEverywhere: true,
     plugins: [
       `jsx`,

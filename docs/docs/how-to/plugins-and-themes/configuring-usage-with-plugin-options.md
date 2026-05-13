@@ -18,13 +18,13 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-plugin-console-log`,
-      options: { optionA: true, optionB: false, message: "Hello world" },
+      options: { optional: true, optionB: false, message: "Hello world" },
     },
   ],
 }
 ```
 
-With the `optionA`, `optionB`, and `message` options passed into the plugin, the code for `gatsby-plugin-console-log` is able to access the values `true`, `false`, and `"Hello world"` by their keys.
+With the `optional`, `optionB`, and `message` options passed into the plugin, the code for `gatsby-plugin-console-log` is able to access the values `true`, `false`, and `"Hello world"` by their keys.
 
 For example, `gatsby-plugin-console-log` can access the `message` in order to log its value to the console inside of the `onPreInit` API:
 
@@ -73,7 +73,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-console-log`,
       options: {
-        optionA: true,
+        optional: true,
         message: "Hello world",
         optionB: false, // Optional.
       },
@@ -82,12 +82,12 @@ module.exports = {
 }
 ```
 
-You want users to pass in a boolean to `optionA` and a string to `message`, and they can optionally pass a boolean to `optionB`. To enforce these rules, you would create the following `pluginOptionsSchema`:
+You want users to pass in a boolean to `optional` and a string to `message`, and they can optionally pass a boolean to `optionB`. To enforce these rules, you would create the following `pluginOptionsSchema`:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
   return Joi.object({
-    optionA: Joi.boolean().required().description(`Enables optionA.`),
+    optional: Joi.boolean().required().description(`Enables optional.`),
     message: Joi.string()
       .required()
       .description(`The message logged to the console.`),
@@ -131,7 +131,7 @@ You can use the [`.default()` method](https://joi.dev/api/?v=17.3.0#anydefaultva
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
   return Joi.object({
-    optionA: Joi.boolean().required().description(`Enables optionA.`),
+    optional: Joi.boolean().required().description(`Enables optional.`),
     message: Joi.string()
       .default(`default message`) // highlight-line
       .description(`The message logged to the console.`),
@@ -175,18 +175,18 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 Sometimes you might want to provide more detailed error messages when validation fails for a specific field. Joi provides a [`.messages()` method](https://joi.dev/api/?v=17.3.0#anymessagesmessages) which lets you override error messages for specific [error types](https://joi.dev/api/?v=17.3.0#list-of-errors) (e.g. `"any.required"` when a `.required()` call fails).
 
-For example, in the `gatsby-plugin-console-log` plugin above, this is how you would provide a custom error message if users do not specify `optionA`:
+For example, in the `gatsby-plugin-console-log` plugin above, this is how you would provide a custom error message if users do not specify `optional`:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.pluginOptionsSchema = ({ Joi }) => {
   return Joi.object({
-    optionA: Joi.boolean()
+    optional: Joi.boolean()
       .required()
-      .description(`Enables optionA.`)
+      .description(`Enables optional.`)
       // highlight-start
       .messages({
         // Override the error message if the .required() call fails
-        "any.required": `"optionA" needs to be specified to true or false. Get the correct value from your dashboard settings.`,
+        "any.required": `"optional" needs to be specified to true or false. Get the correct value from your dashboard settings.`,
       }),
     // highlight-end
     message: Joi.string()
@@ -205,14 +205,14 @@ For example:
 
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
   return Joi.object({
-    optionA: Joi.boolean()
+    optional: Joi.boolean()
       .required()
-      .description(`Enables optionA.`)
+      .description(`Enables optional.`)
       // highlight-start
       .forbidden()
       .messages({
         // Override the error message if the .forbidden() call fails
-        "any.unknown": `"optionA" is no longer supported. Use "optionB" instead by setting it to the same value you had before on "optionA".`,
+        "any.unknown": `"optional" is no longer supported. Use "optionB" instead by setting it to the same value you had before on "optional".`,
       }),
       // highlight-end
     message: Joi.string()
@@ -245,12 +245,12 @@ import { pluginOptionsSchema } from "../gatsby-node"
 describe(`pluginOptionsSchema`, () => {
   it(`should invalidate incorrect options`, async () => {
     const options = {
-      optionA: undefined, // Should be a boolean
+      optional: undefined, // Should be a boolean
       message: 123, // Should be a string
       optionB: `not a boolean`, // Should be a boolean
     }
     const expectedErrors = [
-      `"optionA" is required`,
+      `"optional" is required`,
       `"message" must be a string`,
       `"optionB" must be a boolean`,
     ]
@@ -266,7 +266,7 @@ describe(`pluginOptionsSchema`, () => {
 
   it(`should validate correct options`, async () => {
     const options = {
-      optionA: false,
+      optional: false,
       message: "string",
       optionB: true,
     }

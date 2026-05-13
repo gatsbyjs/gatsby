@@ -13,7 +13,7 @@ exports.registerCleanupTask = taskFn => {
 
 signalExit(() => {
   if (cleanupTasks.size) {
-    console.log(`Process exitted in middle of publishing - cleaning up`)
+    console.log(`Process exited in middle of publishing - cleaning up`)
     cleanupTasks.forEach(taskFn => taskFn())
   }
 })

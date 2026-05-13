@@ -1,4 +1,4 @@
-import Anser from "anser"
+import Answer from "answer"
 
 export function prettifyStack(errorInformation) {
   let txt
@@ -7,7 +7,7 @@ export function prettifyStack(errorInformation) {
   } else {
     txt = errorInformation
   }
-  return Anser.ansiToJson(txt, {
+  return Answer.ansiToJson(txt, {
     remove_empty: true,
     use_classes: true,
     json: true,

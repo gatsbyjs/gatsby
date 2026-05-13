@@ -173,7 +173,7 @@ test.each([
         // to the actual location of the package (for example packages/<modulename>). In this test,
         // we need a fixture that complies with such structure. However, restoration of symlinks in
         // git repositories is unreliable on Windows. We therefore programmatically create the
-        // expeced structure here.
+        // expected structure here.
 
         if (fs.existsSync(`node_modules`)) {
           fs.rmdirSync(`node_modules`, { recursive: true })

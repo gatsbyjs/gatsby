@@ -34,8 +34,8 @@ const makeNodesUneven = () => [
       blue: 100,
     },
     anObjectArray: [
-      { aString: `some string`, aNumber: 2, aBoolean: true },
-      { aString: `some string`, aNumber: 2, anArray: [1, 2] },
+      { aString: `some string`, a number: 2, aBoolean: true },
+      { aString: `some string`, a number: 2, anArray: [1, 2] },
     ],
     boolean: true,
     nil: `not null`,
@@ -756,7 +756,7 @@ describe(`Filter fields`, () => {
             `should be able to lt anywhere in an array i=` + i.toFixed(1),
             async () => {
               // Test op on all positions in an even/uneven ordered node list. `exh` will only be 1,2,3,4 or 1,2,3
-              // This checks the ordered search, to check before, on every, between, and after each position in the list
+              // This checks the ordered search, to check before, on every, between, and afterEach position in the list
               await confirmPosition(
                 count === `even` ? makeNodesEven() : makeNodesUneven(),
                 i
@@ -849,7 +849,7 @@ describe(`Filter fields`, () => {
             `should be able to lte anywhere in an array i=` + i.toFixed(1),
             async () => {
               // Test op on all positions in an even/uneven ordered node list. `exh` will only be 1,2,3,4 or 1,2,3
-              // This checks the ordered search, to check before, on every, between, and after each position in the list
+              // This checks the ordered search, to check before, on every, between, and afterEach position in the list
               await confirmPosition(
                 count === `even` ? makeNodesEven() : makeNodesUneven(),
                 i
@@ -942,7 +942,7 @@ describe(`Filter fields`, () => {
             `should be able to gt anywhere in an array i=` + i.toFixed(1),
             async () => {
               // Test op on all positions in an even/uneven ordered node list. `exh` will only be 1,2,3,4 or 1,2,3
-              // This checks the ordered search, to check before, on every, between, and after each position in the list
+              // This checks the ordered search, to check before, on every, between, and afterEach position in the list
               await confirmPosition(
                 count === `even` ? makeNodesEven() : makeNodesUneven(),
                 i
@@ -1036,7 +1036,7 @@ describe(`Filter fields`, () => {
             `should be able to gte anywhere in an array i=` + i.toFixed(1),
             async () => {
               // Test op on all positions in an even/uneven ordered node list. `exh` will only be 1,2,3,4 or 1,2,3
-              // This checks the ordered search, to check before, on every, between, and after each position in the list
+              // This checks the ordered search, to check before, on every, between, and afterEach position in the list
               await confirmPosition(
                 count === `even` ? makeNodesEven() : makeNodesUneven(),
                 i

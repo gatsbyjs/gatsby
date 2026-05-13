@@ -10,7 +10,7 @@ const config = `config exported from a non-page template module`
 const getServerData = `getServerData exported from a non-page template module`
 const helloWorld = `hello world`
 
-describe(`modifed exports`, () => {
+describe(`modified exports`, () => {
   beforeEach(() => {
     cy.visit(`/modified-exports`).waitForRouteChange()
   })
