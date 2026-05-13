@@ -144,5 +144,130 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
         node.absolutePath
       )
     })
+
+    it(`should load frontmatter data from non-exported variable`, async () => {
+      loadNodeContent = jest.fn().mockReturnValue(`
+          const frontmatter = {
+            title: "Choropleth on d3v4",
+            written: "2017-05-04",
+            layoutType: "post",
+            path: "choropleth-on-d3v4",
+            category: "data science",
+            description: "Things about the choropleth.",
+          }
+        `)
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
+      expect(actions.createNode).toBeCalled()
+      expect(actions.createNode.mock.calls[0]).toMatchSnapshot()
+    })
+
+    it(`should not crash if frontmatter is not an object`, async () => {
+      loadNodeContent = jest.fn().mockReturnValue(`
+          const frontmatter = "not an object"
+          export const other = "stuff"
+        `)
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
+      expect(actions.createNode).not.toBeCalled()
+    })
+
+    it(`should merge frontmatter from multiple sources`, async () => {
+      loadNodeContent = jest.fn().mockReturnValue(`
+          const frontmatter = {
+            title: "Non-exported title",
+          }
+          exports.frontmatter = {
+            path: "exported-path",
+          }
+        `)
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
+      expect(actions.createNode).toBeCalled()
+      expect(actions.createNode.mock.calls[0][0].frontmatter).toEqual(
+        expect.objectContaining({
+          title: `Non-exported title`,
+          path: `exported-path`,
+        })
+      )
+    })
+
+    it(`should safely ignore spread element and extract other keys`, async () => {
+      loadNodeContent = jest.fn().mockReturnValue(`
+          const other = { a: 1 }
+          const frontmatter = {
+            title: "Spread test",
+            ...other,
+            author: "John Doe"
+          }
+        `)
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
+      expect(actions.createNode).toBeCalled()
+      expect(actions.createNode.mock.calls[0][0].frontmatter).toEqual(
+        expect.objectContaining({
+          title: `Spread test`,
+          author: `John Doe`,
+        })
+      )
+    })
+
+    it(`should support string literal keys`, async () => {
+      loadNodeContent = jest.fn().mockReturnValue(`
+          const frontmatter = {
+            "title": "Literal key",
+            'author': "Jane Doe"
+          }
+        `)
+      const shouldCreateNode = shouldOnCreateNode({ node })
+
+      if (shouldCreateNode) {
+        await onCreateNode({
+          node,
+          actions,
+          loadNodeContent,
+          createContentDigest,
+        })
+      }
+      expect(actions.createNode).toBeCalled()
+      expect(actions.createNode.mock.calls[0][0].frontmatter).toEqual(
+        expect.objectContaining({
+          title: `Literal key`,
+          author: `Jane Doe`,
+        })
+      )
+    })
   })
 })
