@@ -1,4 +1,4 @@
-import * as fs from "fs-extra"
+import fs from "fs/promises"
 import { createServiceLock, getService } from "./service-lock"
 import { readConfigFile, getConfigPath } from "./utils"
 import { lock } from "./lock"

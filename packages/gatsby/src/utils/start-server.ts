@@ -14,7 +14,7 @@ import https from "https"
 import cors from "cors"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
-import * as fs from "fs-extra"
+import fs from "fs"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
@@ -559,7 +559,7 @@ export async function startServer(
       return
     }
 
-    const sourceContent = await fs.readFile(absolutePath, `utf-8`)
+    const sourceContent = await fs.promises.readFile(absolutePath, `utf-8`)
 
     const codeFrame = codeFrameColumns(
       sourceContent,

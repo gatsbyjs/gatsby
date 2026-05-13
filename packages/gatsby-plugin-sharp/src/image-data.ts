@@ -2,7 +2,7 @@
 import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby/reporter"
-import fs from "fs-extra"
+import fs from "fs"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"

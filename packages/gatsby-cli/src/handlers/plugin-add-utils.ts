@@ -1,4 +1,4 @@
-import * as fs from "fs-extra"
+import fs from "fs/promises"
 import execa from "execa"
 import _ from "lodash"
 import {
