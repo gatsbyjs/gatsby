@@ -86,7 +86,7 @@
     "express": "^4.18.2",
     "express-http-proxy": "^1.6.3",
     "fastest-levenshtein": "^1.0.16",
-    "fastq": "^1.15.0",
+    "fastq": "^1.20.1",
     "file-loader": "^6.2.0",
     "find-cache-dir": "^3.3.2",
     "fs-exists-cached": "1.0.0",
