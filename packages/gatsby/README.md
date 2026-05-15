@@ -66,8 +66,6 @@ Gatsby helps professional developers efficiently create maintainable, highly-per
 
 - **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be hosted entirely free on [Netlify](https://www.netlify.com/) and other similar services.
 
-- **Use Gatsby's Centralized Data Layer Everywhere.** With Gatsby's [Valhalla Content Hub](https://www.gatsbyjs.com/products/valhalla-content-hub/) you can bring Gatsby's data layer to any project. Making it accessible via a unified GraphQL API for building content sites, eCommerce platforms, and both native and web applications.
-
 [**Learn how to use Gatsby for your next project.**](https://www.gatsbyjs.com/docs/)
 
 ## 🚀 Ship your first Gatsby site in 5 Minutes
