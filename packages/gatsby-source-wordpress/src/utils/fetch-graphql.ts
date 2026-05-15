@@ -73,9 +73,9 @@ const handleErrorOptions = async ({
 
   if (pluginOptions.debug.graphql.copyQueryOnError) {
     try {
-      // clipboardy is ESM-only package
-      const { default: clipboardy } = await import(`clipboardy`)
-      await clipboardy.write(query)
+      // tinyclip is ESM-only package
+      const clipboard = await import(`tinyclip`)
+      await clipboard.writeText(query)
     } catch (e) {
       // do nothing
     }
@@ -540,11 +540,9 @@ ${slackChannelSupportMessage}`
 
     if (copyHtmlResponseOnError) {
       try {
-        // clipboardy is ESM-only package
-        const { default: clipboardy } = await import(`clipboardy`)
-        if (`writeSync` in clipboardy) {
-          clipboardy.writeSync(response.data)
-        }
+        // tinyclip is ESM-only package
+        const clipboard = await import(`tinyclip`)
+        await clipboard.writeText(response.data)
       } catch (e) {
         reporter.error(
           formatLogMessage(
