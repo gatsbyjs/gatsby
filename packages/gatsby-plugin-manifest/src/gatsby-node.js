@@ -72,7 +72,7 @@ exports.onPreInit = (_, pluginOptions) => {
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan, basePath },
+  { reporter, parentSpan, pathPrefix },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -83,7 +83,7 @@ exports.onPostBootstrap = async (
 
   const cache = new Map()
 
-  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
+  await makeManifest({ cache, reporter, pluginOptions: manifest, pathPrefix })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
@@ -108,7 +108,7 @@ exports.onPostBootstrap = async (
             ...cacheModeOverride,
           },
           shouldLocalize: true,
-          basePath,
+          pathPrefix,
         })
       })
     )
@@ -123,7 +123,7 @@ exports.onPostBootstrap = async (
  * @property {Object} reporter - from gatsby-node api
  * @property {Object} pluginOptions - from gatsby-node api/gatsby config
  * @property {boolean?} shouldLocalize
- * @property {string?} basePath - string of base path frpvided by gatsby node
+ * @property {string?} pathPrefix - string of path prefix (includes assetPrefix) provided by gatsby node
  */
 
 /**
@@ -135,7 +135,7 @@ const makeManifest = async ({
   reporter,
   pluginOptions,
   shouldLocalize = false,
-  basePath = ``,
+  pathPrefix = ``,
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
@@ -254,16 +254,16 @@ const makeManifest = async ({
     }
   }
 
-  // Fix #18497 by prefixing paths
+  // Fix #18497 and #25207 by prefixing paths with pathPrefix (includes assetPrefix)
   manifest.icons = manifest.icons.map(icon => {
     return {
       ...icon,
-      src: slash(path.join(basePath, icon.src)),
+      src: slash(path.join(pathPrefix, icon.src)),
     }
   })
 
   if (manifest.start_url) {
-    manifest.start_url = path.posix.join(basePath, manifest.start_url)
+    manifest.start_url = path.posix.join(pathPrefix, manifest.start_url)
   }
 
   // Write manifest
