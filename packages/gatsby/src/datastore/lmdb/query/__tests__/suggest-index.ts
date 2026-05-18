@@ -203,7 +203,7 @@ describe(`suggestIndex`, () => {
 
         // TODO: consider sorting "eq" fields in the order they appear in "sort"
         //  The assumption here is that the same sort order may be used somewhere else,
-        //  so maybe this index can be re-used more often
+        //  so maybe this index can be reused more often
 
         expect(suggestIndex({ filter, sort })).toEqual([
           [`a`, 1],

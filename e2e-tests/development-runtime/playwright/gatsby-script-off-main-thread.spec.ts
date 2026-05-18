@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test"
 
 const id = {
-  // Acutual <Script>
+  // Actual <Script>
   three: `three`,
 
   // DOM nodes appended as a result of `<Script>` execution

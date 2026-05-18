@@ -1,6 +1,6 @@
 # Security
 
-This plugin is built with your WP site security in mind. For that reason, we've intentionally left out any authentication options. The reason is that any data fetched by Gatsby should be considered public data. Any Gatsby site may potentially have a publically queryable GraphQL server running when Gatsby is running in Preview mode (either via self-hosted Preview or on Gatsby Cloud). If we were to source data from WordPress while authenticated, all of the data we sourced would be available in Gatsby, which means it could easily be leaked to anyone who happens upon your Preview instance. For this reason, auth options have been intentionally excluded.
+This plugin is built with your WP site security in mind. For that reason, we've intentionally left out any authentication options. The reason is that any data fetched by Gatsby should be considered public data. Any Gatsby site may potentially have a publicly queryable GraphQL server running when Gatsby is running in Preview mode (either via self-hosted Preview or on Gatsby Cloud). If we were to source data from WordPress while authenticated, all of the data we sourced would be available in Gatsby, which means it could easily be leaked to anyone who happens upon your Preview instance. For this reason, auth options have been intentionally excluded.
 
 If you have a requirement where you need some private data in Gatsby, you should either
 

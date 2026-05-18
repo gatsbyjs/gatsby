@@ -233,7 +233,7 @@ export const queryExtractionBabelError = (
 }
 
 /**
- * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
+ * Set overall program status e.g. `BOOTSTRAPPING` or `BOOTSTRAP_FINISHED`.
  * @private
  */
 export const setProgramStatus = (

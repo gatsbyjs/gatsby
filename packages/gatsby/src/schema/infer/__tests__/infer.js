@@ -55,8 +55,8 @@ const makeNodes = () => [
       [5, 6, 7, 8],
     ],
     anObjectArray: [
-      { aString: `some string`, aNumber: 2, aBoolean: true },
-      { aString: `some string`, aNumber: 2, anArray: [1, 2] },
+      { aString: `some string`, a number: 2, aBoolean: true },
+      { aString: `some string`, a number: 2, anArray: [1, 2] },
       { anotherObjectArray: [{ bar: 10 }] },
     ],
     anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: `quz` }] }, null],
@@ -1322,7 +1322,7 @@ Object {
         anArray,
         aNestedArray,
         anObjectArray {
-          aNumber,
+          a number,
           aBoolean,
           anArray
           anotherObjectArray {

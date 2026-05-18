@@ -136,7 +136,7 @@ describe(`Head function export SSR'ed HTML output`, () => {
     const { title, meta } = getNodes(dom)
 
     expect(title.text).toEqual(
-      `${data.contextValues.contextA.name}(${data.contextValues.contextA.age})`
+      `${data.contextValues.context.name}(${data.contextValues.context.age})`
     )
     expect(meta.attributes.content).toEqual(
       `${data.contextValues.contextB.name}(${data.contextValues.contextB.age})`
@@ -157,7 +157,7 @@ describe(`Head function export SSR'ed HTML output`, () => {
     expect(jsonLD.text).toEqual(data.static.jsonLD)
 
     expect(title.text).toEqual(
-      `${data.contextValues.contextA.name}(${data.contextValues.contextA.age})`
+      `${data.contextValues.context.name}(${data.contextValues.context.age})`
     )
     expect(meta.attributes.content).toEqual(
       `${data.contextValues.contextB.name}(${data.contextValues.contextB.age})`

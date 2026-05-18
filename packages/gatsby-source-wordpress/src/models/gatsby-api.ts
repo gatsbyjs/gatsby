@@ -30,7 +30,7 @@ export const previewOptimizationPreset: IPluginOptionsPreset = {
       // in Gatsby v4+ we can't fetch nodes in resolvers.
       // This means if we apply the following settings in v4+
       // the site will have a lot of missing data when connection
-      // fields reference node's which werent fetched due to the limit option.
+      // fields reference node's which weren't fetched due to the limit option.
       // so only apply the following settings before Gatsby v4
       !usingGatsbyV4OrGreater
         ? {

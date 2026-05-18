@@ -70,8 +70,8 @@ describe(`focus management`, () => {
   })
 
   // TODO: un-skip this tests when this is figured out
-  // this failure doesn't seem to be reproducable locally,
-  // but it does fail consistenly in CI
+  // this failure doesn't seem to be reproducible locally,
+  // but it does fail consistently in CI
   it.skip(`Focus subrouter inside client-only page`, () => {
     cy.visit(`/client-only-paths`).waitForRouteChange()
 

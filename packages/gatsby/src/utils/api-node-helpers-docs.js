@@ -315,7 +315,7 @@ module.exports.pathPrefix = true;
 /**
  * This is the same as `pathPrefix` passed in `gatsby-config.js`.
  * It's an empty string if you don't pass `pathPrefix`.
- * When using assetPrefix, you can use this instead of pathPrefix to recieve the string you set in `gatsby-config.js`.
+ * When using assetPrefix, you can use this instead of pathPrefix to receive the string you set in `gatsby-config.js`.
  * It won't include the `assetPrefix`.
  * @type {string}
  */

@@ -86,7 +86,7 @@ module.exports = {
       resolve: `gatsby-plugin-acme`,
       options: {
         // ⚠️ Doesn't work
-        optionA: () => `foobar`,
+        optional: () => `foobar`,
         // OK
         optionB: `foobar`
       }

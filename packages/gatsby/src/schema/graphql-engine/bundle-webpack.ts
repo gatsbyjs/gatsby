@@ -89,7 +89,7 @@ function getLMDBBinaryFromSiteLocation(
   version: string,
   functionsTarget: IPlatformAndArch
 ): string | undefined {
-  // Read lmdb's package.json, go through its optional depedencies and validate if there's a prebuilt lmdb module with a compatible binary to our platform and arch
+  // Read lmdb's package.json, go through its optional dependencies and validate if there's a prebuilt lmdb module with a compatible binary to our platform and arch
   let packageJson: PackageJson
   try {
     const modulePath = path

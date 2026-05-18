@@ -621,7 +621,7 @@ function getRoutesManifest(): {
         return order
       }
 
-      // if specificity is the same we do lexigraphic comparison of path to ensure
+      // if specificity is the same we do lexicographic comparison of path to ensure
       // deterministic order regardless of order pages where created
       return a.path.localeCompare(b.path)
     })

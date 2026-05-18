@@ -80,7 +80,7 @@ export class WebsocketManager {
           )
 
           if (page) {
-            // when it's SSR we don't want to return the page path but the actualy url used,
+            // when it's SSR we don't want to return the page path but the actually url used,
             // this is necessary when matchPaths are used.
             if (getPageMode(page) === `SSR`) {
               activePagePath = newActivePath

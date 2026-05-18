@@ -32,7 +32,7 @@ export function headExportValidator(head) {
 }
 
 /**
- * Warn once for same messsage
+ * Warn once for same message
  */
 let warnOnce = _ => {}
 if (process.env.NODE_ENV !== `production`) {
@@ -106,7 +106,7 @@ export function diffNodes({ oldNodes, newNodes, onStale, onNew }) {
     }
   }
 
-  // remaing new nodes didn't have matching old node, so need to be added
+  // remaining new nodes didn't have matching old node, so need to be added
   for (const newNode of newNodes) {
     onNew(newNode)
   }
@@ -132,7 +132,7 @@ export function getValidHeadNodesAndAttributes(
     const id = node.attributes?.id?.value
 
     if (isValidNodeName(nodeName)) {
-      // <html> and <body> tags are treated differently, in that we don't render them, we only extract the attributes and apply them separetely
+      // <html> and <body> tags are treated differently, in that we don't render them, we only extract the attributes and apply them separately
       if (nodeName === `html` || nodeName === `body`) {
         for (const attribute of node.attributes) {
           if (attribute.name === HTML_BODY_ORIGINAL_TAG_ATTRIBUTE_KEY) continue

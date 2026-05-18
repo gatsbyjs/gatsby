@@ -51,10 +51,10 @@ module.exports = {
   // Force coverage collection from ignored files using an array of glob patterns
   // forceCoverageMatch: [],
 
-  // A path to a module which exports an async function that is triggered once before all test suites
+  // A path to a module which exports an async function that is triggered once beforeAll test suites
   // globalSetup: null,
 
-  // A path to a module which exports an async function that is triggered once after all test suites
+  // A path to a module which exports an async function that is triggered once afterAll test suites
   // globalTeardown: null,
 
   // A set of global variables that need to be available in all test environments
@@ -119,10 +119,10 @@ module.exports = {
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
 
-  // The paths to modules that run some code to configure or set up the testing environment before each test
+  // The paths to modules that run some code to configure or set up the testing environment beforeEach test
   // setupFiles: [],
 
-  // A list of paths to modules that run some code to configure or set up the testing framework before each test
+  // A list of paths to modules that run some code to configure or set up the testing framework beforeEach test
   // setupFilesAfterEnv: [],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing

@@ -3073,7 +3073,7 @@ var Shadows = (function () {
     {
       key: '_cleanup',
       value: function _cleanup() {
-        // remove those identifers we put on the ShadowHost to avoid using Map()
+        // remove those identifiers we put on the ShadowHost to avoid using Map()
         Object.keys(this.hosts).forEach(function (key) {
           delete this.hosts[key]._sortingId
         }, this)
@@ -3170,7 +3170,7 @@ function moveContextToBeginning(elements, context) {
 function sortElements(elements, _context) {
   if (supports$8.tabsequenceAreaAtImgPosition) {
     // Some browsers sort <area> in DOM order, some place the <area>s
-    // where the <img> referecing them would've been in DOM order.
+    // where the <img> referencing them would've been in DOM order.
     // https://github.com/medialize/ally.js/issues/5
     elements = sortArea(elements, _context)
   }

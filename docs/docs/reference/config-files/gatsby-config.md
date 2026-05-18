@@ -29,7 +29,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-name`,
       options: {
-        optionA: true,
+        optional: true,
         optionB: `Another option`,
       },
     },
@@ -116,7 +116,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-name`,
       options: {
-        optionA: true,
+        optional: true,
         optionB: `Another option`,
       },
     },
@@ -135,7 +135,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-name`,
       options: {
-        optionA: true,
+        optional: true,
         optionB: `Another option`,
       },
     },

@@ -593,7 +593,7 @@ export async function renderPartialHydrationProd({
         StaticQueryContext.Provider,
         { value: staticQueryContext },
         [
-          // Make `useLocation` hook usuable in children
+          // Make `useLocation` hook usable in children
           React.createElement(
             ServerLocation,
             { key: `partial-hydration-server-location`, url: pageData.path },

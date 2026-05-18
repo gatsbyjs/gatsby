@@ -15,9 +15,9 @@ const getDependantPackages = ({
   packagesToPublish.add(packageName)
   const dependants = depTree[packageName]
   if (dependants) {
-    dependants.forEach(dependant =>
+    dependants.forEach(dependent =>
       getDependantPackages({
-        packageName: dependant,
+        packageName: dependent,
         depTree,
         packagesToPublish,
       })

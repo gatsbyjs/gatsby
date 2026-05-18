@@ -57,7 +57,7 @@ module.exports = {
             serialize({ query: { site, pages } }) {
               return pages.nodes.map(node => {
                 return {
-                  description: `A sample page hello world suh dude`,
+                  description: `A sample page hello world such dude`,
                   date: `10-08-1990`,
                   url: `${site.siteMetadata.siteUrl}${pathPrefix}${node.path}`,
                 }

@@ -1,7 +1,7 @@
 import { IGatsbyState, IEnableStatefulSourcePluginAction } from "../types"
 
 /**
- * Flags a source plugin as being "stateful" which means it manages its own data updates and Gatsby doesn't look for "stale" nodes after each `sourceNodes` run.
+ * Flags a source plugin as being "stateful" which means it manages its own data updates and Gatsby doesn't look for "stale" nodes afterEach `sourceNodes` run.
  */
 export const statefulSourcePluginsReducer = (
   statefulSourcePlugins: IGatsbyState["statefulSourcePlugins"] = new Set(),

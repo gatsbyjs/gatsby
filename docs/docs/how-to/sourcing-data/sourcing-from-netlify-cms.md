@@ -97,7 +97,7 @@ very simple (and free) solution for this.
 This is also a good time to consider that Netlify CMS is meant to work in production, as a part of
 your static site, and that the site would ideally be running on continuous deployment (every time
 the repo changes, the website is rebuilt and redeployed automatically). When used in production,
-Netlify CMS and your Gatsby site will stay synced, since your site will be rebuilt after each
+Netlify CMS and your Gatsby site will stay synced, since your site will be rebuilt afterEach
 change, whereas running Netlify CMS locally requires you to pull changes from your remote each time
 to see them in the locally served site.
 

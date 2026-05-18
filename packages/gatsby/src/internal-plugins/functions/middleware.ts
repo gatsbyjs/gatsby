@@ -100,7 +100,7 @@ function createSetContextFunctionMiddleware({
           if (matchResult) {
             req.params = matchResult.params
             if (req.params[`*`]) {
-              // Backwards compatability for v3
+              // Backwards compatibility for v3
               // TODO remove in v5
               req.params[`0`] = req.params[`*`]
             }

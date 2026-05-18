@@ -149,7 +149,7 @@ export function headHandlerForBrowser({
 
       render(
         // just a hack to call the callback after react has done first render
-        // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
+        // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initial render into hiddenRoot) this is for hot reloading
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
           <IsHeadRenderContext.Provider value={true}>

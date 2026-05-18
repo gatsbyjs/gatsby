@@ -31,8 +31,8 @@ const data = {
     link: `/used-by-head-function-export-query.css`,
   },
   contextValues: {
-    contextA: {
-      name: "contextA",
+    context: {
+      name: "context",
       age: 1,
     },
 

@@ -39,8 +39,8 @@ function makeNodes() {
         blue: 100,
       },
       anObjectArray: [
-        { aString: `some string`, aNumber: 2, aBoolean: true },
-        { aString: `some string`, aNumber: 2, anArray: [1, 2] },
+        { aString: `some string`, a number: 2, aBoolean: true },
+        { aString: `some string`, a number: 2, anArray: [1, 2] },
       ],
       boolean: true,
     },
@@ -283,7 +283,7 @@ describe(`connection input fields`, () => {
               node {
                 anObjectArray {
                   aString
-                  aNumber
+                  a number
                   aBoolean
                 }
               }

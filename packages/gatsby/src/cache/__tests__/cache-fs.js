@@ -10,7 +10,7 @@ function countFilesInCacheDir() {
 
 describe(`DiskStore`, function () {
   let cache
-  // remove test directory before each test
+  // remove test directory beforeEach test
   beforeEach(async function () {
     return new Promise(resolve => {
       removeDir(cacheDirectory, () => {

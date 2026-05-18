@@ -279,7 +279,7 @@ export default async function staticPage({
       // the results context to pass the map of slice name to component/data/context
       if (slicesContext.renderEnvironment === `engines`) {
         // this is the same name used in the browser
-        // since this immitates behavior
+        // since this imitates behavior
         const slicesDb = new Map()
 
         for (const sliceName of Object.values(slicesMap)) {

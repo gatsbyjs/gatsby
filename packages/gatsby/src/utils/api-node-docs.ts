@@ -93,7 +93,7 @@ export const createPagesStatefully = true
  * the Gatsby bootstrap sequence. Source plugins use this hook to create nodes.
  * This API is called exactly once per plugin (and once for your site's
  * `gatsby-config.js` file). If you define this hook in `gatsby-node.js` it
- * will be called exactly once after all of your source plugins have finished
+ * will be called exactly once afterAll of your source plugins have finished
  * creating nodes.
  *
  * The [Creating a Source
@@ -432,7 +432,7 @@ export const onPluginInit = true
 export const onPreBootstrap = true
 
 /**
- * Called at the end of the bootstrap process after all other extension APIs have been called.
+ * Called at the end of the bootstrap process afterAll other extension APIs have been called.
  */
 export const onPostBootstrap = true
 
@@ -442,7 +442,7 @@ export const onPostBootstrap = true
 export const onPreBuild = true
 
 /**
- * The last extension point called after all other parts of the build process
+ * The last extension point called afterAll other parts of the build process
  * are complete.
  *
  * @example

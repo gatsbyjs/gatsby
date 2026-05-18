@@ -31,9 +31,9 @@
         "default_langcode": true,
         "revision_translation_affected": true,
         "body": {
-          "value": "Aliquam non varius libero, sit amet consequat ex",
+          "value": "Aliquam non various libero, sit amet consequat ex",
           "format": "plain_text",
-          "processed": "Aliquam non varius libero, sit amet consequat ex"
+          "processed": "Aliquam non various libero, sit amet consequat ex"
         }
       },
       "relationships": {

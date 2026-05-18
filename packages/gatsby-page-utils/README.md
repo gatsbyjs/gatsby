@@ -30,7 +30,7 @@ watchDirectory(
     }
 
     // Filter out anything matching the given ignore patterns and options
-    if (ignorePath(addedPath, "*/connexion")) {
+    if (ignorePath(addedPath, "*/connection")) {
       return
     }
 

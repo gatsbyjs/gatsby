@@ -116,7 +116,7 @@ function cleanupReferencesFromEntry(foreignReferenceMapState, entry) {
       const backLinksForLink = backLinks[link]
       if (backLinksForLink) {
         const newBackLinks = backLinksForLink.filter(({ id }) => id !== entryId)
-        if (newBackLinks.lenth > 0) {
+        if (newBackLinks.length > 0) {
           backLinks[link] = newBackLinks
         } else {
           delete backLinks[link]

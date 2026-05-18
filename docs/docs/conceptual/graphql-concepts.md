@@ -9,7 +9,7 @@ popular and powerful of these is a technology called
 GraphQL was invented at Facebook to help product engineers _pull_ needed data into
 React components.
 
-GraphQL is a **q**uery **l**anguage (the _QL_ part of its name). If you're
+GraphQL is a **q**uery **l**language (the _QL_ part of its name). If you're
 familiar with SQL, it works in a very similar way. Using a special syntax, you describe
 the data you want in your component and then that data is given
 to you.

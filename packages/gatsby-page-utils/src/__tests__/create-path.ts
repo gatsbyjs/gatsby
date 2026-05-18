@@ -12,7 +12,7 @@ describe(`create-path`, () => {
       ]
     `)
   })
-  it(`should convert windows seperator to unix seperator`, () => {
+  it(`should convert windows separator to unix separator`, () => {
     expect(createPath(`lorem\\foo\\bar`)).toEqual(`/lorem/foo/bar`)
   })
   it(`should parse index`, () => {

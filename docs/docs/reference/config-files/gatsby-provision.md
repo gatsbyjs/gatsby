@@ -11,7 +11,7 @@ This document will give an overview of the convention requirements, provide link
 
 ## Overview
 
-The goal of the `gatsby-provision` convention is to provide a standardized manner with which Gatsby sites can populate content into an accompanying data source. A typical use case would be if you're building a Gatsby Starter, or a boilerplate or template site for your own re-use.
+The goal of the `gatsby-provision` convention is to provide a standardized manner with which Gatsby sites can populate content into an accompanying data source. A typical use case would be if you're building a Gatsby Starter, or a boilerplate or template site for your own reuse.
 
 The generated content could be anything from markdown files, to creating a new database, to populating a CMS — but usually it will involve interacting with third parties which require some means of authentication.
 

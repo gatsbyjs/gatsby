@@ -4,10 +4,10 @@ import { pluginOptionsSchema } from "../gatsby-node"
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
-    const expectedErrors = [`"optionA" is not allowed`]
+    const expectedErrors = [`"optional" is not allowed`]
 
     const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      optionA: `This options shouldn't exist`,
+      optional: `This options shouldn't exist`,
     })
 
     expect(errors).toEqual(expectedErrors)

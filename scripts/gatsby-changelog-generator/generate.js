@@ -239,7 +239,7 @@ async function generateChangelog(packageName, fromVersion = null) {
 }
 
 /**
- * Completely regenerate the top part of the changelog with veresions published via the new release process.
+ * Completely regenerate the top part of the changelog with versions published via the new release process.
  *
  * Relies on presence of `<a name="before-release-process"></a>\n` separator in the CHANGELOG.md
  * document as a demarcation of parts of the document before/after the release process was introduced.

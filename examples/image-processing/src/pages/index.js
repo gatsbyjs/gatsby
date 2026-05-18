@@ -231,7 +231,7 @@ class Index extends React.Component {
           ,{` `}
           <a href="http://blog.72lions.com/blog/2015/7/7/duotone-in-js">II</a>,
           {` `}
-          <a href="https://ines.io/blog/dynamic-duotone-svg-jade">III</a>
+          <a href="https://lines.io/blog/dynamic-duotone-svg-jade">III</a>
           ), given two hex colors
           {` `}
           <code>shadow</code>

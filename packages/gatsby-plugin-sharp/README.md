@@ -227,7 +227,7 @@ allImageSharp {
 
 #### duotone
 
-Applys a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if
+Applies a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if
 given two hex colors `shadow` and `highlight` defining start and end color of
 the duotone gradient, e.g.
 
@@ -336,7 +336,7 @@ If updating these doesn't fix the issue, your project probably uses other plugin
 
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
-[3]: https://ines.io/blog/dynamic-duotone-svg-jade
+[3]: https://lines.io/blog/dynamic-duotone-svg-jade
 [4]: https://en.wikipedia.org/wiki/Relative_luminance
 [5]: https://github.com/nagelflorian/react-duotone
 [6]: http://sharp.pixelplumbing.com/en/stable/api-resize/#crop

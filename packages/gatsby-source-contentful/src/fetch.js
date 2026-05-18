@@ -8,7 +8,7 @@ import { CODES } from "./report"
 /**
  * Generate a user friendly error message.
  *
- * Contentful's API has its own error message structure, which might change depending of internal server or authentification errors.
+ * Contentful's API has its own error message structure, which might change depending of internal server or authentication errors.
  */
 const createContentfulErrorMessage = e => {
   // Handle axios error messages
@@ -301,11 +301,11 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
         ) {
           lastCurrentPageLimit = currentPageLimit
           // Reduce page limit by a arbitrary 1/3 of the current limit to ensure
-          // the new and bigger entries are synced without exceeding the reponse size limit
+          // the new and bigger entries are synced without exceeding the response size limit
           currentPageLimit = Math.floor((currentPageLimit / 3) * 2) || 1
           reporter.warn(
             [
-              `The sync with Contentful failed using pageLimit ${lastCurrentPageLimit} as the reponse size limit of the API is exceeded.`,
+              `The sync with Contentful failed using pageLimit ${lastCurrentPageLimit} as the response size limit of the API is exceeded.`,
               `Retrying sync with pageLimit of ${currentPageLimit}`,
             ].join(`\n\n`)
           )

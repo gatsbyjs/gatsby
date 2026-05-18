@@ -184,7 +184,7 @@ export function transformField({
   })
 
   if (typeIncarnationCount > 0) {
-    // this type is nested within itself atleast once
+    // this type is nested within itself at least once
     // create a fragment here that can be reused
     createFragment({
       fields: typeMap.get(typeName).fields,
@@ -220,7 +220,7 @@ export function transformField({
   }
 
   // remove fields that have required args. They'll cause query errors if omitted
-  //  and we can't determine how to use those args programatically.
+  //  and we can't determine how to use those args programmatically.
   if (
     field.args &&
     field.args.length &&

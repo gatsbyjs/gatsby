@@ -33,7 +33,7 @@ export type { IFetchRemoteFileOptions }
 export async function fetchRemoteFile(
   args: IFetchRemoteFileOptions
 ): Promise<string> {
-  // when cachekey is present we can do more persistance
+  // when cachekey is present we can do more persistence
   if (args.cacheKey) {
     const storage = getStorage(getDatabaseDir())
     const info = storage.remoteFileInfo.get(args.url)

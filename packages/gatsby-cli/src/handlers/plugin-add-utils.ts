@@ -134,7 +134,7 @@ const executeInstalls = async (root: string): Promise<void> => {
   const types = _.groupBy(installs, c => c.resource.dependencyType)
 
   // Grab the key of the first install & delete off installs these packages
-  // then run intall
+  // then run install
   // when done, check again & call executeInstalls again.
   // @ts-ignore - fix me
   const depType = installs[0].resource.dependencyType

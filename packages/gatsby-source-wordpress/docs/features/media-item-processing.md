@@ -107,7 +107,7 @@ These settings will become the default in this plugin in a future breaking chang
 ## Referencing static file public URL's
 
 If you want to use image/file url's directly instead of (or in addition) to using Gatsby Image, you can query for the `WpMediaItem.localFile.publicURL` field in GraphQL.
-However, for this field to be available you'll need to first install and configure `gatsby-source-filesystem` and point it at atleast 1 local file.
+However, for this field to be available you'll need to first install and configure `gatsby-source-filesystem` and point it at at least 1 local file.
 
 You can install it in your project with `npm install gatsby-source-filesystem` or `yarn add gatsby-source-filesystem`. Once you do that you can add it to your `gatsby-config.js` like this:
 
@@ -118,7 +118,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `assets`,
-        path: `${__dirname}/content/assets`, // this needs to include a path with atleast 1 file
+        path: `${__dirname}/content/assets`, // this needs to include a path with at least 1 file
       },
     },
   ],

@@ -208,7 +208,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
   })
 
   describe(`no types set `, () => {
-    it(`should return an object with the propety "name" equal to "propertyName"`, () => {
+    it(`should return an object with the property "name" equal to "propertyName"`, () => {
       const doclets = [{ tag: `type`, value: `propertyName` }]
       const type = undefined
 

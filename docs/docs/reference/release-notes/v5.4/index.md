@@ -36,7 +36,7 @@ A big **Thank You** to [our community who contributed][full-changelog] to this r
 - [bicstone](https://github.com/bicstone): chore(docs): fix typo in reference guide [PR #37347](https://github.com/gatsbyjs/gatsby/pull/37347)
 - [demondragong](https://github.com/demondragong): chore(gatsby-plugin-google-analytics): Fix typo in README [PR #37276](https://github.com/gatsbyjs/gatsby/pull/37276)
 - [markacola](https://github.com/markacola): chore: Update `.gitpod` to use correct Node version [PR #37336](https://github.com/gatsbyjs/gatsby/pull/37336)
-- [openscript](https://github.com/openscript): docs(how-to): remove unecessary decomposition [PR #37341](https://github.com/gatsbyjs/gatsby/pull/37341)
+- [openscript](https://github.com/openscript): docs(how-to): remove unnecessary decomposition [PR #37341](https://github.com/gatsbyjs/gatsby/pull/37341)
 - [trentschnee](https://github.com/trentschnee): chore(docs): Update Storybook instructions [PR #37321](https://github.com/gatsbyjs/gatsby/pull/37321)
 - [xavivars](https://github.com/xavivars): fix(gatsby-source-contentful): Add contentTypeFilter to Joi schema [PR #37403](https://github.com/gatsbyjs/gatsby/pull/37403)
 

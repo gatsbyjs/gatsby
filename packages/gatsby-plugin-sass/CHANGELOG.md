@@ -480,7 +480,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update minor and patch for gatsby-plugin-sass [#30074](https://github.com/gatsbyjs/gatsby/issues/30074) ([4f9a90e](https://github.com/gatsbyjs/gatsby/commit/4f9a90eab4e0eca4c04d26087be0734dea163907))
 - update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
 - Update README [#29965](https://github.com/gatsbyjs/gatsby/issues/29965) ([dfb991f](https://github.com/gatsbyjs/gatsby/commit/dfb991f6d32851356578267c9485a658fae8150a))
-- upgarde postcss & plugins [#29793](https://github.com/gatsbyjs/gatsby/issues/29793) ([95f452c](https://github.com/gatsbyjs/gatsby/commit/95f452c9300490bbf961fa65f11fdf89825acd26))
+- upgrade postcss & plugins [#29793](https://github.com/gatsbyjs/gatsby/issues/29793) ([95f452c](https://github.com/gatsbyjs/gatsby/commit/95f452c9300490bbf961fa65f11fdf89825acd26))
 
 #### Other Changes
 

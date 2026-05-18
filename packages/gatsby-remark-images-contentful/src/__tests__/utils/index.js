@@ -28,7 +28,7 @@ describe(`builds responsive sizes`, () => {
     )
   })
 
-  test(`proberly calculates responsive values`, async () => {
+  test(`properly calculates responsive values`, async () => {
     const result = await buildResponsiveSizes(
       { metadata, imageUrl, options },
       reporterMock

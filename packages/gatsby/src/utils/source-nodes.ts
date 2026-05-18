@@ -174,7 +174,7 @@ export default async ({
     warnForPluginsWithoutNodes()
 
     if (
-      // if this is the very first source and no types existed before this sourceNodes run, there's no need to check for stale nodes. They wont be stale because they were just created. Only check for stale nodes in node types that never existed before.
+      // if this is the very first source and no types existed before this sourceNodes run, there's no need to check for stale nodes. They won't be stale because they were just created. Only check for stale nodes in node types that never existed before.
       previouslyExistingNodeTypeNames.length > 0
     ) {
       await deleteStaleNodes(previouslyExistingNodeTypeNames)

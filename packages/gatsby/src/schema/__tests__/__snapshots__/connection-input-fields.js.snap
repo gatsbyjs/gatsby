@@ -10,12 +10,12 @@ Object {
             "anObjectArray": Array [
               Object {
                 "aBoolean": true,
-                "aNumber": 2,
+                "a number": 2,
                 "aString": "some string",
               },
               Object {
                 "aBoolean": null,
-                "aNumber": 2,
+                "a number": 2,
                 "aString": "some string",
               },
             ],

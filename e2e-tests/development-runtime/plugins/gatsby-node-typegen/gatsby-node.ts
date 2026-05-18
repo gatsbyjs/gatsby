@@ -1,7 +1,7 @@
 import { GatsbyNode } from "gatsby"
 
 // This isn't strictly relevant for typegen but I'm lazy...
-// By adding the schema here and re-using it inside createSchemaCustomization we can make sure that Gatsby correctly reads the pluginOptionsSchema from .ts files. If it wouldn't work the checkMePleaseKey would be undefined and the e2e test would fail
+// By adding the schema here and reusing it inside createSchemaCustomization we can make sure that Gatsby correctly reads the pluginOptionsSchema from .ts files. If it wouldn't work the checkMePleaseKey would be undefined and the e2e test would fail
 export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({ Joi }) => {
   return Joi.object({
     checkMePleaseString: Joi.string().default(`hello`)

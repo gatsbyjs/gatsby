@@ -74,7 +74,7 @@ Exact Remote Path regular expressions to use will depend on CMS you use and poss
   ```toml
   [images]
   remote_images = [
-    # <your-drupal-base-url> is speciafied in the `baseUrl` option for the
+    # <your-drupal-base-url> is specified in the `baseUrl` option for the
     # gatsby-source-drupal plugin in your gatsby-config file.
     "<your-drupal-base-url>/.*"
   ]

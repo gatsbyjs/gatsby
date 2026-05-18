@@ -242,7 +242,7 @@ const testWorkerPool = new WorkerPool<WorkerModuleType>(workerModule, {
 })
 ```
 
-This will execute additional module before allowing adding runtime support for new JavaScript syntax or support for TypeScript. Example `ts-register.js`:
+This will execute additional module beforeAllowing adding runtime support for new JavaScript syntax or support for TypeScript. Example `ts-register.js`:
 
 ```js
 // spawned process won't use jest config (or other testing framework equivalent) to support TS, so we need to add support ourselves

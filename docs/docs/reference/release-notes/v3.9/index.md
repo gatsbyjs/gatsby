@@ -64,7 +64,7 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
 - [shanekenney](https://github.com/shanekenney): fix(gatsby-source-contentful): Don't ignore errors thrown when fetching assets [PR #24288](https://github.com/gatsbyjs/gatsby/pull/24288)
 - [axe312ger](https://github.com/axe312ger)
 
-  - fix(contentful): reenable support for gif images [PR #31986](https://github.com/gatsbyjs/gatsby/pull/31986)
+  - fix(contentful): re-enable support for gif images [PR #31986](https://github.com/gatsbyjs/gatsby/pull/31986)
   - fix(gatsby-source-contentful): force base64 previews to be formatted as JPEG [PR #32155](https://github.com/gatsbyjs/gatsby/pull/32155)
 
 - [evank21](https://github.com/evank21): chore(docs): Fix typo in tutorial [PR #32050](https://github.com/gatsbyjs/gatsby/pull/32050)

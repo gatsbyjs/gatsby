@@ -114,7 +114,7 @@ const esModules = [
   `space-separated-tokens`,
   `stringify-entities`,
   `trim-lines`,
-  `trough`,
+  `through`,
   `unified`,
   `unist-builder`,
   `unist-util-generated`,

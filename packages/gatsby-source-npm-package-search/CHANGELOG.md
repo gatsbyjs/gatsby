@@ -417,7 +417,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Bug Fixes
 
-- declare mimeType so markdown trasformer children are added [#29615](https://github.com/gatsbyjs/gatsby/issues/29615) ([cbcd996](https://github.com/gatsbyjs/gatsby/commit/cbcd9962de044a746e5336dfe2db58d202950e73))
+- declare mimeType so markdown transformer children are added [#29615](https://github.com/gatsbyjs/gatsby/issues/29615) ([cbcd996](https://github.com/gatsbyjs/gatsby/commit/cbcd9962de044a746e5336dfe2db58d202950e73))
 
 ## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@2.10.0/packages/gatsby-source-npm-package-search) (2021-02-02)
 

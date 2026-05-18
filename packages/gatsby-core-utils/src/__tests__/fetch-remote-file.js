@@ -279,7 +279,7 @@ describe(`fetch-remote-file`, () => {
   const cachePath = path.join(__dirname, `.cache-fetch`, `files`)
 
   beforeAll(async () => {
-    // Establish requests interception layer before all tests.
+    // Establish requests interception layer beforeAll tests.
     server.listen()
 
     cache = await createMockCache(cachePath)
@@ -291,7 +291,7 @@ describe(`fetch-remote-file`, () => {
     await fs.remove(cacheRoot)
     delete global.__GATSBY
 
-    // Clean up after all tests are done, preventing this
+    // Clean up afterAll tests are done, preventing this
     // interception layer from affecting irrelevant tests.
     server.close()
   })

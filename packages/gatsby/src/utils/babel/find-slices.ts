@@ -19,7 +19,7 @@ function mergePreviouslyCollectedSlice(
   return {
     name: newInfo.name,
     // it's enough for one use of slice that doesn't allow empty
-    // to require passing everyhing
+    // to require passing everything
     allowEmpty:
       previousInfo?.allowEmpty === false
         ? false

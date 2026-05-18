@@ -1,5 +1,5 @@
 import * as ActionCreators from "./redux/actions"
-// TODO: This needs to be implemented when redux/acitons is converted to TS
+// TODO: This needs to be implemented when redux/actions is converted to TS
 export type CreateLogAction = any
 
 export type ErrorMeta =

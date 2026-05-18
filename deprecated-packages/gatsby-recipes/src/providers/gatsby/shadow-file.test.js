@@ -46,7 +46,7 @@ const {
 } = require(`./shadow-file.js`)
 
 describe(`shadow-file create relative path for theme file`, () => {
-  it(`should create the corect path for a non-scoped npm package`, () => {
+  it(`should create the correct path for a non-scoped npm package`, () => {
     expect(
       relativePathForShadowedFile({
         theme: `foo-theme`,
@@ -54,7 +54,7 @@ describe(`shadow-file create relative path for theme file`, () => {
       })
     ).toEqual(`src/foo-theme/foo.js`)
   })
-  it(`should create the corect path for a scoped npm package`, () => {
+  it(`should create the correct path for a scoped npm package`, () => {
     expect(
       relativePathForShadowedFile({
         theme: `@bar/foo-theme`,
@@ -66,7 +66,7 @@ describe(`shadow-file create relative path for theme file`, () => {
 
 // TODO restore e2e tests by running results through slash
 describe(`shadow-file create full path to theme file`, () => {
-  it(`should create the corect path for a non-scoped npm package`, () => {
+  it(`should create the correct path for a non-scoped npm package`, () => {
     expect(
       createPathToThemeFile({
         root: `/sup/`,
@@ -75,7 +75,7 @@ describe(`shadow-file create full path to theme file`, () => {
       })
     ).toEqual(`/sup/node_modules/foo-theme/src/foo.js`)
   })
-  it(`should create the corect path for a scoped npm package`, () => {
+  it(`should create the correct path for a scoped npm package`, () => {
     expect(
       createPathToThemeFile({
         root: `/sup/`,

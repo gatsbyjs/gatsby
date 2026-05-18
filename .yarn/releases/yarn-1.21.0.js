@@ -127290,7 +127290,7 @@ Glob.prototype.parse = function(pattern) {
 
 /**
  * Replace `a` with `b`. Also tracks the change before and
- * after each replacement. This is disabled by default, but
+ * afterEach replacement. This is disabled by default, but
  * can be enabled by setting `options.track` to true.
  *
  * Also, when the pattern is a string, `.split()` is used,

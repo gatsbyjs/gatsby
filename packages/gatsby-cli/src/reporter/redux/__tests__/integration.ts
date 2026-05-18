@@ -19,7 +19,7 @@ describe(`integration`, () => {
     internalActions = await import(`../actions`)
   })
 
-  test(`Doesn't dispatch pre-emptive SUCCESS `, async () => {
+  test(`Doesn't dispatch preemptive SUCCESS `, async () => {
     const { createPendingActivity, endActivity, startActivity } =
       internalActions
 

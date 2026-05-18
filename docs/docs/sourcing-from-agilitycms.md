@@ -223,7 +223,7 @@ export default RichTextArea
 
 ### How Page Templates Work
 
-Page Templates in Agility CMS are how developers can differentiate the styles of certain types of pages, and define where on the page that editors can add Modules (functional components of the page that editors control). Some sites may only have a single page template and this is re-used across the site, others may have other templates to allow for more flexible layouts.
+Page Templates in Agility CMS are how developers can differentiate the styles of certain types of pages, and define where on the page that editors can add Modules (functional components of the page that editors control). Some sites may only have a single page template and this is reused across the site, others may have other templates to allow for more flexible layouts.
 
 In the [agilitycms-gatsby-starter](https://github.com/agility/agilitycms-gatsby-starter) site, the Name of the Page Template is used to find a corresponding React component that matches the same name. If a match is found, that component is dynamically imported and rendered.
 

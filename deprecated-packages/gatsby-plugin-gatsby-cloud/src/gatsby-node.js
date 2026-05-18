@@ -129,7 +129,7 @@ const pluginOptionsSchema = function ({ Joi }) {
 exports.pluginOptionsSchema = pluginOptionsSchema
 
 /**
- * We emit File Nodes via IPC and we need to make sure build doesn't finish before all of
+ * We emit File Nodes via IPC and we need to make sure build doesn't finish beforeAll of
  * messages were sent.
  */
 let ensureEmittingFileNodesFinished

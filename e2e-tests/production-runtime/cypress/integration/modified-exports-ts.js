@@ -16,7 +16,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   }
 })
 
-describe(`modifed exports`, () => {
+describe(`modified exports`, () => {
   beforeEach(() => {
     cy.visit(`/modified-exports-ts`).waitForRouteChange()
   })

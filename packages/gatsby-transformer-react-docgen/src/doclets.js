@@ -88,7 +88,7 @@ export const applyPropDoclets = prop => {
   prop.doclets.forEach(({ tag, value }) => {
     // the @type doclet to provide a prop type
     // Also allows enums (oneOf) if string literals are provided
-    // ex: @type {("optionA"|"optionB")}
+    // ex: @type {("optional"|"optionB")}
     if (tag === `type`) {
       value = cleanDocletValue(value)
 

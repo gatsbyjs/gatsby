@@ -121,7 +121,7 @@ describe(`data resolution`, () => {
     expect(gatsbyResult.data.wpPost.comments.nodes.length).toBe(1)
   })
 
-  it(`resolves hierarchichal categories`, async () => {
+  it(`resolves hierarchical categories`, async () => {
     const gatsbyResult = await fetchGraphql({
       url,
       query: /* GraphQL */ `
@@ -469,7 +469,7 @@ describe(`data resolution`, () => {
     })
   })
 
-  it(`Creats a local file node for files not excluded by the "excludedByMimeTypes" option`, async () => {
+  it(`Creates a local file node for files not excluded by the "excludedByMimeTypes" option`, async () => {
     const wpPluginOpts = getPluginConfig()
     const { excludeByMimeTypes } = wpPluginOpts.options.type.MediaItem.localFile
 

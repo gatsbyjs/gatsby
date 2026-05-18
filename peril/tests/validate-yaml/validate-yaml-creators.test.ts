@@ -7,9 +7,9 @@ const mockedUtils = utils as any
 let mockedResponses: { [id: string]: any }
 const setCreatorsYmlContent = (content: string) =>
   (mockedResponses["docs/community/creators.yml"] = content)
-const setImagesFiles = (filesnames: string[]) =>
+const setImagesFiles = (filenames: string[]) =>
   (mockedResponses["docs/community/images"] = {
-    data: filesnames.map(filename => ({ name: filename })),
+    data: filenames.map(filename => ({ name: filename })),
   })
 const resetMockedResponses = () => {
   mockedResponses = {}

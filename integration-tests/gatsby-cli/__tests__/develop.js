@@ -56,7 +56,7 @@ describe(`gatsby develop`, () => {
   })
 
   it.skip(`starts a gatsby site on port 9000 with -p 9000`, () => {})
-  it.skip(`starts a gatsby site at a diffent host with -h`, () => {})
+  it.skip(`starts a gatsby site at a different host with -h`, () => {})
   it.skip(`starts a gatsby site with ssl using -S`, () => {})
   it.skip(`starts a gatsby site with cert file using -c`, () => {})
   it.skip(`starts a gatsby site with key file using -k`, () => {})

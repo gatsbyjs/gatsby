@@ -223,7 +223,7 @@ interface ISerializableObject {
 }
 
 /**
- * A props object for [slice placholder](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ * A props object for [slice placeholder](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
  */
 export interface SlicePlaceholderProps {
   alias: string
@@ -233,7 +233,7 @@ export interface SlicePlaceholderProps {
 }
 
 /**
- * Component used as a slice placholder, to mark a place in the page where a [slice](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
+ * Component used as a slice placeholder, to mark a place in the page where a [slice](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
  */
 export declare function Slice(props: SlicePlaceholderProps): JSX.Element
 
@@ -475,7 +475,7 @@ export interface GatsbyNode<
   onCreateDevServer?(
     args: CreateDevServerArgs,
     options: PluginOptions,
-    calllback: PluginCallback<void>
+    callback: PluginCallback<void>
   ): void | Promise<void>
 
   /**
@@ -554,21 +554,21 @@ export interface GatsbyNode<
     callback: PluginCallback<void>
   ): void | Promise<void>
 
-  /** Called at the end of the bootstrap process after all other extension APIs have been called. */
+  /** Called at the end of the bootstrap process afterAll other extension APIs have been called. */
   onPostBootstrap?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
   ): void | Promise<void>
 
-  /** The last extension point called after all other parts of the build process are complete. */
+  /** The last extension point called afterAll other parts of the build process are complete. */
   onPostBuild?(
     args: BuildArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
   ): void | Promise<void>
 
-  /** Called at the end of the bootstrap process after all other extension APIs have been called. If you indend to use this API in a plugin, use "onPluginInit" instead. */
+  /** Called at the end of the bootstrap process afterAll other extension APIs have been called. If you indend to use this API in a plugin, use "onPluginInit" instead. */
   onPreBootstrap?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
@@ -661,7 +661,7 @@ export interface GatsbyNode<
    * the Gatsby bootstrap sequence. Source plugins use this hook to create nodes.
    * This API is called exactly once per plugin (and once for your site's
    * `gatsby-config.js` file). If you define this hook in `gatsby-node.js` it
-   * will be called exactly once after all of your source plugins have finished
+   * will be called exactly once afterAll of your source plugins have finished
    * creating nodes.
    *
    * @see https://www.gatsbyjs.com/docs/node-apis/#sourceNodes
@@ -1159,7 +1159,7 @@ export interface NodePluginArgs {
   /**
    * This is the same as `pathPrefix` passed in `gatsby-config.js`.
    * It's an empty string if you don't pass `pathPrefix`.
-   * When using assetPrefix, you can use this instead of pathPrefix to recieve the string you set in `gatsby-config.js`.
+   * When using assetPrefix, you can use this instead of pathPrefix to receive the string you set in `gatsby-config.js`.
    * It won't include the `assetPrefix`.
    */
   basePath: string

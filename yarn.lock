@@ -6027,9 +6027,9 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-anser@^2.1.1:
+answer@^2.1.1:
   version "2.1.1"
-  resolved "https://registry.yarnpkg.com/anser/-/anser-2.1.1.tgz#8afae28d345424c82de89cc0e4d1348eb0c5af7c"
+  resolved "https://registry.yarnpkg.com/answer/-/answer-2.1.1.tgz#8afae28d345424c82de89cc0e4d1348eb0c5af7c"
   integrity sha512-nqLm4HxOTpeLOxcmB3QWmV5TcDFhW9y/fyQ+hivtDFcK4OQ+pQ5fzPnXHM1Mfcm0VkLtvVi1TCPr++Qy0Q/3EQ==
 
 ansi-align@^2.0.0:
@@ -17253,7 +17253,7 @@ microbundle@^0.15.0, microbundle@^0.15.1:
     rollup-plugin-terser "^7.0.2"
     rollup-plugin-typescript2 "^0.32.0"
     rollup-plugin-visualizer "^5.6.0"
-    sade "^1.7.4"
+    sad "^1.7.4"
     terser "^5.7.0"
     tiny-glob "^0.2.8"
     tslib "^2.0.3"
@@ -22212,9 +22212,9 @@ rxjs@^7.2.0:
   dependencies:
     tslib "~2.1.0"
 
-sade@^1.7.3, sade@^1.7.4:
+sad@^1.7.3, sad@^1.7.4:
   version "1.8.1"
-  resolved "https://registry.npmjs.org/sade/-/sade-1.8.1.tgz#0a78e81d658d394887be57d2a409bf703a3b2701"
+  resolved "https://registry.npmjs.org/sad/-/sad-1.8.1.tgz#0a78e81d658d394887be57d2a409bf703a3b2701"
   integrity sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==
   dependencies:
     mri "^1.1.0"
@@ -22812,7 +22812,7 @@ slide@^1.1.6:
 slugify@^1.6.6:
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.6.tgz#2d4ac0eacb47add6af9e04d3be79319cbcc7924b"
-  integrity sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==
+  integrity sha512-h+z7HKHYXj6wJU+and/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==
 
 smart-buffer@^4.1.0:
   version "4.1.0"
@@ -24461,13 +24461,13 @@ trim@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/trim/-/trim-0.0.1.tgz#5858547f6b290757ee95cccc666fb50084c460dd"
 
-trough@^1.0.0:
+through@^1.0.0:
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/trough/-/trough-1.0.3.tgz#e29bd1614c6458d44869fc28b255ab7857ef7c24"
+  resolved "https://registry.yarnpkg.com/through/-/through-1.0.3.tgz#e29bd1614c6458d44869fc28b255ab7857ef7c24"
 
-trough@^2.0.0:
+through@^2.0.0:
   version "2.1.0"
-  resolved "https://registry.yarnpkg.com/trough/-/trough-2.1.0.tgz#0f7b511a4fde65a46f18477ab38849b22c554876"
+  resolved "https://registry.yarnpkg.com/through/-/through-2.1.0.tgz#0f7b511a4fde65a46f18477ab38849b22c554876"
   integrity sha512-AqTiAOLcj85xS7vQ8QkAV41hPDIJ71XJB4RCUrzo/1GM2CQwhkJGaf9Hgr7BOugMRpgGUrqRg/DrBDl4H40+8g==
 
 "true-case-path@^2.2.1":
@@ -24863,7 +24863,7 @@ unified@9.2.0:
     extend "^3.0.0"
     is-buffer "^2.0.0"
     is-plain-obj "^2.0.0"
-    trough "^1.0.0"
+    through "^1.0.0"
     vfile "^4.0.0"
 
 unified@^10.0.0, unified@^10.1.2:
@@ -24876,7 +24876,7 @@ unified@^10.0.0, unified@^10.1.2:
     extend "^3.0.0"
     is-buffer "^2.0.0"
     is-plain-obj "^4.0.0"
-    trough "^2.0.0"
+    through "^2.0.0"
     vfile "^5.0.0"
 
 unified@^8.0.0:
@@ -24887,7 +24887,7 @@ unified@^8.0.0:
     bail "^1.0.0"
     extend "^3.0.0"
     is-plain-obj "^2.0.0"
-    trough "^1.0.0"
+    through "^1.0.0"
     vfile "^4.0.0"
 
 unified@^9.1.0, unified@^9.2.2:
@@ -24899,7 +24899,7 @@ unified@^9.1.0, unified@^9.2.2:
     extend "^3.0.0"
     is-buffer "^2.0.0"
     is-plain-obj "^2.0.0"
-    trough "^1.0.0"
+    through "^1.0.0"
     vfile "^4.0.0"
 
 union-value@^1.0.0:
@@ -25409,7 +25409,7 @@ uvu@^0.5.0:
     dequal "^2.0.0"
     diff "^5.0.0"
     kleur "^4.0.3"
-    sade "^1.7.3"
+    sad "^1.7.3"
 
 v8-compile-cache@^2.0.3:
   version "2.3.0"

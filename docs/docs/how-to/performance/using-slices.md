@@ -12,7 +12,7 @@ The `<Slice>` React component is also referred to as "Slice placeholder". The Re
 
 ## Faster builds in Gatsby Cloud
 
-With the introduction of Incremental Builds, Gatsby Cloud has been able to reduce build times signficantly by only building the pages that changed. With Slices, we've seen improvements in build time by up to 20%. With [Gatsby Cloud Enterprise](/pricing), however, your Slice component changes can build up to 90% faster. By knowing the intricate details of your site and the Slices within it, Gatsby Cloud can build and deploy the exact pieces needed to get your site updated with the latest content.
+With the introduction of Incremental Builds, Gatsby Cloud has been able to reduce build times significantly by only building the pages that changed. With Slices, we've seen improvements in build time by up to 20%. With [Gatsby Cloud Enterprise](/pricing), however, your Slice component changes can build up to 90% faster. By knowing the intricate details of your site and the Slices within it, Gatsby Cloud can build and deploy the exact pieces needed to get your site updated with the latest content.
 
 ## Using Slices in your site
 

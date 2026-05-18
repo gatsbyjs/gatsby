@@ -142,13 +142,13 @@ Object {
             "anObjectArray": Array [
               Object {
                 "aBoolean": true,
-                "aNumber": 2,
+                "a number": 2,
                 "anArray": null,
                 "anotherObjectArray": null,
               },
               Object {
                 "aBoolean": null,
-                "aNumber": 2,
+                "a number": 2,
                 "anArray": Array [
                   1,
                   2,
@@ -157,7 +157,7 @@ Object {
               },
               Object {
                 "aBoolean": null,
-                "aNumber": null,
+                "a number": null,
                 "anArray": null,
                 "anotherObjectArray": Array [
                   Object {
@@ -216,7 +216,7 @@ Object {
             "anObjectArray": Array [
               Object {
                 "aBoolean": null,
-                "aNumber": null,
+                "a number": null,
                 "anArray": null,
                 "anotherObjectArray": Array [
                   Object {

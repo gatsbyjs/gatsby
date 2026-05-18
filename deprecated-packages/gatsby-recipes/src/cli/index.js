@@ -293,7 +293,7 @@ export default async ({
       return (
         <>
           <ResourceProvider
-            // Exclude inputs as they are components (so "plans" currrently
+            // Exclude inputs as they are components (so "plans" currently
             // (we need to cleanup our names) too like resources which is why we
             // exclude them. The input from the inputs (haha) are ignored unless
             // they're passed as props into a resource component in which case
