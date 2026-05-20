@@ -130,5 +130,8 @@
   ],
   "resolutions": {
     "@babel/plugin-transform-modules-commonjs": "7.18.6"
+  },
+  "dependencies": {
+    "@babel/traverse": "7.23.2"
   }
 }
