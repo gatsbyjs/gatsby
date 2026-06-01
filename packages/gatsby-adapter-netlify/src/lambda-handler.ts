@@ -391,7 +391,7 @@ const handler = async (request, context) => {
   })
 }
 
-module.exports = handler
+exports.default = handler
 `
 
   await fs.writeFile(
