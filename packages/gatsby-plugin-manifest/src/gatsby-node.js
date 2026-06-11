@@ -8,6 +8,24 @@ import { doesIconExist } from "./node-helpers"
 
 import pluginOptionsSchema from "./pluginOptionsSchema"
 
+const pathPrefixHasProtocol = pathPrefix =>
+  /^[a-zA-Z][a-zA-Z\d+\-.]*:\/\//.test(pathPrefix)
+
+const joinPathPrefix = (pathPrefix, pathname) => {
+  if (!pathPrefix) {
+    return pathname
+  }
+
+  if (pathPrefixHasProtocol(pathPrefix)) {
+    const basePath = pathPrefix.endsWith(`/`) ? pathPrefix : `${pathPrefix}/`
+    const relativePath = pathname.replace(/^\/+/, ``)
+
+    return new URL(relativePath, basePath).toString()
+  }
+
+  return slash(path.posix.join(pathPrefix, pathname))
+}
+
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)
 
@@ -258,12 +276,12 @@ const makeManifest = async ({
   manifest.icons = manifest.icons.map(icon => {
     return {
       ...icon,
-      src: slash(path.join(pathPrefix, icon.src)),
+      src: joinPathPrefix(pathPrefix, icon.src),
     }
   })
 
   if (manifest.start_url) {
-    manifest.start_url = path.posix.join(pathPrefix, manifest.start_url)
+    manifest.start_url = joinPathPrefix(pathPrefix, manifest.start_url)
   }
 
   // Write manifest
