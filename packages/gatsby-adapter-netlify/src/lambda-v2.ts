@@ -9,6 +9,7 @@ import { relative } from "node:path/posix"
 
 export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId
+  const isApiRoute = fun.name.startsWith(`/api/`)
 
   const frameworksApiFunctionsDir = join(cwd(), `.netlify`, `v1`, `functions`)
   await ensureDir(frameworksApiFunctionsDir)
@@ -238,58 +239,45 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
       slash(join(cookieDir, cookiePkg.main ?? `index.js`))
     )
 
-  const handlerSource = /* javascript */ `import { Buffer } from 'node:buffer'
+  const generator = `gatsby-adapter-netlify@${
+    packageJson?.version ?? `unknown`
+  }`
+
+  const commonImports = /* javascript */ `import { Buffer } from 'node:buffer'
 import { IncomingMessage } from 'node:http'
 import { Readable, Stream } from 'node:stream'
 import { warn } from 'node:console'
-import { createRequire as __createRequire } from 'node:module'
-import { constants as __fsConstants } from 'node:fs'
-import cookie from '${cookieImportPath}'
+import cookie from '${cookieImportPath}'`
 
-function preferDefault(m) {
+  const preferDefaultFn = /* javascript */ `function preferDefault(m) {
   return m && m.default || m
-}
+}`
 
-/*
-  --- Claude coded ---
-  F_OK/R_OK/W_OK/X_OK are not own-enumerable on this fs-extra install.
-  linkfs copies them into lfs via its props list leaving lfs.F_OK = undefined.
-  Gatsby's setupFsWrapper (called at lambda.js module-load time) then calls
-  Object.hasOwnProperty.call(undefined, 'native') which throws.
-  Must run before the lambda.js import below so the CJS require cache is
-  already populated with the patched module when lambda.js does require('fs-extra').
-*/
-
-const __require = __createRequire(import.meta.url)
-const __fsExtra = __require('fs-extra')
-
-for (
-  const [__k, __v] of [['F_OK', __fsConstants.F_OK],
-  ['R_OK', __fsConstants.R_OK], ['W_OK', __fsConstants.W_OK],
-  ['X_OK', __fsConstants.X_OK]]
-) {
-  if (!Object.prototype.hasOwnProperty.call(__fsExtra, __k)) {
-    __fsExtra[__k] = __v
-  }
-}
-
-const functionModule = await import("${getRelativePathToModule(
+  const functionLoader = /* javascript */ `const functionModule = await import("${getRelativePathToModule(
     join(cwd(), fun.pathToEntryPoint)
   )}")
+const functionHandler = preferDefault(preferDefault(functionModule))`
 
-/*
-  lambda.js is a Babel-compiled CJS module (exports.__esModule = true, exports.default = handler).
-  When loaded via ESM import(), Node.js sets functionModule.default = module.exports (the full
-  exports object), not the .default within it. Apply preferDefault twice to unwrap both layers.
-*/
+  const handleRequestFn = /* javascript */ `async function handleRequest(request, context, shouldCache) {
+  const req = await createRequestObject(request, context)
 
-const functionHandler = preferDefault(preferDefault(functionModule))
+  return new Promise(async function (resolve) {
+    try {
+      const res = createResponseObject({
+        onResEnd: resolve,
+        shouldCache
+      })
 
-const { findEnginePageByPath } = await import("${getRelativePathToModule(
-    join(cwd(), `.cache`, `page-ssr`, `index.js`)
-  )}")
+      await functionHandler(req, res)
+    } catch (error) {
+      console.error("Error executing " + request.url, error)
+      resolve(new Response(null, { status: 500 }))
+    }
+  })
+}`
 
-const statuses = {
+  // Shared JS runtime helpers embedded in both SSR and API route handlers
+  const sharedHandlerCode = `const statuses = {
   "100": "Continue",
   "101": "Switching Protocols",
   "102": "Processing",
@@ -579,7 +567,80 @@ function createResponseObject({ onResEnd, shouldCache }) {
   }
 
   return res
+}`
+
+  let handlerSource: string
+
+  if (isApiRoute) {
+    handlerSource = /* javascript */ `${commonImports}
+
+${preferDefaultFn}
+
+${functionLoader}
+
+${sharedHandlerCode}
+
+${handleRequestFn}
+
+export default async function(request, context) {
+  return handleRequest(request, context, false)
 }
+
+export const config = {
+  generator: '${generator}',
+  includedFiles: ${JSON.stringify(
+    ((): Array<string> => {
+      const visited = new Set<string>()
+      return [
+        ...collectNodeModuleFiles(`cookie`, false, visited),
+        ...fun.requiredFiles.map(file =>
+          slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
+        ),
+      ]
+    })()
+  )},
+  name: 'Gatsby ${fun.name}',
+  nodeBundler: 'none',
+  path: '${fun.name}',
+}`
+  } else {
+    handlerSource = /* javascript */ `${commonImports}
+import { createRequire as __createRequire } from 'node:module'
+import { constants as __fsConstants } from 'node:fs'
+
+${preferDefaultFn}
+
+/*
+  F_OK/R_OK/W_OK/X_OK are not own-enumerable on this fs-extra install.
+  linkfs copies them into lfs via its props list leaving lfs.F_OK = undefined.
+  Gatsby's setupFsWrapper (called at lambda.js module-load time) then calls
+  Object.hasOwnProperty.call(undefined, 'native') which throws.
+  Must run before the lambda.js import below so the CJS require cache is
+  already populated with the patched module when lambda.js does require('fs-extra').
+*/
+
+const __require = __createRequire(import.meta.url)
+const __fsExtra = __require('fs-extra')
+
+for (
+  const [__k, __v] of [['F_OK', __fsConstants.F_OK],
+  ['R_OK', __fsConstants.R_OK], ['W_OK', __fsConstants.W_OK],
+  ['X_OK', __fsConstants.X_OK]]
+) {
+  if (!Object.prototype.hasOwnProperty.call(__fsExtra, __k)) {
+    __fsExtra[__k] = __v
+  }
+}
+
+${functionLoader}
+
+const { findEnginePageByPath } = await import("${getRelativePathToModule(
+      join(cwd(), `.cache`, `page-ssr`, `index.js`)
+    )}")
+
+${sharedHandlerCode}
+
+${handleRequestFn}
 
 function getPagePathForLookup(pathname) {
   const match = pathname.match(/^\\/?page-data\\/(.+)\\/page-data\\.json$/)
@@ -594,31 +655,11 @@ export default async function(request, context) {
   const pagePath = getPagePathForLookup(context.url.pathname)
   const page = findEnginePageByPath(pagePath)
   const shouldCache = !!page && page.mode !== 'SSR'
-  const req = await createRequestObject(request, context)
-
-  return new Promise(async function (resolve) {
-    try {
-      const res = createResponseObject({
-        onResEnd: resolve,
-        shouldCache
-      })
-
-      await functionHandler(req, res)
-    } catch (error) {
-      console.error("Error executing " + request.url, error)
-      resolve(new Response(null, { status: 500 }))
-    }
-  })
+  return handleRequest(request, context, shouldCache)
 }
 
 export const config = {
-  excludedPath: [
-    '/*.avif', '/*.bmp', '/*.css', '/*.eot', '/*.gif', '/*.ico', '/*.jpeg', '/*.jpg',
-    '/*.js', '/*.map', '/*.mjs', '/*.mp3', '/*.mp4', '/*.otf', '/*.pdf',
-    '/*.png', '/*.svg', '/*.ttf', '/*.txt', '/*.webm', '/*.webp', '/*.woff', '/*.woff2',
-  ],
-  externalNodeModules: ['msgpackr-extract'],
-  generator: 'gatsby-adapter-netlify@${packageJson?.version ?? `unknown`}',
+  generator: '${generator}',
   includedFiles: ${JSON.stringify(
     ((): Array<string> => {
       const visited = new Set<string>()
@@ -632,11 +673,12 @@ export const config = {
       ]
     })()
   )},
-  name: 'Gatsby Server',
+  name: 'Gatsby SSR + DSG',
   nodeBundler: 'none',
   path: '/*',
   preferStatic: true
-} // TODO: SSR is not seeing the params`
+}`
+  }
 
   writeFileSync(
     join(frameworksApiFunctionsDir, `${functionId}.mjs`),

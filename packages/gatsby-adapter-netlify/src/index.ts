@@ -127,18 +127,7 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       }
 
       await handleRoutesManifest(routesManifest, headerRoutes)
-
-      // functions handling
-      if (functionsManifest.length > 0) {
-        const mergedRequiredFiles = [
-          ...new Set(functionsManifest.flatMap(fun => fun.requiredFiles)),
-        ]
-
-        await prepareFunction({
-          ...functionsManifest[0],
-          requiredFiles: mergedRequiredFiles,
-        })
-      }
+      await Promise.all(functionsManifest.map(fun => prepareFunction(fun)))
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(
