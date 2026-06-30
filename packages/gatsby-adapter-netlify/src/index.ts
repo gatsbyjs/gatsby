@@ -1,11 +1,13 @@
-import { join } from "path"
 import type { AdapterInit, IAdapterConfig } from "gatsby"
-import { prepareFunction } from "./lambda-v2"
-import { prepareFileCdnHandler } from "./file-cdn-handler"
-import { handleRoutesManifest } from "./route-handler"
-import packageJson from "gatsby-adapter-netlify/package.json"
-import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
+
 import { cwd, env } from "node:process"
+import { join } from "path"
+
+import { handleRoutesManifest } from "./route-handler"
+import { prepareFileCdnHandler } from "./file-cdn-handler"
+import { prepareFunction } from "./lambda-v2"
+
+import packageJson from "gatsby-adapter-netlify/package.json"
 
 interface INetlifyCacheUtilsOptions {
   cwd?: string
@@ -111,22 +113,20 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       headerRoutes,
       pathPrefix,
       remoteFileAllowedUrls,
-      reporter,
       routesManifest,
     }): Promise<void> {
       if (useNetlifyImageCDN) {
-        await handleAllowedRemoteUrlsNetlifyConfig({
-          remoteFileAllowedUrls,
-          reporter,
-        })
-
         await prepareFileCdnHandler({
           pathPrefix,
           remoteFileAllowedUrls,
         })
       }
 
-      await handleRoutesManifest(routesManifest, headerRoutes)
+      await handleRoutesManifest(
+        routesManifest,
+        headerRoutes,
+        useNetlifyImageCDN ? remoteFileAllowedUrls : undefined
+      )
       await Promise.all(functionsManifest.map(fun => prepareFunction(fun)))
     },
     config: ({ reporter }): IAdapterConfig => {

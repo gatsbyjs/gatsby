@@ -1,11 +1,13 @@
 import type { IFunctionDefinition } from "gatsby"
-import packageJson from "gatsby-adapter-netlify/package.json"
-import { copySync, ensureDir, readJSONSync } from "fs-extra"
-import { existsSync, readdirSync, realpathSync, writeFileSync } from "node:fs"
-import { dirname, extname, join, sep } from "node:path"
-import { slash } from "gatsby-core-utils/path"
+
 import { cwd } from "node:process"
+import { copySync, ensureDir, readJSONSync } from "fs-extra"
+import { dirname, extname, join, sep } from "node:path"
+import { existsSync, readdirSync, realpathSync, writeFileSync } from "node:fs"
+import { slash } from "gatsby-core-utils/path"
 import { relative } from "node:path/posix"
+
+import packageJson from "gatsby-adapter-netlify/package.json"
 
 export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId

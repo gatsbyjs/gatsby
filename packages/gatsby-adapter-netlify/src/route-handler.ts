@@ -1,7 +1,13 @@
-import type { RoutesManifest, HeaderRoutes } from "gatsby"
+import type {
+  HeaderRoutes,
+  RemoteFileAllowedUrls,
+  RoutesManifest,
+} from "gatsby"
+
+import { cwd } from "node:process"
 import { join } from "path"
 import { outputJSONSync } from "fs-extra"
-import { cwd } from "node:process"
+
 import { createStaticAssetsPathHandler } from "./pretty-urls"
 
 interface INetlifyRedirectEntry {
@@ -127,17 +133,26 @@ export function processRoutesManifest(
 
 export async function handleRoutesManifest(
   routesManifest: RoutesManifest,
-  headerRoutes: HeaderRoutes
+  headerRoutes: HeaderRoutes,
+  remoteFileAllowedUrls?: RemoteFileAllowedUrls
 ): Promise<void> {
   const { redirects, headers, fileMovingPromise } = processRoutesManifest(
     routesManifest,
     headerRoutes
   )
 
-  outputJSONSync(join(cwd(), `.netlify`, `v1`, `config.json`), {
+  const config: Record<string, unknown> = {
     headers,
     redirects,
-  })
+  }
+
+  if (remoteFileAllowedUrls?.length) {
+    config.images = {
+      remote_images: remoteFileAllowedUrls.map(u => u.regexSource),
+    }
+  }
+
+  outputJSONSync(join(cwd(), `.netlify`, `v1`, `config.json`), config)
 
   await fileMovingPromise
 }
