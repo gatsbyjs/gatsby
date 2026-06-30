@@ -1,6 +1,6 @@
 import { join } from "path"
 import type { AdapterInit, IAdapterConfig } from "gatsby"
-import { prepareFunctionVariants } from "./lambda-handler"
+import { prepareFunction } from "./lambda-v2"
 import { prepareFileCdnHandler } from "./file-cdn-handler"
 import { handleRoutesManifest } from "./route-handler"
 import packageJson from "gatsby-adapter-netlify/package.json"
@@ -112,17 +112,18 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         })
       }
 
-      const { lambdasThatUseCaching } = await handleRoutesManifest(
-        routesManifest,
-        headerRoutes
-      )
+      await handleRoutesManifest(routesManifest, headerRoutes)
 
       // functions handling
-      for (const fun of functionsManifest) {
-        await prepareFunctionVariants(
-          fun,
-          lambdasThatUseCaching.get(fun.functionId)
-        )
+      if (functionsManifest.length > 0) {
+        const mergedRequiredFiles = [
+          ...new Set(functionsManifest.flatMap(fun => fun.requiredFiles)),
+        ]
+
+        await prepareFunction({
+          ...functionsManifest[0],
+          requiredFiles: mergedRequiredFiles,
+        })
       }
     },
     config: ({ reporter }): IAdapterConfig => {

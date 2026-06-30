@@ -371,12 +371,14 @@ async function createRequestObject(netlifyRequest, netlifyContext) {
 
   req.headers = {}
   req.rawHeaders = []
+
   for (const [key, value] of netlifyRequest.headers) {
     req.rawHeaders.push(key, value)
     req.headers[key] = value
   }
 
   const cookies = req.headers.cookie
+
   if (cookies) {
     req.cookies = cookie.parse(cookies)
   }
@@ -384,9 +386,11 @@ async function createRequestObject(netlifyRequest, netlifyContext) {
   req.method = netlifyRequest.method
 
   const multiValueQuery = {}
+
   for (const key of new Set(netlifyContext.url.searchParams.keys())) {
     multiValueQuery[key] = netlifyContext.url.searchParams.getAll(key)
   }
+
   req.multiValueQuery = multiValueQuery
 
   req.originalUrl = netlifyContext.url.pathname
@@ -592,7 +596,6 @@ function getPagePathForLookup(pathname) {
 export default async function(request, context) {
   const pagePath = getPagePathForLookup(context.url.pathname)
   const page = findEnginePageByPath(pagePath)
-  console.log(page)
   const shouldCache = !!page && page.mode !== 'SSR'
   const req = await createRequestObject(request, context)
 
@@ -631,7 +634,7 @@ export const config = {
         ),
       ]
     })()
-  )}, // TODO: merge the included files for different functions
+  )},
   name: 'Gatsby Server',
   nodeBundler: 'none',
   path: '/*',

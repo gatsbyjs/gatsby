@@ -158,24 +158,17 @@ export function processRoutesManifest(
     const fromPath = route.path.replace(/\*.*/, `*`)
 
     if (route.type === `function`) {
-      let functionName = route.functionId
       if (route.cache) {
-        functionName = `${route.functionId}-odb`
         if (!lambdasThatUseCaching.has(route.functionId)) {
-          lambdasThatUseCaching.set(route.functionId, functionName)
+          lambdasThatUseCaching.set(route.functionId, `${route.functionId}-odb`)
         }
       }
-
-      const invocationURL = `/.netlify/${
-        route.cache ? `builders` : `functions`
-      }/${functionName}`
-      _redirects += `${encodeURI(fromPath)}  ${invocationURL}  200\n`
     } else if (route.type === `redirect`) {
       const {
         status: routeStatus,
         toPath,
         // TODO: add headers handling
-        headers,
+        _routeHeaders,
         ...rest
       } = route
       let status = String(routeStatus)
