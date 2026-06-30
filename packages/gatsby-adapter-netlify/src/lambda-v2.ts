@@ -114,8 +114,7 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
 
     if (!optional) {
       throw new Error(
-        `gatsby-adapter-netlify: Could not find '${packageName}' in node_modules. ` +
-          `Tried walking up from ${cwd()} and probing pnpm virtual store siblings.`
+        `gatsby-adapter-netlify: Could not find '${packageName}' in node_modules. Tried walking up from ${cwd()} and probing pnpm virtual store siblings.`
       )
     }
 
@@ -205,9 +204,7 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
             walk(join(currentDir, entry.name))
           }
         } else if (entry.isFile() && !isExcludedFile(entry.name)) {
-          files.push(
-            slash(relative(slash(cwd()), slash(join(currentDir, entry.name))))
-          )
+          files.push(slash(join(currentDir, entry.name)))
         }
       }
     }
@@ -630,7 +627,7 @@ export const config = {
         ...collectNodeModuleFiles(`fs-extra`, false, visited),
         ...collectNodeModuleFiles(`linkfs`, true, visited),
         ...fun.requiredFiles.map(file =>
-          slash(file).replace(/\[/g, `*`).replace(/]/g, `*`)
+          slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
         ),
       ]
     })()
@@ -639,7 +636,7 @@ export const config = {
   nodeBundler: 'none',
   path: '/*',
   preferStatic: true
-}`
+} // TODO: SSR is not seeing the params`
 
   writeFileSync(
     join(frameworksApiFunctionsDir, `${functionId}.mjs`),
