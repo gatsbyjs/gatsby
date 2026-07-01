@@ -7,7 +7,7 @@ import { existsSync, readdirSync, realpathSync, writeFileSync } from "node:fs"
 import { slash } from "gatsby-core-utils/path"
 import { relative } from "node:path/posix"
 
-import packageJson from "gatsby-adapter-netlify/package.json"
+import { generator } from "./generator"
 
 export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId
@@ -240,10 +240,6 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
       slash(frameworksApiFunctionsDir),
       slash(join(cookieDir, cookiePkg.main ?? `index.js`))
     )
-
-  const generator = `gatsby-adapter-netlify@${
-    packageJson?.version ?? `unknown`
-  }`
 
   const commonImports = /* javascript */ `import { Buffer } from 'node:buffer'
 import { IncomingMessage } from 'node:http'

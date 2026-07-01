@@ -1,31 +1,11 @@
-import fs from "fs-extra"
-import * as path from "path"
-
-import packageJson from "gatsby-adapter-netlify/package.json"
-
 import type { RemoteFileAllowedUrls } from "gatsby"
 
-export interface IFunctionManifest {
-  version: 1
-  functions: Array<
-    | {
-        function: string
-        name?: string
-        path: string
-        cache?: "manual"
-        generator: string
-      }
-    | {
-        function: string
-        name?: string
-        pattern: string
-        cache?: "manual"
-        generator: string
-      }
-  >
-  layers?: Array<{ name: `https://${string}/mod.ts`; flag: string }>
-  import_map?: string
-}
+import { cwd } from "node:process"
+import { ensureDir } from "fs-extra"
+import { join } from "node:path"
+import { writeFileSync } from "node:fs"
+
+import { generator } from "./generator"
 
 export async function prepareFileCdnHandler({
   pathPrefix,
@@ -34,57 +14,43 @@ export async function prepareFileCdnHandler({
   pathPrefix: string
   remoteFileAllowedUrls: RemoteFileAllowedUrls
 }): Promise<void> {
-  const functionId = `file-cdn`
-
-  const edgeFunctionsManifestPath = path.join(
-    process.cwd(),
+  const frameworksApiEdgeFunctionsDir = join(
+    cwd(),
     `.netlify`,
-    `edge-functions`,
-    `manifest.json`
+    `v1`,
+    `edge-functions`
   )
 
-  const fileCdnEdgeFunction = path.join(
-    process.cwd(),
-    `.netlify`,
-    `edge-functions`,
-    `${functionId}`,
-    `${functionId}.mts`
-  )
+  await ensureDir(frameworksApiEdgeFunctionsDir)
 
-  const handlerSource = /* typescript */ `
-    const allowedUrlPatterns = [${remoteFileAllowedUrls.map(
-      allowedUrl => `new RegExp(\`${allowedUrl.regexSource}\`)`
-    )}]
+  const handlerSource = /* javascript */ `const allowedUrlPatterns = [${remoteFileAllowedUrls.map(
+    allowedUrl => `new RegExp(\`${allowedUrl.regexSource}\`)`
+  )}]
 
-    export default async (req: Request): Promise<Response> => {
-      const url = new URL(req.url)
-      const remoteUrl = url.searchParams.get("url")
-      
-      const isAllowed = allowedUrlPatterns.some(allowedUrlPattern => allowedUrlPattern.test(remoteUrl))
-      if (isAllowed) {
-        return fetch(remoteUrl);
-      } else {
-        console.error(\`URL not allowed: \${remoteUrl}\`)
-        return new Response("Bad request", { status: 500 })
-      }
-    }
-  `
+export default async function(_, context) {
+  const remoteUrl = context.url.searchParams.get("url")
+  const isAllowed = allowedUrlPatterns.some(allowedUrlPattern => allowedUrlPattern.test(remoteUrl))
 
-  await fs.outputFileSync(fileCdnEdgeFunction, handlerSource)
+  if (isAllowed) {
+    return fetch(remoteUrl)
+  } else {
+    console.error(\`URL not allowed: \${remoteUrl}\`)
 
-  const manifest: IFunctionManifest = {
-    functions: [
-      {
-        path: `${pathPrefix}/_gatsby/file/*`,
-        function: functionId,
-        generator: `gatsby-adapter-netlify@${
-          packageJson?.version ?? `unknown`
-        }`,
-      },
-    ],
-    layers: [],
-    version: 1,
+    return new Response("Bad request", {
+      status: 500
+    })
   }
+}
 
-  await fs.outputJSON(edgeFunctionsManifestPath, manifest)
+export const config = {
+  generator: "${generator}",
+  name: "Gatsby File CDN",
+  path: "${pathPrefix}/_gatsby/file/*",
+}
+`
+
+  writeFileSync(
+    join(frameworksApiEdgeFunctionsDir, `file-cdn-handler.mjs`),
+    handlerSource
+  )
 }
