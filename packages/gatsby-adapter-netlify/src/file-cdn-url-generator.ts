@@ -1,6 +1,6 @@
 import type { FileCdnSourceImage, FileCdnUrlGeneratorFn } from "gatsby"
 
-import { basename } from "path"
+import { basename } from "node:path"
 import { createHash } from "node:crypto"
 
 function isImage(node: FileCdnSourceImage): boolean {

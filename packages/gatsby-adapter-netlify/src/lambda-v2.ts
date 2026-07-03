@@ -9,6 +9,210 @@ import { relative } from "node:path/posix"
 
 import { generator } from "./generator"
 
+/*
+  Locates a node_modules package directory using three strategies in order:
+
+    A) Walk up from cwd() checking standard locations at each level.
+      Handles npm/yarn workspaces monorepos where deps are hoisted to a parent directory.
+
+    B) Follow the adapter's real path into pnpm's virtual store and look for the
+      package as a sibling (pnpm sibling layout for adapter deps like `cookie`).
+
+    C) Same as B but via gatsby's real path (for gatsby's own deps like `fs-extra`, `linkfs`).
+
+    Avoids require.resolve() without a `paths` option because that resolves relative to
+    the adapter's physical location — in the dev monorepo (symlinked adapter) that
+    produces paths under packages/gatsby-adapter-netlify/ rather than the user's project.
+*/
+
+export function findNodeModuleDir(
+  packageName: string,
+  optional = false
+): string | undefined {
+  /*
+    Strategy A: walk up the directory tree.
+    The for-loop condition `searchDir !== prev` is false only when dirname() returns
+    its own argument, which happens at the filesystem root — so this terminates.
+  */
+
+  for (
+    let searchDir = cwd(), prev = ``;
+    searchDir !== prev;
+    prev = searchDir, searchDir = dirname(searchDir)
+  ) {
+    const candidates = [
+      join(
+        searchDir,
+        `node_modules`,
+        `gatsby-adapter-netlify`,
+        `node_modules`,
+        packageName
+      ),
+      join(searchDir, `node_modules`, packageName),
+    ]
+
+    for (const dir of candidates) {
+      if (existsSync(join(dir, `package.json`))) {
+        return dir
+      }
+    }
+  }
+
+  /*
+    Strategy B: pnpm virtual store via adapter's sibling layout
+    (covers adapter deps like `cookie` that aren't hoisted to project root)
+  */
+
+  try {
+    const adapterLink = join(cwd(), `node_modules`, `gatsby-adapter-netlify`)
+
+    if (existsSync(adapterLink)) {
+      const adapterReal = realpathSync(adapterLink)
+      // adapterReal = .../node_modules/.pnpm/gatsby-adapter-netlify@X/node_modules/gatsby-adapter-netlify
+      // package is a sibling one directory up in the same node_modules
+      const siblingDir = join(dirname(adapterReal), packageName)
+
+      if (existsSync(join(siblingDir, `package.json`))) {
+        return siblingDir
+      }
+    }
+  } catch {
+    // ignore — realpathSync can throw if the symlink is broken
+  }
+
+  /*
+    Strategy C: pnpm virtual store via gatsby's sibling layout
+    (covers gatsby's own deps like `fs-extra` and `linkfs`)
+  */
+
+  try {
+    const gatsbyLink = join(cwd(), `node_modules`, `gatsby`)
+
+    if (existsSync(gatsbyLink)) {
+      const gatsbyReal = realpathSync(gatsbyLink)
+      const siblingDir = join(dirname(gatsbyReal), packageName)
+
+      if (existsSync(join(siblingDir, `package.json`))) {
+        return siblingDir
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  if (!optional) {
+    throw new Error(
+      `gatsby-adapter-netlify: Could not find '${packageName}' in node_modules. Tried walking up from ${cwd()} and probing pnpm virtual store siblings.`
+    )
+  }
+
+  return undefined
+}
+
+/*
+  When a package is found inside pnpm's virtual store (.pnpm/), it isn't reachable
+  by name from lambda.js's location at runtime (no root symlink for indirect deps).
+  Copy it to .cache/page-ssr/node_modules/<pkg>/ so Node.js finds it there first
+  (nearest ancestor node_modules wins in the CJS resolution algorithm).
+*/
+
+export function ensureRuntimeResolvable(
+  dir: string,
+  packageName: string
+): string {
+  const isVirtualStore =
+    dir.includes(`${sep}node_modules${sep}.pnpm${sep}`) ||
+    dir.includes(`/node_modules/.pnpm/`)
+
+  if (!isVirtualStore) {
+    return dir
+  }
+
+  const copyTarget = join(
+    cwd(),
+    `.cache`,
+    `page-ssr`,
+    `node_modules`,
+    packageName
+  )
+
+  if (!existsSync(copyTarget)) {
+    copySync(dir, copyTarget)
+  }
+
+  return copyTarget
+}
+
+export function isExcludedDir(name: string): boolean {
+  return name === `__tests__`
+}
+
+export function isExcludedFile(name: string): boolean {
+  const lower = name.toLowerCase()
+  return (
+    extname(lower) === `.md` ||
+    lower.startsWith(`license`) ||
+    lower.startsWith(`licence`) ||
+    lower === `tsconfig.json` ||
+    lower === `gulpfile.js`
+  )
+}
+
+/*
+  Recursively collects site-root-relative file paths for a package and all of
+  its transitive dependencies. Scanning the directory rather than returning a
+  glob lets us exclude documentation and license files in code without relying
+  on the bundler's negation-glob support. Sharing `visited` across calls
+  deduplicates entries when multiple packages share a common dep
+  (e.g. both fs-extra and linkfs need graceful-fs).
+*/
+
+export function collectNodeModuleFiles(
+  packageName: string,
+  optional = false,
+  visited = new Set<string>()
+): Array<string> {
+  if (visited.has(packageName)) {
+    return []
+  }
+
+  visited.add(packageName)
+  const rawDir = findNodeModuleDir(packageName, optional)
+
+  if (!rawDir) {
+    return []
+  }
+
+  const dir = ensureRuntimeResolvable(rawDir, packageName)
+  const files: Array<string> = []
+
+  function walk(currentDir: string): void {
+    for (const entry of readdirSync(currentDir, {
+      withFileTypes: true,
+    })) {
+      if (entry.isDirectory()) {
+        if (!isExcludedDir(entry.name)) {
+          walk(join(currentDir, entry.name))
+        }
+      } else if (entry.isFile() && !isExcludedFile(entry.name)) {
+        files.push(slash(join(currentDir, entry.name)))
+      }
+    }
+  }
+
+  walk(dir)
+
+  const pkg = readJSONSync(join(dir, `package.json`)) as {
+    dependencies?: Record<string, string>
+  }
+
+  for (const dep of Object.keys(pkg.dependencies ?? {})) {
+    files.push(...collectNodeModuleFiles(dep, true, visited))
+  }
+
+  return files
+}
+
 export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId
   const isApiRoute = fun.name.startsWith(`/api/`)
@@ -22,207 +226,6 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
     return (
       `./` + relative(slash(frameworksApiFunctionsDir), slash(absolutePath))
     )
-  }
-
-  /*
-    Locates a node_modules package directory using three strategies in order:
-
-      A) Walk up from cwd() checking standard locations at each level.
-        Handles npm/yarn workspaces monorepos where deps are hoisted to a parent directory.
-
-      B) Follow the adapter's real path into pnpm's virtual store and look for the
-        package as a sibling (pnpm sibling layout for adapter deps like `cookie`).
-
-      C) Same as B but via gatsby's real path (for gatsby's own deps like `fs-extra`, `linkfs`).
-
-      Avoids require.resolve() without a `paths` option because that resolves relative to
-      the adapter's physical location — in the dev monorepo (symlinked adapter) that
-      produces paths under packages/gatsby-adapter-netlify/ rather than the user's project.
-  */
-
-  function findNodeModuleDir(
-    packageName: string,
-    optional = false
-  ): string | undefined {
-    /*
-      Strategy A: walk up the directory tree.
-      The for-loop condition `searchDir !== prev` is false only when dirname() returns
-      its own argument, which happens at the filesystem root — so this terminates.
-    */
-
-    for (
-      let searchDir = cwd(), prev = ``;
-      searchDir !== prev;
-      prev = searchDir, searchDir = dirname(searchDir)
-    ) {
-      const candidates = [
-        join(
-          searchDir,
-          `node_modules`,
-          `gatsby-adapter-netlify`,
-          `node_modules`,
-          packageName
-        ),
-        join(searchDir, `node_modules`, packageName),
-      ]
-
-      for (const dir of candidates) {
-        if (existsSync(join(dir, `package.json`))) {
-          return dir
-        }
-      }
-    }
-
-    /*
-      Strategy B: pnpm virtual store via adapter's sibling layout
-      (covers adapter deps like `cookie` that aren't hoisted to project root)
-    */
-
-    try {
-      const adapterLink = join(cwd(), `node_modules`, `gatsby-adapter-netlify`)
-
-      if (existsSync(adapterLink)) {
-        const adapterReal = realpathSync(adapterLink)
-        // adapterReal = .../node_modules/.pnpm/gatsby-adapter-netlify@X/node_modules/gatsby-adapter-netlify
-        // package is a sibling one directory up in the same node_modules
-        const siblingDir = join(dirname(adapterReal), packageName)
-
-        if (existsSync(join(siblingDir, `package.json`))) {
-          return siblingDir
-        }
-      }
-    } catch {
-      // ignore — realpathSync can throw if the symlink is broken
-    }
-
-    /*
-      Strategy C: pnpm virtual store via gatsby's sibling layout
-      (covers gatsby's own deps like `fs-extra` and `linkfs`)
-    */
-
-    try {
-      const gatsbyLink = join(cwd(), `node_modules`, `gatsby`)
-
-      if (existsSync(gatsbyLink)) {
-        const gatsbyReal = realpathSync(gatsbyLink)
-        const siblingDir = join(dirname(gatsbyReal), packageName)
-
-        if (existsSync(join(siblingDir, `package.json`))) {
-          return siblingDir
-        }
-      }
-    } catch {
-      // ignore
-    }
-
-    if (!optional) {
-      throw new Error(
-        `gatsby-adapter-netlify: Could not find '${packageName}' in node_modules. Tried walking up from ${cwd()} and probing pnpm virtual store siblings.`
-      )
-    }
-
-    return undefined
-  }
-
-  /*
-    When a package is found inside pnpm's virtual store (.pnpm/), it isn't reachable
-    by name from lambda.js's location at runtime (no root symlink for indirect deps).
-    Copy it to .cache/page-ssr/node_modules/<pkg>/ so Node.js finds it there first
-    (nearest ancestor node_modules wins in the CJS resolution algorithm).
-  */
-
-  function ensureRuntimeResolvable(dir: string, packageName: string): string {
-    const isVirtualStore =
-      dir.includes(`${sep}node_modules${sep}.pnpm${sep}`) ||
-      dir.includes(`/node_modules/.pnpm/`)
-
-    if (!isVirtualStore) {
-      return dir
-    }
-
-    const copyTarget = join(
-      cwd(),
-      `.cache`,
-      `page-ssr`,
-      `node_modules`,
-      packageName
-    )
-
-    if (!existsSync(copyTarget)) {
-      copySync(dir, copyTarget)
-    }
-
-    return copyTarget
-  }
-
-  function isExcludedDir(name: string): boolean {
-    return name === `__tests__`
-  }
-
-  function isExcludedFile(name: string): boolean {
-    const lower = name.toLowerCase()
-    return (
-      extname(lower) === `.md` ||
-      lower.startsWith(`license`) ||
-      lower.startsWith(`licence`) ||
-      lower === `tsconfig.json` ||
-      lower === `gulpfile.js`
-    )
-  }
-
-  /*
-    Recursively collects site-root-relative file paths for a package and all of
-    its transitive dependencies. Scanning the directory rather than returning a
-    glob lets us exclude documentation and license files in code without relying
-    on the bundler's negation-glob support. Sharing `visited` across calls
-    deduplicates entries when multiple packages share a common dep
-    (e.g. both fs-extra and linkfs need graceful-fs).
-  */
-
-  function collectNodeModuleFiles(
-    packageName: string,
-    optional = false,
-    visited = new Set<string>()
-  ): Array<string> {
-    if (visited.has(packageName)) {
-      return []
-    }
-
-    visited.add(packageName)
-    const rawDir = findNodeModuleDir(packageName, optional)
-
-    if (!rawDir) {
-      return []
-    }
-
-    const dir = ensureRuntimeResolvable(rawDir, packageName)
-    const files: Array<string> = []
-
-    function walk(currentDir: string): void {
-      for (const entry of readdirSync(currentDir, {
-        withFileTypes: true,
-      })) {
-        if (entry.isDirectory()) {
-          if (!isExcludedDir(entry.name)) {
-            walk(join(currentDir, entry.name))
-          }
-        } else if (entry.isFile() && !isExcludedFile(entry.name)) {
-          files.push(slash(join(currentDir, entry.name)))
-        }
-      }
-    }
-
-    walk(dir)
-
-    const pkg = readJSONSync(join(dir, `package.json`)) as {
-      dependencies?: Record<string, string>
-    }
-
-    for (const dep of Object.keys(pkg.dependencies ?? {})) {
-      files.push(...collectNodeModuleFiles(dep, true, visited))
-    }
-
-    return files
   }
 
   const cookieDir = ensureRuntimeResolvable(
