@@ -533,7 +533,7 @@ jobs:
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Locally published dev packages always look "just published" to Yarn's minimum release age (quarantine) check, so pre-approve them by name
           command: |
-            echo -e 'npmPreapprovedPackages:\n  - "gatsby*"' >> .yarnrc.yml
+            echo -e 'npmPreapprovedPackages:\n  - "gatsby*"\n  - "babel-plugin-remove-graphql-queries"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
