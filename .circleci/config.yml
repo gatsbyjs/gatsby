@@ -531,6 +531,10 @@ jobs:
           command: |
             echo -e 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Locally published dev packages always look "just published" to Yarn's minimum release age (quarantine) check, so pre-approve them by name
+          command: |
+            echo -e 'npmPreapprovedPackages:\n  - "gatsby*"' >> .yarnrc.yml
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
           working_directory: /tmp/e2e-tests/gatsby-pnp
@@ -740,10 +744,6 @@ jobs:
       e2e_executor_suffix:
         type: string
     executor: e2e<< parameters.e2e_executor_suffix >>
-    environment:
-      # locally published dev packages (gatsby-dev-cli) always look "just published" to Yarn's
-      # minimum release age (quarantine) check, so pre-approve them by name
-      YARN_NPM_PREAPPROVED_PACKAGES: "gatsby*"
     steps:
       - check_netlify_credentials
       - e2e-test:
@@ -758,8 +758,6 @@ jobs:
       e2e_executor_suffix:
         type: string
     executor: e2e<< parameters.e2e_executor_suffix >>
-    environment:
-      YARN_NPM_PREAPPROVED_PACKAGES: "gatsby*"
     steps:
       - check_netlify_credentials
       # used in e2e-tests/adapters/make-monorepo.sh
