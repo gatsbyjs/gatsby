@@ -6,7 +6,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "24.11.1"
+        default: "24.18.0"
       gatsby_major:
         type: string
         default: "5"
@@ -31,7 +31,7 @@ executors:
 
   e2e24:
     docker:
-      - image: "cypress/browsers:node-24.11.1-chrome-142.0.7444.175-1-ff-145.0.1-edge-142.0.3595.90-1"
+      - image: "cypress/browsers:node-24.18.0-chrome-149.0.7827.200-1-ff-152.0.3-edge-149.0.4022.98-1"
     environment:
       GATSBY_CPU_COUNT: 2
       VERBOSE: 1
@@ -102,13 +102,8 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["18.2.0", "24.11.1"]
-        e2e_executor_suffix: ["18", "24"]
-      exclude:
-        - node_version: "18.2.0"
-          e2e_executor_suffix: "24"
-        - node_version: "24.11.1"
-          e2e_executor_suffix: "18"
+        node_version: ["24.18.0"]
+        e2e_executor_suffix: ["24"]
     requires:
       - bootstrap-<< matrix.node_version >>
 
@@ -120,7 +115,7 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["18.2.0", "24.11.1"]
+        node_version: ["18.2.0", "24.18.0"]
     requires:
       - bootstrap-<< matrix.node_version >>
 
@@ -307,7 +302,7 @@ jobs:
   unit_tests_node24:
     executor:
       name: node
-      image: "24.11.1"
+      image: "24.18.0"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -913,7 +908,7 @@ workflows:
           name: "bootstrap-<< matrix.node_version >>"
           matrix:
             parameters:
-              node_version: ["18.2.0", "20.19", "24.11.1"]
+              node_version: ["18.2.0", "20.19", "24.18.0"]
       - lint
       - typecheck:
           requires:
@@ -936,7 +931,7 @@ workflows:
       - unit_tests_node24:
           <<: *ignore_docs
           requires:
-            - bootstrap-24.11.1
+            - bootstrap-24.18.0
       - integration_tests_gatsby_source_wordpress:
           <<: *integration-test-workflow
       - integration_tests_long_term_caching:
