@@ -531,9 +531,9 @@ jobs:
           command: |
             echo -e 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # Locally published dev packages always look "just published" to Yarn's minimum release age (quarantine) check, so pre-approve them by name
+      - run: # Locally published dev packages are always <1 day old, so they always trip Yarn's minimum release age (quarantine) check; disable it instead of allowlisting packages one by one
           command: |
-            echo -e 'npmPreapprovedPackages:\n  - "gatsby*"\n  - "babel-plugin-remove-graphql-queries"' >> .yarnrc.yml
+            echo -e 'npmMinimalAgeGate: 0' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
