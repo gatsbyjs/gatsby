@@ -43,12 +43,12 @@ await execa(`npm`, [`run`, `clean`], {
 
 const deployAlias = "gatsby-e2e-tests"
 
+// NO_COLOR disables ANSI escape codes so the URL/deploy-id parsing below is reliable.
 const deployResults = await execa(
   "npx",
   [
     "ntl",
     "deploy",
-    "--json",
     "--alias",
     deployAlias,
     "--message",
@@ -57,26 +57,37 @@ const deployResults = await execa(
   ],
   {
     reject: false,
+    env: { ...env, NO_COLOR: "1" },
   }
 )
 
+if (deployResults.stdout) {
+  log(deployResults.stdout)
+}
+
+if (deployResults.stderr) {
+  error(deployResults.stderr)
+}
+
 if (deployResults.exitCode !== 0) {
-  if (deployResults.stdout) {
-    log(deployResults.stdout)
-  }
-
-  if (deployResults.stderr) {
-    error(deployResults.stderr)
-  }
-
   exit(deployResults.exitCode)
 }
 
-const deployInfo = JSON.parse(deployResults.stdout)
+// Netlify CLI prints: "Draft URL: <https://xxxxx--mysite.netlify.app>"
+const draftUrlMatch = deployResults.stdout.match(
+  /Draft URL: <(https?:\/\/[^>]+)>/
+)
 
-const deployUrl =
-  `https://${deployInfo.deploy_id}--${deployInfo.site_name}.netlify.app` +
-  (env.PATH_PREFIX ?? ``)
+// The permalink also appears as part of a "/deploys/<deploy_id>" link in the output.
+const deployIdMatch = deployResults.stdout.match(/\/deploys\/([a-f0-9]+)/)
+
+if (!draftUrlMatch || !deployIdMatch) {
+  error(`Could not extract deploy URL or deploy ID from Netlify CLI output`)
+  exit(1)
+}
+
+const deployId = deployIdMatch[1]
+const deployUrl = draftUrlMatch[1] + (env.PATH_PREFIX ?? ``)
 
 env.DEPLOY_URL = deployUrl
 log(`Deployed to ${deployUrl}`)
@@ -87,14 +98,14 @@ try {
   })
 } finally {
   if (!env.GATSBY_TEST_SKIP_CLEANUP) {
-    log(`Deleting project with deploy_id ${deployInfo.deploy_id}`)
+    log(`Deleting project with deploy_id ${deployId}`)
 
     const deleteResponse = await execa("npx", [
       "ntl",
       "api",
       "deleteDeploy",
       "--data",
-      `{ "deploy_id": "${deployInfo.deploy_id}" }`,
+      `{ "deploy_id": "${deployId}" }`,
     ])
 
     if (deleteResponse.exitCode !== 0) {
@@ -103,8 +114,6 @@ try {
       )
     }
 
-    log(
-      `Successfully deleted project with deploy_id ${deployInfo.deploy_id}`
-    )
+    log(`Successfully deleted project with deploy_id ${deployId}`)
   }
 }
