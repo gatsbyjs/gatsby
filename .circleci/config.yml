@@ -740,6 +740,10 @@ jobs:
       e2e_executor_suffix:
         type: string
     executor: e2e<< parameters.e2e_executor_suffix >>
+    environment:
+      # locally published dev packages (gatsby-dev-cli) always look "just published" to Yarn's
+      # minimum release age (quarantine) check, so pre-approve them by name
+      YARN_NPM_PREAPPROVED_PACKAGES: "gatsby*"
     steps:
       - check_netlify_credentials
       - e2e-test:
@@ -754,6 +758,8 @@ jobs:
       e2e_executor_suffix:
         type: string
     executor: e2e<< parameters.e2e_executor_suffix >>
+    environment:
+      YARN_NPM_PREAPPROVED_PACKAGES: "gatsby*"
     steps:
       - check_netlify_credentials
       # used in e2e-tests/adapters/make-monorepo.sh
