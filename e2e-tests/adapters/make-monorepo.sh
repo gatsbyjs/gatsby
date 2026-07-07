@@ -21,14 +21,6 @@ if [ "$resolutions" != "null" ]; then
   mv package.tmp.json package.json
 fi
 
-# npm only honors "overrides" when declared in the workspace root's package.json,
-# not in a nested workspace member, so copy it over the same way as resolutions above.
-overrides=$(jq '.overrides' workspace/package.json)
-if [ "$overrides" != "null" ]; then
-  jq --argjson ov "$overrides" '. + {overrides: $ov}' package.json > package.tmp.json
-  mv package.tmp.json package.json
-fi
-
 # update netlify.toml build command and publish dir
 sed -i.bak -e 's/npm run build/npm run build -w workspace/g' -e 's/public/workspace\/public/g' workspace/netlify.toml
 

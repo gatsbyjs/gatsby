@@ -44,16 +44,10 @@
     "typescript": "^5.3.3"
   },
   "resolutions": {
-    "unstorage": "1.17.3"
-  },
-  "overrides": {
-    "netlify-cli": {
-      "globby": "^14.0.0"
-    },
-    "gatsby-adapter-netlify": {
-      "@netlify/cache-utils": {
-        "globby": "^14.0.0"
-      }
-    }
+    "unstorage": "1.17.3",
+    "netlify-cli/globby": "^14.0.0",
+    "netlify-cli/**/globby": "^14.0.0",
+    "gatsby-adapter-netlify/globby": "^14.0.0",
+    "gatsby-adapter-netlify/**/globby": "^14.0.0"
   }
 }
