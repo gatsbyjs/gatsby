@@ -21,6 +21,57 @@ const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 const cacheLocation = path.join(process.cwd(), `.cache`, `webpack`, `page-ssr`)
 
+const lambdaCacheLocation = path.join(
+  process.cwd(),
+  `.cache`,
+  `webpack`,
+  `page-ssr-lambda`
+)
+
+// Config shared by both the entry.js and lambda.js bundles below - each
+// compiler spreads this and overrides output, module, etc. as needed
+// rather than deep-merging, since object spread only merges one level deep
+
+const sharedWebpackConfig: Partial<webpack.Configuration> = {
+  mode: `none`,
+  target: `node`,
+  devtool: false,
+  output: {
+    path: outputDir,
+    libraryTarget: `commonjs`,
+  },
+  resolve: {
+    extensions,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        type: `javascript/auto`,
+        resolve: {
+          byDependency: {
+            esm: {
+              fullySpecified: false,
+            },
+          },
+        },
+      },
+      {
+        // For node binary relocations, include ".node" files as well here
+        test: /\.(m?js|node)$/,
+        // it is recommended for Node builds to turn off AMD support
+        parser: { amd: false },
+        use: {
+          loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
+          options: {
+            outputAssetBase: `assets`,
+          },
+        },
+      },
+    ],
+  },
+}
+
 export async function copyStaticQueriesToEngine({
   engineTemplatePaths,
   components,
@@ -132,16 +183,20 @@ export async function createPageSSRBundle({
     }
   }
 
+  function createLoggingPlugin(): webpack.WebpackPluginInstance | false {
+    return process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
+      ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)
+      : false
+  }
+
   const compiler = webpack({
+    ...sharedWebpackConfig,
     name: `Page Engine`,
-    mode: `none`,
     entry: path.join(__dirname, `entry.js`),
     output: {
-      path: outputDir,
+      ...sharedWebpackConfig.output,
       filename: `index.js`,
-      libraryTarget: `commonjs`,
     },
-    target: `node`,
     externalsPresets: {
       node: false,
     },
@@ -167,32 +222,9 @@ export async function createPageSSRBundle({
         return acc
       }, {}),
     ],
-    devtool: false,
     module: {
       rules: [
-        {
-          test: /\.m?js$/,
-          type: `javascript/auto`,
-          resolve: {
-            byDependency: {
-              esm: {
-                fullySpecified: false,
-              },
-            },
-          },
-        },
-        {
-          // For node binary relocations, include ".node" files as well here
-          test: /\.(m?js|node)$/,
-          // it is recommended for Node builds to turn off AMD support
-          parser: { amd: false },
-          use: {
-            loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
-            options: {
-              outputAssetBase: `assets`,
-            },
-          },
-        },
+        ...(sharedWebpackConfig.module?.rules ?? []),
         {
           test: /\.txt/,
           type: `asset/resource`,
@@ -200,7 +232,7 @@ export async function createPageSSRBundle({
       ],
     },
     resolve: {
-      extensions,
+      ...sharedWebpackConfig.resolve,
       alias: {
         ".cache": `${rootDir}/.cache/`,
         [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
@@ -238,67 +270,101 @@ export async function createPageSSRBundle({
           !!process.env.GATSBY_SLICES
         ),
       }),
-      process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
-        ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)
-        : false,
+      createLoggingPlugin(),
     ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
   })
 
-  let IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = ``
+  let imageCdnUrlGeneratorModuleRelativePath = ``
   if (global.__GATSBY?.imageCDNUrlGeneratorModulePath) {
     await fs.copyFile(
       global.__GATSBY.imageCDNUrlGeneratorModulePath,
       path.join(outputDir, `image-cdn-url-generator.js`)
     )
-    IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./image-cdn-url-generator.js`
+    imageCdnUrlGeneratorModuleRelativePath = `./image-cdn-url-generator.js`
   }
 
-  let FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = ``
+  let fileCdnUrlGeneratorModuleRelativePath = ``
   if (global.__GATSBY?.fileCDNUrlGeneratorModulePath) {
     await fs.copyFile(
       global.__GATSBY.fileCDNUrlGeneratorModulePath,
       path.join(outputDir, `file-cdn-url-generator.js`)
     )
-    FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH = `./file-cdn-url-generator.js`
+    fileCdnUrlGeneratorModuleRelativePath = `./file-cdn-url-generator.js`
   }
 
-  let functionCode = await fs.readFile(
-    path.join(__dirname, `lambda.js`),
-    `utf-8`
-  )
+  // lambda.js` is the entry point. It requires ./index and ../query-engine
+  // at runtime by relative path, so those + CDN generator modules copied above
+  // stay external rather than inlined. Node builtins are left as externals
+  // (unlike the `index.js` bundle above). lambda.js sets up global._fsWrapper
+  // when running on a read-only filesystem, so its own fs usage must hit
+  // the real fs module rather than engines-fs-provider's global._actualFsWrapper,
+  // which doesn't exist yet at this point.
 
-  functionCode = functionCode
-    .replaceAll(
-      `%CDN_DATASTORE_PATH%`,
-      shouldBundleDatastore() ? `` : getLmdbOnCdnPath()
-    )
-    .replaceAll(
-      `%CDN_DATASTORE_ORIGIN%`,
-      shouldBundleDatastore() ? `` : state.adapter.config.deployURL ?? ``
-    )
-    .replaceAll(`%PATH_PREFIX%`, pathPrefix)
-    .replaceAll(
-      `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
-      IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
-    )
-    .replaceAll(
-      `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
-      FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
-    )
+  const lambdaCompiler = webpack({
+    ...sharedWebpackConfig,
+    name: `Page Engine Lambda`,
+    entry: path.join(__dirname, `lambda.js`),
+    output: {
+      ...sharedWebpackConfig.output,
+      filename: `lambda.js`,
+    },
+    cache: {
+      type: `filesystem`,
+      name: `page-ssr-lambda`,
+      cacheLocation: lambdaCacheLocation,
+      buildDependencies: {
+        config: [__filename],
+      },
+    },
+    externals: [
+      `./index`,
+      `../query-engine`,
+      `./image-cdn-url-generator.js`,
+      `./file-cdn-url-generator.js`,
+      `electron`, // :shrug: `got` seems to have electron specific code path
+    ],
+    plugins: [
+      new webpack.DefinePlugin({
+        CDN_DATASTORE_PATH: JSON.stringify(
+          shouldBundleDatastore() ? `` : getLmdbOnCdnPath()
+        ),
+        CDN_DATASTORE_ORIGIN: JSON.stringify(
+          shouldBundleDatastore() ? `` : state.adapter.config.deployURL ?? ``
+        ),
+        PATH_PREFIX: JSON.stringify(pathPrefix),
+        IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH: JSON.stringify(
+          imageCdnUrlGeneratorModuleRelativePath
+        ),
+        FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH: JSON.stringify(
+          fileCdnUrlGeneratorModuleRelativePath
+        ),
+      }),
+      createLoggingPlugin(),
+    ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
+  })
 
-  await fs.outputFile(path.join(outputDir, `lambda.js`), functionCode)
-
-  return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => {
-      compiler.close(closeErr => {
-        if (err) {
-          return reject(err)
-        }
-        if (closeErr) {
-          return reject(closeErr)
-        }
-        return resolve(stats?.compilation)
+  function runCompiler(
+    instance: webpack.Compiler
+  ): Promise<webpack.Compilation | undefined> {
+    return new Promise((resolve, reject) => {
+      instance.run((err, stats) => {
+        instance.close(closeErr => {
+          if (err) {
+            return reject(err)
+          }
+          if (closeErr) {
+            return reject(closeErr)
+          }
+          return resolve(stats?.compilation)
+        })
       })
     })
-  })
+  }
+
+  const [pageEngineCompilation] = await Promise.all([
+    runCompiler(compiler),
+    runCompiler(lambdaCompiler),
+  ])
+
+  return pageEngineCompilation
 }

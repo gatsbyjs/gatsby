@@ -1,217 +1,16 @@
 import type { IFunctionDefinition } from "gatsby"
 
+import { createRequire } from "node:module"
 import { cwd } from "node:process"
-import { copySync, ensureDir, readJSONSync } from "fs-extra"
-import { dirname, extname, join, sep } from "node:path"
-import { existsSync, readdirSync, realpathSync, writeFileSync } from "node:fs"
-import { slash } from "gatsby-core-utils/path"
+import { ensureDir } from "fs-extra"
+import { join } from "node:path"
 import { relative } from "node:path/posix"
+import { slash } from "gatsby-core-utils/path"
+import { writeFileSync } from "node:fs"
 
 import { generator } from "./generator"
 
-/*
-  Locates a node_modules package directory using three strategies in order:
-
-    A) Walk up from cwd() checking standard locations at each level.
-      Handles npm/yarn workspaces monorepos where deps are hoisted to a parent directory.
-
-    B) Follow the adapter's real path into pnpm's virtual store and look for the
-      package as a sibling (pnpm sibling layout for adapter deps like `cookie`).
-
-    C) Same as B but via gatsby's real path (for gatsby's own deps like `fs-extra`, `linkfs`).
-
-    Avoids require.resolve() without a `paths` option because that resolves relative to
-    the adapter's physical location — in the dev monorepo (symlinked adapter) that
-    produces paths under packages/gatsby-adapter-netlify/ rather than the user's project.
-*/
-
-export function findNodeModuleDir(
-  packageName: string,
-  optional = false
-): string | undefined {
-  /*
-    Strategy A: walk up the directory tree.
-    The for-loop condition `searchDir !== prev` is false only when dirname() returns
-    its own argument, which happens at the filesystem root — so this terminates.
-  */
-
-  for (
-    let searchDir = cwd(), prev = ``;
-    searchDir !== prev;
-    prev = searchDir, searchDir = dirname(searchDir)
-  ) {
-    const candidates = [
-      join(
-        searchDir,
-        `node_modules`,
-        `gatsby-adapter-netlify`,
-        `node_modules`,
-        packageName
-      ),
-      join(searchDir, `node_modules`, packageName),
-    ]
-
-    for (const dir of candidates) {
-      if (existsSync(join(dir, `package.json`))) {
-        return dir
-      }
-    }
-  }
-
-  /*
-    Strategy B: pnpm virtual store via adapter's sibling layout
-    (covers adapter deps like `cookie` that aren't hoisted to project root)
-  */
-
-  try {
-    const adapterLink = join(cwd(), `node_modules`, `gatsby-adapter-netlify`)
-
-    if (existsSync(adapterLink)) {
-      const adapterReal = realpathSync(adapterLink)
-      // adapterReal = .../node_modules/.pnpm/gatsby-adapter-netlify@X/node_modules/gatsby-adapter-netlify
-      // package is a sibling one directory up in the same node_modules
-      const siblingDir = join(dirname(adapterReal), packageName)
-
-      if (existsSync(join(siblingDir, `package.json`))) {
-        return siblingDir
-      }
-    }
-  } catch {
-    // ignore — realpathSync can throw if the symlink is broken
-  }
-
-  /*
-    Strategy C: pnpm virtual store via gatsby's sibling layout
-    (covers gatsby's own deps like `fs-extra` and `linkfs`)
-  */
-
-  try {
-    const gatsbyLink = join(cwd(), `node_modules`, `gatsby`)
-
-    if (existsSync(gatsbyLink)) {
-      const gatsbyReal = realpathSync(gatsbyLink)
-      const siblingDir = join(dirname(gatsbyReal), packageName)
-
-      if (existsSync(join(siblingDir, `package.json`))) {
-        return siblingDir
-      }
-    }
-  } catch {
-    // ignore
-  }
-
-  if (!optional) {
-    throw new Error(
-      `gatsby-adapter-netlify: Could not find '${packageName}' in node_modules. Tried walking up from ${cwd()} and probing pnpm virtual store siblings.`
-    )
-  }
-
-  return undefined
-}
-
-/*
-  When a package is found inside pnpm's virtual store (.pnpm/), it isn't reachable
-  by name from lambda.js's location at runtime (no root symlink for indirect deps).
-  Copy it to .cache/page-ssr/node_modules/<pkg>/ so Node.js finds it there first
-  (nearest ancestor node_modules wins in the CJS resolution algorithm).
-*/
-
-export function ensureRuntimeResolvable(
-  dir: string,
-  packageName: string
-): string {
-  const isVirtualStore =
-    dir.includes(`${sep}node_modules${sep}.pnpm${sep}`) ||
-    dir.includes(`/node_modules/.pnpm/`)
-
-  if (!isVirtualStore) {
-    return dir
-  }
-
-  const copyTarget = join(
-    cwd(),
-    `.cache`,
-    `page-ssr`,
-    `node_modules`,
-    packageName
-  )
-
-  if (!existsSync(copyTarget)) {
-    copySync(dir, copyTarget)
-  }
-
-  return copyTarget
-}
-
-export function isExcludedDir(name: string): boolean {
-  return name === `__tests__`
-}
-
-export function isExcludedFile(name: string): boolean {
-  const lower = name.toLowerCase()
-  return (
-    extname(lower) === `.md` ||
-    lower.startsWith(`license`) ||
-    lower.startsWith(`licence`) ||
-    lower === `tsconfig.json` ||
-    lower === `gulpfile.js`
-  )
-}
-
-/*
-  Recursively collects site-root-relative file paths for a package and all of
-  its transitive dependencies. Scanning the directory rather than returning a
-  glob lets us exclude documentation and license files in code without relying
-  on the bundler's negation-glob support. Sharing `visited` across calls
-  deduplicates entries when multiple packages share a common dep
-  (e.g. both fs-extra and linkfs need graceful-fs).
-*/
-
-export function collectNodeModuleFiles(
-  packageName: string,
-  optional = false,
-  visited = new Set<string>()
-): Array<string> {
-  if (visited.has(packageName)) {
-    return []
-  }
-
-  visited.add(packageName)
-  const rawDir = findNodeModuleDir(packageName, optional)
-
-  if (!rawDir) {
-    return []
-  }
-
-  const dir = ensureRuntimeResolvable(rawDir, packageName)
-  const files: Array<string> = []
-
-  function walk(currentDir: string): void {
-    for (const entry of readdirSync(currentDir, {
-      withFileTypes: true,
-    })) {
-      if (entry.isDirectory()) {
-        if (!isExcludedDir(entry.name)) {
-          walk(join(currentDir, entry.name))
-        }
-      } else if (entry.isFile() && !isExcludedFile(entry.name)) {
-        files.push(slash(join(currentDir, entry.name)))
-      }
-    }
-  }
-
-  walk(dir)
-
-  const pkg = readJSONSync(join(dir, `package.json`)) as {
-    dependencies?: Record<string, string>
-  }
-
-  for (const dep of Object.keys(pkg.dependencies ?? {})) {
-    files.push(...collectNodeModuleFiles(dep, true, visited))
-  }
-
-  return files
-}
+const require = createRequire(__filename)
 
 export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId
@@ -228,21 +27,8 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
     )
   }
 
-  const cookieDir = ensureRuntimeResolvable(
-    findNodeModuleDir(`cookie`) as string,
-    `cookie`
-  )
-
-  const cookiePkg = readJSONSync(join(cookieDir, `package.json`)) as {
-    main?: string
-  }
-
-  const cookieImportPath =
-    `./` +
-    relative(
-      slash(frameworksApiFunctionsDir),
-      slash(join(cookieDir, cookiePkg.main ?? `index.js`))
-    )
+  const cookieModulePath = require.resolve(`./vendor/cookie`)
+  const cookieImportPath = getRelativePathToModule(`./vendor/cookie`)
 
   const commonImports = /* javascript */ `import { Buffer } from 'node:buffer'
 import { IncomingMessage } from 'node:http'
@@ -257,6 +43,7 @@ import cookie from '${cookieImportPath}'`
   const functionLoader = /* javascript */ `const functionModule = await import("${getRelativePathToModule(
     join(cwd(), fun.pathToEntryPoint)
   )}")
+
 const functionHandler = preferDefault(preferDefault(functionModule))`
 
   const handleRequestFn = /* javascript */ `async function handleRequest(request, context, shouldCache) {
@@ -589,49 +376,20 @@ export default async function(request, context) {
 
 export const config = {
   generator: '${generator}',
-  includedFiles: ${JSON.stringify(
-    ((): Array<string> => {
-      const visited = new Set<string>()
-      return [
-        ...collectNodeModuleFiles(`cookie`, false, visited),
-        ...fun.requiredFiles.map(file =>
-          slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
-        ),
-      ]
-    })()
-  )},
+  includedFiles: ${JSON.stringify([
+    slash(cookieModulePath),
+    ...fun.requiredFiles.map(file =>
+      slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
+    ),
+  ])},
   name: 'Gatsby ${fun.name}',
   nodeBundler: 'none',
   path: '${fun.name}',
 }`
   } else {
     handlerSource = /* javascript */ `${commonImports}
-import { createRequire as __createRequire } from 'node:module'
-import { constants as __fsConstants } from 'node:fs'
 
 ${preferDefaultFn}
-
-/*
-  F_OK/R_OK/W_OK/X_OK are not own-enumerable on this fs-extra install.
-  linkfs copies them into lfs via its props list leaving lfs.F_OK = undefined.
-  Gatsby's setupFsWrapper (called at lambda.js module-load time) then calls
-  Object.hasOwnProperty.call(undefined, 'native') which throws.
-  Must run before the lambda.js import below so the CJS require cache is
-  already populated with the patched module when lambda.js does require('fs-extra').
-*/
-
-const __require = __createRequire(import.meta.url)
-const __fsExtra = __require('fs-extra')
-
-for (
-  const [__k, __v] of [['F_OK', __fsConstants.F_OK],
-  ['R_OK', __fsConstants.R_OK], ['W_OK', __fsConstants.W_OK],
-  ['X_OK', __fsConstants.X_OK]]
-) {
-  if (!Object.prototype.hasOwnProperty.call(__fsExtra, __k)) {
-    __fsExtra[__k] = __v
-  }
-}
 
 ${functionLoader}
 
@@ -661,19 +419,12 @@ export default async function(request, context) {
 
 export const config = {
   generator: '${generator}',
-  includedFiles: ${JSON.stringify(
-    ((): Array<string> => {
-      const visited = new Set<string>()
-      return [
-        ...collectNodeModuleFiles(`cookie`, false, visited),
-        ...collectNodeModuleFiles(`fs-extra`, false, visited),
-        ...collectNodeModuleFiles(`linkfs`, true, visited),
-        ...fun.requiredFiles.map(file =>
-          slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
-        ),
-      ]
-    })()
-  )},
+  includedFiles: ${JSON.stringify([
+    slash(cookieModulePath),
+    ...fun.requiredFiles.map(file =>
+      slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
+    ),
+  ])},
   name: 'Gatsby SSR + DSG',
   nodeBundler: 'none',
   path: '/*',
