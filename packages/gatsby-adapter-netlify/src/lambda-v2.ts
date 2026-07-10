@@ -40,6 +40,7 @@ function toNetlifyFunctionPath(name: string): string {
 export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId
   const isApiRoute = fun.name.startsWith(`/api/`)
+  const netlifyFunctionPath = toNetlifyFunctionPath(fun.name)
 
   const frameworksApiFunctionsDir = join(cwd(), `.netlify`, `v1`, `functions`)
   await ensureDir(frameworksApiFunctionsDir)
@@ -418,9 +419,9 @@ export const config = {
       slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
     ),
   ])},
-  name: 'Gatsby ${fun.name}',
+  name: 'Gatsby ${netlifyFunctionPath}',
   nodeBundler: 'none',
-  path: '${toNetlifyFunctionPath(fun.name)}',
+  path: '${netlifyFunctionPath}',
 }`
   } else {
     handlerSource = /* javascript */ `${commonImports}
