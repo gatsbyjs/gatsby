@@ -185,7 +185,30 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         useNetlifyImageCDN ? remoteFileAllowedUrls : undefined
       )
 
-      await Promise.all(functionsManifest.map(fun => prepareFunction(fun)))
+      // Function-type routes (e.g. per-page SSR/DSG routes sharing the
+      // `ssr-engine` functionId) tell us the specific paths each function
+      // should be registered for, instead of relying on a catch-all.
+      const pathsByFunctionId = new Map<string, Set<string>>()
+      for (const route of routesManifest) {
+        if (route.type !== `function`) {
+          continue
+        }
+
+        const paths = pathsByFunctionId.get(route.functionId)
+        if (paths) {
+          paths.add(route.path)
+        } else {
+          pathsByFunctionId.set(route.functionId, new Set([route.path]))
+        }
+      }
+
+      await Promise.all(
+        functionsManifest.map(fun =>
+          prepareFunction(fun, [
+            ...(pathsByFunctionId.get(fun.functionId) ?? []),
+          ])
+        )
+      )
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(

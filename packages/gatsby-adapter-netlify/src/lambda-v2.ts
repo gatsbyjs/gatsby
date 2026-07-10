@@ -37,7 +37,10 @@ function toNetlifyFunctionPath(name: string): string {
     .replace(/\[([^\]]+)\]/g, `:$1`)
 }
 
-export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
+export async function prepareFunction(
+  fun: IFunctionDefinition,
+  paths: Array<string>
+): Promise<void> {
   const functionId = fun.functionId
   const isApiRoute = fun.name.startsWith(`/api/`)
   const netlifyFunctionPath = toNetlifyFunctionPath(fun.name)
@@ -440,10 +443,12 @@ ${handleRequestFn}
 
 function getPagePathForLookup(pathname) {
   const match = pathname.match(/^\\/?page-data\\/(.+)\\/page-data\\.json$/)
+
   if (match) {
     const pagePath = match[1]
     return pagePath === 'index' ? '/' : pagePath
   }
+
   return pathname
 }
 
@@ -464,7 +469,7 @@ export const config = {
   ])},
   name: 'Gatsby SSR + DSG',
   nodeBundler: 'none',
-  path: '/*',
+  path: ${JSON.stringify(paths)},
   preferStatic: true
 }`
   }

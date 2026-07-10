@@ -50,12 +50,15 @@ function getWrittenHandler(functionId: string): string {
 describe(`prepareFunction`, () => {
   describe(`SSR/DSG routes`, () => {
     it(`produces a handler that imports the entrypoint and page-ssr engine`, async () => {
-      await prepareFunction({
-        functionId: `test`,
-        name: `SSR & DSG`,
-        pathToEntryPoint,
-        requiredFiles: [requiredFile],
-      })
+      await prepareFunction(
+        {
+          functionId: `test`,
+          name: `SSR & DSG`,
+          pathToEntryPoint,
+          requiredFiles: [requiredFile],
+        },
+        [`/blog/:slug/`, `/page-data/blog/:slug/page-data.json`]
+      )
 
       const handlerCode = getWrittenHandler(`test`)
 
@@ -69,7 +72,11 @@ describe(`prepareFunction`, () => {
       expect(handlerCode).toContain(`generator: 'gatsby-adapter-netlify`)
       expect(handlerCode).toContain(`name: 'Gatsby SSR + DSG'`)
       expect(handlerCode).toContain(`nodeBundler: 'none'`)
-      expect(handlerCode).toContain(`path: '/*'`)
+
+      expect(handlerCode).toContain(
+        `path: ["/blog/:slug/","/page-data/blog/:slug/page-data.json"]`
+      )
+
       expect(handlerCode).toContain(`preferStatic: true`)
       expect(handlerCode).toContain(slash(requiredFile))
     })
@@ -77,12 +84,15 @@ describe(`prepareFunction`, () => {
 
   describe(`API routes`, () => {
     it(`produces a handler scoped to the API route's own path`, async () => {
-      await prepareFunction({
-        functionId: `api-test`,
-        name: `/api/test`,
-        pathToEntryPoint,
-        requiredFiles: [requiredFile],
-      })
+      await prepareFunction(
+        {
+          functionId: `api-test`,
+          name: `/api/test`,
+          pathToEntryPoint,
+          requiredFiles: [requiredFile],
+        },
+        [`/api/test`]
+      )
 
       const handlerCode = getWrittenHandler(`api-test`)
 
@@ -110,12 +120,15 @@ describe(`prepareFunction`, () => {
     ])(
       `converts bracketed route %s to the Netlify path %s`,
       async (functionId, name, netlifyPath) => {
-        await prepareFunction({
-          functionId,
-          name,
-          pathToEntryPoint,
-          requiredFiles: [requiredFile],
-        })
+        await prepareFunction(
+          {
+            functionId,
+            name,
+            pathToEntryPoint,
+            requiredFiles: [requiredFile],
+          },
+          [netlifyPath]
+        )
 
         const handlerCode = getWrittenHandler(functionId)
         expect(handlerCode).toContain(`path: '${netlifyPath}',`)
