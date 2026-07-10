@@ -98,5 +98,28 @@ describe(`prepareFunction`, () => {
       expect(handlerCode).not.toContain(`preferStatic`)
       expect(handlerCode).toContain(slash(requiredFile))
     })
+
+    it.each([
+      [`param`, `/api/param/[slug]`, `/api/param/:slug`],
+      [`wildcard`, `/api/wildcard/[...]`, `/api/wildcard/*`],
+      [
+        `named-wildcard`,
+        `/api/named-wildcard/[...slug]`,
+        `/api/named-wildcard/:slug*`,
+      ],
+    ])(
+      `converts bracketed route %s to the Netlify path %s`,
+      async (functionId, name, netlifyPath) => {
+        await prepareFunction({
+          functionId,
+          name,
+          pathToEntryPoint,
+          requiredFiles: [requiredFile],
+        })
+
+        const handlerCode = getWrittenHandler(functionId)
+        expect(handlerCode).toContain(`path: '${netlifyPath}',`)
+      }
+    )
   })
 })

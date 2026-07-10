@@ -12,6 +12,31 @@ import { generator } from "./generator"
 
 const require = createRequire(__filename)
 
+/*
+  Converts Gatsby's file-system route bracket syntax to a Netlify Functions v2
+  path (which is matched using the URLPattern spec):
+  - /api/param/[slug]   => /api/param/:slug
+  - /api/wildcard/[...] => /api/wildcard/*
+  - /api/wildcard/[...slug] => /api/wildcard/:slug*
+
+  * and :slug* match identical sets of URLs (both consume everything after
+  the prefix, across any number of segments) — the only difference is the
+  key the captured value is exposed under in context.params: * is an
+  unnamed group, so it's exposed as the index key "0" (guaranteed by the
+  URLPattern spec). :slug* is a named repeat-modifier group; Netlify's docs
+  only show named groups for single-segment :id-style params, not this
+  modifier, so the "slug" key is verified against the current implementation
+  but not a documented guarantee — only named splat params (from a
+  [...slug] route) are at risk if that ever changes.
+*/
+
+function toNetlifyFunctionPath(name: string): string {
+  return name
+    .replace(/\[\.\.\.\]/g, `*`)
+    .replace(/\[\.\.\.([^\]]+)\]/g, `:$1*`)
+    .replace(/\[([^\]]+)\]/g, `:$1`)
+}
+
 export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId
   const isApiRoute = fun.name.startsWith(`/api/`)
@@ -167,6 +192,17 @@ async function createRequestObject(netlifyRequest, netlifyContext) {
   req.multiValueQuery = multiValueQuery
 
   req.originalUrl = netlifyContext.url.pathname
+
+  // Unnamed splats (from a [...] route) come back keyed by index
+  // alias to * per Gatsby's Functions API
+  req.params = {
+    ...netlifyContext.params
+  }
+
+  if (req.params['0'] !== undefined) {
+    req.params['*'] = req.params['0']
+  }
+
   req.query = Object.fromEntries(netlifyContext.url.searchParams)
   req.rawUrl = netlifyRequest.url
   req.url = req.originalUrl
@@ -384,7 +420,7 @@ export const config = {
   ])},
   name: 'Gatsby ${fun.name}',
   nodeBundler: 'none',
-  path: '${fun.name}',
+  path: '${toNetlifyFunctionPath(fun.name)}',
 }`
   } else {
     handlerSource = /* javascript */ `${commonImports}
