@@ -39,11 +39,19 @@ function toNetlifyFunctionPath(name: string): string {
 
 export async function prepareFunction(
   fun: IFunctionDefinition,
-  paths: Array<string>
+  paths: Array<string>,
+  pathPrefix: string
 ): Promise<void> {
   const functionId = fun.functionId
   const isApiRoute = fun.name.startsWith(`/api/`)
-  const netlifyFunctionPath = toNetlifyFunctionPath(fun.name)
+
+  /*
+    paths (derived from Gatsby's routesManifest) already has pathPrefix
+    baked in, but API routes' path is built from fun.name which doesn't,
+    so it needs to be applied here. It's an empty string when none provided.
+  */
+
+  const netlifyFunctionPath = `${pathPrefix}${toNetlifyFunctionPath(fun.name)}`
 
   const frameworksApiFunctionsDir = join(cwd(), `.netlify`, `v1`, `functions`)
   await ensureDir(frameworksApiFunctionsDir)

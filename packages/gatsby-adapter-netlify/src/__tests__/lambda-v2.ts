@@ -57,7 +57,8 @@ describe(`prepareFunction`, () => {
           pathToEntryPoint,
           requiredFiles: [requiredFile],
         },
-        [`/blog/:slug/`, `/page-data/blog/:slug/page-data.json`]
+        [`/blog/:slug/`, `/page-data/blog/:slug/page-data.json`],
+        ``
       )
 
       const handlerCode = getWrittenHandler(`test`)
@@ -80,6 +81,22 @@ describe(`prepareFunction`, () => {
       expect(handlerCode).toContain(`preferStatic: true`)
       expect(handlerCode).toContain(slash(requiredFile))
     })
+
+    it(`passes through paths as-is, since routesManifest already applies pathPrefix`, async () => {
+      await prepareFunction(
+        {
+          functionId: `test-prefix`,
+          name: `SSR & DSG`,
+          pathToEntryPoint,
+          requiredFiles: [requiredFile],
+        },
+        [`/prefix/blog/:slug/`],
+        `/prefix`
+      )
+
+      const handlerCode = getWrittenHandler(`test-prefix`)
+      expect(handlerCode).toContain(`path: ["/prefix/blog/:slug/"]`)
+    })
   })
 
   describe(`API routes`, () => {
@@ -91,7 +108,8 @@ describe(`prepareFunction`, () => {
           pathToEntryPoint,
           requiredFiles: [requiredFile],
         },
-        [`/api/test`]
+        [`/api/test`],
+        ``
       )
 
       const handlerCode = getWrittenHandler(`api-test`)
@@ -107,6 +125,24 @@ describe(`prepareFunction`, () => {
       expect(handlerCode).toContain(`path: '/api/test'`)
       expect(handlerCode).not.toContain(`preferStatic`)
       expect(handlerCode).toContain(slash(requiredFile))
+    })
+
+    it(`prepends pathPrefix to the API route's path`, async () => {
+      await prepareFunction(
+        {
+          functionId: `api-test-prefix`,
+          name: `/api/test`,
+          pathToEntryPoint,
+          requiredFiles: [requiredFile],
+        },
+        [`/prefix/api/test`],
+        `/prefix`
+      )
+
+      const handlerCode = getWrittenHandler(`api-test-prefix`)
+
+      expect(handlerCode).toContain(`name: 'Gatsby /prefix/api/test'`)
+      expect(handlerCode).toContain(`path: '/prefix/api/test'`)
     })
 
     it.each([
@@ -127,7 +163,8 @@ describe(`prepareFunction`, () => {
             pathToEntryPoint,
             requiredFiles: [requiredFile],
           },
-          [netlifyPath]
+          [netlifyPath],
+          ``
         )
 
         const handlerCode = getWrittenHandler(functionId)

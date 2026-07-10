@@ -204,9 +204,11 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
 
       await Promise.all(
         functionsManifest.map(fun =>
-          prepareFunction(fun, [
-            ...(pathsByFunctionId.get(fun.functionId) ?? []),
-          ])
+          prepareFunction(
+            fun,
+            [...(pathsByFunctionId.get(fun.functionId) ?? [])],
+            pathPrefix
+          )
         )
       )
     },
