@@ -14,6 +14,7 @@ jest.mock(`fs-extra`, () => {
     writeFile: jest.fn().mockImplementation(async (filePath, content) => {
       mockFiles.set(filePath, content)
     }),
+    ensureDir: jest.fn().mockResolvedValue(undefined),
     pathExists: jest
       .fn()
       .mockImplementation(async filePath => mockFiles.has(filePath)),
@@ -28,10 +29,8 @@ jest.mock(`axios`, () => {
 const path = require(`path`)
 
 const latestAdaptersModulePath = path.join(
-  __dirname,
-  `..`,
-  `..`,
-  `..`,
+  process.cwd(),
+  `.cache`,
   `latest-adapters.js`
 )
 
@@ -162,24 +161,10 @@ describe(`default behavior: has network connectivity`, () => {
     it(`uses GATSBY_ADAPTERS_MANIFEST env var if set`, async () => {
       process.env.GATSBY_ADAPTERS_MANIFEST = `custom_manifest`
 
-      axios.get.mockRejectedValueOnce(
-        new Error(`does not matter and should't be called`)
-      )
-      axios.get.mockRejectedValueOnce(
-        new Error(`does not matter and should't be called`)
-      )
-
       const data = await getLatestAdapters()
 
-      expect(axios.get).not.toHaveBeenCalledWith(
-        expect.stringContaining(`raw.githubusercontent.com`),
-        expect.any(Object)
-      )
-
-      expect(axios.get).not.toHaveBeenCalledWith(
-        expect.stringContaining(`unpkg.com`),
-        expect.any(Object)
-      )
+      // forcedContent should short-circuit fetching entirely
+      expect(axios.get).not.toHaveBeenCalled()
 
       expect(fs.writeFile).toHaveBeenCalledWith(
         expect.stringContaining(`latest-adapters.js`),
@@ -188,6 +173,16 @@ describe(`default behavior: has network connectivity`, () => {
       )
 
       expect(data).toEqual(mockAdaptersManifest)
+    })
+
+    it(`doesn't throw if the cache directory can't be written to (e.g. read-only filesystem)`, async () => {
+      // use forcedContent so this doesn't depend on axios.get call count/order
+      process.env.GATSBY_ADAPTERS_MANIFEST = latestAdaptersMarker
+      fs.ensureDir.mockRejectedValueOnce(new Error(`EROFS`))
+
+      await expect(getLatestAdapters()).resolves.not.toThrow()
+
+      expect(fs.writeFile).not.toHaveBeenCalled()
     })
   })
 })
