@@ -233,15 +233,29 @@ function checkIfNeedToInstallMissingSharp(
   currentTarget: IPlatformAndArch
 ): IBinaryPackageStatus | undefined {
   try {
-    // check if sharp is resolvable
-    const sharp: typeof import("sharp") = require(`sharp`)
+    // "gatsby" doesn't depend on "sharp" directly (only "gatsby-sharp" does), so borrow
+    // gatsby-sharp's require context to resolve it - a plain `require("sharp")` here only
+    // works by accident of hoisting under classic node_modules installs, and is rejected
+    // outright as an undeclared/phantom dependency under strict resolution (e.g. Yarn PnP)
+    const gatsbySharpRequire = mod.createRequire(
+      require.resolve(`gatsby-sharp/package.json`)
+    )
+    const sharpPackageJsonLocation =
+      gatsbySharpRequire.resolve(`sharp/package.json`)
+    // sharp throws synchronously at require-time if it can't load a native binary for the
+    // current platform, so getting here already confirms one was found and loaded
+    const sharp: typeof import("sharp") = gatsbySharpRequire(`sharp`)
 
     if (isEqual(functionsTarget, currentTarget)) {
-      // if current platform and target is the same as functions target, we need to check if vendored libvips
-      // exists in the current sharp installation as it will be needed in lambda
-      if (sharp.vendor.installed.includes(sharp.vendor.current)) {
-        // vendored libvips is installed, so we can use it
-        return undefined
+      // current platform and functions target are the same, and we've just confirmed sharp
+      // can load its native binary here, so point the bundle at this exact install rather
+      // than installing a separate copy into the internal packages cache
+      return {
+        needToInstall: false,
+        packageName: `sharp`,
+        packageVersion:
+          sharp.versions.sharp ?? require(sharpPackageJsonLocation).version,
+        packageLocation: path.dirname(sharpPackageJsonLocation),
       }
     }
 
@@ -250,7 +264,7 @@ function checkIfNeedToInstallMissingSharp(
         needToInstall: true,
         packageName: `sharp`,
         packageVersion:
-          sharp.versions.sharp ?? require(`sharp/package.json`).version,
+          sharp.versions.sharp ?? require(sharpPackageJsonLocation).version,
       },
       functionsTarget
     )
