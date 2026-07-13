@@ -298,6 +298,47 @@ function getSharpRuntimePlatform(
   }
 }
 
+async function copySharpLibvipsSharedLibrary(
+  sharpPackageLocation: string,
+  runtimePlatform: string
+): Promise<void> {
+  // sharp's compiled .node addon dynamically links (via rpath) against a shared library shipped
+  // in a separate "@img/sharp-libvips-*" package, using relative search paths such as
+  // "../../node_modules/@img/sharp-libvips-<platform>/lib/*" computed relative to wherever the
+  // .node file itself ends up. `@vercel/webpack-asset-relocator-loader` only auto-discovers a
+  // native binary's own shared-library dependencies for the `bindings`/`nbind`/`node-pre-gyp`
+  // loading conventions - sharp uses none of those - so we place it ourselves at one of the
+  // relative locations its rpath actually searches. Not every platform has a separate libvips
+  // package (e.g. Windows statically links it), so a missing one here is not an error.
+  try {
+    const sharpRequire = mod.createRequire(
+      path.join(sharpPackageLocation, `package.json`)
+    )
+    const libvipsPackageJsonLocation = sharpRequire.resolve(
+      `@img/sharp-libvips-${runtimePlatform}/package.json`
+    )
+    const libvipsLibDir = path.join(
+      path.dirname(libvipsPackageJsonLocation),
+      `lib`
+    )
+
+    if (await fs.pathExists(libvipsLibDir)) {
+      await fs.copy(
+        libvipsLibDir,
+        path.join(
+          outputDir,
+          `node_modules`,
+          `@img`,
+          `sharp-libvips-${runtimePlatform}`,
+          `lib`
+        )
+      )
+    }
+  } catch (e) {
+    // no-op - platform has no separate libvips package to copy, or we couldn't find it
+  }
+}
+
 async function installMissing(
   packages: Array<IBinaryPackageStatus | undefined>,
   functionsTarget: IPlatformAndArch
@@ -444,6 +485,13 @@ export async function createGraphqlEngineBundle(
       functionsTarget,
       currentTarget
     )
+
+    if (forcedSharpRuntimePlatform) {
+      await copySharpLibvipsSharedLibrary(
+        sharpPackageInfo.packageLocation,
+        forcedSharpRuntimePlatform
+      )
+    }
   }
 
   const compiler = webpack({
