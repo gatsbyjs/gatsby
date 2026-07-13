@@ -512,6 +512,10 @@ jobs:
       - run: # Don't allow any fallback to root dependencies
           command: yarn config set pnpFallbackMode none
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Pin sharp's optional-dependency resolution to this executor's actual platform, so a host-detection quirk can't cause it to skip installing the linux-x64/glibc binary
+          command: |
+            echo -e 'supportedArchitectures:\n  os:\n    - "linux"\n  cpu:\n    - "x64"\n  libc:\n    - "glibc"' >> .yarnrc.yml
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Install before custom registry server is set
           command: yarn add start-server-and-test@^1.11.0
           working_directory: /tmp/e2e-tests/gatsby-pnp
