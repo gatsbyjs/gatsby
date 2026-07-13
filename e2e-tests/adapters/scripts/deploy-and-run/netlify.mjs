@@ -76,21 +76,16 @@ if (deployResults.exitCode !== 0) {
   exit(deployResults.exitCode)
 }
 
-// Netlify CLI prints: "Draft URL: <https://xxxxx--mysite.netlify.app>"
-const draftUrlMatch = deployResults.stdout.match(
-  /Draft URL: <(https?:\/\/[^>]+)>/
-)
-
 // The permalink also appears as part of a "/deploys/<deploy_id>" link in the output.
 const deployIdMatch = deployResults.stdout.match(/\/deploys\/([a-f0-9]+)/)
 
-if (!draftUrlMatch || !deployIdMatch) {
+if (!deployIdMatch) {
   error(`Could not extract deploy URL or deploy ID from Netlify CLI output`)
   exit(1)
 }
 
 const deployId = deployIdMatch[1]
-const deployUrl = draftUrlMatch[1] + (env.PATH_PREFIX ?? ``)
+const deployUrl = `https://${deployId}--${env.NETLIFY_SITE_ID}.netlify.app` + (env.PATH_PREFIX ?? ``)
 
 env.DEPLOY_URL = deployUrl
 log(`Deployed to ${deployUrl}`)
