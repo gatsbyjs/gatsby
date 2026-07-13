@@ -488,6 +488,15 @@ jobs:
       - run: # default doesn't have API functions so let's get some of those
           command: cp -r ./e2e-tests/adapters/src/api /tmp/e2e-tests/gatsby-pnp/src/api
           working_directory: ~/project
+      - run: # sharp <0.33 doesn't support Yarn PnP (its native binary can't be located after unplugging); force a PnP-compatible version for this test
+          command: |
+            node -e "
+              const fs = require('fs');
+              const pkg = JSON.parse(fs.readFileSync('package.json'));
+              pkg.resolutions = { ...pkg.resolutions, sharp: '^0.33.5' };
+              fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+            "
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: touch yarn.lock
           working_directory: /tmp/e2e-tests/gatsby-pnp
