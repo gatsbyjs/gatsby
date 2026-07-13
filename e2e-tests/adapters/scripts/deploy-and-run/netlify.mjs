@@ -76,7 +76,7 @@ if (deployResults.exitCode !== 0) {
   exit(deployResults.exitCode)
 }
 
-// The permalink also appears as part of a "/deploys/<deploy_id>" link in the output.
+// /deploys/<deploy_id>
 const deployIdMatch = deployResults.stdout.match(/\/deploys\/([a-f0-9]+)/)
 
 if (!deployIdMatch) {
@@ -85,8 +85,7 @@ if (!deployIdMatch) {
 }
 
 const deployId = deployIdMatch[1]
-const deployUrl = `https://${deployId}--${env.NETLIFY_SITE_ID}.netlify.app` + (env.PATH_PREFIX ?? ``)
-
+const deployUrl = `https://${deployId}--gatsby-adapters-e2e-default.netlify.app` + (env.PATH_PREFIX ?? ``)
 env.DEPLOY_URL = deployUrl
 log(`Deployed to ${deployUrl}`)
 

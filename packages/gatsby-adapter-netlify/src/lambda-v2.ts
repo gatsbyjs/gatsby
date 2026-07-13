@@ -37,6 +37,33 @@ function toNetlifyFunctionPath(name: string): string {
     .replace(/\[([^\]]+)\]/g, `:$1`)
 }
 
+// File-like routes (page-data.json, etc) have a fixed suffix and aren't
+// affected by the trailingSlash option, so they're left untouched below.
+const ASSET_SUFFIXES = [`.html`, `.json`, `.js`, `.map`, `.txt`, `.xml`, `.pdf`]
+
+/*
+  Netlify Functions v2 paths are matched using the URLPattern spec, which
+  treats a trailing slash as significant ("/foo" and "/foo/" are different
+  patterns). Gatsby's own routing (both client-side and the SSR engine's
+  internal page lookup, see find-page-by-path.ts) treats the trailing slash
+  as optional regardless of the trailingSlash option, since there's no
+  redirect layer normalizing it before the request reaches the function.
+  `{/}?` is URLPattern's syntax for an optional trailing slash group, so
+  this keeps the function reachable however the request happens to be
+  slashed.
+*/
+function withOptionalTrailingSlash(path: string): string {
+  if (
+    path === `/` ||
+    path.endsWith(`*`) ||
+    ASSET_SUFFIXES.some(suffix => path.endsWith(suffix))
+  ) {
+    return path
+  }
+
+  return path.endsWith(`/`) ? `${path.slice(0, -1)}{/}?` : `${path}{/}?`
+}
+
 export async function prepareFunction(
   fun: IFunctionDefinition,
   paths: Array<string>,
@@ -477,7 +504,7 @@ export const config = {
   ])},
   name: 'Gatsby SSR + DSG',
   nodeBundler: 'none',
-  path: ${JSON.stringify(paths)},
+  path: ${JSON.stringify(paths.map(withOptionalTrailingSlash))},
   preferStatic: true
 }`
   }

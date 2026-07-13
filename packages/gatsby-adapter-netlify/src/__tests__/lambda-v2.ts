@@ -74,8 +74,11 @@ describe(`prepareFunction`, () => {
       expect(handlerCode).toContain(`name: 'Gatsby SSR + DSG'`)
       expect(handlerCode).toContain(`nodeBundler: 'none'`)
 
+      // trailing slash is made optional since the request may or may not
+      // include one regardless of the trailingSlash option; page-data.json
+      // paths are left untouched since they're fixed asset names
       expect(handlerCode).toContain(
-        `path: ["/blog/:slug/","/page-data/blog/:slug/page-data.json"]`
+        `path: ["/blog/:slug{/}?","/page-data/blog/:slug/page-data.json"]`
       )
 
       expect(handlerCode).toContain(`preferStatic: true`)
@@ -95,7 +98,31 @@ describe(`prepareFunction`, () => {
       )
 
       const handlerCode = getWrittenHandler(`test-prefix`)
-      expect(handlerCode).toContain(`path: ["/prefix/blog/:slug/"]`)
+      expect(handlerCode).toContain(`path: ["/prefix/blog/:slug{/}?"]`)
+    })
+
+    it(`makes the trailing slash optional so the request's exact slashing doesn't matter`, async () => {
+      await prepareFunction(
+        {
+          functionId: `test-trailing-slash`,
+          name: `SSR & DSG`,
+          pathToEntryPoint,
+          requiredFiles: [requiredFile],
+        },
+        [
+          `/`,
+          `/blog/`,
+          `/blog/:slug/`,
+          `/app/*`,
+          `/page-data/blog/page-data.json`,
+        ],
+        ``
+      )
+
+      const handlerCode = getWrittenHandler(`test-trailing-slash`)
+      expect(handlerCode).toContain(
+        `path: ["/","/blog{/}?","/blog/:slug{/}?","/app/*","/page-data/blog/page-data.json"]`
+      )
     })
   })
 
