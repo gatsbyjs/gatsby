@@ -37,8 +37,6 @@ function toNetlifyFunctionPath(name: string): string {
     .replace(/\[([^\]]+)\]/g, `:$1`)
 }
 
-// File-like routes (page-data.json, etc) have a fixed suffix and aren't
-// affected by the trailingSlash option, so they're left untouched below.
 const ASSET_SUFFIXES = [`.html`, `.json`, `.js`, `.map`, `.txt`, `.xml`, `.pdf`]
 
 /*
@@ -51,7 +49,10 @@ const ASSET_SUFFIXES = [`.html`, `.json`, `.js`, `.map`, `.txt`, `.xml`, `.pdf`]
   `{/}?` is URLPattern's syntax for an optional trailing slash group, so
   this keeps the function reachable however the request happens to be
   slashed.
+
+  Also, skip the static files (the ones in asset suffixes above).
 */
+
 function withOptionalTrailingSlash(path: string): string {
   if (
     path === `/` ||

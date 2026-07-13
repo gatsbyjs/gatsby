@@ -959,6 +959,10 @@ workflows:
           <<: *integration-test-workflow
       - integration_tests_esm_in_gatsby_files:
           <<: *integration-test-workflow
+          # sanitize-html requires Node 22+, so skip the Node 18 matrix entry
+          matrix:
+            parameters:
+              node_version: ["24.18.0"]
       - integration_tests_lmdb_regeneration:
           <<: *integration-test-workflow
       - integration_tests_gatsby_cli:
