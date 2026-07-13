@@ -22,13 +22,6 @@ executors:
       # don't want to use it regardless, for consistency (and because it can cause problems)
       SHARP_IGNORE_GLOBAL_LIBVIPS: 1
 
-  e2e18:
-    docker:
-      - image: "cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1"
-    environment:
-      GATSBY_CPU_COUNT: 2
-      VERBOSE: 1
-
   e2e24:
     docker:
       - image: "cypress/browsers:node-24.18.0-chrome-149.0.7827.200-1-ff-152.0.3-edge-149.0.4022.98-1"
@@ -115,7 +108,7 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["18.2.0", "24.18.0"]
+        node_version: ["24.18.0"]
     requires:
       - bootstrap-<< matrix.node_version >>
 
@@ -287,16 +280,10 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
-  unit_tests_node18:
+  unit_tests_node22:
     executor:
       name: node
-      image: "18.2.0"
-    <<: *test_template
-
-  unit_tests_node20:
-    executor:
-      name: node
-      image: "20.19"
+      image: "22.23.1"
     <<: *test_template
 
   unit_tests_node24:
@@ -784,7 +771,7 @@ jobs:
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
       - restore_yarn_cache:
-          node_version: 18.0.0
+          node_version: 24.18.0
       - <<: *install_node_modules
       - run: yarn markdown
       - run: git config --global user.name "GatsbyJS Bot"
@@ -798,7 +785,7 @@ jobs:
       # python is not built in and node-gyp needs it to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
       - restore_yarn_cache:
-          node_version: 18.0.0
+          node_version: 24.18.0
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
@@ -823,11 +810,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.0.0 and yarn
+          name: Install node 22.23.1 and yarn
           command: |
-            nvm install 18.0.0
-            nvm alias default 18.0.0
-            nvm use 18.0.0
+            nvm install 22.23.1
+            nvm alias default 22.23.1
+            nvm use 22.23.1
             choco install yarn -y
       - run:
           name: Rebuild packages for windows
@@ -861,11 +848,11 @@ jobs:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.19.0, yarn and netlify-cli
+          name: Install node 22.23.1, yarn and netlify-cli
           command: |
-            nvm install 18.19.0
-            nvm alias default 18.19.0
-            nvm use 18.19.0
+            nvm install 22.23.1
+            nvm alias default 22.23.1
+            nvm use 22.23.1
             npm install -g yarn netlify-cli
       - run:
           name: Clear out sharp
@@ -913,26 +900,22 @@ workflows:
           name: "bootstrap-<< matrix.node_version >>"
           matrix:
             parameters:
-              node_version: ["18.2.0", "20.19", "24.18.0"]
+              node_version: ["22.23.1", "24.18.0"]
       - lint
       - typecheck:
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-22.23.1
       - windows_unit_tests:
           <<: *ignore_docs
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-22.23.1
       - windows_adapters_smoke:
           requires:
-            - bootstrap-18.2.0
-      - unit_tests_node18:
+            - bootstrap-22.23.1
+      - unit_tests_node22:
           <<: *ignore_docs
           requires:
-            - bootstrap-18.2.0
-      - unit_tests_node20:
-          <<: *ignore_docs
-          requires:
-            - bootstrap-20.19
+            - bootstrap-22.23.1
       - unit_tests_node24:
           <<: *ignore_docs
           requires:
@@ -959,10 +942,6 @@ workflows:
           <<: *integration-test-workflow
       - integration_tests_esm_in_gatsby_files:
           <<: *integration-test-workflow
-          # sanitize-html requires Node 22+, so skip the Node 18 matrix entry
-          matrix:
-            parameters:
-              node_version: ["24.18.0"]
       - integration_tests_lmdb_regeneration:
           <<: *integration-test-workflow
       - integration_tests_gatsby_cli:
