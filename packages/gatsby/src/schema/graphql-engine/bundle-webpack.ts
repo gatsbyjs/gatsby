@@ -273,6 +273,31 @@ function checkIfNeedToInstallMissingSharp(
   }
 }
 
+function getSharpRuntimePlatform(
+  sharpPackageLocation: string,
+  functionsTarget: IPlatformAndArch,
+  currentTarget: IPlatformAndArch
+): string | undefined {
+  try {
+    if (isEqual(functionsTarget, currentTarget)) {
+      // building for the platform we're actually running on - ask sharp's own detection,
+      // which correctly accounts for musl vs glibc, rather than reimplementing it here
+      const sharpRequire = mod.createRequire(
+        path.join(sharpPackageLocation, `package.json`)
+      )
+      const { runtimePlatformArch } = sharpRequire(`./lib/libvips.js`)
+      return runtimePlatformArch()
+    }
+
+    // cross-platform build - sharp's own detection reflects the build machine, not the
+    // target, so construct the string sharp itself would use (assumes glibc, true of every
+    // functions target Gatsby currently supports)
+    return `${functionsTarget.platform}-${functionsTarget.arch}`
+  } catch (e) {
+    return undefined
+  }
+}
+
 async function installMissing(
   packages: Array<IBinaryPackageStatus | undefined>,
   functionsTarget: IPlatformAndArch
@@ -379,6 +404,7 @@ export async function createGraphqlEngineBundle(
 
   const dynamicAliases: Record<string, string> = {}
   let forcedLmdbBinaryModule: string | undefined = undefined
+  let forcedSharpRuntimePlatform: string | undefined = undefined
 
   // we need to make sure we have internal packages cache directory setup for current lambda target
   // before we attempt to check if we can reuse those packages
@@ -413,6 +439,11 @@ export async function createGraphqlEngineBundle(
       )
     }
     dynamicAliases[`sharp$`] = sharpPackageInfo.packageLocation
+    forcedSharpRuntimePlatform = getSharpRuntimePlatform(
+      sharpPackageInfo.packageLocation,
+      functionsTarget,
+      currentTarget
+    )
   }
 
   const compiler = webpack({
@@ -467,6 +498,9 @@ export async function createGraphqlEngineBundle(
                 assetRelocatorUseEntry,
                 {
                   loader: require.resolve(`./sharp-bundling-patch`),
+                  options: {
+                    forcedRuntimePlatform: forcedSharpRuntimePlatform,
+                  },
                 },
               ],
             },
