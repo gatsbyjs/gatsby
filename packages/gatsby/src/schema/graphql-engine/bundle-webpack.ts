@@ -298,18 +298,20 @@ function getSharpRuntimePlatform(
   }
 }
 
+// sharp's compiled .node addon dynamically links (via rpath) against a shared library shipped
+// in a separate "@img/sharp-libvips-*" package, searched for at a handful of relative locations
+// from wherever the .node file itself ends up (e.g. "../../node_modules/@img/sharp-libvips-
+// <platform>/lib/*" and "../../../node_modules/@img/sharp-libvips-<platform>/lib/*").
+// `@vercel/webpack-asset-relocator-loader` only auto-discovers a native binary's own
+// shared-library dependencies for the `bindings`/`nbind`/`node-pre-gyp` loading conventions -
+// sharp uses none of those - so we place it ourselves once we know where the .node file
+// actually landed. Not every platform has a separate libvips package (e.g. Windows statically
+// links it), so finding none here is not an error.
 async function copySharpLibvipsSharedLibrary(
   sharpPackageLocation: string,
-  runtimePlatform: string
+  runtimePlatform: string,
+  sharpNodeBinaryDir: string
 ): Promise<void> {
-  // sharp's compiled .node addon dynamically links (via rpath) against a shared library shipped
-  // in a separate "@img/sharp-libvips-*" package, using relative search paths such as
-  // "../../node_modules/@img/sharp-libvips-<platform>/lib/*" computed relative to wherever the
-  // .node file itself ends up. `@vercel/webpack-asset-relocator-loader` only auto-discovers a
-  // native binary's own shared-library dependencies for the `bindings`/`nbind`/`node-pre-gyp`
-  // loading conventions - sharp uses none of those - so we place it ourselves at one of the
-  // relative locations its rpath actually searches. Not every platform has a separate libvips
-  // package (e.g. Windows statically links it), so a missing one here is not an error.
   try {
     const sharpRequire = mod.createRequire(
       path.join(sharpPackageLocation, `package.json`)
@@ -322,18 +324,28 @@ async function copySharpLibvipsSharedLibrary(
       `lib`
     )
 
-    if (await fs.pathExists(libvipsLibDir)) {
-      await fs.copy(
-        libvipsLibDir,
-        path.join(
-          outputDir,
-          `node_modules`,
-          `@img`,
-          `sharp-libvips-${runtimePlatform}`,
-          `lib`
-        )
-      )
+    if (!(await fs.pathExists(libvipsLibDir))) {
+      return
     }
+
+    const candidateDirs = [2, 3].map(levelsUp =>
+      path.join(
+        sharpNodeBinaryDir,
+        ...new Array(levelsUp).fill(`..`),
+        `node_modules`,
+        `@img`,
+        `sharp-libvips-${runtimePlatform}`,
+        `lib`
+      )
+    )
+
+    await Promise.all(
+      candidateDirs
+        // never write outside of the bundle output directory - a candidate this deep
+        // relative to a shallower-than-expected binary location would land outside it
+        .filter(dir => !path.relative(outputDir, dir).startsWith(`..`))
+        .map(dir => fs.copy(libvipsLibDir, dir))
+    )
   } catch (e) {
     // no-op - platform has no separate libvips package to copy, or we couldn't find it
   }
@@ -485,13 +497,6 @@ export async function createGraphqlEngineBundle(
       functionsTarget,
       currentTarget
     )
-
-    if (forcedSharpRuntimePlatform) {
-      await copySharpLibvipsSharedLibrary(
-        sharpPackageInfo.packageLocation,
-        forcedSharpRuntimePlatform
-      )
-    }
   }
 
   const compiler = webpack({
@@ -755,6 +760,30 @@ export async function createGraphqlEngineBundle(
           }
 
           await Promise.all(binaryFixingPromises)
+        }
+
+        if (
+          forcedSharpRuntimePlatform &&
+          sharpPackageInfo?.needToInstall === false
+        ) {
+          const sharpNodeAssetSuffix = `sharp-${forcedSharpRuntimePlatform}.node`
+          const libvipsCopyPromises: Array<Promise<void>> = []
+
+          for (const asset of (
+            stats?.compilation?.assetsInfo ?? new Map()
+          ).keys()) {
+            if (asset?.endsWith(sharpNodeAssetSuffix)) {
+              libvipsCopyPromises.push(
+                copySharpLibvipsSharedLibrary(
+                  sharpPackageInfo.packageLocation,
+                  forcedSharpRuntimePlatform,
+                  path.dirname(path.join(outputDir, asset))
+                )
+              )
+            }
+          }
+
+          await Promise.all(libvipsCopyPromises)
         }
 
         compiler.close(closeErr => {
