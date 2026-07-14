@@ -25,6 +25,7 @@ interface ICoreUtilsDatabase {
 
 let databases: ICoreUtilsDatabase | undefined
 let rootDb: RootDatabase
+let rootDbPath: string | undefined
 
 export function getDatabaseDir(): string {
   const rootDir = global.__GATSBY?.root ?? process.cwd()
@@ -60,6 +61,16 @@ export function getStorage(fullDbPath: string): ICoreUtilsDatabase {
       compression: true,
       sharedStructuresKey: Symbol.for(`structures`),
     })
+    rootDbPath = fullDbPath
+
+    // registers the root db so the custom jest test environment
+    // (jest.environment.ts) can force-close it after each test file. Without
+    // this, a leaked open handle on this LMDB env can cause EBUSY errors on
+    // Windows when later tests try to remove the `.cache` directory.
+    if (!globalThis.__GATSBY_OPEN_ROOT_LMDBS) {
+      globalThis.__GATSBY_OPEN_ROOT_LMDBS = new Map()
+    }
+    globalThis.__GATSBY_OPEN_ROOT_LMDBS.set(fullDbPath, rootDb)
 
     databases = {
       remoteFileInfo: rootDb.openDB({
@@ -80,5 +91,9 @@ export async function closeDatabase(): Promise<void> {
   if (rootDb) {
     await rootDb.close()
     databases = undefined
+    if (rootDbPath) {
+      globalThis.__GATSBY_OPEN_ROOT_LMDBS?.delete(rootDbPath)
+      rootDbPath = undefined
+    }
   }
 }

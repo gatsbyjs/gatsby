@@ -94,7 +94,7 @@ try {
     stdio: `inherit`,
   })
 } finally {
-  /* if (!env.GATSBY_TEST_SKIP_CLEANUP) {
+  if (!env.GATSBY_TEST_SKIP_CLEANUP) {
     log(`Deleting project with deploy_id ${deployId}`)
 
     const deleteResponse = await execa("npx", [
@@ -112,5 +112,5 @@ try {
     }
 
     log(`Successfully deleted project with deploy_id ${deployId}`)
-    } */
+    }
 }

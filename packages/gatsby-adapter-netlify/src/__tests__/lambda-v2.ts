@@ -29,7 +29,12 @@ beforeAll(() => {
 })
 
 afterAll(() => {
-  removeSync(join(cwd(), `.cache`))
+  // Only remove what this test actually creates. Nuking the whole `.cache`
+  // directory (which is shared with other test files running in the same
+  // `--runInBand` process) can hit an EBUSY/unlink error on Windows if
+  // gatsby-core-utils' LMDB env under `.cache/data` is still open elsewhere
+  // in the process.
+  removeSync(join(cwd(), `.cache`, `page-ssr`))
   removeSync(join(cwd(), `.netlify`))
 })
 
