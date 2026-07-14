@@ -312,6 +312,15 @@ async function copySharpLibvipsSharedLibrary(
   runtimePlatform: string,
   sharpNodeBinaryDir: string
 ): Promise<void> {
+  // eslint-disable-next-line no-console
+  console.log(
+    `[sharp-debug] copySharpLibvipsSharedLibrary called with`,
+    JSON.stringify({
+      sharpPackageLocation,
+      runtimePlatform,
+      sharpNodeBinaryDir,
+    })
+  )
   try {
     const sharpRequire = mod.createRequire(
       path.join(sharpPackageLocation, `package.json`)
@@ -324,7 +333,13 @@ async function copySharpLibvipsSharedLibrary(
       `lib`
     )
 
-    if (!(await fs.pathExists(libvipsLibDir))) {
+    const libvipsLibDirExists = await fs.pathExists(libvipsLibDir)
+    // eslint-disable-next-line no-console
+    console.log(
+      `[sharp-debug] libvipsLibDir=${libvipsLibDir} exists=${libvipsLibDirExists}`
+    )
+
+    if (!libvipsLibDirExists) {
       return
     }
 
@@ -339,15 +354,26 @@ async function copySharpLibvipsSharedLibrary(
       )
     )
 
-    await Promise.all(
-      candidateDirs
-        // never write outside of the bundle output directory - a candidate this deep
-        // relative to a shallower-than-expected binary location would land outside it
-        .filter(dir => !path.relative(outputDir, dir).startsWith(`..`))
-        .map(dir => fs.copy(libvipsLibDir, dir))
+    const withinBoundsDirs = candidateDirs.filter(
+      // never write outside of the bundle output directory - a candidate this deep
+      // relative to a shallower-than-expected binary location would land outside it
+      dir => !path.relative(outputDir, dir).startsWith(`..`)
     )
+
+    // eslint-disable-next-line no-console
+    console.log(
+      `[sharp-debug] candidateDirs=${JSON.stringify(
+        candidateDirs
+      )} withinBoundsDirs=${JSON.stringify(withinBoundsDirs)}`
+    )
+
+    await Promise.all(withinBoundsDirs.map(dir => fs.copy(libvipsLibDir, dir)))
+
+    // eslint-disable-next-line no-console
+    console.log(`[sharp-debug] copy completed`)
   } catch (e) {
-    // no-op - platform has no separate libvips package to copy, or we couldn't find it
+    // eslint-disable-next-line no-console
+    console.log(`[sharp-debug] copySharpLibvipsSharedLibrary threw:`, e)
   }
 }
 
@@ -496,6 +522,10 @@ export async function createGraphqlEngineBundle(
       sharpPackageInfo.packageLocation,
       functionsTarget,
       currentTarget
+    )
+    // eslint-disable-next-line no-console
+    console.log(
+      `[sharp-debug] sharpPackageInfo.packageLocation=${sharpPackageInfo.packageLocation} forcedSharpRuntimePlatform=${forcedSharpRuntimePlatform}`
     )
   }
 
@@ -762,6 +792,15 @@ export async function createGraphqlEngineBundle(
           await Promise.all(binaryFixingPromises)
         }
 
+        // eslint-disable-next-line no-console
+        console.log(
+          `[sharp-debug] post-build check: forcedSharpRuntimePlatform=${forcedSharpRuntimePlatform} sharpPackageInfo.needToInstall=${
+            sharpPackageInfo?.needToInstall
+          } allAssets=${JSON.stringify(
+            Array.from((stats?.compilation?.assetsInfo ?? new Map()).keys())
+          )}`
+        )
+
         if (
           forcedSharpRuntimePlatform &&
           sharpPackageInfo?.needToInstall === false
@@ -773,6 +812,8 @@ export async function createGraphqlEngineBundle(
             stats?.compilation?.assetsInfo ?? new Map()
           ).keys()) {
             if (asset?.endsWith(sharpNodeAssetSuffix)) {
+              // eslint-disable-next-line no-console
+              console.log(`[sharp-debug] matched sharp .node asset: ${asset}`)
               libvipsCopyPromises.push(
                 copySharpLibvipsSharedLibrary(
                   sharpPackageInfo.packageLocation,

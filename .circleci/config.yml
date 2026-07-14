@@ -539,6 +539,16 @@ jobs:
       - run:
           command: yarn build
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Debug tooling for the sharp native binary bundling issue - remove once resolved
+          when: always
+          command: |
+            echo "--- .node and .so/.dylib files under .cache/query-engine ---"
+            find .cache/query-engine -type f \( -iname "*.node" -o -iname "*.so*" -o -iname "*.dylib" \) 2>&1 || true
+            echo "--- full tree under .cache/query-engine/assets ---"
+            find .cache/query-engine/assets 2>&1 || true
+            echo "--- full tree under .cache/query-engine/node_modules ---"
+            find .cache/query-engine/node_modules 2>&1 || true
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: /tmp/e2e-tests/gatsby-pnp
