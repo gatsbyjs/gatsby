@@ -28,11 +28,25 @@ jest.mock(`axios`, () => {
 
 const path = require(`path`)
 
-const latestAdaptersModulePath = path.join(
-  process.cwd(),
-  `.cache`,
-  `latest-adapters.js`
+jest.mock(`find-cache-dir`, () =>
+  jest.fn(() =>
+    require(`path`).join(
+      process.cwd(),
+      `node_modules`,
+      `.cache`,
+      `gatsby-latest-files`
+    )
+  )
 )
+
+const mockCacheDir = path.join(
+  process.cwd(),
+  `node_modules`,
+  `.cache`,
+  `gatsby-latest-files`
+)
+
+const latestAdaptersModulePath = path.join(mockCacheDir, `latest-adapters.js`)
 
 const latestAdaptersMarker = `<mocked-adapters-js>`
 

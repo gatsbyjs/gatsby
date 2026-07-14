@@ -1,14 +1,19 @@
 import path from "path"
 import * as fs from "fs-extra"
 import axios from "axios"
+import findCacheDir from "find-cache-dir"
 import { IAdapterManifestEntry } from "./adapter/types"
 import { preferDefault } from "../bootstrap/prefer-default"
 
 const ROOT = path.join(__dirname, `..`, `..`)
 // Packages installed via Yarn PnP (and potentially other read-only node_modules setups) mount
-// the installed package's own directory from a read-only zip, so the cache written below has
-// to live in the site's own directory instead of next to the packaged fallback files in ROOT.
-const CACHE_ROOT = path.join(process.cwd(), `.cache`)
+// the installed package's own directory from a read-only zip, so the cache written below can't
+// live next to the packaged fallback files in ROOT. It also can't live under the site's `.cache`
+// (unlike other Gatsby-internal caches) - writing there perturbs the persistent webpack caches
+// that key off that same directory, causing spurious browser/SSR bundle rebuilds. Use the same
+// node_modules/.cache convention babel-loader and terser-webpack-plugin already rely on instead.
+const CACHE_ROOT =
+  findCacheDir({ name: `gatsby-latest-files`, create: true }) ?? ROOT
 const UNPKG_ROOT = `https://unpkg.com/gatsby/`
 const GITHUB_ROOT = `https://raw.githubusercontent.com/gatsbyjs/gatsby/master/packages/gatsby/`
 
