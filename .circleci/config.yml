@@ -42,6 +42,14 @@ aliases:
       name: Set up pnpm
       command: |
         mkdir -p "$HOME/.local/bin" "$HOME/.local/share/pnpm"
+        # The corepack bundled with older Node releases (notably the 18.20.x
+        # used by the cypress/browsers e2e images) doesn't recognize the
+        # current npm registry signing keys, so any fetchLatestStableVersion
+        # path crashes with "Cannot find matching keyid". Install a recent
+        # corepack into a user-writable prefix and put it ahead of the system
+        # one on PATH so the rest of the step uses it.
+        npm install --global --prefix "$HOME/.local" corepack@latest >/dev/null 2>&1 || true
+        export PATH="$HOME/.local/bin:$PATH"
         corepack enable --install-directory "$HOME/.local/bin"
         echo 'export PNPM_HOME="$HOME/.local/share/pnpm"' >> "$BASH_ENV"
         echo 'export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"' >> "$BASH_ENV"
@@ -57,6 +65,11 @@ aliases:
         # trying to replace the system binary, and define PNPM_HOME so
         # follow-up global installs can add binaries to PATH.
         mkdir -p "$HOME/.local/bin" "$HOME/.local/share/pnpm"
+        # Refresh corepack itself first so it has the current registry signing
+        # keys; the bundled corepack on older Node versions fails signature
+        # verification when fetching newer pnpm releases.
+        npm install --global --prefix "$HOME/.local" corepack@latest >/dev/null 2>&1 || true
+        export PATH="$HOME/.local/bin:$PATH"
         corepack enable --install-directory "$HOME/.local/bin"
         echo 'export PNPM_HOME="$HOME/.local/share/pnpm"' >> "$BASH_ENV"
         echo 'export PATH="$HOME/.local/bin:$PNPM_HOME:$PATH"' >> "$BASH_ENV"
@@ -831,6 +844,11 @@ jobs:
             nvm install 18.12.1
             nvm alias default 18.12.1
             nvm use 18.12.1
+            # The corepack bundled with Node 18 lacks the current npm registry
+            # signing keys, so the first time it fetches a recent pnpm release
+            # it crashes with "Cannot find matching keyid". Bumping corepack
+            # itself avoids that.
+            npm install --global corepack@latest
             corepack enable
       - run:
           name: Rebuild packages for windows
@@ -847,13 +865,14 @@ jobs:
             pnpm install --frozen-lockfile
       - run:
           name: Run tests
+          # Use bash here: PowerShell's array splat to a .cmd shim collapses
+          # the test list into a single quoted blob, which then gets fed to
+          # pnpm as one giant program name. Bash word-splitting handles the
+          # large arg list reliably.
+          shell: bash.exe
           command: |
-            # circleci tests split returns a single space-delimited line on
-            # Windows here, so split it ourselves and build the native command
-            # args explicitly instead of passing one giant quoted pattern.
-            $tests = (((pnpm -s jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split) -join ' ') -split '\s+' | Where-Object { $_ }
-            $jestArgs = @('exec', 'jest', '--ci', '--runInBand') + $tests
-            & pnpm $jestArgs
+            tests=$(pnpm -s jest --listTests | tr '\\\\' '/' | sed 's|.*/packages/|packages/|' | circleci tests split)
+            pnpm jest --ci --runInBand $tests
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
@@ -883,6 +902,9 @@ jobs:
             nvm install 18.19.0
             nvm alias default 18.19.0
             nvm use 18.19.0
+            # See the parallel comment in windows_unit_tests: Node 18's bundled
+            # corepack rejects the current npm registry signing keys.
+            npm install --global corepack@latest
             corepack enable
             npm install -g netlify-cli
       - run:

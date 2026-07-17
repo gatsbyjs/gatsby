@@ -5,8 +5,8 @@
   "bin": "cli.js",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle -i src/index.ts --no-pkg-main --target=node -f=cjs --sourcemap=false --compress --alias worker_threads=@ascorbic/worker-threads-shim",
-    "watch": "microbundle -i src/index.ts --no-pkg-main --target=node -f=cjs --alias worker_threads=@ascorbic/worker-threads-shim --watch ",
+    "build": "microbundle -i src/index.ts --no-pkg-main --target=node -f=cjs --sourcemap=false --compress --alias worker_threads=@ascorbic/worker-threads-shim --generateTypes false",
+    "watch": "microbundle -i src/index.ts --no-pkg-main --target=node -f=cjs --alias worker_threads=@ascorbic/worker-threads-shim --watch --generateTypes false",
     "prepack": "npm run build",
     "import-plugin-options": "node ./scripts/import-options-schema.js"
   },

@@ -180,10 +180,23 @@ const publishPackage = async ({
 
   const uncreateTemporaryNPMRC = createTemporaryNPMRC({ pathToPackage, root })
 
-  // npm publish
+  // Use `pnpm publish` rather than `npm publish` here. Running `npm publish`
+  // from inside a pnpm workspace crashes in `@npmcli/arborist` with
+  // "Cannot set properties of null (setting 'devOptional')" because the
+  // package's `node_modules` is the symlink-heavy pnpm layout. pnpm publish
+  // packs the tarball itself (bypassing arborist) and then hands the tarball
+  // to npm, which sidesteps the crash. `--no-git-checks` is required because
+  // adjustPackageJson() has already mutated package.json to insert the
+  // temporary `-dev-*` versions.
   const publishCmd = [
-    `npm`,
-    [`publish`, `--tag`, `gatsby-dev`, `--registry=${registryUrl}`],
+    `pnpm`,
+    [
+      `publish`,
+      `--tag`,
+      `gatsby-dev`,
+      `--registry=${registryUrl}`,
+      `--no-git-checks`,
+    ],
     {
       cwd: pathToPackage,
     },
