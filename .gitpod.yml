@@ -2,16 +2,18 @@ image:
   file: .gitpod.Dockerfile
 tasks:
   - init: >
-      yarn run bootstrap &&
+      pnpm run bootstrap &&
       cd ./examples/using-typescript &&
-      yarn install &&
+      # Pin Yarn 1 explicitly so this nested example does not inherit the repo
+      # root pnpm packageManager metadata.
+      env COREPACK_ENABLE_STRICT=0 corepack yarn@1.22.22 install &&
       gatsby-dev --set-path-to-repo ../.. &&
       gatsby-dev --scan-once &&
       npx gatsby build &&
       cd ../.. &&
       touch /tmp/done.txt
     command: >
-      yarn run watch --scope={gatsby,gatsby-link}
+      pnpm run watch --scope={gatsby,gatsby-link}
   - openMode: split-right
     before: >
       cd ./examples/using-typescript
@@ -31,5 +33,3 @@ tasks:
 ports:
   - port: 8000
     onOpen: open-preview
-  - port: 31997 # yarn mutex
-    onOpen: ignore

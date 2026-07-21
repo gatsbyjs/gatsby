@@ -8,18 +8,22 @@ jest.setTimeout(60000)
 describe(`polyfills`, () => {
   const packageRoot = path.resolve(__dirname, `../../`)
   const tmpDir = `.tmp`
+  const microbundleCli = require.resolve(`microbundle/dist/cli.js`)
 
   beforeAll(async () => {
     const pkg = require(`../../package.json`)
-    const buildScript = pkg.scripts[`build:polyfills`].replace(
-      ` --no-sourcemap`,
-      ``
-    )
+    const buildArgs = pkg.scripts[`build:polyfills`]
+      .replace(` --no-sourcemap`, ``)
+      .replace(/^microbundle\s+/, ``)
+      .split(` `)
 
+    // Call the locally installed CLI directly so this repo's root
+    // `packageManager` metadata does not leak into the test via Corepack.
     await execa(
-      `yarn`,
+      process.execPath,
       [
-        ...buildScript.split(` `),
+        microbundleCli,
+        ...buildArgs,
         `--no-compress`,
         `-o`,
         path.join(tmpDir, `polyfills.js`),

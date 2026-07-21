@@ -4,6 +4,14 @@ GLOB=$1
 IS_CI="${CI:-false}"
 BASE=$(pwd)
 
+# Starter validation intentionally runs Yarn 1 inside nested starter projects.
+# Calling `yarn` directly from this pnpm-rooted repo can make Yarn/Corepack read
+# the root packageManager field instead of the starter project, so pin Yarn 1
+# explicitly for these repo-owned checks.
+run_starter_yarn() {
+  env COREPACK_ENABLE_STRICT=0 corepack yarn@1.22.22 "$@"
+}
+
 if [ "$IS_CI" = true ]; then
   sudo apt-get update && sudo apt-get install jq
 fi
@@ -30,7 +38,7 @@ for folder in $GLOB; do
 
   # check both npm and yarn, sometimes yarn registry lags behind
   rm -rf node_modules &&
-  yarn &&
+  run_starter_yarn &&
   npm run build ||
   exit 1
 

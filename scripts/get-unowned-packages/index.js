@@ -1,9 +1,7 @@
-const { getPackages } = require(`@lerna/project`)
-const PackageGraph = require(`@lerna/package-graph`)
-const filterPackages = require(`@lerna/filter-packages`)
 const util = require(`util`)
 const path = require(`path`)
 const { exec, execSync } = require(`child_process`)
+const { detectProjects } = require(`lerna/utils`)
 
 const execP = util.promisify(exec)
 
@@ -36,38 +34,35 @@ module.exports = async function getUnownedPackages({
       })
   }
 
-  return getPackages(rootPath).then(async packages => {
-    const graph = new PackageGraph(packages, `dependencies`, true)
-
-    // filter out private packages
-    // adding owner to private packages will fail, because package doesn't exist
-    const publicGatsbyPackages = filterPackages(
-      graph.rawPackageList,
-      [],
-      [],
-      false
+  return detectProjects(rootPath)
+    .then(({ projectGraph }) =>
+      Object.values(projectGraph.nodes)
+        .map(node => node.package)
+        .filter(Boolean)
     )
+    .then(async packages => {
+      const publicGatsbyPackages = packages.filter(pkg => !pkg.private)
 
-    const alreadyOwnedPackages = await getPackagesWithReadWriteAccess(user)
+      const alreadyOwnedPackages = await getPackagesWithReadWriteAccess(user)
 
-    const publicGatsbyPackagesWithoutAccess = publicGatsbyPackages.filter(
-      pkg => {
-        if (alreadyOwnedPackages[pkg.name]) {
-          return false
+      const publicGatsbyPackagesWithoutAccess = publicGatsbyPackages.filter(
+        pkg => {
+          if (alreadyOwnedPackages[pkg.name]) {
+            return false
+          }
+
+          try {
+            return !execSync(`npm view ${pkg.name} version`, { stdio: `pipe` })
+              .stderr
+          } catch (e) {
+            return false
+          }
         }
+      )
 
-        try {
-          return !execSync(`npm view ${pkg.name} version`, { stdio: `pipe` })
-            .stderr
-        } catch (e) {
-          return false
-        }
+      return {
+        packages: publicGatsbyPackagesWithoutAccess,
+        user,
       }
-    )
-
-    return {
-      packages: publicGatsbyPackagesWithoutAccess,
-      user,
-    }
-  })
+    })
 }

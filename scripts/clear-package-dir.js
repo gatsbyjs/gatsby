@@ -2,14 +2,11 @@ const ignore = require(`ignore`)
 const fs = require(`fs-extra`)
 const yargs = require(`yargs`)
 const chalk = require(`chalk`)
-const collectUpdates = require(`@lerna/collect-updates`)
-const PackageGraph = require(`@lerna/package-graph`)
-const Project = require(`@lerna/project`)
-const PromptUtilities = require(`@lerna/prompt`)
 const _ = require(`lodash`)
 const path = require(`path`)
 const packlist = require(`npm-packlist`)
-const { execSync } = require(`child_process`)
+const readline = require(`readline/promises`)
+const { execFileSync, execSync } = require(`child_process`)
 
 const argv = yargs
   .command(
@@ -43,13 +40,14 @@ const argv = yargs
     describe: `Force deletion of file without prompting user to confirm`,
   }).argv
 
-const verbose = argv[`dry-run`] || argv[`verbose`]
+const isDryRun =
+  process.argv.includes(`--dry-run`) || Boolean(argv[`dry-run`] || argv.dryRun)
+const verbose = isDryRun || argv[`verbose`]
 
 const buildIgnoreArray = str =>
   str
     .split(`\n`)
     .filter(line => {
-      // skip empty lines and comments
       if (!line || line[0] === `#`) {
         return false
       }
@@ -59,8 +57,6 @@ const buildIgnoreArray = str =>
     .reduce((acc, item) => {
       acc.push(item)
 
-      // add "<directory>/**" glob as ignore package need that to
-      // properly ignore entries like "node_modules"
       if (!/\*\*$/.test(item)) {
         acc.push(`${item}/**`)
       }
@@ -74,7 +70,7 @@ const getListOfFilesToClear = async ({ location, name }) => {
       fs.readFileSync(path.join(location, `.gitignore`), `utf-8`)
     )
   } catch {
-    // not all packages have .gitignore - see gatsby-plugin-no-sourcemap
+    // not all packages have .gitignore
   } finally {
     const notTrackedFiles = execSync(
       `git ls-files --others --exclude-standard`,
@@ -89,12 +85,11 @@ const getListOfFilesToClear = async ({ location, name }) => {
   }
 
   const result = await packlist({ path: location })
-
   const ig = ignore().add(gitignore)
 
   console.log(`Files that will be deleted for ${chalk.bold(name)}:`)
 
-  const filesToDelete = result
+  return result
     .filter(file => {
       const willBeDeleted = ig.ignores(file)
       if (verbose || willBeDeleted) {
@@ -108,56 +103,75 @@ const getListOfFilesToClear = async ({ location, name }) => {
       return willBeDeleted
     })
     .map(file => path.join(location, file))
-
-  return filesToDelete
 }
 
-const run = async () => {
+async function confirm(message) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  })
+
   try {
-    const project = new Project(process.cwd())
-
-    const packages = await project.getPackages()
-    const packageGraph = new PackageGraph(packages)
-
-    const changed = collectUpdates(
-      packageGraph.rawPackageList,
-      packageGraph,
-      { cwd: process.cwd() },
-      {
-        ...project.config,
-        loglevel: `silent`,
-        bump: argv.bump,
-      }
-    )
-
-    const filesToDelete = _.flatten(
-      await Promise.all(changed.map(getListOfFilesToClear))
-    )
-
-    if (!argv[`dry-run`] && filesToDelete.length > 0) {
-      if (
-        argv[`force`] ||
-        (await PromptUtilities.confirm(
-          `Are you sure you want to delete those files?`
-        ))
-      ) {
-        filesToDelete.forEach(file => {
-          fs.removeSync(file)
-        })
-      } else {
-        console.log(
-          `${chalk.red(
-            `Stopping publish`
-          )}: there are files that need to be cleared.\n\nIf this is a bug in check script and everything is fine, run:\n\n${chalk.green(
-            `yarn lerna publish`
-          )}\n\ndirectly to skip checks (and hopefully apply changes to clear-package-dir script to fix it).`
-        )
-        process.exit(1)
-      }
-    }
-  } catch {
-    // if no packages are marked as changed, lerna will exit with non-zero
+    const answer = await rl.question(`${message} [y/N] `)
+    return /^y(es)?$/i.test(answer.trim())
+  } finally {
+    rl.close()
   }
 }
 
-run()
+function getChangedPackages() {
+  try {
+    const output = execFileSync(
+      process.execPath,
+      [
+        path.join(__dirname, `..`, `node_modules`, `lerna`, `dist`, `cli.js`),
+        `changed`,
+        `--json`,
+        `--all`,
+        `--loglevel`,
+        `silent`,
+      ],
+      { encoding: `utf8` }
+    )
+    return JSON.parse(output)
+  } catch (error) {
+    if (error.status === 1 && !String(error.stdout || ``).trim()) {
+      return []
+    }
+
+    throw error
+  }
+}
+
+async function run() {
+  const changedPackages = getChangedPackages()
+  const filesToDelete = _.flatten(
+    await Promise.all(changedPackages.map(getListOfFilesToClear))
+  )
+
+  if (isDryRun || filesToDelete.length === 0) {
+    return
+  }
+
+  if (
+    argv[`force`] ||
+    (await confirm(`Are you sure you want to delete those files?`))
+  ) {
+    filesToDelete.forEach(file => {
+      fs.removeSync(file)
+    })
+    return
+  }
+
+  console.log(
+    `${chalk.red(
+      `Stopping publish`
+    )}: there are files that need to be cleared.\n\nIf this is a bug in the check script and everything is fine, rerun the publish script directly to skip checks (and then fix clear-package-dir).`
+  )
+  process.exit(1)
+}
+
+run().catch(error => {
+  console.error(error)
+  process.exit(1)
+})

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
-    "prepare": "cross-env NODE_ENV=production npm run build"
+    "prepack": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
     "gatsby",
@@ -30,20 +30,20 @@
     "chokidar": "^3.6.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "^4.17.0-next.0",
-    "gatsby-page-utils": "^3.17.0-next.0",
-    "gatsby-plugin-utils": "^4.17.0-next.0",
+    "gatsby-core-utils": "workspace:^4.17.0-next.0",
+    "gatsby-page-utils": "workspace:^3.17.0-next.0",
+    "gatsby-plugin-utils": "workspace:^4.17.0-next.0",
     "globby": "^11.1.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
-    "babel-preset-gatsby-package": "^3.17.0-next.0",
+    "babel-preset-gatsby-package": "workspace:^3.17.0-next.0",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "gatsby": "^5.0.0-next"
+    "gatsby": "workspace:^5.0.0-next"
   },
   "engines": {
     "node": ">=18.0.0 <26"

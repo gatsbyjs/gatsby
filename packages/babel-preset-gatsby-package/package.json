@@ -43,7 +43,7 @@
   ],
   "scripts": {
     "build": "",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepack": "cross-env NODE_ENV=production npm run build",
     "watch": ""
   }
 }

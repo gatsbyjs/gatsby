@@ -27,10 +27,10 @@
     "file-type": "^16.5.4",
     "filesize": "^6.4.0",
     "fs-extra": "^11.2.0",
-    "gatsby-core-utils": "^4.17.0-next.0",
-    "gatsby-plugin-catch-links": "^5.17.0-next.0",
-    "gatsby-plugin-utils": "^4.17.0-next.0",
-    "gatsby-source-filesystem": "^5.17.0-next.0",
+    "gatsby-core-utils": "workspace:^4.17.0-next.0",
+    "gatsby-plugin-catch-links": "workspace:^5.17.0-next.0",
+    "gatsby-plugin-utils": "workspace:^4.17.0-next.0",
+    "gatsby-source-filesystem": "workspace:^5.17.0-next.0",
     "glob": "^7.2.3",
     "got": "^11.8.6",
     "immer": "^9.0.21",
@@ -55,10 +55,10 @@
     "@types/semver": "^7.5.0",
     "babel-plugin-import-globals": "^2.0.0",
     "babel-plugin-module-resolver": "4.1.0",
-    "babel-preset-gatsby": "^3.17.0-next.0",
-    "babel-preset-gatsby-package": "^3.17.0-next.0",
+    "babel-preset-gatsby": "workspace:^3.17.0-next.0",
+    "babel-preset-gatsby-package": "workspace:^3.17.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "^3.17.0-next.0",
+    "gatsby-plugin-image": "workspace:^3.17.0-next.0",
     "identity-obj-proxy": "^3.0.0",
     "react-test-renderer": "^16.14.0",
     "rimraf": "^3.0.2",
@@ -74,10 +74,10 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next",
-    "gatsby-plugin-image": "^3.0.0-next",
-    "gatsby-plugin-sharp": "^5.0.0-next",
-    "gatsby-transformer-sharp": "^5.0.0-next"
+    "gatsby": "workspace:^5.0.0-next",
+    "gatsby-plugin-image": "workspace:^3.0.0-next",
+    "gatsby-plugin-sharp": "workspace:^5.0.0-next",
+    "gatsby-transformer-sharp": "workspace:^5.0.0-next"
   },
   "repository": {
     "type": "git",
@@ -85,7 +85,7 @@
     "directory": "packages/gatsby-source-wordpress"
   },
   "scripts": {
-    "prepare": "npm run build",
+    "prepack": "npm run build",
     "build": "rimraf dist && babel src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps && npm run generate-plugin-options-docs",
     "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps",
     "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js"

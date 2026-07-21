@@ -7,6 +7,13 @@ COMMIT_MESSAGE=$(git log -1 --pretty=%B)
 MINIMAL_STARTER=gatsby-starter-minimal
 MINIMAL_STARTER_TS=gatsby-starter-minimal-ts
 
+# Publishing starters still needs a Yarn 1 lockfile, but invoking `yarn`
+# directly from this pnpm-rooted repo can pick up the repo root packageManager
+# metadata instead of the cloned starter project.
+run_starter_yarn() {
+  env COREPACK_ENABLE_STRICT=0 corepack yarn@1.22.22 "$@"
+}
+
 if [ "$IS_CI" = true ]; then
   sudo apt-get update && sudo apt-get install jq
 fi
@@ -39,7 +46,7 @@ for folder in $GLOB; do
   if [ "$IS_WORKSPACE" = null ]; then
     rm -f yarn.lock
     if [[ "$MINIMAL_STARTER" != "$NAME" || "$MINIMAL_STARTER_TS" != "$NAME" ]]; then # ignore minimal starter (ts) because we don't want any lock files for create-gatsby
-      yarn import # generate a new yarn.lock file based on package-lock.json, gatsby new does this is new CLI versions but will ignore if file exists
+      run_starter_yarn import # generate a new yarn.lock file based on package-lock.json, gatsby new does this in new CLI versions but will ignore if file exists
     fi
   fi
 

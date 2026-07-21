@@ -38,6 +38,10 @@ const esModules = [
   `comma-separated-tokens`,
   `decode-named-character-reference`,
   `escape-string-regexp`,
+  // The MDX/unified toolchain pulls in a lot of small ESM-only helpers. Match
+  // the package families directly so the pnpm layout doesn't turn this into an
+  // ever-growing one-package-at-a-time allowlist.
+  `estree-util(?:-[^/]+)+`,
   `estree-util-attach-comments`,
   `estree-util-build-jsx`,
   `estree-util-is-identifier-name`,
@@ -47,6 +51,7 @@ const esModules = [
   `form-data-encoder`,
   `github-slugger`,
   `got`,
+  `hast-util(?:-[^/]+)+`,
   `hast-util-from-parse5`,
   `hast-util-is-element`,
   `hast-util-parse-selector`,
@@ -65,19 +70,26 @@ const esModules = [
   `is-reference`,
   `longest-streak`,
   `lowercase-keys`,
+  `mdast-util(?:-[^/]+)+`,
   `mdast-util-definitions`,
   `mdast-util-from-markdown`,
   `mdast-util-mdx`,
+  `mdast-util-mdx-jsx`,
+  `mdast-util-mdx-expression`,
+  `mdast-util-mdxjs-esm`,
+  `mdast-util-phrasing`,
   `mdast-util-to-hast`,
   `mdast-util-to-markdown`,
   `mdast-util-to-string`,
   `mdast-util-toc`,
+  `micromark(?:-[^/]+)+`,
   `micromark`,
   `micromark-core-commonmark`,
   `micromark-extension-mdx-expression`,
   `micromark-extension-mdx-jsx`,
   `micromark-extension-mdx-md`,
   `micromark-extension-mdxjs`,
+  `micromark-extension-mdxjs-esm`,
   `micromark-factory-destination`,
   `micromark-factory-label`,
   `micromark-factory-mdx-expression`,
@@ -96,6 +108,7 @@ const esModules = [
   `micromark-util-subtokenize`,
   `mimic-response`,
   `normalize-url`,
+  `node-releases`,
   `p-any`,
   `p-cancelable`,
   `p-some`,
@@ -117,16 +130,21 @@ const esModules = [
   `trough`,
   `unified`,
   `unist-builder`,
+  `unist-util(?:-[^/]+)+`,
   `unist-util-generated`,
   `unist-util-is`,
   `unist-util-position`,
   `unist-util-position-from-estree`,
   `unist-util-stringify-position`,
   `unist-util-visit`,
+  `vfile(?:-[^/]+)?`,
   `vfile`,
+  `vfile-location`,
+  `vfile-message`,
   `web-namespaces`,
   `zwitch`,
 ].join(`|`)
+const esModulesWithPnpmStore = `/node_modules/(?!(?:\\.pnpm/[^/]+/node_modules/)?(?:${esModules})(?:/|$))`
 
 /** @type {import('jest').Config} */
 const config = {
@@ -149,7 +167,11 @@ const config = {
     `__tests__/fixtures`,
     `__testfixtures__/`,
   ],
-  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
+  transformIgnorePatterns: [
+    // pnpm adds an extra `.pnpm/<store-entry>/node_modules/` hop before the
+    // real package path, so Jest needs to look through that layer too.
+    esModulesWithPnpmStore,
+  ],
   transform: {
     "^.+\\.(jsx|js|mjs|ts|tsx)$": `<rootDir>/jest-transformer.js`,
   },

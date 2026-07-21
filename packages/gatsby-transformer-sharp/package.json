@@ -11,7 +11,7 @@
     "bluebird": "^3.7.2",
     "common-tags": "^1.8.2",
     "fs-extra": "^11.2.0",
-    "gatsby-plugin-utils": "^4.17.0-next.0",
+    "gatsby-plugin-utils": "workspace:^4.17.0-next.0",
     "probe-image-size": "^7.2.3",
     "semver": "^7.5.3",
     "sharp": "^0.32.6"
@@ -19,7 +19,7 @@
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
-    "babel-preset-gatsby-package": "^3.17.0-next.0",
+    "babel-preset-gatsby-package": "workspace:^3.17.0-next.0",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp#readme",
@@ -31,8 +31,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^5.0.0-next",
-    "gatsby-plugin-sharp": "^5.0.0-next"
+    "gatsby": "workspace:^5.0.0-next",
+    "gatsby-plugin-sharp": "workspace:^5.0.0-next"
   },
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.js\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepack": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
   },
   "engines": {

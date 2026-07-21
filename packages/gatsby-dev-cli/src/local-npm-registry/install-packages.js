@@ -109,6 +109,7 @@ const installPackages = async ({
       changed |= handleDeps(pkg.dependencies)
       changed |= handleDeps(pkg.devDependencies)
       changed |= handleDeps(pkg.peerDependencies)
+      changed |= handleDeps(pkg.optionalDependencies)
 
       if (changed) {
         console.log(`Changing deps in ${pkgJsonPath} to use @gatsby-dev`)

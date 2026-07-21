@@ -36,7 +36,7 @@
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
-    "prepare": "cross-env NODE_ENV=production npm-run-all --npm-path npm -s build typegen",
+    "prepack": "cross-env NODE_ENV=production npm-run-all --npm-path npm -s build typegen",
     "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\" --extensions \".ts,.js\""
   }
 }
