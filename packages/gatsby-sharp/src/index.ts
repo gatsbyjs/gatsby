@@ -19,7 +19,6 @@ function importSharp(): typeof import("sharp") {
     const cleanRequire = createRequire(__filename)
     const sharp = cleanRequire(`sharp`)
 
-    sharp.simd(true)
     // Concurrency is handled by gatsby
     sharp.concurrency(1)
 
