@@ -259,6 +259,7 @@
   "resolutions": {
     "graphql": "^16.8.1"
   },
+  "preferUnplugged": true,
   "scripts": {
     "build": "npm run build:types && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
     "postbuild": "node scripts/output-api-file.js",
