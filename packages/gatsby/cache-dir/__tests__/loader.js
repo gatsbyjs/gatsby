@@ -293,6 +293,41 @@ describe(`Production loader`, () => {
       expect(await prodLoader.loadPageDataJson(`/mypage/`)).toBe(expectation)
       expect(xhrCount).toBe(1)
     })
+
+    it(`should include pathPrefix in HEAD request for missing HTML`, async () => {
+      global.__BASE_PATH__ = `/blog`
+      global.__PATH_PREFIX__ = `/blog`
+
+      const prodLoader = new ProdLoader(null, [])
+
+      const payload = { ...defaultPayload, path: `/404.html/` }
+      mock.use(
+        `GET`,
+        /\/blog\/page-data\/unknown-page\/page-data\.json/,
+        (req, res) => {
+          xhrCount++
+          return res.status(200).body(``)
+        }
+      )
+      mock.use(
+        `GET`,
+        /\/blog\/page-data\/404\.html\/page-data\.json/,
+        (req, res) => {
+          xhrCount++
+          res.header(`content-type`, `application/json`)
+          return res.status(200).body(JSON.stringify(payload))
+        }
+      )
+
+      let requestedPath
+      mock.use(`HEAD`, /.*/, (req, res) => {
+        requestedPath = req.url().path
+        return res.status(404)
+      })
+
+      await prodLoader.loadPageDataJson(`/unknown-page/`)
+      expect(requestedPath).toBe(`/blog/unknown-page/`)
+    })
   })
 
   describe(`loadPage`, () => {
