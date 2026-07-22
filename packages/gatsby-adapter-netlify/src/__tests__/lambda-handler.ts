@@ -31,6 +31,12 @@ test(`produced handler is correct`, async () => {
   // require paths should not have backward slashes (win paths)
   expect(handlerCode).not.toMatch(/require\(["'][^"']*\\[^"']*["']\)/)
 
+  // The handler must be exposed as a `default` export so Netlify treats it as
+  // a modern (v2) Request/Response function. A legacy `exports.handler` would
+  // be picked up as a v1 lambda and fail with "handler is undefined".
+  expect(handlerCode).toMatch(/exports\.default\s*=/)
+  expect(handlerCode).not.toMatch(/exports\.handler\s*=/)
+
   expect(writeJsonSpy).toBeCalledWith(
     expect.any(String),
     expect.objectContaining({

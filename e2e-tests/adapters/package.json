@@ -44,6 +44,7 @@
     "typescript": "^5.3.3"
   },
   "resolutions": {
-    "unstorage": "1.17.3"
+    "unstorage": "1.17.3",
+    "toad-cache": "3.7.0"
   }
 }

@@ -34,7 +34,6 @@
     "@babel/runtime": "^7.20.13",
     "@netlify/cache-utils": "^6.0.4",
     "@netlify/config": "^24.4.0",
-    "@netlify/functions": "^5.1.2",
     "cookie": "^0.6.0",
     "fastq": "^1.15.0",
     "fs-extra": "^11.2.0",

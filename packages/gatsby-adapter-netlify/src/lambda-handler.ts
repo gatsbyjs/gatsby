@@ -86,13 +86,6 @@ const Stream = require("stream")
 const http = require("http")
 const { Buffer } = require("buffer")
 const cookie = require("${getRelativePathToModule(`cookie`)}")
-${
-  isODB
-    ? `const { builder } = require("${getRelativePathToModule(
-        `@netlify/functions`
-      )}")`
-    : ``
-}
 
 const preferDefault = m => (m && m.default) || m
 
@@ -168,34 +161,65 @@ const statuses = {
   "511": "Network Authentication Required"
 }
 
-const createRequestObject = ({ event, context }) => {
-  const {
-    path = "",
-    multiValueQueryStringParameters,
+// Build a best-effort Lambda-style \`event\` from a web \`Request\` so that
+// existing functions reading \`req.netlifyFunctionParams.event\` keep working.
+const createCompatEvent = ({ request, url, bodyBuffer }) => {
+  const queryStringParameters = {}
+  const multiValueQueryStringParameters = {}
+  for (const [key, value] of url.searchParams) {
+    queryStringParameters[key] = value
+    if (!multiValueQueryStringParameters[key]) {
+      multiValueQueryStringParameters[key] = []
+    }
+    multiValueQueryStringParameters[key].push(value)
+  }
+
+  const headers = {}
+  const multiValueHeaders = {}
+  for (const [key, value] of request.headers) {
+    headers[key] = value
+    multiValueHeaders[key] = value.split(", ")
+  }
+
+  return {
+    path: url.pathname,
+    httpMethod: request.method,
     queryStringParameters,
-    httpMethod,
-    multiValueHeaders = {},
-    body,
-    isBase64Encoded,
-    rawUrl
-  } = event
+    multiValueQueryStringParameters,
+    headers,
+    multiValueHeaders,
+    body: bodyBuffer && bodyBuffer.length ? bodyBuffer.toString("base64") : null,
+    isBase64Encoded: true,
+    rawUrl: request.url,
+  }
+}
+
+const createRequestObject = ({ request, context, url, bodyBuffer }) => {
   const newStream = new Stream.Readable()
   const req = Object.assign(newStream, http.IncomingMessage.prototype)
-  req.url = path
+  req.url = url.pathname + url.search
   req.originalUrl = req.url
-  req.rawUrl = rawUrl
-  req.query = queryStringParameters
-  req.multiValueQuery = multiValueQueryStringParameters
-  req.method = httpMethod
+  req.rawUrl = request.url
+  req.query = {}
+  req.multiValueQuery = {}
+  for (const [key, value] of url.searchParams) {
+    req.query[key] = value
+    if (!req.multiValueQuery[key]) {
+      req.multiValueQuery[key] = []
+    }
+    req.multiValueQuery[key].push(value)
+  }
+  req.method = request.method
   req.rawHeaders = []
   req.headers = {}
   // Expose Netlify Function event and context on request object.
-  req.netlifyFunctionParams = { event, context }
-  for (const key of Object.keys(multiValueHeaders)) {
-    for (const value of multiValueHeaders[key]) {
-      req.rawHeaders.push(key, value)
-    }
-    req.headers[key.toLowerCase()] = multiValueHeaders[key].toString()
+  req.netlifyFunctionParams = {
+    event: createCompatEvent({ request, url, bodyBuffer }),
+    context,
+  }
+  for (const [key, value] of request.headers) {
+    req.rawHeaders.push(key, value)
+    req.headers[key.toLowerCase()] = value
   }
   req.getHeader = name => req.headers[name.toLowerCase()]
   req.getHeaders = () => req.headers
@@ -205,18 +229,15 @@ const createRequestObject = ({ event, context }) => {
     req.cookies = cookie.parse(cookies)
   }
   // req.connection = {}
-  if (body) {
-    req.push(body, isBase64Encoded ? "base64" : undefined)
+  if (bodyBuffer && bodyBuffer.length) {
+    req.push(bodyBuffer)
   }
   req.push(null)
   return req
 }
 
 const createResponseObject = ({ onResEnd }) => {
-  const response = {
-    isBase64Encoded: true,
-    multiValueHeaders: {},
-  };
+  const response = {};
   const res = new Stream();
   Object.defineProperty(res, 'statusCode', {
     get() {
@@ -264,24 +285,15 @@ const createResponseObject = ({ onResEnd }) => {
     if (!res.statusCode) {
       res.statusCode = 200;
     }
-    if (response.body) {
-      response.body = Buffer.from(response.body).toString('base64');
-    }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore These types are a mess, and need sorting out
-    response.multiValueHeaders = res.headers;
     res.writeHead(response.statusCode);
-    // Convert all multiValueHeaders into arrays
-    for (const key of Object.keys(response.multiValueHeaders)) {
-      const header = response.multiValueHeaders[key];
-      if (!Array.isArray(header)) {
-        response.multiValueHeaders[key] = [header];
-      }
-    }
     res.finished = true;
     res.writableEnded = true;
-    // Call onResEnd handler with the response object
-    onResEnd(response);
+    // Call onResEnd handler with the collected status, headers and body buffer.
+    onResEnd({
+      statusCode: response.statusCode,
+      headers: res.headers,
+      body: response.body,
+    });
     return res;
   };
   // Gatsby Functions additions
@@ -335,21 +347,51 @@ const createResponseObject = ({ onResEnd }) => {
   return res;
 };
 
-const handler = async (event, context) => {
-  const req = createRequestObject({ event, context })
+const buildResponse = ({ statusCode, headers, body }) => {
+  const responseHeaders = new Headers()
+  for (const key of Object.keys(headers)) {
+    const value = headers[key]
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        responseHeaders.append(key, item)
+      }
+    } else {
+      responseHeaders.set(key, value)
+    }
+  }
+${
+  isODB
+    ? `  // DSG responses are rendered once and then served from the Netlify
+  // durable CDN cache, reproducing the behavior of the previous On-Demand
+  // Builder (rendered content persists across requests until purged).
+  responseHeaders.set("Netlify-CDN-Cache-Control", "public, durable, max-age=31536000, must-revalidate")
+`
+    : ``
+}  return new Response(body ?? null, { status: statusCode, headers: responseHeaders })
+}
+
+const handler = async (request, context) => {
+  const url = new URL(request.url)
+  const bodyBuffer =
+    request.body && request.method !== "GET" && request.method !== "HEAD"
+      ? Buffer.from(await request.arrayBuffer())
+      : undefined
+  const req = createRequestObject({ request, context, url, bodyBuffer })
 
   return new Promise(async resolve => {
     try {
-      const res = createResponseObject({ onResEnd: resolve })
+      const res = createResponseObject({
+        onResEnd: result => resolve(buildResponse(result)),
+      })
       await functionHandler(req, res)
     } catch(error) {
-      console.error("Error executing " + event.path, error)
-      resolve({ statusCode: 500 })
+      console.error("Error executing " + url.pathname, error)
+      resolve(new Response(null, { status: 500 }))
     }
   })
 }
 
-exports.handler = ${isODB ? `builder(handler)` : `handler`}
+exports.default = handler
 `
 
   await fs.writeFile(

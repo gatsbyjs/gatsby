@@ -166,9 +166,11 @@ export function processRoutesManifest(
         }
       }
 
-      const invocationURL = `/.netlify/${
-        route.cache ? `builders` : `functions`
-      }/${functionName}`
+      // Both cached (DSG) and non-cached functions are now invoked as standard
+      // Netlify Functions. The cached variant handles CDN caching itself by
+      // emitting a `Netlify-CDN-Cache-Control` header, so it no longer needs
+      // the legacy On-Demand Builder (`/.netlify/builders/`) invocation path.
+      const invocationURL = `/.netlify/functions/${functionName}`
       _redirects += `${encodeURI(fromPath)}  ${invocationURL}  200\n`
     } else if (route.type === `redirect`) {
       const {
