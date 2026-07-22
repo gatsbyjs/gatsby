@@ -28,6 +28,34 @@ Array [
 ]
 `;
 
+exports[`gatsby-transformer-javascript-frontmatter onCreateNode should load frontmatter data from non-exported variable 1`] = `
+Array [
+  Object {
+    "children": Array [],
+    "frontmatter": Object {
+      "category": "data science",
+      "description": "Things about the choropleth.",
+      "error": false,
+      "layoutType": "post",
+      "path": "choropleth-on-d3v4",
+      "title": "Choropleth on d3v4",
+      "written": "2017-05-04",
+    },
+    "id": "foo >>> JavascriptFrontmatter",
+    "internal": Object {
+      "contentDigest": "digest",
+      "type": "JavascriptFrontmatter",
+    },
+    "node": Object {
+      "extension": "js",
+      "id": "foo",
+      "internal": Object {},
+    },
+    "parent": "foo",
+  },
+]
+`;
+
 exports[`gatsby-transformer-javascript-frontmatter onCreateNode should load frontmatter data with exported object 1`] = `
 Array [
   Object {
