@@ -1,4 +1,4 @@
-import fs from "fs-extra"
+import fs from "fs/promises"
 import * as path from "path"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix

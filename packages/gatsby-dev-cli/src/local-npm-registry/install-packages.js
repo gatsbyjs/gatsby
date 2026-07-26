@@ -1,5 +1,5 @@
 const path = require(`path`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 
 const { promisifiedSpawn } = require(`../utils/promisified-spawn`)
 const { registryUrl } = require(`./verdaccio-config`)
@@ -112,9 +112,8 @@ const installPackages = async ({
 
       if (changed) {
         console.log(`Changing deps in ${pkgJsonPath} to use @gatsby-dev`)
-        fs.outputJSONSync(pkgJsonPath, pkg, {
-          spaces: 2,
-        })
+        fs.mkdirSync(path.dirname(pkgJsonPath), { recursive: true })
+        fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2))
       }
     })
 

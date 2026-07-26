@@ -1,5 +1,5 @@
 const NodeEnvironment = require(`jest-environment-node`).TestEnvironment
-const fsExtra = require(`fs-extra`)
+const { rm } = require(`fs/promises`)
 
 const isWindows = process.platform === `win32`
 
@@ -26,7 +26,7 @@ class CustomEnvironment extends NodeEnvironment {
           if (rootDb.isOperational()) {
             await rootDb.close()
           }
-          await fsExtra.remove(dbPath)
+          await rm(dbPath, { recursive: true, force: true })
         }
       }
 

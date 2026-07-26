@@ -5,7 +5,6 @@ const {
   _unstable_createJob,
   _lazyJobsEnabled,
 } = require(`./index`)
-const { pathExists } = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils/path`)
 
 const { setPluginOptions } = require(`./plugin-options`)

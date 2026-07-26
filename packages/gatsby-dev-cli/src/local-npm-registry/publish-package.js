@@ -1,4 +1,4 @@
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const path = require(`path`)
 
 const { promisifiedSpawn } = require(`../utils/promisified-spawn`)
@@ -69,13 +69,15 @@ const adjustPackageJson = ({
   ])
 
   // change version and dependency versions
-  fs.outputFileSync(monoRepoPackageJsonPath, temporaryMonorepoPKGjsonString)
+  fs.mkdirSync(path.dirname(monoRepoPackageJsonPath), { recursive: true })
+  fs.writeFileSync(monoRepoPackageJsonPath, temporaryMonorepoPKGjsonString)
 
   return {
     newPackageVersion: monorepoPKGjson.version,
     unadjustPackageJson: registerCleanupTask(() => {
       // restore original package.json
-      fs.outputFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
+      fs.mkdirSync(path.dirname(monoRepoPackageJsonPath), { recursive: true })
+      fs.writeFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
       unignorePackageJSONChanges()
     }),
   }
@@ -89,14 +91,16 @@ const adjustPackageJson = ({
  */
 const createTemporaryNPMRC = ({ pathToPackage, root }) => {
   const NPMRCPathInPackage = path.join(pathToPackage, `.npmrc`)
-  fs.outputFileSync(NPMRCPathInPackage, NPMRCContent)
+  fs.mkdirSync(path.dirname(NPMRCPathInPackage), { recursive: true })
+  fs.writeFileSync(NPMRCPathInPackage, NPMRCContent)
 
   const NPMRCPathInRoot = path.join(root, `.npmrc`)
-  fs.outputFileSync(NPMRCPathInRoot, NPMRCContent)
+  fs.mkdirSync(path.dirname(NPMRCPathInRoot), { recursive: true })
+  fs.writeFileSync(NPMRCPathInRoot, NPMRCContent)
 
   return registerCleanupTask(() => {
-    fs.removeSync(NPMRCPathInPackage)
-    fs.removeSync(NPMRCPathInRoot)
+    fs.rmSync(NPMRCPathInPackage, { recursive: true, force: true })
+    fs.rmSync(NPMRCPathInRoot, { recursive: true, force: true })
   })
 }
 

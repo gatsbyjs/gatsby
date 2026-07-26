@@ -59,7 +59,7 @@ if (argv.version) {
 
 const conf = new Configstore(pkg.name)
 
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 
 let pathToRepo = argv.setPathToRepo
 

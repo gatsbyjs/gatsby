@@ -9,10 +9,10 @@ import {
   sourceContentFor,
 } from "@jridgewell/trace-mapping"
 
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const chalk = require(`chalk`)
-const { isNodeInternalModulePath } = require(`gatsby-core-utils`)
+import fs from "fs"
+import path from "path"
+import chalk from "chalk"
+import { isNodeInternalModulePath } from "gatsby-core-utils"
 
 const getDirName = (arg: unknown): string => {
   // Caveat related to executing in engines:
@@ -77,7 +77,7 @@ export const getNonGatsbyCodeFrame = ({
     : fileName
 
   try {
-    const code = fs.readFileSync(normalizedFileName, { encoding: `utf-8` })
+    const code = fs.readFileSync(normalizedFileName, `utf8`)
     return {
       fileName,
       line,
