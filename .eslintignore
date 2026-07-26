@@ -17,7 +17,6 @@ e2e-tests
 examples
 integration-tests
 **/*.d.ts
-deprecated-packages
 
 packages/*/*.js
 packages/gatsby-source-shopify/**/*.js
@@ -25,10 +24,6 @@ packages/gatsby-plugin-preload-fonts/prepare/*.js
 packages/gatsby/cache-dir/commonjs/**/*
 packages/gatsby-codemods/transforms
 packages/gatsby-source-graphql/batching
-deprecated-packages/gatsby-plugin-gatsby-cloud/components
-deprecated-packages/gatsby-plugin-gatsby-cloud/context
-deprecated-packages/gatsby-plugin-gatsby-cloud/models
-deprecated-packages/gatsby-plugin-gatsby-cloud/utils
 packages/gatsby-plugin-preact/fast-refresh
 
 packages/gatsby-source-wordpress/test-site/**

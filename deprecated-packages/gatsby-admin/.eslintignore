@@ -1,5 +1,0 @@
-packages/*/*.js
-packages/gatsby-link/index.js
-packages/gatsby-legacy-polyfills/dist/**
-../gatsby-link/index.js
-../gatsby-legacy-polyfills/dist/**
