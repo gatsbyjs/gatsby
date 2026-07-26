@@ -169,7 +169,7 @@ Not set by default. If set to a string (example `My Sales Channel`), only produc
 
 `apiVersion: string`
 
-The API version that should be used. More information: https://shopify.dev/docs/api/usage/versioning.
+The Shopify Admin API version that should be used. Defaults to `2026-01`. More information: https://shopify.dev/docs/api/usage/versioning.
 
 ## Images
 
