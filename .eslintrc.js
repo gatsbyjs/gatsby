@@ -29,6 +29,8 @@ module.exports = {
     after: true,
     spyOn: true,
     // These should be in scope but for some reason eslint can't see them
+    // `AggregateError` is ES2021; parserOptions.ecmaVersion is still 2016 here.
+    AggregateError: true,
     NodeJS: true,
     JSX: true,
     NodeRequire: true,
