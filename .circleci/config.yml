@@ -531,6 +531,10 @@ jobs:
           command: |
             echo -e 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # gatsby-dev-cli installs versions it published to verdaccio seconds
+             # earlier, so Yarn's release-age gate (4.10+) quarantines all of them
+          command: yarn config set npmMinimalAgeGate 0
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
           working_directory: /tmp/e2e-tests/gatsby-pnp
