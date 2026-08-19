@@ -212,6 +212,15 @@ module.exports = {
         // problems in our tests where we often want this functionality for module
         // mocking. At this point it's easier to have it off and just encourage
         // using top-level imports via code reviews.
+        "@typescript-eslint/no-unused-vars": [
+          `warn`,
+          {
+            varsIgnorePattern: `^_`,
+            argsIgnorePattern: `^_`,
+            ignoreRestSiblings: true,
+          },
+        ],
+        "no-unused-vars": `off`,
         "@typescript-eslint/no-var-requires": `off`,
         "@typescript-eslint/no-extra-semi": `off`,
         // This rule ensures that typescript types do not have semicolons

@@ -1,6 +1,6 @@
 import type { ImageCdnTransformArgs } from "gatsby"
 
-import { generateImageUrl, generateImageArgs } from "../image-cdn-url-generator"
+import { generateImageUrl } from "../image-cdn-url-generator"
 
 describe(`generateImageUrl`, () => {
   // pathPrefix is not used for images

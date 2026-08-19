@@ -1,10 +1,19 @@
 import path from "path"
 import * as fs from "fs-extra"
 import axios from "axios"
+import findCacheDir from "find-cache-dir"
 import { IAdapterManifestEntry } from "./adapter/types"
 import { preferDefault } from "../bootstrap/prefer-default"
 
 const ROOT = path.join(__dirname, `..`, `..`)
+// Packages installed via Yarn PnP (and potentially other read-only node_modules setups) mount
+// the installed package's own directory from a read-only zip, so the cache written below can't
+// live next to the packaged fallback files in ROOT. It also can't live under the site's `.cache`
+// (unlike other Gatsby-internal caches) - writing there perturbs the persistent webpack caches
+// that key off that same directory, causing spurious browser/SSR bundle rebuilds. Use the same
+// node_modules/.cache convention babel-loader and terser-webpack-plugin already rely on instead.
+const CACHE_ROOT =
+  findCacheDir({ name: `gatsby-latest-files`, create: true }) ?? ROOT
 const UNPKG_ROOT = `https://unpkg.com/gatsby/`
 const GITHUB_ROOT = `https://raw.githubusercontent.com/gatsbyjs/gatsby/master/packages/gatsby/`
 
@@ -14,8 +23,8 @@ const FILE_NAMES = {
 }
 
 const OUTPUT_FILES = {
-  APIS: path.join(ROOT, `latest-apis.json`),
-  ADAPTERS: path.join(ROOT, `latest-adapters.js`),
+  APIS: path.join(CACHE_ROOT, `latest-apis.json`),
+  ADAPTERS: path.join(CACHE_ROOT, `latest-adapters.js`),
 }
 
 export interface IAPIResponse {
@@ -60,15 +69,21 @@ const _getFile = async <T>({
   }
 
   if (dataToUse) {
-    await fs.writeFile(
-      outputFileName,
-      typeof dataToUse === `string`
-        ? dataToUse
-        : JSON.stringify(dataToUse, null, 2),
-      `utf8`
-    )
+    try {
+      await fs.ensureDir(CACHE_ROOT)
+      await fs.writeFile(
+        outputFileName,
+        typeof dataToUse === `string`
+          ? dataToUse
+          : JSON.stringify(dataToUse, null, 2),
+        `utf8`
+      )
 
-    fileToUse = outputFileName
+      fileToUse = outputFileName
+    } catch (e) {
+      // couldn't cache the freshly fetched file (e.g. read-only filesystem) - fall back to
+      // whatever is packaged with the current gatsby version instead of failing the build
+    }
   } else {
     // if file was previously cached, use it
     if (await fs.pathExists(outputFileName)) {

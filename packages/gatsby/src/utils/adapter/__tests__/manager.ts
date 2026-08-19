@@ -321,7 +321,7 @@ describe(`getFunctionsManifest`, () => {
       Array [
         Object {
           "functionId": "static-index-js",
-          "name": "/api/static/index",
+          "name": "/api/static",
           "pathToEntryPoint": ".cache/functions/static/index.js",
           "requiredFiles": Array [
             ".cache/functions/static/index.js",

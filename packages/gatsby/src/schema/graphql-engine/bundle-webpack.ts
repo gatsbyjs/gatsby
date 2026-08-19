@@ -233,15 +233,29 @@ function checkIfNeedToInstallMissingSharp(
   currentTarget: IPlatformAndArch
 ): IBinaryPackageStatus | undefined {
   try {
-    // check if sharp is resolvable
-    const sharp: typeof import("sharp") = require(`sharp`)
+    // "gatsby" doesn't depend on "sharp" directly (only "gatsby-sharp" does), so borrow
+    // gatsby-sharp's require context to resolve it - a plain `require("sharp")` here only
+    // works by accident of hoisting under classic node_modules installs, and is rejected
+    // outright as an undeclared/phantom dependency under strict resolution (e.g. Yarn PnP)
+    const gatsbySharpRequire = mod.createRequire(
+      require.resolve(`gatsby-sharp/package.json`)
+    )
+    const sharpPackageJsonLocation =
+      gatsbySharpRequire.resolve(`sharp/package.json`)
+    // sharp throws synchronously at require-time if it can't load a native binary for the
+    // current platform, so getting here already confirms one was found and loaded
+    const sharp: typeof import("sharp") = gatsbySharpRequire(`sharp`)
 
     if (isEqual(functionsTarget, currentTarget)) {
-      // if current platform and target is the same as functions target, we need to check if vendored libvips
-      // exists in the current sharp installation as it will be needed in lambda
-      if (sharp.vendor.installed.includes(sharp.vendor.current)) {
-        // vendored libvips is installed, so we can use it
-        return undefined
+      // current platform and functions target are the same, and we've just confirmed sharp
+      // can load its native binary here, so point the bundle at this exact install rather
+      // than installing a separate copy into the internal packages cache
+      return {
+        needToInstall: false,
+        packageName: `sharp`,
+        packageVersion:
+          sharp.versions.sharp ?? require(sharpPackageJsonLocation).version,
+        packageLocation: path.dirname(sharpPackageJsonLocation),
       }
     }
 
@@ -250,12 +264,93 @@ function checkIfNeedToInstallMissingSharp(
         needToInstall: true,
         packageName: `sharp`,
         packageVersion:
-          sharp.versions.sharp ?? require(`sharp/package.json`).version,
+          sharp.versions.sharp ?? require(sharpPackageJsonLocation).version,
       },
       functionsTarget
     )
   } catch (e) {
     return undefined
+  }
+}
+
+function getSharpRuntimePlatform(
+  sharpPackageLocation: string,
+  functionsTarget: IPlatformAndArch,
+  currentTarget: IPlatformAndArch
+): string | undefined {
+  try {
+    if (isEqual(functionsTarget, currentTarget)) {
+      // building for the platform we're actually running on - ask sharp's own detection,
+      // which correctly accounts for musl vs glibc, rather than reimplementing it here
+      const sharpRequire = mod.createRequire(
+        path.join(sharpPackageLocation, `package.json`)
+      )
+      const { runtimePlatformArch } = sharpRequire(`./lib/libvips.js`)
+      return runtimePlatformArch()
+    }
+
+    // cross-platform build - sharp's own detection reflects the build machine, not the
+    // target, so construct the string sharp itself would use (assumes glibc, true of every
+    // functions target Gatsby currently supports)
+    return `${functionsTarget.platform}-${functionsTarget.arch}`
+  } catch (e) {
+    return undefined
+  }
+}
+
+// sharp's compiled .node addon dynamically links (via rpath) against a shared library shipped
+// in a separate "@img/sharp-libvips-*" package, searched for at a handful of relative locations
+// from wherever the .node file itself ends up (e.g. "../../node_modules/@img/sharp-libvips-
+// <platform>/lib/*" and "../../../node_modules/@img/sharp-libvips-<platform>/lib/*").
+// `@vercel/webpack-asset-relocator-loader` only auto-discovers a native binary's own
+// shared-library dependencies for the `bindings`/`nbind`/`node-pre-gyp` loading conventions -
+// sharp uses none of those - so we place it ourselves once we know where the .node file
+// actually landed. Not every platform has a separate libvips package (e.g. Windows statically
+// links it), so finding none here is not an error.
+async function copySharpLibvipsSharedLibrary(
+  sharpPackageLocation: string,
+  runtimePlatform: string,
+  sharpNodeBinaryDir: string
+): Promise<void> {
+  try {
+    const sharpRequire = mod.createRequire(
+      path.join(sharpPackageLocation, `package.json`)
+    )
+    // these packages' "exports" map only exposes "./package" (no .json extension) for
+    // package.json, not "./package.json" itself - requesting the literal ".json" subpath
+    // throws "Package subpath './package.json' is not defined by 'exports'"
+    const libvipsPackageJsonLocation = sharpRequire.resolve(
+      `@img/sharp-libvips-${runtimePlatform}/package`
+    )
+    const libvipsLibDir = path.join(
+      path.dirname(libvipsPackageJsonLocation),
+      `lib`
+    )
+
+    if (!(await fs.pathExists(libvipsLibDir))) {
+      return
+    }
+
+    const candidateDirs = [2, 3].map(levelsUp =>
+      path.join(
+        sharpNodeBinaryDir,
+        ...new Array(levelsUp).fill(`..`),
+        `node_modules`,
+        `@img`,
+        `sharp-libvips-${runtimePlatform}`,
+        `lib`
+      )
+    )
+
+    await Promise.all(
+      candidateDirs
+        // never write outside of the bundle output directory - a candidate this deep
+        // relative to a shallower-than-expected binary location would land outside it
+        .filter(dir => !path.relative(outputDir, dir).startsWith(`..`))
+        .map(dir => fs.copy(libvipsLibDir, dir))
+    )
+  } catch (e) {
+    // no-op - platform has no separate libvips package to copy, or we couldn't find it
   }
 }
 
@@ -365,6 +460,7 @@ export async function createGraphqlEngineBundle(
 
   const dynamicAliases: Record<string, string> = {}
   let forcedLmdbBinaryModule: string | undefined = undefined
+  let forcedSharpRuntimePlatform: string | undefined = undefined
 
   // we need to make sure we have internal packages cache directory setup for current lambda target
   // before we attempt to check if we can reuse those packages
@@ -399,6 +495,11 @@ export async function createGraphqlEngineBundle(
       )
     }
     dynamicAliases[`sharp$`] = sharpPackageInfo.packageLocation
+    forcedSharpRuntimePlatform = getSharpRuntimePlatform(
+      sharpPackageInfo.packageLocation,
+      functionsTarget,
+      currentTarget
+    )
   }
 
   const compiler = webpack({
@@ -453,6 +554,9 @@ export async function createGraphqlEngineBundle(
                 assetRelocatorUseEntry,
                 {
                   loader: require.resolve(`./sharp-bundling-patch`),
+                  options: {
+                    forcedRuntimePlatform: forcedSharpRuntimePlatform,
+                  },
                 },
               ],
             },
@@ -659,6 +763,30 @@ export async function createGraphqlEngineBundle(
           }
 
           await Promise.all(binaryFixingPromises)
+        }
+
+        if (
+          forcedSharpRuntimePlatform &&
+          sharpPackageInfo?.needToInstall === false
+        ) {
+          const sharpNodeAssetSuffix = `sharp-${forcedSharpRuntimePlatform}.node`
+          const libvipsCopyPromises: Array<Promise<void>> = []
+
+          for (const asset of (
+            stats?.compilation?.assetsInfo ?? new Map()
+          ).keys()) {
+            if (asset?.endsWith(sharpNodeAssetSuffix)) {
+              libvipsCopyPromises.push(
+                copySharpLibvipsSharedLibrary(
+                  sharpPackageInfo.packageLocation,
+                  forcedSharpRuntimePlatform,
+                  path.dirname(path.join(outputDir, asset))
+                )
+              )
+            }
+          }
+
+          await Promise.all(libvipsCopyPromises)
         }
 
         compiler.close(closeErr => {
