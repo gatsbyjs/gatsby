@@ -777,7 +777,12 @@ jobs:
       - run: apt-get update && apt-get install -y jq
       - e2e-test:
           test_path: e2e-tests/adapters
-          test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
+          # node_modules/yarn.lock at this point are from the plain, pre-substitution
+          # install e2e-test.sh already ran against the workspace root (which has no
+          # dependencies of its own, so nothing local got linked). Clear them so the
+          # gatsby-dev call below - the one that actually links local packages - runs
+          # against a clean tree instead of layering an incremental install on top of it.
+          test_command: rm -rf node_modules yarn.lock; cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
           pre_gatsby_dev_command: ./make-monorepo.sh
       - store_test_results:
           path: e2e-tests/adapters/cypress/results
