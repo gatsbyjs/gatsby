@@ -29,6 +29,13 @@ executors:
       GATSBY_CPU_COUNT: 2
       VERBOSE: 1
 
+  e2e22:
+    docker:
+      - image: "cypress/browsers:node-22.21.0-chrome-141.0.7390.107-1-ff-144.0-edge-141.0.3537.92-1"
+    environment:
+      GATSBY_CPU_COUNT: 2
+      VERBOSE: 1
+
   e2e24:
     docker:
       - image: "cypress/browsers:node-24.11.1-chrome-142.0.7444.175-1-ff-145.0.1-edge-142.0.3595.90-1"
@@ -109,6 +116,26 @@ aliases:
           e2e_executor_suffix: "24"
         - node_version: "24.11.1"
           e2e_executor_suffix: "18"
+    requires:
+      - bootstrap-<< matrix.node_version >>
+
+  # netlify-cli requires node>=22.13.0, so the adapters e2e tests run on node 22
+  # where the rest of the e2e suite still covers node 18
+  adapters-e2e-test-workflow: &adapters-e2e-test-workflow
+    filters:
+      branches:
+        ignore:
+          - master
+          - /docs.+/
+    matrix:
+      parameters:
+        node_version: ["22.21.0", "24.11.1"]
+        e2e_executor_suffix: ["22", "24"]
+      exclude:
+        - node_version: "22.21.0"
+          e2e_executor_suffix: "24"
+        - node_version: "24.11.1"
+          e2e_executor_suffix: "22"
     requires:
       - bootstrap-<< matrix.node_version >>
 
@@ -878,11 +905,12 @@ jobs:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.19.0, yarn and netlify-cli
+          # netlify-cli requires node>=22.13.0
+          name: Install node 22.21.0, yarn and netlify-cli
           command: |
-            nvm install 18.19.0
-            nvm alias default 18.19.0
-            nvm use 18.19.0
+            nvm install 22.21.0
+            nvm alias default 22.21.0
+            nvm use 22.21.0
             npm install -g yarn netlify-cli
       - run:
           name: Clear out sharp
@@ -930,7 +958,7 @@ workflows:
           name: "bootstrap-<< matrix.node_version >>"
           matrix:
             parameters:
-              node_version: ["18.2.0", "20.19", "24.11.1"]
+              node_version: ["18.2.0", "20.19", "22.21.0", "24.11.1"]
       - lint
       - typecheck:
           requires:
@@ -941,7 +969,7 @@ workflows:
             - bootstrap-18.2.0
       - windows_adapters_smoke:
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-22.21.0
       - unit_tests_node18:
           <<: *ignore_docs
           requires:
@@ -995,9 +1023,9 @@ workflows:
       - e2e_tests_trailing-slash:
           <<: *e2e-test-workflow
       - e2e_tests_adapters:
-          <<: *e2e-test-workflow
+          <<: *adapters-e2e-test-workflow
       - e2e_tests_adapters_monorepo:
-          <<: *e2e-test-workflow
+          <<: *adapters-e2e-test-workflow
       - e2e_tests_development_runtime_with_react_18:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime_with_react_18:
