@@ -531,6 +531,22 @@ jobs:
           command: |
             echo -e 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Exempt locally published packages from Yarn's minimum release age gate
+          command: yarn config set --json npmPreapprovedPackages "$(node ~/project/scripts/list-publishable-packages.js)"
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Allow build scripts for packages that need them (Yarn 4 disables them by default)
+          command: |
+            node -e '
+              const fs = require("fs");
+              const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+              pkg.dependenciesMeta = {
+                gatsby: { built: true },
+                "gatsby-cli": { built: true },
+                sharp: { built: true },
+              };
+              fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
+            '
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
           working_directory: /tmp/e2e-tests/gatsby-pnp
