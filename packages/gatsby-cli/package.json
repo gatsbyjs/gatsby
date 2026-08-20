@@ -45,7 +45,7 @@
     "semver": "^7.5.3",
     "signal-exit": "^3.0.7",
     "stack-trace": "^0.0.10",
-    "strip-ansi": "^6.0.1",
+    "strip-ansi": "^7.2.0",
     "tinyclip": "^0.1.12",
     "yargs": "^15.4.1",
     "yoga-layout-prebuilt": "^1.10.0",
