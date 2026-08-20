@@ -116,7 +116,7 @@ function setupFsWrapper(): string {
 
     // linkfs doesn't pass across the `native` prop, which graceful-fs needs
     for (const key in lfs) {
-      if (Object.hasOwnProperty.call(fs[key], `native`)) {
+      if (fs[key] && Object.hasOwnProperty.call(fs[key], `native`)) {
         lfs[key].native = fs[key].native
       }
     }
