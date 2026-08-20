@@ -111,7 +111,7 @@
     "graphql-compose": "^9.0.10",
     "graphql-http": "^1.19.0",
     "graphql-tag": "^2.12.6",
-    "hasha": "^5.2.2",
+    "hasha": "^7.0.0",
     "is-relative": "^1.0.0",
     "is-relative-url": "^3.0.0",
     "joi": "^17.9.2",
