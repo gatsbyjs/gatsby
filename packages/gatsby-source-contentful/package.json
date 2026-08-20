@@ -21,7 +21,7 @@
     "is-online": "^10.0.0",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.12",
+    "node-fetch": "^3.3.2",
     "semver": "^7.5.3",
     "url": "^0.11.1"
   },
