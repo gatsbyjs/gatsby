@@ -87,10 +87,37 @@ const http = require("http")
 const { Buffer } = require("buffer")
 const cookie = require("${getRelativePathToModule(`cookie`)}")
 ${
-  isODB
-    ? `const { builder } = require("${getRelativePathToModule(
-        `@netlify/functions`
-      )}")`
+  isODB // inlined @netlify/functions#builder working on Node@24 that doesn't use callback
+    ? /* javascript */ `function builder(handler) {
+      return async function(event, context) {
+        if (event.httpMethod !== 'GET' && event.httpMethod !== 'HEAD') {
+          return {
+            body: 'Method Not Allowed',
+            statusCode: HTTP_STATUS_METHOD_NOT_ALLOWED,
+          }
+        }
+
+        // Removing query string parameters from the builder function.
+        const modifiedEvent = {
+          ...event,
+          multiValueQueryStringParameters: {},
+          queryStringParameters: {},
+        }
+        const response = await handler(modifiedEvent, context)
+        // augmentResponse
+        if (!response) {
+          return response
+        }
+        return {
+          ...response,
+          metadata: {
+            version: 1,
+            builder_function: true,
+            ttl: 0
+          }
+        }
+      }
+    }`
     : ``
 }
 

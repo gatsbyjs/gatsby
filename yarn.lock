@@ -3378,13 +3378,6 @@
   resolved "https://registry.yarnpkg.com/@netlify/edge-functions/-/edge-functions-2.2.0.tgz#5f7f5c7602a7f98888a4b4421576ca609dad2083"
   integrity sha512-8UeKA2nUDB0oWE+Z0gLpA7wpLq8nM+NrZEQMfSdzfMJNvmYVabil/mS07rb0EBrUxM9PCKidKenaiCRnPTBSKw==
 
-"@netlify/functions@^5.1.2":
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/@netlify/functions/-/functions-5.1.2.tgz#a18a141c989f3c5e6963d5d4c0613f106854ae0c"
-  integrity sha512-tpPiLSkQatuexH8AdAZ8RlALvT7ixOE9VhvpkzQGNvihcms8hzmvUDuSxQa7UneTj/sHsdirnXmnJ+nmf+Nx/w==
-  dependencies:
-    "@netlify/types" "2.3.0"
-
 "@netlify/headers-parser@^9.0.2":
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/@netlify/headers-parser/-/headers-parser-9.0.2.tgz#814588a8623df574212f998856f161594d1b1368"
@@ -3411,11 +3404,6 @@
     fast-safe-stringify "^2.1.1"
     is-plain-obj "^4.0.0"
     path-exists "^5.0.0"
-
-"@netlify/types@2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@netlify/types/-/types-2.3.0.tgz#db4dc8e0a5f288cfb6d9f23f02202f2d68a06959"
-  integrity sha512-5gxMWh/S7wr0uHKSTbMv4bjWmWSpwpeLYvErWeVNAPll5/QNFo9aWimMAUuh8ReLY3/fg92XAroVVu7+z27Snw==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
