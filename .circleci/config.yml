@@ -29,6 +29,13 @@ executors:
       GATSBY_CPU_COUNT: 2
       VERBOSE: 1
 
+  e2e22:
+    docker:
+      - image: "cypress/browsers:node-22.21.0-chrome-141.0.7390.107-1-ff-144.0-edge-141.0.3537.92-1"
+    environment:
+      GATSBY_CPU_COUNT: 2
+      VERBOSE: 1
+
   e2e24:
     docker:
       - image: "cypress/browsers:node-24.11.1-chrome-142.0.7444.175-1-ff-145.0.1-edge-142.0.3595.90-1"
@@ -109,6 +116,26 @@ aliases:
           e2e_executor_suffix: "24"
         - node_version: "24.11.1"
           e2e_executor_suffix: "18"
+    requires:
+      - bootstrap-<< matrix.node_version >>
+
+  # netlify-cli requires node>=22.13.0, so the adapters e2e tests run on node 22
+  # where the rest of the e2e suite still covers node 18
+  adapters-e2e-test-workflow: &adapters-e2e-test-workflow
+    filters:
+      branches:
+        ignore:
+          - master
+          - /docs.+/
+    matrix:
+      parameters:
+        node_version: ["22.21.0", "24.11.1"]
+        e2e_executor_suffix: ["22", "24"]
+      exclude:
+        - node_version: "22.21.0"
+          e2e_executor_suffix: "24"
+        - node_version: "24.11.1"
+          e2e_executor_suffix: "22"
     requires:
       - bootstrap-<< matrix.node_version >>
 
@@ -531,6 +558,22 @@ jobs:
           command: |
             echo -e 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Exempt locally published packages from Yarn's minimum release age gate
+          command: yarn config set --json npmPreapprovedPackages "$(node ~/project/scripts/list-publishable-packages.js)"
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Allow build scripts for packages that need them (Yarn 4 disables them by default)
+          command: |
+            node -e '
+              const fs = require("fs");
+              const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+              pkg.dependenciesMeta = {
+                gatsby: { built: true },
+                "gatsby-cli": { built: true },
+                sharp: { built: true },
+              };
+              fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
+            '
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
           working_directory: /tmp/e2e-tests/gatsby-pnp
@@ -761,7 +804,12 @@ jobs:
       - run: apt-get update && apt-get install -y jq
       - e2e-test:
           test_path: e2e-tests/adapters
-          test_command: cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
+          # node_modules/yarn.lock at this point are from the plain, pre-substitution
+          # install e2e-test.sh already ran against the workspace root (which has no
+          # dependencies of its own, so nothing local got linked). Clear them so the
+          # gatsby-dev call below - the one that actually links local packages - runs
+          # against a clean tree instead of layering an incremental install on top of it.
+          test_command: rm -rf node_modules yarn.lock; cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
           pre_gatsby_dev_command: ./make-monorepo.sh
       - store_test_results:
           path: e2e-tests/adapters/cypress/results
@@ -857,11 +905,12 @@ jobs:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 18.19.0, yarn and netlify-cli
+          # netlify-cli requires node>=22.13.0
+          name: Install node 22.21.0, yarn and netlify-cli
           command: |
-            nvm install 18.19.0
-            nvm alias default 18.19.0
-            nvm use 18.19.0
+            nvm install 22.21.0
+            nvm alias default 22.21.0
+            nvm use 22.21.0
             npm install -g yarn netlify-cli
       - run:
           name: Clear out sharp
@@ -909,7 +958,7 @@ workflows:
           name: "bootstrap-<< matrix.node_version >>"
           matrix:
             parameters:
-              node_version: ["18.2.0", "20.19", "24.11.1"]
+              node_version: ["18.2.0", "20.19", "22.21.0", "24.11.1"]
       - lint
       - typecheck:
           requires:
@@ -920,7 +969,7 @@ workflows:
             - bootstrap-18.2.0
       - windows_adapters_smoke:
           requires:
-            - bootstrap-18.2.0
+            - bootstrap-22.21.0
       - unit_tests_node18:
           <<: *ignore_docs
           requires:
@@ -974,9 +1023,9 @@ workflows:
       - e2e_tests_trailing-slash:
           <<: *e2e-test-workflow
       - e2e_tests_adapters:
-          <<: *e2e-test-workflow
+          <<: *adapters-e2e-test-workflow
       - e2e_tests_adapters_monorepo:
-          <<: *e2e-test-workflow
+          <<: *adapters-e2e-test-workflow
       - e2e_tests_development_runtime_with_react_18:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime_with_react_18:
