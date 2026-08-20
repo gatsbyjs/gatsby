@@ -209,6 +209,16 @@ commands:
           name: Fix Google Chrome apt signing key
           command: wget -q -O /etc/apt/trusted.gpg.d/google-chrome.asc https://dl.google.com/linux/linux_signing_key.pub
 
+  set_expected_functions_node_version:
+    description: "Tell the adapters e2e tests which Node version functions should run on"
+    parameters:
+      node_version:
+        type: string
+    steps:
+      - run:
+          name: Set CYPRESS_EXPECTED_FUNCTIONS_NODE_VERSION
+          command: echo 'export CYPRESS_EXPECTED_FUNCTIONS_NODE_VERSION="<< parameters.node_version >>"' >> "$BASH_ENV"
+
   e2e-test:
     parameters:
       skip_file_change_test:
@@ -785,6 +795,8 @@ jobs:
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
       - check_netlify_credentials
+      - set_expected_functions_node_version:
+          node_version: << parameters.node_version >>
       - e2e-test:
           test_path: e2e-tests/adapters
       - store_test_results:
@@ -799,6 +811,8 @@ jobs:
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
       - check_netlify_credentials
+      - set_expected_functions_node_version:
+          node_version: << parameters.node_version >>
       # used in e2e-tests/adapters/make-monorepo.sh
       - fix_chrome_signing_key
       - run: apt-get update && apt-get install -y jq
