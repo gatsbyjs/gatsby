@@ -10,6 +10,9 @@ interface ISliceBoundaryMatch {
   type: "start" | "end"
 }
 
+const sliceCache = new Map<string, string>()
+const stitchedSliceCache = new Map<string, string>()
+
 function ensureExpectedType(maybeType: string): "start" | "end" {
   if (maybeType === `start` || maybeType === `end`) {
     return maybeType
@@ -28,10 +31,25 @@ async function stitchSlices(
   let cursor = 0
 
   async function getSliceContent(sliceHtmlName: string): Promise<string> {
-    return fs.readFile(
-      path.join(publicDir, `_gatsby`, `slices`, `${sliceHtmlName}.html`),
-      `utf-8`
-    )
+    if (!sliceCache.has(sliceHtmlName)) {
+      const content = await fs.readFile(
+        path.join(publicDir, `_gatsby`, `slices`, `${sliceHtmlName}.html`),
+        `utf-8`
+      )
+      sliceCache.set(sliceHtmlName, content)
+    }
+    return sliceCache.get(sliceHtmlName)!
+  }
+
+  async function getStitchedSlice(sliceHtmlName: string): Promise<string> {
+    if (!stitchedSliceCache.has(sliceHtmlName)) {
+      const stitched = await stitchSlices(
+        await getSliceContent(sliceHtmlName),
+        publicDir
+      )
+      stitchedSliceCache.set(sliceHtmlName, stitched)
+    }
+    return stitchedSliceCache.get(sliceHtmlName)!
   }
 
   for (const match of htmlString.matchAll(
@@ -100,10 +118,7 @@ async function stitchSlices(
         continue
       }
 
-      processedHTML += `${await stitchSlices(
-        await getSliceContent(meta.id),
-        publicDir
-      )}<!-- slice-end id="${meta.id}" -->`
+      processedHTML += `${await getStitchedSlice(meta.id)}<!-- slice-end id="${meta.id}" -->`
       cursor = meta.end
 
       previousStart = undefined
