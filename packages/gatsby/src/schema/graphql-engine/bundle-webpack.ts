@@ -237,12 +237,9 @@ function checkIfNeedToInstallMissingSharp(
     const sharp: typeof import("sharp") = require(`sharp`)
 
     if (isEqual(functionsTarget, currentTarget)) {
-      // if current platform and target is the same as functions target, we need to check if vendored libvips
-      // exists in the current sharp installation as it will be needed in lambda
-      if (sharp.vendor.installed.includes(sharp.vendor.current)) {
-        // vendored libvips is installed, so we can use it
-        return undefined
-      }
+      // For sharp >= 0.33, prebuilt binaries are shipped as optional dependencies
+      // so if the platform matches, it's already installed.
+      return undefined
     }
 
     return checkIfInstalledInInternalPackagesCache(
@@ -444,18 +441,6 @@ export async function createGraphqlEngineBundle(
       rules: [
         {
           oneOf: [
-            {
-              // specific set of loaders for sharp
-              test: /node_modules[/\\]sharp[/\\].*\.[cm]?js$/,
-              // it is recommended for Node builds to turn off AMD support
-              parser: { amd: false },
-              use: [
-                assetRelocatorUseEntry,
-                {
-                  loader: require.resolve(`./sharp-bundling-patch`),
-                },
-              ],
-            },
             {
               // specific set of loaders for LMBD - our custom patch to massage lmdb to work with relocator -> relocator
               test: /node_modules[/\\]lmdb[/\\].*\.[cm]?js/,

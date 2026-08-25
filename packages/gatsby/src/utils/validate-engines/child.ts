@@ -36,6 +36,11 @@ export async function validate(directory: string): Promise<void> {
       return originalModuleLoad(request, parent, isMain)
     }
 
+    // Allow imports to sharp binaries
+    if (request.startsWith(`@img/sharp-`)) {
+      return originalModuleLoad(request, parent, isMain)
+    }
+
     // Allow imports to modules in engines directory.
     // For example: importing ".cache/page-ssr/routes/render-page" from
     // page-ssr engine should be allowed as it is part of engine.
