@@ -1,4 +1,4 @@
-import type { ProcessorOptions } from "@mdx-js/mdx"
+import type { CompileOptions } from "@mdx-js/mdx"
 import type { GatsbyCache, NodePluginArgs } from "gatsby"
 import type { Pluggable } from "unified"
 import type { IMdxPluginOptions } from "./plugin-options"
@@ -19,9 +19,7 @@ export async function getSourcePluginsAsRemarkPlugins({
   reporter,
   cache,
   pathPrefix,
-}: IGetSourcePluginsAsRemarkPlugins): Promise<
-  ProcessorOptions["remarkPlugins"]
-> {
+}: IGetSourcePluginsAsRemarkPlugins): Promise<CompileOptions["remarkPlugins"]> {
   const userPluginsFiltered = gatsbyRemarkPlugins
     ? gatsbyRemarkPlugins.filter(plugin => typeof plugin.module === `function`)
     : []

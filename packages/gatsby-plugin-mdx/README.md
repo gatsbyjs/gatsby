@@ -178,6 +178,7 @@ gatsbyRemarkPlugins: [`gatsby-remark-images`]
 These configuration options are directly passed into the MDX compiler.
 
 See all available options in [the official documentation of `@mdx-js/mdx`](https://mdxjs.com/packages/mdx/#compilefile-options).
+If you need to process mixed `.mdx` and `.md` files, set `format: 'detect'`.
 
 ```js:title=gatsby-config.mjs
 import remarkGfm from "remark-gfm"

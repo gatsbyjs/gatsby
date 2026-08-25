@@ -393,7 +393,7 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .keys({
         jsx: Joi.boolean().description(`Whether to keep JSX`),
         format: Joi.string()
-          .valid(`mdx`, `md`)
+          .valid(`mdx`, `md`, `detect`)
           .description(`Format of the files to be processed`),
         outputFormat: Joi.string()
           .valid(`program`, `function-body`)
