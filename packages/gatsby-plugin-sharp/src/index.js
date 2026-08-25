@@ -4,7 +4,7 @@ const imageSize = require(`probe-image-size`)
 const { isCI } = require(`gatsby-core-utils/ci`)
 
 const _ = require(`lodash`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const path = require(`path`)
 
 const { createArgsDigest } = require(`./process-file`)
@@ -97,7 +97,7 @@ function prepareQueue({ file, args }) {
   const outputFilePath = path.join(argsDigestShort, imgSrc)
 
   // make sure outputDir is created
-  fs.ensureDirSync(outputDir)
+  fs.mkdirSync(outputDir, { recursive: true })
 
   const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
     file,

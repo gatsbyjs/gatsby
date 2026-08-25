@@ -1,6 +1,6 @@
 const startVerdaccio = require(`verdaccio`).default
 
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const _ = require(`lodash`)
 
 let VerdaccioInitPromise = null
@@ -17,7 +17,7 @@ const startServer = () => {
   console.log(`Starting local verdaccio server`)
 
   // clear storage
-  fs.removeSync(verdaccioConfig.storage)
+  fs.rmSync(verdaccioConfig.storage, { recursive: true, force: true })
 
   VerdaccioInitPromise = new Promise(resolve => {
     startVerdaccio(

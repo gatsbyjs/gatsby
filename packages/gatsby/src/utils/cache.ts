@@ -4,7 +4,7 @@ import manager, {
   CachingConfig,
   MultiCache,
 } from "cache-manager"
-import fs from "fs-extra"
+import fs from "fs"
 import * as fsStore from "../cache/cache-fs"
 import path from "path"
 
@@ -38,7 +38,7 @@ export default class GatsbyCache {
   }
 
   init(): GatsbyCache {
-    fs.ensureDirSync(this.directory)
+    fs.mkdirSync(this.directory, { recursive: true })
 
     const configs: Array<StoreConfig> = [
       {

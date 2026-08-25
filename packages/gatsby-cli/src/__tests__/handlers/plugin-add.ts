@@ -1,4 +1,4 @@
-import { ensureDir, copyFile, readFile, rm } from "fs-extra"
+import { mkdir, copyFile, readFile, rm } from "fs/promises"
 import { join } from "path"
 import { addPlugins } from "../../handlers/plugin-add"
 
@@ -29,7 +29,7 @@ const plugin = {
 
 describe(`addPlugins`, () => {
   beforeAll(async () => {
-    await ensureDir(fixtures)
+    await mkdir(fixtures, { recursive: true })
   })
 
   describe(`gatsby-config.js`, () => {
@@ -38,7 +38,7 @@ describe(`addPlugins`, () => {
     })
 
     afterEach(async () => {
-      await rm(config.js.fixture)
+      await rm(config.js.fixture, { recursive: true, force: true })
     })
 
     it(`should not write with no plugins`, async () => {
@@ -81,7 +81,7 @@ describe(`addPlugins`, () => {
     })
 
     afterEach(async () => {
-      await rm(config.ts.fixture)
+      await rm(config.ts.fixture, { recursive: true, force: true })
     })
 
     it(`should not write with no plugins`, async () => {

@@ -1,4 +1,4 @@
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const path = require(`path`)
 const fileType = require(`file-type`)
 
@@ -73,7 +73,7 @@ async function processBufferNode({
       ext = filetype ? `.${filetype.ext}` : `.bin`
     }
     filename = createFilePath(path.join(pluginCacheDir, hash), name, ext)
-    await fs.ensureDir(path.dirname(filename))
+    await fs.promises.mkdir(path.dirname(filename), { recursive: true })
 
     // Cache the buffer contents
     await writeBuffer(filename, buffer)
