@@ -30,6 +30,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         onDone: {
           target: `waitingPendingQueries`,
         },
+        onError: {
+          target: `done`,
+        },
       },
     },
     // This state exists solely because "extractQueries" finishes too early.
