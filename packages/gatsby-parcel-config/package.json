@@ -21,7 +21,7 @@
     "@parcel/optimizer-terser": "2.8.3",
     "@parcel/packager-js": "2.8.3",
     "@parcel/packager-raw": "2.8.3",
-    "@parcel/reporter-dev-server": "2.8.3",
+    "@parcel/reporter-dev-server": "2.16.4",
     "@parcel/resolver-default": "2.8.3",
     "@parcel/runtime-js": "2.8.3",
     "@parcel/transformer-js": "2.8.3",
