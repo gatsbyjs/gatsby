@@ -65,7 +65,7 @@
     "ci-info": "4.4.0",
     "configstore": "^5.0.1",
     "fastq": "^1.15.0",
-    "file-type": "^16.5.4",
+    "file-type": "^21.0.0",
     "fs-extra": "^11.2.0",
     "got": "^11.8.6",
     "hash-wasm": "^4.11.0",
