@@ -83,6 +83,24 @@ describe(`Production loader`, () => {
       expect(xhrCount).toBe(1)
     })
 
+    it(`should percent-encode characters RFC 3986 forbids in paths (e.g. splat route brackets)`, async () => {
+      const prodLoader = new ProdLoader(null, [])
+
+      const payload = { path: `/[...slug]/` }
+      mockPageData(`/%5B...slug%5D`, 200, payload, true)
+
+      const expectation = {
+        status: `success`,
+        pagePath: `/[...slug]`,
+        payload,
+      }
+      expect(await prodLoader.loadPageDataJson(`/[...slug]/`)).toEqual(
+        expectation
+      )
+      expect(prodLoader.pageDataDb.get(`/[...slug]`)).toEqual(expectation)
+      expect(xhrCount).toBe(1)
+    })
+
     it(`should return a pageData json on success without contentType`, async () => {
       const prodLoader = new ProdLoader(null, [])
 
