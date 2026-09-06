@@ -617,7 +617,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
     .recommendCommands()
     .parse(argv.slice(2))
 
-  if (parsed._.length === 0 && !parsed.help && !parsed.version) {
+  if (parsed._.length === 0) {
     cli.showHelp(`log`)
   }
 
