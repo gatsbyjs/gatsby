@@ -525,7 +525,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
     // ignore
   }
 
-  return cli
+  const parsed = cli
     .command({
       command: `new [rootPath] [starter]`,
       describe: `Create new Gatsby project.`,
@@ -613,8 +613,13 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
       }),
     })
     .wrap(cli.terminalWidth())
-    .demandCommand(1, `Pass --help to see all available commands and options.`)
     .strict()
     .recommendCommands()
     .parse(argv.slice(2))
+
+  if (parsed._.length === 0 && !parsed.help && !parsed.version) {
+    cli.showHelp(`log`)
+  }
+
+  return parsed
 }
