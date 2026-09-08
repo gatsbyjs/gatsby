@@ -11,23 +11,13 @@ import { promisify } from "util"
 import type { ISSRData, EnginePage } from "./entry"
 import { link, rewritableMethods as linkRewritableMethods } from "linkfs"
 
-// Placeholders replaced by `bundle-webpack.ts` in the prebuilt bundle at
-// `gatsby build` time. They live on an object so that webpack (which bundles
-// this file at gatsby package build time) can't constant-fold the truthiness
-// checks below before the real values are substituted.
-const injected = {
-  CDN_DATASTORE_PATH: `%CDN_DATASTORE_PATH%`,
-  CDN_DATASTORE_ORIGIN: `%CDN_DATASTORE_ORIGIN%`,
-  PATH_PREFIX: `%PATH_PREFIX%`,
-  IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH: `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
-  FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH: `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`,
-}
-
-const cdnDatastorePath = injected.CDN_DATASTORE_PATH
+const cdnDatastorePath = `%CDN_DATASTORE_PATH%`
 // this is fallback origin, we will prefer to extract it from first request instead
 // as in some cases one reported by adapter might not be correct
-const cdnDatastoreOrigin = injected.CDN_DATASTORE_ORIGIN
-const PATH_PREFIX = injected.PATH_PREFIX
+const cdnDatastoreOrigin = `%CDN_DATASTORE_ORIGIN%`
+const PATH_PREFIX = `%PATH_PREFIX%`
+const imageCdnUrlGeneratorModuleRelativePath = `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+const fileCdnUrlGeneratorModuleRelativePath = `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
 
 // this file should be in `.cache/page-ssr-module/lambda.js`
 // so getting `.cache` location should be one directory above
@@ -238,23 +228,16 @@ global.__GATSBY = {
   buildId: ``,
 }
 
-// these sibling modules are only written out when the site actually uses them,
-// so `__non_webpack_require__` to keep webpack from trying to resolve them
-// when this file is bundled at gatsby package build time
 // eslint-disable-next-line @typescript-eslint/naming-convention
 declare const __non_webpack_require__: typeof require
 
-if (injected.IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH) {
+if (imageCdnUrlGeneratorModuleRelativePath) {
   global.__GATSBY.imageCDNUrlGeneratorModulePath =
-    __non_webpack_require__.resolve(
-      injected.IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
-    )
+    __non_webpack_require__.resolve(imageCdnUrlGeneratorModuleRelativePath)
 }
-if (injected.FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH) {
+if (fileCdnUrlGeneratorModuleRelativePath) {
   global.__GATSBY.fileCDNUrlGeneratorModulePath =
-    __non_webpack_require__.resolve(
-      injected.FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH
-    )
+    __non_webpack_require__.resolve(fileCdnUrlGeneratorModuleRelativePath)
 }
 
 const dbPath = setupFsWrapper()
