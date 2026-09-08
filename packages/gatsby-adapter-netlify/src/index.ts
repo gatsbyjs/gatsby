@@ -1,15 +1,7 @@
 import type { AdapterInit, IAdapterConfig } from "gatsby"
 
-import {
-  chmod,
-  copyFile,
-  readdir,
-  rename,
-  stat,
-  unlink,
-} from "node:fs/promises"
 import { cwd, env } from "node:process"
-import { join, resolve } from "node:path"
+import { join } from "node:path"
 
 import { handleRoutesManifest } from "./route-handler"
 import { prepareFileCdnHandler } from "./file-cdn-handler"
@@ -37,54 +29,6 @@ interface INetlifyCacheUtils {
 interface INetlifyAdapterOptions {
   excludeDatastoreFromEngineFunction?: boolean
   imageCDN?: boolean
-}
-
-/*
-  @netlify/cache-utils copies files with cpy, which feeds paths to copy-file.
-  copy-file uses fs.lstat() then stats.isFile() — false for symlinks — and throws
-  EISDIR regardless of what the symlink points to. Gatsby's installMissing() runs
-  `npm install` in .cache/internal-packages/linux-x64/ to fetch cross-platform native
-  binaries for bundling, and npm creates .bin/ symlinks as part of that install.
-  Walk the directories first and replace any file symlinks with real copies so
-  cache-utils never encounters them.
-*/
-
-async function resolveFileSymlinks(directories: Array<string>): Promise<void> {
-  async function walk(dir: string): Promise<void> {
-    let entries
-
-    try {
-      entries = await readdir(dir, { withFileTypes: true })
-    } catch {
-      return
-    }
-
-    await Promise.all(
-      entries.map(async entry => {
-        const fullPath = join(dir, entry.name)
-
-        if (entry.isSymbolicLink()) {
-          try {
-            const targetStat = await stat(fullPath)
-
-            if (targetStat.isFile()) {
-              const tmp = `${fullPath}.__netlify_tmp`
-              await copyFile(fullPath, tmp)
-              await chmod(tmp, targetStat.mode)
-              await unlink(fullPath)
-              await rename(tmp, fullPath)
-            }
-          } catch {
-            // broken symlink or unreadable target — leave it
-          }
-        } else if (entry.isDirectory()) {
-          await walk(fullPath)
-        }
-      })
-    )
-  }
-
-  await Promise.all(directories.map(dir => walk(resolve(cwd(), dir))))
 }
 
 let _cacheUtils: INetlifyCacheUtils | undefined
@@ -156,7 +100,6 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
             `[gatsby-adapter-netlify] using @netlify/cache-utils save`
           )
 
-          await resolveFileSymlinks(directories)
           await utils.save(directories, {})
 
           reporter.info(
