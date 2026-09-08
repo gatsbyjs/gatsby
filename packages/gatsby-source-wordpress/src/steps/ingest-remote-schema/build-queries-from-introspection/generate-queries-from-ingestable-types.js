@@ -315,9 +315,9 @@ const generateNodeQueriesFromIngestibleFields = async () => {
             `Query debug mode. Writing node list query for the ${nodesType.name} node type to the system clipboard and exiting\n\n`
           )
         )
-        // clipboardy is ESM-only package
-        const { default: clipboardy } = await import(`clipboardy`)
-        await clipboardy.write(
+        // tinyclip is ESM-only package
+        const clipboard = await import(`tinyclip`)
+        await clipboard.writeText(
           prettier.format(nodeListQueries[0], { parser: `graphql` })
         )
         process.exit()
