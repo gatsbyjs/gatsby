@@ -18,7 +18,7 @@
     "gatsby-source-filesystem": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.63.6",
+    "sass": "~1.99.0",
     "typeface-merriweather": "^1.1.13"
   },
   "keywords": [
@@ -55,7 +55,7 @@
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
-    "@playwright/test": "^1.35.1",
+    "@playwright/test": "~1.61.1",
     "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "fs-extra": "^11.2.0",

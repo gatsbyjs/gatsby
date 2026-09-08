@@ -6,7 +6,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "24.18.0"
+        default: "24.11.1"
       gatsby_major:
         type: string
         default: "5"
@@ -22,9 +22,23 @@ executors:
       # don't want to use it regardless, for consistency (and because it can cause problems)
       SHARP_IGNORE_GLOBAL_LIBVIPS: 1
 
+  e2e18:
+    docker:
+      - image: "cypress/browsers:node-18.20.3-chrome-125.0.6422.141-1-ff-126.0.1-edge-125.0.2535.85-1"
+    environment:
+      GATSBY_CPU_COUNT: 2
+      VERBOSE: 1
+
+  e2e22:
+    docker:
+      - image: "cypress/browsers:node-22.21.0-chrome-141.0.7390.107-1-ff-144.0-edge-141.0.3537.92-1"
+    environment:
+      GATSBY_CPU_COUNT: 2
+      VERBOSE: 1
+
   e2e24:
     docker:
-      - image: "cypress/browsers:node-24.18.0-chrome-149.0.7827.200-1-ff-152.0.3-edge-149.0.4022.98-1"
+      - image: "cypress/browsers:node-24.11.1-chrome-142.0.7444.175-1-ff-145.0.1-edge-142.0.3595.90-1"
     environment:
       GATSBY_CPU_COUNT: 2
       VERBOSE: 1
@@ -95,8 +109,33 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["24.18.0"]
-        e2e_executor_suffix: ["24"]
+        node_version: ["18.2.0", "24.11.1"]
+        e2e_executor_suffix: ["18", "24"]
+      exclude:
+        - node_version: "18.2.0"
+          e2e_executor_suffix: "24"
+        - node_version: "24.11.1"
+          e2e_executor_suffix: "18"
+    requires:
+      - bootstrap-<< matrix.node_version >>
+
+  # netlify-cli requires node>=22.13.0, so the adapters e2e tests run on node 22
+  # where the rest of the e2e suite still covers node 18
+  adapters-e2e-test-workflow: &adapters-e2e-test-workflow
+    filters:
+      branches:
+        ignore:
+          - master
+          - /docs.+/
+    matrix:
+      parameters:
+        node_version: ["22.21.0", "24.11.1"]
+        e2e_executor_suffix: ["22", "24"]
+      exclude:
+        - node_version: "22.21.0"
+          e2e_executor_suffix: "24"
+        - node_version: "24.11.1"
+          e2e_executor_suffix: "22"
     requires:
       - bootstrap-<< matrix.node_version >>
 
@@ -108,7 +147,7 @@ aliases:
           - /docs.+/
     matrix:
       parameters:
-        node_version: ["24.18.0"]
+        node_version: ["18.2.0", "24.11.1"]
     requires:
       - bootstrap-<< matrix.node_version >>
 
@@ -169,6 +208,16 @@ commands:
       - run:
           name: Fix Google Chrome apt signing key
           command: wget -q -O /etc/apt/trusted.gpg.d/google-chrome.asc https://dl.google.com/linux/linux_signing_key.pub
+
+  set_expected_functions_node_version:
+    description: "Tell the adapters e2e tests which Node version functions should run on"
+    parameters:
+      node_version:
+        type: string
+    steps:
+      - run:
+          name: Set CYPRESS_EXPECTED_FUNCTIONS_NODE_VERSION
+          command: echo 'export CYPRESS_EXPECTED_FUNCTIONS_NODE_VERSION="<< parameters.node_version >>"' >> "$BASH_ENV"
 
   e2e-test:
     parameters:
@@ -280,16 +329,22 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
-  unit_tests_node22:
+  unit_tests_node18:
     executor:
       name: node
-      image: "22.23.1"
+      image: "18.2.0"
+    <<: *test_template
+
+  unit_tests_node20:
+    executor:
+      name: node
+      image: "20.19"
     <<: *test_template
 
   unit_tests_node24:
     executor:
       name: node
-      image: "24.18.0"
+      image: "24.11.1"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -488,15 +543,6 @@ jobs:
       - run: # default doesn't have API functions so let's get some of those
           command: cp -r ./e2e-tests/adapters/src/api /tmp/e2e-tests/gatsby-pnp/src/api
           working_directory: ~/project
-      - run: # sharp <0.33 doesn't support Yarn PnP (its native binary can't be located after unplugging); force a PnP-compatible version for this test
-          command: |
-            node -e "
-              const fs = require('fs');
-              const pkg = JSON.parse(fs.readFileSync('package.json'));
-              pkg.resolutions = { ...pkg.resolutions, sharp: '^0.33.5' };
-              fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
-            "
-          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: touch yarn.lock
           working_directory: /tmp/e2e-tests/gatsby-pnp
@@ -512,10 +558,6 @@ jobs:
       - run: # Don't allow any fallback to root dependencies
           command: yarn config set pnpFallbackMode none
           working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # Pin sharp's optional-dependency resolution to this executor's actual platform, so a host-detection quirk can't cause it to skip installing the linux-x64/glibc binary
-          command: |
-            echo -e 'supportedArchitectures:\n  os:\n    - "linux"\n  cpu:\n    - "x64"\n  libc:\n    - "glibc"' >> .yarnrc.yml
-          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Install before custom registry server is set
           command: yarn add start-server-and-test@^1.11.0
           working_directory: /tmp/e2e-tests/gatsby-pnp
@@ -526,9 +568,21 @@ jobs:
           command: |
             echo -e 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # Locally published dev packages are always <1 day old, so they always trip Yarn's minimum release age (quarantine) check; disable it instead of allowlisting packages one by one
+      - run: # Exempt locally published packages from Yarn's minimum release age gate
+          command: yarn config set --json npmPreapprovedPackages "$(node ~/project/scripts/list-publishable-packages.js)"
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Allow build scripts for packages that need them (Yarn 4 disables them by default)
           command: |
-            echo -e 'npmMinimalAgeGate: 0' >> .yarnrc.yml
+            node -e '
+              const fs = require("fs");
+              const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+              pkg.dependenciesMeta = {
+                gatsby: { built: true },
+                "gatsby-cli": { built: true },
+                sharp: { built: true },
+              };
+              fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
+            '
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
@@ -741,6 +795,8 @@ jobs:
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
       - check_netlify_credentials
+      - set_expected_functions_node_version:
+          node_version: << parameters.node_version >>
       - e2e-test:
           test_path: e2e-tests/adapters
       - store_test_results:
@@ -755,6 +811,8 @@ jobs:
     executor: e2e<< parameters.e2e_executor_suffix >>
     steps:
       - check_netlify_credentials
+      - set_expected_functions_node_version:
+          node_version: << parameters.node_version >>
       # used in e2e-tests/adapters/make-monorepo.sh
       - fix_chrome_signing_key
       - run: apt-get update && apt-get install -y jq
@@ -784,7 +842,7 @@ jobs:
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
       - restore_yarn_cache:
-          node_version: 24.18.0
+          node_version: 18.0.0
       - <<: *install_node_modules
       - run: yarn markdown
       - run: git config --global user.name "GatsbyJS Bot"
@@ -798,7 +856,7 @@ jobs:
       # python is not built in and node-gyp needs it to build lmdb
       - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
       - restore_yarn_cache:
-          node_version: 24.18.0
+          node_version: 18.0.0
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
@@ -823,11 +881,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 22.23.1 and yarn
+          name: Install node 18.0.0 and yarn
           command: |
-            nvm install 22.23.1
-            nvm alias default 22.23.1
-            nvm use 22.23.1
+            nvm install 18.0.0
+            nvm alias default 18.0.0
+            nvm use 18.0.0
             choco install yarn -y
       - run:
           name: Rebuild packages for windows
@@ -861,11 +919,12 @@ jobs:
           command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 22.23.1, yarn and netlify-cli
+          # netlify-cli requires node>=22.13.0
+          name: Install node 22.21.0, yarn and netlify-cli
           command: |
-            nvm install 22.23.1
-            nvm alias default 22.23.1
-            nvm use 22.23.1
+            nvm install 22.21.0
+            nvm alias default 22.21.0
+            nvm use 22.21.0
             npm install -g yarn netlify-cli
       - run:
           name: Clear out sharp
@@ -913,26 +972,30 @@ workflows:
           name: "bootstrap-<< matrix.node_version >>"
           matrix:
             parameters:
-              node_version: ["22.23.1", "24.18.0"]
+              node_version: ["18.2.0", "20.19", "22.21.0", "24.11.1"]
       - lint
       - typecheck:
           requires:
-            - bootstrap-22.23.1
+            - bootstrap-18.2.0
       - windows_unit_tests:
           <<: *ignore_docs
           requires:
-            - bootstrap-22.23.1
+            - bootstrap-18.2.0
       - windows_adapters_smoke:
           requires:
-            - bootstrap-22.23.1
-      - unit_tests_node22:
+            - bootstrap-22.21.0
+      - unit_tests_node18:
           <<: *ignore_docs
           requires:
-            - bootstrap-22.23.1
+            - bootstrap-18.2.0
+      - unit_tests_node20:
+          <<: *ignore_docs
+          requires:
+            - bootstrap-20.19
       - unit_tests_node24:
           <<: *ignore_docs
           requires:
-            - bootstrap-24.18.0
+            - bootstrap-24.11.1
       - integration_tests_gatsby_source_wordpress:
           <<: *integration-test-workflow
       - integration_tests_long_term_caching:
@@ -974,9 +1037,9 @@ workflows:
       - e2e_tests_trailing-slash:
           <<: *e2e-test-workflow
       - e2e_tests_adapters:
-          <<: *e2e-test-workflow
+          <<: *adapters-e2e-test-workflow
       - e2e_tests_adapters_monorepo:
-          <<: *e2e-test-workflow
+          <<: *adapters-e2e-test-workflow
       - e2e_tests_development_runtime_with_react_18:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime_with_react_18:
