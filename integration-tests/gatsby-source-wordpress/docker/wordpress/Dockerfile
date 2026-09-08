@@ -10,7 +10,10 @@ LABEL maintainer="tyler@gatsbyjs.com"
 # Set timezone
 RUN echo 'date.timezone = "UTC"' > /usr/local/etc/php/conf.d/timezone.ini
 # install system deps
-RUN apt-get update && apt-get install unzip git -y && rm -rf /var/lib/apt/lists/*
+# Debian 11 (bullseye) LTS ended 2026-08-31, so bullseye-security's InRelease is
+# past its Valid-Until and apt-get update now fails. Skip the freshness check
+# until this image moves to a supported base (wordpress:6.5+ is bookworm).
+RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install unzip git -y && rm -rf /var/lib/apt/lists/*
 # install wp-cli
 RUN curl -O 'https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar' \
   && chmod +x wp-cli.phar \
