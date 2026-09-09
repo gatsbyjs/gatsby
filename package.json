@@ -45,7 +45,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "fs-extra": "^11.2.0",
-    "glob": "^7.2.3",
+    "glob": "^10.0.0",
     "husky": "3.1.0",
     "ignore": "^5.2.4",
     "jest": "^29.5.0",
