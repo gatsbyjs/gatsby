@@ -72,7 +72,7 @@
     "import-from": "^4.0.0",
     "lmdb": "2.5.3",
     "lock": "^1.1.0",
-    "node-object-hash": "^2.3.10",
+    "node-object-hash": "^3.1.1",
     "proper-lockfile": "^4.1.2",
     "resolve-from": "^5.0.0",
     "tmp": "^0.2.1",
