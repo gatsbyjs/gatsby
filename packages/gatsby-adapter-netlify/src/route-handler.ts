@@ -54,7 +54,7 @@ export function processRoutesManifest(
       const redirectObj: INetlifyRedirectEntry = {
         from: fromPath,
         status: route.status,
-        to: route.toPath.replace(/\*/, `:splat`),
+        to: route.toPath.replace(/\*/g, `:splat`),
       }
 
       if (route.force) {
