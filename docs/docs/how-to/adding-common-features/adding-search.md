@@ -41,12 +41,17 @@ There are many options available, including both self-hosted and commercially ho
 - [Meilisearch](https://www.meilisearch.com/) - OSS, [has Gatsby plugin](/plugins/gatsby-plugin-meilisearch/)
 - [Typesense](https://typesense.org/) - OSS, [has hosted version](https://cloud.typesense.org), [has Gatsby plugin](/plugins/gatsby-plugin-typesense/)
 
-Of these, the most common solution is Algolia. The Gatsby docs include a guide to adding Algolia to your site:
+#### Algolia 
 
-- [Adding Search with Algolia](/docs/adding-search-with-algolia)
+Algolia is a commercial search solution (with free tiers) that hosts the search index and search engine for you. It allows for advanced search features like events, analytics, recommendations, personalization, and more. Your search queries will be sent to their servers which will respond with any results. For UI components, Algolia provides a various libraries out of the box such as [InstantSearch](https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/) and [AutoComplete](https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/), or you can build your own from scratch and use the [REST APIs](https://www.algolia.com/doc/api-reference/rest-api/). 
 
-When using Algolia, they host the search index and search engine for you. Your search queries will be sent to their servers which will respond with any results. For UI components, Algolia provides a [React library](https://github.com/algolia/react-instantsearch) that has helpful components.
+*Free For Public Technical Docs*
 
-If you're building a documentation website you can use [Algolia's DocSearch feature](https://community.algolia.com/docsearch/). It will automatically create a search index from the content of your pages.
+If you're building a public technical documentation website you can use [Algolia DocSearch](https://docsearch.algolia.com/). It will automatically create a search index from the content of your pages using a [crawler](https://docsearch.algolia.com/docs/record-extractor) and you can use the [DocSearch UI](https://docsearch.algolia.com/docs/docsearch-v3) out of the box.
 
+*InDepth Guide*
+
+To dive deeper into adding Algolia to your site, see [Adding search with Algolia](/docs/adding-search-with-algolia).
+
+#### ElasticSearch
 Elasticsearch also has several React component libraries for search, such as [ReactiveSearch](https://github.com/appbaseio/reactivesearch).
