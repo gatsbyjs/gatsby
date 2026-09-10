@@ -150,8 +150,12 @@ async function main() {
     for (const [index, pkg] of pending.entries()) {
       console.log(`> npm ${args.join(` `)} (${pkg.name}@${pkg.version})`)
       try {
-        const { stdout } = await run(`npm`, args, { cwd: pkg.location })
-        console.log(stdout.trim())
+        // this is just to not accidentally publish anything yet
+        throw new Error(
+          `Publishing is disabled for safety - remove this line to enable`
+        )
+        // const { stdout } = await run(`npm`, args, { cwd: pkg.location })
+        // console.log(stdout.trim())
       } catch (error) {
         // Stop rather than carry on: the packages after this one may depend on the
         // version that just failed, and publishing them would put manifests on the
