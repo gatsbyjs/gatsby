@@ -144,11 +144,8 @@ export function processRoutesManifest(
 ): {
   redirects: string
   headers: string
-  lambdasThatUseCaching: Map<string, string>
   fileMovingPromise: Promise<void>
 } {
-  const lambdasThatUseCaching = new Map<string, string>()
-
   const { ensureStaticAssetPath, fileMovingDone } =
     createStaticAssetsPathHandler()
 
@@ -158,18 +155,11 @@ export function processRoutesManifest(
     const fromPath = route.path.replace(/\*.*/, `*`)
 
     if (route.type === `function`) {
-      let functionName = route.functionId
-      if (route.cache) {
-        functionName = `${route.functionId}-odb`
-        if (!lambdasThatUseCaching.has(route.functionId)) {
-          lambdasThatUseCaching.set(route.functionId, functionName)
-        }
-      }
-
-      const invocationURL = `/.netlify/${
-        route.cache ? `builders` : `functions`
-      }/${functionName}`
-      _redirects += `${encodeURI(fromPath)}  ${invocationURL}  200\n`
+      // DSG responses are cached by the function itself now, so both SSR and
+      // DSG routes go to the same plain function instead of an ODB variant
+      _redirects += `${encodeURI(fromPath)}  /.netlify/functions/${
+        route.functionId
+      }  200\n`
     } else if (route.type === `redirect`) {
       const {
         status: routeStatus,
@@ -248,7 +238,6 @@ export function processRoutesManifest(
   return {
     redirects: _redirects,
     headers: _headers,
-    lambdasThatUseCaching,
     fileMovingPromise: fileMovingDone(),
   }
 }
@@ -256,17 +245,13 @@ export function processRoutesManifest(
 export async function handleRoutesManifest(
   routesManifest: RoutesManifest,
   headerRoutes: HeaderRoutes
-): Promise<{
-  lambdasThatUseCaching: Map<string, string>
-}> {
-  const { redirects, headers, lambdasThatUseCaching, fileMovingPromise } =
-    processRoutesManifest(routesManifest, headerRoutes)
+): Promise<void> {
+  const { redirects, headers, fileMovingPromise } = processRoutesManifest(
+    routesManifest,
+    headerRoutes
+  )
 
   await injectEntries(`public/_redirects`, redirects)
   await injectEntries(`public/_headers`, headers)
   await fileMovingPromise
-
-  return {
-    lambdasThatUseCaching,
-  }
 }

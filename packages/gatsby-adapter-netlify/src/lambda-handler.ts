@@ -1,133 +1,57 @@
 import type { IFunctionDefinition } from "gatsby"
-import packageJson from "gatsby-adapter-netlify/package.json"
+import { writeFileSync } from "fs"
 import fs from "fs-extra"
 import * as path from "path"
 import { slash } from "gatsby-core-utils/path"
 
-interface INetlifyFunctionConfig {
-  externalNodeModules?: Array<string>
-  includedFiles?: Array<string>
-  includedFilesBasePath?: string
-  ignoredNodeModules?: Array<string>
-  nodeBundler?: "esbuild" | "esbuild_zisi" | "nft" | "zisi" | "none"
-  nodeSourcemap?: boolean
-  nodeVersion?: string
-  processDynamicNodeImports?: boolean
-  rustTargetDirectory?: string
-  schedule?: string
-  zipGo?: boolean
-  name?: string
-  generator?: string
-  nodeModuleFormat?: "cjs" | "esm"
-}
+import { generator } from "./generator"
 
-interface INetlifyFunctionManifest {
-  config: INetlifyFunctionConfig
-  version: number
-}
+export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
+  const functionId = fun.functionId
 
-export async function prepareFunction(
-  fun: IFunctionDefinition,
-  odbfunctionName?: string
-): Promise<void> {
-  let functionId = fun.functionId
-  let isODB = false
-
-  if (odbfunctionName) {
-    functionId = odbfunctionName
-    isODB = true
-  }
-
-  const internalFunctionsDir = path.join(
+  const frameworksApiFunctionsDir = path.join(
     process.cwd(),
     `.netlify`,
-    `functions-internal`,
-    functionId
+    `v1`,
+    `functions`
   )
-
-  await fs.ensureDir(internalFunctionsDir)
-
-  // This is a temporary hacky approach, eventually it should be just `fun.name`
-  const displayName = isODB
-    ? `DSG`
-    : fun.name === `SSR & DSG`
-    ? `SSR`
-    : fun.name
-
-  const functionManifest: INetlifyFunctionManifest = {
-    config: {
-      name: displayName,
-      generator: `gatsby-adapter-netlify@${packageJson?.version ?? `unknown`}`,
-      includedFiles: fun.requiredFiles.map(file =>
-        slash(file).replace(/\[/g, `*`).replace(/]/g, `*`)
-      ),
-      includedFilesBasePath: process.cwd(),
-      externalNodeModules: [`msgpackr-extract`],
-    },
-    version: 1,
-  }
-
-  await fs.writeJSON(
-    path.join(internalFunctionsDir, `${functionId}.json`),
-    functionManifest
-  )
+  await fs.ensureDir(frameworksApiFunctionsDir)
 
   function getRelativePathToModule(modulePath: string): string {
     const absolutePath = require.resolve(modulePath)
 
     return (
       `./` +
-      path.posix.relative(slash(internalFunctionsDir), slash(absolutePath))
+      path.posix.relative(slash(frameworksApiFunctionsDir), slash(absolutePath))
     )
   }
 
-  const handlerSource = /* javascript */ `
-const Stream = require("stream")
-const http = require("http")
-const { Buffer } = require("buffer")
-const cookie = require("${getRelativePathToModule(`cookie`)}")
-${
-  isODB // inlined @netlify/functions#builder working on Node@24 that doesn't use callback
-    ? /* javascript */ `function builder(handler) {
-      return async function(event, context) {
-        if (event.httpMethod !== 'GET' && event.httpMethod !== 'HEAD') {
-          return {
-            body: 'Method Not Allowed',
-            statusCode: HTTP_STATUS_METHOD_NOT_ALLOWED,
-          }
-        }
+  const cookieModulePath = require.resolve(`./vendor/cookie`)
+  const cookieImportPath = getRelativePathToModule(`./vendor/cookie`)
 
-        // Removing query string parameters from the builder function.
-        const modifiedEvent = {
-          ...event,
-          multiValueQueryStringParameters: {},
-          queryStringParameters: {},
-        }
-        const response = await handler(modifiedEvent, context)
-        // augmentResponse
-        if (!response) {
-          return response
-        }
-        return {
-          ...response,
-          metadata: {
-            version: 1,
-            builder_function: true,
-            ttl: 0
-          }
-        }
-      }
-    }`
-    : ``
+  const includedFiles = JSON.stringify([
+    slash(cookieModulePath),
+    ...fun.requiredFiles.map(file =>
+      slash(path.join(process.cwd(), file))
+        .replace(/\[/g, `*`)
+        .replace(/]/g, `*`)
+    ),
+  ])
+
+  const handlerSource = /* javascript */ `import { Buffer } from 'node:buffer'
+import { IncomingMessage } from 'node:http'
+import { Readable, Stream } from 'node:stream'
+import { warn } from 'node:console'
+import cookie from '${cookieImportPath}'
+import * as functionModule from '${getRelativePathToModule(
+    path.join(process.cwd(), fun.pathToEntryPoint)
+  )}'
+
+function preferDefault(m) {
+  return m && m.default || m
 }
 
-const preferDefault = m => (m && m.default) || m
-
-const functionModule = require("${getRelativePathToModule(
-    path.join(process.cwd(), fun.pathToEntryPoint)
-  )}")
-
-const functionHandler = preferDefault(functionModule)
+const functionHandler = preferDefault(preferDefault(functionModule))
 
 const statuses = {
   "100": "Continue",
@@ -195,202 +119,256 @@ const statuses = {
   "511": "Network Authentication Required"
 }
 
-const createRequestObject = ({ event, context }) => {
-  const {
-    path = "",
-    multiValueQueryStringParameters,
-    queryStringParameters,
-    httpMethod,
-    multiValueHeaders = {},
-    body,
-    isBase64Encoded,
-    rawUrl
-  } = event
-  const newStream = new Stream.Readable()
-  const req = Object.assign(newStream, http.IncomingMessage.prototype)
-  req.url = path
-  req.originalUrl = req.url
-  req.rawUrl = rawUrl
-  req.query = queryStringParameters
-  req.multiValueQuery = multiValueQueryStringParameters
-  req.method = httpMethod
-  req.rawHeaders = []
-  req.headers = {}
-  // Expose Netlify Function event and context on request object.
-  req.netlifyFunctionParams = { event, context }
-  for (const key of Object.keys(multiValueHeaders)) {
-    for (const value of multiValueHeaders[key]) {
-      req.rawHeaders.push(key, value)
-    }
-    req.headers[key.toLowerCase()] = multiValueHeaders[key].toString()
+async function createRequestObject(netlifyRequest, netlifyContext) {
+  const req = Object.assign(new Readable(), IncomingMessage.prototype)
+
+  req.getHeader = function(name) {
+    return req.headers[name.toLowerCase()]
   }
-  req.getHeader = name => req.headers[name.toLowerCase()]
-  req.getHeaders = () => req.headers
-  // Gatsby includes cookie middleware
+
+  req.getHeaders = function() {
+    return req.headers
+  }
+
+  req.headers = {}
+  req.rawHeaders = []
+
+  for (const [key, value] of netlifyRequest.headers) {
+    req.rawHeaders.push(key, value)
+    req.headers[key] = value
+  }
+
   const cookies = req.headers.cookie
+
   if (cookies) {
     req.cookies = cookie.parse(cookies)
   }
-  // req.connection = {}
-  if (body) {
-    req.push(body, isBase64Encoded ? "base64" : undefined)
+
+  req.method = netlifyRequest.method
+
+  const multiValueQuery = {}
+
+  for (const key of new Set(netlifyContext.url.searchParams.keys())) {
+    multiValueQuery[key] = netlifyContext.url.searchParams.getAll(key)
   }
+
+  req.multiValueQuery = multiValueQuery
+
+  req.originalUrl = netlifyContext.url.pathname
+
+  req.query = Object.fromEntries(netlifyContext.url.searchParams)
+  req.rawUrl = netlifyRequest.url
+  req.url = req.originalUrl
+
+  const requestBodyBuffer = await netlifyRequest.arrayBuffer()
+  req.push(Buffer.from(requestBodyBuffer))
   req.push(null)
+
   return req
 }
 
-const createResponseObject = ({ onResEnd }) => {
+function createResponseObject({ onResEnd }) {
+  function isProtectedHeader(name, override = false) {
+    if (override) {
+      return false
+    }
+
+    return name.toLowerCase() === 'content-type'
+  }
+
   const response = {
-    isBase64Encoded: true,
-    multiValueHeaders: {},
-  };
-  const res = new Stream();
+    body: undefined,
+    statusCode: undefined
+  }
+
+  const res = new Stream()
   Object.defineProperty(res, 'statusCode', {
     get() {
-      return response.statusCode;
+      return response.statusCode
     },
     set(statusCode) {
-      response.statusCode = statusCode;
-    },
-  });
-  res.headers = { 'content-type': 'text/html; charset=utf-8' };
-  res.writeHead = (status, headers) => {
-    response.statusCode = status;
-    if (headers) {
-      res.headers = Object.assign(res.headers, headers);
+      response.statusCode = statusCode
     }
-    // Return res object to allow for chaining
-    // Fixes: https://github.com/netlify/next-on-netlify/pull/74
-    return res;
-  };
-  res.write = (chunk) => {
-    if (!response.body) {
-      response.body = Buffer.from('');
+  })
+
+  res.end = function (text) {
+    if (text) {
+      res.write(text)
     }
-    response.body = Buffer.concat([
-      Buffer.isBuffer(response.body)
-        ? response.body
-        : Buffer.from(response.body),
-      Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk),
-    ]);
-    return true;
-  };
-  res.setHeader = (name, value) => {
-    res.headers[name.toLowerCase()] = value;
-    return res;
-  };
-  res.removeHeader = (name) => {
-    delete res.headers[name.toLowerCase()];
-  };
-  res.getHeader = (name) => res.headers[name.toLowerCase()];
-  res.getHeaders = () => res.headers;
-  res.hasHeader = (name) => Boolean(res.getHeader(name));
-  res.end = (text) => {
-    if (text)
-      res.write(text);
+
     if (!res.statusCode) {
-      res.statusCode = 200;
+      res.statusCode = 200
     }
-    if (response.body) {
-      response.body = Buffer.from(response.body).toString('base64');
+
+    res.finished = true
+    res.writableEnded = true
+
+    onResEnd(new Response(response.body ?? null, {
+      headers: res.headers,
+      status: response.statusCode
+    }))
+
+    return res
+  }
+
+  res.getHeader = function (name) {
+    return res.headers[name.toLowerCase()]
+  }
+
+  res.getHeaders = function () {
+    return res.headers
+  }
+
+  res.hasHeader = function (name) {
+    return Boolean(res.getHeader(name))
+  }
+
+  res.headers = {
+    'content-type': 'text/html; charset=utf-8'
+  }
+
+  res.removeHeader = function (name) {
+    if (isProtectedHeader(name)) {
+      warn('cannot modify header ' + name)
+      return
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore These types are a mess, and need sorting out
-    response.multiValueHeaders = res.headers;
-    res.writeHead(response.statusCode);
-    // Convert all multiValueHeaders into arrays
-    for (const key of Object.keys(response.multiValueHeaders)) {
-      const header = response.multiValueHeaders[key];
-      if (!Array.isArray(header)) {
-        response.multiValueHeaders[key] = [header];
+
+    delete res.headers[name.toLowerCase()]
+  }
+
+  res.setHeader = function (name, value, override = false) {
+    if (isProtectedHeader(name, override)) {
+      warn('cannot modify header ' + name)
+      return res
+    }
+
+    res.headers[name.toLowerCase()] = value
+    return res
+  }
+
+  res.write = function (chunk) {
+    if (!response.body) {
+      response.body = Buffer.from('')
+    }
+
+    response.body = Buffer.concat([
+      Buffer.from(response.body),
+      Buffer.from(chunk)
+    ])
+
+    return true
+  }
+
+  res.writeHead = function (status, headers) {
+    response.statusCode = status
+
+    if (headers) {
+      for (const [name, value] of Object.entries(headers)) {
+        res.setHeader(name, value)
       }
     }
-    res.finished = true;
-    res.writableEnded = true;
-    // Call onResEnd handler with the response object
-    onResEnd(response);
-    return res;
-  };
+
+    return res
+  }
+
   // Gatsby Functions additions
-  res.send = (data) => {
+  res.json = function (data) {
     if (res.finished) {
-      return res;
+      return res
     }
+
+    res.setHeader('content-type', 'application/json', true)
+    res.end(JSON.stringify(data))
+    return res
+  }
+
+  res.status = function (code) {
+    const numericCode = Number.parseInt(code)
+
+    if (!Number.isNaN(numericCode)) {
+      response.statusCode = numericCode
+    }
+
+    return res
+  }
+
+  res.redirect = function (statusCodeOrUrl, url) {
+    let statusCode = statusCodeOrUrl
+    let urlLocation = url
+
+    if (!url && typeof statusCodeOrUrl === 'string') {
+      urlLocation = statusCodeOrUrl
+      statusCode = 302
+    }
+
+    res.writeHead(statusCode, {
+      location: urlLocation
+    })
+
+    res.end()
+    return res
+  }
+
+  res.send = function (data) {
+    if (res.finished) {
+      return res
+    }
+
     if (typeof data === 'number') {
       return res
         .status(data)
-        .setHeader('content-type', 'text/plain; charset=utf-8')
-        .end(statuses[data] || String(data));
+        .setHeader('content-type', 'text/plain; charset=utf-8', true)
+        .end(statuses[data] || String(data))
     }
+
     if (typeof data === 'boolean' || typeof data === 'object') {
       if (Buffer.isBuffer(data)) {
-        res.setHeader('content-type', 'application/octet-Stream');
+        res.setHeader('content-type', 'application/octet-Stream', true)
       }
+
       else if (data !== null) {
-        return res.json(data);
+        return res.json(data)
       }
     }
-    res.end(data);
-    return res;
-  };
-  res.json = (data) => {
-    if (res.finished) {
-      return res;
-    }
-    res.setHeader('content-type', 'application/json');
-    res.end(JSON.stringify(data));
-    return res;
-  };
-  res.status = (code) => {
-    const numericCode = Number.parseInt(code);
-    if (!Number.isNaN(numericCode)) {
-      response.statusCode = numericCode;
-    }
-    return res;
-  };
-  res.redirect = (statusCodeOrUrl, url) => {
-    let statusCode = statusCodeOrUrl;
-    let Location = url;
-    if (!url && typeof statusCodeOrUrl === 'string') {
-      Location = statusCodeOrUrl;
-      statusCode = 302;
-    }
-    res.writeHead(statusCode, { Location });
-    res.end();
-    return res;
-  };
-  return res;
-};
 
-const handler = async (event, context) => {
-  const req = createRequestObject({ event, context })
+    res.end(data)
+    return res
+  }
 
-  return new Promise(async resolve => {
+  return res
+}
+
+export default async function(request, context) {
+  const req = await createRequestObject(request, context)
+
+  return new Promise(async function (resolve) {
     try {
       const res = createResponseObject({ onResEnd: resolve })
-      await functionHandler(req, res)
-    } catch(error) {
-      console.error("Error executing " + event.path, error)
-      resolve({ statusCode: 500 })
+
+      await functionHandler(req, res, {
+        onPageResponse({ cache }) {
+          if (cache) {
+            // matches what On-demand Builders used to emit for DSG responses
+            res.setHeader('netlify-cdn-cache-control', 'public, s-maxage=31536000, must-revalidate, durable')
+          }
+        }
+      })
+    } catch (error) {
+      console.error("Error executing " + request.url, error)
+      resolve(new Response(null, { status: 500 }))
     }
   })
 }
 
-exports.handler = ${isODB ? `builder(handler)` : `handler`}
-`
+export const config = {
+  generator: '${generator}',
+  includedFiles: ${includedFiles},
+  name: 'Gatsby ${fun.name}',
+  nodeBundler: 'none'
+}`
 
-  await fs.writeFile(
-    path.join(internalFunctionsDir, `${functionId}.js`),
+  writeFileSync(
+    path.join(frameworksApiFunctionsDir, `${functionId}.mjs`),
     handlerSource
   )
-}
-
-export async function prepareFunctionVariants(
-  fun: IFunctionDefinition,
-  odbfunctionName?: string
-): Promise<void> {
-  await prepareFunction(fun)
-  if (odbfunctionName) {
-    await prepareFunction(fun, odbfunctionName)
-  }
 }

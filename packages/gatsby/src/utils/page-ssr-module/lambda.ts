@@ -9,6 +9,7 @@ import { URL } from "url"
 import { promisify } from "util"
 
 import type { ISSRData, EnginePage } from "./entry"
+import type { IEngineAdapterOptions } from "../adapter/types"
 import { link, rewritableMethods as linkRewritableMethods } from "linkfs"
 
 const cdnDatastorePath = `%CDN_DATASTORE_PATH%`
@@ -16,6 +17,8 @@ const cdnDatastorePath = `%CDN_DATASTORE_PATH%`
 // as in some cases one reported by adapter might not be correct
 const cdnDatastoreOrigin = `%CDN_DATASTORE_ORIGIN%`
 const PATH_PREFIX = `%PATH_PREFIX%`
+const imageCdnUrlGeneratorModuleRelativePath = `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+const fileCdnUrlGeneratorModuleRelativePath = `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
 
 // this file should be in `.cache/page-ssr-module/lambda.js`
 // so getting `.cache` location should be one directory above
@@ -226,17 +229,16 @@ global.__GATSBY = {
   buildId: ``,
 }
 
-// eslint-disable-next-line no-constant-condition
-if (`%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
-  global.__GATSBY.imageCDNUrlGeneratorModulePath = require.resolve(
-    `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
-  )
+// eslint-disable-next-line @typescript-eslint/naming-convention
+declare const __non_webpack_require__: typeof require
+
+if (imageCdnUrlGeneratorModuleRelativePath) {
+  global.__GATSBY.imageCDNUrlGeneratorModulePath =
+    __non_webpack_require__.resolve(imageCdnUrlGeneratorModuleRelativePath)
 }
-// eslint-disable-next-line no-constant-condition
-if (`%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
-  global.__GATSBY.fileCDNUrlGeneratorModulePath = require.resolve(
-    `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
-  )
+if (fileCdnUrlGeneratorModuleRelativePath) {
+  global.__GATSBY.fileCDNUrlGeneratorModulePath =
+    __non_webpack_require__.resolve(fileCdnUrlGeneratorModuleRelativePath)
 }
 
 const dbPath = setupFsWrapper()
@@ -487,7 +489,8 @@ function getPage(pathname: string): IPageInfo | undefined {
 
 async function engineHandler(
   req: GatsbyFunctionRequest,
-  res: GatsbyFunctionResponse
+  res: GatsbyFunctionResponse,
+  adapter?: IEngineAdapterOptions
 ): Promise<void> {
   try {
     let pageInfo: IPageInfo | undefined
@@ -522,11 +525,13 @@ async function engineHandler(
     if (isPageData) {
       const results = await renderPageData({ data })
       setStatusAndHeaders({ page, data, res })
+      adapter?.onPageResponse?.({ cache: page.mode === `DSG` })
       res.json(results)
       return
     } else {
       const results = await renderHTML({ data })
       setStatusAndHeaders({ page, data, res })
+      adapter?.onPageResponse?.({ cache: page.mode === `DSG` })
       res.send(results)
       return
     }

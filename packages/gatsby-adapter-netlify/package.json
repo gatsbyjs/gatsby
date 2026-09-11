@@ -33,8 +33,6 @@
   "dependencies": {
     "@babel/runtime": "^7.20.13",
     "@netlify/cache-utils": "^6.0.4",
-    "@netlify/config": "^24.4.0",
-    "cookie": "^0.6.0",
     "fastq": "^1.15.0",
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.17.0-next.0"

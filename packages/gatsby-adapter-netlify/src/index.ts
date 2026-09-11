@@ -1,10 +1,10 @@
 import { join } from "path"
 import type { AdapterInit, IAdapterConfig } from "gatsby"
-import { prepareFunctionVariants } from "./lambda-handler"
+import { prepareFunction } from "./lambda-handler"
+import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 import { prepareFileCdnHandler } from "./file-cdn-handler"
 import { handleRoutesManifest } from "./route-handler"
 import packageJson from "gatsby-adapter-netlify/package.json"
-import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 
 interface INetlifyCacheUtilsOptions {
   ttl?: number
@@ -98,13 +98,9 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       headerRoutes,
       pathPrefix,
       remoteFileAllowedUrls,
-      reporter,
     }): Promise<void> {
       if (useNetlifyImageCDN) {
-        await handleAllowedRemoteUrlsNetlifyConfig({
-          remoteFileAllowedUrls,
-          reporter,
-        })
+        await handleAllowedRemoteUrlsNetlifyConfig({ remoteFileAllowedUrls })
 
         await prepareFileCdnHandler({
           pathPrefix,
@@ -112,18 +108,9 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         })
       }
 
-      const { lambdasThatUseCaching } = await handleRoutesManifest(
-        routesManifest,
-        headerRoutes
-      )
+      await handleRoutesManifest(routesManifest, headerRoutes)
 
-      // functions handling
-      for (const fun of functionsManifest) {
-        await prepareFunctionVariants(
-          fun,
-          lambdasThatUseCaching.get(fun.functionId)
-        )
-      }
+      await Promise.all(functionsManifest.map(fun => prepareFunction(fun)))
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(
