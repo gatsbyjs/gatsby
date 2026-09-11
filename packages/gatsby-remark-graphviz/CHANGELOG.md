@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.16.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@5.16.0...gatsby-remark-graphviz@5.16.1) (2026-09-11)
+
+
+### Bug Fixes
+
+* **gatsby-remark-graphviz:** remove stray console.log ([#39436](https://github.com/gatsbyjs/gatsby/issues/39436)) ([dabbe47](https://github.com/gatsbyjs/gatsby/commit/dabbe47c8f8e9250d4b89e72d3baa33c36520211))
+* reset package versions to last published stable ([4e89033](https://github.com/gatsbyjs/gatsby/commit/4e890334a63ab7cae6f15beccb1158466d271d6a))
+* use more explicit node.js version range ([#39398](https://github.com/gatsbyjs/gatsby/issues/39398)) ([ede00a5](https://github.com/gatsbyjs/gatsby/commit/ede00a5adff7f494bcfd3d14f6ed54ea942986c1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * babel-preset-gatsby-package bumped from ^3.16.0 to ^3.16.1
+  * peerDependencies
+    * gatsby bumped from ^5.0.0-next to ^5.16.2
+
 ## [5.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@5.16.0/packages/gatsby-remark-graphviz) (2026-01-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)
