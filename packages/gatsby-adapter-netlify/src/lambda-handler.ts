@@ -282,8 +282,6 @@ function createResponseObject({ onResEnd }) {
       }
     }
 
-    // Return res object to allow for chaining
-    // Fixes: https://github.com/netlify/next-on-netlify/pull/74
     return res
   }
 
