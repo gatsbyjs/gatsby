@@ -3,14 +3,14 @@ import { join, relative } from "node:path"
 import { removeSync } from "fs-extra"
 import { slash } from "gatsby-core-utils/path"
 
-jest.mock(`node:fs`, () => {
+jest.mock(`fs`, () => {
   return {
-    ...jest.requireActual(`node:fs`),
+    ...jest.requireActual(`fs`),
     writeFileSync: jest.fn(),
   }
 })
 
-import { writeFileSync } from "node:fs"
+import { writeFileSync } from "fs"
 import { prepareFunction } from "../lambda-handler"
 
 const fixturePath = join(

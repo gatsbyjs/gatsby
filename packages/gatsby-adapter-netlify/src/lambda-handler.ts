@@ -1,12 +1,9 @@
 import type { IFunctionDefinition } from "gatsby"
-
-import { createRequire } from "node:module"
-import { cwd } from "node:process"
-import { ensureDir } from "fs-extra"
-import { join } from "node:path"
-import { relative } from "node:path/posix"
+import { createRequire } from "module"
+import { writeFileSync } from "fs"
+import fs from "fs-extra"
+import * as path from "path"
 import { slash } from "gatsby-core-utils/path"
-import { writeFileSync } from "node:fs"
 
 import { generator } from "./generator"
 
@@ -15,14 +12,20 @@ const require = createRequire(__filename)
 export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId
 
-  const frameworksApiFunctionsDir = join(cwd(), `.netlify`, `v1`, `functions`)
-  await ensureDir(frameworksApiFunctionsDir)
+  const frameworksApiFunctionsDir = path.join(
+    process.cwd(),
+    `.netlify`,
+    `v1`,
+    `functions`
+  )
+  await fs.ensureDir(frameworksApiFunctionsDir)
 
   function getRelativePathToModule(modulePath: string): string {
     const absolutePath = require.resolve(modulePath)
 
     return (
-      `./` + relative(slash(frameworksApiFunctionsDir), slash(absolutePath))
+      `./` +
+      path.posix.relative(slash(frameworksApiFunctionsDir), slash(absolutePath))
     )
   }
 
@@ -40,7 +43,7 @@ import cookie from '${cookieImportPath}'`
 }`
 
   const functionLoader = /* javascript */ `const functionModule = await import("${getRelativePathToModule(
-    join(cwd(), fun.pathToEntryPoint)
+    path.join(process.cwd(), fun.pathToEntryPoint)
   )}")
 
 const functionHandler = preferDefault(preferDefault(functionModule))`
@@ -368,7 +371,9 @@ function createResponseObject({ onResEnd }) {
   const includedFiles = JSON.stringify([
     slash(cookieModulePath),
     ...fun.requiredFiles.map(file =>
-      slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
+      slash(path.join(process.cwd(), file))
+        .replace(/\[/g, `*`)
+        .replace(/]/g, `*`)
     ),
   ])
 
@@ -394,7 +399,7 @@ export const config = {
 }`
 
   writeFileSync(
-    join(frameworksApiFunctionsDir, `${functionId}.mjs`),
+    path.join(frameworksApiFunctionsDir, `${functionId}.mjs`),
     handlerSource
   )
 }
