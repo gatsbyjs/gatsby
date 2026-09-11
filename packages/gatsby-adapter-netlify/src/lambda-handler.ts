@@ -1,13 +1,10 @@
 import type { IFunctionDefinition } from "gatsby"
-import { createRequire } from "module"
 import { writeFileSync } from "fs"
 import fs from "fs-extra"
 import * as path from "path"
 import { slash } from "gatsby-core-utils/path"
 
 import { generator } from "./generator"
-
-const require = createRequire(__filename)
 
 export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId
