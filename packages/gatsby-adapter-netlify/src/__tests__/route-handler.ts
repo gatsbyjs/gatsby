@@ -1,252 +1,193 @@
-import type { HeaderRoutes, IRedirectRoute, RoutesManifest } from "gatsby"
+import fs from "fs-extra"
+import { tmpdir } from "os"
+import { join } from "path"
+import type { IRedirectRoute, RoutesManifest } from "gatsby"
+import {
+  injectEntries,
+  ADAPTER_MARKER_START,
+  ADAPTER_MARKER_END,
+  NETLIFY_PLUGIN_MARKER_START,
+  NETLIFY_PLUGIN_MARKER_END,
+  GATSBY_PLUGIN_MARKER_START,
+  processRoutesManifest,
+} from "../route-handler"
 
-jest.mock(`fs-extra`, () => {
-  return {
-    ...jest.requireActual(`fs-extra`),
-    outputJSONSync: jest.fn(),
+function generateLotOfContent(placeholderCharacter: string): string {
+  return (placeholderCharacter.repeat(80) + `\n`).repeat(1_000_000)
+}
+
+const newAdapterContent = generateLotOfContent(`a`)
+const previousAdapterContent =
+  ADAPTER_MARKER_START +
+  `\n` +
+  generateLotOfContent(`b`) +
+  ADAPTER_MARKER_END +
+  `\n`
+
+const gatsbyPluginNetlifyContent =
+  GATSBY_PLUGIN_MARKER_START + `\n` + generateLotOfContent(`c`)
+
+const netlifyPluginGatsbyContent =
+  NETLIFY_PLUGIN_MARKER_START +
+  `\n` +
+  generateLotOfContent(`c`) +
+  NETLIFY_PLUGIN_MARKER_END +
+  `\n`
+
+const customContent1 =
+  `# customContent1 start` +
+  `\n` +
+  generateLotOfContent(`x`) +
+  `# customContent1 end` +
+  `\n`
+const customContent2 =
+  `# customContent2 start` +
+  `\n` +
+  generateLotOfContent(`y`) +
+  `# customContent2 end` +
+  `\n`
+const customContent3 =
+  `# customContent3 start` +
+  `\n` +
+  generateLotOfContent(`z`) +
+  `# customContent3 end` +
+  `\n`
+
+async function getContent(previousContent?: string): Promise<string> {
+  const filePath = join(
+    await fs.mkdtemp(join(tmpdir(), `inject-entries`)),
+    `out.txt`
+  )
+
+  if (typeof previousContent !== `undefined`) {
+    await fs.writeFile(filePath, previousContent)
   }
-})
 
-import { outputJSONSync } from "fs-extra"
-import { handleRoutesManifest, processRoutesManifest } from "../route-handler"
+  await injectEntries(filePath, newAdapterContent)
+
+  return fs.readFile(filePath, `utf8`)
+}
+
+jest.setTimeout(60_000)
 
 describe(`route-handler`, () => {
-  describe(`processRoutesManifest`, () => {
-    describe(`redirects`, () => {
-      it(`honors the force parameter`, () => {
-        const manifest: RoutesManifest = [
-          {
-            path: `/old-url`,
-            type: `redirect`,
-            toPath: `/new-url`,
-            status: 301,
-            headers: [{ key: `string`, value: `string` }],
-            force: true,
-          },
-          {
-            path: `/old-url2`,
-            type: `redirect`,
-            toPath: `/new-url2`,
-            status: 308,
-            headers: [{ key: `string`, value: `string` }],
-            force: false,
-          },
-        ]
+  describe(`injectEntries`, () => {
+    it(`no cached file`, async () => {
+      const content = await getContent()
 
-        const { redirects } = processRoutesManifest(manifest)
-
-        expect(redirects).toContainEqual({
-          from: `/old-url`,
-          to: `/new-url`,
-          status: 301,
-          force: true,
-        })
-        // `force` is omitted entirely (rather than `false`) when not forced
-        expect(redirects).toContainEqual({
-          from: `/old-url2`,
-          to: `/new-url2`,
-          status: 308,
-        })
-      })
-
-      it(`honors the conditions parameter`, () => {
-        const redirect: IRedirectRoute = {
-          path: `/old-url`,
-          type: `redirect`,
-          toPath: `/new-url`,
-          status: 200,
-          headers: [{ key: `string`, value: `string` }],
-          conditions: { language: [`ca`, `us`] },
-        }
-
-        const { redirects } = processRoutesManifest([redirect])
-
-        expect(redirects).toContainEqual({
-          from: `/old-url`,
-          to: `/new-url`,
-          status: 200,
-          conditions: { Language: [`ca`, `us`] },
-        })
-      })
-
-      it(`passes through query and signed parameters`, () => {
-        const redirect: IRedirectRoute = {
-          path: `/old-url`,
-          type: `redirect`,
-          toPath: `/new-url`,
-          status: 200,
-          headers: [],
-          query: { foo: `bar` },
-          signed: `some-signing-secret`,
-        }
-
-        const { redirects } = processRoutesManifest([redirect])
-
-        expect(redirects).toContainEqual({
-          from: `/old-url`,
-          to: `/new-url`,
-          status: 200,
-          query: { foo: `bar` },
-          signed: `some-signing-secret`,
-        })
-      })
-
-      it(`replaces wildcards with splat syntax`, () => {
-        const redirect: IRedirectRoute = {
-          path: `/old-url/*`,
-          type: `redirect`,
-          toPath: `/new-url/*`,
-          status: 301,
-          headers: [],
-        }
-
-        const { redirects } = processRoutesManifest([redirect])
-
-        expect(redirects).toContainEqual({
-          from: `/old-url/*`,
-          to: `/new-url/:splat`,
-          status: 301,
-        })
-      })
+      expect(content.indexOf(newAdapterContent)).not.toBe(-1)
     })
 
-    describe(`headers`, () => {
-      it(`builds headers from static routes when no headerRoutes are provided`, () => {
-        const manifest: RoutesManifest = [
-          {
-            path: `/some-page`,
-            type: `static`,
-            filePath: `public/some-page.html`,
-            headers: [
-              { key: `x-custom-header`, value: `foo` },
-              { key: `x-other-header`, value: `bar` },
-            ],
-          },
-        ]
+    describe(`has cached file`, () => {
+      it(`no previous adapter or plugins or custom entries`, async () => {
+        const content = await getContent(``)
 
-        const { headers } = processRoutesManifest(manifest)
-
-        expect(headers).toContainEqual({
-          for: `/some-page`,
-          values: {
-            "x-custom-header": `foo`,
-            "x-other-header": `bar`,
-          },
-        })
+        expect(content.indexOf(newAdapterContent)).not.toBe(-1)
       })
 
-      it(`omits routes that don't have any headers`, () => {
-        const manifest: RoutesManifest = [
-          {
-            path: `/some-page`,
-            type: `static`,
-            filePath: `public/some-page.html`,
-            headers: [],
-          },
-        ]
+      it(`has just custom entries`, async () => {
+        const content = await getContent(customContent1)
 
-        const { headers } = processRoutesManifest(manifest)
-
-        expect(headers).toEqual([])
+        expect(content.indexOf(newAdapterContent)).not.toBe(-1)
+        expect(content.indexOf(customContent1)).not.toBe(-1)
       })
 
-      it(`uses headerRoutes instead of route headers when provided`, () => {
-        const manifest: RoutesManifest = [
-          {
-            path: `/some-page`,
-            type: `static`,
-            filePath: `public/some-page.html`,
-            headers: [{ key: `x-custom-header`, value: `foo` }],
-          },
-        ]
-        const headerRoutes: HeaderRoutes = [
-          {
-            path: `/*`,
-            headers: [{ key: `x-global-header`, value: `baz` }],
-          },
-        ]
+      it(`has just gatsby-plugin-netlify entries`, async () => {
+        const content = await getContent(gatsbyPluginNetlifyContent)
 
-        const { headers } = processRoutesManifest(manifest, headerRoutes)
+        expect(content.indexOf(newAdapterContent)).not.toBe(-1)
+        // it removes gatsby-plugin-netlify entries
+        expect(content.indexOf(GATSBY_PLUGIN_MARKER_START)).toBe(-1)
+        expect(content.indexOf(gatsbyPluginNetlifyContent)).toBe(-1)
+      })
 
-        expect(headers).toEqual([
-          {
-            for: `/*`,
-            values: { "x-global-header": `baz` },
-          },
-        ])
+      it(`has just netlify-plugin-gatsby entries`, async () => {
+        const content = await getContent(netlifyPluginGatsbyContent)
+
+        expect(content.indexOf(newAdapterContent)).not.toBe(-1)
+        // it removes netlify-plugin-gatsby entries
+        expect(content.indexOf(NETLIFY_PLUGIN_MARKER_START)).toBe(-1)
+        expect(content.indexOf(NETLIFY_PLUGIN_MARKER_END)).toBe(-1)
+        expect(content.indexOf(netlifyPluginGatsbyContent)).toBe(-1)
+      })
+
+      it(`has gatsby-plugin-netlify, nelify-plugin-gatsby, custom content and previous adapter content`, async () => {
+        // kitchen-sink
+        const previousContent =
+          customContent1 +
+          previousAdapterContent +
+          customContent2 +
+          netlifyPluginGatsbyContent +
+          customContent3 +
+          gatsbyPluginNetlifyContent
+
+        const content = await getContent(previousContent)
+
+        expect(content.indexOf(newAdapterContent)).not.toBe(-1)
+
+        // it preserve any custom entries
+        expect(content.indexOf(customContent1)).not.toBe(-1)
+        expect(content.indexOf(customContent2)).not.toBe(-1)
+        expect(content.indexOf(customContent3)).not.toBe(-1)
+
+        // it removes previous gatsby-adapter-netlify entries
+        expect(content.indexOf(previousAdapterContent)).toBe(-1)
+
+        // it removes gatsby-plugin-netlify entries
+        expect(content.indexOf(GATSBY_PLUGIN_MARKER_START)).toBe(-1)
+        expect(content.indexOf(gatsbyPluginNetlifyContent)).toBe(-1)
+
+        // it removes netlify-plugin-gatsby entries
+        expect(content.indexOf(NETLIFY_PLUGIN_MARKER_START)).toBe(-1)
+        expect(content.indexOf(NETLIFY_PLUGIN_MARKER_END)).toBe(-1)
+        expect(content.indexOf(netlifyPluginGatsbyContent)).toBe(-1)
       })
     })
   })
 
-  describe(`handleRoutesManifest`, () => {
-    beforeEach(() => {
-      jest.mocked(outputJSONSync).mockClear()
-    })
-
-    it(`writes redirects and headers to the Frameworks API config file`, async () => {
+  describe(`createRedirects`, () => {
+    it(`honors the force parameter`, async () => {
       const manifest: RoutesManifest = [
         {
           path: `/old-url`,
           type: `redirect`,
           toPath: `/new-url`,
           status: 301,
-          headers: [],
+          headers: [{ key: `string`, value: `string` }],
+          force: true,
         },
-      ]
-      const headerRoutes: HeaderRoutes = [
         {
-          path: `/*`,
-          headers: [{ key: `x-global-header`, value: `baz` }],
+          path: `/old-url2`,
+          type: `redirect`,
+          toPath: `/new-url2`,
+          status: 308,
+          headers: [{ key: `string`, value: `string` }],
+          force: false,
         },
       ]
 
-      await handleRoutesManifest(manifest, headerRoutes)
+      const { redirects } = processRoutesManifest(manifest)
 
-      expect(outputJSONSync).toHaveBeenCalledTimes(1)
-      const [filePath, config] = jest.mocked(outputJSONSync).mock.calls[0]
-
-      expect(filePath).toMatch(/\.netlify[/\\]v1[/\\]config\.json$/)
-      expect(config).toEqual({
-        redirects: [{ from: `/old-url`, to: `/new-url`, status: 301 }],
-        headers: [{ for: `/*`, values: { "x-global-header": `baz` } }],
-      })
+      // `!` is appended to status to mark forced redirect
+      expect(redirects).toMatch(/^\/old-url\s+\/new-url\s+301!$/m)
+      // `!` is not appended to status to mark not forced redirect
+      expect(redirects).toMatch(/^\/old-url2\s+\/new-url2\s+308$/m)
     })
 
-    it(`includes images.remote_images when remoteFileAllowedUrls is passed`, async () => {
-      await handleRoutesManifest(
-        [],
-        [],
-        [
-          {
-            urlPattern: `https://example.com/*`,
-            regexSource: `^https://example\\.com/.*$`,
-          },
-        ]
+    it(`honors the conditions parameter`, async () => {
+      const redirect: IRedirectRoute = {
+        path: `/old-url`,
+        type: `redirect`,
+        toPath: `/new-url`,
+        status: 200,
+        headers: [{ key: `string`, value: `string` }],
+        conditions: { language: [`ca`, `us`] },
+      }
+
+      const { redirects } = processRoutesManifest([redirect])
+      expect(redirects).toMatch(
+        /^\/old-url\s+\/new-url\s+200\s+Language=ca,us$/m
       )
-
-      const [, config] = jest.mocked(outputJSONSync).mock.calls[0]
-
-      expect(config).toMatchObject({
-        images: {
-          remote_images: [`^https://example\\.com/.*$`],
-        },
-      })
-    })
-
-    it(`omits images config when remoteFileAllowedUrls is not passed`, async () => {
-      await handleRoutesManifest([], [])
-
-      const [, config] = jest.mocked(outputJSONSync).mock.calls[0]
-
-      expect(config).not.toHaveProperty(`images`)
-    })
-
-    it(`omits images config when remoteFileAllowedUrls is empty`, async () => {
-      await handleRoutesManifest([], [], [])
-
-      const [, config] = jest.mocked(outputJSONSync).mock.calls[0]
-
-      expect(config).not.toHaveProperty(`images`)
     })
   })
 })

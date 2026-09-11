@@ -1,6 +1,6 @@
 import { cwd } from "node:process"
 import { join, relative } from "node:path"
-import { outputFileSync, removeSync } from "fs-extra"
+import { removeSync } from "fs-extra"
 import { slash } from "gatsby-core-utils/path"
 
 jest.mock(`node:fs`, () => {
@@ -17,24 +17,7 @@ const fixturePath = join(relative(cwd(), __dirname), `fixtures`, `lambda-v2`)
 const pathToEntryPoint = join(fixturePath, `entry.js`)
 const requiredFile = join(fixturePath, `included.js`)
 
-// lambda-v2's SSR/DSG handler resolves the page-ssr engine from a hardcoded
-// cwd-relative path at generation time, so it needs to exist on disk.
-const pageSsrEntryPoint = join(cwd(), `.cache`, `page-ssr`, `index.js`)
-
-beforeAll(() => {
-  outputFileSync(
-    pageSsrEntryPoint,
-    `exports.findEnginePageByPath = () => undefined\n`
-  )
-})
-
 afterAll(() => {
-  // Only remove what this test actually creates. Nuking the whole `.cache`
-  // directory (which is shared with other test files running in the same
-  // `--runInBand` process) can hit an EBUSY/unlink error on Windows if
-  // gatsby-core-utils' LMDB env under `.cache/data` is still open elsewhere
-  // in the process.
-  removeSync(join(cwd(), `.cache`, `page-ssr`))
   removeSync(join(cwd(), `.netlify`))
 })
 
@@ -53,161 +36,68 @@ function getWrittenHandler(functionId: string): string {
 }
 
 describe(`prepareFunction`, () => {
-  describe(`SSR/DSG routes`, () => {
-    it(`produces a handler that imports the entrypoint and page-ssr engine`, async () => {
-      await prepareFunction(
-        {
-          functionId: `test`,
-          name: `SSR & DSG`,
-          pathToEntryPoint,
-          requiredFiles: [requiredFile],
-        },
-        [`/blog/:slug/`, `/page-data/blog/:slug/page-data.json`],
-        ``
-      )
-
-      const handlerCode = getWrittenHandler(`test`)
-
-      // expect dynamic import in produced code (this is mostly to make sure handlerCode is actual handler code)
-      expect(handlerCode).toMatch(/import\(["'][^"']*["']\)/)
-      // import paths should not have backward slashes (win paths)
-      expect(handlerCode).not.toMatch(/import\(["'][^"']*\\[^"']*["']\)/)
-      // caching is driven by the engine's onPageResponse hook rather than by
-      // the adapter resolving the page a second time, or by an ODB variant
-      expect(handlerCode).toContain(`onPageResponse({ cache })`)
-      expect(handlerCode).toContain(`netlify-cdn-cache-control`)
-      expect(handlerCode).not.toContain(`findEnginePageByPath`)
-
-      expect(handlerCode).toContain(`generator: 'gatsby-adapter-netlify`)
-      expect(handlerCode).toContain(`name: 'Gatsby SSR + DSG'`)
-      expect(handlerCode).toContain(`nodeBundler: 'none'`)
-
-      // trailing slash is made optional since the request may or may not
-      // include one regardless of the trailingSlash option; page-data.json
-      // paths are left untouched since they're fixed asset names
-      expect(handlerCode).toContain(
-        `path: ["/blog/:slug{/}?","/page-data/blog/:slug/page-data.json"]`
-      )
-
-      expect(handlerCode).toContain(`preferStatic: true`)
-      expect(handlerCode).toContain(slash(requiredFile))
+  it(`produces a handler that imports the entrypoint`, async () => {
+    await prepareFunction({
+      functionId: `test`,
+      name: `SSR & DSG`,
+      pathToEntryPoint,
+      requiredFiles: [requiredFile],
     })
 
-    it(`passes through paths as-is, since routesManifest already applies pathPrefix`, async () => {
-      await prepareFunction(
-        {
-          functionId: `test-prefix`,
-          name: `SSR & DSG`,
-          pathToEntryPoint,
-          requiredFiles: [requiredFile],
-        },
-        [`/prefix/blog/:slug/`],
-        `/prefix`
-      )
+    const handlerCode = getWrittenHandler(`test`)
 
-      const handlerCode = getWrittenHandler(`test-prefix`)
-      expect(handlerCode).toContain(`path: ["/prefix/blog/:slug{/}?"]`)
-    })
+    // expect dynamic import in produced code (this is mostly to make sure handlerCode is actual handler code)
+    expect(handlerCode).toMatch(/import\(["'][^"']*["']\)/)
+    // import paths should not have backward slashes (win paths)
+    expect(handlerCode).not.toMatch(/import\(["'][^"']*\\[^"']*["']\)/)
 
-    it(`makes the trailing slash optional so the request's exact slashing doesn't matter`, async () => {
-      await prepareFunction(
-        {
-          functionId: `test-trailing-slash`,
-          name: `SSR & DSG`,
-          pathToEntryPoint,
-          requiredFiles: [requiredFile],
-        },
-        [
-          `/`,
-          `/blog/`,
-          `/blog/:slug/`,
-          `/app/*`,
-          `/page-data/blog/page-data.json`,
-        ],
-        ``
-      )
-
-      const handlerCode = getWrittenHandler(`test-trailing-slash`)
-      expect(handlerCode).toContain(
-        `path: ["/","/blog{/}?","/blog/:slug{/}?","/app/*","/page-data/blog/page-data.json"]`
-      )
-    })
+    expect(handlerCode).toContain(`generator: 'gatsby-adapter-netlify`)
+    expect(handlerCode).toContain(`name: 'Gatsby SSR & DSG'`)
+    expect(handlerCode).toContain(`nodeBundler: 'none'`)
+    expect(handlerCode).toContain(slash(requiredFile))
   })
 
-  describe(`API routes`, () => {
-    it(`produces a handler scoped to the API route's own path`, async () => {
-      await prepareFunction(
-        {
-          functionId: `api-test`,
-          name: `/api/test`,
-          pathToEntryPoint,
-          requiredFiles: [requiredFile],
-        },
-        [`/api/test`],
-        ``
-      )
-
-      const handlerCode = getWrittenHandler(`api-test`)
-
-      expect(handlerCode).toMatch(/import\(["'][^"']*["']\)/)
-      expect(handlerCode).not.toMatch(/import\(["'][^"']*\\[^"']*["']\)/)
-      // API routes share the same handler, they just never get a cacheable
-      // response from the entry point
-      expect(handlerCode).not.toContain(`findEnginePageByPath`)
-
-      expect(handlerCode).toContain(`generator: 'gatsby-adapter-netlify`)
-      expect(handlerCode).toContain(`name: 'Gatsby /api/test'`)
-      expect(handlerCode).toContain(`nodeBundler: 'none'`)
-      expect(handlerCode).toContain(`path: '/api/test'`)
-      // `preferStatic` is set for every function so that statically rendered
-      // output always wins, matching the old `_redirects` behaviour
-      expect(handlerCode).toContain(`preferStatic`)
-      expect(handlerCode).toContain(slash(requiredFile))
+  it(`caches responses the engine marks as cacheable`, async () => {
+    await prepareFunction({
+      functionId: `cache-test`,
+      name: `SSR & DSG`,
+      pathToEntryPoint,
+      requiredFiles: [requiredFile],
     })
 
-    it(`prepends pathPrefix to the API route's path`, async () => {
-      await prepareFunction(
-        {
-          functionId: `api-test-prefix`,
-          name: `/api/test`,
-          pathToEntryPoint,
-          requiredFiles: [requiredFile],
-        },
-        [`/prefix/api/test`],
-        `/prefix`
-      )
+    const handlerCode = getWrittenHandler(`cache-test`)
 
-      const handlerCode = getWrittenHandler(`api-test-prefix`)
+    // caching is driven by the engine's onPageResponse hook, so the handler
+    // neither resolves the page itself nor needs an On-demand Builder variant
+    expect(handlerCode).toContain(`onPageResponse({ cache })`)
+    expect(handlerCode).toContain(`netlify-cdn-cache-control`)
+    expect(handlerCode).not.toContain(`findEnginePageByPath`)
+  })
 
-      expect(handlerCode).toContain(`name: 'Gatsby /prefix/api/test'`)
-      expect(handlerCode).toContain(`path: '/prefix/api/test'`)
+  it(`leaves routing to the redirects generated from the routes manifest`, async () => {
+    await prepareFunction({
+      functionId: `routing-test`,
+      name: `/api/test`,
+      pathToEntryPoint,
+      requiredFiles: [requiredFile],
     })
 
-    it.each([
-      [`param`, `/api/param/[slug]`, `/api/param/:slug`],
-      [`wildcard`, `/api/wildcard/[...]`, `/api/wildcard/*`],
-      [
-        `named-wildcard`,
-        `/api/named-wildcard/[...slug]`,
-        `/api/named-wildcard/:slug*`,
-      ],
-    ])(
-      `converts bracketed route %s to the Netlify path %s`,
-      async (functionId, name, netlifyPath) => {
-        await prepareFunction(
-          {
-            functionId,
-            name,
-            pathToEntryPoint,
-            requiredFiles: [requiredFile],
-          },
-          [netlifyPath],
-          ``
-        )
+    const handlerCode = getWrittenHandler(`routing-test`)
 
-        const handlerCode = getWrittenHandler(functionId)
-        expect(handlerCode).toContain(`path: '${netlifyPath}',`)
-      }
+    expect(handlerCode).not.toContain(`path:`)
+    expect(handlerCode).not.toContain(`preferStatic`)
+  })
+
+  it(`uses the same handler shape for API routes`, async () => {
+    await prepareFunction({
+      functionId: `api-test`,
+      name: `/api/test`,
+      pathToEntryPoint,
+      requiredFiles: [requiredFile],
+    })
+
+    expect(getWrittenHandler(`api-test`)).toBe(
+      getWrittenHandler(`routing-test`)
     )
   })
 })

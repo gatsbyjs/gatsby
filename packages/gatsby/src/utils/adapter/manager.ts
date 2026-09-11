@@ -645,9 +645,14 @@ function getFunctionsManifest(): FunctionsManifest {
       `functions`,
       functionInfo.relativeCompiledFilePath
     )
+    const relativePathWithoutFileExtension = posix.join(
+      posix.parse(functionInfo.originalRelativeFilePath).dir,
+      posix.parse(functionInfo.originalRelativeFilePath).name
+    )
+
     functions.push({
       functionId: functionInfo.functionId,
-      name: `/api/${functionInfo.functionRoute}`,
+      name: `/api/${relativePathWithoutFileExtension}`,
       pathToEntryPoint,
       requiredFiles: [pathToEntryPoint],
     })

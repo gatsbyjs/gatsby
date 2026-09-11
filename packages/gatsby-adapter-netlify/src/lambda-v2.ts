@@ -12,74 +12,8 @@ import { generator } from "./generator"
 
 const require = createRequire(__filename)
 
-/*
-  Converts Gatsby's file-system route bracket syntax to a Netlify Functions v2
-  path (which is matched using the URLPattern spec):
-  - /api/param/[slug]   => /api/param/:slug
-  - /api/wildcard/[...] => /api/wildcard/*
-  - /api/wildcard/[...slug] => /api/wildcard/:slug*
-
-  * and :slug* match identical sets of URLs (both consume everything after
-  the prefix, across any number of segments) — the only difference is the
-  key the captured value is exposed under in context.params: * is an
-  unnamed group, so it's exposed as the index key "0" (guaranteed by the
-  URLPattern spec). :slug* is a named repeat-modifier group; Netlify's docs
-  only show named groups for single-segment :id-style params, not this
-  modifier, so the "slug" key is verified against the current implementation
-  but not a documented guarantee — only named splat params (from a
-  [...slug] route) are at risk if that ever changes.
-*/
-
-function toNetlifyFunctionPath(name: string): string {
-  return name
-    .replace(/\[\.\.\.\]/g, `*`)
-    .replace(/\[\.\.\.([^\]]+)\]/g, `:$1*`)
-    .replace(/\[([^\]]+)\]/g, `:$1`)
-}
-
-const ASSET_SUFFIXES = [`.html`, `.json`, `.js`, `.map`, `.txt`, `.xml`, `.pdf`]
-
-/*
-  Netlify Functions v2 paths are matched using the URLPattern spec, which
-  treats a trailing slash as significant ("/foo" and "/foo/" are different
-  patterns). Gatsby's own routing (both client-side and the SSR engine's
-  internal page lookup, see find-page-by-path.ts) treats the trailing slash
-  as optional regardless of the trailingSlash option, since there's no
-  redirect layer normalizing it before the request reaches the function.
-  `{/}?` is URLPattern's syntax for an optional trailing slash group, so
-  this keeps the function reachable however the request happens to be
-  slashed.
-
-  Also, skip the static files (the ones in asset suffixes above).
-*/
-
-function withOptionalTrailingSlash(path: string): string {
-  if (
-    path === `/` ||
-    path.endsWith(`*`) ||
-    ASSET_SUFFIXES.some(suffix => path.endsWith(suffix))
-  ) {
-    return path
-  }
-
-  return path.endsWith(`/`) ? `${path.slice(0, -1)}{/}?` : `${path}{/}?`
-}
-
-export async function prepareFunction(
-  fun: IFunctionDefinition,
-  paths: Array<string>,
-  pathPrefix: string
-): Promise<void> {
+export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const functionId = fun.functionId
-  const isApiRoute = fun.name.startsWith(`/api/`)
-
-  /*
-    paths (derived from Gatsby's routesManifest) already has pathPrefix
-    baked in, but API routes' path is built from fun.name which doesn't,
-    so it needs to be applied here. It's an empty string when none provided.
-  */
-
-  const netlifyFunctionPath = `${pathPrefix}${toNetlifyFunctionPath(fun.name)}`
 
   const frameworksApiFunctionsDir = join(cwd(), `.netlify`, `v1`, `functions`)
   await ensureDir(frameworksApiFunctionsDir)
@@ -438,12 +372,6 @@ function createResponseObject({ onResEnd }) {
     ),
   ])
 
-  /*
-    `preferStatic` keeps statically rendered pages winning over the function,
-    which is what the `_redirects` rules used to give us - a page created with a
-    `matchPath` covers paths that may also have been rendered at build time.
-  */
-
   const handlerSource = /* javascript */ `${commonImports}
 
 ${preferDefaultFn}
@@ -461,14 +389,8 @@ export default async function(request, context) {
 export const config = {
   generator: '${generator}',
   includedFiles: ${includedFiles},
-  name: 'Gatsby ${isApiRoute ? netlifyFunctionPath : `SSR + DSG`}',
-  nodeBundler: 'none',
-  path: ${
-    isApiRoute
-      ? `'${netlifyFunctionPath}'`
-      : JSON.stringify(paths.map(withOptionalTrailingSlash))
-  },
-  preferStatic: true
+  name: 'Gatsby ${fun.name}',
+  nodeBundler: 'none'
 }`
 
   writeFileSync(
