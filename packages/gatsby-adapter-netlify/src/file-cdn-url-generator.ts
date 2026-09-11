@@ -1,7 +1,7 @@
-import type { FileCdnSourceImage, FileCdnUrlGeneratorFn } from "gatsby"
+import { createHash } from "crypto"
+import { basename } from "path"
 
-import { basename } from "node:path"
-import { createHash } from "node:crypto"
+import type { FileCdnUrlGeneratorFn, FileCdnSourceImage } from "gatsby"
 
 function isImage(node: FileCdnSourceImage): boolean {
   return node.mimeType.startsWith(`image/`) && node.mimeType !== `image/svg+xml`
@@ -15,17 +15,15 @@ export const generateFileUrl: FileCdnUrlGeneratorFn = function generateFileUrl(
 ): string {
   // use image cdn for images and file lambda for other files
   let baseURL: URL
-
   if (isImage(source)) {
-    baseURL = new URL(`/.netlify/images`, placeholderOrigin)
+    baseURL = new URL(`${placeholderOrigin}/.netlify/images`)
     baseURL.searchParams.append(`url`, source.url)
     baseURL.searchParams.append(`cd`, source.internal.contentDigest)
   } else {
     baseURL = new URL(
-      `${pathPrefix}/_gatsby/file/${createHash(`md5`)
+      `${placeholderOrigin}${pathPrefix}/_gatsby/file/${createHash(`md5`)
         .update(source.url)
-        .digest(`hex`)}/${basename(source.filename)}`,
-      placeholderOrigin
+        .digest(`hex`)}/${basename(source.filename)}`
     )
 
     baseURL.searchParams.append(`url`, source.url)
