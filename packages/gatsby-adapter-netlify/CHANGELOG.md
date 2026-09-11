@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-adapter-netlify@1.4.0...gatsby-adapter-netlify@1.4.1) (2026-09-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @netlify/cache-utils to v6 ([#39442](https://github.com/gatsbyjs/gatsby/issues/39442)) ([ce04ee7](https://github.com/gatsbyjs/gatsby/commit/ce04ee773e12f65a7443db2d2c873e9eac4b32e0))
+* **deps:** update dependency @netlify/config to v24 ([#39443](https://github.com/gatsbyjs/gatsby/issues/39443)) ([0d329a6](https://github.com/gatsbyjs/gatsby/commit/0d329a68986b2589fec514f5301528ccca74a18e))
+* **deps:** update dependency @netlify/functions to v5 ([#39444](https://github.com/gatsbyjs/gatsby/issues/39444)) ([10a78f7](https://github.com/gatsbyjs/gatsby/commit/10a78f7ce45ec17cc939c10ecc457de65b1e3efe))
+* ensure CHANGELOG.md is packed ([a9604cc](https://github.com/gatsbyjs/gatsby/commit/a9604ccb15272044925de0196bcfd4c6630de834))
+* reset package versions to last published stable ([4e89033](https://github.com/gatsbyjs/gatsby/commit/4e890334a63ab7cae6f15beccb1158466d271d6a))
+* ssr/dsg compatibility for node@24 lambda ([#39653](https://github.com/gatsbyjs/gatsby/issues/39653)) ([08150f2](https://github.com/gatsbyjs/gatsby/commit/08150f2a6be1082005621a486232926dd1cdf36a))
+* use more explicit node.js version range ([#39398](https://github.com/gatsbyjs/gatsby/issues/39398)) ([ede00a5](https://github.com/gatsbyjs/gatsby/commit/ede00a5adff7f494bcfd3d14f6ed54ea942986c1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * gatsby-core-utils bumped from ^4.16.0 to ^4.16.1
+  * devDependencies
+    * babel-preset-gatsby-package bumped from ^3.16.0 to ^3.16.1
+  * peerDependencies
+    * gatsby bumped from ^5.10.0-alpha to ^5.16.2
+
 ## [1.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-adapter-netlify@1.4.0/packages/gatsby-adapter-netlify) (2026-01-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)

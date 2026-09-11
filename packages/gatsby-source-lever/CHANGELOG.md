@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.16.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@5.16.0...gatsby-source-lever@5.16.1) (2026-09-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to ^1.13.5 ([#39459](https://github.com/gatsbyjs/gatsby/issues/39459)) ([a9aa253](https://github.com/gatsbyjs/gatsby/commit/a9aa253707e707d067c344c9a78dcdfe78174eac))
+* reset package versions to last published stable ([4e89033](https://github.com/gatsbyjs/gatsby/commit/4e890334a63ab7cae6f15beccb1158466d271d6a))
+* use more explicit node.js version range ([#39398](https://github.com/gatsbyjs/gatsby/issues/39398)) ([ede00a5](https://github.com/gatsbyjs/gatsby/commit/ede00a5adff7f494bcfd3d14f6ed54ea942986c1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * babel-preset-gatsby-package bumped from ^3.16.0 to ^3.16.1
+  * peerDependencies
+    * gatsby bumped from ^5.0.0-next to ^5.16.2
+
 ## [5.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-lever@5.16.0/packages/gatsby-source-lever) (2026-01-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)

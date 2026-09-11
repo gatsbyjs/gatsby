@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.16.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@5.16.1...gatsby@5.16.2) (2026-09-11)
+
+
+### Bug Fixes
+
+* **deps:** bump `body-parser` to resolve `qs` vuln ([2ab2001](https://github.com/gatsbyjs/gatsby/commit/2ab2001b0a586cb79efacac0a71429e49fbd8040))
+* **deps:** bump `body-parser` to resolve `qs` vulnerability warning ([#39396](https://github.com/gatsbyjs/gatsby/issues/39396)) ([2ab2001](https://github.com/gatsbyjs/gatsby/commit/2ab2001b0a586cb79efacac0a71429e49fbd8040))
+* **deps:** replace `invariant` with `tiny-invariant` ([#39434](https://github.com/gatsbyjs/gatsby/issues/39434)) ([81124e0](https://github.com/gatsbyjs/gatsby/commit/81124e00135e98cf40279c29c4040e735e56cb5e))
+* **deps:** update dependency @netlify/functions to v5 ([#39444](https://github.com/gatsbyjs/gatsby/issues/39444)) ([10a78f7](https://github.com/gatsbyjs/gatsby/commit/10a78f7ce45ec17cc939c10ecc457de65b1e3efe))
+* **deps:** update dependency axios to ^1.13.5 ([#39459](https://github.com/gatsbyjs/gatsby/issues/39459)) ([a9aa253](https://github.com/gatsbyjs/gatsby/commit/a9aa253707e707d067c344c9a78dcdfe78174eac))
+* **deps:** update dependency node-html-parser to v7 ([#39494](https://github.com/gatsbyjs/gatsby/issues/39494)) ([07112b8](https://github.com/gatsbyjs/gatsby/commit/07112b85ccce9c261a72d6704cba77e830430858))
+* **deps:** update socket.io packages to ^4.8.3 ([#39501](https://github.com/gatsbyjs/gatsby/issues/39501)) ([d2feefa](https://github.com/gatsbyjs/gatsby/commit/d2feefad55d0a98c319fdea4600a1ed3804fa18b))
+* ensure CHANGELOG.md is packed ([a9604cc](https://github.com/gatsbyjs/gatsby/commit/a9604ccb15272044925de0196bcfd4c6630de834))
+* ensure inserting `<title>` in `<head>` updates `document.title` ([#39382](https://github.com/gatsbyjs/gatsby/issues/39382)) ([20baf7c](https://github.com/gatsbyjs/gatsby/commit/20baf7cf40ad8b567c25a547c354a0b1a49d50aa))
+* reset package versions to last published stable ([4e89033](https://github.com/gatsbyjs/gatsby/commit/4e890334a63ab7cae6f15beccb1158466d271d6a))
+* ssr/dsg compatibility for node@24 lambda ([#39653](https://github.com/gatsbyjs/gatsby/issues/39653)) ([08150f2](https://github.com/gatsbyjs/gatsby/commit/08150f2a6be1082005621a486232926dd1cdf36a))
+* use more explicit node.js version range ([#39398](https://github.com/gatsbyjs/gatsby/issues/39398)) ([ede00a5](https://github.com/gatsbyjs/gatsby/commit/ede00a5adff7f494bcfd3d14f6ed54ea942986c1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * babel-plugin-remove-graphql-queries bumped from ^5.16.0 to ^5.16.1
+    * babel-preset-gatsby bumped from ^3.16.0 to ^3.16.1
+    * gatsby-cli bumped from ^5.16.0 to ^5.16.1
+    * gatsby-core-utils bumped from ^4.16.0 to ^4.16.1
+    * gatsby-graphiql-explorer bumped from ^3.16.0 to ^3.16.1
+    * gatsby-legacy-polyfills bumped from ^3.16.0 to ^3.16.1
+    * gatsby-link bumped from ^5.16.0 to ^5.16.1
+    * gatsby-page-utils bumped from ^3.16.0 to ^3.16.1
+    * gatsby-parcel-config bumped from 1.16.0 to 1.16.1
+    * gatsby-plugin-page-creator bumped from ^5.16.0 to ^5.16.1
+    * gatsby-plugin-typescript bumped from ^5.16.0 to ^5.16.1
+    * gatsby-plugin-utils bumped from ^4.16.0 to ^4.16.1
+    * gatsby-react-router-scroll bumped from ^6.16.0 to ^6.16.1
+    * gatsby-script bumped from ^2.16.0 to ^2.16.1
+    * gatsby-worker bumped from ^2.16.0 to ^2.16.1
+  * devDependencies
+    * babel-preset-gatsby-package bumped from ^3.16.0 to ^3.16.1
+  * optionalDependencies
+    * gatsby-sharp bumped from ^1.16.0 to ^1.16.1
+
 ### [5.16.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.16.1/packages/gatsby) (2026-02-10)
 
 #### Bug Fixes

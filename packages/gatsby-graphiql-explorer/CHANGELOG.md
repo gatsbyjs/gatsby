@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.16.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@3.16.0...gatsby-graphiql-explorer@3.16.1) (2026-09-11)
+
+
+### Bug Fixes
+
+* ensure CHANGELOG.md is packed ([a9604cc](https://github.com/gatsbyjs/gatsby/commit/a9604ccb15272044925de0196bcfd4c6630de834))
+* reset package versions to last published stable ([4e89033](https://github.com/gatsbyjs/gatsby/commit/4e890334a63ab7cae6f15beccb1158466d271d6a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * babel-preset-gatsby-package bumped from ^3.16.0 to ^3.16.1
+
 ## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@3.16.0/packages/gatsby-graphiql-explorer) (2026-01-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@4.16.0...gatsby-core-utils@4.16.1) (2026-09-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ci-info to v4 ([#39461](https://github.com/gatsbyjs/gatsby/issues/39461)) ([96f9dc9](https://github.com/gatsbyjs/gatsby/commit/96f9dc94e0e82d846434b5d20b9a72a154a5bbd0))
+* ensure CHANGELOG.md is packed ([a9604cc](https://github.com/gatsbyjs/gatsby/commit/a9604ccb15272044925de0196bcfd4c6630de834))
+* reset package versions to last published stable ([4e89033](https://github.com/gatsbyjs/gatsby/commit/4e890334a63ab7cae6f15beccb1158466d271d6a))
+* use more explicit node.js version range ([#39398](https://github.com/gatsbyjs/gatsby/issues/39398)) ([ede00a5](https://github.com/gatsbyjs/gatsby/commit/ede00a5adff7f494bcfd3d14f6ed54ea942986c1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * babel-preset-gatsby-package bumped from ^3.16.0 to ^3.16.1
+
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@4.16.0/packages/gatsby-core-utils) (2026-01-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)
