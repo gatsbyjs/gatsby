@@ -43,14 +43,13 @@ import { IncomingMessage } from 'node:http'
 import { Readable, Stream } from 'node:stream'
 import { warn } from 'node:console'
 import cookie from '${cookieImportPath}'
+import * as functionModule from '${getRelativePathToModule(
+    path.join(process.cwd(), fun.pathToEntryPoint)
+  )}'
 
 function preferDefault(m) {
   return m && m.default || m
 }
-
-const functionModule = await import("${getRelativePathToModule(
-    path.join(process.cwd(), fun.pathToEntryPoint)
-  )}")
 
 const functionHandler = preferDefault(preferDefault(functionModule))
 

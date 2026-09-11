@@ -50,10 +50,12 @@ describe(`prepareFunction`, () => {
 
     const handlerCode = getWrittenHandler(`test`)
 
-    // expect dynamic import in produced code (this is mostly to make sure handlerCode is actual handler code)
-    expect(handlerCode).toMatch(/import\(["'][^"']*["']\)/)
+    // expect the entrypoint import in produced code (this is mostly to make sure handlerCode is actual handler code)
+    expect(handlerCode).toMatch(
+      /import \* as functionModule from ["'][^"']*["']/
+    )
     // import paths should not have backward slashes (win paths)
-    expect(handlerCode).not.toMatch(/import\(["'][^"']*\\[^"']*["']\)/)
+    expect(handlerCode).not.toMatch(/from ["'][^"']*\\[^"']*["']/)
 
     expect(handlerCode).toContain(`generator: 'gatsby-adapter-netlify`)
     expect(handlerCode).toContain(`name: 'Gatsby SSR & DSG'`)
