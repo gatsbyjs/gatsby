@@ -1,12 +1,12 @@
 /*
   Vendored from the cookie npm package (v0.6.0), used only by the generated
-  function handler in ../lambda-v2.ts to parse the cookie request header.
+  function handler in ../lambda-handler.ts to parse the cookie request header.
 
   Vendoring avoids resolving cookie from node_modules at runtime, which
   previously required special-casing npm/yarn hoisting, monorepo workspaces,
   and pnpm's virtual store layout. Since this file ships as part of
   gatsby-adapter-netlify's own dist/, its location relative to the compiled
-  lambda-v2.js is always known ahead of time.
+  lambda-handler.js is always known ahead of time.
 
   Copyright(c) 2012-2014 Roman Shtylman
   Copyright(c) 2015 Douglas Christopher Wilson

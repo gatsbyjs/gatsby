@@ -11,9 +11,13 @@ jest.mock(`node:fs`, () => {
 })
 
 import { writeFileSync } from "node:fs"
-import { prepareFunction } from "../lambda-v2"
+import { prepareFunction } from "../lambda-handler"
 
-const fixturePath = join(relative(cwd(), __dirname), `fixtures`, `lambda-v2`)
+const fixturePath = join(
+  relative(cwd(), __dirname),
+  `fixtures`,
+  `lambda-handler`
+)
 const pathToEntryPoint = join(fixturePath, `entry.js`)
 const requiredFile = join(fixturePath, `included.js`)
 

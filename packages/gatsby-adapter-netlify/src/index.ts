@@ -1,6 +1,6 @@
 import { join } from "path"
 import type { AdapterInit, IAdapterConfig } from "gatsby"
-import { prepareFunction } from "./lambda-v2"
+import { prepareFunction } from "./lambda-handler"
 import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 import { prepareFileCdnHandler } from "./file-cdn-handler"
 import { handleRoutesManifest } from "./route-handler"
