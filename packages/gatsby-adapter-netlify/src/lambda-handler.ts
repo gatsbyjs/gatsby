@@ -32,46 +32,8 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const cookieModulePath = require.resolve(`./vendor/cookie`)
   const cookieImportPath = getRelativePathToModule(`./vendor/cookie`)
 
-  const commonImports = /* javascript */ `import { Buffer } from 'node:buffer'
-import { IncomingMessage } from 'node:http'
-import { Readable, Stream } from 'node:stream'
-import { warn } from 'node:console'
-import cookie from '${cookieImportPath}'`
-
-  const preferDefaultFn = /* javascript */ `function preferDefault(m) {
-  return m && m.default || m
-}`
-
-  const functionLoader = /* javascript */ `const functionModule = await import("${getRelativePathToModule(
-    path.join(process.cwd(), fun.pathToEntryPoint)
-  )}")
-
-const functionHandler = preferDefault(preferDefault(functionModule))`
-
-  const handleRequestFn = /* javascript */ `async function handleRequest(request, context) {
-  const req = await createRequestObject(request, context)
-
-  return new Promise(async function (resolve) {
-    try {
-      const res = createResponseObject({ onResEnd: resolve })
-
-      await functionHandler(req, res, {
-        onPageResponse({ cache }) {
-          if (cache) {
-            // matches what On-demand Builders used to emit for DSG responses
-            res.setHeader('netlify-cdn-cache-control', 'public, s-maxage=31536000, must-revalidate, durable')
-          }
-        }
-      })
-    } catch (error) {
-      console.error("Error executing " + request.url, error)
-      resolve(new Response(null, { status: 500 }))
-    }
-  })
-}`
-
-  // Shared JS runtime helpers embedded in both SSR and API route handlers
-  const sharedHandlerCode = `const statuses = {
+  // JS runtime helpers embedded in the generated handler
+  const runtimeHelpers = `const statuses = {
   "100": "Continue",
   "101": "Switching Protocols",
   "102": "Processing",
@@ -377,18 +339,44 @@ function createResponseObject({ onResEnd }) {
     ),
   ])
 
-  const handlerSource = /* javascript */ `${commonImports}
+  const handlerSource = /* javascript */ `import { Buffer } from 'node:buffer'
+import { IncomingMessage } from 'node:http'
+import { Readable, Stream } from 'node:stream'
+import { warn } from 'node:console'
+import cookie from '${cookieImportPath}'
 
-${preferDefaultFn}
+function preferDefault(m) {
+  return m && m.default || m
+}
 
-${functionLoader}
+const functionModule = await import("${getRelativePathToModule(
+    path.join(process.cwd(), fun.pathToEntryPoint)
+  )}")
 
-${sharedHandlerCode}
+const functionHandler = preferDefault(preferDefault(functionModule))
 
-${handleRequestFn}
+${runtimeHelpers}
 
 export default async function(request, context) {
-  return handleRequest(request, context)
+  const req = await createRequestObject(request, context)
+
+  return new Promise(async function (resolve) {
+    try {
+      const res = createResponseObject({ onResEnd: resolve })
+
+      await functionHandler(req, res, {
+        onPageResponse({ cache }) {
+          if (cache) {
+            // matches what On-demand Builders used to emit for DSG responses
+            res.setHeader('netlify-cdn-cache-control', 'public, s-maxage=31536000, must-revalidate, durable')
+          }
+        }
+      })
+    } catch (error) {
+      console.error("Error executing " + request.url, error)
+      resolve(new Response(null, { status: 500 }))
+    }
+  })
 }
 
 export const config = {
