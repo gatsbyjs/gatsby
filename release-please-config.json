@@ -1,0 +1,328 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bootstrap-sha": "aea34d80b48583f36894eae89de0b90581201c6b",
+  "last-release-sha": "aea34d80b48583f36894eae89de0b90581201c6b",
+  "include-component-in-tag": true,
+  "include-v-in-tag": false,
+  "tag-separator": "@",
+  "release-type": "node",
+  "separate-pull-requests": false,
+  "plugins": ["node-workspace"],
+  "packages": {
+    "packages/babel-plugin-remove-graphql-queries": {
+      "component": "babel-plugin-remove-graphql-queries"
+    },
+    "packages/babel-preset-gatsby": {
+      "component": "babel-preset-gatsby"
+    },
+    "packages/babel-preset-gatsby-package": {
+      "component": "babel-preset-gatsby-package"
+    },
+    "packages/create-gatsby": {
+      "component": "create-gatsby"
+    },
+    "packages/gatsby": {
+      "component": "gatsby"
+    },
+    "packages/gatsby-adapter-netlify": {
+      "component": "gatsby-adapter-netlify"
+    },
+    "packages/gatsby-cli": {
+      "component": "gatsby-cli"
+    },
+    "packages/gatsby-codemods": {
+      "component": "gatsby-codemods"
+    },
+    "packages/gatsby-core-utils": {
+      "component": "gatsby-core-utils"
+    },
+    "packages/gatsby-cypress": {
+      "component": "gatsby-cypress"
+    },
+    "packages/gatsby-design-tokens": {
+      "component": "gatsby-design-tokens"
+    },
+    "packages/gatsby-dev-cli": {
+      "component": "gatsby-dev-cli"
+    },
+    "packages/gatsby-graphiql-explorer": {
+      "component": "gatsby-graphiql-explorer"
+    },
+    "packages/gatsby-legacy-polyfills": {
+      "component": "gatsby-legacy-polyfills"
+    },
+    "packages/gatsby-link": {
+      "component": "gatsby-link"
+    },
+    "packages/gatsby-page-utils": {
+      "component": "gatsby-page-utils"
+    },
+    "packages/gatsby-parcel-config": {
+      "component": "gatsby-parcel-config"
+    },
+    "packages/gatsby-parcel-namer-relative-to-cwd": {
+      "component": "@gatsbyjs/parcel-namer-relative-to-cwd"
+    },
+    "packages/gatsby-plugin-benchmark-reporting": {
+      "component": "gatsby-plugin-benchmark-reporting"
+    },
+    "packages/gatsby-plugin-canonical-urls": {
+      "component": "gatsby-plugin-canonical-urls"
+    },
+    "packages/gatsby-plugin-catch-links": {
+      "component": "gatsby-plugin-catch-links"
+    },
+    "packages/gatsby-plugin-coffeescript": {
+      "component": "gatsby-plugin-coffeescript"
+    },
+    "packages/gatsby-plugin-cxs": {
+      "component": "gatsby-plugin-cxs"
+    },
+    "packages/gatsby-plugin-emotion": {
+      "component": "gatsby-plugin-emotion"
+    },
+    "packages/gatsby-plugin-facebook-analytics": {
+      "component": "gatsby-plugin-facebook-analytics"
+    },
+    "packages/gatsby-plugin-feed": {
+      "component": "gatsby-plugin-feed"
+    },
+    "packages/gatsby-plugin-flow": {
+      "component": "gatsby-plugin-flow"
+    },
+    "packages/gatsby-plugin-fullstory": {
+      "component": "gatsby-plugin-fullstory"
+    },
+    "packages/gatsby-plugin-google-analytics": {
+      "component": "gatsby-plugin-google-analytics"
+    },
+    "packages/gatsby-plugin-google-gtag": {
+      "component": "gatsby-plugin-google-gtag"
+    },
+    "packages/gatsby-plugin-google-tagmanager": {
+      "component": "gatsby-plugin-google-tagmanager"
+    },
+    "packages/gatsby-plugin-image": {
+      "component": "gatsby-plugin-image"
+    },
+    "packages/gatsby-plugin-jss": {
+      "component": "gatsby-plugin-jss"
+    },
+    "packages/gatsby-plugin-layout": {
+      "component": "gatsby-plugin-layout"
+    },
+    "packages/gatsby-plugin-less": {
+      "component": "gatsby-plugin-less"
+    },
+    "packages/gatsby-plugin-lodash": {
+      "component": "gatsby-plugin-lodash"
+    },
+    "packages/gatsby-plugin-manifest": {
+      "component": "gatsby-plugin-manifest"
+    },
+    "packages/gatsby-plugin-mdx": {
+      "component": "gatsby-plugin-mdx"
+    },
+    "packages/gatsby-plugin-no-sourcemaps": {
+      "component": "gatsby-plugin-no-sourcemaps"
+    },
+    "packages/gatsby-plugin-nprogress": {
+      "component": "gatsby-plugin-nprogress"
+    },
+    "packages/gatsby-plugin-offline": {
+      "component": "gatsby-plugin-offline"
+    },
+    "packages/gatsby-plugin-page-creator": {
+      "component": "gatsby-plugin-page-creator"
+    },
+    "packages/gatsby-plugin-postcss": {
+      "component": "gatsby-plugin-postcss"
+    },
+    "packages/gatsby-plugin-preact": {
+      "component": "gatsby-plugin-preact"
+    },
+    "packages/gatsby-plugin-preload-fonts": {
+      "component": "gatsby-plugin-preload-fonts"
+    },
+    "packages/gatsby-plugin-react-css-modules": {
+      "component": "gatsby-plugin-react-css-modules"
+    },
+    "packages/gatsby-plugin-react-helmet": {
+      "component": "gatsby-plugin-react-helmet"
+    },
+    "packages/gatsby-plugin-sass": {
+      "component": "gatsby-plugin-sass"
+    },
+    "packages/gatsby-plugin-schema-snapshot": {
+      "component": "gatsby-plugin-schema-snapshot"
+    },
+    "packages/gatsby-plugin-sharp": {
+      "component": "gatsby-plugin-sharp"
+    },
+    "packages/gatsby-plugin-sitemap": {
+      "component": "gatsby-plugin-sitemap"
+    },
+    "packages/gatsby-plugin-styled-components": {
+      "component": "gatsby-plugin-styled-components"
+    },
+    "packages/gatsby-plugin-styled-jsx": {
+      "component": "gatsby-plugin-styled-jsx"
+    },
+    "packages/gatsby-plugin-styletron": {
+      "component": "gatsby-plugin-styletron"
+    },
+    "packages/gatsby-plugin-stylus": {
+      "component": "gatsby-plugin-stylus"
+    },
+    "packages/gatsby-plugin-subfont": {
+      "component": "gatsby-plugin-subfont"
+    },
+    "packages/gatsby-plugin-twitter": {
+      "component": "gatsby-plugin-twitter"
+    },
+    "packages/gatsby-plugin-typescript": {
+      "component": "gatsby-plugin-typescript"
+    },
+    "packages/gatsby-plugin-typography": {
+      "component": "gatsby-plugin-typography"
+    },
+    "packages/gatsby-plugin-utils": {
+      "component": "gatsby-plugin-utils"
+    },
+    "packages/gatsby-react-router-scroll": {
+      "component": "gatsby-react-router-scroll"
+    },
+    "packages/gatsby-remark-autolink-headers": {
+      "component": "gatsby-remark-autolink-headers"
+    },
+    "packages/gatsby-remark-code-repls": {
+      "component": "gatsby-remark-code-repls"
+    },
+    "packages/gatsby-remark-copy-linked-files": {
+      "component": "gatsby-remark-copy-linked-files"
+    },
+    "packages/gatsby-remark-custom-blocks": {
+      "component": "gatsby-remark-custom-blocks"
+    },
+    "packages/gatsby-remark-embed-snippet": {
+      "component": "gatsby-remark-embed-snippet"
+    },
+    "packages/gatsby-remark-graphviz": {
+      "component": "gatsby-remark-graphviz"
+    },
+    "packages/gatsby-remark-images": {
+      "component": "gatsby-remark-images"
+    },
+    "packages/gatsby-remark-images-contentful": {
+      "component": "gatsby-remark-images-contentful"
+    },
+    "packages/gatsby-remark-katex": {
+      "component": "gatsby-remark-katex"
+    },
+    "packages/gatsby-remark-prismjs": {
+      "component": "gatsby-remark-prismjs"
+    },
+    "packages/gatsby-remark-responsive-iframe": {
+      "component": "gatsby-remark-responsive-iframe"
+    },
+    "packages/gatsby-remark-smartypants": {
+      "component": "gatsby-remark-smartypants"
+    },
+    "packages/gatsby-script": {
+      "component": "gatsby-script"
+    },
+    "packages/gatsby-sharp": {
+      "component": "gatsby-sharp"
+    },
+    "packages/gatsby-source-contentful": {
+      "component": "gatsby-source-contentful"
+    },
+    "packages/gatsby-source-drupal": {
+      "component": "gatsby-source-drupal"
+    },
+    "packages/gatsby-source-faker": {
+      "component": "gatsby-source-faker"
+    },
+    "packages/gatsby-source-filesystem": {
+      "component": "gatsby-source-filesystem"
+    },
+    "packages/gatsby-source-graphql": {
+      "component": "gatsby-source-graphql"
+    },
+    "packages/gatsby-source-hacker-news": {
+      "component": "gatsby-source-hacker-news"
+    },
+    "packages/gatsby-source-lever": {
+      "component": "gatsby-source-lever"
+    },
+    "packages/gatsby-source-medium": {
+      "component": "gatsby-source-medium"
+    },
+    "packages/gatsby-source-mongodb": {
+      "component": "gatsby-source-mongodb"
+    },
+    "packages/gatsby-source-npm-package-search": {
+      "component": "gatsby-source-npm-package-search"
+    },
+    "packages/gatsby-source-shopify": {
+      "component": "gatsby-source-shopify"
+    },
+    "packages/gatsby-source-wikipedia": {
+      "component": "gatsby-source-wikipedia"
+    },
+    "packages/gatsby-source-wordpress": {
+      "component": "gatsby-source-wordpress"
+    },
+    "packages/gatsby-transformer-asciidoc": {
+      "component": "gatsby-transformer-asciidoc"
+    },
+    "packages/gatsby-transformer-csv": {
+      "component": "gatsby-transformer-csv"
+    },
+    "packages/gatsby-transformer-documentationjs": {
+      "component": "gatsby-transformer-documentationjs"
+    },
+    "packages/gatsby-transformer-excel": {
+      "component": "gatsby-transformer-excel"
+    },
+    "packages/gatsby-transformer-hjson": {
+      "component": "gatsby-transformer-hjson"
+    },
+    "packages/gatsby-transformer-javascript-frontmatter": {
+      "component": "gatsby-transformer-javascript-frontmatter"
+    },
+    "packages/gatsby-transformer-json": {
+      "component": "gatsby-transformer-json"
+    },
+    "packages/gatsby-transformer-pdf": {
+      "component": "gatsby-transformer-pdf"
+    },
+    "packages/gatsby-transformer-react-docgen": {
+      "component": "gatsby-transformer-react-docgen"
+    },
+    "packages/gatsby-transformer-remark": {
+      "component": "gatsby-transformer-remark"
+    },
+    "packages/gatsby-transformer-screenshot": {
+      "component": "gatsby-transformer-screenshot"
+    },
+    "packages/gatsby-transformer-sharp": {
+      "component": "gatsby-transformer-sharp"
+    },
+    "packages/gatsby-transformer-sqip": {
+      "component": "gatsby-transformer-sqip"
+    },
+    "packages/gatsby-transformer-toml": {
+      "component": "gatsby-transformer-toml"
+    },
+    "packages/gatsby-transformer-xml": {
+      "component": "gatsby-transformer-xml"
+    },
+    "packages/gatsby-transformer-yaml": {
+      "component": "gatsby-transformer-yaml"
+    },
+    "packages/gatsby-worker": {
+      "component": "gatsby-worker"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+name: release-please
+
+# release-please owns versioning: it keeps a release PR up to date with the
+# version bumps and CHANGELOG entries implied by the conventional commits on
+# `master`. Merging that PR creates the git tags and GitHub Releases.
+on:
+  push:
+    branches:
+      - master
+
+permissions: {}
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4.4.1
+        id: release
