@@ -1,6 +1,7 @@
 import path from "path"
 import fs from "fs"
-import { slash, createRequireFromPath } from "gatsby-core-utils"
+import { createRequire } from "module"
+import { slash } from "gatsby-core-utils"
 import { warnOnIncompatiblePeerDependency } from "./validate"
 import { PackageJson } from "../../.."
 import { IPluginInfo, PluginRef } from "./types"
@@ -54,9 +55,7 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
    */
   try {
     const requireSource =
-      rootDir !== null
-        ? createRequireFromPath(`${rootDir}/:internal:`)
-        : require
+      rootDir !== null ? createRequire(`${rootDir}/:internal:`) : require
 
     // If the path is absolute, resolve the directory of the internal plugin,
     // otherwise resolve the directory containing the package.json
