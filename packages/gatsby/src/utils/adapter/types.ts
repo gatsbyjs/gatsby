@@ -109,6 +109,29 @@ export interface IFunctionDefinition {
 
 export type FunctionsManifest = Array<IFunctionDefinition>
 
+export interface IEnginePageResponseDetails {
+  /**
+   * If `cache` is true, this response should be cached for current deployment
+   * and served on subsequent requests for this page. Same meaning as `cache` on
+   * function routes in the `routesManifest`, just resolved per request.
+   */
+  cache: boolean
+}
+
+export interface IEngineAdapterOptions {
+  /**
+   * Called once Gatsby has resolved the page for a request and applied its own
+   * status and headers, before the response body is written. Adapters use it to
+   * apply platform specific handling - setting CDN caching headers for DSG
+   * pages, for example - without having to resolve the page a second time.
+   *
+   * Pass this as the third argument when invoking the engine function entry
+   * point (`IFunctionDefinition.pathToEntryPoint` of the `ssr-engine`
+   * function). It is not called for requests that don't resolve to a page.
+   */
+  onPageResponse?: (details: IEnginePageResponseDetails) => void
+}
+
 interface IDefaultContext {
   /**
    * Reporter instance that can be used to log messages to terminal
