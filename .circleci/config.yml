@@ -308,10 +308,15 @@ jobs:
       - checkout
       # installation of dependencies takes a while because of the 100 packages we have inside the monorepo
       # Linting only needs the root packages, we remove the workspace and only install root packages
+      # `.eslintrc.js` parses with @babel/eslint-parser, which loads `.babelrc.js`,
+      # which needs the `babel-preset-gatsby-package` preset - so that workspace has to
+      # stay. It also has no dependencies on other monorepo packages, which matters:
+      # those would not be workspace-linked here, so yarn would try to resolve them from
+      # npm and fail for any version that is not published yet.
       - run:
           name: "remove workspaces from package.json"
           command: |
-            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby-package"\]/g' package.json
       - <<: *install_node_modules
       - run: yarn lint:code
       - run: yarn lint:other
