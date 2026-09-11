@@ -156,16 +156,6 @@ async function createRequestObject(netlifyRequest, netlifyContext) {
 
   req.originalUrl = netlifyContext.url.pathname
 
-  // Unnamed splats (from a [...] route) come back keyed by index
-  // alias to * per Gatsby's Functions API
-  req.params = {
-    ...netlifyContext.params
-  }
-
-  if (req.params['0'] !== undefined) {
-    req.params['*'] = req.params['0']
-  }
-
   req.query = Object.fromEntries(netlifyContext.url.searchParams)
   req.rawUrl = netlifyRequest.url
   req.url = req.originalUrl
