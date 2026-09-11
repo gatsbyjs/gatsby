@@ -1,6 +1,7 @@
 import { join } from "path"
 import type { AdapterInit, IAdapterConfig } from "gatsby"
 import { prepareFunction } from "./lambda-v2"
+import { handleAllowedRemoteUrlsNetlifyConfig } from "./allowed-remote-urls"
 import { prepareFileCdnHandler } from "./file-cdn-handler"
 import { handleRoutesManifest } from "./route-handler"
 import packageJson from "gatsby-adapter-netlify/package.json"
@@ -99,6 +100,8 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
       remoteFileAllowedUrls,
     }): Promise<void> {
       if (useNetlifyImageCDN) {
+        await handleAllowedRemoteUrlsNetlifyConfig({ remoteFileAllowedUrls })
+
         await prepareFileCdnHandler({
           pathPrefix,
           remoteFileAllowedUrls,
