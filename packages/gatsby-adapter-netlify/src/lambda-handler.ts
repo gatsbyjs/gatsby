@@ -32,8 +32,32 @@ export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
   const cookieModulePath = require.resolve(`./vendor/cookie`)
   const cookieImportPath = getRelativePathToModule(`./vendor/cookie`)
 
-  // JS runtime helpers embedded in the generated handler
-  const runtimeHelpers = `const statuses = {
+  const includedFiles = JSON.stringify([
+    slash(cookieModulePath),
+    ...fun.requiredFiles.map(file =>
+      slash(path.join(process.cwd(), file))
+        .replace(/\[/g, `*`)
+        .replace(/]/g, `*`)
+    ),
+  ])
+
+  const handlerSource = /* javascript */ `import { Buffer } from 'node:buffer'
+import { IncomingMessage } from 'node:http'
+import { Readable, Stream } from 'node:stream'
+import { warn } from 'node:console'
+import cookie from '${cookieImportPath}'
+
+function preferDefault(m) {
+  return m && m.default || m
+}
+
+const functionModule = await import("${getRelativePathToModule(
+    path.join(process.cwd(), fun.pathToEntryPoint)
+  )}")
+
+const functionHandler = preferDefault(preferDefault(functionModule))
+
+const statuses = {
   "100": "Continue",
   "101": "Switching Protocols",
   "102": "Processing",
@@ -328,34 +352,7 @@ function createResponseObject({ onResEnd }) {
   }
 
   return res
-}`
-
-  const includedFiles = JSON.stringify([
-    slash(cookieModulePath),
-    ...fun.requiredFiles.map(file =>
-      slash(path.join(process.cwd(), file))
-        .replace(/\[/g, `*`)
-        .replace(/]/g, `*`)
-    ),
-  ])
-
-  const handlerSource = /* javascript */ `import { Buffer } from 'node:buffer'
-import { IncomingMessage } from 'node:http'
-import { Readable, Stream } from 'node:stream'
-import { warn } from 'node:console'
-import cookie from '${cookieImportPath}'
-
-function preferDefault(m) {
-  return m && m.default || m
 }
-
-const functionModule = await import("${getRelativePathToModule(
-    path.join(process.cwd(), fun.pathToEntryPoint)
-  )}")
-
-const functionHandler = preferDefault(preferDefault(functionModule))
-
-${runtimeHelpers}
 
 export default async function(request, context) {
   const req = await createRequestObject(request, context)
