@@ -15,6 +15,7 @@
     "gatsby-graphiql"
   ],
   "files": [
+    "CHANGELOG.md",
     "dist/*",
     "index.js"
   ],

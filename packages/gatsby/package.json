@@ -216,6 +216,7 @@
     "node": ">=18.0.0 <26"
   },
   "files": [
+    "CHANGELOG.md",
     "adapters.js",
     "apis.json",
     "ipc.json",

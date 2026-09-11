@@ -9,6 +9,7 @@
   "main": "dist/index.js",
   "source": "src/index.ts",
   "files": [
+    "CHANGELOG.md",
     "dist/*"
   ],
   "types": "dist/index.d.ts",

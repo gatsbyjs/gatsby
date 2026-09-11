@@ -45,6 +45,7 @@
     "typescript": "^5.1.6"
   },
   "files": [
+    "CHANGELOG.md",
     "dist/"
   ],
   "engines": {

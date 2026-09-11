@@ -12,6 +12,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/create-gatsby#readme",
   "files": [
+    "CHANGELOG.md",
     "lib/index.js",
     "cli.js",
     "stubs/"

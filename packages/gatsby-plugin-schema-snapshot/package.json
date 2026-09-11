@@ -8,6 +8,7 @@
     "gatsby-plugin"
   ],
   "files": [
+    "CHANGELOG.md",
     "gatsby-node.js"
   ],
   "repository": {

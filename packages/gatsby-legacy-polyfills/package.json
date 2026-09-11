@@ -28,6 +28,7 @@
     "core-js-compat": "3.31.0"
   },
   "files": [
+    "CHANGELOG.md",
     "dist/"
   ],
   "devDependencies": {

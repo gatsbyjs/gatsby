@@ -18,6 +18,7 @@
     "unist-util-find": "1.0.2"
   },
   "files": [
+    "CHANGELOG.md",
     "index.js",
     "README.md"
   ],

@@ -70,6 +70,7 @@
     "graphql": "^16.0.0"
   },
   "files": [
+    "CHANGELOG.md",
     "dist/"
   ],
   "engines": {

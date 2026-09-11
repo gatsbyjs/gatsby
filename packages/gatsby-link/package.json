@@ -10,6 +10,7 @@
   "module": "dist/index.modern.mjs",
   "types": "index.d.ts",
   "files": [
+    "CHANGELOG.md",
     "dist/*",
     "index.d.ts"
   ],

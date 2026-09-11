@@ -58,6 +58,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "files": [
+    "CHANGELOG.md",
     "dist/"
   ],
   "dependencies": {

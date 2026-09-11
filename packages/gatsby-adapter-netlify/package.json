@@ -53,6 +53,7 @@
     "gatsby": "^5.10.0-alpha"
   },
   "files": [
+    "CHANGELOG.md",
     "dist/"
   ],
   "engines": {

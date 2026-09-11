@@ -33,6 +33,7 @@
     "watch": "babel -w src --out-dir lib/ --ignore \"**/__tests__\" --extensions \".ts\""
   },
   "files": [
+    "CHANGELOG.md",
     "lib/index.js"
   ]
 }

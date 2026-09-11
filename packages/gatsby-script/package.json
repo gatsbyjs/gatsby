@@ -11,6 +11,7 @@
   "module": "dist/index.modern.mjs",
   "types": "dist/index.d.ts",
   "files": [
+    "CHANGELOG.md",
     "dist/*"
   ],
   "sideEffects": false,
