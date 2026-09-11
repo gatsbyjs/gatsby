@@ -269,9 +269,6 @@ commands:
                 name: Upgrade React to << parameters.react_version >>
                 command: "REACT_VERSION=<< parameters.react_version >> TEST_PATH=<< parameters.test_path >> node ./scripts/upgrade-react"
       - run:
-          name: Install gatsby-dev@next
-          command: yarn global add gatsby-dev-cli@next --ignore-engines
-      - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>" "<< parameters.pre_gatsby_dev_command >>"
 
@@ -311,10 +308,15 @@ jobs:
       - checkout
       # installation of dependencies takes a while because of the 100 packages we have inside the monorepo
       # Linting only needs the root packages, we remove the workspace and only install root packages
+      # `.eslintrc.js` parses with @babel/eslint-parser, which loads `.babelrc.js`,
+      # which needs the `babel-preset-gatsby-package` preset - so that workspace has to
+      # stay. It also has no dependencies on other monorepo packages, which matters:
+      # those would not be workspace-linked here, so yarn would try to resolve them from
+      # npm and fail for any version that is not published yet.
       - run:
           name: "remove workspaces from package.json"
           command: |
-            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby-package"\]/g' package.json
       - <<: *install_node_modules
       - run: yarn lint:code
       - run: yarn lint:other
@@ -714,7 +716,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd development-runtime; gatsby-dev --force-install --scan-once; yarn test
+          test_command: cd development-runtime; node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once; yarn test
 
   themes_e2e_tests_production_runtime:
     parameters:
@@ -726,7 +728,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/themes
-          test_command: cd production-runtime; gatsby-dev --force-install --scan-once; yarn test
+          test_command: cd production-runtime; node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once; yarn test
 
   e2e_tests_mdx:
     parameters:
@@ -823,7 +825,7 @@ jobs:
           # dependencies of its own, so nothing local got linked). Clear them so the
           # gatsby-dev call below - the one that actually links local packages - runs
           # against a clean tree instead of layering an incremental install on top of it.
-          test_command: rm -rf node_modules yarn.lock; cd workspace; gatsby-dev --force-install --scan-once; cd ..; yarn test
+          test_command: rm -rf node_modules yarn.lock; cd workspace; node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once; cd ..; yarn test
           pre_gatsby_dev_command: ./make-monorepo.sh
       - store_test_results:
           path: e2e-tests/adapters/cypress/results
@@ -848,19 +850,6 @@ jobs:
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
-
-  update_changelogs:
-    executor: node
-    steps:
-      - checkout
-      # python is not built in and node-gyp needs it to build lmdb
-      - run: sudo apt-get update && sudo apt-get install -y jq python3 python-is-python3
-      - restore_yarn_cache:
-          node_version: 18.0.0
-      - <<: *install_node_modules
-      - run: git config --global user.name "GatsbyJS Bot"
-      - run: git config --global user.email "core-team@gatsbyjs.com"
-      - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
 
   # TODO(serhalp): Test Windows on Node.js 20 and 24?
   windows_unit_tests:
@@ -949,22 +938,6 @@ jobs:
 
 workflows:
   version: 2
-
-  # Ideally, we should trigger this when any new release is created, sadly there is no easy way to do it:
-  # - Can't rely on tags: GitHub won't send webhook to CircleCI when there are more than 3 tags in one push
-  #   See: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push
-  # - Can't rely on pushes to "release/*" branches because we have "Only build pull requests" option enabled
-  #   (so pushes without pull requests are ignored by CircleCI)
-  nightly-update-changelogs:
-    triggers:
-      - schedule:
-          cron: "0 0 * * 1,2,3,4,5"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - update_changelogs
 
   build-test:
     jobs:
