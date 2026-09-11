@@ -1,5 +1,8 @@
 import Module from "module"
 
-// `Module.createRequire` has been available since Node v12.2.0, which is
-// below our minimum supported Node version, so no polyfill is needed.
+/**
+ * @deprecated Use `createRequire` from Node's built-in `module` instead. This
+ * was a polyfill for Node < 10.12, which is far below the minimum supported
+ * version, and is now just an alias. To be removed in the next major.
+ */
 export const createRequireFromPath = Module.createRequire
