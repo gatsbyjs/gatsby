@@ -68,9 +68,10 @@ let mockInstalledInSiteAdapter: IMockedAdapterPackage | undefined = undefined
 let mockInstalledInCacheAdapter: IMockedAdapterPackage | undefined = undefined
 
 const mockAdaptersCacheDir = getAdaptersCacheDir()
-jest.mock(`gatsby-core-utils/create-require-from-path`, () => {
+jest.mock(`module`, () => {
   return {
-    createRequireFromPath: jest.fn((path: string) => {
+    ...jest.requireActual(`module`),
+    createRequire: jest.fn((path: string) => {
       let mockPackage: IMockedAdapterPackage | undefined
       let prefix: string | undefined
 

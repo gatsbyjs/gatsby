@@ -1,4 +1,4 @@
-import { createRequireFromPath } from "gatsby-core-utils"
+import { createRequire } from "module"
 import * as path from "path"
 import {
   IGatsbyConfigInput,
@@ -36,7 +36,7 @@ const resolveTheme = async (
     typeof themeSpec === `string` ? themeSpec : themeSpec.resolve
   let themeDir
   try {
-    const scopedRequire = createRequireFromPath(`${rootDir}/:internal:`)
+    const scopedRequire = createRequire(`${rootDir}/:internal:`)
     // theme is an node-resolvable module
     themeDir = path.dirname(scopedRequire.resolve(themeName))
   } catch (e) {
