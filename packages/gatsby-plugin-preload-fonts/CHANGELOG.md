@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@4.16.0...gatsby-plugin-preload-fonts@4.16.1) (2026-09-11)
+
+
+### Bug Fixes
+
+* reset package versions to last published stable ([4e89033](https://github.com/gatsbyjs/gatsby/commit/4e890334a63ab7cae6f15beccb1158466d271d6a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * gatsby-core-utils bumped from ^4.16.0 to ^4.16.1
+  * devDependencies
+    * babel-preset-gatsby-package bumped from ^3.16.0 to ^3.16.1
+  * peerDependencies
+    * gatsby bumped from ^5.0.0-next to ^5.16.2
+
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@4.16.0/packages/gatsby-plugin-preload-fonts) (2026-01-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.16)
