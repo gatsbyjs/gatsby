@@ -72,8 +72,11 @@ describe(`prepareFunction`, () => {
       expect(handlerCode).toMatch(/import\(["'][^"']*["']\)/)
       // import paths should not have backward slashes (win paths)
       expect(handlerCode).not.toMatch(/import\(["'][^"']*\\[^"']*["']\)/)
-      // resolves the page-ssr engine rather than a Netlify Functions builder
-      expect(handlerCode).toContain(`findEnginePageByPath`)
+      // caching is driven by the engine's onPageResponse hook rather than by
+      // the adapter resolving the page a second time, or by an ODB variant
+      expect(handlerCode).toContain(`onPageResponse({ cache })`)
+      expect(handlerCode).toContain(`netlify-cdn-cache-control`)
+      expect(handlerCode).not.toContain(`findEnginePageByPath`)
 
       expect(handlerCode).toContain(`generator: 'gatsby-adapter-netlify`)
       expect(handlerCode).toContain(`name: 'Gatsby SSR + DSG'`)
@@ -148,14 +151,17 @@ describe(`prepareFunction`, () => {
 
       expect(handlerCode).toMatch(/import\(["'][^"']*["']\)/)
       expect(handlerCode).not.toMatch(/import\(["'][^"']*\\[^"']*["']\)/)
-      // API routes don't need the page-ssr engine lookup
+      // API routes share the same handler, they just never get a cacheable
+      // response from the entry point
       expect(handlerCode).not.toContain(`findEnginePageByPath`)
 
       expect(handlerCode).toContain(`generator: 'gatsby-adapter-netlify`)
       expect(handlerCode).toContain(`name: 'Gatsby /api/test'`)
       expect(handlerCode).toContain(`nodeBundler: 'none'`)
       expect(handlerCode).toContain(`path: '/api/test'`)
-      expect(handlerCode).not.toContain(`preferStatic`)
+      // `preferStatic` is set for every function so that statically rendered
+      // output always wins, matching the old `_redirects` behaviour
+      expect(handlerCode).toContain(`preferStatic`)
       expect(handlerCode).toContain(slash(requiredFile))
     })
 

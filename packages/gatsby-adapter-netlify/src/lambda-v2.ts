@@ -111,17 +111,21 @@ import cookie from '${cookieImportPath}'`
 
 const functionHandler = preferDefault(preferDefault(functionModule))`
 
-  const handleRequestFn = /* javascript */ `async function handleRequest(request, context, shouldCache) {
+  const handleRequestFn = /* javascript */ `async function handleRequest(request, context) {
   const req = await createRequestObject(request, context)
 
   return new Promise(async function (resolve) {
     try {
-      const res = createResponseObject({
-        onResEnd: resolve,
-        shouldCache
-      })
+      const res = createResponseObject({ onResEnd: resolve })
 
-      await functionHandler(req, res)
+      await functionHandler(req, res, {
+        onPageResponse({ cache }) {
+          if (cache) {
+            // matches what On-demand Builders used to emit for DSG responses
+            res.setHeader('netlify-cdn-cache-control', 'public, s-maxage=31536000, must-revalidate, durable')
+          }
+        }
+      })
     } catch (error) {
       console.error("Error executing " + request.url, error)
       resolve(new Response(null, { status: 500 }))
@@ -254,14 +258,13 @@ async function createRequestObject(netlifyRequest, netlifyContext) {
   return req
 }
 
-function createResponseObject({ onResEnd, shouldCache }) {
+function createResponseObject({ onResEnd }) {
   function isProtectedHeader(name, override = false) {
     if (override) {
       return false
     }
 
-    const lower = name.toLowerCase()
-    return lower === 'content-type' || (shouldCache && lower === 'netlify-cdn-cache-control')
+    return name.toLowerCase() === 'content-type'
   }
 
   const response = {
@@ -312,12 +315,7 @@ function createResponseObject({ onResEnd, shouldCache }) {
   }
 
   res.headers = {
-    'content-type': 'text/html; charset=utf-8',
-    ...(
-      shouldCache ? {
-        'netlify-cdn-cache-control': 'durable, immutable, max-age=31536000, public'
-      } : {}
-    )
+    'content-type': 'text/html; charset=utf-8'
   }
 
   res.removeHeader = function (name) {
@@ -433,10 +431,20 @@ function createResponseObject({ onResEnd, shouldCache }) {
   return res
 }`
 
-  let handlerSource: string
+  const includedFiles = JSON.stringify([
+    slash(cookieModulePath),
+    ...fun.requiredFiles.map(file =>
+      slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
+    ),
+  ])
 
-  if (isApiRoute) {
-    handlerSource = /* javascript */ `${commonImports}
+  /*
+    `preferStatic` keeps statically rendered pages winning over the function,
+    which is what the `_redirects` rules used to give us - a page created with a
+    `matchPath` covers paths that may also have been rendered at build time.
+  */
+
+  const handlerSource = /* javascript */ `${commonImports}
 
 ${preferDefaultFn}
 
@@ -447,68 +455,21 @@ ${sharedHandlerCode}
 ${handleRequestFn}
 
 export default async function(request, context) {
-  return handleRequest(request, context, false)
+  return handleRequest(request, context)
 }
 
 export const config = {
   generator: '${generator}',
-  includedFiles: ${JSON.stringify([
-    slash(cookieModulePath),
-    ...fun.requiredFiles.map(file =>
-      slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
-    ),
-  ])},
-  name: 'Gatsby ${netlifyFunctionPath}',
+  includedFiles: ${includedFiles},
+  name: 'Gatsby ${isApiRoute ? netlifyFunctionPath : `SSR + DSG`}',
   nodeBundler: 'none',
-  path: '${netlifyFunctionPath}',
-}`
-  } else {
-    handlerSource = /* javascript */ `${commonImports}
-
-${preferDefaultFn}
-
-${functionLoader}
-
-const { findEnginePageByPath } = await import("${getRelativePathToModule(
-      join(cwd(), `.cache`, `page-ssr`, `index.js`)
-    )}")
-
-${sharedHandlerCode}
-
-${handleRequestFn}
-
-function getPagePathForLookup(pathname) {
-  const match = pathname.match(/^\\/?page-data\\/(.+)\\/page-data\\.json$/)
-
-  if (match) {
-    const pagePath = match[1]
-    return pagePath === 'index' ? '/' : pagePath
-  }
-
-  return pathname
-}
-
-export default async function(request, context) {
-  const pagePath = getPagePathForLookup(context.url.pathname)
-  const page = findEnginePageByPath(pagePath)
-  const shouldCache = !!page && page.mode !== 'SSR'
-  return handleRequest(request, context, shouldCache)
-}
-
-export const config = {
-  generator: '${generator}',
-  includedFiles: ${JSON.stringify([
-    slash(cookieModulePath),
-    ...fun.requiredFiles.map(file =>
-      slash(join(cwd(), file)).replace(/\[/g, `*`).replace(/]/g, `*`)
-    ),
-  ])},
-  name: 'Gatsby SSR + DSG',
-  nodeBundler: 'none',
-  path: ${JSON.stringify(paths.map(withOptionalTrailingSlash))},
+  path: ${
+    isApiRoute
+      ? `'${netlifyFunctionPath}'`
+      : JSON.stringify(paths.map(withOptionalTrailingSlash))
+  },
   preferStatic: true
 }`
-  }
 
   writeFileSync(
     join(frameworksApiFunctionsDir, `${functionId}.mjs`),
