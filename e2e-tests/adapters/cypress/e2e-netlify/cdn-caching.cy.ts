@@ -12,7 +12,6 @@ import { applyTrailingSlashOption } from "../../utils"
  */
 
 const TRAILING_SLASH = Cypress.env(`TRAILING_SLASH`) || `never`
-const PATH_PREFIX = Cypress.env(`PATH_PREFIX`) || ``
 
 // The CDN consumes and strips the cache-control directive. Requesting debug
 // logging returns the stripped headers renamed with a `debug-` prefix, so the
@@ -22,8 +21,10 @@ const DEBUG_HEADERS = { "x-nf-debug-logging": "1" }
 const DSG_ROUTE = `/routes/dsg/static`
 const SSR_ROUTE = `/routes/ssr/static`
 
+// `baseUrl` already carries the path prefix - the deploy script bakes it into
+// DEPLOY_URL - so these are relative to it and must not add it again.
 function routeUrl(route: string): string {
-  return PATH_PREFIX + applyTrailingSlashOption(route, TRAILING_SLASH)
+  return applyTrailingSlashOption(route, TRAILING_SLASH)
 }
 
 describe(`CDN caching`, () => {
@@ -40,7 +41,7 @@ describe(`CDN caching`, () => {
 
     it(`marks DSG page-data as cacheable`, () => {
       cy.request({
-        url: `${PATH_PREFIX}/page-data/routes/dsg/static/page-data.json`,
+        url: `/page-data/routes/dsg/static/page-data.json`,
         headers: DEBUG_HEADERS,
       }).then(response => {
         expect(
