@@ -2,13 +2,6 @@
   "command": {
     "create": {
       "license": "MIT"
-    },
-    "publish": {
-      "allowBranch": "release/*",
-      "bump": "patch",
-      "conventionalCommits": true,
-      "changelog": false,
-      "message": "chore(release): Publish"
     }
   },
   "packages": ["packages/*"],
