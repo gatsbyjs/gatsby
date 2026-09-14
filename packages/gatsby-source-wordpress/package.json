@@ -36,7 +36,7 @@
     "immer": "^9.0.21",
     "json-diff": "^1.0.6",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.7.0",
+    "node-fetch": "^3.3.2",
     "p-queue": "^6.6.2",
     "prettier": "^2.8.8",
     "read-chunk": "^3.2.0",
