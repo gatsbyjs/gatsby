@@ -57,6 +57,14 @@ let chdirSpy: jest.SpyInstance
 let logSpy: jest.SpyInstance
 
 beforeAll(() => {
+  // webpack replaces this at bundle time; under jest it has to be supplied.
+  // `.resolve` delegates to jest's resolver so moduleNameMapper still handles
+  // the unsubstituted `%...%` placeholders it is called with.
+  ;(
+    global as unknown as { __non_webpack_require__: unknown }
+  ).__non_webpack_require__ = Object.assign((id: string) => require(id), {
+    resolve: (id: string): string => require.resolve(id),
+  })
   // module scope chdirs relative to the built lambda's location
   chdirSpy = jest.spyOn(process, `chdir`).mockImplementation(() => {})
   // and logs the datastore download it attempts on import
@@ -67,6 +75,8 @@ beforeAll(() => {
 afterAll(() => {
   chdirSpy.mockRestore()
   logSpy.mockRestore()
+  delete (global as unknown as { __non_webpack_require__?: unknown })
+    .__non_webpack_require__
 })
 
 const page = (mode: EnginePage["mode"]): EnginePage =>
