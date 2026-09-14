@@ -16,6 +16,8 @@ const cdnDatastorePath = `%CDN_DATASTORE_PATH%`
 // as in some cases one reported by adapter might not be correct
 const cdnDatastoreOrigin = `%CDN_DATASTORE_ORIGIN%`
 const PATH_PREFIX = `%PATH_PREFIX%`
+const imageCdnUrlGeneratorModuleRelativePath = `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+const fileCdnUrlGeneratorModuleRelativePath = `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
 
 // this file should be in `.cache/page-ssr-module/lambda.js`
 // so getting `.cache` location should be one directory above
@@ -226,17 +228,16 @@ global.__GATSBY = {
   buildId: ``,
 }
 
-// eslint-disable-next-line no-constant-condition
-if (`%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
-  global.__GATSBY.imageCDNUrlGeneratorModulePath = require.resolve(
-    `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
-  )
+// eslint-disable-next-line @typescript-eslint/naming-convention
+declare const __non_webpack_require__: typeof require
+
+if (imageCdnUrlGeneratorModuleRelativePath) {
+  global.__GATSBY.imageCDNUrlGeneratorModulePath =
+    __non_webpack_require__.resolve(imageCdnUrlGeneratorModuleRelativePath)
 }
-// eslint-disable-next-line no-constant-condition
-if (`%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
-  global.__GATSBY.fileCDNUrlGeneratorModulePath = require.resolve(
-    `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
-  )
+if (fileCdnUrlGeneratorModuleRelativePath) {
+  global.__GATSBY.fileCDNUrlGeneratorModulePath =
+    __non_webpack_require__.resolve(fileCdnUrlGeneratorModuleRelativePath)
 }
 
 const dbPath = setupFsWrapper()
