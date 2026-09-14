@@ -1,7 +1,7 @@
 import { store } from "../redux"
 import { memoize } from "lodash"
 
-import { createRequireFromPath } from "gatsby-core-utils"
+import { createRequire } from "module"
 import { join, dirname } from "path"
 import { PackageJson } from "../.."
 import { readFile } from "fs-extra"
@@ -28,7 +28,7 @@ const getTreeFromNodeModules = async (
   dir: string,
   results: Map<string, IDependency> = new Map()
 ): Promise<Array<IDependency>> => {
-  const requireFromHere = createRequireFromPath(`${dir}/:internal:`)
+  const requireFromHere = createRequire(`${dir}/:internal:`)
   let packageJSON: PackageJson
   try {
     packageJSON = await readJSON(require.resolve(join(dir, `package.json`)))

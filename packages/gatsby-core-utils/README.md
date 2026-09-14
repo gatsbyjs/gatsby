@@ -91,20 +91,6 @@ console.log({ CI_NAME })
 // ...
 ```
 
-### createRequireFromPath
-
-A cross-version polyfill for Node's [`Module.createRequire`](https://nodejs.org/api/modules.html#modules_module_createrequire_filename).
-
-```js
-const { createRequireFromPath } = require("gatsby-core-utils")
-
-const requireUtil = createRequireFromPath("../src/utils/")
-
-// Require `../src/utils/some-tool`
-requireUtil("./some-tool")
-// ...
-```
-
 ### Mutex
 
 When working inside workers or async operations you want some kind of concurrency control that a specific work load can only concurrent one at a time. This is what a [Mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) does.
