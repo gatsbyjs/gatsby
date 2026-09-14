@@ -9,6 +9,7 @@ import { URL } from "url"
 import { promisify } from "util"
 
 import type { ISSRData, EnginePage } from "./entry"
+import type { IEngineAdapterOptions } from "../adapter/types"
 import { link, rewritableMethods as linkRewritableMethods } from "linkfs"
 
 const cdnDatastorePath = `%CDN_DATASTORE_PATH%`
@@ -488,7 +489,8 @@ function getPage(pathname: string): IPageInfo | undefined {
 
 async function engineHandler(
   req: GatsbyFunctionRequest,
-  res: GatsbyFunctionResponse
+  res: GatsbyFunctionResponse,
+  adapter?: IEngineAdapterOptions
 ): Promise<void> {
   try {
     let pageInfo: IPageInfo | undefined
@@ -523,11 +525,13 @@ async function engineHandler(
     if (isPageData) {
       const results = await renderPageData({ data })
       setStatusAndHeaders({ page, data, res })
+      adapter?.onPageResponse?.({ cache: page.mode === `DSG` })
       res.json(results)
       return
     } else {
       const results = await renderHTML({ data })
       setStatusAndHeaders({ page, data, res })
+      adapter?.onPageResponse?.({ cache: page.mode === `DSG` })
       res.send(results)
       return
     }
