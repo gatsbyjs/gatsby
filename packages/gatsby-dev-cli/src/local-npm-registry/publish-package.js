@@ -14,6 +14,8 @@ const {
 } = require(`../utils/get-monorepo-package-json-path`)
 const { registerCleanupTask } = require(`./cleanup-tasks`)
 
+const DEPENDENCY_FIELDS = [`dependencies`, `optionalDependencies`]
+
 /**
  * Edit package.json to:
  *  - adjust version to temporary one
@@ -41,21 +43,32 @@ const adjustPackageJson = ({
 
   monorepoPKGjson.version = `${monorepoPKGjson.version}-dev-${versionPostFix}`
   packagesToPublish.forEach(packageThatWillBePublished => {
-    if (
-      monorepoPKGjson.dependencies &&
-      monorepoPKGjson.dependencies[packageThatWillBePublished]
-    ) {
-      const currentVersion = JSON.parse(
-        fs.readFileSync(
-          getMonorepoPackageJsonPath({
-            packageName: packageThatWillBePublished,
-            packageNameToPath,
-          }),
-          `utf-8`
-        )
-      ).version
+    // `optionalDependencies` matters as much as `dependencies` here: a range left
+    // pointing at a version that isn't on npm yet (as on a release PR) can't be
+    // satisfied from the local registry either, because what we publish there is a
+    // `-dev-` prerelease and a caret range won't match a prerelease.
+    const fieldsToAdjust = DEPENDENCY_FIELDS.filter(
+      field =>
+        monorepoPKGjson[field] &&
+        monorepoPKGjson[field][packageThatWillBePublished]
+    )
 
-      monorepoPKGjson.dependencies[
+    if (fieldsToAdjust.length === 0) {
+      return
+    }
+
+    const currentVersion = JSON.parse(
+      fs.readFileSync(
+        getMonorepoPackageJsonPath({
+          packageName: packageThatWillBePublished,
+          packageNameToPath,
+        }),
+        `utf-8`
+      )
+    ).version
+
+    for (const field of fieldsToAdjust) {
+      monorepoPKGjson[field][
         packageThatWillBePublished
       ] = `${currentVersion}-dev-${versionPostFix}`
     }
