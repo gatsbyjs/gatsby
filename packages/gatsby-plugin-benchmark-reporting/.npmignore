@@ -4,3 +4,4 @@
 /*.js
 !/gatsby-node.js
 yarn.lock
+CHANGELOG.md
