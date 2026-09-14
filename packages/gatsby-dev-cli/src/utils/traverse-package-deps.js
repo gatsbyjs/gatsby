@@ -59,7 +59,7 @@ const traversePackagesDeps = ({
     }
 
     const fromMonoRepo = _.intersection(
-      Object.keys({ ...pkgJson.dependencies }),
+      Object.keys({ ...pkgJson.dependencies, ...pkgJson.optionalDependencies }),
       monoRepoPackages
     )
 
