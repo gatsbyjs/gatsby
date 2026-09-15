@@ -108,9 +108,21 @@ const createNetlifyAdapter: AdapterInit<INetlifyAdapterOptions> = options => {
         })
       }
 
-      await handleRoutesManifest(routesManifest, headerRoutes)
+      const { pathsByFunctionId } = await handleRoutesManifest(
+        routesManifest,
+        headerRoutes
+      )
 
-      await Promise.all(functionsManifest.map(fun => prepareFunction(fun)))
+      await Promise.all(
+        functionsManifest.map(fun => {
+          const paths = pathsByFunctionId.get(fun.functionId)
+          if (!paths) {
+            return null
+          }
+
+          return prepareFunction(fun, [...paths])
+        })
+      )
     },
     config: ({ reporter }): IAdapterConfig => {
       reporter.verbose(

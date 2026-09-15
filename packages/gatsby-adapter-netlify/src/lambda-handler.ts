@@ -6,7 +6,35 @@ import { slash } from "gatsby-core-utils/path"
 
 import { generator } from "./generator"
 
-export async function prepareFunction(fun: IFunctionDefinition): Promise<void> {
+/*
+  Function paths are matched with URLPattern, which treats a trailing slash as
+  significant. Gatsby's own routing treats it as optional, and with no redirect
+  layer normalizing the request before it reaches the function, the pattern has
+  to accept both. `{/}?` is URLPattern's optional trailing slash group.
+*/
+// Paths arrive already normalized by `processRoutesManifest` - splats collapsed,
+// trailingSlash applied - so this only decides the trailing slash pattern.
+function toRoutePattern(path: string): string {
+  // a splat already matches a trailing slash, and the root has nothing to trim
+  if (path === `/` || path.endsWith(`*`)) {
+    return path
+  }
+
+  // `{/}?` is URLPattern's optional trailing slash, so it has to follow a path
+  // without one - otherwise `/foo/{/}?` stops matching `/foo`. Which form the
+  // manifest gives depends on the trailingSlash option, so normalize it.
+  return `${path.replace(/\/$/, ``)}{/}?`
+}
+
+/*
+  `paths` comes from Gatsby's routesManifest, which covers page routes and API
+  routes alike, with the path prefix, the trailingSlash option and URLPattern's
+  param syntax (`[slug]` -> `:slug`) already applied.
+*/
+export async function prepareFunction(
+  fun: IFunctionDefinition,
+  paths: Array<string>
+): Promise<void> {
   const functionId = fun.functionId
 
   const frameworksApiFunctionsDir = path.join(
@@ -350,6 +378,10 @@ export default async function(request, context) {
           if (cache) {
             // matches what On-demand Builders used to emit for DSG responses
             res.setHeader('netlify-cdn-cache-control', 'public, s-maxage=31536000, must-revalidate, durable')
+            // Deferred pages can't read the request, so query params must not split
+            // the cache. A function response without its own netlify-vary is keyed on
+            // the full query string; \`query=\` pins it to a constant instead.
+            res.setHeader('netlify-vary', 'query=')
           }
         }
       })
@@ -364,7 +396,9 @@ export const config = {
   generator: '${generator}',
   includedFiles: ${includedFiles},
   name: 'Gatsby ${fun.name}',
-  nodeBundler: 'none'
+  nodeBundler: 'none',
+  path: ${JSON.stringify(paths.map(toRoutePattern))},
+  preferStatic: true
 }`
 
   writeFileSync(

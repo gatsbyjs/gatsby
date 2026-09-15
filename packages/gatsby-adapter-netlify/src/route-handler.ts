@@ -144,6 +144,7 @@ export function processRoutesManifest(
 ): {
   redirects: string
   headers: string
+  pathsByFunctionId: Map<string, Set<string>>
   fileMovingPromise: Promise<void>
 } {
   const { ensureStaticAssetPath, fileMovingDone } =
@@ -151,15 +152,20 @@ export function processRoutesManifest(
 
   let _redirects = ``
   let _headers = ``
+  // Function routes get no rewrite - each function declares the paths it answers
+  // on through its own `path` config, so collect them for the caller instead.
+  const pathsByFunctionId = new Map<string, Set<string>>()
+
   for (const route of routesManifest) {
     const fromPath = route.path.replace(/\*.*/, `*`)
 
     if (route.type === `function`) {
-      // DSG responses are cached by the function itself now, so both SSR and
-      // DSG routes go to the same plain function instead of an ODB variant
-      _redirects += `${encodeURI(fromPath)}  /.netlify/functions/${
-        route.functionId
-      }  200\n`
+      const paths = pathsByFunctionId.get(route.functionId)
+      if (paths) {
+        paths.add(fromPath)
+      } else {
+        pathsByFunctionId.set(route.functionId, new Set([fromPath]))
+      }
     } else if (route.type === `redirect`) {
       const {
         status: routeStatus,
@@ -238,6 +244,7 @@ export function processRoutesManifest(
   return {
     redirects: _redirects,
     headers: _headers,
+    pathsByFunctionId,
     fileMovingPromise: fileMovingDone(),
   }
 }
@@ -245,13 +252,13 @@ export function processRoutesManifest(
 export async function handleRoutesManifest(
   routesManifest: RoutesManifest,
   headerRoutes: HeaderRoutes
-): Promise<void> {
-  const { redirects, headers, fileMovingPromise } = processRoutesManifest(
-    routesManifest,
-    headerRoutes
-  )
+): Promise<{ pathsByFunctionId: Map<string, Set<string>> }> {
+  const { redirects, headers, pathsByFunctionId, fileMovingPromise } =
+    processRoutesManifest(routesManifest, headerRoutes)
 
   await injectEntries(`public/_redirects`, redirects)
   await injectEntries(`public/_headers`, headers)
   await fileMovingPromise
+
+  return { pathsByFunctionId }
 }
