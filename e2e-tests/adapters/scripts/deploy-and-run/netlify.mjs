@@ -3,7 +3,7 @@ import { argv, env, exit } from "node:process"
 import { error, log } from "node:console"
 import { execa } from "execa"
 
-if (!env.NETLIFY_AUTH_TOKEN) {
+if (env.CI && !env.NETLIFY_AUTH_TOKEN) {
   error(``)
   error(`============================================================`)
   error(``)

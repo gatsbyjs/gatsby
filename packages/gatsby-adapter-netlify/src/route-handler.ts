@@ -144,32 +144,28 @@ export function processRoutesManifest(
 ): {
   redirects: string
   headers: string
-  lambdasThatUseCaching: Map<string, string>
+  pathsByFunctionId: Map<string, Set<string>>
   fileMovingPromise: Promise<void>
 } {
-  const lambdasThatUseCaching = new Map<string, string>()
-
   const { ensureStaticAssetPath, fileMovingDone } =
     createStaticAssetsPathHandler()
 
   let _redirects = ``
   let _headers = ``
+  // Function routes get no rewrite - each function declares the paths it answers
+  // on through its own `path` config, so collect them for the caller instead.
+  const pathsByFunctionId = new Map<string, Set<string>>()
+
   for (const route of routesManifest) {
     const fromPath = route.path.replace(/\*.*/, `*`)
 
     if (route.type === `function`) {
-      let functionName = route.functionId
-      if (route.cache) {
-        functionName = `${route.functionId}-odb`
-        if (!lambdasThatUseCaching.has(route.functionId)) {
-          lambdasThatUseCaching.set(route.functionId, functionName)
-        }
+      const paths = pathsByFunctionId.get(route.functionId)
+      if (paths) {
+        paths.add(fromPath)
+      } else {
+        pathsByFunctionId.set(route.functionId, new Set([fromPath]))
       }
-
-      const invocationURL = `/.netlify/${
-        route.cache ? `builders` : `functions`
-      }/${functionName}`
-      _redirects += `${encodeURI(fromPath)}  ${invocationURL}  200\n`
     } else if (route.type === `redirect`) {
       const {
         status: routeStatus,
@@ -248,7 +244,7 @@ export function processRoutesManifest(
   return {
     redirects: _redirects,
     headers: _headers,
-    lambdasThatUseCaching,
+    pathsByFunctionId,
     fileMovingPromise: fileMovingDone(),
   }
 }
@@ -256,17 +252,13 @@ export function processRoutesManifest(
 export async function handleRoutesManifest(
   routesManifest: RoutesManifest,
   headerRoutes: HeaderRoutes
-): Promise<{
-  lambdasThatUseCaching: Map<string, string>
-}> {
-  const { redirects, headers, lambdasThatUseCaching, fileMovingPromise } =
+): Promise<{ pathsByFunctionId: Map<string, Set<string>> }> {
+  const { redirects, headers, pathsByFunctionId, fileMovingPromise } =
     processRoutesManifest(routesManifest, headerRoutes)
 
   await injectEntries(`public/_redirects`, redirects)
   await injectEntries(`public/_headers`, headers)
   await fileMovingPromise
 
-  return {
-    lambdasThatUseCaching,
-  }
+  return { pathsByFunctionId }
 }

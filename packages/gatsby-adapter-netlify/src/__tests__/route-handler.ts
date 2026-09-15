@@ -145,6 +145,51 @@ describe(`route-handler`, () => {
     })
   })
 
+  describe(`function routes`, () => {
+    it(`emits no rewrite and reports the paths per function instead`, () => {
+      const manifest: RoutesManifest = [
+        {
+          path: `/routes/dsg/static/`,
+          type: `function`,
+          functionId: `ssr-engine`,
+        },
+        {
+          path: `/routes/ssr/static/`,
+          type: `function`,
+          functionId: `ssr-engine`,
+        },
+        {
+          path: `/api/param/:slug/`,
+          type: `function`,
+          functionId: `param-slug-js`,
+        },
+        {
+          path: `/api/wildcard/*/`,
+          type: `function`,
+          functionId: `wildcard-js`,
+        },
+      ]
+
+      const { redirects, pathsByFunctionId } = processRoutesManifest(manifest)
+
+      // each function declares these through its own `path` config
+      expect(redirects).not.toContain(`/.netlify/functions/`)
+      expect(redirects.trim()).toBe(``)
+
+      expect([...(pathsByFunctionId.get(`ssr-engine`) ?? [])]).toEqual([
+        `/routes/dsg/static/`,
+        `/routes/ssr/static/`,
+      ])
+      // trailingSlash can leave a slash after the splat; it is collapsed here
+      expect([...(pathsByFunctionId.get(`wildcard-js`) ?? [])]).toEqual([
+        `/api/wildcard/*`,
+      ])
+      expect([...(pathsByFunctionId.get(`param-slug-js`) ?? [])]).toEqual([
+        `/api/param/:slug/`,
+      ])
+    })
+  })
+
   describe(`createRedirects`, () => {
     it(`honors the force parameter`, async () => {
       const manifest: RoutesManifest = [
