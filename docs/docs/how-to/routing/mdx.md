@@ -31,6 +31,12 @@ If you already have a Gatsby site that you'd like to add MDX to, you can follow 
    npm install gatsby-plugin-mdx gatsby-source-filesystem @mdx-js/react
    ```
 
+   > **Note:** If you see an error about "dependency resolution," use this command instead:
+
+   ```shell
+   npm install gatsby-plugin-mdx gatsby-source-filesystem @mdx-js/react --legacy-peer-deps
+   ```
+
 1. Update your `gatsby-config.js` to use `gatsby-plugin-mdx` and `gatsby-source-filesystem`
 
    ```js:title=gatsby-config.js
