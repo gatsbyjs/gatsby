@@ -341,7 +341,7 @@ describe(`Test plugin manifest options`, () => {
 
   it(`correctly works with pathPrefix`, async () => {
     await onPostBootstrap(
-      { ...apiArgs, basePath: `/blog` },
+      { ...apiArgs, pathPrefix: `/blog` },
       {
         name: `GatsbyJS`,
         short_name: `GatsbyJS`,
@@ -358,6 +358,32 @@ describe(`Test plugin manifest options`, () => {
     )
     expect(sharp).toHaveBeenCalledTimes(0)
     expect(contents).toMatchSnapshot()
+  })
+
+  it(`correctly prefixes icon paths with assetPrefix via pathPrefix`, async () => {
+    await onPostBootstrap(
+      { ...apiArgs, pathPrefix: `https://cdn.example.com/blog` },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icons: [
+          {
+            src: `icons/icon-48x48.png`,
+            sizes: `48x48`,
+            type: `image/png`,
+          },
+        ],
+      }
+    )
+    const contents = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    expect(contents.icons[0].src).toBe(
+      `https://cdn.example.com/blog/icons/icon-48x48.png`
+    )
+    expect(contents.start_url).toBe(`https://cdn.example.com/blog/`)
   })
 
   it(`generates all language versions`, async () => {
@@ -432,7 +458,7 @@ describe(`Test plugin manifest options`, () => {
     })
 
     await onPostBootstrap(
-      { ...apiArgs, basePath: `/blog` },
+      { ...apiArgs, pathPrefix: `/blog` },
       pluginSpecificOptions
     )
 
