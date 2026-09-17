@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "4.17.0-next.0",
+  "version": "4.16.0",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -58,6 +58,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "files": [
+    "CHANGELOG.md",
     "dist/"
   ],
   "dependencies": {
@@ -82,7 +83,7 @@
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
     "@types/ci-info": "2.0.0",
-    "babel-preset-gatsby-package": "^3.17.0-next.0",
+    "babel-preset-gatsby-package": "^3.16.0",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "is-uuid": "^1.0.2",
