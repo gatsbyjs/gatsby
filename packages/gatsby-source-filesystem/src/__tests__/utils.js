@@ -16,6 +16,9 @@ describe(`create remote file node`, () => {
       [`https://test.com/asdf.png`, `asdf`, `.png`],
       [`./path/to/relative/file.tiff`, `file`, `.tiff`],
       [`/absolutely/this/will/work.bmp`, `work`, `.bmp`],
+      [`mailto:test@example.com`, ``, ``],
+      [`?foo=bar`, ``, ``],
+      [`#hash-only`, ``, ``],
     ].forEach(([url, name, ext]) => {
       expect(getRemoteFileName(url)).toBe(name)
       expect(getRemoteFileExtension(url)).toBe(ext)
