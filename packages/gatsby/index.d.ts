@@ -45,6 +45,8 @@ export {
   HeaderRoutes,
   FunctionsManifest,
   IAdapterConfig,
+  IEngineAdapterOptions,
+  IEnginePageResponseDetails,
   ImageCdnUrlGeneratorFn,
   ImageCdnSourceImage,
   ImageCdnTransformArgs,
