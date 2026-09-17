@@ -11,13 +11,41 @@ import { createUrl } from "./image-helpers"
 async function distributeWorkload(workers, count = 50) {
   const methods = workers.slice()
 
+  // There is no cancellation here, so a rejecting worker must not escape while
+  // its siblings are still in flight. `downloadContentfulAssets` is awaited
+  // from `sourceNodes`, and any surviving task runner keeps calling
+  // `createNode` after that lifecycle has returned. `gatsby develop` then sees
+  // nodes mutating during query execution, recreates pages, runs the queries
+  // again, and after `RECOMPILE_PANIC_LIMIT` rounds aborts with "Panicking
+  // because nodes appear to be being changed every time we run queries".
+  //
+  // Errors are collected and re-raised once all work has settled, so a failed
+  // download stays fatal (#24288) without stranding the others. A lone error
+  // is rethrown untouched to keep its original message and stack.
+  const errors = []
+
   async function task() {
     while (methods.length > 0) {
-      await methods.pop()()
+      try {
+        await methods.pop()()
+      } catch (error) {
+        errors.push(error)
+      }
     }
   }
 
   await Promise.all(new Array(count).fill(undefined).map(() => task()))
+
+  if (errors.length === 1) {
+    throw errors[0]
+  }
+
+  if (errors.length > 1) {
+    throw new AggregateError(
+      errors,
+      `${errors.length} of ${workers.length} Contentful asset downloads failed`
+    )
+  }
 }
 
 /**
