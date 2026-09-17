@@ -11,7 +11,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
-import * as fs from "fs-extra"
+import fs from "fs"
 import path from "path"
 import reporter from "gatsby-cli/lib/reporter"
 import { resolveModuleExports } from "../resolve-module-exports"

@@ -1,5 +1,5 @@
 import sysPath from "path"
-import fs from "fs-extra"
+import fs from "fs"
 import { collectionExtractQueryString } from "../collection-extract-query-string"
 import reporter from "gatsby/reporter"
 

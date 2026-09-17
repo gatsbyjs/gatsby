@@ -1,4 +1,4 @@
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const _ = require(`lodash`)
 const {
   getMonorepoPackageJsonPath,

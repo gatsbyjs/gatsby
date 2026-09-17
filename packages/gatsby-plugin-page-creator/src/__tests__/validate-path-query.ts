@@ -1,6 +1,6 @@
 import { validatePathQuery } from "../validate-path-query"
 import systemPath from "path"
-import fs from "fs-extra"
+import fs from "fs/promises"
 
 describe(`validatePathQuery`, () => {
   it(`throws on missing starting /`, () => {
@@ -55,12 +55,16 @@ Unable to find a file at: \\"<PROJECT_ROOT>/src/pages/foo/{bar}\\""
       `src/pages`,
       `${filePath}.js`
     )
-    await fs.createFile(absolutePath)
+    await fs.mkdir(systemPath.dirname(absolutePath), { recursive: true })
+    await fs.access(absolutePath).catch(() => fs.writeFile(absolutePath, ``))
 
     expect(() => {
       validatePathQuery(filePath, [`.js`, `.ts`, `.mjs`])
     }).not.toThrow()
 
-    await fs.remove(systemPath.join(process.cwd(), `src/pages`))
+    await fs.rm(systemPath.join(process.cwd(), `src/pages`), {
+      recursive: true,
+      force: true,
+    })
   })
 })

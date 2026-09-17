@@ -1,7 +1,7 @@
 const chokidar = require(`chokidar`)
 const _ = require(`lodash`)
 const del = require(`del`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const path = require(`path`)
 const findWorkspaceRoot = require(`find-yarn-workspace-root`)
 
@@ -55,7 +55,7 @@ async function watch(
 
   const realCopyPath = arg => {
     const { oldPath, newPath, quiet, resolve, reject, retry = 0 } = arg
-    fs.copy(oldPath, newPath, err => {
+    fs.cp(oldPath, newPath, { recursive: true }, err => {
       if (err) {
         if (retry >= MAX_COPY_RETRIES) {
           console.error(err)

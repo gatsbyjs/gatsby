@@ -10,7 +10,6 @@
     "@babel/runtime": "^7.20.13",
     "bluebird": "^3.7.2",
     "common-tags": "^1.8.2",
-    "fs-extra": "^11.2.0",
     "gatsby-plugin-utils": "^4.17.0-next.0",
     "probe-image-size": "^7.2.3",
     "semver": "^7.5.3",
