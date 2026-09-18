@@ -53,7 +53,7 @@ Array [
 exports[`gets ssl certs automatic SSL certificate sets up dev cert 1`] = `
 Array [
   Array [
-    "setting up automatic SSL certificate (may require elevated permissions/sudo)
+    "Setting up automatic SSL certificate (may require elevated permissions/sudo)
 ",
   ],
 ]

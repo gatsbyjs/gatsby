@@ -72,7 +72,7 @@ export async function getSslCert({
   }
 
   report.info(
-    `setting up automatic SSL certificate (may require elevated permissions/sudo)\n`
+    `Setting up automatic SSL certificate (may require elevated permissions/sudo)\n`
   )
   try {
     if ([`linux`, `darwin`].includes(os.platform()) && !process.env.HOME) {
