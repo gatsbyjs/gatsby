@@ -55,6 +55,28 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
   createPage({
     path: applyTrailingSlashOption(
+      `/routes/client-only-param-created-with-gatsby-node`,
+      TRAILING_SLASH
+    ),
+    matchPath: `/routes/client-only-param-created-with-gatsby-node/:id`,
+    component: path.resolve(`./src/templates/match-path-with-gatsby-node.jsx`),
+    context: {
+      title: `client-only-param-created-with-gatsby-node`,
+    },
+  })
+  createPage({
+    path: applyTrailingSlashOption(
+      `/routes/client-only-wildcard-created-with-gatsby-node`,
+      TRAILING_SLASH
+    ),
+    matchPath: `/routes/client-only-wildcard-created-with-gatsby-node/*id`,
+    component: path.resolve(`./src/templates/match-path-with-gatsby-node.jsx`),
+    context: {
+      title: `client-only-wildcard-created-with-gatsby-node`,
+    },
+  })
+  createPage({
+    path: applyTrailingSlashOption(
       `/routes/ssg/remote-file-data-from-context/`,
       TRAILING_SLASH
     ),

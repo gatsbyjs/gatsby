@@ -65,10 +65,42 @@ describe("Paths", () => {
       name: "client-only/named-wildcard",
       param: "corinno/fenring",
     },
+    {
+      name: "client-only-created-with-gatsby-node",
+      // matching on page.path
+      param: "",
+    },
+    {
+      name: "client-only-created-with-gatsby-node",
+      // matching on page.matchPath
+      param: "match-path",
+    },
+    {
+      name: "client-only-param-created-with-gatsby-node",
+      // matching on page.path
+      param: "",
+    },
+    {
+      name: "client-only-param-created-with-gatsby-node",
+      // matching on page.matchPath
+      param: "single-param",
+    },
+    {
+      name: "client-only-wildcard-created-with-gatsby-node",
+      // matching on page.path
+      param: "",
+    },
+    {
+      name: "client-only-wildcard-created-with-gatsby-node",
+      // matching on page.matchPath
+      param: "deeply/nested/path",
+    },
   ] as const
 
   for (const route of routes) {
-    it(`should return "${route.name}" result`, () => {
+    it(`should return "${route.name}${
+      route.param ? `/${route.param}` : ""
+    }" result`, () => {
       cy.visit(
         `/routes/${route.name}${route.param ? `/${route.param}` : ""}`
       ).waitForRouteChange()
