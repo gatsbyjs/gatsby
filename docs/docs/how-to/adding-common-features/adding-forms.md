@@ -98,4 +98,4 @@ Alternately, these services usually have an endpoint to send data to. If you int
 
 ## Further Resources
 
-- Walkthrough of [creating a form in React](../creating-a-form-in-react)
+- Walkthrough of [creating a form in React](/docs/building-a-contact-form/)
