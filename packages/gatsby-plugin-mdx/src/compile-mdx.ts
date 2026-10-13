@@ -1,10 +1,40 @@
 import deepmerge from "deepmerge"
 import type { NodePluginArgs, PluginOptions } from "gatsby"
-import type { ProcessorOptions } from "@mdx-js/mdx"
+import type { ProcessorOptions, CompileOptions } from "@mdx-js/mdx"
 import type { IMdxMetadata } from "./types"
 import { enhanceMdxOptions, IMdxPluginOptions } from "./plugin-options"
 import { ERROR_CODES } from "./error-utils"
 import { cachedImport, createFileToMdxCacheKey } from "./cache-helpers"
+
+// Support CompileOptions (includes format: 'detect') in options
+// https://github.com/mdx-js/mdx/blob/000460532e6a558693cbe73c2ffdb8d6c098a07b/packages/mdx/lib/util/resolve-file-and-options.js#L32
+function processFormatDetect(
+  options: CompileOptions,
+  fileExtname: string | undefined
+): ProcessorOptions {
+  const markdownExtensions = [
+    `md`,
+    `markdown`,
+    `mdown`,
+    `mkdn`,
+    `mkd`,
+    `mdwn`,
+    `mkdown`,
+    `ron`,
+  ]
+  const md = markdownExtensions.map(d => `.${d}`)
+  const { format, ...rest } = options
+  const newOptions: ProcessorOptions = {
+    format:
+      format === `md` || format === `mdx`
+        ? format
+        : fileExtname && (rest.mdExtensions || md).includes(fileExtname)
+        ? `md`
+        : `mdx`,
+    ...rest,
+  }
+  return newOptions
+}
 
 // Compiles MDX into JS
 // Differences to original @mdx-js/loader:
@@ -12,7 +42,7 @@ import { cachedImport, createFileToMdxCacheKey } from "./cache-helpers"
 // * We inject the path to the original mdx file into the VFile which is used by the processor
 export async function compileMDX(
   { absolutePath, source }: { absolutePath: string; source: string | Buffer },
-  options: ProcessorOptions,
+  options: CompileOptions,
   cache: NodePluginArgs["cache"],
   reporter: NodePluginArgs["reporter"]
 ): Promise<{ processedMDX: string; metadata: IMdxMetadata } | null> {
@@ -22,7 +52,12 @@ export async function compileMDX(
     >(`@mdx-js/mdx`)
     const { VFile } = await cachedImport<typeof import("vfile")>(`vfile`)
 
-    const processor = createProcessor(options)
+    // Inject path to original file for remark plugins. See: https://github.com/gatsbyjs/gatsby/issues/26914
+    const file = new VFile({ value: source, path: absolutePath })
+
+    const newOptions = processFormatDetect(options, file.extname)
+
+    const processor = createProcessor(newOptions)
 
     // Pass required custom data into the processor
     processor.data(
@@ -31,10 +66,7 @@ export async function compileMDX(
     )
     processor.data(`mdxMetadata`, {})
 
-    const result = await processor.process(
-      // Inject path to original file for remark plugins. See: https://github.com/gatsbyjs/gatsby/issues/26914
-      new VFile({ value: source, path: absolutePath })
-    )
+    const result = await processor.process(file)
 
     // Clone metadata so ensure it won't be overridden by later processings
     const clonedMetadata = Object.assign(
