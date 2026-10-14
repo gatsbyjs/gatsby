@@ -3,7 +3,7 @@ const v8 = require(`v8`)
 const glob = require(`glob`)
 const path = require(`path`)
 const _ = require(`lodash`)
-const { createRequireFromPath } = require(`gatsby-core-utils`)
+const { createRequire } = require(`module`)
 
 const { saveState } = require(`gatsby/dist/redux/save-state`)
 
@@ -14,7 +14,7 @@ const {
 const { getAllPlugins } = require(`./utils/collect-scenarios`)
 
 // use lmdb version used by gatsby core
-const gatsbyRequire = createRequireFromPath(require.resolve(`gatsby`))
+const gatsbyRequire = createRequire(require.resolve(`gatsby`))
 const { open } = gatsbyRequire(`lmdb`)
 
 const getDiskCacheSnapshot = () => {

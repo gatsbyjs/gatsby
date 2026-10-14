@@ -1,6 +1,6 @@
 import reporter from "gatsby-cli/lib/reporter"
 import _ from "lodash"
-import { createRequireFromPath } from "gatsby-core-utils/create-require-from-path"
+import { createRequire } from "module"
 import { join } from "path"
 import { emptyDir, ensureDir, outputJson } from "fs-extra"
 import execa, { Options as ExecaOptions } from "execa"
@@ -64,9 +64,7 @@ const tryLoadingAlreadyInstalledAdapter = async ({
     ))
 > => {
   try {
-    const locationRequire = createRequireFromPath(
-      `${installLocation}/:internal:`
-    )
+    const locationRequire = createRequire(`${installLocation}/:internal:`)
     const adapterPackageJson = locationRequire(
       `${adapterToUse.module}/package.json`
     )

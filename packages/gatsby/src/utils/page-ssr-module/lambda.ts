@@ -16,6 +16,8 @@ const cdnDatastorePath = `%CDN_DATASTORE_PATH%`
 // as in some cases one reported by adapter might not be correct
 const cdnDatastoreOrigin = `%CDN_DATASTORE_ORIGIN%`
 const PATH_PREFIX = `%PATH_PREFIX%`
+const imageCdnUrlGeneratorModuleRelativePath = `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
+const fileCdnUrlGeneratorModuleRelativePath = `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
 
 // this file should be in `.cache/page-ssr-module/lambda.js`
 // so getting `.cache` location should be one directory above
@@ -114,12 +116,30 @@ function setupFsWrapper(): string {
     // Alias the cache dir paths to the temp dir
     const lfs = createLinkedFS(fs)
 
-    // linkfs doesn't pass across the `native` prop, which graceful-fs needs
+    // The following code is needed because linkfs doesn't pass across
+    // the `native` prop, which graceful-fs needs. However, we need to
+    // skip deprecated access-mode constants (F_OK, R_OK, W_OK, X_OK, etc.),
+    // because linkfs always creates these properties by doing lfs[prop] = fs[prop],
+    // even when fs[prop] is undefined (that is, it doesn't filter undefined
+    // properties). With fs-extra, the deprecated fs.F_OK, fs.R_OK, etc.
+    // aliases are missing because it rebuilds its API using object spread,
+    // which only copies enumerable properties, while Node marks these aliases
+    // as non-enumerable. As a result, lfs.F_OK (and others) become enumerable
+    // own properties with an undefined value, so the for...in loop visits them and
+    // Object.hasOwnProperty.call(fs[prop], `native`) throws. Skipping these keys
+    // (or basically anything that is not a function) is safe because .native is
+    // only added by graceful-fs to patched filesystem functions
+    // (e.g. fs.readdir.native), never to these numeric constants.
+
     for (const key in lfs) {
-      if (Object.hasOwnProperty.call(fs[key], `native`)) {
+      if (
+        typeof fs[key] === `function` &&
+        Object.hasOwnProperty.call(fs[key], `native`)
+      ) {
         lfs[key].native = fs[key].native
       }
     }
+
     // 'promises' is not initially linked within the 'linkfs'
     // package, and is needed by underlying Gatsby code (the
     // @graphql-tools/code-file-loader)
@@ -208,17 +228,16 @@ global.__GATSBY = {
   buildId: ``,
 }
 
-// eslint-disable-next-line no-constant-condition
-if (`%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
-  global.__GATSBY.imageCDNUrlGeneratorModulePath = require.resolve(
-    `%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
-  )
+// eslint-disable-next-line @typescript-eslint/naming-convention
+declare const __non_webpack_require__: typeof require
+
+if (imageCdnUrlGeneratorModuleRelativePath) {
+  global.__GATSBY.imageCDNUrlGeneratorModulePath =
+    __non_webpack_require__.resolve(imageCdnUrlGeneratorModuleRelativePath)
 }
-// eslint-disable-next-line no-constant-condition
-if (`%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`) {
-  global.__GATSBY.fileCDNUrlGeneratorModulePath = require.resolve(
-    `%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%`
-  )
+if (fileCdnUrlGeneratorModuleRelativePath) {
+  global.__GATSBY.fileCDNUrlGeneratorModulePath =
+    __non_webpack_require__.resolve(fileCdnUrlGeneratorModuleRelativePath)
 }
 
 const dbPath = setupFsWrapper()
