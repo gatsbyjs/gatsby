@@ -169,7 +169,7 @@
     "url-loader": "^4.1.1",
     "uuid": "^8.3.2",
     "webpack": "~5.98.0",
-    "webpack-dev-middleware": "^5.3.4",
+    "webpack-dev-middleware": "^7.0.0",
     "webpack-merge": "^5.9.0",
     "webpack-stats-plugin": "^1.1.3",
     "webpack-virtual-modules": "^0.6.2",
