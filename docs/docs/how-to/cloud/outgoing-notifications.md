@@ -3,6 +3,12 @@ title: "Outgoing Notifications"
 description: "Learn how to set outgoing notifications based on your build and deploy status"
 ---
 
+<Announcement>
+
+**Gatsby Cloud hosting has been retired.** Build and preview URLs on the `gtsb.io` domain no longer work (they now return `410 Gone`), and the `gatsbyjs.io` domain that replaced it is no longer served either. Host your Gatsby site on Netlify instead, where it gets a `<your-site>.netlify.app` URL and deploy previews out of the box. See the [Netlify Gatsby guide](https://docs.netlify.com/integrations/frameworks/gatsby/) and [the Gatsby Cloud migration announcement](https://www.netlify.com/blog/gatsby-cloud-evolution/).
+
+</Announcement>
+
 When your Gatsby site is built and deployed on Gatsby Cloud, you now have the option to hook up a set of outgoing notifications regarding the status of that build. You can send notifications via:
 
 1. A generic webhook.
@@ -50,6 +56,8 @@ You can expect the message payload to appear as following:
   "event": "BUILD_SUCCEEDED"
 }
 ```
+
+The `deployPreviewUrl` and `logsUrl` values in this example point at the `gtsb.io` domain, which no longer works. Any webhook consumer that still expects `gtsb.io` links should be updated to the equivalent [Netlify deploy notifications](https://docs.netlify.com/site-deploys/notifications/), whose payloads link to `netlify.app` deploy URLs and the Netlify UI.
 
 ### Adding slack notifications
 
