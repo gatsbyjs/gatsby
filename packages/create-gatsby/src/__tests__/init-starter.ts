@@ -176,6 +176,28 @@ describe(`init-starter`, () => {
       )
     })
 
+    it(`process package installation with nub`, async () => {
+      process.env.npm_config_user_agent = `nub/0.4.13 npm/? node/v22.15.0`
+      ;(path as any).join.mockImplementation(() => `/somewhere-here`)
+      ;(execa as any).mockImplementation(() => Promise.resolve())
+      ;(fs as any).readJSON.mockImplementation(() => {
+        return { name: `gatsby-project` }
+      })
+
+      await initStarter(
+        `gatsby-starter-hello-world`,
+        `./somewhere`,
+        [`one-package`],
+        `A site`
+      )
+
+      expect(reporter.success).toBeCalledWith(`Installed plugins`)
+      expect(reporter.panic).not.toBeCalled()
+      expect(execa).toBeCalledWith(`nub`, [`add`, `one-package`], {
+        stderr: `inherit`,
+      })
+    })
+
     it(`gently informs the user that yarn is not available when trying to use it`, async () => {
       process.env.npm_config_user_agent = `yarn`
       ;(execSync as any).mockImplementation(() => {

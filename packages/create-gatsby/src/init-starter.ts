@@ -5,7 +5,7 @@ import path from "path"
 import { reporter } from "./utils/reporter"
 import { spin } from "tiny-spin"
 import { getConfigStore } from "./utils/get-config-store"
-type PackageManager = "yarn" | "npm"
+type PackageManager = "yarn" | "npm" | "nub"
 import colors from "ansi-colors"
 import { clearLine } from "./utils/clear-line"
 
@@ -24,6 +24,12 @@ export const getPackageManager = (
   if (npmConfigUserAgent?.includes(`yarn`)) {
     configStore.set(packageManagerConfigKey, `yarn`)
     return `yarn`
+  }
+
+  // nub's user agent also contains `npm`, so check for `nub` first
+  if (npmConfigUserAgent?.includes(`nub`)) {
+    configStore.set(packageManagerConfigKey, `nub`)
+    return `nub`
   }
 
   configStore.set(packageManagerConfigKey, `npm`)
@@ -140,6 +146,10 @@ const install = async (
 
       await fs.remove(`package-lock.json`)
       await execa(`yarnpkg`, args, options)
+    } else if (pm === `nub`) {
+      const args = packages.length ? [`add`, ...packages] : [`install`]
+
+      await execa(`nub`, args, options)
     } else {
       await fs.remove(`yarn.lock`)
       await execa(`npm`, [`install`, ...npmAdditionalCliArgs], options)
