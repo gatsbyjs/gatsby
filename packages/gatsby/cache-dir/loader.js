@@ -27,7 +27,11 @@ const stripSurroundingSlashes = s => {
 const createPageDataUrl = rawPath => {
   const [path, maybeSearch] = rawPath.split(`?`)
   const fixedPath = path === `/` ? `index` : stripSurroundingSlashes(path)
-  return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json${
+  // Encode the path, so routes with characters that RFC 3986 forbids in URL
+  // paths (e.g. the square brackets of a client-only splat route like
+  // `/[...slug]/`) are requested percent-encoded. `rawPath` is always decoded
+  // (see `trimPathname` in find-path.js), so this never double-encodes.
+  return `${__PATH_PREFIX__}/page-data/${encodeURI(fixedPath)}/page-data.json${
     maybeSearch ? `?${maybeSearch}` : ``
   }`
 }
