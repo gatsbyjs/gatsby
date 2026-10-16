@@ -14,7 +14,7 @@ const {
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build } = require(`../index`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const withResolverContext = require(`../context`)

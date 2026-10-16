@@ -1,5 +1,6 @@
 import path from "path"
-import { createReadStream, readFile, mkdtemp } from "fs-extra"
+import { mkdtemp, readFile } from "fs/promises"
+import { createReadStream } from "fs"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { createMutex } from "gatsby-core-utils/mutex"
 import Queue from "fastq"

@@ -1,5 +1,5 @@
 import sharp from "./safe-sharp"
-import fs from "fs-extra"
+import fs from "fs"
 
 export function rgbToHex(red, green, blue) {
   return `#${(blue | (green << 8) | (red << 16) | (1 << 24))

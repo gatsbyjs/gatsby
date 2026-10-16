@@ -3,7 +3,6 @@ const mockFS = {
 }
 
 jest.mock(`fs`, () => mockFS)
-jest.mock(`fs-extra`, () => mockFS)
 
 jest.mock(`path`, () => {
   return {

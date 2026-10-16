@@ -1,4 +1,4 @@
-import fs from "fs-extra"
+import fs from "fs"
 import { getStore } from "~/store"
 import prettier from "prettier"
 import { formatLogMessage } from "~/utils/format-log-message"
@@ -37,21 +37,21 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
   } of Object.values(remoteSchema.nodeQueries)) {
     const directory = `${wordPressGraphQLDirectory}/${typeInfo.nodesTypeName}`
 
-    await fs.ensureDir(directory)
+    await fs.promises.mkdir(directory, { recursive: true })
 
-    await fs.writeFile(
+    await fs.promises.writeFile(
       `${directory}/node-list-query.graphql`,
       prettier.format(nodeListQueries[0], { parser: `graphql` }),
       `utf8`
     )
 
-    await fs.writeFile(
+    await fs.promises.writeFile(
       `${directory}/node-single-query.graphql`,
       prettier.format(nodeQuery, { parser: `graphql` }),
       `utf8`
     )
 
-    await fs.writeFile(
+    await fs.promises.writeFile(
       `${directory}/node-preview-query.graphql`,
       prettier.format(previewQuery, { parser: `graphql` }),
       `utf8`
@@ -60,9 +60,9 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
 
   const directory = `${wordPressGraphQLDirectory}/RootQuery`
 
-  await fs.ensureDir(directory)
+  await fs.promises.mkdir(directory, { recursive: true })
 
-  await fs.writeFile(
+  await fs.promises.writeFile(
     `${directory}/non-node-root-query.graphql`,
     prettier.format(remoteSchema.nonNodeQuery, { parser: `graphql` })
   )

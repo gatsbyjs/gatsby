@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 // @flow
-const fs = require(`fs-extra`)
+const fs = require(`fs/promises`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const slugify = require(`slugify`)

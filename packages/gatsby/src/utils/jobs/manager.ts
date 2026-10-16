@@ -72,7 +72,7 @@ async function runLocalWorker<T>(
   workerFn: { ({ inputPaths, outputDir, args }: InternalJob): T },
   job: InternalJob
 ): Promise<T> {
-  await fs.ensureDir(job.outputDir)
+  await fs.promises.mkdir(job.outputDir, { recursive: true })
 
   return new Promise((resolve, reject) => {
     // execute worker nextTick

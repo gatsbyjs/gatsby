@@ -1,5 +1,5 @@
 const path = require(`path`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 
 jest.mock(`async/queue`, () => () => {
   return {
@@ -15,7 +15,7 @@ jest.mock(`gatsby/dist/redux/actions`, () => {
 })
 
 const sharp = require(`sharp`)
-fs.ensureDirSync = jest.fn()
+fs.mkdirSync = jest.fn()
 fs.existsSync = jest.fn().mockReturnValue(false)
 
 const decodeBase64PngAsRaw = async png =>

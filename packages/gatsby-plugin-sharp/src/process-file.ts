@@ -1,5 +1,5 @@
 import sharp from "./safe-sharp"
-import fs from "fs-extra"
+import fs from "fs/promises"
 import path from "path"
 import debug from "debug"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
@@ -50,7 +50,7 @@ export const processFile = async (
       try {
         const { outputPath, args } = transform
         log(`Start processing ${outputPath}`)
-        await fs.ensureDir(path.dirname(outputPath))
+        await fs.mkdir(path.dirname(outputPath), { recursive: true })
 
         const transformArgs = healOptions(
           { defaultQuality: options.defaultQuality as number },

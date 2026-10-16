@@ -1,4 +1,4 @@
-import * as fs from "fs-extra"
+import fs from "fs/promises"
 import path from "path"
 
 export interface IFile {
@@ -10,7 +10,8 @@ async function writeFile({ source, targetPath }: IFile): Promise<void> {
   // Read the stub
   const stubData = await fs.readFile(source)
   // Write stub to targetPath
-  await fs.outputFile(targetPath, stubData)
+  await fs.mkdir(path.dirname(targetPath), { recursive: true })
+  await fs.writeFile(targetPath, stubData)
 }
 
 export async function writeFiles(

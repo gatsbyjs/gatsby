@@ -7,7 +7,7 @@
  */
 import path from "path"
 import tmp from "tmp"
-import fs from "fs-extra"
+import fs from "fs/promises"
 import xdgBasedir from "xdg-basedir"
 import { createContentDigest } from "./create-content-digest"
 import { isCI } from "./ci"
@@ -55,7 +55,7 @@ export const createServiceLock = async (
 
   const siteDir = getSiteDir(programPath)
 
-  await fs.ensureDir(siteDir)
+  await fs.mkdir(siteDir, { recursive: true })
 
   const serviceDataFile = getDataFilePath(siteDir, serviceName)
 

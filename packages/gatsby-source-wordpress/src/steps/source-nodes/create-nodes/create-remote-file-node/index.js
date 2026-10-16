@@ -1,6 +1,6 @@
 import { b64e } from "~/utils/string-encoding"
 import { withPluginKey } from "~/store"
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const { remoteFileDownloaderBarPromise } = require(`./progress-bar-promise`)
 const got = require(`got`)
 const { createContentDigest } = require(`gatsby-core-utils`)
@@ -163,7 +163,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     // Called if we stall without receiving any data
     const handleTimeout = async () => {
       fsWriteStream.close()
-      fs.removeSync(tmpFilename)
+      fs.rmSync(tmpFilename, { recursive: true, force: true })
       if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
@@ -204,7 +204,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       processingCache[url] = null
       totalJobs -= 1
       bar.total = totalJobs
-      fs.removeSync(tmpFilename)
+      fs.rmSync(tmpFilename, { recursive: true, force: true })
       console.error(error)
       reject(error)
     })
@@ -305,7 +305,7 @@ async function processRemoteNode({
 
   // If the status code is 200, move the piped temp file to the real name.
   if (response.statusCode === 200) {
-    await fs.move(tmpFilename, filename, { overwrite: true })
+    await fs.promises.rename(tmpFilename, filename)
     // Else if 304, remove the empty response.
   } else {
     processingCache[url] = null
@@ -313,7 +313,7 @@ async function processRemoteNode({
 
     bar.total = totalJobs
 
-    await fs.remove(tmpFilename)
+    await fs.promises.rm(tmpFilename, { recursive: true, force: true })
   }
 
   // Create the file node.

@@ -1,5 +1,5 @@
-jest.mock(`fs-extra`, () => {
-  const fs = jest.requireActual(`fs-extra`)
+jest.mock(`fs/promises`, () => {
+  const fs = jest.requireActual(`fs/promises`)
   return {
     ...fs,
     readFile: jest.fn(),
@@ -8,7 +8,7 @@ jest.mock(`fs-extra`, () => {
 jest.mock(`../../utils/api-runner-node`, () => () => [])
 jest.mock(`gatsby-cli/lib/reporter/index`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-const fs = require(`fs-extra`)
+const fs = require(`fs/promises`)
 const { store } = require(`../../redux`)
 
 const dispatchSpy = jest.spyOn(store, `dispatch`)

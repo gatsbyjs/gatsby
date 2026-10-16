@@ -14,7 +14,6 @@
     "chalk": "^4.1.2",
     "common-tags": "^1.8.2",
     "contentful": "^11.2.5",
-    "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.17.0-next.0",
     "gatsby-plugin-utils": "^4.17.0-next.0",
     "gatsby-source-filesystem": "^5.17.0-next.0",

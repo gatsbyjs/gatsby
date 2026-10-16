@@ -1,5 +1,5 @@
 // @ts-check
-import fs from "fs-extra"
+import fs from "fs/promises"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import path from "path"
 import {
