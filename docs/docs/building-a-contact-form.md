@@ -115,6 +115,33 @@ All forms set up in this way come with reCAPTCHA by default, but you can also en
 
 Because the input is hidden, Formspree will know that only a bot could have made the submission and it will be silently ignored!
 
+### BootForm
+
+[BootForm](https://bootform.com) is a form backend with a free plan for static sites. You don't need an account to start: point the form's `action` at `https://f.bootform.com/` followed by a UUID you generate yourself (for example with `crypto.randomUUID()`), and the first submission creates the form.
+
+```jsx:title=src/pages/contact.js
+<form method="post" action="https://f.bootform.com/{your-form-uuid}">
+  ...
+  <label>
+    Email
+    <input type="email" name="email" />
+  </label>
+  <input
+    type="text"
+    name="bform_website"
+    style={{ position: "absolute", left: "-9999px" }}
+    tabIndex={-1}
+    autoComplete="off"
+    aria-hidden="true"
+  />
+  ...
+</form>
+```
+
+The first submissions to a new form are held until you claim it: the visitor is redirected to a claim page, where you create a free account (or log in) and take ownership. After that, submissions show up in the BootForm dashboard and can be sent on to email or Discord on the free plan, and to Slack, a webhook or Zapier on paid plans.
+
+The `bform_website` input is a honeypot. People never see it, so a submission that fills it in is treated as spam. Keep it empty, and hide it off-screen as above rather than with `display: none`, which some bots skip. You can find more on claiming a form and spam protection in the [BootForm docs](https://bootform.com/docs/getting-started).
+
 ### Run your own server
 
 If your form data requires a significant amount of business logic to handle, creating your own service might make the most sense. The most popular solution to this is writing an HTTP server - this can be done in many languages including PHP, Ruby, GoLang, or in our case Node.js with [Express](https://expressjs.com/).
