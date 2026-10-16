@@ -1,6 +1,6 @@
 {
   "name": "gatsby-sharp",
-  "version": "1.17.0-next.0",
+  "version": "1.16.0",
   "sideEffects": false,
   "keywords": [
     "gatsby",
@@ -9,6 +9,7 @@
   "main": "dist/index.js",
   "source": "src/index.ts",
   "files": [
+    "CHANGELOG.md",
     "dist/*"
   ],
   "types": "dist/index.d.ts",
