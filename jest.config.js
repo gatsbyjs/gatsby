@@ -154,6 +154,12 @@ const config = {
     "^.+\\.(jsx|js|mjs|ts|tsx)$": `<rootDir>/jest-transformer.js`,
   },
   moduleNameMapper: {
+    // `page-ssr-module/lambda.ts` is a bundle template that `require.resolve`s these
+    // two tokens; the bundler substitutes them at build time, so under jest they have
+    // to resolve to something. `require.resolve` ignores virtual `jest.mock`s, which
+    // is why this lives here rather than in the test file.
+    "^%IMAGE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%$": `<rootDir>/packages/gatsby/src/utils/page-ssr-module/__tests__/fixtures/bundler-placeholder.js`,
+    "^%FILE_CDN_URL_GENERATOR_MODULE_RELATIVE_PATH%$": `<rootDir>/packages/gatsby/src/utils/page-ssr-module/__tests__/fixtures/bundler-placeholder.js`,
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
     "^@reach/router(.*)": `<rootDir>/node_modules/@gatsbyjs/reach-router$1`,
     "^weak-lru-cache$": `<rootDir>/node_modules/weak-lru-cache/dist/index.cjs`,
