@@ -360,6 +360,46 @@ describe(`Test plugin manifest options`, () => {
     expect(contents).toMatchSnapshot()
   })
 
+  it(`correctly works with assetPrefix`, async () => {
+    await onPostBootstrap(
+      { ...apiArgs, basePath: ``, assetPrefix: `https://cdn.example.com` },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+      }
+    )
+    const contents = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    contents.icons.forEach(icon => {
+      expect(icon.src).toMatch(/^https:\/\/cdn\.example\.com/)
+    })
+  })
+
+  it(`correctly works with assetPrefix and pathPrefix combined`, async () => {
+    await onPostBootstrap(
+      {
+        ...apiArgs,
+        basePath: `/blog`,
+        assetPrefix: `https://cdn.example.com`,
+      },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+      }
+    )
+    const contents = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    contents.icons.forEach(icon => {
+      expect(icon.src).toMatch(/^https:\/\/cdn\.example\.com\/blog/)
+    })
+  })
+
   it(`generates all language versions`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
     const pluginSpecificOptions = {
