@@ -536,3 +536,64 @@ describe(`pluginOptionsSchema`, () => {
     expect(errors).toEqual([])
   })
 })
+
+describe(`assetPrefix support`, () => {
+  const apiArgsWithPrefix = {
+    reporter,
+    basePath: `/blog`,
+    store: {
+      getState: () => ({ config: { assetPrefix: `https://cdn.example.com/` } }),
+    },
+  }
+
+  beforeEach(() => {
+    fs.writeFileSync.mockReset()
+    fs.mkdirSync.mockReset()
+    fs.existsSync.mockReset()
+    fs.copyFileSync.mockReset()
+    sharp.mockClear()
+  })
+
+  it(`applies assetPrefix followed by pathPrefix to icon paths`, async () => {
+    await onPostBootstrap(apiArgsWithPrefix, { ...manifestOptions })
+
+    const calls = fs.writeFileSync.mock.calls
+    const contents = JSON.parse(calls[calls.length - 1][1])
+    expect(contents.icons.map(icon => icon.src)).toEqual([
+      `https://cdn.example.com/blog/icons/icon-48x48.png`,
+      `https://cdn.example.com/blog/icons/icon-128x128.png`,
+    ])
+    // start_url must stay same-origin, i.e. pathPrefix only
+    expect(contents.start_url).toBe(`/blog/`)
+  })
+
+  it(`leaves absolute icon URLs untouched`, async () => {
+    await onPostBootstrap(apiArgsWithPrefix, {
+      ...manifestOptions,
+      icons: [
+        {
+          src: `https://other.example.com/icon-48x48.png`,
+          sizes: `48x48`,
+          type: `image/png`,
+        },
+      ],
+    })
+
+    const calls = fs.writeFileSync.mock.calls
+    const contents = JSON.parse(calls[calls.length - 1][1])
+    expect(contents.icons.map(icon => icon.src)).toEqual([
+      `https://other.example.com/icon-48x48.png`,
+    ])
+  })
+
+  it(`keeps relative icon paths unchanged when no assetPrefix is set`, async () => {
+    await onPostBootstrap({ reporter }, { ...manifestOptions })
+
+    const calls = fs.writeFileSync.mock.calls
+    const contents = JSON.parse(calls[calls.length - 1][1])
+    expect(contents.icons.map(icon => icon.src)).toEqual([
+      `icons/icon-48x48.png`,
+      `icons/icon-128x128.png`,
+    ])
+  })
+})
