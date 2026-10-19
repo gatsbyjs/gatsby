@@ -360,6 +360,62 @@ describe(`Test plugin manifest options`, () => {
     expect(contents).toMatchSnapshot()
   })
 
+  it(`correctly works with pathPrefix and assetPrefix (Fixes #25207)`, async () => {
+    await onPostBootstrap(
+      { ...apiArgs, basePath: `/blog`, pathPrefix: `https://cdn.example.com` },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+      }
+    )
+    const contents = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    // Icons must include both the asset prefix and the path prefix.
+    contents.icons.forEach(icon => {
+      expect(icon.src).toMatch(/^https:\/\/cdn\.example\.com\/blog\/icons\//)
+    })
+  })
+
+  it(`correctly works with explicit assetPrefix argument`, async () => {
+    await onPostBootstrap(
+      {
+        ...apiArgs,
+        basePath: `/blog`,
+        assetPrefix: `https://cdn.example.com`,
+      },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+      }
+    )
+    const contents = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    contents.icons.forEach(icon => {
+      expect(icon.src).toMatch(/^https:\/\/cdn\.example\.com\/blog\/icons\//)
+    })
+  })
+
+  it(`does not change icon paths when no prefixes are set`, async () => {
+    await onPostBootstrap(apiArgs, {
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `standalone`,
+    })
+    const contents = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    contents.icons.forEach(icon => {
+      expect(icon.src).toEqual(expect.stringMatching(/^icons\//))
+    })
+  })
+
   it(`generates all language versions`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
     const pluginSpecificOptions = {

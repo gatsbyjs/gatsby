@@ -8,6 +8,22 @@ import { doesIconExist } from "./node-helpers"
 
 import pluginOptionsSchema from "./pluginOptionsSchema"
 
+/**
+ * Detect absolute URLs such as `https://cdn.example.com` or
+ * `//cdn.example.com` used as an `assetPrefix`.
+ */
+function isAbsoluteUrl(prefix) {
+  return typeof prefix === `string` && /^(https?:)?\/\//i.test(prefix)
+}
+
+function trimTrailingSlash(value) {
+  return value.endsWith(`/`) ? value.slice(0, -1) : value
+}
+
+function ensureLeadingSlash(pathname) {
+  return pathname.startsWith(`/`) ? pathname : `/${pathname}`
+}
+
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)
 
@@ -72,7 +88,7 @@ exports.onPreInit = (_, pluginOptions) => {
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan, basePath },
+  { reporter, parentSpan, basePath, pathPrefix, assetPrefix },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -83,7 +99,18 @@ exports.onPostBootstrap = async (
 
   const cache = new Map()
 
-  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
+  // `pathPrefix` (passed by api-runner-node) is the combined public path,
+  // i.e. assetPrefix + pathPrefix when an assetPrefix is configured. Fall
+  // back to it for backwards compatibility when `assetPrefix` is absent.
+  const effectiveAssetPrefix = assetPrefix ?? pathPrefix
+
+  await makeManifest({
+    cache,
+    reporter,
+    pluginOptions: manifest,
+    basePath,
+    assetPrefix: effectiveAssetPrefix,
+  })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
@@ -109,6 +136,7 @@ exports.onPostBootstrap = async (
           },
           shouldLocalize: true,
           basePath,
+          assetPrefix: effectiveAssetPrefix,
         })
       })
     )
@@ -123,7 +151,8 @@ exports.onPostBootstrap = async (
  * @property {Object} reporter - from gatsby-node api
  * @property {Object} pluginOptions - from gatsby-node api/gatsby config
  * @property {boolean?} shouldLocalize
- * @property {string?} basePath - string of base path frpvided by gatsby node
+ * @property {string?} basePath - string of base path provided by gatsby node (pathPrefix)
+ * @property {string?} assetPrefix - string of asset prefix provided by gatsby node (may be an absolute URL)
  */
 
 /**
@@ -136,6 +165,7 @@ const makeManifest = async ({
   pluginOptions,
   shouldLocalize = false,
   basePath = ``,
+  assetPrefix = ``,
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
@@ -254,11 +284,21 @@ const makeManifest = async ({
     }
   }
 
-  // Fix #18497 by prefixing paths
+  // Fix #18497 and #25207 by prefixing paths. `basePath` is the site's
+  // pathPrefix while `assetPrefix` is the (possibly absolute) URL assets are
+  // served from; both must be reflected in the manifest's icon URLs.
+  const joinWithAssetPrefix = pathname => {
+    const prefixed = slash(path.join(basePath, pathname))
+
+    return isAbsoluteUrl(assetPrefix)
+      ? `${trimTrailingSlash(assetPrefix)}${ensureLeadingSlash(prefixed)}`
+      : prefixed
+  }
+
   manifest.icons = manifest.icons.map(icon => {
     return {
       ...icon,
-      src: slash(path.join(basePath, icon.src)),
+      src: joinWithAssetPrefix(icon.src),
     }
   })
 
