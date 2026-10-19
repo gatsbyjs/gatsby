@@ -1,5 +1,0 @@
-yarn.lock
-**/*.js
-**/*.d.ts
-/**/*.map
-!/src/**/*.js
