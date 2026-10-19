@@ -340,8 +340,15 @@ describe(`Test plugin manifest options`, () => {
   })
 
   it(`correctly works with pathPrefix`, async () => {
+    const store = {
+      getState: () => {
+        return {
+          config: { pathPrefix: `/blog` },
+        }
+      },
+    }
     await onPostBootstrap(
-      { ...apiArgs, basePath: `/blog` },
+      { ...apiArgs, basePath: `/blog`, store },
       {
         name: `GatsbyJS`,
         short_name: `GatsbyJS`,
@@ -358,6 +365,47 @@ describe(`Test plugin manifest options`, () => {
     )
     expect(sharp).toHaveBeenCalledTimes(0)
     expect(contents).toMatchSnapshot()
+  })
+
+  // Test for issue #25207 - assetPrefix + pathPrefix should be used
+  it(`correctly uses assetPrefix and pathPrefix from gatsby config`, async () => {
+    const store = {
+      getState: () => {
+        return {
+          config: {
+            pathPrefix: `/blog`,
+            assetPrefix: `https://cdn.example.com`,
+          },
+        }
+      },
+    }
+    await onPostBootstrap(
+      // Note: basePath is empty - assetPrefix + pathPrefix from store should be used
+      { ...apiArgs, basePath: ``, store },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icons: [
+          {
+            src: `icons/icon-48x48.png`,
+            sizes: `48x48`,
+            type: `image/png`,
+          },
+        ],
+      }
+    )
+    const contents = fs.writeFileSync.mock.calls[0][1]
+    const manifest = JSON.parse(contents)
+    // Verify icon URLs include assetPrefix + pathPrefix
+    expect(manifest.icons[0].src).toBe(
+      `https://cdn.example.com/blog/icons/icon-48x48.png`
+    )
+    // Verify start_url includes assetPrefix + pathPrefix
+    expect(manifest.start_url).toBe(`https://cdn.example.com/blog/`)
   })
 
   it(`generates all language versions`, async () => {
