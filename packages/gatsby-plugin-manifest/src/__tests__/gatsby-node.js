@@ -542,7 +542,9 @@ describe(`assetPrefix support`, () => {
     reporter,
     basePath: `/blog`,
     store: {
-      getState: () => ({ config: { assetPrefix: `https://cdn.example.com/` } }),
+      getState: () => {
+        return { config: { assetPrefix: `https://cdn.example.com/` } }
+      },
     },
   }
 
