@@ -1,4 +1,4 @@
-import type { ProcessorOptions } from "@mdx-js/mdx"
+import type { CompileOptions } from "@mdx-js/mdx"
 import type { GatsbyCache, NodePluginArgs, PluginOptions, Store } from "gatsby"
 import deepmerge from "deepmerge"
 import type { IPluginInfo } from "gatsby-plugin-utils/types"
@@ -10,7 +10,7 @@ import { remarkPathPlugin } from "./remark-path-prefix-plugin"
 
 export interface IMdxPluginOptions {
   extensions: [string]
-  mdxOptions: ProcessorOptions
+  mdxOptions: CompileOptions
   gatsbyRemarkPlugins?: [IPluginInfo]
 }
 interface IHelpers {
@@ -24,7 +24,7 @@ interface IHelpers {
 type MdxDefaultOptions = (pluginOptions: PluginOptions) => IMdxPluginOptions
 
 export const defaultOptions: MdxDefaultOptions = pluginOptions => {
-  const mdxOptions: ProcessorOptions = {
+  const mdxOptions: CompileOptions = {
     format: `mdx`,
     useDynamicImport: true,
     providerImportSource: `@mdx-js/react`,
@@ -44,7 +44,7 @@ export const defaultOptions: MdxDefaultOptions = pluginOptions => {
 type EnhanceMdxOptions = (
   pluginOptions: PluginOptions,
   helpers: IHelpers
-) => Promise<ProcessorOptions>
+) => Promise<CompileOptions>
 
 export const enhanceMdxOptions: EnhanceMdxOptions = async (
   pluginOptions,
