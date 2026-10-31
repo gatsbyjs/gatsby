@@ -43,32 +43,49 @@ Each method detailed below will start with the following contact form:
 
 ## Form submission options in Gatsby
 
-### Getform
+### Forminit
 
-Getform is a form backend platform which offers a free-plan for handling form submissions on static sites. Begin by creating a form on your Gatsby site that you can receive submissions from. When creating the form, direct the HTTP POST method to the Getform, by placing the `name` attributes for the fields you want to make visible. (name, email, message etc.)
+[Forminit](https://forminit.com/) (formerly Getform) is a form backend service for collecting submissions from static sites without building your own server. Its free plan includes form submissions, email notifications, and file uploads with 100 MB of file storage.
+
+To get started, create a form in the Forminit dashboard and copy its Form ID.
+
+Update your form's `action` to `https://forminit.com/f/YOUR_FORM_ID`, replacing `YOUR_FORM_ID` with your Form ID. Use Forminit's field naming conventions to identify the submitted data, and add `encType="multipart/form-data"` to support file uploads:
 
 ```jsx:title=src/pages/contact.js
-<form method="post" action="https://getform.io/{your-unique-getform-endpoint}">
-  ...
-  <label>
-    Email
-    <input type="email" name="email" />
-  </label>
+<form
+  method="post"
+  action="https://forminit.com/f/YOUR_FORM_ID"
+  encType="multipart/form-data"
+>
   <label>
     Name
-    <input type="text" name="name" />
+    <input type="text" name="fi-sender-fullName" id="name" />
+  </label>
+  <label>
+    Email
+    <input type="email" name="fi-sender-email" id="email" required />
+  </label>
+  <label>
+    Subject
+    <input type="text" name="fi-text-subject" id="subject" />
   </label>
   <label>
     Message
-    <input type="text" name="message" />
+    <textarea name="fi-text-message" id="message" rows="5" required />
   </label>
-  ...
+  <label>
+    <input type="file" name="fi-file-attachment" id="attachment" />
+  </label>
+  <button type="submit">Send</button>
+  <input type="reset" value="Clear" />
 </form>
 ```
 
-Once you've made the code changes to your form, you can head over to the contact page on your site and start submitting data to the form. The submissions will then be visible on the Getform dashboard. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data you see on Getform using Zapier and Webhooks options that are offered.
+The `fi-sender-` fields identify the person submitting the form, `fi-text-` fields collect text values, and `fi-file-` fields collect uploaded files. See the [form blocks documentation](https://forminit.com/docs/form-blocks/) for additional field types and the [file upload guide](https://forminit.com/docs/file-upload/) for supported file types and limits.
 
-You can find more info on the registration process and form setup on the [Getform website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [CodePen](https://codepen.io/getform).
+Submit the form from your contact page to see the submission and any attached file in your Forminit dashboard. You can configure email notifications and connect submissions to other services through workflows.
+
+For an example using JavaScript to submit the form without leaving the page, see the [Forminit Gatsby integration guide](https://forminit.com/docs/gatsby/).
 
 ### Netlify
 
