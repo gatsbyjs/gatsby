@@ -5,7 +5,7 @@ description: "Learn about the different VCS providers that are supported on Gats
 
 Gatsby Cloud provides VCS ([Version Control System](https://www.atlassian.com/git/tutorials/what-is-version-control)) integrations for your repositories in three major Git providers:
 
-- Github
+- GitHub
 - GitLab
 - Bitbucket
 
