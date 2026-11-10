@@ -74,11 +74,11 @@ Click the link below to quickly try the workflow of developing, building, and de
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-blog&utm_source=github&utm_medium=link&utm_campaign=onboarding&utm_content=oss)
 
-At the end of this process, you'll have
+At the end of this process, you'll have:
 
 1. a site working on Netlify
-2. a new repository that is linked to that new site
-3. as you push changes to your new repository, Netlify will automatically rebuild and redeploy your site!
+2. a new repository linked to that new site
+3. automatic rebuilds and redeployments on Netlify whenever you push changes to your repository!
 
 ## 💻 Get started with Gatsby locally in 5 Minutes
 
