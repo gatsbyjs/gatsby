@@ -63,7 +63,7 @@ exports.onCreateNode = async ({
   // For all MarkdownRemark nodes that have a featured image url, call createRemoteFileNode
   if (
     node.internal.type === "MarkdownRemark" &&
-    node.frontmatter.featuredImgUrl !== null
+    node.frontmatter.featuredImgUrl
   ) {
     const fileNode = await createRemoteFileNode({
       url: node.frontmatter.featuredImgUrl, // string that points to the URL of the image
