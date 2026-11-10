@@ -207,7 +207,7 @@ const createPreviewStatusCallback =
     } else {
       reporter.log(
         formatLogMessage(
-          `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`
+          `Failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`
         )
       )
     }

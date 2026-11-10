@@ -38,7 +38,7 @@ const fetchAndApplyNodeUpdates = async ({
   const { cache, reporter } = helpers
 
   const activity = reporter.activityTimer(
-    formatLogMessage(`pull updates since last build`)
+    formatLogMessage(`Pull updates since last build`)
   )
   activity.start()
 

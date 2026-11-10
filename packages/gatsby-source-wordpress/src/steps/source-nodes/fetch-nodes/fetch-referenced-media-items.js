@@ -76,7 +76,7 @@ const pushPromiseOntoRetryQueue = ({
       if (timesRetried < 5) {
         if (timesRetried > 1) {
           helpers.reporter.info(
-            `pushing ${retryKey} to the end of the request queue.`
+            `Pushing ${retryKey} to the end of the request queue.`
           )
 
           helpers.reporter.info(
@@ -97,7 +97,7 @@ const pushPromiseOntoRetryQueue = ({
         })
       } else {
         helpers.reporter.info(
-          `\n\nalready re-queued ${retryKey} 5 times :( sorry.\nTry lowering process.env.GATSBY_CONCURRENT_DOWNLOAD.\nIt's currently set to ${process.env.GATSBY_CONCURRENT_DOWNLOAD}\n\n`
+          `\n\nAlready re-queued ${retryKey} 5 times :( sorry.\nTry lowering process.env.GATSBY_CONCURRENT_DOWNLOAD.\nIt's currently set to ${process.env.GATSBY_CONCURRENT_DOWNLOAD}\n\n`
         )
         // we already tried this earlier in the queue
         // no choice but to give up :(

@@ -52,7 +52,7 @@ const handleOpenBrowser = (url): void => {
   // for ideas see https://github.com/netlify/cli/blob/908f285fb80f04bf2635da73381c94387b9c8b0d/src/utils/open-browser.js
   console.log(``)
   reporter.info(`Opening Gatsby Cloud for you to login from, copy this`)
-  reporter.info(`url into your browser if it doesn't open automatically:`)
+  reporter.info(`URL into your browser if it doesn't open automatically:`)
   console.log(``)
   console.log(url)
   opn(url)

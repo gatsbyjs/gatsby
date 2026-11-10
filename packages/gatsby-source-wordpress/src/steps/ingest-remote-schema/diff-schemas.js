@@ -26,7 +26,7 @@ const checkIfSchemaHasChanged = async ({ traceId }) => {
   )
 
   const activity = helpers.reporter.activityTimer(
-    formatLogMessage(`diff schemas`)
+    formatLogMessage(`Diff schemas`)
   )
 
   if (pluginOptions.verbose && lastCompletedSourceTime) {

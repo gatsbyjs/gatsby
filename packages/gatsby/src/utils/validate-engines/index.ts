@@ -18,13 +18,13 @@ export async function validateEnginesWithActivity(
     )
   ) {
     reporter.info(
-      `Skipping Rendering Engines validation as they are build for different platform and/or architecture`
+      `Skipping rendering engines validation as they are built for a different platform and/or architecture`
     )
     return
   }
 
   const validateEnginesActivity = reporter.activityTimer(
-    `Validating Rendering Engines`,
+    `Validating rendering engines`,
     {
       parentSpan: buildSpan,
     }

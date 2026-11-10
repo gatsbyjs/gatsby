@@ -10,7 +10,7 @@ export async function writeOutRequires({
   assertStore(store)
 
   // Write out files.
-  const activity = reporter.activityTimer(`write out requires`, {
+  const activity = reporter.activityTimer(`Write out requires`, {
     parentSpan,
   })
   activity.start()

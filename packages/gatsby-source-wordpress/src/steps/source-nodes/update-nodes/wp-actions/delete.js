@@ -71,7 +71,7 @@ const wpActionDELETE = async ({ helpers, wpAction }) => {
       reporter.log(``)
       reporter.info(
         formatLogMessage(
-          `${chalk.bold(`deleted ${wpAction.referencedNodeSingularName}`)} ${
+          `${chalk.bold(`Deleted ${wpAction.referencedNodeSingularName}`)} ${
             wpAction.title
           } (#${wpAction.referencedNodeID})`
         )

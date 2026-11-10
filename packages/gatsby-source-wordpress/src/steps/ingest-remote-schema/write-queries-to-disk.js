@@ -17,7 +17,7 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
   }
 
   const activity = reporter.activityTimer(
-    formatLogMessage(`writing GraphQL queries to disk at ./WordPress/GraphQL/`)
+    formatLogMessage(`Writing GraphQL queries to disk at ./WordPress/GraphQL/`)
   )
 
   activity.start()

@@ -295,7 +295,7 @@ const ensurePluginRequirementsAreMet = async (
   }
 
   const activity = helpers.reporter.activityTimer(
-    formatLogMessage(`ensuring plugin requirements are met`)
+    formatLogMessage(`Ensuring plugin requirements are met`)
   )
 
   activity.start()

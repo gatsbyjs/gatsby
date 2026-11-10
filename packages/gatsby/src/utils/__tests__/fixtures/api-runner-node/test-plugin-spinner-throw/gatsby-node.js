@@ -1,6 +1,6 @@
 exports.testAPIHook = ({ reporter }) => {
   const activity = reporter.activityTimer(
-    `spinner activity with throwing`
+    `Spinner activity with throwing`
   )
   activity.start()
   throw new Error(`error`)

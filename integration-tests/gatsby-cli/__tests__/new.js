@@ -20,12 +20,26 @@ const clean = async dir => {
 describe(`gatsby new`, () => {
   // make folder for us to create sites into
   const dir = join(__dirname, "../execution-folder")
+  const blogStarter = join(dir, `blog-starter`)
   const originalPackageManager =
     getConfigStore().get("cli.packageManager") || `npm`
 
   beforeAll(async () => {
     await clean(dir)
     await fs.ensureDir(dir)
+    const sourceRoot =
+      process.env.CIRCLE_WORKING_DIRECTORY || join(__dirname, `../../..`)
+    await fs.copy(join(sourceRoot, `starters/blog`), blogStarter)
+    const blogPackagePath = join(blogStarter, `package.json`)
+    const blogPackage = await fs.readJSON(blogPackagePath)
+    const transformerRemark = await fs.readJSON(
+      join(sourceRoot, `packages/gatsby-transformer-remark/package.json`)
+    )
+    blogPackage.resolutions = {
+      ...blogPackage.resolutions,
+      "sanitize-html": transformerRemark.dependencies[`sanitize-html`],
+    }
+    await fs.writeJSON(blogPackagePath, blogPackage, { spaces: 2 })
     GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, `yarn`])
   })
 
@@ -50,15 +64,15 @@ describe(`gatsby new`, () => {
     expect(code).toBe(0)
   })
 
-  it(`creates a gatsby site with the blog starter`, () => {
+  it(`creates a gatsby site with a local blog starter`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-blog`,
-      `gatsbyjs/gatsby-starter-blog`,
+      blogStarter,
     ])
 
     logs.should.contain(
-      `info Creating new site from git: https://github.com/gatsbyjs/gatsby-starter-blog.git`
+      `info Creating new site from local starter: ${blogStarter}`
     )
     logs.should.contain(`success Created starter directory layout`)
     logs.should.contain(`info Installing packages...`)

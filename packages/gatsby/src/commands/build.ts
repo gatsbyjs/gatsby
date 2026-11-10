@@ -212,7 +212,7 @@ module.exports = async function build(
     _CFLAGS_.GATSBY_MAJOR === `5`
   ) {
     const buildPartialHydrationBundleActivityProgress = report.activityTimer(
-      `Building Partial Hydration renderer`,
+      `Building partial hydration renderer`,
       { parentSpan: buildSpan }
     )
     buildPartialHydrationBundleActivityProgress.start()
@@ -250,7 +250,7 @@ module.exports = async function build(
   if (shouldGenerateEngines()) {
     const state = store.getState()
     const buildActivityTimer = report.activityTimer(
-      `Building Rendering Engines`,
+      `Building rendering engines`,
       { parentSpan: buildSpan }
     )
     try {

@@ -55,7 +55,7 @@ export default async function compile({ parentSpan } = {}): Promise<
 > {
   const { program, schema, flattenedPlugins } = store.getState()
 
-  const activity = report.activityTimer(`extract queries from components`, {
+  const activity = report.activityTimer(`Extract queries from components`, {
     parentSpan,
     id: `query-extraction`,
   })

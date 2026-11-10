@@ -17,7 +17,7 @@ export async function sourceNodes({
 }> {
   assertStore(store)
 
-  const activity = reporter.activityTimer(`source and transform nodes`, {
+  const activity = reporter.activityTimer(`Source and transform nodes`, {
     parentSpan,
   })
   activity.start()

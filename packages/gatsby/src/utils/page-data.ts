@@ -229,7 +229,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
     staleNodeManifests = false
 
     reporter.warn(
-      `[gatsby] node manifests were created but no page-data.json files were written, so manifest ID's were not added to page-data.json files. This may be a bug or it may be due to a source plugin creating a node manifest for a node that did not change. Node manifest IDs: ${nodeManifests
+      `Node manifests were created but no page-data.json files were written, so manifest ID's were not added to page-data.json files. This may be a bug or it may be due to a source plugin creating a node manifest for a node that did not change. Node manifest IDs: ${nodeManifests
         .map(n => n.manifestId)
         .slice(0, maxManifestIdsToLog)
         .join(`,`)}${

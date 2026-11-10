@@ -53,7 +53,7 @@ export async function runQueriesInWorkersQueue(
   }
 ): Promise<void> {
   const activity = reporter.createProgress(
-    `run queries in workers`,
+    `Run queries in workers`,
     queryIds.staticQueryIds.length + queryIds.pageQueryIds.length,
     0,
     { parentSpan: opts?.parentSpan }

@@ -25,23 +25,23 @@ describe(`gatsby develop`, () => {
 
     // 3. Make sure logs for the user contain expected results
     const logs = getLogs()
-    logs.should.contain(`success load gatsby config`)
-    logs.should.contain(`success load plugins`)
+    logs.should.contain(`success Load Gatsby config`)
+    logs.should.contain(`success Load plugins`)
     logs.should.contain(`success onPreInit`)
-    logs.should.contain(`success initialize cache`)
-    logs.should.contain(`success copy gatsby files`)
+    logs.should.contain(`success Initialize cache`)
+    logs.should.contain(`success Copy Gatsby files`)
     logs.should.contain(`success onPreBootstrap`)
     logs.should.contain(`success createSchemaCustomization`)
-    logs.should.contain(`success source and transform nodes`)
-    logs.should.contain(`success building schema`)
+    logs.should.contain(`success Source and transform nodes`)
+    logs.should.contain(`success Building schema`)
     logs.should.contain(`success createPages`)
     logs.should.contain(`success createPagesStatefully`)
     logs.should.contain(`success onPreExtractQueries`)
-    logs.should.contain(`success extract queries from components`)
-    logs.should.contain(`success write out requires`)
-    logs.should.contain(`success write out redirect data`)
+    logs.should.contain(`success Extract queries from components`)
+    logs.should.contain(`success Write out requires`)
+    logs.should.contain(`success Write out redirect data`)
     logs.should.contain(`success onPostBootstrap`)
-    logs.should.contain(`info bootstrap finished`)
+    logs.should.contain(`info Bootstrap finished`)
     // These don't fire in CI. Need to figure out how to make it work. Might not be possible
     // logs.should.contain(
     //   `You can now view gatsby-starter-default in the browser.`

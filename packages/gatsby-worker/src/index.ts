@@ -85,6 +85,7 @@ class TaskInfo<T> {
 
 interface IWorkerInfo<T> {
   workerId: number
+  state: "active" | "ending"
   send: (msg: ParentMessageUnion) => void
   kill: (signal?: NodeJS.Signals | number) => boolean
   lastMessage: number
@@ -206,6 +207,7 @@ export class WorkerPool<
 
       const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
         workerId,
+        state: `active`,
         send: (msg: ParentMessageUnion): void => {
           if (!worker.connected) {
             return
@@ -348,6 +350,7 @@ export class WorkerPool<
    */
   end(): Array<Promise<number | null>> {
     const results = this.workers.map(async workerInfo => {
+      workerInfo.state = `ending`
       // tell worker to end gracefully
       const endMessage: ParentMessageUnion = [END, ++this.counter]
 
@@ -418,6 +421,10 @@ export class WorkerPool<
     this.idleWorkers.delete(workerInfo)
 
     await workerInfo.ready
+
+    if (workerInfo.state === `ending`) {
+      return
+    }
 
     const msg: ParentMessageUnion = [
       EXECUTE,

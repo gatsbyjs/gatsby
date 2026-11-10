@@ -252,7 +252,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
 
   const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
   const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
-  const activity = reporter.activityTimer(`query running`)
+  const activity = reporter.activityTimer(`Query running`)
   activity.start()
   await queryUtil.processStaticQueries(staticQueryIds, {
     activity,

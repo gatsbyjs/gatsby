@@ -22,7 +22,7 @@ export async function runSliceQueries({
 
   const state = store.getState()
   const activity = reporter.createProgress(
-    `run slice queries`,
+    `Run slice queries`,
     sliceQueryIds.length,
     0,
     {

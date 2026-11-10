@@ -885,7 +885,7 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `loading Drupal content changes`,
+          `Loading Drupal content changes`,
           expect.anything()
         )
 
