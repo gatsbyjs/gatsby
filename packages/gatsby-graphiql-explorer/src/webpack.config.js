@@ -63,6 +63,13 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    alias: {
+      "@graphiql/react": path.dirname(
+        require.resolve(`@graphiql/react/package.json`)
+      ),
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, `index.html.ejs`),
