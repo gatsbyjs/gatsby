@@ -8,6 +8,10 @@ import { doesIconExist } from "./node-helpers"
 
 import pluginOptionsSchema from "./pluginOptionsSchema"
 
+// Absolute URLs (with a scheme) are never prefixed, mirroring gatsby-link's
+// `isLocalLink` guard used by `withPrefix`/`withAssetPrefix`.
+const ABSOLUTE_URL_REGEX = /^[a-zA-Z][a-zA-Z\d+\-.]*?:/
+
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)
 
@@ -72,7 +76,7 @@ exports.onPreInit = (_, pluginOptions) => {
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan, basePath },
+  { reporter, parentSpan, basePath, store },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -82,8 +86,15 @@ exports.onPostBootstrap = async (
   activity.start()
 
   const cache = new Map()
+  const assetPrefix = store?.getState?.().config?.assetPrefix || ``
 
-  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
+  await makeManifest({
+    cache,
+    reporter,
+    pluginOptions: manifest,
+    basePath,
+    assetPrefix,
+  })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
@@ -109,6 +120,7 @@ exports.onPostBootstrap = async (
           },
           shouldLocalize: true,
           basePath,
+          assetPrefix,
         })
       })
     )
@@ -136,6 +148,7 @@ const makeManifest = async ({
   pluginOptions,
   shouldLocalize = false,
   basePath = ``,
+  assetPrefix = ``,
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
@@ -254,11 +267,18 @@ const makeManifest = async ({
     }
   }
 
-  // Fix #18497 by prefixing paths
+  // Fix #18497, #25207 by prefixing paths with `assetPrefix` followed by
+  // `pathPrefix`, matching the URLs gatsby-ssr generates for the <head>
+  // icon links (`withAssetPrefix`). `start_url` stays pathPrefix-only,
+  // since a manifest's start_url must remain same-origin.
+  const normalizedAssetPrefix = assetPrefix.replace(/\/+$/, ``)
   manifest.icons = manifest.icons.map(icon => {
+    if (ABSOLUTE_URL_REGEX.test(icon.src)) {
+      return icon
+    }
     return {
       ...icon,
-      src: slash(path.join(basePath, icon.src)),
+      src: `${normalizedAssetPrefix}${slash(path.join(basePath, icon.src))}`,
     }
   })
 
