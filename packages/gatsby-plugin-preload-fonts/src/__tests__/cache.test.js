@@ -1,12 +1,15 @@
 jest.spyOn(process, `cwd`).mockImplementationOnce(() => `/project/root`)
 const mockExit = jest.spyOn(process, `exit`).mockImplementation(() => {})
 
-const { readFileSync, writeFileSync } = require(`fs-extra`)
+const fs = require(`fs`)
+const { readFileSync, writeFileSync } = fs
 const { load, save } = require(`../prepare/cache`)
 const { join } = require(`path`)
 
-jest.mock(`fs-extra`, () => {
+jest.mock(`fs`, () => {
+  const fs = jest.requireActual(`fs`)
   return {
+    ...fs,
     accessSync: jest.fn(),
     readFileSync: jest.fn(),
     writeFileSync: jest.fn(),

@@ -1,5 +1,5 @@
 import { getPluginOptionsMdString } from "../generate-plugin-options-docs"
-import fs from "fs-extra"
+import fs from "fs/promises"
 import path from "path"
 
 describe(`Plugin options docs`, () => {

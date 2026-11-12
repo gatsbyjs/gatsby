@@ -1,4 +1,4 @@
-import * as fs from "fs-extra"
+import fs from "fs"
 import * as t from "@babel/types"
 import traverse from "@babel/traverse"
 import { codeFrameColumns, SourceLocation } from "@babel/code-frame"

@@ -1,7 +1,7 @@
 import { getPluginOptions } from "./../../utils/get-gatsby-api"
 import { GatsbyHelpers } from "~/utils/gatsby-types"
 import path from "path"
-import fs from "fs-extra"
+import fs from "fs/promises"
 import chalk from "chalk"
 import urlUtil from "url"
 import PQueue from "p-queue"
@@ -115,16 +115,22 @@ const writeDummyPageDataJsonIfNeeded = async ({
     pageNode.path
   )
 
-  await fs.ensureDir(pageDataDirectory)
+  await fs.mkdir(pageDataDirectory, { recursive: true })
 
   const pageDataPath = path.join(pageDataDirectory, `page-data.json`)
 
-  const pageDataExists = await fs.pathExists(pageDataPath)
+  const pageDataExists = await fs.access(pageDataPath).then(
+    () => true,
+    () => false
+  )
 
   if (!pageDataExists) {
-    await fs.writeJSON(pageDataPath, {
-      isDraft: previewData.isDraft,
-    })
+    await fs.writeFile(
+      pageDataPath,
+      JSON.stringify({
+        isDraft: previewData.isDraft,
+      })
+    )
   }
 }
 

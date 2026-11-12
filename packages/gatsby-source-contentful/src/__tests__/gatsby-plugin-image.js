@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 // @ts-check
-import fs from "fs-extra"
+import fs from "fs/promises"
 import { setPluginOptions } from "gatsby-plugin-sharp/plugin-options"
 import _ from "lodash"
 import { resolve } from "path"

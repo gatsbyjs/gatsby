@@ -1,5 +1,5 @@
 import path from "path"
-import { remove, mkdirp } from "fs-extra"
+import { rm, mkdir } from "fs/promises"
 import { createMutex } from "../mutex"
 import * as storage from "../utils/get-storage"
 
@@ -27,14 +27,14 @@ async function doAsync(
 describe(`mutex`, () => {
   const cachePath = path.join(__dirname, `.cache`)
   beforeAll(async () => {
-    await mkdirp(cachePath)
+    await mkdir(cachePath, { recursive: true })
     storage.getDatabaseDir.mockReturnValue(cachePath)
   })
 
   afterAll(async () => {
     await storage.closeDatabase()
     globalThis.__GATSBY_OPEN_LMDBS.delete(storage.getDatabaseDir())
-    await remove(cachePath)
+    await rm(cachePath, { recursive: true, force: true })
   })
 
   it(`should only allow one action go through at the same time`, async () => {

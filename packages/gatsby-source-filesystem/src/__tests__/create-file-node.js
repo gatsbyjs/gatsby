@@ -1,9 +1,9 @@
 const path = require(`path`)
 
 const { createFileNode } = require(`../create-file-node`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 
-const fsStatBak = fs.stat
+const fsStatBak = fs.promises.stat
 
 const createMockCache = (get = jest.fn()) => {
   return {
@@ -101,7 +101,7 @@ describe(`create-file-node`, () => {
     // If this breaks, note that the actual values here are not relevant. They just need to be mocked because
     // otherwise the tests change due to changing timestamps. The returned object should mimic the real fs.stat
     // Note: async tests should run in serial so this mock should not cause cross test pollution on this thread.
-    fs.stat = jest.fn().mockResolvedValue(
+    fs.promises.stat = jest.fn().mockResolvedValue(
       Promise.resolve({
         isDirectory() {
           return false
@@ -128,7 +128,7 @@ describe(`create-file-node`, () => {
   })
 
   afterEach(() => {
-    fs.stat = fsStatBak
+    fs.promises.stat = fsStatBak
   })
 
   it(`creates a file node`, async () => {

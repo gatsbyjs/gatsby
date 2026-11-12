@@ -5,7 +5,7 @@ import {
   Actions,
   Store,
 } from "gatsby"
-import fs from "fs-extra"
+import fs from "fs"
 import path from "path"
 import { watchImage } from "./watcher"
 import type { FileSystemNode } from "gatsby-source-filesystem"
@@ -211,7 +211,7 @@ export async function writeImage(
 
     if (sharpData) {
       // Write the image properties to the cache
-      await fs.writeJSON(filename, sharpData)
+      await fs.promises.writeFile(filename, JSON.stringify(sharpData))
     } else {
       reporter.warn(`Could not process image ${file.relativePath}`)
     }

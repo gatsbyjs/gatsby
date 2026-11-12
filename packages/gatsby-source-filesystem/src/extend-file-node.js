@@ -1,5 +1,5 @@
 const { GraphQLString } = require(`gatsby/graphql`)
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const path = require(`path`)
 const { prefixId, CODES } = require(`./error-utils`)
 
@@ -30,10 +30,10 @@ module.exports = ({
         )
 
         if (!fs.existsSync(publicPath)) {
-          fs.copySync(
+          fs.cpSync(
             details.absolutePath,
             publicPath,
-            { dereference: true },
+            { recursive: true, dereference: true },
             err => {
               if (err) {
                 reporter.panic(
