@@ -115,6 +115,20 @@ All forms set up in this way come with reCAPTCHA by default, but you can also en
 
 Because the input is hidden, Formspree will know that only a bot could have made the submission and it will be silently ignored!
 
+### Lamofel
+
+Lamofel is a form backend for HTML forms and static sites: submissions are stored and emailed to an address you have confirmed. It has a Free plan of 100 messages a month, with a "Powered by" footer on the thanks page. You do not need an account to generate the form code, but a live endpoint needs a free account and a confirmed email address.
+
+To use it, sign up at [lamofel.com](https://lamofel.com), confirm your email address, add a form, copy the endpoint URL it shows, and direct the HTTP POST method of your form to that endpoint.
+
+```diff
+- <form method="post" action="#">
++ <form method="post" action="https://lamofel.com/f/YOUR_FORM_ID">
+  ...
+```
+
+Replace `YOUR_FORM_ID` with the last part of the endpoint URL Lamofel shows after you add a form. You can compare the Free, Starter and Pro plans [on their website](https://lamofel.com/plans).
+
 ### Run your own server
 
 If your form data requires a significant amount of business logic to handle, creating your own service might make the most sense. The most popular solution to this is writing an HTTP server - this can be done in many languages including PHP, Ruby, GoLang, or in our case Node.js with [Express](https://expressjs.com/).
