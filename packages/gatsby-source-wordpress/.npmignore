@@ -47,3 +47,4 @@ decls
 examples
 
 *.env*
+CHANGELOG.md
