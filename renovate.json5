@@ -21,11 +21,6 @@
     {
       "matchDepTypes": ["devDependencies"],
       "enabled": false
-    },
-    {
-      "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["security"],
-      "prPriority": 100
     }
   ],
   "postUpdateOptions": ["yarnDedupeHighest"],
