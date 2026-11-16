@@ -53,15 +53,11 @@ describe(`webpack loader: parses MDX and transforms it into JSX`, () => {
             import Example from \\"./example\\";
             function _createMdxContent(props) {
               const _components = Object.assign({
-                hr: \\"hr\\",
-                h2: \\"h2\\",
                 h1: \\"h1\\",
                 p: \\"p\\"
               }, props.components);
               return _jsxs(_Fragment, {
-                children: [_jsx(_components.hr, {}), \\"/n\\", _jsx(_components.h2, {
-                  children: \\"title: Some Frontmatter Data\\"
-                }), \\"/n\\", \\"/n\\", _jsx(_components.h1, {
+                children: [_jsx(_components.h1, {
                   children: \\"MDX test\\"
                 }), \\"/n\\", _jsx(_components.p, {
                   children: \\"Does it parse and transform?\\"
@@ -77,5 +73,35 @@ describe(`webpack loader: parses MDX and transforms it into JSX`, () => {
             export default MDXContent;
             "
           `)
+  })
+
+  it(`compiles the source webpack read instead of a stale node body`, async () => {
+    const resourcePath = `/mocked-stale`
+    getNodeMock.mockImplementation(() => {
+      return {
+        body: `# Previous heading`,
+      }
+    })
+    cache.set(createFileToMdxCacheKey(resourcePath), 456)
+
+    const transformedSource = await gatsbyMDXLoader.call(
+      {
+        getOptions: () => {
+          return {
+            options: {},
+            getNode,
+            cache,
+            reporter,
+          }
+        },
+        resourcePath,
+        resourceQuery: `mocked`,
+        addDependency: jest.fn(),
+      } as unknown as LoaderContext<string>,
+      `# Updated heading`
+    )
+
+    expect(transformedSource).toContain(`Updated heading`)
+    expect(transformedSource).not.toContain(`Previous heading`)
   })
 })
