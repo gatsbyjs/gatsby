@@ -1,10 +1,12 @@
 /* eslint-disable @babel/no-invalid-this */
+import { createHash } from "crypto"
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { NodePluginArgs } from "gatsby"
 import type { LoaderDefinition } from "webpack"
 import { slash } from "gatsby-core-utils/path"
 import { createFileToMdxCacheKey } from "./cache-helpers"
 import { compileMDX } from "./compile-mdx"
+import { parseFrontmatter } from "./frontmatter"
 
 export interface IGatsbyMDXLoaderOptions {
   options: ProcessorOptions
@@ -29,11 +31,19 @@ const gatsbyMDXLoader: LoaderDefinition = async function (source) {
     return source
   }
 
+  // Compile the source webpack just read instead of the Mdx node body. On save,
+  // webpack can rebuild before the node is updated, and the stale body would
+  // then stay on the page. The md5 key matches a File node's default
+  // contentDigest, so this shares one parse with onCreateNode.
+  const { body } = parseFrontmatter(
+    createHash(`md5`).update(source).digest(`hex`),
+    source
+  )
+
   const compileRes = await compileMDX(
-    // We want to work with the transformed source from our layout plugin
     {
       absolutePath: resourcePath,
-      source: mdxNode.body as string,
+      source: body,
     },
     options,
     cache,
