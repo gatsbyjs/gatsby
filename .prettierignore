@@ -1,7 +1,6 @@
 *.min.js
 **/node_modules/**
 flow-typed
-deprecated-packages
 
 # webfont demo styles
 **/specimen_files

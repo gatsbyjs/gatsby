@@ -73,7 +73,7 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 
 In early 2020 we've [introduced Gatsby Recipes](/blog/2020-04-15-announcing-gatsby-recipes/) to automate common site building tasks. Since then our priorities and plans on that front for Gatsby have shifted, thus `gatsby-recipes` itself didn't ever go from alpha status to general availability. We're deprecating `gatsby-recipes` now to signal that we'll no longer will continue work on this specific package and to also remove some heavy dependencies from `gatsby-cli`. Some deprecation warnings or audit messages about packages from `gatsby-recipes` should be gone now.
 
-You can continue to use it via `gatsby-cli@4.4.0` and the source itself will live inside the `deprecated-packages` folder in the [monorepo](https://github.com/gatsbyjs/gatsby/tree/master/deprecated-packages).
+You can continue to use it via `gatsby-cli@4.4.0`.
 
 If you've liked the features in `gatsby-recipes` and would like to have something similar in the future, feel free to open a [feature request](https://github.com/gatsbyjs/gatsby/discussions/categories/ideas-feature-requests) in our discussions forum. Thanks!
 

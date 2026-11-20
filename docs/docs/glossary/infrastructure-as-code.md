@@ -22,4 +22,4 @@ Configuration files, like other code files, are text. That means you can use ver
 
 [Gatsby Recipes](/blog/2020-04-15-announcing-gatsby-recipes/) applies the infrastructure as code concept to front-end development. With Gatsby Recipes, you can automate common site building tasks, such as adding a plugin or test suite.
 
-We've discontinued this experiment and you can use Gatsby versions up to `4.4.0` to still use it. The old code still lives [on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/deprecated-packages/gatsby-recipes).
+We've discontinued this experiment and you can use Gatsby versions up to `4.4.0` to still use it.
